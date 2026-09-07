@@ -20,6 +20,14 @@
       <div class="sec-rule"></div>
     </div>
 
+    <p class="sec-lead" style="margin:-8px 0 24px">{{ school.model.tagline }}</p>
+
+    <!-- โมเดลสามมิติ ลากเพื่อหมุน แตะองค์ประกอบเพื่อดูรายละเอียด -->
+    <div appReveal style="margin-bottom:38px">
+      <app-banchuen-model />
+    </div>
+
+    <!-- ความหมายขององค์ประกอบทั้ง 8 (ข้อมูลจาก school.data.ts) -->
     <div class="grid grid-4" style="margin-bottom:34px">
       <div class="card card-hover" *ngFor="let l of school.model.letters; let i = index"
            appReveal="zoom" [revealDelay]="i * 70">

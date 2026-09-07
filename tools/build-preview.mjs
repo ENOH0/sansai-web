@@ -6,6 +6,8 @@
  *   node tools/build-preview.mjs
  */
 import { readFile, writeFile, mkdir, rm, readdir } from 'node:fs/promises';
+// โมเดล BANCHUEN ใช้ไฟล์เดียวกับเว็บแอปจริง (Node 22 นำเข้าไฟล์ .ts ได้โดยตรง)
+import { BANCHUEN_HTML, BANCHUEN_STEPS, initBanchuen } from '../src/app/shared/banchuen-model/banchuen.markup.ts';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import os from 'node:os';
@@ -731,6 +733,8 @@ ${pageHero(d.no, d.weight, d.name, d.subtitle)}
 <section class="section section-alt"><div class="wrap">
   ${secHead('', '3.1', 'ภาวะผู้นำของผู้บริหาร', d.leadership.lead)}
   <div class="sec-head"${rev()}><h3 class="sec-title" style="font-size:22px">${esc(S.model.name)} — องค์ประกอบทั้ง 8</h3><div class="sec-rule"></div></div>
+  <p class="sec-lead" style="margin:-8px 0 24px">${esc(S.model.tagline)}</p>
+  <div id="bcRoot"${rev()} style="margin-bottom:38px">${BANCHUEN_HTML}</div>
   <div class="grid grid-4" style="margin-bottom:34px">${S.model.letters.map((l, i) => `
     <div class="card card-hover"${rev('zoom', i * 70)}>
       <div class="model-letter">
@@ -1026,6 +1030,8 @@ function route(){
   activate(view);
   awF = { level: '', cat: '' };
   awApply();
+  const bc = document.getElementById('bcRoot');
+  if (bc) initBanchuen(bc, BC_STEPS);
 }
 
 document.getElementById('navToggle').addEventListener('click',()=>{ drawer.hidden = !drawer.hidden; });
@@ -1056,6 +1062,11 @@ document.addEventListener('click', e => {
     if(on) p.querySelectorAll('.chart-card').forEach(c=>c.classList.add('is-in'));
   });
 });
+
+
+// ---------- โมเดลสามมิติ BANCHUEN ----------
+const BC_STEPS = ${JSON.stringify(BANCHUEN_STEPS)};
+const initBanchuen = ${initBanchuen.toString()};
 
 
 // ---------- แตะชื่อเส้นเพื่อเน้นเส้นนั้นในกราฟเส้น ----------

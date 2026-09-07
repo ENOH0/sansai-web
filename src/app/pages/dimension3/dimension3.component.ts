@@ -8,12 +8,14 @@ import { SectionHeaderComponent } from '../../shared/section-header/section-head
 import { KpiGridComponent } from '../../shared/kpi-grid/kpi-grid.component';
 import { CycleFlowComponent } from '../../shared/cycle-flow/cycle-flow.component';
 import { CalloutComponent } from '../../shared/callout/callout.component';
+import { BanchuenModelComponent } from '../../shared/banchuen-model/banchuen-model.component';
 import { PagerComponent } from '../../shared/pager/pager.component';
 
 @Component({
   selector: 'app-dimension3',
   standalone: true,
   imports: [
+    BanchuenModelComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
     KpiGridComponent, CycleFlowComponent, CalloutComponent, PagerComponent
   ],
