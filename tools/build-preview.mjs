@@ -59,8 +59,8 @@ const rev = (kind = '', delay = 0) => {
 };
 
 /* -------- กราฟเส้น (SVG เหมือนกับ LineChartComponent) -------- */
-function lineChart({ title, subtitle, note, labels, series, showValues = true, fmt = n2, min, max }) {
-  const W = 900, H = 400, PL = 56, PR = 24, PT = 34, PB = 46;
+function lineChart({ title, subtitle, note, labels, series, showValues = true, fmt = n2, min, max, height = 400 }) {
+  const W = 900, H = height, PL = 56, PR = 24, PT = 34, PB = 46;
   const all = series.flatMap(s => s.values).filter(v => v != null && !isNaN(v));
   let lo = min ?? Math.min(...all), hi = max ?? Math.max(...all);
   if (min === undefined) lo = Math.max(0, Math.floor((lo - (hi - lo) * 0.18) / 5) * 5);
@@ -81,14 +81,21 @@ function lineChart({ title, subtitle, note, labels, series, showValues = true, f
     const color = s.color || PALETTE[si % PALETTE.length];
     const d = s.values.map((v, i) => `${i ? 'L' : 'M'} ${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(' ');
     const dots = s.values.map((v, i) =>
-      `<circle class="series-dot" cx="${x(i)}" cy="${y(v)}" r="5.5" fill="#fff" stroke="${color}" stroke-width="3" style="animation-delay:${600 + si * 180 + i * 90}ms"/>` +
-      (showValues ? `<text class="axis-text" x="${x(i)}" y="${y(v) - 14}" text-anchor="middle" fill="${color}" style="font-weight:700">${fmt(v)}</text>` : '')
+      `<circle class="series-dot" cx="${x(i)}" cy="${y(v)}" r="6.5" fill="#fff" stroke="${color}" stroke-width="3.4" style="animation-delay:${600 + si * 180 + i * 90}ms"/>` +
+      `<text class="axis-text val" x="${x(i)}" y="${y(v) - 16}" text-anchor="middle" fill="${color}"${showValues ? '' : ' hidden'}>${fmt(v)}</text>`
     ).join('');
-    return `<path class="series-path${s.dashed ? ' is-dashed' : ''}" d="${d}" stroke="${color}" style="animation-delay:${si * 180}ms"/>${dots}`;
+    return `<g class="series" data-si="${si}"><path class="series-path${s.dashed ? ' is-dashed' : ''}" d="${d}" stroke="${color}" style="animation-delay:${si * 180}ms"/>${dots}</g>`;
+  }).join('');
+
+  // เส้นขอบขาววาดรวมไว้ชั้นล่างสุดก่อนเส้นสีทั้งหมด จะได้ไม่ไปบังเส้นอื่น
+  const halos = series.map((s, si) => {
+    if (s.dashed) return '';
+    const d = s.values.map((v, i) => `${i ? 'L' : 'M'} ${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(' ');
+    return `<path class="series-halo" data-si="${si}" d="${d}" style="animation-delay:${si * 180}ms"/>`;
   }).join('');
 
   const legend = series.map((s, si) =>
-    `<span class="legend-item"><span class="legend-swatch" style="background:${s.color || PALETTE[si % PALETTE.length]}"></span>${esc(s.name)}</span>`).join('');
+    `<button type="button" class="legend-item" data-si="${si}"><span class="legend-swatch" style="background:${s.color || PALETTE[si % PALETTE.length]}"></span>${esc(s.name)}</button>`).join('');
 
   return `<div class="chart-card"${rev()}>
     <div class="chart-head"><div>
@@ -98,9 +105,10 @@ function lineChart({ title, subtitle, note, labels, series, showValues = true, f
     <svg class="chart-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${esc(title)}">
       ${grid}
       <line class="axis-line" x1="${PL}" x2="${W - PR}" y1="${H - PB}" y2="${H - PB}"/>
-      ${xlabels}${lines}
+      ${xlabels}<g class="halos">${halos}</g>${lines}
     </svg>
-    <div class="chart-legend">${legend}</div>
+    <div class="chart-legend" data-focus="${showValues ? 'values' : 'novalues'}">${legend}</div>
+    ${series.length > 2 ? `<p class="chart-hint">แตะชื่อเส้นด้านบนเพื่อดูเฉพาะเส้นนั้นพร้อมตัวเลขกำกับ แตะซ้ำเพื่อกลับไปดูทุกเส้น</p>` : ''}
     ${note ? `<p class="chart-note">${esc(note)}</p>` : ''}
   </div>`;
 }
@@ -490,7 +498,7 @@ function pageHome(D) {
 }
 
 function pageDim1(D) {
-  const d = D.DIM1, P = PALETTE;
+  const d = D.DIM1, P = PALETTE, GP = PALETTE;
   const s11 = d.section11, s12 = d.section12;
   const onetHeaders = ['สาระการเรียนรู้', 'ร.ร. 2566', 'ประเทศ 2566', 'ต่าง', 'ร.ร. 2567', 'ประเทศ 2567', 'ต่าง', 'ร.ร. 2568', 'ประเทศ 2568', 'ต่าง'];
   const cmpRows = subs => subs.map(s => ({
@@ -529,7 +537,7 @@ ${pageHero(d.no, d.weight, d.name, d.subtitle)}
 <section class="section section-alt"><div class="wrap">
   ${secHead('', '1.1.2', 'ความสามารถในการอ่าน–เขียนภาษาไทย การสื่อสาร และการคิดคำนวณ', s11.thai.narrative)}
   <div class="stack">
-    ${lineChart({ title: 'ร้อยละของผู้เรียนที่มีผลการคัดกรองการอ่าน–เขียนภาษาไทยในระดับดี', subtitle: 'จำแนกรายระดับชั้น ปีการศึกษา 2566–2568', labels: s11.thai.years, showValues: false, series: [...s11.thai.rows.map((r, i) => ({ name: r.name, values: r.values, color: P[i % 5] })), { name: 'ค่าเฉลี่ยรวม', values: s11.thai.average, color: '#08152f' }], note: s11.thai.conclusion })}
+    ${lineChart({ title: 'ร้อยละของผู้เรียนที่มีผลการคัดกรองการอ่าน–เขียนภาษาไทยในระดับดี', subtitle: 'จำแนกรายระดับชั้น ปีการศึกษา 2566–2568', labels: s11.thai.years, showValues: false, min: 70, max: 95, height: 480, series: [...s11.thai.rows.map((r, i) => ({ name: r.name, values: r.values, color: GP[i % 6] })), { name: 'ค่าเฉลี่ยรวม', values: s11.thai.average, color: '#08152f' }], note: s11.thai.conclusion })}
     ${table({ caption: s11.thai.caption, headers: ['ระดับชั้น', 'ปี 2566', 'ปี 2567', 'ปี 2568'], rows: [...s11.thai.rows.map(r => ({ cells: [r.name, ...r.values.map(n2)] })), { cells: ['ค่าเฉลี่ย', ...s11.thai.average.map(n2)], total: true }] })}
   </div>
 </div></section>
@@ -1040,6 +1048,35 @@ document.addEventListener('click', e => {
     p.hidden = !on;
     // กราฟที่เพิ่งถูกแสดงต้องเล่นแอนิเมชันทันที ไม่ต้องรอเลื่อนหน้า
     if(on) p.querySelectorAll('.chart-card').forEach(c=>c.classList.add('is-in'));
+  });
+});
+
+
+// ---------- แตะชื่อเส้นเพื่อเน้นเส้นนั้นในกราฟเส้น ----------
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.chart-legend .legend-item');
+  if(!btn) return;
+  const card = btn.closest('.chart-card');
+  const legend = btn.closest('.chart-legend');
+  const showAll = legend.dataset.focus === 'values';
+  const si = btn.dataset.si;
+  const on = !btn.classList.contains('is-on');
+  legend.querySelectorAll('.legend-item').forEach(b=>{
+    b.classList.toggle('is-on', on && b.dataset.si === si);
+    b.classList.toggle('is-off', on && b.dataset.si !== si);
+    b.setAttribute('aria-pressed', String(on && b.dataset.si === si));
+  });
+  card.querySelectorAll('.series-halo').forEach(h=>{
+    h.classList.toggle('is-dim', on && h.dataset.si !== si);
+  });
+  card.querySelectorAll('.series').forEach(g=>{
+    const me = g.dataset.si === si;
+    g.classList.toggle('is-dim', on && !me);
+    g.classList.toggle('is-focus', on && me);
+    // SVG element ไม่รองรับ property .hidden ต้องสั่งผ่าน attribute โดยตรง
+    g.querySelectorAll('.axis-text.val').forEach(t=>{
+      if(showAll || (on && me)) t.removeAttribute('hidden'); else t.setAttribute('hidden','');
+    });
   });
 });
 

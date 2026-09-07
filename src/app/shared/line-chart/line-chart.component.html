@@ -27,32 +27,52 @@
             text-anchor="middle">{{ lb }}</text>
     </g>
 
+    <!-- เส้นขอบสีขาวใต้เส้นทุกเส้น วาดไว้ชั้นล่างสุดทั้งหมดก่อน
+         เพื่อให้เส้นสีทับกันแล้วยังแยกออกจากกันได้ โดยไม่ไปบังเส้นอื่น -->
+    <g class="halos">
+      <ng-container *ngFor="let s of series; let si = index">
+        <path class="series-halo" *ngIf="!s.dashed"
+              [class.is-dim]="isDim(si)"
+              [attr.d]="pathFor(s)"
+              [style.animation-delay]="si * 180 + 'ms'" />
+      </ng-container>
+    </g>
+
     <!-- เส้นข้อมูล -->
-    <g *ngFor="let s of series; let si = index">
+    <g class="series" *ngFor="let s of series; let si = index"
+       [class.is-dim]="isDim(si)" [class.is-focus]="focusIndex === si">
+
       <path class="series-path"
             [class.is-dashed]="s.dashed"
             [attr.d]="pathFor(s)"
             [attr.stroke]="colorOf(s, si)"
             [style.animation-delay]="si * 180 + 'ms'" />
+
       <g *ngFor="let v of s.values; let i = index">
         <circle class="series-dot"
-                [attr.cx]="xPos(i)" [attr.cy]="yPos(v)" r="5.5"
+                [attr.cx]="xPos(i)" [attr.cy]="yPos(v)" r="6.5"
                 [attr.fill]="'#fff'"
-                [attr.stroke]="colorOf(s, si)" stroke-width="3"
+                [attr.stroke]="colorOf(s, si)" stroke-width="3.4"
                 [style.animation-delay]="(600 + si * 180 + i * 90) + 'ms'" />
-        <text class="axis-text" *ngIf="showValues"
-              [attr.x]="xPos(i)" [attr.y]="yPos(v) - 14" text-anchor="middle"
-              [attr.fill]="colorOf(s, si)"
-              style="font-weight:700">{{ v | number: valueFormat }}</text>
+        <text class="axis-text val" *ngIf="showValueFor(si)"
+              [attr.x]="xPos(i)" [attr.y]="yPos(v) - 16" text-anchor="middle"
+              [attr.fill]="colorOf(s, si)">{{ v | number: valueFormat }}</text>
       </g>
     </g>
   </svg>
 
   <div class="chart-legend">
-    <span class="legend-item" *ngFor="let s of series; let si = index">
+    <button type="button" class="legend-item" *ngFor="let s of series; let si = index"
+            [class.is-off]="isDim(si)" [class.is-on]="focusIndex === si"
+            [attr.aria-pressed]="focusIndex === si"
+            (click)="focus(si)">
       <span class="legend-swatch" [style.background]="colorOf(s, si)"></span>{{ s.name }}
-    </span>
+    </button>
   </div>
+
+  <p class="chart-hint" *ngIf="series.length > 2">
+    แตะชื่อเส้นด้านบนเพื่อดูเฉพาะเส้นนั้นพร้อมตัวเลขกำกับ แตะซ้ำเพื่อกลับไปดูทุกเส้น
+  </p>
 
   <p class="chart-note" *ngIf="note">{{ note }}</p>
 </div>

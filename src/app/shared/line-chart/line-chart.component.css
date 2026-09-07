@@ -36,6 +36,22 @@
 
 @keyframes fadeLine { to { opacity: 1; } }
 
+/* เส้นขอบสีขาวใต้เส้นจริง — เมื่อหลายเส้นทับกันจะยังแยกออกจากกันได้ชัด */
+.series-halo {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 7.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+}
+
+:host-context(.is-in) .series-halo,
+.is-in .series-halo {
+  animation: drawLine 1.5s var(--ease) forwards;
+}
+
 /* จุดข้อมูลค่อย ๆ ผุดขึ้นตามหลังเส้น */
 .series-dot {
   opacity: 0;
@@ -53,8 +69,74 @@
   to { opacity: 1; transform: scale(1); }
 }
 
+/* ตัวเลขกำกับจุด — ใส่ขอบขาวรอบตัวอักษรให้อ่านออกแม้ทับเส้นกราฟ */
+.axis-text.val {
+  font-size: 13px;
+  font-weight: 700;
+  stroke: #fff;
+  stroke-width: 3.4px;
+  paint-order: stroke;
+  stroke-linejoin: round;
+}
+
+/* ---------- เน้นเส้นที่เลือก ---------- */
+.series {
+  transition: opacity .25s var(--ease);
+}
+
+.series.is-dim,
+.series-halo.is-dim {
+  opacity: .13;
+  pointer-events: none;
+}
+
+.series-halo { transition: opacity .25s var(--ease); }
+
+.series.is-focus .series-path { stroke-width: 4.2; }
+.series.is-focus .series-dot { r: 7.5; }
+
+/* ปุ่มคำอธิบายเส้น — แตะได้สะดวกบน iPad */
+.chart-legend .legend-item {
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  font-family: inherit;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 11px;
+  cursor: pointer;
+  transition: background .2s var(--ease), border-color .2s var(--ease),
+              opacity .2s var(--ease), transform .16s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.chart-legend .legend-item:active { transform: scale(.96); }
+
+.chart-legend .legend-item.is-on {
+  background: var(--navy-50);
+  border-color: var(--navy-200);
+  color: var(--navy-800);
+}
+
+.chart-legend .legend-item.is-off { opacity: .42; }
+
+@media (hover: hover) {
+  .chart-legend .legend-item:hover { background: var(--navy-50); }
+}
+
+.chart-hint {
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  color: var(--ink-mute);
+}
+
+@media print {
+  .chart-hint { display: none !important; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .series-path { animation: none !important; stroke-dashoffset: 0 !important; }
+  .series-halo { animation: none !important; stroke-dashoffset: 0 !important; }
   .series-path.is-dashed { animation: none !important; opacity: 1 !important; }
   .series-dot { animation: none !important; opacity: 1 !important; }
 }

@@ -27,9 +27,12 @@ export class LineChartComponent {
   @Input() min?: number;
   @Input() max?: number;
 
+  /** ความสูงพื้นที่วาด — เพิ่มค่าได้เมื่อมีหลายเส้นซ้อนกันในช่วงแคบ */
+  @Input() height = 400;
+
   // ขนาดพื้นที่วาด (หน่วย viewBox — สเกลอัตโนมัติตามความกว้างจริง)
   readonly W = 900;
-  readonly H = 400;
+  get H(): number { return this.height; }
   readonly PL = 56;   // ขอบซ้าย
   readonly PR = 24;   // ขอบขวา
   readonly PT = 34;   // ขอบบน
@@ -74,5 +77,22 @@ export class LineChartComponent {
 
   colorOf(s: LineSeries, i: number): string {
     return s.color ?? this.palette[i % this.palette.length];
+  }
+
+  /** เส้นที่ถูกเลือกให้เด่นขึ้น (-1 = แสดงทุกเส้นเท่ากัน) */
+  focusIndex = -1;
+
+  /** แตะชื่อเส้นในคำอธิบายเพื่อเน้นเฉพาะเส้นนั้น แตะซ้ำเพื่อกลับไปดูทั้งหมด */
+  focus(i: number): void {
+    this.focusIndex = this.focusIndex === i ? -1 : i;
+  }
+
+  isDim(i: number): boolean {
+    return this.focusIndex !== -1 && this.focusIndex !== i;
+  }
+
+  /** แสดงตัวเลขกำกับจุดเมื่อเปิดไว้ หรือเมื่อเส้นนั้นกำลังถูกเน้น */
+  showValueFor(i: number): boolean {
+    return this.showValues || this.focusIndex === i;
   }
 }

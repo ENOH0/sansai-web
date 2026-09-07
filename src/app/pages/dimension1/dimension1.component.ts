@@ -80,9 +80,13 @@ export class Dimension1Component {
   // ---------- ภาษาไทย ----------
   readonly yearHeaders3 = ['ระดับชั้น', 'ปี 2566', 'ปี 2567', 'ปี 2568'];
 
+  /* ใช้ชุดสี 6 สีเฉพาะกราฟนี้ เพราะมี 6 ระดับชั้น
+     ถ้าใช้ชุด 5 สีเดิม ม.6 จะได้สีซ้ำกับ ม.1 จนแยกเส้นไม่ออก */
+  private readonly gradePalette = ['#1e4d9e', '#d4a537', '#4f88d4', '#0f7a4d', '#8a4fbd', '#b4433a'];
+
   readonly thaiSeries: LineSeries[] = [
     ...DIM1.section11.thai.rows.map((r, i) => ({
-      name: r.name, values: r.values, color: this.palette[i % 5]
+      name: r.name, values: r.values, color: this.gradePalette[i % 6]
     })),
     { name: 'ค่าเฉลี่ยรวม', values: DIM1.section11.thai.average, color: '#08152f' }
   ];
