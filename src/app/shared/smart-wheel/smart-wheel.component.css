@@ -1,0 +1,155 @@
+/* SMART Student — วงล้อ ACTIVITY (ใช้ ViewEncapsulation.None จึงตั้งชื่อคลาส sw- ทั้งหมด) */
+.sw-layout {
+  display: grid;
+  grid-template-columns: minmax(420px, 1.1fr) minmax(280px, .75fr);
+  gap: clamp(24px, 4vw, 52px);
+  align-items: center;
+}
+
+/* ---------- แผนภาพวงล้อ ---------- */
+.sw-diagram {
+  position: relative;
+  width: min(100%, 560px);
+  margin: auto;
+  aspect-ratio: 1;
+}
+
+/* วงรอบนอก 4 ช่วง = วงจรคุณภาพ */
+.sw-cycle { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.sw-cycle path { fill: none; stroke-width: 44; stroke: var(--navy-100); }
+.sw-cycle path:nth-of-type(even) { stroke: var(--navy-200); }
+.sw-cycle text {
+  fill: var(--navy-700);
+  font-family: inherit;
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+/* วงล้อ 8 เสี้ยว สลับเข้ม–อ่อน โดยเริ่มเสี้ยวแรกที่ -112.5 องศา
+   ตำแหน่งปุ่มคำนวณจากมุมเดียวกัน จึงตรงกับสีพื้นเสมอ */
+.sw-wheel {
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: conic-gradient(from -112.5deg,
+    var(--navy-600) 0 12.5%, var(--navy-50) 12.5% 25%,
+    var(--navy-700) 25% 37.5%, var(--navy-100) 37.5% 50%,
+    var(--navy-600) 50% 62.5%, var(--navy-50) 62.5% 75%,
+    var(--navy-700) 75% 87.5%, var(--navy-100) 87.5% 100%);
+  box-shadow: inset 0 0 0 3px #fff, var(--shadow-md);
+}
+
+/* วงในสีขาวพร้อมเส้นประ */
+.sw-wheel::after {
+  content: "";
+  position: absolute;
+  inset: 30%;
+  border: 8px dashed var(--navy-200);
+  border-radius: 50%;
+  background: #fff;
+  z-index: 2;
+}
+
+.sw-hub {
+  position: absolute;
+  inset: 34%;
+  z-index: 3;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  line-height: 1.15;
+  pointer-events: none;
+}
+.sw-hub span {
+  display: block;
+  color: var(--gold-600);
+  font-size: clamp(13px, 2vw, 17px);
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+.sw-hub strong {
+  display: block;
+  color: var(--navy-800);
+  font-family: 'Noto Serif Thai', serif;
+  font-size: clamp(19px, 3.2vw, 30px);
+  font-weight: 700;
+}
+
+/* ---------- ปุ่มแต่ละองค์ประกอบ ---------- */
+.sw-piece {
+  position: absolute;
+  z-index: 4;
+  transform: translate(-50%, -50%);
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  width: 21%;
+  min-height: 21%;
+  padding: 4px;
+  color: #fff;
+  font-family: inherit;
+  text-align: center;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background .2s var(--ease), transform .18s var(--ease);
+}
+.sw-piece:active { transform: translate(-50%, -50%) scale(.94); }
+.sw-piece.is-on { background: rgba(255, 255, 255, .22); box-shadow: 0 0 0 3px var(--gold-500); }
+@media (hover: hover) {
+  .sw-piece:hover { background: rgba(255, 255, 255, .18); }
+}
+
+.sw-letter {
+  display: block;
+  color: var(--gold-400);
+  font-family: 'Noto Serif Thai', serif;
+  font-size: clamp(20px, 3.6vw, 34px);
+  font-weight: 700;
+  line-height: 1;
+}
+.sw-name { font-size: clamp(10px, 1.25vw, 13px); font-weight: 700; line-height: 1.2; }
+
+/* เสี้ยวสีอ่อนต้องใช้ตัวอักษรสีเข้ม */
+.sw-piece.is-light { color: var(--navy-800); }
+.sw-piece.is-light .sw-letter { color: var(--gold-600); }
+.sw-piece.is-light.is-on { background: rgba(30, 77, 158, .12); }
+
+/* ---------- การ์ดคำอธิบาย ---------- */
+.sw-detail {
+  padding: 26px 28px;
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--gold-500);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+}
+.sw-detail-label { margin: 0 0 8px; color: var(--ink-mute); font-size: 13px; font-weight: 800; letter-spacing: .06em; }
+.sw-detail-title { margin: 0 0 12px; color: var(--navy-800); font-size: clamp(20px, 2.4vw, 26px); font-weight: 800; }
+.sw-detail-text { margin: 0; color: var(--ink-soft); font-size: 16px; line-height: 1.75; }
+.sw-detail-key {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 6px 12px;
+  color: var(--navy-900);
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: 9px;
+  background: linear-gradient(135deg, var(--gold-400), var(--gold-500));
+}
+.sw-hint { margin: 18px 0 0; color: var(--ink-mute); font-size: 13.5px; }
+
+@media (max-width: 900px) {
+  .sw-layout { grid-template-columns: 1fr; }
+  .sw-diagram { width: min(100%, 480px); }
+  .sw-cycle text { font-size: 26px; }
+}
+@media (max-width: 520px) {
+  .sw-diagram { width: 100%; }
+  .sw-name { font-size: 9px; }
+}

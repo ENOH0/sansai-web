@@ -9,6 +9,7 @@ import { readFile, writeFile, mkdir, rm, readdir } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 // โมเดล BANCHUEN ใช้ไฟล์เดียวกับเว็บแอปจริง (Node 22 นำเข้าไฟล์ .ts ได้โดยตรง)
 import { BANCHUEN_HTML, BANCHUEN_STEPS, initBanchuen } from '../src/app/shared/banchuen-model/banchuen.markup.ts';
+import { SMART_WHEEL_HTML, WHEEL_ITEMS, initSmartWheel } from '../src/app/shared/smart-wheel/smart-wheel.markup.ts';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import os from 'node:os';
@@ -661,6 +662,12 @@ ${pageHero(d.no, d.weight, d.name, d.subtitle)}
 </div></section>
 
 <section class="section section-alt"><div class="wrap">
+  <div class="sec-head"${rev()}><h3 class="sec-title" style="font-size:22px">SMART Student — วงล้อ ACTIVITY</h3><div class="sec-rule"></div></div>
+  <p class="sec-lead" style="margin:-8px 0 26px">กรอบการจัดการเรียนรู้ที่ยึดผู้เรียนเป็นศูนย์กลาง ประกอบด้วย 8 องค์ประกอบที่ทำงานต่อเนื่องกันเป็นวงจร ตั้งแต่การวางแผน ลงมือปฏิบัติ ตรวจสอบผล และปรับปรุงเพื่อพัฒนาคุณภาพผู้เรียนอย่างต่อเนื่อง</p>
+  <div id="swRoot"${rev()}>${SMART_WHEEL_HTML}</div>
+</div></section>
+
+<section class="section section-alt"><div class="wrap">
   ${secHead('', '2.1', 'การพัฒนาหลักสูตรสถานศึกษา', c.lead)}
   ${cycleFlow(c.cycle)}
   <div class="sec-head" style="margin-top:52px"${rev()}><h3 class="sec-title" style="font-size:22px">พัฒนาการของหลักสูตรสถานศึกษา 3 ปีการศึกษา</h3><div class="sec-rule"></div></div>
@@ -1047,6 +1054,8 @@ function route(){
   awApply();
   const bc = document.getElementById('bcRoot');
   if (bc) initBanchuen(bc, BC_STEPS);
+  const sw = document.getElementById('swRoot');
+  if (sw) initSmartWheel(sw, SW_ITEMS);
 }
 
 document.getElementById('navToggle').addEventListener('click',()=>{ drawer.hidden = !drawer.hidden; });
@@ -1082,6 +1091,10 @@ document.addEventListener('click', e => {
 // ---------- โมเดลสามมิติ BANCHUEN ----------
 const BC_STEPS = ${JSON.stringify(BANCHUEN_STEPS)};
 const initBanchuen = ${initBanchuen.toString()};
+
+// ---------- วงล้อ SMART Student ----------
+const SW_ITEMS = ${JSON.stringify(WHEEL_ITEMS)};
+const initSmartWheel = ${initSmartWheel.toString()};
 
 
 // ---------- แตะชื่อเส้นเพื่อเน้นเส้นนั้นในกราฟเส้น ----------

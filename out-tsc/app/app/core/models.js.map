@@ -1,0 +1,1 @@
+{"version":3,"file":"models.js","sourceRoot":"","sources":["../../../../src/app/core/models.ts"],"names":[],"mappings":"AAAA,+DAA+D;AAC/D,mDAAmD;AACnD,+DAA+D;AAiD/D,oCAAoC;AACpC,MAAM,CAAC,MAAM,aAAa,GAAG;IAC3B,SAAS,EAAE,cAAc;IACzB,SAAS,EAAE,MAAM;IACjB,SAAS,EAAE,cAAc;IACzB,SAAS,EAAE,QAAQ;IACnB,SAAS,EAAE,OAAO;IAClB,SAAS,CAAE,8BAA8B;CAC1C,CAAC"}

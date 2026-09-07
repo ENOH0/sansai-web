@@ -9,6 +9,7 @@ import { KpiGridComponent } from '../../shared/kpi-grid/kpi-grid.component';
 import { CycleFlowComponent } from '../../shared/cycle-flow/cycle-flow.component';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { CalloutComponent } from '../../shared/callout/callout.component';
+import { SmartWheelComponent } from '../../shared/smart-wheel/smart-wheel.component';
 import { PhotoGalleryComponent } from '../../shared/photo-gallery/photo-gallery.component';
 import { GALLERY } from '../../data/gallery.data';
 import { PagerComponent } from '../../shared/pager/pager.component';
@@ -18,6 +19,7 @@ import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
   selector: 'app-dimension2',
   standalone: true,
   imports: [
+    SmartWheelComponent,
     PhotoGalleryComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
     KpiGridComponent, CycleFlowComponent, DataTableComponent, CalloutComponent,
