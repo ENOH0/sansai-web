@@ -1,0 +1,22 @@
+<div class="sec-head" appReveal>
+  <h3 class="sec-title" style="font-size:22px">{{ title }}</h3>
+  <div class="sec-rule"></div>
+</div>
+<p class="sec-lead" *ngIf="lead" style="margin:-8px 0 22px">{{ lead }}</p>
+
+<div class="gal-grid">
+  <figure class="gal-item" *ngFor="let p of items; let i = index"
+          appReveal="zoom" [revealDelay]="(i % 4) * 70">
+    <button type="button" class="gal-btn" (click)="open(p)"
+            [attr.aria-label]="'ดูภาพขนาดเต็ม: ' + p.caption">
+      <img class="gal-img" [src]="p.src" [alt]="p.caption" loading="lazy" decoding="async" />
+    </button>
+    <figcaption class="gal-cap">{{ p.caption }}</figcaption>
+  </figure>
+</div>
+
+<div class="gal-lightbox" *ngIf="lightbox" (click)="close()">
+  <button type="button" class="gal-close" aria-label="ปิด">✕</button>
+  <img [src]="lightbox.src" [alt]="lightbox.caption" />
+  <p class="gal-lb-cap">{{ lightbox.caption }}</p>
+</div>

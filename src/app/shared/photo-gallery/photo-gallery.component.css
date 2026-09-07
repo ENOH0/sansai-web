@@ -1,0 +1,82 @@
+:host { display: block; }
+
+.gal-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.gal-item { margin: 0; }
+
+.gal-btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  cursor: zoom-in;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.gal-btn:active { transform: scale(.98); }
+@media (hover: hover) {
+  .gal-btn:hover { box-shadow: var(--shadow-md); }
+}
+
+.gal-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--navy-50);
+}
+
+.gal-cap {
+  margin: 10px 2px 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* ดูภาพขนาดเต็ม */
+.gal-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-content: center;
+  gap: 14px;
+  padding: 28px;
+  background: rgba(8, 21, 47, .93);
+  cursor: zoom-out;
+}
+.gal-lightbox img {
+  max-width: min(1100px, 92vw);
+  max-height: 78vh;
+  border-radius: 10px;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, .5);
+}
+.gal-lb-cap {
+  margin: 0;
+  color: #e8f0ff;
+  font-size: 15px;
+  text-align: center;
+}
+.gal-close {
+  position: absolute;
+  top: 18px; right: 18px;
+  width: 48px; height: 48px;
+  color: #fff;
+  font-size: 20px;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 50%;
+  background: rgba(255,255,255,.12);
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) { .gal-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 834px)  { .gal-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; } }
+@media (max-width: 520px)  { .gal-grid { grid-template-columns: 1fr; } }

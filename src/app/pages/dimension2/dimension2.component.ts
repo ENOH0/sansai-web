@@ -9,6 +9,8 @@ import { KpiGridComponent } from '../../shared/kpi-grid/kpi-grid.component';
 import { CycleFlowComponent } from '../../shared/cycle-flow/cycle-flow.component';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { CalloutComponent } from '../../shared/callout/callout.component';
+import { PhotoGalleryComponent } from '../../shared/photo-gallery/photo-gallery.component';
+import { GALLERY } from '../../data/gallery.data';
 import { PagerComponent } from '../../shared/pager/pager.component';
 import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
 
@@ -16,6 +18,7 @@ import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
   selector: 'app-dimension2',
   standalone: true,
   imports: [
+    PhotoGalleryComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
     KpiGridComponent, CycleFlowComponent, DataTableComponent, CalloutComponent,
     PagerComponent, BarChartComponent
@@ -24,6 +27,7 @@ import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
   styleUrl: './dimension2.component.css'
 })
 export class Dimension2Component {
+  readonly gallery = GALLERY['d2'];
   readonly d = DIM2;
 
   readonly indicatorKeys = Object.keys(DIM2.indicators) as (keyof typeof DIM2.indicators)[];

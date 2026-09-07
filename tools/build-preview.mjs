@@ -6,6 +6,7 @@
  *   node tools/build-preview.mjs
  */
 import { readFile, writeFile, mkdir, rm, readdir } from 'node:fs/promises';
+import { pathToFileURL } from 'node:url';
 // โมเดล BANCHUEN ใช้ไฟล์เดียวกับเว็บแอปจริง (Node 22 นำเข้าไฟล์ .ts ได้โดยตรง)
 import { BANCHUEN_HTML, BANCHUEN_STEPS, initBanchuen } from '../src/app/shared/banchuen-model/banchuen.markup.ts';
 import { fileURLToPath } from 'node:url';
@@ -18,18 +19,12 @@ const tmp = path.join(os.tmpdir(), 'sansai-preview-' + process.pid);
 
 // ---------- โหลดไฟล์ data (ซึ่งเขียนเป็น ESM ล้วน ไม่มี type annotation) ----------
 async function loadData() {
-  await mkdir(tmp, { recursive: true });
-  const names = ['school', 'dimension1', 'dimension2', 'dimension3', 'dimension4', 'dimension5', 'awards'];
+  const names = ['school', 'dimension1', 'dimension2', 'dimension3', 'dimension4', 'dimension5', 'awards', 'gallery'];
   const out = {};
   for (const n of names) {
-    let src = await readFile(path.join(root, 'src/app/data', `${n}.data.ts`), 'utf8');
-    // ตัดส่วนที่เป็น TypeScript ล้วนออก เพื่อให้ Node นำเข้าไฟล์ได้โดยตรง
-    src = src
-      .replace(/export interface[\s\S]*?\n\}\n/g, '')       // ตัด interface
-      .replace(/export const (\w+):[^=]+=/g, 'export const $1 ='); // ตัดชนิดข้อมูลของตัวแปร
-    const file = path.join(tmp, `${n}.mjs`);
-    await writeFile(file, src, 'utf8');
-    Object.assign(out, await import(path.toNamespacedPath(file) + `?t=${Date.now()}`));
+    // Node 22 นำเข้าไฟล์ .ts ได้โดยตรง จึงใช้ไฟล์ data ตัวเดียวกับเว็บแอปได้เลย
+    const file = path.join(root, 'src/app/data', `${n}.data.ts`);
+    Object.assign(out, await import(pathToFileURL(file).href));
   }
   return out;
 }
@@ -116,6 +111,21 @@ function lineChart({ title, subtitle, note, labels, series, showValues = true, f
     ${series.length > 2 ? `<p class="chart-hint">แตะชื่อเส้นด้านบนเพื่อดูเฉพาะเส้นนั้นพร้อมตัวเลขกำกับ แตะซ้ำเพื่อกลับไปดูทุกเส้น</p>` : ''}
     ${note ? `<p class="chart-note">${esc(note)}</p>` : ''}
   </div>`;
+}
+
+/* -------- แกลเลอรีภาพกิจกรรม -------- */
+function gallery(D, key, no, lead) {
+  const items = D.GALLERY[key] || [];
+  return `<section class="section"><div class="wrap">
+    ${secHead ? '' : ''}
+    <div class="sec-head"${rev()}><h3 class="sec-title" style="font-size:22px">ภาพกิจกรรมประกอบด้านที่ ${no}</h3><div class="sec-rule"></div></div>
+    <p class="sec-lead" style="margin:-8px 0 22px">${esc(lead)}</p>
+    <div class="gal-grid">${items.map((p, i) => `
+      <figure class="gal-item"${rev('zoom', (i % 4) * 70)}>
+        <button type="button" class="gal-btn"><img class="gal-img" src="public/${p.src}" alt="${esc(p.caption)}" loading="lazy" decoding="async"></button>
+        <figcaption class="gal-cap">${esc(p.caption)}</figcaption>
+      </figure>`).join('')}</div>
+  </div></section>`;
 }
 
 /* -------- กราฟแท่ง -------- */
@@ -637,6 +647,7 @@ ${pageHero(d.no, d.weight, d.name, d.subtitle)}
   <div style="margin-top:24px">${barChart({ title: 'ผลสุขภาพจิตของนักเรียน', subtitle: 'ร้อยละของนักเรียนทั้งหมด ปีการศึกษา 2566–2568', labels: s12.health.years, series: MIND_ORDER.map(n => s12.health.mindRows.find(r => r.name === n)).filter(Boolean).map(r => ({ name: r.name, values: r.values, color: MIND_COLOR[r.name] })), max: 100, fmt: n2, note: s12.health.conclusion })}</div>
 </div></section>
 
+${gallery(D, 'd1', 1, 'ภาพกิจกรรมที่สะท้อนคุณลักษณะและคุณภาพของผู้เรียน จากเอกสารประกอบการประเมินด้านที่ 1')}
 <section class="section-tight section-alt"><div class="wrap">${pager('', '', 'dimension-2', 'ด้านที่ 2 การบริหารหลักสูตรและงานวิชาการ')}</div></section>`;
 }
 
@@ -717,6 +728,7 @@ ${pageHero(d.no, d.weight, d.name, d.subtitle)}
 <section class="section section-alt"><div class="wrap">
   ${secHead('สรุป', '', 'ตัวชี้วัดของด้านที่ 2 ทั้ง 4 รายการ', 'ตามแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน ระดับประถมศึกษาและมัธยมศึกษา')}
   ${indicatorCards(d.indicators)}
+${gallery(D, 'd2', 2, 'ภาพกิจกรรมพัฒนาผู้เรียนและงานวิชาการ จากเอกสารประกอบการประเมินด้านที่ 2')}
   <div style="margin-top:34px">${pager('dimension-1', 'ด้านที่ 1 คุณภาพนักเรียน', 'dimension-3', 'ด้านที่ 3 การบริหารและการจัดการศึกษา')}</div>
 </div></section>`;
 }
@@ -788,6 +800,7 @@ ${pageHero(d.no, d.weight, d.name, d.subtitle)}
 <section class="section"><div class="wrap">
   ${secHead('สรุป', '', 'ตัวชี้วัดของด้านที่ 3 ทั้ง 5 รายการ', 'ตามแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน ระดับประถมศึกษาและมัธยมศึกษา')}
   ${indicatorCards(d.indicators)}
+${gallery(D, 'd3', 3, 'ภาพการบริหารจัดการและการพัฒนาครูและบุคลากร จากเอกสารประกอบการประเมินด้านที่ 3')}
   <div style="margin-top:34px">${pager('dimension-2', 'ด้านที่ 2 การบริหารหลักสูตรและงานวิชาการ', 'dimension-4', 'ด้านที่ 4 การจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ')}</div>
 </div></section>`;
 }
@@ -842,6 +855,7 @@ ${pageHero(d.no, d.weight, d.name, d.subtitle)}
 <section class="section section-alt"><div class="wrap">
   ${secHead('สรุป', '', 'ตัวชี้วัดของด้านที่ 4 ทั้ง 4 รายการ', 'ตามแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน ระดับประถมศึกษาและมัธยมศึกษา')}
   ${indicatorCards(d.indicators)}
+${gallery(D, 'd4', 4, 'ภาพการจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ จากเอกสารประกอบการประเมินด้านที่ 4')}
   <div style="margin-top:34px">${pager('dimension-3', 'ด้านที่ 3 การบริหารและการจัดการศึกษา', 'dimension-5', 'ด้านที่ 5 ความดีเด่นของสถานศึกษา')}</div>
 </div></section>`;
 }
@@ -885,6 +899,7 @@ ${projects}
     <h3 class="card-title" style="font-size:17.5px">${esc(k)}</h3>
     <ol class="bullets">${v.map(x => `<li>${esc(x)}</li>`).join('')}</ol></div>`).join('')}
   <div style="margin-top:24px">${callout('หมายเหตุ:', 'โครงการที่นำเสนอเป็นโครงการตามแนวพระราชดำริของพระบาทสมเด็จพระเจ้าอยู่หัวรัชกาลที่ 9 หรือรัชกาลปัจจุบัน ตามที่กำหนดไว้ในแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน')}</div>
+${gallery(D, 'd5', 5, 'ภาพความดีเด่นและการพัฒนาคุณภาพอย่างต่อเนื่อง จากเอกสารประกอบการประเมินด้านที่ 5')}
   <div style="margin-top:34px">${pager('dimension-4', 'ด้านที่ 4 การจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ', 'home', 'กลับสู่หน้าแรก')}</div>
 </div></section>`;
 }
@@ -1119,6 +1134,19 @@ document.addEventListener('click', e=>{
   if(f){ const k=f.dataset.f==='level'?'level':'cat';
          awF[k]= awF[k]===f.dataset.v ? '' : f.dataset.v; awApply(); return; }
   if(e.target.closest('#awClear')){ awF={level:'',cat:''}; awApply(); return; }
+
+  const g=e.target.closest('.gal-btn');
+  if(g){
+    const img=g.querySelector('img');
+    const box=document.createElement('div');
+    box.className='gal-lightbox';
+    box.innerHTML='<button type="button" class="gal-close" aria-label="ปิด">✕</button>'
+                + '<img src="'+img.getAttribute('src')+'" alt=""/>'
+                + '<p class="gal-lb-cap">'+(img.getAttribute('alt')||'')+'</p>';
+    box.addEventListener('click', ()=>box.remove());
+    document.body.appendChild(box);
+    return;
+  }
 
   const ph=e.target.closest('.award-photo');
   if(ph){

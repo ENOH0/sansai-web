@@ -8,6 +8,8 @@ import { SectionHeaderComponent } from '../../shared/section-header/section-head
 import { KpiGridComponent } from '../../shared/kpi-grid/kpi-grid.component';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { CalloutComponent } from '../../shared/callout/callout.component';
+import { PhotoGalleryComponent } from '../../shared/photo-gallery/photo-gallery.component';
+import { GALLERY } from '../../data/gallery.data';
 import { PagerComponent } from '../../shared/pager/pager.component';
 import { LineChartComponent } from '../../shared/line-chart/line-chart.component';
 import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
@@ -18,6 +20,7 @@ import { OnetChartComponent } from '../../shared/onet-chart/onet-chart.component
   selector: 'app-dimension1',
   standalone: true,
   imports: [
+    PhotoGalleryComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
     KpiGridComponent, DataTableComponent, CalloutComponent, PagerComponent,
     LineChartComponent, BarChartComponent, MeterListComponent, OnetChartComponent
@@ -26,6 +29,7 @@ import { OnetChartComponent } from '../../shared/onet-chart/onet-chart.component
   styleUrl: './dimension1.component.css'
 })
 export class Dimension1Component {
+  readonly gallery = GALLERY['d1'];
   readonly d = DIM1;
 
   // ---- หัวข้อย่อย (ตัดเลขนำหน้าออกเพราะแสดงในกล่องตัวเลขแล้ว) ----

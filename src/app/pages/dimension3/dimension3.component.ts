@@ -9,12 +9,15 @@ import { KpiGridComponent } from '../../shared/kpi-grid/kpi-grid.component';
 import { CycleFlowComponent } from '../../shared/cycle-flow/cycle-flow.component';
 import { CalloutComponent } from '../../shared/callout/callout.component';
 import { BanchuenModelComponent } from '../../shared/banchuen-model/banchuen-model.component';
+import { PhotoGalleryComponent } from '../../shared/photo-gallery/photo-gallery.component';
+import { GALLERY } from '../../data/gallery.data';
 import { PagerComponent } from '../../shared/pager/pager.component';
 
 @Component({
   selector: 'app-dimension3',
   standalone: true,
   imports: [
+    PhotoGalleryComponent,
     BanchuenModelComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
     KpiGridComponent, CycleFlowComponent, CalloutComponent, PagerComponent
@@ -23,6 +26,7 @@ import { PagerComponent } from '../../shared/pager/pager.component';
   styleUrl: './dimension3.component.css'
 })
 export class Dimension3Component {
+  readonly gallery = GALLERY['d3'];
   readonly d = DIM3;
   readonly school = SCHOOL;
   readonly indicatorKeys = Object.keys(DIM3.indicators) as (keyof typeof DIM3.indicators)[];
