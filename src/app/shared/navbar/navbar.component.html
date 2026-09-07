@@ -14,6 +14,9 @@
          [routerLink]="item.path"
          routerLinkActive="is-active"
          [routerLinkActiveOptions]="{ exact: item.path === '/' }">{{ item.short }}</a>
+
+      <a class="nav-link" [href]="evalLink.url" target="_blank" rel="noopener"
+         [attr.aria-label]="evalLink.label">{{ evalLink.short }}</a>
     </nav>
 
     <button class="nav-toggle" type="button"
@@ -45,4 +48,7 @@
      routerLinkActive="is-active"
      [routerLinkActiveOptions]="{ exact: item.path === '/' }"
      (click)="close()">{{ item.label }}</a>
+
+  <a class="nav-link" [href]="evalLink.url" target="_blank" rel="noopener"
+     (click)="close()">{{ evalLink.label }}</a>
 </nav>

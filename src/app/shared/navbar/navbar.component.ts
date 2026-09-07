@@ -2,7 +2,7 @@ import { Component, HostListener, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { SCHOOL, NAV_ITEMS } from '../../data/school.data';
+import { SCHOOL, NAV_ITEMS, EVAL_LINK } from '../../data/school.data';
 
 /**
  * แถบนำทางด้านบน (ตรึงอยู่บนสุดเสมอ)
@@ -19,6 +19,7 @@ import { SCHOOL, NAV_ITEMS } from '../../data/school.data';
 export class NavbarComponent {
   readonly school = SCHOOL;
   readonly items = NAV_ITEMS;
+  readonly evalLink = EVAL_LINK;
 
   readonly open = signal(false);
   readonly scrolled = signal(false);

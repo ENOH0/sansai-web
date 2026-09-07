@@ -946,14 +946,14 @@ async function main() {
     <span class="brand-mark">${esc(S.initials)}</span>
     <span class="brand-text"><span class="brand-name">${esc(S.name)}</span>
     <span class="brand-sub">${esc(S.award)} · ${esc(S.level)}</span></span></a>
-  <nav class="nav-links" id="navLinks">${nav}</nav>
+  <nav class="nav-links" id="navLinks">${nav}<a class="nav-link" href="${D.EVAL_LINK.url}" target="_blank" rel="noopener">${esc(D.EVAL_LINK.short)}</a></nav>
   <button class="nav-toggle" id="navToggle" type="button" aria-label="เปิดเมนู">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
       <line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
   </button>
 </div></header>
 <div class="progress" id="progress" style="width:0"></div>
-<nav class="nav-drawer" id="drawer" hidden>${navFull}</nav>
+<nav class="nav-drawer" id="drawer" hidden>${navFull}<a class="nav-link" href="${D.EVAL_LINK.url}" target="_blank" rel="noopener">${esc(D.EVAL_LINK.label)}</a></nav>
 
 <main id="view"></main>
 

@@ -169,6 +169,13 @@ export const SCHOOL = {
 };
 
 // เมนูหลักของเว็บไซต์
+// ลิงก์ภายนอก — เว็บเลือกอาหารและการแสดงสำหรับคณะกรรมการ (เปิดแท็บใหม่)
+export const EVAL_LINK = {
+  label: 'เลือกอาหารและการแสดง',
+  short: 'เลือกอาหารและการแสดง',
+  url: 'https://script.google.com/a/macros/sansai.ac.th/s/AKfycbxSUUEOc_4398_Cxoh3isL4S2AcImyGIN01fW9JcBm2fXTAR5kh8IbWK2Jc8FxN7mThng/exec'
+};
+
 export const NAV_ITEMS = [
   { path: '/', label: 'หน้าแรก', short: 'หน้าแรก' },
   { path: '/dimension-1', label: 'ด้านที่ 1 คุณภาพนักเรียน', short: 'ด้านที่ 1' },
