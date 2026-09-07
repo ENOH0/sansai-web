@@ -1,0 +1,111 @@
+<header class="page-hero awards-hero">
+  <div class="wrap page-hero-inner">
+    <span class="page-badge">รางวัลเชิงประจักษ์</span>
+    <h1>รางวัลของนักเรียนและครู</h1>
+  </div>
+</header>
+
+<section class="section">
+  <div class="wrap">
+    <app-kpi-grid [items]="kpis" />
+  </div>
+</section>
+
+<!-- ═══════════ รางวัลนักเรียน ═══════════ -->
+<section class="section section-alt">
+  <div class="wrap">
+    <app-section-header kicker="เล่มด้านที่ 1 คุณภาพนักเรียน" title="รางวัลของนักเรียน"
+      lead="แสดงเฉพาะรายการที่มีภาพหลักฐานปรากฏในเล่ม แตะที่รูปเพื่อดูขนาดเต็ม และใช้ปุ่มด้านล่างเพื่อกรองตามระดับรางวัลหรือหมวดหมู่" />
+
+    <!-- ตัวกรอง -->
+    <div class="filters" appReveal>
+      <div class="filter-row">
+        <span class="filter-label">ระดับรางวัล</span>
+        <button type="button" class="fchip" *ngFor="let l of levels" [class.is-on]="level === l" (click)="setLevel(l)">
+          {{ l }} <span class="fcount">{{ countLevel(l) }}</span>
+        </button>
+      </div>
+
+      <div class="filter-row">
+        <span class="filter-label">หมวดหมู่</span>
+        <button type="button" class="fchip" *ngFor="let c of categories" [class.is-on]="category === c"
+          (click)="setCategory(c)">
+          {{ c }} <span class="fcount">{{ countCategory(c) }}</span>
+        </button>
+      </div>
+
+      <div class="filter-foot">
+        <span class="filter-result">แสดง {{ filtered.length }} จาก {{ students.length }} รางวัล</span>
+        <button type="button" class="fclear" *ngIf="level || category" (click)="clear()">
+          ล้างตัวกรอง
+        </button>
+      </div>
+    </div>
+
+    <!-- การ์ดรางวัล -->
+    <div class="award-grid">
+      <article class="award-card" *ngFor="let a of filtered; let i = index; trackBy: trackByName" appReveal
+        [revealDelay]="(i % 3) * 80">
+        <div class="award-photos" [class.two]="a.photos.length > 1">
+          <button type="button" class="award-photo" *ngFor="let p of a.photos" (click)="open(p)"
+            [attr.aria-label]="'ดูรูปขนาดเต็มของ ' + a.name">
+            <img [src]="p" [alt]="a.name + ' — ' + a.award" loading="lazy" decoding="async" />
+          </button>
+        </div>
+
+        <div class="award-body">
+          <div class="chip-row">
+            <span class="chip" [class.chip-gold]="a.level === 'ระดับนานาชาติ'">{{ a.level }}</span>
+            <span class="chip">{{ a.category }}</span>
+          </div>
+          <h3 class="award-name">{{ a.name }}</h3>
+          <p class="award-title">{{ a.award }}</p>
+          <p class="award-detail" *ngIf="a.detail">{{ a.detail }}</p>
+        </div>
+      </article>
+    </div>
+
+    <p class="award-empty" *ngIf="!filtered.length">
+      ไม่พบรางวัลตามเงื่อนไขที่เลือก — ลองล้างตัวกรองแล้วเลือกใหม่
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ รางวัลครู ═══════════ -->
+<section class="section">
+  <div class="wrap">
+    <app-section-header kicker="เล่มด้านที่ 3 การบริหารและการจัดการศึกษา" title="รางวัลและวิทยฐานะของครู"
+      lead="ผลจากการที่ผู้บริหารสร้างขวัญและกำลังใจ ส่งเสริมให้ครูและบุคลากรทางการศึกษาพัฒนาตนเองอย่างต่อเนื่อง จนได้รับการยอมรับและมีความก้าวหน้าในวิชาชีพ" />
+
+    <div class="award-grid teacher-grid">
+      <article class="award-card" *ngFor="let t of teachers; let i = index; trackBy: trackByName" appReveal
+        [revealDelay]="i * 90">
+        <div class="award-photos">
+          <button type="button" class="award-photo" *ngFor="let p of t.photos" (click)="open(p)"
+            [attr.aria-label]="'ดูรูปขนาดเต็มของ ' + t.name">
+            <img [src]="p" [alt]="t.name + ' — ' + t.award" loading="lazy" decoding="async" />
+          </button>
+        </div>
+        <div class="award-body">
+          <div class="chip-row"><span class="chip chip-gold">{{ t.role }}</span></div>
+          <h3 class="award-name">{{ t.name }}</h3>
+          <p class="award-title">{{ t.award }}</p>
+          <p class="award-detail" *ngIf="t.detail">{{ t.detail }}</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section-tight section-alt">
+  <div class="wrap">
+    <app-pager prevPath="/dimension-5" prevName="ด้านที่ 5 ความดีเด่นของสถานศึกษา" nextPath="/"
+      nextName="กลับสู่หน้าแรก" />
+  </div>
+</section>
+
+<!-- ดูรูปขนาดเต็ม -->
+<div class="lightbox" *ngIf="lightbox" (click)="close()">
+  <button type="button" class="lightbox-close" (click)="close()" aria-label="ปิด">✕</button>
+  <img [src]="lightbox" alt="" (click)="$event.stopPropagation()" />
+</div>

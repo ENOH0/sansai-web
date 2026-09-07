@@ -1,0 +1,21 @@
+/* กรอบการ์ดกราฟใช้ร่วมกันทั้ง 3 ชนิด จึงประกาศไว้ที่ src/styles.css
+   ไฟล์นี้เก็บเฉพาะสไตล์และแอนิเมชันของกราฟชนิดนี้เท่านั้น */
+:host { display: block; }
+
+/* แท่งกราฟงอกขึ้นจากแกนล่างเมื่อเลื่อนเข้ามุมมอง */
+.bar-rect {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  transform: scaleY(0);
+}
+
+:host-context(.is-in) .bar-rect,
+.is-in .bar-rect {
+  animation: growBar .85s var(--ease) forwards;
+}
+
+@keyframes growBar { to { transform: scaleY(1); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .bar-rect { animation: none !important; transform: none !important; }
+}

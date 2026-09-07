@@ -1,0 +1,246 @@
+/* หน้ารางวัลเชิงประจักษ์ */
+:host { display: block; }
+
+.awards-hero { background: linear-gradient(140deg, var(--navy-950), var(--navy-800) 55%, var(--navy-600)); }
+
+/* ---------- ตัวกรอง ---------- */
+.filters {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 28px;
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-row + .filter-row { margin-top: 14px; }
+
+.filter-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-mute);
+  min-width: 92px;
+}
+
+.fchip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  /* สูง 44px ตามเกณฑ์พื้นที่สัมผัสของ Apple */
+  min-height: 44px;
+  padding: 0 15px;
+  border-radius: 11px;
+  border: 1px solid var(--navy-100);
+  background: #fff;
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s var(--ease), color .2s var(--ease),
+              border-color .2s var(--ease), transform .18s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fchip:active { transform: scale(.96); }
+
+.fchip.is-on {
+  background: var(--navy-600);
+  border-color: var(--navy-600);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(30, 77, 158, .26);
+}
+
+.fcount {
+  font-size: 13px;
+  font-weight: 700;
+  background: var(--navy-50);
+  color: var(--navy-700);
+  border-radius: 999px;
+  padding: 1px 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.fchip.is-on .fcount { background: rgba(255, 255, 255, .22); color: #fff; }
+
+@media (hover: hover) {
+  .fchip:hover:not(.is-on) { border-color: var(--navy-300); background: var(--navy-50); }
+}
+
+.filter-foot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+}
+
+.filter-result { font-size: 14.5px; color: var(--ink-mute); font-weight: 600; }
+
+.fclear {
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: 1px solid var(--navy-200);
+  background: #fff;
+  color: var(--navy-700);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- การ์ดรางวัล ---------- */
+.award-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.teacher-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.award-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+
+@media (hover: hover) {
+  .award-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+}
+
+.award-photos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+  background: var(--navy-50);
+}
+
+.award-photos.two { grid-template-columns: 1fr 1fr; }
+
+.award-photo {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: var(--navy-50);
+  cursor: zoom-in;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.award-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .45s var(--ease);
+}
+
+@media (hover: hover) {
+  .award-photo:hover img { transform: scale(1.05); }
+}
+
+.award-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; }
+
+.award-name {
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--navy-900);
+  margin: 4px 0 0;
+}
+
+.award-title { margin: 0; font-size: 15.5px; font-weight: 700; color: var(--navy-600); line-height: 1.6; }
+.award-detail { margin: 0; font-size: 14.5px; color: var(--ink-soft); line-height: 1.7; }
+
+.award-empty {
+  text-align: center;
+  padding: 40px 0;
+  color: var(--ink-mute);
+  font-size: 16px;
+}
+
+/* ---------- ดูรูปขนาดเต็ม ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(8, 21, 47, .92);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  display: grid;
+  place-items: center;
+  padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
+  animation: lbIn .25s var(--ease);
+  cursor: zoom-out;
+}
+
+@keyframes lbIn { from { opacity: 0; } to { opacity: 1; } }
+
+.lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 12px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .5);
+  cursor: default;
+  animation: lbZoom .3s var(--ease);
+}
+
+@keyframes lbZoom { from { transform: scale(.94); } to { transform: none; } }
+
+.lightbox-close {
+  position: absolute;
+  top: max(18px, env(safe-area-inset-top));
+  right: 18px;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, .3);
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- Responsive สำหรับ iPad ---------- */
+@media (max-width: 1180px) {
+  .teacher-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 1024px) {
+  .award-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 834px) {
+  .award-grid, .teacher-grid { grid-template-columns: 1fr; }
+  .filter-label { min-width: 100%; margin-bottom: 2px; }
+  .award-photo { aspect-ratio: 16 / 10; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox, .lightbox img { animation: none !important; }
+  .award-photo img { transition: none !important; }
+}
+
+@media print {
+  .filters, .lightbox { display: none !important; }
+  .award-card { break-inside: avoid; box-shadow: none; }
+  .award-grid { grid-template-columns: repeat(2, 1fr); }
+}

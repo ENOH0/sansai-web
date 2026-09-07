@@ -1,0 +1,60 @@
+/* กรอบการ์ดกราฟใช้ร่วมกันทั้ง 3 ชนิด จึงประกาศไว้ที่ src/styles.css
+   ไฟล์นี้เก็บเฉพาะสไตล์และแอนิเมชันของกราฟชนิดนี้เท่านั้น */
+:host { display: block; }
+
+/* เส้นกราฟถูก "วาด" ทีละเส้นเมื่อเลื่อนเข้ามุมมอง
+   โดยลด stroke-dashoffset จากความยาวเส้นลงเหลือศูนย์ */
+.series-path {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+}
+
+:host-context(.is-in) .series-path,
+.is-in .series-path {
+  animation: drawLine 1.5s var(--ease) forwards;
+}
+
+@keyframes drawLine { to { stroke-dashoffset: 0; } }
+
+/* เส้นประ (ค่าเฉลี่ยระดับประเทศ / ค่าเป้าหมาย)
+   stroke-dasharray ถูกใช้ทำลายเส้นประอยู่แล้ว จึงวาดทีละส่วนไม่ได้
+   เปลี่ยนเป็นค่อย ๆ ปรากฏขึ้นแทน */
+.series-path.is-dashed {
+  stroke-dasharray: 7 6;
+  stroke-dashoffset: 0;
+  opacity: 0;
+}
+
+:host-context(.is-in) .series-path.is-dashed,
+.is-in .series-path.is-dashed {
+  animation: fadeLine .9s var(--ease) forwards;
+}
+
+@keyframes fadeLine { to { opacity: 1; } }
+
+/* จุดข้อมูลค่อย ๆ ผุดขึ้นตามหลังเส้น */
+.series-dot {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+:host-context(.is-in) .series-dot,
+.is-in .series-dot {
+  animation: popDot .45s var(--ease) forwards;
+}
+
+@keyframes popDot {
+  from { opacity: 0; transform: scale(.2); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .series-path { animation: none !important; stroke-dashoffset: 0 !important; }
+  .series-path.is-dashed { animation: none !important; opacity: 1 !important; }
+  .series-dot { animation: none !important; opacity: 1 !important; }
+}

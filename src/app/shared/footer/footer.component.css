@@ -1,0 +1,37 @@
+/* ท้ายหน้า — พื้นน้ำเงินเข้มตัดกับเนื้อหาด้านบน */
+.foot {
+  background: var(--navy-950);
+  color: rgba(255, 255, 255, .72);
+  padding: 48px 0 34px;
+}
+
+.foot h4 { color: #fff; font-size: 17px; margin-bottom: 10px; }
+.foot a { color: rgba(255, 255, 255, .8); }
+
+.foot-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 32px;
+}
+
+.foot ul { list-style: none; margin: 0; padding: 0; font-size: 15px; }
+.foot li { margin-bottom: 7px; }
+
+.foot-address { font-size: 15px; line-height: 1.8; margin-bottom: 12px; }
+.foot-contact { font-size: 15px; margin: 0; }
+
+.foot-award { margin-top: 14px; color: var(--gold-400); font-weight: 700; }
+
+.foot-bottom {
+  margin-top: 34px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, .13);
+  font-size: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+@media (max-width: 1024px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 834px)  { .foot-grid { grid-template-columns: 1fr; } }

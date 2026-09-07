@@ -1,0 +1,69 @@
+/* ส่วนหัวของหน้าด้านที่ 1–5 */
+:host { display: block; }
+
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(140deg, var(--navy-900), var(--navy-700) 60%, var(--navy-600));
+  color: #fff;
+  padding: calc(var(--nav-h) + 54px) 0 56px;
+}
+
+/* ลายเส้นทแยงบาง ๆ เพิ่มมิติให้พื้นหลัง */
+.page-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(115deg, rgba(255, 255, 255, .05) 0 2px, transparent 2px 22px);
+  opacity: .5;
+  pointer-events: none;
+}
+
+.page-hero-inner { position: relative; z-index: 2; }
+
+.page-hero h1 {
+  color: #fff;
+  font-size: clamp(26px, 3.6vw, 42px);
+  margin: 12px 0 10px;
+}
+
+.page-hero p {
+  color: rgba(255, 255, 255, .85);
+  max-width: 74ch;
+  margin: 0;
+}
+
+.page-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, .14);
+  border: 1px solid rgba(255, 255, 255, .26);
+  color: var(--gold-400);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 7px 15px;
+  border-radius: 999px;
+}
+
+.page-weight {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(232, 196, 106, .16);
+  border: 1px solid rgba(232, 196, 106, .4);
+  color: var(--gold-400);
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+@media print {
+  .page-hero {
+    background: var(--navy-900) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

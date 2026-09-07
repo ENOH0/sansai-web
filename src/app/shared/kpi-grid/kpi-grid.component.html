@@ -1,0 +1,13 @@
+<div class="grid grid-4">
+  <div class="stat"
+       *ngFor="let k of items; let i = index"
+       [class.stat-gold]="i % 4 === 3"
+       appReveal [revealDelay]="i * 90">
+    <div class="stat-value">
+      <span [appCountUp]="k.value" [decimals]="k.decimals ?? 0"></span>
+      <span class="stat-unit" *ngIf="k.unit">{{ k.unit }}</span>
+    </div>
+    <div class="stat-label">{{ k.label }}</div>
+    <div class="stat-note" *ngIf="k.note">{{ k.note }}</div>
+  </div>
+</div>

@@ -1,0 +1,132 @@
+/* กราฟ O-NET แบบเลือกดูรายวิชาได้ */
+:host { display: block; }
+
+/* ---------- ปุ่มเลือกวิชา ---------- */
+.onet-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.onet-tab {
+  /* สูง 46px ให้แตะง่ายบน iPad ตามเกณฑ์พื้นที่สัมผัสของ Apple */
+  min-height: 46px;
+  padding: 0 18px;
+  border-radius: 12px;
+  border: 1px solid var(--navy-100);
+  background: #fff;
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 15.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .2s var(--ease), color .2s var(--ease),
+              border-color .2s var(--ease), transform .18s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.onet-tab:active { transform: scale(.96); }
+
+.onet-tab.is-on {
+  background: var(--navy-600);
+  border-color: var(--navy-600);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(30, 77, 158, .28);
+}
+
+/* เอฟเฟกต์ hover เฉพาะอุปกรณ์ที่มีเมาส์ ไม่ให้ค้างบนจอสัมผัส */
+@media (hover: hover) {
+  .onet-tab:hover:not(.is-on) {
+    background: var(--navy-50);
+    border-color: var(--navy-200);
+    color: var(--navy-700);
+  }
+}
+
+/* ---------- การ์ดสรุปผลต่างรายปี ---------- */
+.onet-diffs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.onet-diff {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.onet-diff-year {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink-mute);
+  letter-spacing: .02em;
+}
+
+.onet-diff-main {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.onet-diff-value {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--navy-800);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.onet-diff-vs {
+  font-size: 14px;
+  color: var(--ink-mute);
+  font-variant-numeric: tabular-nums;
+}
+
+.onet-diff-gap {
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.onet-diff-gap.up { color: #0f7a4d; }
+.onet-diff-gap.down { color: #b4433a; }
+
+/* ---------- ข้อความสรุปใต้การ์ด ---------- */
+.onet-conclusion {
+  margin: 16px 0 0;
+  font-size: 15.5px;
+  color: var(--ink-soft);
+}
+
+.onet-conclusion strong { color: var(--navy-800); }
+
+/* iPad แนวตั้ง — ให้ปุ่มเลือกวิชาเลื่อนแนวนอนแทนการตัดบรรทัด */
+@media (max-width: 834px) {
+  .onet-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+    /* ซ่อนแถบเลื่อนให้ดูสะอาดตอนนำเสนอ */
+    scrollbar-width: none;
+  }
+  .onet-tabs::-webkit-scrollbar { display: none; }
+
+  .onet-tab { flex: none; }
+  .onet-diffs { grid-template-columns: 1fr; }
+}
+
+@media print {
+  .onet-tabs { display: none !important; }
+}

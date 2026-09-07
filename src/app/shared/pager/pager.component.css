@@ -1,0 +1,52 @@
+/* ปุ่มไปด้านก่อนหน้า / ด้านถัดไป — วางไว้ท้ายทุกหน้า */
+:host { display: block; }
+
+.pager {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pager-spacer { flex: 1 1 240px; }
+
+.pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 240px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  box-shadow: var(--shadow-sm);
+  min-height: 76px;
+  justify-content: center;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+}
+
+.pager-link:active { transform: translateY(-2px); }
+
+@media (hover: hover) {
+  .pager-link:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+}
+
+.pager-dir {
+  font-size: 13px;
+  color: var(--ink-mute);
+  font-weight: 700;
+  letter-spacing: .05em;
+}
+
+.pager-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--navy-800);
+}
+
+.pager-link.next { text-align: right; align-items: flex-end; }
+
+@media print {
+  .pager { display: none !important; }
+}

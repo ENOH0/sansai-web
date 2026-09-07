@@ -1,0 +1,13 @@
+<nav class="pager" appReveal>
+  <a class="pager-link prev" *ngIf="prevPath" [routerLink]="prevPath">
+    <span class="pager-dir">‹ ก่อนหน้า</span>
+    <span class="pager-name">{{ prevName }}</span>
+  </a>
+  <span class="pager-spacer" *ngIf="!prevPath"></span>
+
+  <a class="pager-link next" *ngIf="nextPath" [routerLink]="nextPath">
+    <span class="pager-dir">ถัดไป ›</span>
+    <span class="pager-name">{{ nextName }}</span>
+  </a>
+  <span class="pager-spacer" *ngIf="!nextPath"></span>
+</nav>

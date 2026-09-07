@@ -1,0 +1,50 @@
+# ============================================================
+# สำหรับโฮสต์ที่ใช้ Apache (cPanel, DirectAdmin, Plesk, hosting ไทยส่วนใหญ่)
+#
+# ไฟล์นี้จะถูกคัดลอกไปอยู่ในโฟลเดอร์ผลลัพธ์ตอน npm run build
+# ให้อัปโหลดขึ้น host พร้อมไฟล์อื่นทั้งหมด
+# ============================================================
+
+# ---------- สำคัญที่สุด: ส่งทุกเส้นทางกลับไปที่ index.html ----------
+# เว็บนี้เป็น Single Page Application เส้นทางอย่าง /dimension-1
+# ไม่มีไฟล์จริงอยู่บนเซิร์ฟเวอร์ ถ้าไม่ตั้งค่าส่วนนี้
+# กรรมการกดรีเฟรชหน้าด้านที่ 1 แล้วจะขึ้น 404
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # ถ้าเป็นไฟล์หรือโฟลเดอร์ที่มีอยู่จริง ให้ส่งไฟล์นั้นตามปกติ
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # นอกนั้นส่งกลับไปที่ index.html ให้ Angular จัดการเส้นทางเอง
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# ---------- บีบอัดไฟล์ ให้โหลดเร็วขึ้นบน iPad ----------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ---------- แคช ----------
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # ไฟล์ js/css มีรหัสต่อท้ายชื่อทุกครั้งที่ build จึงแคชยาวได้
+  <FilesMatch "\.(js|css|woff2|png|jpg|jpeg|svg|webp)$">
+    ExpiresDefault "access plus 1 year"
+    Header set Cache-Control "public, immutable"
+  </FilesMatch>
+
+  # index.html ห้ามแคช ไม่งั้นแก้ข้อมูลแล้วกรรมการยังเห็นของเก่า
+  <FilesMatch "index\.html$">
+    ExpiresDefault "access plus 0 seconds"
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ---------- ให้ไฟล์ภาษาไทยแสดงผลถูกต้อง ----------
+AddDefaultCharset UTF-8

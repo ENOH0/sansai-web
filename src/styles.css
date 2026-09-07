@@ -1,0 +1,452 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   โรงเรียนสันทรายวิทยาคม — ระบบดีไซน์ส่วนกลาง (สีน้ำเงิน–ขาว)
+
+   ไฟล์นี้เก็บเฉพาะสิ่งที่ใช้ร่วมกันทั้งเว็บ ได้แก่
+     · ตัวแปรสี ระยะห่าง และเงา
+     · โครงหน้า (.wrap .section .grid)
+     · องค์ประกอบที่หลายหน้าเรียกใช้ (.card .chip .tbl .callout ...)
+     · แอนิเมชันเลื่อนเข้ามุมมอง ซึ่ง directive ไปติดคลาสให้กับ
+       element ในหน้าอื่น จึงต้องอยู่ระดับส่วนกลาง
+
+   สไตล์เฉพาะของแต่ละ component อยู่ในไฟล์ .css ของ component นั้น
+   เช่น แถบนำทางอยู่ที่ shared/navbar/navbar.component.css
+   ============================================================ */
+
+:root {
+  /* ---------- สีประจำโรงเรียน: น้ำเงิน–ขาว ---------- */
+  --navy-950: #08152f;
+  --navy-900: #0d2149;
+  --navy-800: #132f63;
+  --navy-700: #183d80;
+  --navy-600: #1e4d9e;
+  --navy-500: #2c66bd;
+  --navy-400: #4f88d4;
+  --navy-300: #82ade4;
+  --navy-200: #b3cdf0;
+  --navy-100: #d8e6f8;
+  --navy-50:  #eef4fc;
+
+  /* ---------- สีทอง ใช้เน้นรางวัลและตัวเลขสำคัญ ---------- */
+  --gold-400: #e8c46a;
+  --gold-500: #d4a537;
+  --gold-600: #b3862a;
+
+  /* ---------- สีตัวอักษรและพื้นหลัง ---------- */
+  --ink: #16233c;
+  --ink-soft: #43536f;
+  --ink-mute: #6b7a94;
+  --line: #dfe7f2;
+  --paper: #ffffff;
+  --paper-alt: #f5f8fd;
+
+  /* ---------- ระยะและเงา ---------- */
+  --radius: 18px;
+  --radius-sm: 12px;
+  --shadow-sm: 0 1px 2px rgba(13, 33, 73, .06), 0 4px 12px rgba(13, 33, 73, .05);
+  --shadow-md: 0 2px 6px rgba(13, 33, 73, .08), 0 16px 40px rgba(13, 33, 73, .09);
+  --shadow-lg: 0 8px 20px rgba(13, 33, 73, .12), 0 30px 70px rgba(13, 33, 73, .14);
+
+  /* ความสูงแถบนำทาง — component อื่นใช้ค่านี้เว้นที่ด้านบน */
+  --nav-h: 68px;
+  --ease: cubic-bezier(.22, .78, .3, 1);
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 16px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper-alt);
+  color: var(--ink);
+  font-family: 'Noto Sans Thai', 'Sarabun', 'Leelawadee UI', 'Segoe UI', system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  /* ให้ momentum scroll ลื่นบน iPad */
+  -webkit-overflow-scrolling: touch;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Noto Serif Thai', 'Sarabun', serif;
+  color: var(--navy-900);
+  line-height: 1.5;
+  margin: 0;
+  font-weight: 700;
+}
+
+p { margin: 0 0 1em; }
+a { color: var(--navy-600); text-decoration: none; }
+
+/* ============================================================
+   โครงหน้า
+   ============================================================ */
+.wrap      { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+.wrap-wide { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+.section       { padding: 72px 0; }
+.section-tight { padding: 44px 0; }
+.section-alt   { background: var(--paper); }
+
+.stack > * + * { margin-top: 18px; }
+
+.grid   { display: grid; gap: 20px; }
+.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* ============================================================
+   หัวข้อของแต่ละหมวด
+   (component app-section-header ใช้ชุดนี้ และหน้าเนื้อหาบางหน้า
+    ก็เรียกใช้โดยตรงเพื่อทำหัวข้อย่อยภายในหมวด)
+   ============================================================ */
+.sec-head { margin-bottom: 30px; }
+
+.sec-kicker {
+  display: inline-block;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  color: var(--navy-500);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.sec-title { font-size: clamp(22px, 2.7vw, 30px); line-height: 1.45; }
+
+/* กล่องเลขหัวข้อ เช่น 1.1 หรือ 2.3 */
+.sec-title .num {
+  display: inline-grid;
+  place-items: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 10px;
+  border-radius: 12px;
+  background: var(--navy-600);
+  color: #fff;
+  font-size: 17px;
+  margin-right: 12px;
+  vertical-align: middle;
+  box-shadow: 0 6px 18px rgba(30, 77, 158, .3);
+}
+
+.sec-lead { color: var(--ink-soft); margin-top: 12px; max-width: 82ch; }
+.sec-rule { width: 60px; height: 4px; border-radius: 4px; background: var(--gold-500); margin-top: 14px; }
+
+/* ============================================================
+   การ์ด
+   ============================================================ */
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px;
+  box-shadow: var(--shadow-sm);
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+
+.card-hover { will-change: transform; }
+
+/* ยกการ์ดเฉพาะอุปกรณ์ที่มีเมาส์ ไม่ให้ค้างบนจอสัมผัส */
+@media (hover: hover) {
+  .card-hover:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+}
+.card-hover:active { transform: translateY(-2px); }
+
+.card-title { font-size: 19px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+.card-body  { color: var(--ink-soft); font-size: 16.5px; }
+.card-accent { border-top: 4px solid var(--navy-600); }
+.card-gold   { border-top: 4px solid var(--gold-500); }
+
+/* ============================================================
+   ป้ายกำกับ
+   ============================================================ */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 600;
+  background: var(--navy-50);
+  color: var(--navy-700);
+  border: 1px solid var(--navy-100);
+}
+
+.chip-gold { background: #fdf6e6; color: var(--gold-600); border-color: #f2e2b8; }
+.chip-row  { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ============================================================
+   ตาราง — เลื่อนแนวนอนได้ในกรอบของตัวเองบน iPad
+   ============================================================ */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+table.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15.5px;
+  min-width: 520px;
+}
+
+table.tbl caption {
+  caption-side: top;
+  text-align: left;
+  padding: 16px 20px 4px;
+  font-weight: 700;
+  color: var(--navy-800);
+  font-size: 16.5px;
+}
+
+table.tbl th {
+  background: var(--navy-800);
+  color: #fff;
+  font-weight: 600;
+  padding: 13px 16px;
+  text-align: left;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+}
+
+/* คอลัมน์ตัวเลขจัดชิดขวาและใช้ตัวเลขความกว้างเท่ากัน อ่านง่ายเวลาเทียบค่า */
+table.tbl th.num,
+table.tbl td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+table.tbl td { padding: 12px 16px; border-top: 1px solid var(--line); color: var(--ink-soft); }
+table.tbl tbody tr:nth-child(even) { background: var(--paper-alt); }
+
+table.tbl tbody tr.total { background: var(--navy-50); font-weight: 700; }
+table.tbl tbody tr.total td { color: var(--navy-800); }
+
+.up   { color: #0f7a4d; font-weight: 700; }
+.down { color: #b4433a; font-weight: 700; }
+
+/* ============================================================
+   กรอบการ์ดกราฟ — ใช้ร่วมกันทั้งกราฟเส้น กราฟแท่ง และแถบเปรียบเทียบ
+   (แอนิเมชันเฉพาะของแต่ละกราฟอยู่ในไฟล์ .css ของกราฟนั้น)
+   ============================================================ */
+.chart-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.chart-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.chart-title { font-size: 17.5px; font-weight: 700; color: var(--navy-800); }
+.chart-sub   { font-size: 14px; color: var(--ink-mute); }
+
+.chart-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 14px; }
+.legend-item  { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink-soft); font-weight: 600; }
+.legend-swatch { width: 14px; height: 4px; border-radius: 3px; flex: none; }
+.legend-swatch.dot { width: 11px; height: 11px; border-radius: 50%; }
+
+/* touch-action: pan-y ให้เลื่อนหน้าผ่านกราฟได้ปกติบนจอสัมผัส */
+.chart-svg  { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.chart-note { font-size: 14px; color: var(--ink-mute); margin-top: 12px; line-height: 1.7; }
+
+.axis-line   { stroke: var(--line); stroke-width: 1; }
+.axis-text   { font-size: 12.5px; fill: var(--ink-mute); font-family: inherit; }
+.axis-text.b { font-weight: 700; fill: var(--ink-soft); }
+.grid-line   { stroke: #eef2f8; stroke-width: 1; }
+
+/* ============================================================
+   รายการลำดับและไทม์ไลน์
+   ============================================================ */
+.steps { position: relative; padding-left: 34px; }
+
+.steps::before {
+  content: '';
+  position: absolute;
+  left: 13px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--navy-300), var(--navy-100));
+}
+
+.step-item { position: relative; margin-bottom: 22px; }
+
+.step-item::before {
+  content: '';
+  position: absolute;
+  left: -27px; top: 9px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--navy-500);
+  box-shadow: 0 0 0 4px var(--navy-50);
+}
+
+.step-item h4 { font-size: 17px; margin-bottom: 5px; }
+.step-item p  { margin: 0; color: var(--ink-soft); font-size: 16px; }
+
+/* กล่องตัวเลขลำดับ ใช้ในการ์ดของหลายหน้า */
+.step-no {
+  width: 38px; height: 38px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: var(--navy-50);
+  color: var(--navy-700);
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 12px;
+  border: 1px solid var(--navy-100);
+}
+
+.bullets { margin: 0; padding-left: 22px; color: var(--ink-soft); }
+.bullets li { margin-bottom: 9px; }
+.bullets li::marker { color: var(--navy-500); }
+
+/* ============================================================
+   กล่องข้อความเน้น
+   ============================================================ */
+.callout {
+  border-left: 4px solid var(--navy-600);
+  background: var(--navy-50);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 18px 22px;
+  color: var(--navy-900);
+  font-size: 16.5px;
+}
+
+.callout-gold { border-left-color: var(--gold-500); background: #fdf8ec; color: #6b5216; }
+.callout strong { color: var(--navy-800); }
+
+.quote {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: clamp(19px, 2.3vw, 26px);
+  line-height: 1.7;
+  color: var(--navy-800);
+  text-align: center;
+  padding: 6px 0;
+}
+
+/* ============================================================
+   ปุ่ม
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  /* สูง 50px เพื่อให้แตะง่ายบน iPad */
+  min-height: 50px;
+  padding: 0 24px;
+  border-radius: 13px;
+  font-weight: 700;
+  font-size: 16px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform .2s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active { transform: scale(.97); }
+
+.btn-primary { background: var(--gold-500); color: var(--navy-950); box-shadow: 0 8px 24px rgba(212, 165, 55, .34); }
+.btn-ghost   { background: rgba(255, 255, 255, .1); color: #fff; border-color: rgba(255, 255, 255, .35); }
+.btn-outline { background: #fff; color: var(--navy-700); border-color: var(--navy-200); }
+
+/* ============================================================
+   แอนิเมชันเลื่อนเข้ามุมมอง
+   RevealDirective เป็นคนติดคลาสเหล่านี้ให้กับ element ในหน้าต่าง ๆ
+   จึงต้องประกาศไว้ระดับส่วนกลาง ไม่สามารถย้ายไปไฟล์ component ได้
+   ใช้เฉพาะ transform และ opacity เพื่อให้ Safari บน iPad ลื่นไหล
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  transition: opacity .75s var(--ease), transform .75s var(--ease);
+  will-change: opacity, transform;
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+.reveal-l { opacity: 0; transform: translate3d(-30px, 0, 0); transition: opacity .75s var(--ease), transform .75s var(--ease); }
+.reveal-l.is-in { opacity: 1; transform: none; }
+
+.reveal-r { opacity: 0; transform: translate3d(30px, 0, 0); transition: opacity .75s var(--ease), transform .75s var(--ease); }
+.reveal-r.is-in { opacity: 1; transform: none; }
+
+.reveal-z { opacity: 0; transform: scale(.955); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal-z.is-in { opacity: 1; transform: none; }
+
+/* เคารพการตั้งค่า "ลดการเคลื่อนไหว" ของ iPadOS */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-l, .reveal-r, .reveal-z {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* ============================================================
+   Responsive — เน้น iPad (768–1180px) ทั้งแนวตั้งและแนวนอน
+   ============================================================ */
+
+/* iPad Pro และจอกลาง */
+@media (max-width: 1180px) {
+  .wrap, .wrap-wide { padding: 0 28px; }
+  .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* iPad แนวนอน 1024 */
+@media (max-width: 1024px) {
+  .section { padding: 56px 0; }
+  .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* iPad แนวตั้ง 820–834 และ iPad mini */
+@media (max-width: 834px) {
+  :root { --nav-h: 64px; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .card { padding: 22px; }
+  .section { padding: 48px 0; }
+}
+
+@media (max-width: 560px) {
+  .wrap, .wrap-wide { padding: 0 18px; }
+  body { font-size: 16.5px; }
+  .sec-title .num { min-width: 38px; height: 38px; font-size: 15px; margin-right: 9px; }
+}
+
+/* ============================================================
+   สั่งพิมพ์ / บันทึกเป็น PDF
+   ============================================================ */
+@media print {
+  .reveal, .reveal-l, .reveal-r, .reveal-z {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .card, .chart-card, .table-scroll { break-inside: avoid; box-shadow: none; }
+}

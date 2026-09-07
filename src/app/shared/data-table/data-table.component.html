@@ -1,0 +1,17 @@
+<div class="table-scroll" appReveal>
+  <table class="tbl">
+    <caption *ngIf="caption">{{ caption }}</caption>
+    <thead>
+      <tr>
+        <th *ngFor="let h of headers; let i = index" [class.num]="i >= numFrom">{{ h }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of rows" [class.total]="r.total">
+        <td *ngFor="let c of r.cells; let i = index" [class.num]="i >= numFrom">{{ c }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p class="chart-note" *ngIf="note">{{ note }}</p>

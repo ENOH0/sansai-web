@@ -1,0 +1,55 @@
+/* การ์ดตัวเลขสถิติ — ตัวเลขจะนับขึ้นเมื่อเลื่อนถึง */
+:host { display: block; }
+
+.stat {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px 22px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+/* แถบสีด้านซ้ายของการ์ด */
+.stat::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--navy-500), var(--navy-800));
+}
+
+/* การ์ดใบที่ 4 ใช้สีทองเพื่อตัดจังหวะสายตา */
+.stat-gold::before {
+  background: linear-gradient(180deg, var(--gold-400), var(--gold-600));
+}
+
+.stat-value {
+  font-family: 'Noto Serif Thai', serif;
+  font-weight: 700;
+  font-size: clamp(28px, 3.4vw, 38px);
+  color: var(--navy-800);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-unit {
+  font-size: 16px;
+  color: var(--ink-mute);
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.stat-label {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.stat-note {
+  font-size: 13.5px;
+  color: var(--ink-mute);
+  margin-top: 2px;
+}

@@ -1,0 +1,47 @@
+<div class="onet">
+  <!-- ปุ่มเลือกวิชา — แตะได้สะดวกบน iPad -->
+  <div class="onet-tabs" role="tablist" [attr.aria-label]="'เลือกรายวิชาสำหรับ ' + title">
+    <button type="button"
+            class="onet-tab"
+            role="tab"
+            [class.is-on]="selectedIndex === -1"
+            [attr.aria-selected]="selectedIndex === -1"
+            (click)="select(-1)">ทุกวิชา</button>
+
+    <button type="button"
+            class="onet-tab"
+            role="tab"
+            *ngFor="let s of subjects; let i = index"
+            [class.is-on]="selectedIndex === i"
+            [attr.aria-selected]="selectedIndex === i"
+            (click)="select(i)">{{ s.name }}</button>
+  </div>
+
+  <!-- กราฟ — เปลี่ยนตามวิชาที่เลือก -->
+  <app-line-chart
+    [title]="title"
+    [subtitle]="chartSubtitle"
+    [labels]="years"
+    [series]="series"
+    [showValues]="selectedIndex !== -1"
+    [note]="note" />
+
+  <!-- ตัวเลขสรุปรายปีของวิชาที่เลือก -->
+  <div class="onet-diffs" *ngIf="current">
+    <div class="onet-diff" *ngFor="let d of diffs">
+      <div class="onet-diff-year">ปีการศึกษา {{ d.year }}</div>
+      <div class="onet-diff-main">
+        <span class="onet-diff-value">{{ d.school | number: '1.2-2' }}</span>
+        <span class="onet-diff-vs">เทียบประเทศ {{ d.nation | number: '1.2-2' }}</span>
+      </div>
+      <div class="onet-diff-gap" [class.up]="d.diff >= 0" [class.down]="d.diff < 0">
+        {{ signed(d.diff) }}
+      </div>
+    </div>
+  </div>
+
+  <p class="onet-conclusion" *ngIf="current">
+    รายวิชา<strong>{{ current.name }}</strong> มีค่าเฉลี่ยสูงกว่าระดับประเทศ
+    <strong>{{ yearsAbove }}</strong> ปี จากทั้งหมด {{ years.length }} ปีการศึกษา
+  </p>
+</div>

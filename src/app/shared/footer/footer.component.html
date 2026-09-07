@@ -1,0 +1,42 @@
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h4>{{ school.name }}</h4>
+        <p class="foot-address">
+          {{ school.address }}
+        </p>
+        <p class="foot-contact">
+          โทรศัพท์ {{ school.phone }}<br />
+          อีเมล {{ school.email }}<br />
+          เว็บไซต์ {{ school.website }}
+        </p>
+      </div>
+
+      <div>
+        <h4>เนื้อหาการประเมิน</h4>
+        <ul>
+          <li *ngFor="let item of items">
+            <a [routerLink]="item.path">{{ item.label }}</a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>สังกัด</h4>
+        <ul>
+          <li>{{ school.area }}</li>
+          <li>{{ school.affiliation }}</li>
+          <li class="foot-award">
+            {{ school.award }}<br />{{ school.level }} {{ school.academicYear }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© {{ year }} {{ school.name }} — เอกสารประกอบการประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน</span>
+      <span>{{ school.philosophy }}</span>
+    </div>
+  </div>
+</footer>

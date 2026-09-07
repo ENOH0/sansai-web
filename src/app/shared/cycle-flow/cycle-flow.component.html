@@ -1,0 +1,13 @@
+<div class="cycle">
+  <div class="cycle-step"
+       *ngFor="let s of steps; let i = index"
+       appReveal="zoom" [revealDelay]="i * 110">
+    <div class="cycle-no">{{ i + 1 }}</div>
+    <div class="chip cycle-chip">{{ s.step }}</div>
+    <h4>{{ s.title }}</h4>
+    <p>{{ s.text }}</p>
+    <ul *ngIf="s.bullets?.length">
+      <li *ngFor="let b of s.bullets">{{ b }}</li>
+    </ul>
+  </div>
+</div>

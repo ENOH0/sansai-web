@@ -1,0 +1,45 @@
+/* กรอบการ์ดกราฟใช้ร่วมกันทั้ง 3 ชนิด จึงประกาศไว้ที่ src/styles.css
+   ไฟล์นี้เก็บเฉพาะสไตล์และแอนิเมชันของกราฟชนิดนี้เท่านั้น */
+:host { display: block; }
+
+/* แถบเปรียบเทียบแนวนอน */
+.meter { margin-bottom: 16px; }
+
+.meter-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.meter-name { font-weight: 600; color: var(--ink); }
+.meter-val { font-weight: 700; color: var(--navy-700); font-variant-numeric: tabular-nums; }
+
+.meter-track {
+  height: 12px;
+  border-radius: 999px;
+  background: var(--navy-50);
+  overflow: hidden;
+}
+
+.meter-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--navy-500), var(--navy-800));
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+:host-context(.is-in) .meter-fill,
+.is-in .meter-fill {
+  animation: fillBar 1.1s var(--ease) forwards;
+}
+
+@keyframes fillBar { to { transform: scaleX(1); } }
+
+.meter-body { margin-top: 18px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .meter-fill { animation: none !important; transform: none !important; }
+}

@@ -1,0 +1,32 @@
+/* หน้าด้านที่ 3
+   โครงหน้า การ์ด และตารางใช้ระบบดีไซน์ส่วนกลางที่ src/styles.css
+   ไฟล์นี้ไว้ใส่สไตล์เฉพาะของหน้านี้เท่านั้น */
+:host {
+  display: block;
+}
+
+/* การ์ดตัวอักษรของ BANCHUEN Model */
+.model-letter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.model-badge {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--navy-700);
+  color: #fff;
+  display: grid; place-items: center;
+  font-size: 21px;
+  font-weight: 700;
+  font-family: 'Noto Serif Thai', serif;
+}
+
+.model-en {
+  font-weight: 700;
+  color: var(--navy-600);
+  font-size: 14.5px;
+  line-height: 1.4;
+}

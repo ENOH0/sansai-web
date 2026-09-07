@@ -1,0 +1,81 @@
+/* วงจรการดำเนินงาน 4 ขั้น
+   วางแผน → ดำเนินการ → ตรวจสอบ → พัฒนาต่อยอด */
+:host { display: block; }
+
+.cycle {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.cycle-step {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px 22px 22px;
+  box-shadow: var(--shadow-sm);
+  border-top: 4px solid var(--navy-600);
+}
+
+/* ไล่เฉดสีจากน้ำเงินเข้มไปอ่อน แล้วจบด้วยสีทองที่ขั้นพัฒนาต่อยอด */
+.cycle-step:nth-child(2) { border-top-color: var(--navy-500); }
+.cycle-step:nth-child(3) { border-top-color: var(--navy-400); }
+.cycle-step:nth-child(4) { border-top-color: var(--gold-500); }
+
+.cycle-no {
+  width: 38px; height: 38px;
+  border-radius: 11px;
+  display: grid; place-items: center;
+  background: var(--navy-50);
+  color: var(--navy-700);
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 12px;
+  border: 1px solid var(--navy-100);
+}
+
+.cycle-step:nth-child(4) .cycle-no {
+  background: #fdf6e6;
+  color: var(--gold-600);
+  border-color: #f2e2b8;
+}
+
+.cycle-chip { margin-bottom: 10px; }
+
+.cycle-step h4 { font-size: 17.5px; margin-bottom: 8px; }
+.cycle-step p { font-size: 15.5px; color: var(--ink-soft); margin: 0; }
+
+.cycle-step ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  font-size: 15.5px;
+  color: var(--ink-soft);
+}
+.cycle-step li { margin-bottom: 5px; }
+
+/* ลูกศรเชื่อมระหว่างขั้น */
+.cycle-step::after {
+  content: '›';
+  position: absolute;
+  right: -16px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 30px;
+  color: var(--navy-300);
+  line-height: 1;
+  z-index: 2;
+  font-weight: 700;
+}
+.cycle-step:last-child::after { display: none; }
+
+/* iPad Pro และจอกลาง — เหลือ 2 คอลัมน์ */
+@media (max-width: 1180px) {
+  .cycle { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .cycle-step:nth-child(2)::after { display: none; }
+}
+
+/* iPad แนวตั้ง — เรียงลงมาทีละขั้น */
+@media (max-width: 834px) {
+  .cycle { grid-template-columns: 1fr; }
+  .cycle-step::after { display: none; }
+}

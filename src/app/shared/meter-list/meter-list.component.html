@@ -1,0 +1,25 @@
+<div class="chart-card" appReveal>
+  <div class="chart-head">
+    <div>
+      <div class="chart-title">{{ title }}</div>
+      <div class="chart-sub" *ngIf="subtitle">{{ subtitle }}</div>
+    </div>
+  </div>
+
+  <div class="meter-body">
+    <div class="meter" *ngFor="let r of rows; let i = index">
+      <div class="meter-head">
+        <span class="meter-name">{{ r.name }}</span>
+        <span class="meter-val">{{ r.display ?? (r.value | number: '1.2-2') }}{{ suffix }}</span>
+      </div>
+      <div class="meter-track">
+        <div class="meter-fill"
+             [style.width.%]="pct(r.value)"
+             [style.background]="r.color ? r.color : null"
+             [style.animation-delay]="i * 90 + 'ms'"></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="chart-note" *ngIf="note">{{ note }}</p>
+</div>

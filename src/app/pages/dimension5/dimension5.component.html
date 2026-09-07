@@ -1,0 +1,109 @@
+<app-page-hero [no]="d.no" [weight]="d.weight" [name]="d.name" [subtitle]="d.subtitle" />
+
+<section class="section">
+  <div class="wrap">
+    <div class="card card-accent" appReveal style="margin-bottom:32px">
+      <p class="card-body" style="margin:0">{{ d.intro }}</p>
+    </div>
+    <app-kpi-grid [items]="d.kpis" />
+  </div>
+</section>
+
+<!-- ═══════════ โครงการดีเด่นทั้ง 3 ═══════════ -->
+<ng-container *ngFor="let p of d.projects; let pi = index">
+  <section class="section" [class.section-alt]="pi % 2 === 0">
+    <div class="wrap">
+      <app-section-header
+        [num]="p.no"
+        [title]="p.name"
+        [lead]="p.summary" />
+
+      <app-callout label="ที่มาของโครงการ:" [gold]="true" style="display:block;margin-bottom:30px">
+        {{ p.royal }}
+      </app-callout>
+
+      <div class="card" appReveal style="margin-bottom:34px">
+        <h3 class="card-title">วัตถุประสงค์</h3>
+        <ol class="bullets">
+          <li *ngFor="let o of p.objectives">{{ o }}</li>
+        </ol>
+      </div>
+
+      <div class="sec-head" appReveal>
+        <h3 class="sec-title" style="font-size:22px">กระบวนการดำเนินงาน</h3>
+        <div class="sec-rule"></div>
+      </div>
+
+      <app-cycle-flow [steps]="p.cycle" />
+
+      <!-- เครือข่ายที่ปรึกษา (เฉพาะ 5.1) -->
+      <div class="card card-gold" *ngIf="p.partners?.length" appReveal style="margin-top:34px">
+        <h3 class="card-title">เครือข่ายทางวิชาการที่ร่วมเป็นที่ปรึกษา</h3>
+        <div class="chip-row" style="margin-top:12px">
+          <span class="chip chip-gold" *ngFor="let n of p.partners">{{ n }}</span>
+        </div>
+      </div>
+
+      <!-- 8 กลุ่มสาระ (เฉพาะ 5.2) -->
+      <ng-container *ngIf="p.subjectGroups?.length">
+        <div class="sec-head" style="margin-top:52px" appReveal>
+          <h3 class="sec-title" style="font-size:22px">การขับเคลื่อนความเป็นเลิศครบทั้ง 8 กลุ่มสาระการเรียนรู้</h3>
+          <div class="sec-rule"></div>
+        </div>
+        <div class="grid grid-2">
+          <div class="card card-hover" *ngFor="let g of p.subjectGroups; let gi = index"
+               appReveal [revealDelay]="gi * 70">
+            <h3 class="card-title" style="font-size:17.5px">{{ g.name }}</h3>
+            <p class="card-body" style="margin:0;font-size:15.5px">{{ g.text }}</p>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </section>
+</ng-container>
+
+<!-- ═══════════ การเผยแพร่ ═══════════ -->
+<section class="section section-alt">
+  <div class="wrap">
+    <app-section-header
+      kicker="ผลการดำเนินงาน"
+      [title]="d.dissemination.title"
+      [lead]="d.dissemination.lead" />
+
+    <div class="grid grid-4">
+      <div class="card card-accent" *ngFor="let c of d.dissemination.channels; let i = index"
+           appReveal="zoom" [revealDelay]="i * 90">
+        <h3 class="card-title" style="font-size:17px">{{ c.name }}</h3>
+        <p class="card-body" style="margin:0;font-size:15.5px">{{ c.text }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ตัวชี้วัด ═══════════ -->
+<section class="section">
+  <div class="wrap">
+    <app-section-header
+      kicker="สรุป"
+      title="ตัวชี้วัดของด้านที่ 5"
+      lead="ตามแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน ระดับประถมศึกษาและมัธยมศึกษา" />
+
+    <div class="card" *ngFor="let key of indicatorKeys" appReveal>
+      <h3 class="card-title" style="font-size:17.5px">{{ key }}</h3>
+      <ol class="bullets">
+        <li *ngFor="let it of d.indicators[key]">{{ it }}</li>
+      </ol>
+    </div>
+
+    <app-callout label="หมายเหตุ:" style="display:block;margin-top:24px">
+      โครงการที่นำเสนอเป็นโครงการตามแนวพระราชดำริของพระบาทสมเด็จพระเจ้าอยู่หัวรัชกาลที่ 9 หรือรัชกาลปัจจุบัน
+      ตามที่กำหนดไว้ในแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน
+    </app-callout>
+
+    <div style="margin-top:34px">
+      <app-pager
+        prevPath="/dimension-4" prevName="ด้านที่ 4 การจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ"
+        nextPath="/" nextName="กลับสู่หน้าแรก" />
+    </div>
+  </div>
+</section>

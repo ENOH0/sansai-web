@@ -1,0 +1,125 @@
+<app-page-hero [no]="d.no" [weight]="d.weight" [name]="d.name" [subtitle]="d.subtitle" />
+
+<section class="section">
+  <div class="wrap">
+    <div class="card card-accent" appReveal style="margin-bottom:32px">
+      <p class="card-body" style="margin:0">{{ d.intro }}</p>
+    </div>
+    <app-kpi-grid [items]="d.kpis" />
+  </div>
+</section>
+
+<!-- ═══════════ 4.1 การออกแบบการจัดการเรียนรู้ ═══════════ -->
+<section class="section section-alt">
+  <div class="wrap">
+    <app-section-header num="4.1" title="การออกแบบการจัดการเรียนรู้" [lead]="d.design.lead" />
+    <app-cycle-flow [steps]="d.design.cycle" />
+  </div>
+</section>
+
+<!-- ═══════════ 4.2 การจัดการชั้นเรียน ═══════════ -->
+<section class="section">
+  <div class="wrap">
+    <app-section-header num="4.2" title="การจัดการเรียนรู้และการจัดการชั้นเรียน" [lead]="d.classroom.lead" />
+
+    <div class="grid grid-2">
+      <div class="card card-hover" *ngFor="let p of d.classroom.practices; let i = index"
+           appReveal [revealDelay]="i * 70">
+        <div style="width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
+                    background:#eef4fc;color:#183d80;font-weight:700;border:1px solid #d8e6f8;
+                    margin-bottom:12px">{{ i + 1 }}</div>
+        <h3 class="card-title">{{ p.title }}</h3>
+        <p class="card-body" style="margin:0">{{ p.text }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4.3 การวัดและประเมินผล ═══════════ -->
+<section class="section section-alt">
+  <div class="wrap">
+    <app-section-header num="4.3" title="การวัดและประเมินผลการเรียนรู้" [lead]="d.assessment.lead" />
+
+    <div class="steps" style="margin-bottom:38px">
+      <div class="step-item" *ngFor="let p of d.assessment.points; let i = index"
+           appReveal="left" [revealDelay]="i * 90">
+        <h4>{{ p.title }}</h4>
+        <p>{{ p.text }}</p>
+      </div>
+    </div>
+
+    <app-line-chart
+      [title]="d.assessment.outcome.caption"
+      subtitle="ผลจากการวัดและประเมินผลที่นำกลับมาพัฒนาการเรียนการสอน ปีการศึกษา 2566–2568"
+      [labels]="d.assessment.outcome.years"
+      [series]="outcomeSeries"
+      [min]="50" [max]="100"
+      [note]="d.assessment.outcome.note" />
+  </div>
+</section>
+
+<!-- ═══════════ 4.4 การนำผลไปใช้ ═══════════ -->
+<section class="section">
+  <div class="wrap">
+    <app-section-header num="4.4" title="การนำผลการประเมินไปใช้" [lead]="d.useResults.lead" />
+
+    <div class="grid grid-4" style="margin-bottom:34px">
+      <div class="card card-accent" *ngFor="let s of d.useResults.steps; let i = index"
+           appReveal="zoom" [revealDelay]="i * 90">
+        <div class="chip" style="margin-bottom:10px">ขั้นที่ {{ i + 1 }}</div>
+        <h3 class="card-title" style="font-size:17px">{{ s.title }}</h3>
+        <p class="card-body" style="margin:0;font-size:15.5px">{{ s.text }}</p>
+      </div>
+    </div>
+
+    <div class="sec-head" appReveal>
+      <h3 class="sec-title" style="font-size:22px">หลักฐานเชิงประจักษ์ของการนำผลไปใช้</h3>
+      <div class="sec-rule"></div>
+      <p class="sec-lead">เปรียบเทียบผลลัพธ์ที่เกิดกับผู้เรียนระหว่างปีการศึกษา 2566 และ 2568 หลังจากครูนำผลการประเมินมาปรับแผนการจัดการเรียนรู้</p>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card card-gold" *ngFor="let e of d.useResults.evidence; let i = index"
+           appReveal [revealDelay]="i * 80">
+        <h3 class="card-title" style="font-size:17px">{{ e.label }}</h3>
+        <div style="display:flex;align-items:baseline;gap:14px;margin:14px 0 8px">
+          <span style="font-family:'Noto Serif Thai',serif;font-size:26px;font-weight:700;color:#6b7a94">
+            {{ e.from | number: '1.2-2' }}
+          </span>
+          <span style="font-size:22px;color:#82ade4">→</span>
+          <span style="font-family:'Noto Serif Thai',serif;font-size:32px;font-weight:700;color:#132f63">
+            {{ e.to | number: '1.2-2' }}<span style="font-size:16px;color:#6b7a94;margin-left:4px">{{ e.unit }}</span>
+          </span>
+          <span class="up" style="margin-left:auto">+{{ (e.to - e.from) | number: '1.2-2' }}</span>
+        </div>
+        <p class="card-body" style="margin:0;font-size:15px">{{ e.note }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ตัวชี้วัด ═══════════ -->
+<section class="section section-alt">
+  <div class="wrap">
+    <app-section-header
+      kicker="สรุป"
+      title="ตัวชี้วัดของด้านที่ 4 ทั้ง 4 รายการ"
+      lead="ตามแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน ระดับประถมศึกษาและมัธยมศึกษา" />
+
+    <div class="grid grid-2">
+      <div class="card" *ngFor="let key of indicatorKeys; let i = index"
+           appReveal [revealDelay]="i * 80">
+        <h3 class="card-title" style="font-size:17.5px">{{ key }}</h3>
+        <ol class="bullets" style="font-size:15.5px">
+          <li *ngFor="let it of d.indicators[key]">{{ it }}</li>
+        </ol>
+      </div>
+    </div>
+
+    <div style="margin-top:34px">
+      <app-pager
+        prevPath="/dimension-3" prevName="ด้านที่ 3 การบริหารและการจัดการศึกษา"
+        nextPath="/dimension-5" nextName="ด้านที่ 5 ความดีเด่นของสถานศึกษา" />
+    </div>
+  </div>
+</section>

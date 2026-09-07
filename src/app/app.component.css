@@ -1,0 +1,41 @@
+/* โครงหน้าหลักของเว็บ */
+:host { display: block; }
+
+/* ---------- ปุ่มกลับขึ้นด้านบน ---------- */
+.to-top {
+  position: fixed;
+  right: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  z-index: 50;
+  width: 54px; height: 54px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, .94);
+  color: var(--navy-700);
+  box-shadow: var(--shadow-md);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 20px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity .3s var(--ease), transform .3s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.to-top.is-on {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+@media (max-width: 560px) {
+  .to-top { width: 48px; height: 48px; }
+}
+
+@media print {
+  .to-top { display: none !important; }
+}
