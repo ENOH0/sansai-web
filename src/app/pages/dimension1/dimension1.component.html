@@ -203,12 +203,33 @@
   <div class="wrap">
     <app-section-header num="1.1.7" [title]="pathTitle" [lead]="d.section11.pathway.narrative" />
 
+    <!-- ╔══════════════════════════════════════════════════════════╗
+         ║ ตัวเลือกที่ 1 : กราฟเส้น                                  ║
+         ║ ถ้าไม่ใช้ ให้ลบตั้งแต่บรรทัดนี้ถึงบรรทัด "จบตัวเลือกที่ 1"  ║
+         ╚══════════════════════════════════════════════════════════╝ -->
     <app-line-chart
       title="ร้อยละของนักเรียนชั้น ม.3 จำแนกตามเส้นทางหลังจบการศึกษา"
       subtitle="ปีการศึกษา 2565–2568"
       [labels]="d.section11.pathway.years"
       [series]="pathSeries"
       [note]="d.section11.pathway.conclusion" />
+    <!-- จบตัวเลือกที่ 1 -->
+
+    <!-- ╔══════════════════════════════════════════════════════════╗
+         ║ ตัวเลือกที่ 2 : กราฟแท่ง                                  ║
+         ║ ถ้าไม่ใช้ ให้ลบตั้งแต่บรรทัดนี้ถึงบรรทัด "จบตัวเลือกที่ 2"  ║
+         ╚══════════════════════════════════════════════════════════╝ -->
+    <div style="margin-top:24px">
+      <app-bar-chart
+        title="ร้อยละของนักเรียนชั้น ม.3 จำแนกตามเส้นทางหลังจบการศึกษา"
+        subtitle="ปีการศึกษา 2565–2568"
+        [labels]="d.section11.pathway.years"
+        [series]="pathBars"
+        [max]="80"
+        valueFormat="1.2-2"
+        [note]="d.section11.pathway.conclusion" />
+    </div>
+    <!-- จบตัวเลือกที่ 2 -->
   </div>
 </section>
 
@@ -296,12 +317,13 @@
     </div>
 
     <div style="margin-top:24px">
-      <app-line-chart
+      <app-bar-chart
         title="ผลสุขภาพจิตของนักเรียน"
         subtitle="ร้อยละของนักเรียนทั้งหมด ปีการศึกษา 2566–2568"
         [labels]="d.section12.health.years"
-        [series]="mindSeries"
-        [min]="0" [max]="100"
+        [series]="mindBars"
+        [max]="100"
+        valueFormat="1.2-2"
         [note]="d.section12.health.conclusion" />
     </div>
   </div>

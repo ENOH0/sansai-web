@@ -50,6 +50,9 @@ const n2 = v => Number(v).toLocaleString('th-TH', { minimumFractionDigits: 2, ma
 const n0 = v => Number(v).toLocaleString('th-TH');
 const signed = v => (v >= 0 ? '+' : '') + n2(v);
 const PALETTE = ['#1e4d9e', '#d4a537', '#4f88d4', '#0f7a4d', '#8a4fbd', '#b4433a'];
+// สุขภาพจิต — เรียงแท่ง มีปัญหา → เสี่ยง → ปกติ
+const MIND_ORDER = ['มีปัญหา', 'เสี่ยง', 'ปกติ'];
+const MIND_COLOR = { 'มีปัญหา': '#b4433a', 'เสี่ยง': '#d4a537', 'ปกติ': '#0f7a4d' };
 
 let revealSeq = 0;
 const rev = (kind = '', delay = 0) => {
@@ -593,7 +596,10 @@ ${pageHero(d.no, d.weight, d.name, d.subtitle)}
 
 <section class="section section-alt"><div class="wrap">
   ${secHead('', '1.1.7', 'ความพร้อมในการศึกษาต่อ การฝึกงาน หรือการทำงาน', s11.pathway.narrative)}
+  <!-- ตัวเลือกที่ 1 : กราฟเส้น — ลบบรรทัดนี้ทิ้งได้ถ้าไม่ใช้ -->
   ${lineChart({ title: 'ร้อยละของนักเรียนชั้น ม.3 จำแนกตามเส้นทางหลังจบการศึกษา', subtitle: 'ปีการศึกษา 2565–2568', labels: s11.pathway.years, series: s11.pathway.rows.map((r, i) => ({ name: r.name, values: r.values, color: P[i % 5] })), note: s11.pathway.conclusion })}
+  <!-- ตัวเลือกที่ 2 : กราฟแท่ง — ลบบรรทัดนี้ทิ้งได้ถ้าไม่ใช้ -->
+  <div style="margin-top:24px">${barChart({ title: 'ร้อยละของนักเรียนชั้น ม.3 จำแนกตามเส้นทางหลังจบการศึกษา', subtitle: 'ปีการศึกษา 2565–2568', labels: s11.pathway.years, series: s11.pathway.rows.map((r, i) => ({ name: r.name, values: r.values, color: P[i % 5] })), max: 80, fmt: n2, note: s11.pathway.conclusion })}</div>
 </div></section>
 
 <section class="section"><div class="wrap">
@@ -626,7 +632,7 @@ ${pageHero(d.no, d.weight, d.name, d.subtitle)}
     ${lineChart({ title: 'สมรรถภาพทางกายของนักเรียน', subtitle: 'ร้อยละจำแนกตามระดับสมรรถภาพ ปีการศึกษา 2566–2568', labels: s12.health.years, series: s12.health.fitRows.map((r, i) => ({ name: r.name, values: r.values, color: P[i % 5] })), showValues: false, note: 'กลุ่มสมรรถภาพดีมากและดีเพิ่มขึ้นทุกปี ขณะที่กลุ่มที่ต้องปรับปรุงลดลงอย่างต่อเนื่องจากร้อยละ 20.28 เหลือร้อยละ 12.32' })}
     ${lineChart({ title: 'สัดส่วนร่างกายของนักเรียน', subtitle: 'ร้อยละจำแนกตามเกณฑ์ ปีการศึกษา 2566–2568', labels: s12.health.years, series: s12.health.bodyRows.map((r, i) => ({ name: r.name, values: r.values, color: P[i % 5] })), showValues: false, note: 'นักเรียนที่มีสัดส่วนร่างกายปกติเพิ่มขึ้นเป็นร้อยละ 90.81 ในปีการศึกษา 2568 ขณะที่กลุ่มอ้วนลดลงจากร้อยละ 16.63 เหลือร้อยละ 5.09' })}
   </div>
-  <div style="margin-top:24px">${lineChart({ title: 'ผลสุขภาพจิตของนักเรียน', subtitle: 'ร้อยละของนักเรียนทั้งหมด ปีการศึกษา 2566–2568', labels: s12.health.years, series: s12.health.mindRows.map((r, i) => ({ name: r.name, values: r.values, color: P[i % 5] })), min: 0, max: 100, note: s12.health.conclusion })}</div>
+  <div style="margin-top:24px">${barChart({ title: 'ผลสุขภาพจิตของนักเรียน', subtitle: 'ร้อยละของนักเรียนทั้งหมด ปีการศึกษา 2566–2568', labels: s12.health.years, series: MIND_ORDER.map(n => s12.health.mindRows.find(r => r.name === n)).filter(Boolean).map(r => ({ name: r.name, values: r.values, color: MIND_COLOR[r.name] })), max: 100, fmt: n2, note: s12.health.conclusion })}</div>
 </div></section>
 
 <section class="section-tight section-alt"><div class="wrap">${pager('', '', 'dimension-2', 'ด้านที่ 2 การบริหารหลักสูตรและงานวิชาการ')}</div></section>`;

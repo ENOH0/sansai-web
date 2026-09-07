@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LineSeries, MeterRow, TableRow } from '../../core/models';
+import { BarSeries, LineSeries, MeterRow, TableRow } from '../../core/models';
 import { DIM1 } from '../../data/dimension1.data';
 import { RevealDirective } from '../../shared/directives/reveal.directive';
 import { PageHeroComponent } from '../../shared/page-hero/page-hero.component';
@@ -162,6 +162,11 @@ export class Dimension1Component {
     name: r.name, values: r.values, color: this.palette[i % 5]
   }));
 
+  /* ชุดข้อมูลเดียวกันในรูปกราฟแท่ง (ตัวเลือกที่ 2 ของหัวข้อ 1.1.7) */
+  readonly pathBars: BarSeries[] = DIM1.section11.pathway.rows.map((r, i) => ({
+    name: r.name, values: r.values, color: this.palette[i % 5]
+  }));
+
   // ---------- คุณลักษณะอันพึงประสงค์ ----------
   readonly desiredMeters: MeterRow[] = DIM1.section12.desired.rows
     .map(r => ({ name: r.name, value: r.avg }))
@@ -208,9 +213,16 @@ export class Dimension1Component {
     name: r.name, values: r.values, color: this.palette[i % 5]
   }));
 
-  readonly mindSeries: LineSeries[] = DIM1.section12.health.mindRows.map((r, i) => ({
-    name: r.name, values: r.values, color: this.palette[i % 5]
-  }));
+  /* สุขภาพจิต — แสดงเป็นกราฟแท่ง เรียงลำดับ มีปัญหา → เสี่ยง → ปกติ */
+  private readonly mindOrder = ['มีปัญหา', 'เสี่ยง', 'ปกติ'];
+  private readonly mindColor: Record<string, string> = {
+    'มีปัญหา': '#b4433a', 'เสี่ยง': '#d4a537', 'ปกติ': '#0f7a4d'
+  };
+
+  readonly mindBars: BarSeries[] = this.mindOrder
+    .map(n => DIM1.section12.health.mindRows.find(r => r.name === n))
+    .filter((r): r is { name: string; values: number[] } => !!r)
+    .map(r => ({ name: r.name, values: r.values, color: this.mindColor[r.name] }));
 
   private signed(v: number): string {
     return (v >= 0 ? '+' : '') + v.toFixed(2);
