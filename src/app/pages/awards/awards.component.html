@@ -70,7 +70,8 @@
       <button type="button" class="rail-nav prev" (click)="scrollRail(studentRail, -1)"
               aria-label="เลื่อนไปทางซ้าย">‹</button>
       <div class="award-rail" #studentRail>
-        <article class="award-card" *ngFor="let a of filtered; trackBy: trackByName">
+        <article class="award-card" [attr.data-level]="a.level"
+                 *ngFor="let a of filtered; trackBy: trackByName">
         <div class="award-photos" [class.two]="a.photos.length > 1">
           <button type="button" class="award-photo" *ngFor="let p of a.photos"
                   (click)="open(p)" [attr.aria-label]="'ดูรูปขนาดเต็มของ ' + a.name">
@@ -116,7 +117,7 @@
       <button type="button" class="rail-nav prev" (click)="scrollRail(teacherRail, -1)"
               aria-label="เลื่อนไปทางซ้าย">‹</button>
       <div class="award-rail" #teacherRail>
-        <article class="award-card" *ngFor="let t of teachers; trackBy: trackByName">
+        <article class="award-card is-teacher" *ngFor="let t of teachers; trackBy: trackByName">
         <div class="award-photos">
           <button type="button" class="award-photo" *ngFor="let p of t.photos"
                   (click)="open(p)" [attr.aria-label]="'ดูรูปขนาดเต็มของ ' + t.name">

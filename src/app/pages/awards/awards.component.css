@@ -490,3 +490,199 @@ header.awards-hero::after { display: none; }
   cursor: not-allowed;
   filter: grayscale(1);
 }
+
+/* ═══════════════════════════════════════════════════════════
+   ตกแต่งการ์ดตามระดับรางวัล — ยิ่งระดับสูง ยิ่งเน้นมาก
+   ทอง = ระดับนานาชาติ · น้ำเงิน = ระดับชาติ · เรียบ = ระดับภูมิภาค
+   ═══════════════════════════════════════════════════════════ */
+.award-rail .award-card {
+  border-radius: 20px;
+  border-color: rgba(255, 255, 255, .5);
+  box-shadow: 0 14px 34px rgba(8, 21, 47, .22);
+}
+
+/* แถบสีบางบนหัวการ์ด บอกระดับรางวัลตั้งแต่แรกเห็น */
+.award-rail .award-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  z-index: 3;
+  background: var(--navy-200);
+}
+
+/* ---------- ระดับภูมิภาค — เรียบที่สุด ---------- */
+.award-rail [data-level="ระดับภูมิภาค"]::before {
+  background: linear-gradient(90deg, var(--navy-200), var(--navy-100));
+}
+
+/* ---------- ระดับชาติ — เน้นปานกลาง ---------- */
+.award-rail [data-level="ระดับชาติ"] {
+  box-shadow: 0 16px 38px rgba(8, 21, 47, .26), 0 0 0 1px var(--navy-300);
+}
+.award-rail [data-level="ระดับชาติ"]::before {
+  background: linear-gradient(90deg, var(--navy-700), var(--navy-400));
+}
+.award-rail [data-level="ระดับชาติ"] .chip:first-child {
+  background: linear-gradient(135deg, var(--navy-700), var(--navy-500));
+  color: #fff;
+  border-color: rgba(255, 255, 255, .35);
+}
+
+/* ---------- ระดับนานาชาติ — อลังการที่สุด ---------- */
+.award-rail [data-level="ระดับนานาชาติ"] {
+  box-shadow:
+    0 0 0 2px var(--gold-500),
+    0 0 0 6px rgba(212, 165, 55, .22),
+    0 22px 50px rgba(8, 21, 47, .34);
+}
+.award-rail [data-level="ระดับนานาชาติ"]::before {
+  height: 6px;
+  background: linear-gradient(90deg, var(--gold-600), var(--gold-400) 40%, #fff6dc 50%, var(--gold-400) 60%, var(--gold-600));
+}
+
+/* ป้ายระดับนานาชาติ พื้นทองพร้อมดาวนำหน้า */
+.award-rail [data-level="ระดับนานาชาติ"] .chip-gold {
+  background: linear-gradient(135deg, var(--gold-400), var(--gold-600));
+  color: var(--navy-900);
+  border-color: #fff3d0;
+  font-weight: 800;
+  box-shadow: 0 4px 14px rgba(212, 165, 55, .5);
+}
+.award-rail [data-level="ระดับนานาชาติ"] .chip-gold::before {
+  content: "★ ";
+  color: var(--navy-900);
+}
+
+/* แสงกวาดผ่านการ์ดทองช้า ๆ */
+.award-rail [data-level="ระดับนานาชาติ"] .award-photos::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, .34) 48%, transparent 58%);
+  transform: translateX(-120%);
+  animation: awShine 5.5s ease-in-out infinite;
+}
+@keyframes awShine {
+  0%, 62% { transform: translateX(-120%); }
+  86%, 100% { transform: translateX(120%); }
+}
+
+/* ---------- การ์ดครู ---------- */
+.award-rail .is-teacher {
+  box-shadow: 0 16px 38px rgba(8, 21, 47, .26), 0 0 0 1px var(--gold-500);
+}
+.award-rail .is-teacher::before {
+  background: linear-gradient(90deg, var(--gold-600), var(--gold-400));
+}
+.award-rail .is-teacher .chip-gold {
+  background: linear-gradient(135deg, var(--gold-400), var(--gold-500));
+  color: var(--navy-900);
+  font-weight: 800;
+}
+
+/* ยกการ์ดขึ้นเมื่อชี้ ระดับสูงยกแรงกว่า */
+@media (hover: hover) {
+  .award-rail .award-card:hover { transform: translateY(-6px); }
+  .award-rail [data-level="ระดับนานาชาติ"]:hover {
+    transform: translateY(-10px);
+    box-shadow:
+      0 0 0 2px var(--gold-400),
+      0 0 0 8px rgba(212, 165, 55, .3),
+      0 30px 60px rgba(8, 21, 47, .4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .award-rail [data-level="ระดับนานาชาติ"] .award-photos::after { animation: none; opacity: 0; }
+}
+
+/* ═══════════ ตกแต่งกล่องตัวกรอง ═══════════ */
+.filters {
+  position: relative;
+  padding: 26px 26px 20px;
+  border: 1px solid rgba(255, 255, 255, .55);
+  border-radius: 22px;
+  background: linear-gradient(180deg, #fff 0%, #f6f9ff 100%);
+  box-shadow: 0 20px 46px rgba(8, 21, 47, .3);
+  overflow: hidden;
+}
+
+/* แถบทองบางบนหัวกล่อง ให้เข้าชุดกับการ์ดรางวัล */
+.filters::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--gold-600), var(--gold-400) 45%, #fff6dc 52%, var(--gold-400) 60%, var(--gold-600));
+}
+
+/* ป้ายหัวแถวมีจุดนำหน้า อ่านเป็นหมวดชัดขึ้น */
+.filter-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 106px;
+  color: var(--navy-800);
+  font-weight: 800;
+}
+.filter-label::before {
+  content: "";
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--gold-500);
+  box-shadow: 0 0 0 4px rgba(212, 165, 55, .22);
+}
+.filter-row + .filter-row .filter-label::before {
+  background: var(--navy-500);
+  box-shadow: 0 0 0 4px rgba(30, 77, 158, .16);
+}
+
+.filter-row + .filter-row {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--navy-100);
+}
+
+.fchip {
+  border-radius: 999px;
+  border-color: var(--navy-100);
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(8, 21, 47, .07);
+}
+
+/* ปุ่มที่เลือกอยู่ — แถวระดับรางวัลใช้สีทอง แถวหมวดหมู่ใช้สีน้ำเงิน */
+.filter-row:first-of-type .fchip.is-on {
+  background: linear-gradient(135deg, var(--gold-400), var(--gold-600));
+  border-color: #fff3d0;
+  color: var(--navy-900);
+  box-shadow: 0 8px 20px rgba(212, 165, 55, .45);
+}
+.filter-row:first-of-type .fchip.is-on .fcount {
+  background: rgba(8, 21, 47, .16);
+  color: var(--navy-900);
+}
+
+.filter-row + .filter-row .fchip.is-on {
+  background: linear-gradient(135deg, var(--navy-700), var(--navy-500));
+  border-color: var(--navy-700);
+  box-shadow: 0 8px 20px rgba(30, 77, 158, .4);
+}
+
+.filter-foot {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.filter-result { color: var(--navy-800); }
+
+.fclear {
+  border-radius: 999px;
+  min-height: 42px;
+  padding: 0 18px;
+  font-size: 15.5px;
+  font-weight: 700;
+}

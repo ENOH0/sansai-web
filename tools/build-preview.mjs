@@ -334,7 +334,7 @@ function pageAwards(D) {
       ${a.detail ? `<p class="award-detail">${esc(a.detail)}</p>` : ''}
     </div></article>`;
 
-  const tcard = t => `<article class="award-card"${rev()}>
+  const tcard = t => `<article class="award-card is-teacher"${rev()}>
     <div class="award-photos">
       ${t.photos.map(p => `<button type="button" class="award-photo" data-full="${img(p)}">
         <img src="${img(p)}" alt="${esc(t.name)}" loading="lazy" decoding="async"/></button>`).join('')}
