@@ -346,7 +346,27 @@ function pageAwards(D) {
       ${t.detail ? `<p class="award-detail">${esc(t.detail)}</p>` : ''}
     </div></article>`;
 
+  const AWSLIDES = ['gallery/d1/g02.jpg','gallery/d1/g16.jpg','gallery/d3/g06.jpg','gallery/d1/g04.jpg'];
+  const head = (kicker, title, lead) => `
+    <div class="sec-head"${rev()}>
+      <span class="aw-kicker">${esc(kicker)}</span>
+      <h2 class="sec-title aw-title">${esc(title)}</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <p class="aw-lead">${esc(lead)}</p>`;
+  const rail = (id, inner) => `<div class="rail-wrap">
+    <button type="button" class="rail-nav prev" data-rail="${id}" data-dir="-1" aria-label="เลื่อนไปทางซ้าย">‹</button>
+    <div class="award-rail" id="${id}">${inner}</div>
+    <button type="button" class="rail-nav next" data-rail="${id}" data-dir="1" aria-label="เลื่อนไปทางขวา">›</button>
+  </div>`;
+
   return `
+<div class="aw-bg" id="awBg" aria-hidden="true">
+  <div class="aw-media">${AWSLIDES.map((sl, i) =>
+    `<div class="aw-slide${i === 0 ? ' is-on' : ''}" style="background-image:url(public/${sl})"></div>`).join('')}</div>
+  <div class="aw-veil"></div>
+</div>
+
 <header class="page-hero awards-hero"><div class="wrap page-hero-inner">
   <span class="page-badge">รางวัลเชิงประจักษ์</span>
   <h1>รางวัลของนักเรียนและครู</h1>
@@ -354,11 +374,11 @@ function pageAwards(D) {
      รวบรวมจากภาคผนวกเล่มด้านที่ 1 และการสร้างขวัญกำลังใจในเล่มด้านที่ 3</p>
 </div></header>
 
-<section class="section"><div class="wrap">${kpiGrid(kpis)}</div></section>
+<section class="section aw-sec"><div class="wrap">${kpiGrid(kpis)}</div></section>
 
-<section class="section section-alt"><div class="wrap">
-  ${secHead('เล่มด้านที่ 1 คุณภาพนักเรียน', '', 'รางวัลของนักเรียน',
-    'แสดงเฉพาะรายการที่มีภาพหลักฐานปรากฏในเล่ม แตะที่รูปเพื่อดูขนาดเต็ม และใช้ปุ่มด้านล่างเพื่อกรองตามระดับรางวัลหรือหมวดหมู่')}
+<section class="section aw-sec"><div class="wrap">
+  ${head('เล่มด้านที่ 1 คุณภาพนักเรียน', 'รางวัลของนักเรียน',
+    'แสดงเฉพาะรายการที่มีภาพหลักฐานปรากฏในเล่ม กรองตามระดับรางวัลหรือหมวดหมู่ได้จากปุ่มด้านล่าง แล้วเลื่อนการ์ดไปทางข้างเพื่อดูรายการถัดไป แตะที่รูปเพื่อดูขนาดเต็ม')}
 
   <div class="filters"${rev()}>
     <div class="filter-row"><span class="filter-label">ระดับรางวัล</span>
@@ -371,14 +391,14 @@ function pageAwards(D) {
     </div>
   </div>
 
-  <div class="award-grid" id="awGrid">${S.map(card).join('')}</div>
+  ${rail('awGrid', S.map(card).join(''))}
   <p class="award-empty" id="awEmpty" hidden>ไม่พบรางวัลตามเงื่อนไขที่เลือก — ลองล้างตัวกรองแล้วเลือกใหม่</p>
 </div></section>
 
-<section class="section"><div class="wrap">
-  ${secHead('เล่มด้านที่ 3 การบริหารและการจัดการศึกษา', '', 'รางวัลและวิทยฐานะของครู',
+<section class="section aw-sec"><div class="wrap">
+  ${head('เล่มด้านที่ 3 การบริหารและการจัดการศึกษา', 'รางวัลและวิทยฐานะของครู',
     'ผลจากการที่ผู้บริหารสร้างขวัญและกำลังใจ ส่งเสริมให้ครูและบุคลากรทางการศึกษาพัฒนาตนเองอย่างต่อเนื่อง จนได้รับการยอมรับและมีความก้าวหน้าในวิชาชีพ')}
-  <div class="award-grid teacher-grid">${T.map(tcard).join('')}</div>
+  ${rail('awTeach', T.map(tcard).join(''))}
 </div></section>
 
 <section class="section-tight section-alt"><div class="wrap">
@@ -965,7 +985,7 @@ function activate(root){
   });
 }
 
-let coverTimer = null;
+let coverTimer = null, awBgTimer = null;
 function route(){
   const id = (location.hash||'#home').slice(1);
   const page = PAGES[id] ? id : 'home';
@@ -981,6 +1001,18 @@ function route(){
   if (bc) initBanchuen(bc, BC_STEPS);
   const sw = document.getElementById('swRoot');
   if (sw) initSmartWheel(sw, SW_ITEMS);
+  // ไล่เปลี่ยนภาพพื้นหลังหน้ารางวัล
+  clearInterval(awBgTimer);
+  const ab = document.getElementById('awBg');
+  if (ab) {
+    const asl = ab.querySelectorAll('.aw-slide');
+    let ai = 0;
+    awBgTimer = setInterval(() => {
+      asl[ai].classList.remove('is-on');
+      ai = (ai + 1) % asl.length;
+      asl[ai].classList.add('is-on');
+    }, 7000);
+  }
   // ไล่เปลี่ยนภาพพื้นหลังหน้าปก
   clearInterval(coverTimer);
   const cm = document.getElementById('coverMedia');
@@ -1076,14 +1108,32 @@ function awApply(){
   document.getElementById('awCount').textContent='แสดง '+n+' จาก '+total+' รางวัล';
   document.getElementById('awEmpty').hidden=n>0;
   document.getElementById('awClear').hidden=!(awF.level||awF.cat);
-  document.querySelectorAll('.fchip').forEach(b=>
-    b.classList.toggle('is-on', awF[b.dataset.f==='level'?'level':'cat']===b.dataset.v));
+  // ตัวนับปรับตามตัวกรองอีกฝั่ง หมวดที่ไม่มีรายการจะจางลงและกดไม่ได้
+  const all=[...grid.querySelectorAll('.award-card')];
+  document.querySelectorAll('.fchip').forEach(b=>{
+    const isLevel=b.dataset.f==='level';
+    const key=isLevel?'level':'cat';
+    const on=awF[key]===b.dataset.v;
+    const c=all.filter(x=> (isLevel ? x.dataset.level : x.dataset.cat)===b.dataset.v
+      && (isLevel ? (!awF.cat||x.dataset.cat===awF.cat) : (!awF.level||x.dataset.level===awF.level))).length;
+    b.querySelector('.fcount').textContent=c;
+    b.classList.toggle('is-on', on);
+    b.classList.toggle('is-empty', c===0);
+    b.disabled = c===0 && !on;
+  });
 }
 document.addEventListener('click', e=>{
   const f=e.target.closest('.fchip');
   if(f){ const k=f.dataset.f==='level'?'level':'cat';
          awF[k]= awF[k]===f.dataset.v ? '' : f.dataset.v; awApply(); return; }
   if(e.target.closest('#awClear')){ awF={level:'',cat:''}; awApply(); return; }
+
+  const rn=e.target.closest('.rail-nav');
+  if(rn){
+    const r=document.getElementById(rn.dataset.rail);
+    if(r) r.scrollBy({left: Number(rn.dataset.dir)*Math.max(280, r.clientWidth*0.8), behavior:'smooth'});
+    return;
+  }
 
   const g=e.target.closest('.gal-btn');
   if(g){

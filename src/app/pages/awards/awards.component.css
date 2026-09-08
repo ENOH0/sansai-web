@@ -160,14 +160,14 @@
 .award-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; }
 
 .award-name {
-  font-size: 19px;
-  line-height: 1.5;
+  font-size: 21px;
+  line-height: 1.45;
   color: var(--navy-900);
   margin: 4px 0 0;
 }
 
-.award-title { margin: 0; font-size: 17.5px; font-weight: 700; color: var(--navy-600); line-height: 1.6; }
-.award-detail { margin: 0; font-size: 16px; color: var(--ink-soft); line-height: 1.7; }
+.award-title { margin: 0; font-size: 18.5px; font-weight: 700; color: var(--navy-600); line-height: 1.6; }
+.award-detail { margin: 0; font-size: 16.5px; color: var(--ink-soft); line-height: 1.7; }
 
 .award-empty {
   text-align: center;
@@ -243,4 +243,250 @@
   .filters, .lightbox { display: none !important; }
   .award-card { break-inside: avoid; box-shadow: none; }
   .award-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ═══════════ พื้นหลังภาพตรึงจอ (แนวเดียวกับหน้าแรก) ═══════════ */
+.aw-bg { position: fixed; inset: 0; z-index: -1; background: var(--navy-900); }
+.aw-media { position: absolute; inset: 0; }
+
+.aw-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.6s var(--ease);
+}
+.aw-slide.is-on { opacity: 1; }
+
+.aw-veil {
+  position: absolute;
+  inset: 0;
+  /* ตัวเลขท้าย rgba() คือความทึบ 0–1 ลดแล้วเห็นภาพชัดขึ้น */
+  background: linear-gradient(180deg, rgba(8, 21, 47, .8) 0%, rgba(8, 21, 47, .72) 45%, rgba(8, 21, 47, .84) 100%);
+}
+
+/* ส่วนเนื้อหาโปร่งใสเพื่อให้เห็นภาพพื้นหลัง */
+.aw-sec { background: transparent; }
+
+.aw-kicker {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--gold-400);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .06em;
+}
+.aw-title { color: #fff; text-shadow: 0 2px 18px rgba(8, 21, 47, .6); }
+.aw-lead {
+  max-width: 900px;
+  margin: -6px 0 26px;
+  color: #d7e3f7;
+  font-size: 17.5px;
+  line-height: 1.85;
+}
+
+/* ตัวกรองบนพื้นภาพ */
+.filters { background: rgba(255, 255, 255, .95); }
+.filter-label, .filter-result { color: var(--ink-soft); }
+
+/* ═══════════ รางการ์ดเลื่อนแนวนอน ═══════════ */
+.rail-wrap { position: relative; }
+
+.award-rail {
+  display: flex;
+  gap: 20px;
+  /* เลื่อนแนวนอนอิสระ ไม่ล็อกการเลื่อนหน้าลงล่าง */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  padding: 6px 2px 18px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  /* pan-y ปล่อยให้ปัดขึ้นลงเลื่อนหน้าได้ตามปกติ */
+  touch-action: pan-x pan-y;
+}
+.award-rail::-webkit-scrollbar { display: none; }
+
+.award-rail .award-card {
+  flex: 0 0 360px;
+  scroll-snap-align: start;
+}
+
+/* กรอบรูปสูงเท่ากันทุกใบ ไม่ว่าจะมีรูปเดียวหรือสองรูป การ์ดจึงไม่สูงลดหลั่นกัน */
+.award-rail .award-photos { height: 224px; }
+.award-rail .award-photo { aspect-ratio: auto; height: 100%; }
+
+.award-rail .award-body { padding: 20px 22px 22px; gap: 9px; }
+
+/* จำกัดจำนวนบรรทัด ไม่ให้การ์ดที่มีคำอธิบายยาวดันการ์ดอื่นสูงตาม */
+.award-rail .award-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.award-rail .award-detail {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ปุ่มลูกศรสำหรับเครื่องที่มีเมาส์ — บนจอสัมผัสใช้ปัดนิ้วแทน */
+.rail-nav {
+  position: absolute;
+  top: 34%;
+  z-index: 5;
+  display: none;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  color: var(--navy-800);
+  font-size: 30px;
+  line-height: 1;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  transition: transform .18s var(--ease), background .18s var(--ease);
+}
+.rail-nav.prev { left: -18px; }
+.rail-nav.next { right: -18px; }
+@media (hover: hover) {
+  .rail-nav { display: grid; }
+  .rail-nav:hover { background: #fff; transform: scale(1.06); }
+}
+
+.award-empty { color: #dbe6f7; }
+
+@media (max-width: 834px) {
+  .award-rail .award-card { flex-basis: 320px; }
+  .award-rail .award-photos { height: 200px; }
+  .aw-lead { font-size: 17px; }
+}
+@media (max-width: 560px) {
+  .award-rail .award-card { flex-basis: 84vw; }
+}
+
+/* ---------- จัดหน้าให้ลงตัวขึ้นบนพื้นภาพ ---------- */
+
+/* กล่องตัวกรอง — เพิ่มระยะหายใจและขนาดตัวอักษร */
+.filters {
+  padding: 22px 24px 18px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+.filter-label { font-size: 16px; min-width: 92px; }
+.filter-result { font-size: 16.5px; font-weight: 700; }
+.fchip { font-size: 16px; min-height: 46px; padding: 0 16px; }
+.fcount { font-size: 14.5px; }
+
+/* ป้ายกำกับบนการ์ด */
+.award-rail .chip { font-size: 14.5px; padding: 6px 13px; }
+
+/* เว้นระยะระหว่างกล่องตัวกรองกับรางการ์ด */
+.rail-wrap { margin-top: 30px; }
+
+/* บอกให้รู้ว่ายังเลื่อนต่อได้ ด้วยการเผยขอบการ์ดถัดไป */
+.award-rail { padding-right: 40px; }
+
+/* ชื่อยาวสุด 2 บรรทัด เพื่อคุมความสูงการ์ดไม่ให้ต่างกันมาก */
+.award-rail .award-name {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------- ป้ายกำกับลอยบนรูป ประหยัดพื้นที่และดูสะอาดขึ้น ---------- */
+.award-rail .award-card { position: relative; }
+
+.award-rail .chip-row {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 2;
+  gap: 6px;
+}
+
+.award-rail .chip {
+  background: rgba(255, 255, 255, .92);
+  border-color: rgba(255, 255, 255, .6);
+  color: var(--navy-800);
+  font-size: 13.5px;
+  padding: 5px 11px;
+  box-shadow: 0 3px 10px rgba(8, 21, 47, .22);
+  backdrop-filter: blur(6px);
+}
+.award-rail .chip-gold { background: rgba(253, 246, 230, .95); color: var(--gold-600); }
+
+/* ไล่เฉดมืดบาง ๆ ใต้ป้าย ให้ตัวอักษรอ่านออกแม้รูปสว่าง */
+.award-rail .award-photos::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 90px;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(8, 21, 47, .34), transparent);
+}
+.award-rail .award-photos { position: relative; }
+
+.award-rail .award-body { padding-top: 18px; }
+.award-rail .award-name { margin-top: 0; }
+
+/* ---------- ส่วนหัวของหน้า ----------
+   หน้านี้เขียน <header> เอง ไม่ได้ใช้คอมโพเนนต์ page-hero
+   จึงต้องกำหนดสไตล์ไว้ที่นี่ ไม่งั้นตัวหนังสือจะกลืนไปกับภาพพื้นหลัง */
+/* ใช้ header.awards-hero ให้ชนะสไตล์ .page-hero ที่มาทีหลังในไฟล์รวม */
+header.awards-hero {
+  position: relative;
+  padding: calc(var(--nav-h) + 54px) 0 34px;
+  color: #fff;
+  /* ม่านเข้มเฉพาะช่วงหัวหน้า ให้ตัวหนังสืออ่านชัดแต่ยังเห็นภาพจาง ๆ */
+  background: linear-gradient(180deg, rgba(8, 21, 47, .82) 0%, rgba(8, 21, 47, .58) 68%, rgba(8, 21, 47, 0) 100%);
+}
+
+/* ลบลายเส้นทแยงของ page-hero ออก เพราะที่นี่พื้นหลังเป็นภาพจริง */
+header.awards-hero::after { display: none; }
+
+.awards-hero .page-hero-inner { position: relative; z-index: 2; }
+
+.awards-hero .page-badge {
+  display: inline-block;
+  padding: 7px 16px;
+  color: var(--gold-400);
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  border: 1px solid rgba(212, 165, 55, .5);
+  border-radius: 999px;
+  background: rgba(8, 21, 47, .45);
+}
+
+.awards-hero h1 {
+  margin: 16px 0 12px;
+  color: #fff;
+  font-size: clamp(31px, 3.8vw, 50px);
+  line-height: 1.3;
+  text-shadow: 0 3px 22px rgba(8, 21, 47, .7);
+}
+
+.awards-hero p {
+  max-width: 76ch;
+  margin: 0;
+  color: #dfe9fb;
+  font-size: 18px;
+  line-height: 1.85;
+  text-shadow: 0 2px 14px rgba(8, 21, 47, .6);
+}
+
+/* ปุ่มกรองที่ไม่มีรายการตรงกับตัวกรองอีกฝั่ง — จางลงและกดไม่ได้ */
+.fchip.is-empty:not(.is-on) {
+  opacity: .38;
+  cursor: not-allowed;
+  filter: grayscale(1);
 }

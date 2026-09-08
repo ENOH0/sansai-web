@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RevealDirective } from '../../shared/directives/reveal.directive';
-import { SectionHeaderComponent } from '../../shared/section-header/section-header.component';
 import { KpiGridComponent } from '../../shared/kpi-grid/kpi-grid.component';
 import { PagerComponent } from '../../shared/pager/pager.component';
 import {
@@ -19,13 +18,41 @@ import { Kpi } from '../../core/models';
   selector: 'app-awards',
   standalone: true,
   imports: [
-    CommonModule, RevealDirective, SectionHeaderComponent,
+    CommonModule, RevealDirective,
     KpiGridComponent, PagerComponent
   ],
   templateUrl: './awards.component.html',
   styleUrl: './awards.component.css'
 })
-export class AwardsComponent {
+export class AwardsComponent implements OnInit, OnDestroy {
+  /** ภาพพื้นหลังไล่เปลี่ยน เหมือนหน้าแรก */
+  readonly slides = [
+    'gallery/d1/g02.jpg',
+    'gallery/d1/g16.jpg',
+    'gallery/d3/g06.jpg',
+    'gallery/d1/g04.jpg'
+  ];
+  readonly current = signal(0);
+  private timer?: number;
+  private readonly zone = inject(NgZone);
+
+  ngOnInit(): void {
+    this.zone.runOutsideAngular(() => {
+      this.timer = window.setInterval(() => {
+        this.zone.run(() => this.current.set((this.current() + 1) % this.slides.length));
+      }, 7000);
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.timer !== undefined) clearInterval(this.timer);
+  }
+
+  /** เลื่อนรางการ์ดทีละหนึ่งหน้าจอ */
+  scrollRail(rail: HTMLElement, dir: number): void {
+    rail.scrollBy({ left: dir * Math.max(280, rail.clientWidth * 0.8), behavior: 'smooth' });
+  }
+
   readonly students = STUDENT_AWARDS;
   readonly teachers = TEACHER_AWARDS;
   readonly levels = AWARD_LEVELS;
@@ -56,8 +83,16 @@ export class AwardsComponent {
   setCategory(v: string): void { this.category = this.category === v ? '' : v; }
   clear(): void { this.level = ''; this.category = ''; }
 
-  countLevel(v: string): number { return this.students.filter(a => a.level === v).length; }
-  countCategory(v: string): number { return this.students.filter(a => a.category === v).length; }
+  /* ตัวนับปรับตามตัวกรองอีกฝั่งที่เลือกอยู่
+     เช่นกด "ระดับนานาชาติ" หมวดหมู่จะโชว์เฉพาะจำนวนที่อยู่ในระดับนั้น
+     หมวดที่ไม่มีเลยจะจางลงและกดไม่ได้ */
+  countLevel(v: string): number {
+    return this.students.filter(a => a.level === v && (!this.category || a.category === this.category)).length;
+  }
+
+  countCategory(v: string): number {
+    return this.students.filter(a => a.category === v && (!this.level || a.level === this.level)).length;
+  }
 
   open(src: string): void { this.lightbox = src; }
   close(): void { this.lightbox = null; }
