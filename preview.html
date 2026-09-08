@@ -2013,7 +2013,9 @@ body { display: block; }
 }
 
 /* iPad แนวนอนลงมา — ยุบเมนูเป็นปุ่ม */
-@media (max-width: 1024px) {
+/* ยุบเป็นปุ่มเมนูตั้งแต่ 1400px ลงมา ครอบคลุม iPad ทุกรุ่นทั้งแนวตั้งและแนวนอน
+   (iPad Pro 12.9 แนวนอน = 1366px) เมนู 8 รายการจึงไม่ต้องเบียดกันบนแถบเดียว */
+@media (max-width: 1400px) {
   .nav-links { display: none; }
   .nav-toggle { display: inline-flex; }
 }
