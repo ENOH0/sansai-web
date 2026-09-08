@@ -16,7 +16,7 @@
   display: grid;
   place-items: center;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 22.5px;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   opacity: 0;

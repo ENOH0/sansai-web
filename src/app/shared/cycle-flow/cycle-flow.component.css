@@ -30,7 +30,7 @@
   background: var(--navy-50);
   color: var(--navy-700);
   font-weight: 700;
-  font-size: 16px;
+  font-size: 18px;
   margin-bottom: 12px;
   border: 1px solid var(--navy-100);
 }
@@ -43,13 +43,13 @@
 
 .cycle-chip { margin-bottom: 10px; }
 
-.cycle-step h4 { font-size: 17.5px; margin-bottom: 8px; }
-.cycle-step p { font-size: 15.5px; color: var(--ink-soft); margin: 0; }
+.cycle-step h4 { font-size: 19.5px; margin-bottom: 9px; }
+.cycle-step p { font-size: 17.5px; color: var(--ink-soft); margin: 0; }
 
 .cycle-step ul {
   margin: 8px 0 0;
   padding-left: 20px;
-  font-size: 15.5px;
+  font-size: 17.5px;
   color: var(--ink-soft);
 }
 .cycle-step li { margin-bottom: 5px; }
@@ -60,7 +60,7 @@
   position: absolute;
   right: -16px; top: 50%;
   transform: translateY(-50%);
-  font-size: 30px;
+  font-size: 33.5px;
   color: var(--navy-300);
   line-height: 1;
   z-index: 2;

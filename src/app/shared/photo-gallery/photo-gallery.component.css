@@ -37,7 +37,7 @@
 .gal-cap {
   margin: 10px 2px 0;
   color: var(--ink-soft);
-  font-size: 14px;
+  font-size: 15.5px;
   line-height: 1.55;
 }
 
@@ -62,7 +62,7 @@
 .gal-lb-cap {
   margin: 0;
   color: #e8f0ff;
-  font-size: 15px;
+  font-size: 17px;
   text-align: center;
 }
 .gal-close {
@@ -70,7 +70,7 @@
   top: 18px; right: 18px;
   width: 48px; height: 48px;
   color: #fff;
-  font-size: 20px;
+  font-size: 22.5px;
   border: 1px solid rgba(255,255,255,.35);
   border-radius: 50%;
   background: rgba(255,255,255,.12);

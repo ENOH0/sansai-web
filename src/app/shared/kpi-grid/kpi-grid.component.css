@@ -26,30 +26,30 @@
 }
 
 .stat-value {
-  font-family: 'Noto Serif Thai', serif;
+  font-family: 'Sarabun', sans-serif;
   font-weight: 700;
-  font-size: clamp(28px, 3.4vw, 38px);
+  font-size: clamp(31.5px, 3.4vw, 42.5px);
   color: var(--navy-800);
   line-height: 1.2;
   font-variant-numeric: tabular-nums;
 }
 
 .stat-unit {
-  font-size: 16px;
+  font-size: 18px;
   color: var(--ink-mute);
   font-weight: 600;
   margin-left: 4px;
 }
 
 .stat-label {
-  font-size: 15px;
+  font-size: 17px;
   color: var(--ink-soft);
   margin-top: 4px;
   font-weight: 600;
 }
 
 .stat-note {
-  font-size: 13.5px;
+  font-size: 15px;
   color: var(--ink-mute);
   margin-top: 2px;
 }

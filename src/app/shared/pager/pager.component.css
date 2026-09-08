@@ -33,14 +33,14 @@
 }
 
 .pager-dir {
-  font-size: 13px;
+  font-size: 14.5px;
   color: var(--ink-mute);
   font-weight: 700;
   letter-spacing: .05em;
 }
 
 .pager-name {
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 700;
   color: var(--navy-800);
 }

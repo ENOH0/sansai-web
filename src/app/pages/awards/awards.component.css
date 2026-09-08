@@ -23,7 +23,7 @@
 .filter-row + .filter-row { margin-top: 14px; }
 
 .filter-label {
-  font-size: 14px;
+  font-size: 15.5px;
   font-weight: 700;
   color: var(--ink-mute);
   min-width: 92px;
@@ -41,7 +41,7 @@
   background: #fff;
   color: var(--ink-soft);
   font-family: inherit;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 600;
   cursor: pointer;
   transition: background .2s var(--ease), color .2s var(--ease),
@@ -59,7 +59,7 @@
 }
 
 .fcount {
-  font-size: 13px;
+  font-size: 14.5px;
   font-weight: 700;
   background: var(--navy-50);
   color: var(--navy-700);
@@ -84,7 +84,7 @@
   border-top: 1px dashed var(--line);
 }
 
-.filter-result { font-size: 14.5px; color: var(--ink-mute); font-weight: 600; }
+.filter-result { font-size: 16px; color: var(--ink-mute); font-weight: 600; }
 
 .fclear {
   min-height: 40px;
@@ -94,7 +94,7 @@
   background: #fff;
   color: var(--navy-700);
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -160,20 +160,20 @@
 .award-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; }
 
 .award-name {
-  font-size: 17px;
+  font-size: 19px;
   line-height: 1.5;
   color: var(--navy-900);
   margin: 4px 0 0;
 }
 
-.award-title { margin: 0; font-size: 15.5px; font-weight: 700; color: var(--navy-600); line-height: 1.6; }
-.award-detail { margin: 0; font-size: 14.5px; color: var(--ink-soft); line-height: 1.7; }
+.award-title { margin: 0; font-size: 17.5px; font-weight: 700; color: var(--navy-600); line-height: 1.6; }
+.award-detail { margin: 0; font-size: 16px; color: var(--ink-soft); line-height: 1.7; }
 
 .award-empty {
   text-align: center;
   padding: 40px 0;
   color: var(--ink-mute);
-  font-size: 16px;
+  font-size: 18px;
 }
 
 /* ---------- ดูรูปขนาดเต็ม ---------- */
@@ -214,7 +214,7 @@
   border: 1px solid rgba(255, 255, 255, .3);
   background: rgba(255, 255, 255, .12);
   color: #fff;
-  font-size: 20px;
+  font-size: 22.5px;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }

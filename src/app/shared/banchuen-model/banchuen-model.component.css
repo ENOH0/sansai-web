@@ -13,7 +13,7 @@
   gap: 9px;
   margin: 0 0 13px;
   color: var(--navy-800);
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: .06em;
 }
@@ -36,7 +36,7 @@
 .bc-src {
   position: relative;
   padding: 12px 4px 12px 18px;
-  font-size: 14.5px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 1.5;
   color: var(--ink-soft);
@@ -57,7 +57,7 @@
   width: 46px; height: 46px;
   margin: 18px auto 0;
   color: #fff;
-  font-size: 23px;
+  font-size: 26px;
   font-weight: 800;
   border-radius: 50%;
   background: var(--navy-600);
@@ -68,7 +68,7 @@
   margin: 9px 0;
   padding: 13px 14px;
   color: #fff;
-  font-size: 14px;
+  font-size: 15.5px;
   font-weight: 600;
   line-height: 1.45;
   border-radius: 10px;
@@ -81,7 +81,7 @@
   display: inline-block;
   min-width: 22px;
   color: var(--gold-400);
-  font-size: 12px;
+  font-size: 13.5px;
   font-weight: 800;
 }
 
@@ -110,7 +110,7 @@
 .bc-help {
   margin: 0;
   color: var(--ink-mute);
-  font-size: 12.5px;
+  font-size: 14px;
   font-weight: 600;
 }
 .bc-help span { color: var(--navy-600); font-weight: 800; }
@@ -121,7 +121,7 @@
   padding: 0 13px;
   color: var(--navy-700);
   font-family: inherit;
-  font-size: 13px;
+  font-size: 14.5px;
   font-weight: 700;
   border: 1px solid var(--navy-100);
   border-radius: 11px;
@@ -240,15 +240,15 @@
   place-items: center;
   width: 36px; height: 36px;
   color: var(--gold-400);
-  font-family: 'Noto Serif Thai', Georgia, serif;
-  font-size: 21px;
+  font-family: 'Sarabun', sans-serif;
+  font-size: 23.5px;
   font-weight: 700;
   border: 2px solid var(--gold-500);
   border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, var(--navy-600), var(--navy-900) 76%);
 }
-.bc-node-name { font-size: 11.5px; font-weight: 800; line-height: 1.2; }
-.bc-node-name small { display: block; margin-top: 3px; color: var(--ink-mute); font-size: 10px; font-weight: 700; }
+.bc-node-name { font-size: 13px; font-weight: 800; line-height: 1.2; }
+.bc-node-name small { display: block; margin-top: 3.5px; color: var(--ink-mute); font-size: 11px; font-weight: 700; }
 
 .bc-core {
   position: absolute; top: 50%; left: 50%;
@@ -267,9 +267,9 @@
   transform: translate(-50%,-50%) translateZ(96px);
   backface-visibility: hidden;
 }
-.bc-core-label { display: block; color: var(--gold-400); font-size: 14px; font-weight: 800; letter-spacing: .12em; }
-.bc-core-title { margin: 3px 0 2px; font-family: 'Noto Serif Thai', serif; font-size: 25px; font-weight: 700; line-height: 1; }
-.bc-core-sub { margin: 0; color: #dbe9ff; font-size: 11px; font-weight: 600; line-height: 1.45; }
+.bc-core-label { display: block; color: var(--gold-400); font-size: 15.5px; font-weight: 800; letter-spacing: .12em; }
+.bc-core-title { margin: 3.5px 0 2px; font-family: 'Sarabun', sans-serif; font-size: 28px; font-weight: 700; line-height: 1; }
+.bc-core-sub { margin: 0; color: #dbe9ff; font-size: 12.5px; font-weight: 600; line-height: 1.45; }
 .bc-core-ring { position: absolute; inset: 8px; border: 1px solid rgba(255,255,255,.5); border-radius: inherit; }
 
 /* คลื่นพลังตอนแตะเลือกองค์ประกอบ */
@@ -312,16 +312,16 @@
   display: grid; place-items: center;
   width: 42px; height: 42px;
   color: var(--gold-400);
-  font-family: 'Noto Serif Thai', Georgia, serif;
-  font-size: 23px;
+  font-family: 'Sarabun', sans-serif;
+  font-size: 26px;
   font-weight: 700;
   border-radius: 50%;
   background: var(--navy-700);
 }
-.bc-detail-type { margin: 0 0 2px; color: var(--navy-600); font-size: 11px; font-weight: 800; letter-spacing: .06em; }
-.bc-detail-title { margin: 0; color: var(--navy-900); font-size: 15px; font-weight: 800; }
-.bc-detail-copy { margin: 3px 0 0; color: var(--ink-soft); font-size: 13px; line-height: 1.5; }
-.bc-detail-next { color: var(--navy-600); font-size: 12.5px; font-weight: 800; white-space: nowrap; }
+.bc-detail-type { margin: 0 0 2px; color: var(--navy-600); font-size: 12.5px; font-weight: 800; letter-spacing: .06em; }
+.bc-detail-title { margin: 0; color: var(--navy-900); font-size: 17px; font-weight: 800; }
+.bc-detail-copy { margin: 3.5px 0 0; color: var(--ink-soft); font-size: 14.5px; line-height: 1.5; }
+.bc-detail-next { color: var(--navy-600); font-size: 14px; font-weight: 800; white-space: nowrap; }
 
 /* ---------- หลักคิดใต้โมเดล ---------- */
 .bc-principles {
@@ -337,8 +337,8 @@
   background: #fff;
   box-shadow: var(--shadow-sm);
 }
-.bc-principle h4 { margin: 0 0 6px; color: var(--navy-800); font-size: 16px; font-weight: 800; }
-.bc-principle p { margin: 0; color: var(--ink-soft); font-size: 14.5px; line-height: 1.65; }
+.bc-principle h4 { margin: 0 0 6px; color: var(--navy-800); font-size: 18px; font-weight: 800; }
+.bc-principle p { margin: 0; color: var(--ink-soft); font-size: 16px; line-height: 1.65; }
 
 /* ---------- iPad แนวนอน ---------- */
 @media (max-width: 1180px) {
@@ -357,14 +357,14 @@
   .bc-viewport { min-height: 440px; }
   .bc-scene { width: min(100%, 430px); }
   .bc-node { width: 120px; min-height: 50px; grid-template-columns: 30px 1fr; padding: 5px; }
-  .bc-node-letter { width: 28px; height: 28px; font-size: 17px; }
-  .bc-node-name { font-size: 9.5px; }
+  .bc-node-letter { width: 31.5px; height: 31.5px; font-size: 19px; }
+  .bc-node-name { font-size: 10.5px; }
   .bc-node-name small { display: none; }
   .bc-core { width: 160px; padding: 16px; }
-  .bc-core-title { font-size: 20px; }
-  .bc-core-sub { font-size: 9.5px; }
+  .bc-core-title { font-size: 22.5px; }
+  .bc-core-sub { font-size: 10.5px; }
   .bc-detail { grid-template-columns: 38px minmax(0,1fr); padding: 10px 12px; }
-  .bc-detail-key { width: 36px; height: 36px; font-size: 19px; }
+  .bc-detail-key { width: 40.5px; height: 40.5px; font-size: 21.5px; }
   .bc-detail-next { display: none; }
   .bc-principles { grid-template-columns: 1fr; }
 }

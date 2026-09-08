@@ -68,8 +68,8 @@ body {
   margin: 0;
   background: var(--paper-alt);
   color: var(--ink);
-  font-family: 'Noto Sans Thai', 'Sarabun', 'Leelawadee UI', 'Segoe UI', system-ui, sans-serif;
-  font-size: 17px;
+  font-family: 'Sarabun', 'Leelawadee UI', 'Segoe UI', system-ui, sans-serif;
+  font-size: 19px;
   line-height: 1.85;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -78,11 +78,12 @@ body {
 }
 
 h1, h2, h3, h4 {
-  font-family: 'Noto Serif Thai', 'Sarabun', serif;
+  font-family: 'Sarabun', 'Leelawadee UI', sans-serif;
   color: var(--navy-900);
-  line-height: 1.5;
+  line-height: 1.45;
   margin: 0;
-  font-weight: 700;
+  /* Sarabun เป็นฟอนต์ไร้เชิง หัวข้อจึงใช้น้ำหนัก 800 ให้ยังเด่นชัด */
+  font-weight: 800;
 }
 
 p { margin: 0 0 1em; }
@@ -114,7 +115,7 @@ a { color: var(--navy-600); text-decoration: none; }
 
 .sec-kicker {
   display: inline-block;
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: .09em;
   color: var(--navy-500);
@@ -122,7 +123,7 @@ a { color: var(--navy-600); text-decoration: none; }
   margin-bottom: 8px;
 }
 
-.sec-title { font-size: clamp(22px, 2.7vw, 30px); line-height: 1.45; }
+.sec-title { font-size: clamp(24.5px, 2.7vw, 33.5px); line-height: 1.45; }
 
 /* กล่องเลขหัวข้อ เช่น 1.1 หรือ 2.3 */
 .sec-title .num {
@@ -134,7 +135,7 @@ a { color: var(--navy-600); text-decoration: none; }
   border-radius: 12px;
   background: var(--navy-600);
   color: #fff;
-  font-size: 17px;
+  font-size: 19px;
   margin-right: 12px;
   vertical-align: middle;
   box-shadow: 0 6px 18px rgba(30, 77, 158, .3);
@@ -163,8 +164,8 @@ a { color: var(--navy-600); text-decoration: none; }
 }
 .card-hover:active { transform: translateY(-2px); }
 
-.card-title { font-size: 19px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-.card-body  { color: var(--ink-soft); font-size: 16.5px; }
+.card-title { font-size: 21.5px; margin-bottom: 11px; display: flex; align-items: center; gap: 11px; }
+.card-body  { color: var(--ink-soft); font-size: 18.5px; }
 .card-accent { border-top: 4px solid var(--navy-600); }
 .card-gold   { border-top: 4px solid var(--gold-500); }
 
@@ -177,7 +178,7 @@ a { color: var(--navy-600); text-decoration: none; }
   gap: 6px;
   padding: 5px 12px;
   border-radius: 999px;
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: 600;
   background: var(--navy-50);
   color: var(--navy-700);
@@ -201,7 +202,7 @@ a { color: var(--navy-600); text-decoration: none; }
 table.tbl {
   width: 100%;
   border-collapse: collapse;
-  font-size: 15.5px;
+  font-size: 17.5px;
   min-width: 520px;
 }
 
@@ -211,7 +212,7 @@ table.tbl caption {
   padding: 16px 20px 4px;
   font-weight: 700;
   color: var(--navy-800);
-  font-size: 16.5px;
+  font-size: 18.5px;
 }
 
 table.tbl th {
@@ -263,20 +264,20 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
   margin-bottom: 6px;
 }
 
-.chart-title { font-size: 17.5px; font-weight: 700; color: var(--navy-800); }
-.chart-sub   { font-size: 14px; color: var(--ink-mute); }
+.chart-title { font-size: 19.5px; font-weight: 700; color: var(--navy-800); }
+.chart-sub   { font-size: 15.5px; color: var(--ink-mute); }
 
 .chart-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 14px; }
-.legend-item  { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink-soft); font-weight: 600; }
+.legend-item  { display: inline-flex; align-items: center; gap: 9px; font-size: 15.5px; color: var(--ink-soft); font-weight: 600; }
 .legend-swatch { width: 14px; height: 4px; border-radius: 3px; flex: none; }
 .legend-swatch.dot { width: 11px; height: 11px; border-radius: 50%; }
 
 /* touch-action: pan-y ให้เลื่อนหน้าผ่านกราฟได้ปกติบนจอสัมผัส */
 .chart-svg  { display: block; width: 100%; height: auto; touch-action: pan-y; }
-.chart-note { font-size: 14px; color: var(--ink-mute); margin-top: 12px; line-height: 1.7; }
+.chart-note { font-size: 15.5px; color: var(--ink-mute); margin-top: 13.5px; line-height: 1.7; }
 
 .axis-line   { stroke: var(--line); stroke-width: 1; }
-.axis-text   { font-size: 12.5px; fill: var(--ink-mute); font-family: inherit; }
+.axis-text   { font-size: 14px; fill: var(--ink-mute); font-family: inherit; }
 .axis-text.b { font-weight: 700; fill: var(--ink-soft); }
 .grid-line   { stroke: #eef2f8; stroke-width: 1; }
 
@@ -306,8 +307,8 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
   box-shadow: 0 0 0 4px var(--navy-50);
 }
 
-.step-item h4 { font-size: 17px; margin-bottom: 5px; }
-.step-item p  { margin: 0; color: var(--ink-soft); font-size: 16px; }
+.step-item h4 { font-size: 19px; margin-bottom: 5.5px; }
+.step-item p  { margin: 0; color: var(--ink-soft); font-size: 18px; }
 
 /* กล่องตัวเลขลำดับ ใช้ในการ์ดของหลายหน้า */
 .step-no {
@@ -318,7 +319,7 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
   background: var(--navy-50);
   color: var(--navy-700);
   font-weight: 700;
-  font-size: 16px;
+  font-size: 18px;
   margin-bottom: 12px;
   border: 1px solid var(--navy-100);
 }
@@ -336,15 +337,15 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   padding: 18px 22px;
   color: var(--navy-900);
-  font-size: 16.5px;
+  font-size: 18.5px;
 }
 
 .callout-gold { border-left-color: var(--gold-500); background: #fdf8ec; color: #6b5216; }
 .callout strong { color: var(--navy-800); }
 
 .quote {
-  font-family: 'Noto Serif Thai', serif;
-  font-size: clamp(19px, 2.3vw, 26px);
+  font-family: 'Sarabun', sans-serif;
+  font-size: clamp(21.5px, 2.3vw, 29px);
   line-height: 1.7;
   color: var(--navy-800);
   text-align: center;
@@ -364,7 +365,7 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
   padding: 0 24px;
   border-radius: 13px;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 18px;
   border: 1px solid transparent;
   cursor: pointer;
   transition: transform .2s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
@@ -436,8 +437,8 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
 
 @media (max-width: 560px) {
   .wrap, .wrap-wide { padding: 0 18px; }
-  body { font-size: 16.5px; }
-  .sec-title .num { min-width: 38px; height: 38px; font-size: 15px; margin-right: 9px; }
+  body { font-size: 18.5px; }
+  .sec-title .num { min-width: 42.5px; height: 42.5px; font-size: 17px; margin-right: 10px; }
 }
 
 /* ============================================================
