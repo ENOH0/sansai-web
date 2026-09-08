@@ -390,126 +390,50 @@ function pageAwards(D) {
 //  หน้าต่าง ๆ
 // ============================================================
 function pageHome(D) {
-  const S = D.SCHOOL, DIMS = D.DIMENSIONS, st = S.students;
+  const S = D.SCHOOL, DIMS = D.DIMENSIONS, EV = D.EVAL_LINK;
+  const SLIDES = ['gallery/d1/g08.jpg','gallery/d1/g10.jpg','gallery/d1/g15.jpg','gallery/d3/g12.jpg','gallery/d1/g16.jpg'];
+  const IMG = [6, 1, 2, 2, 7];
+  const links = [
+    ...DIMS.map(d => ({ no: String(d.no), name: d.name, sub: d.desc, weight: d.weight,
+      href: '#' + d.path.slice(1), image: `gallery/d${d.no}/g0${IMG[d.no - 1]}.jpg`, ext: false })),
+    { no: '★', name: 'รางวัลเชิงประจักษ์',
+      sub: 'รางวัลของนักเรียนและครู พร้อมภาพหลักฐานเชิงประจักษ์ ระดับนานาชาติ ระดับชาติ และระดับภูมิภาค',
+      href: '#awards', image: 'gallery/d1/g02.jpg', ext: false },
+    { no: '↗', name: EV.label,
+      sub: 'แบบฟอร์มสำหรับคณะกรรมการเลือกรายการอาหารและชุดการแสดงในวันประเมิน (เปิดในแท็บใหม่)',
+      href: EV.url, image: 'gallery/d1/g16.jpg', ext: true }
+  ];
   return `
-<section class="hero"><div class="wrap hero-inner">
-  <span class="hero-eyebrow"${rev()}>${esc(S.award)} · ${esc(S.level)}</span>
-  <h1 class="hero-title"${rev('', 90)}>${esc(S.name)}</h1>
-  <div class="hero-rule"${rev('', 150)}></div>
-  <p class="hero-lead"${rev('', 200)}>เอกสารประกอบการประเมินสถานศึกษา ${esc(S.academicYear)}<br/>${esc(S.area)} ${esc(S.affiliation)}</p>
-  <div class="hero-actions"${rev('', 280)}>
-    <a class="btn btn-primary" href="#dimension-1">เริ่มอ่านด้านที่ 1 ›</a>
-    <a class="btn btn-ghost" href="#overview">ภาพรวมทั้ง 5 ด้าน</a>
-  </div>
-</div></section>
+<div class="cover-bg" aria-hidden="true">
+  <div class="cover-media" id="coverMedia">${SLIDES.map((s, i) =>
+    `<div class="cover-slide${i === 0 ? ' is-on' : ''}" style="background-image:url(public/${s})"></div>`).join('')}</div>
+  <div class="cover-veil"></div>
+</div>
 
-<section class="section section-alt"><div class="wrap">
-  <div class="sec-head vision-head"${rev()}>
-    <div class="sec-kicker">วิสัยทัศน์</div>
-    <p class="quote">“${esc(S.vision)}”</p>
-    <div class="sec-rule vision-rule"></div>
+<section class="cover">
+  <div class="cover-inner">
+    <p class="cover-eyebrow">${esc(S.award)} · ${esc(S.level)}</p>
+    <h1 class="cover-title">${esc(S.name)}</h1>
+    <div class="cover-rule"></div>
+    <p class="cover-sub">เอกสารประกอบการประเมินสถานศึกษา ${esc(S.academicYear)}<br>${esc(S.area)}</p>
+    <a class="cover-cta" href="#dimension-1">เริ่มดูข้อมูลด้านที่ 1</a>
   </div>
-  <div class="grid grid-4" style="margin-top:34px">
-    ${S.futureSkills.map((s, i) => `<div class="card card-hover card-accent"${rev('zoom', i * 100)}>
-      <div class="chip chip-gold" style="margin-bottom:10px">ทักษะแห่งอนาคต ${i + 1}</div>
-      <div class="skill-text">${esc(s)}</div></div>`).join('')}
-  </div>
-  <div class="grid grid-3" style="margin-top:22px">
-    <div class="card"${rev('left')}><h3 class="card-title">ปรัชญา</h3><p class="card-body" style="margin:0">${esc(S.philosophy)}</p></div>
-    <div class="card"${rev('', 80)}><h3 class="card-title">ค่านิยม</h3><p class="card-body" style="margin:0">${esc(S.coreValue)}</p></div>
-    <div class="card"${rev('right', 160)}><h3 class="card-title">วัฒนธรรมองค์กร</h3><p class="card-body" style="margin:0">${esc(S.way)}</p></div>
-  </div>
-</div></section>
+  <a class="cover-scroll" href="#contents"><span>สารบัญ</span>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+</section>
 
-<section class="section"><div class="wrap">
-  ${secHead('ข้อมูลพื้นฐาน', '', 'โรงเรียนสันทรายวิทยาคมในวันนี้',
-    'โรงเรียนสหศึกษาขนาดใหญ่ ก่อตั้งเมื่อวันที่ 14 มิถุนายน พ.ศ. 2516 บนพื้นที่ 35 ไร่ 2 งาน 5 ตารางวา เปิดสอนระดับชั้นมัธยมศึกษาปีที่ 1 ถึงมัธยมศึกษาปีที่ 6 ครอบคลุมเขตพื้นที่บริการ 12 ตำบลของอำเภอสันทราย จังหวัดเชียงใหม่')}
-  ${kpiGrid(S.highlights)}
-  <div style="margin-top:34px">${lineChart({
-    title: 'จำนวนนักเรียนย้อนหลัง 4 ปีการศึกษา',
-    subtitle: 'แยกตามระดับชั้นมัธยมศึกษาตอนต้น ตอนปลาย และรวมทั้งหมด (หน่วย: คน)',
-    labels: st.years, fmt: n0,
-    series: [
-      { name: 'มัธยมศึกษาตอนต้น', values: st.rows[3].values, color: '#4f88d4' },
-      { name: 'มัธยมศึกษาตอนปลาย', values: st.rows[7].values, color: '#d4a537' },
-      { name: 'รวมทั้งหมด', values: st.rows[8].values, color: '#132f63' }
-    ],
-    note: 'จำนวนนักเรียนรวมเพิ่มขึ้นจาก 1,658 คน ในปีการศึกษา 2566 เป็น 2,198 คน ในปีการศึกษา 2569 คิดเป็นการเพิ่มขึ้นร้อยละ 32.57 ภายใน 4 ปี สะท้อนความเชื่อมั่นของผู้ปกครองและชุมชนที่มีต่อคุณภาพการจัดการศึกษาของโรงเรียน'
-  })}</div>
-  <div class="grid grid-2" style="margin-top:24px">
-    ${table({
-      caption: 'จำนวนนักเรียนจำแนกตามระดับชั้น (คน)',
-      headers: ['ระดับชั้น', ...st.years.map(y => 'ปี ' + y)],
-      rows: st.rows.map(r => ({ cells: [r.level, ...r.values.map(n0)], total: !!r.total }))
-    })}
-    ${table({
-      caption: 'ครูและบุคลากรทางการศึกษา ณ วันที่ 10 มิถุนายน 2568 (คน)',
-      headers: ['ประเภทบุคลากร', 'ชาย', 'หญิง', 'รวม'],
-      rows: S.staff.rows.map(r => ({ cells: [r.type, r.male || '–', r.female || '–', r.total], total: !!r.isTotal })),
-      note: 'ระดับการศึกษาสูงสุด: ต่ำกว่าปริญญาตรี 16 คน · ปริญญาตรี 57 คน · สูงกว่าปริญญาตรี 39 คน'
-    })}
-  </div>
-</div></section>
-
-<section class="section section-alt"><div class="wrap">
-  ${secHead('นวัตกรรมการบริหาร', '', S.model.name, S.model.tagline)}
-  <div class="grid grid-4">${S.model.letters.map((l, i) => `
-    <div class="card card-hover"${rev('zoom', i * 70)}>
-      <div class="model-letter">
-        <span class="model-badge">${esc(l.letter)}</span>
-        <span class="model-en">${esc(l.en)}</span>
-      </div><p class="card-body" style="margin:0;font-size:15.5px">${esc(l.th)}</p></div>`).join('')}</div>
-</div></section>
-
-<section class="section" id="overview"><div class="wrap">
-  ${secHead('สารบัญ', '', 'รายการประเมินทั้ง 5 ด้าน',
-    'เนื้อหาแบ่งตามรายการประเมินและตัวชี้วัดของแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน ระดับประถมศึกษาและมัธยมศึกษา สามารถเลือกอ่านแต่ละด้านได้จากแถบเมนูด้านบนหรือการ์ดด้านล่างนี้')}
-  <div class="grid grid-3">${DIMS.map((d, i) => `
-    <a class="dim-card" href="#${d.path.slice(1)}"${rev('', i * 90)}>
-      <div class="dim-num">${d.no}</div>
-      <div class="dim-name">${esc(d.name)}</div>
-      <p class="dim-desc">${esc(d.desc)}</p>
-      <div class="chip-row" style="margin-bottom:14px">
-        <span class="chip chip-gold">น้ำหนัก ${d.weight}</span><span class="chip">${d.items} รายการ</span></div>
-      <div class="dim-meta">อ่านด้านที่ ${d.no} <span>›</span></div></a>`).join('')}</div>
-</div></section>
-
-<section class="section section-alt"><div class="wrap">
-  ${secHead('ทิศทางการพัฒนา', '', 'พันธกิจ เป้าประสงค์ และกลยุทธ์',
-    'โรงเรียนกำหนดทิศทางการพัฒนาไว้ในแผนพัฒนาการจัดการศึกษา พ.ศ. 2568–2570 ซึ่งจัดทำจากการศึกษาสภาพปัญหา ความต้องการจำเป็น และบริบทของสถานศึกษาอย่างเป็นระบบ โดยความร่วมมือของผู้มีส่วนได้ส่วนเสียทุกฝ่าย')}
-  <div class="grid grid-2">
-    <div class="card"${rev('left')}><h3 class="card-title">พันธกิจ 5 ข้อ</h3>
-      <ol class="bullets">${S.missions.map(m => `<li>${esc(m)}</li>`).join('')}</ol></div>
-    <div class="card"${rev('right')}><h3 class="card-title">เป้าประสงค์ 5 ข้อ</h3>
-      <ol class="bullets">${S.goals.map(g => `<li>${esc(g)}</li>`).join('')}</ol></div>
-  </div>
-  <div class="grid grid-3" style="margin-top:20px">${S.strategies.map((st2, i) => `
-    <div class="card card-accent"${rev('', i * 100)}>
-      <div class="chip" style="margin-bottom:10px">กลยุทธ์ที่ ${st2.no}</div>
-      <h3 class="card-title" style="font-size:17.5px">${esc(st2.title)}</h3>
-      <ul class="bullets" style="font-size:15.5px">${st2.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>`).join('')}</div>
-</div></section>
-
-<section class="section"><div class="wrap">
-  ${secHead('บริบทของสถานศึกษา', '', 'ชุมชนและเครือข่ายความร่วมมือ', S.community.serviceArea)}
-  <div class="grid grid-2">
-    <div class="card"${rev('left')}><h3 class="card-title">สภาพชุมชนโดยรวม</h3>
-      <ul class="bullets">
-        <li>ลักษณะชุมชน: ${esc(S.community.character)}</li>
-        <li>จำนวนประชากร: ${esc(S.community.population)}</li>
-        <li>เด็กในวัยเรียน: ${esc(S.community.schoolAgeChildren)}</li>
-        <li>อาชีพสำคัญ: ${esc(S.community.occupation)}</li>
-        <li>รายได้เฉลี่ยต่อครัวเรือน: ${esc(S.community.income)}</li>
-      </ul>
-      <p class="card-body" style="margin-top:12px;margin-bottom:0">${esc(S.community.note)}</p></div>
-    <div class="card card-gold"${rev('right')}>
-      <h3 class="card-title">เครือข่ายความร่วมมือ</h3>
-      <p class="card-body">${esc(S.community.partners)}</p>
-      <h3 class="card-title" style="margin-top:20px">อาคารสถานที่และเทคโนโลยี</h3>
-      <div class="table-scroll" style="border:none"><table class="tbl" style="min-width:0"><tbody>
-        ${S.facilities.map(f => `<tr><td>${esc(f.name)}</td><td class="num">${esc(f.value)}</td></tr>`).join('')}
-      </tbody></table></div></div>
-  </div>
+<section class="section contents" id="contents"><div class="wrap">
+  <div class="sec-head"${rev()}><h2 class="sec-title">สารบัญ</h2><div class="sec-rule"></div></div>
+  <div class="toc">${links.map((l, i) => `
+    <a class="toc-card" href="${l.ext ? l.href : l.href}"${l.ext ? ' target="_blank" rel="noopener"' : ''}${rev('zoom', i * 70)}>
+      <span class="toc-photo" style="background-image:url(public/${l.image})"></span>
+      <span class="toc-body">
+        <span class="toc-top"><span class="toc-no">${esc(l.no)}</span>${l.weight ? `<span class="toc-weight">น้ำหนัก ${l.weight} คะแนน</span>` : ''}</span>
+        <span class="toc-name">${esc(l.name)}</span>
+        <span class="toc-sub">${esc(l.sub)}</span>
+        <span class="toc-go">เปิดดู <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </span>
+    </a>`).join('')}</div>
 </div></section>`;
 }
 
@@ -1041,6 +965,7 @@ function activate(root){
   });
 }
 
+let coverTimer = null;
 function route(){
   const id = (location.hash||'#home').slice(1);
   const page = PAGES[id] ? id : 'home';
@@ -1056,6 +981,18 @@ function route(){
   if (bc) initBanchuen(bc, BC_STEPS);
   const sw = document.getElementById('swRoot');
   if (sw) initSmartWheel(sw, SW_ITEMS);
+  // ไล่เปลี่ยนภาพพื้นหลังหน้าปก
+  clearInterval(coverTimer);
+  const cm = document.getElementById('coverMedia');
+  if (cm) {
+    const sl = cm.querySelectorAll('.cover-slide');
+    let ci = 0;
+    coverTimer = setInterval(() => {
+      sl[ci].classList.remove('is-on');
+      ci = (ci + 1) % sl.length;
+      sl[ci].classList.add('is-on');
+    }, 6000);
+  }
 }
 
 document.getElementById('navToggle').addEventListener('click',()=>{ drawer.hidden = !drawer.hidden; });

@@ -1,45 +1,64 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit, NgZone, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TableRow } from '../../core/models';
 import { RouterLink } from '@angular/router';
-import { SCHOOL, DIMENSIONS } from '../../data/school.data';
+import { SCHOOL, DIMENSIONS, EVAL_LINK } from '../../data/school.data';
 import { RevealDirective } from '../../shared/directives/reveal.directive';
-import { SectionHeaderComponent } from '../../shared/section-header/section-header.component';
-import { KpiGridComponent } from '../../shared/kpi-grid/kpi-grid.component';
-import { DataTableComponent } from '../../shared/data-table/data-table.component';
-import { LineChartComponent } from '../../shared/line-chart/line-chart.component';
+
+/** รายการในสารบัญหน้าแรก — แก้ภาพหรือข้อความได้ที่นี่ที่เดียว */
+interface HomeLink {
+  no: string; name: string; sub: string; weight?: number;
+  path?: string; url?: string; image: string;
+}
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [
-    CommonModule, RouterLink, RevealDirective,
-    SectionHeaderComponent, KpiGridComponent, DataTableComponent, LineChartComponent
-  ],
+  imports: [CommonModule, RouterLink, RevealDirective],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
   readonly school = SCHOOL;
-  readonly dimensions = DIMENSIONS;
+  private readonly zone = inject(NgZone);
 
-  readonly studentYears = SCHOOL.students.years;
+  /** ภาพพื้นหลังที่ไล่เปลี่ยนในหน้าปก */
+  readonly slides = [
+    'gallery/d1/g08.jpg',
+    'gallery/d1/g10.jpg',
+    'gallery/d1/g15.jpg',
+    'gallery/d3/g12.jpg',
+    'gallery/d1/g16.jpg'
+  ];
+  readonly current = signal(0);
+  private timer?: number;
 
-  readonly studentSeries = [
-    { name: 'มัธยมศึกษาตอนต้น', values: SCHOOL.students.rows[3].values, color: '#4f88d4' },
-    { name: 'มัธยมศึกษาตอนปลาย', values: SCHOOL.students.rows[7].values, color: '#d4a537' },
-    { name: 'รวมทั้งหมด', values: SCHOOL.students.rows[8].values, color: '#132f63' }
+  readonly links: HomeLink[] = [
+    ...DIMENSIONS.map(d => ({
+      no: String(d.no), name: d.name, sub: d.desc, weight: d.weight,
+      path: d.path, image: `gallery/d${d.no}/g0${[6, 1, 2, 2, 7][d.no - 1]}.jpg`
+    })),
+    {
+      no: '★', name: 'รางวัลเชิงประจักษ์',
+      sub: 'รางวัลของนักเรียนและครู พร้อมภาพหลักฐานเชิงประจักษ์ ระดับนานาชาติ ระดับชาติ และระดับภูมิภาค',
+      path: '/awards', image: 'gallery/d1/g02.jpg'
+    },
+    {
+      no: '↗', name: EVAL_LINK.label,
+      sub: 'แบบฟอร์มสำหรับคณะกรรมการเลือกรายการอาหารและชุดการแสดงในวันประเมิน (เปิดในแท็บใหม่)',
+      url: EVAL_LINK.url, image: 'gallery/d1/g16.jpg'
+    }
   ];
 
-  readonly studentHeaders = ['ระดับชั้น', ...SCHOOL.students.years.map(y => 'ปี ' + y)];
+  ngOnInit(): void {
+    // เปลี่ยนภาพพื้นหลังนอก zone เพื่อไม่ให้ Angular ตรวจสอบทั้งหน้าทุก 6 วินาที
+    this.zone.runOutsideAngular(() => {
+      this.timer = window.setInterval(() => {
+        this.zone.run(() => this.current.set((this.current() + 1) % this.slides.length));
+      }, 6000);
+    });
+  }
 
-  readonly studentRows: TableRow[] = SCHOOL.students.rows.map(r => ({
-    cells: [r.level, ...r.values.map(v => v.toLocaleString('th-TH'))],
-    total: !!r.total
-  }));
-
-  readonly staffRows: TableRow[] = SCHOOL.staff.rows.map(r => ({
-    cells: [r.type, r.male || '–', r.female || '–', r.total],
-    total: !!r.isTotal
-  }));
+  ngOnDestroy(): void {
+    if (this.timer !== undefined) clearInterval(this.timer);
+  }
 }

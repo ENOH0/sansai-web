@@ -1,180 +1,251 @@
-/* หน้าแรก — ส่วนเปิด (hero) และการ์ดสรุปแต่ละด้าน */
-:host { display: block; }
-
-/* ---------- ส่วนเปิดของเว็บ ---------- */
-.hero {
+/* ═══════════ หน้าปก ═══════════ */
+.cover {
   position: relative;
+  /* 100svh ทำให้เต็มจอพอดีบน iPad ไม่โดนแถบเบราว์เซอร์กิน */
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: calc(var(--nav-h) + 40px) 24px 96px;
   overflow: hidden;
-  background: linear-gradient(155deg, var(--navy-900) 0%, var(--navy-800) 45%, var(--navy-600) 100%);
-  color: #fff;
-  padding: calc(var(--nav-h) + 74px) 0 84px;
+  isolation: isolate;
 }
 
-/* วงกลมเรืองแสงสองวงที่ลอยช้า ๆ อยู่เบื้องหลัง */
-.hero::before,
-.hero::after {
-  content: '';
+/* ตรึงไว้กับจอ ภาพจึงเต็มจอตลอดแม้เลื่อนลงดูสารบัญ
+   z-index ติดลบ ทำให้อยู่หลังเนื้อหาแต่ยังเห็นผ่านพื้นที่โปร่ง */
+.cover-bg { position: fixed; inset: 0; z-index: -1; background: var(--navy-900); }
+
+.cover-media { position: absolute; inset: 0; }
+
+.cover-slide {
   position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 1.6s var(--ease), transform 7s linear;
+}
+.cover-slide.is-on { opacity: 1; transform: scale(1); }
+
+/* ม่านน้ำเงินเข้ม ทำให้ตัวหนังสือขาวอ่านชัดทุกภาพ */
+.cover-veil {
+  position: absolute;
+  inset: 0;
+  /* ── ความเข้มของม่าน ── ตัวเลขท้ายสุดของแต่ละ rgba() คือค่าความทึบ 0–1
+     0 = ใส ไม่มีม่าน · 1 = ทึบสนิท ยิ่งเลขน้อยยิ่งเห็นภาพชัดขึ้น
+     ถ้าลดแล้วตัวหนังสือขาวเริ่มอ่านยาก ให้เพิ่มกลับทีละ .05 */
+  background:
+    linear-gradient(180deg, rgba(8, 21, 47, .9) 0%, rgba(8, 21, 47, .8) 45%, rgba(8, 21, 47, .48) 100%),
+    radial-gradient(ellipse at 50% 46%, rgba(8, 21, 47, .12), rgba(8, 21, 47, .58) 78%);
 }
 
-.hero::before {
-  width: 620px; height: 620px;
-  right: -180px; top: -240px;
-  background: radial-gradient(circle, rgba(232, 196, 106, .22), transparent 62%);
-  animation: floatA 16s ease-in-out infinite;
+.cover-inner {
+  max-width: 940px;
+  text-align: center;
+  color: #fff;
 }
 
-.hero::after {
-  width: 520px; height: 520px;
-  left: -160px; bottom: -240px;
-  background: radial-gradient(circle, rgba(130, 173, 228, .28), transparent 65%);
-  animation: floatB 20s ease-in-out infinite;
+.cover-eyebrow {
+  margin: 0 0 22px;
+  color: var(--gold-400);
+  font-size: clamp(13px, 1.6vw, 16px);
+  font-weight: 700;
+  letter-spacing: .12em;
+  animation: coverRise .9s var(--ease) both;
 }
 
-/* เคลื่อนไหวด้วย translate3d เท่านั้น เพื่อให้ Safari บน iPad ลื่นไหล */
-@keyframes floatA {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(-26px, 30px, 0); }
+.cover-title {
+  margin: 0;
+  color: #fff;
+  font-family: 'Noto Serif Thai', serif;
+  font-size: clamp(40px, 7.4vw, 88px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -.01em;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, .35);
+  animation: coverRise .9s .12s var(--ease) both;
 }
 
-@keyframes floatB {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(30px, -24px, 0); }
+.cover-rule {
+  width: 96px;
+  height: 4px;
+  margin: 28px auto;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--gold-400), var(--gold-600));
+  animation: coverRise .9s .24s var(--ease) both;
 }
 
-.hero h1, .hero h2, .hero h3 { color: #fff; }
-.hero-inner { position: relative; z-index: 2; }
+.cover-sub {
+  margin: 0 auto;
+  max-width: 640px;
+  color: #d9e5f8;
+  font-size: clamp(15px, 1.9vw, 18px);
+  line-height: 1.85;
+  animation: coverRise .9s .36s var(--ease) both;
+}
 
-.hero-eyebrow {
+.cover-cta {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  padding: 8px 16px;
+  min-height: 56px;
+  margin-top: 38px;
+  padding: 0 40px;
+  color: var(--navy-900);
+  font-size: 17px;
+  font-weight: 800;
+  text-decoration: none;
   border-radius: 999px;
-  background: rgba(255, 255, 255, .13);
-  border: 1px solid rgba(255, 255, 255, .24);
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: .02em;
-  color: var(--gold-400);
+  background: linear-gradient(135deg, var(--gold-400), var(--gold-500));
+  box-shadow: 0 14px 34px rgba(212, 165, 55, .34);
+  animation: coverRise .9s .48s var(--ease) both;
+  transition: transform .22s var(--ease), box-shadow .22s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.cover-cta:active { transform: scale(.97); }
+@media (hover: hover) {
+  .cover-cta:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(212, 165, 55, .45); }
 }
 
-.hero-title {
-  font-size: clamp(30px, 4.6vw, 54px);
-  line-height: 1.32;
-  margin: 20px 0 14px;
-  letter-spacing: -.01em;
+.cover-scroll {
+  position: absolute;
+  bottom: max(26px, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  color: #cfe0fa;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-decoration: none;
+  animation: coverRise .9s .7s var(--ease) both;
+}
+.cover-scroll svg { animation: coverBob 2.2s ease-in-out infinite; }
+
+@keyframes coverRise {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes coverBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
 }
 
-.hero-lead {
-  font-size: clamp(16px, 1.7vw, 20px);
-  color: rgba(255, 255, 255, .86);
-  max-width: 62ch;
-  line-height: 1.85;
+/* ═══════════ สารบัญ ═══════════ */
+/* พื้นโปร่งเพื่อให้เห็นภาพพื้นหลังที่ตรึงอยู่ */
+.contents { background: transparent; }
+.contents .sec-title { color: #fff; text-shadow: 0 2px 18px rgba(8, 21, 47, .6); }
+
+.toc {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
 }
 
-.hero-rule {
-  width: 84px; height: 4px;
-  border-radius: 4px;
-  background: var(--gold-500);
-  margin: 22px 0;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-top: 32px;
-}
-
-/* ---------- การ์ดสรุปแต่ละด้าน ---------- */
-.dim-card {
-  display: block;
-  background: #fff;
+.toc-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  text-decoration: none;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 26px;
+  background: #fff;
   box-shadow: var(--shadow-sm);
-  position: relative;
   overflow: hidden;
-  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+  transition: transform .26s var(--ease), box-shadow .26s var(--ease), border-color .26s var(--ease);
+  -webkit-tap-highlight-color: transparent;
 }
-
-.dim-card::before {
-  content: '';
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 5px;
-  background: linear-gradient(180deg, var(--navy-500), var(--navy-800));
-}
-
-.dim-card:active { transform: translateY(-3px); }
-
+.toc-card:active { transform: scale(.985); }
 @media (hover: hover) {
-  .dim-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+  .toc-card:hover { transform: translateY(-6px); border-color: var(--navy-200); box-shadow: var(--shadow-lg); }
+  .toc-card:hover .toc-photo { transform: scale(1.06); }
+  .toc-card:hover .toc-go { color: var(--gold-600); }
 }
 
-.dim-num {
-  font-family: 'Noto Serif Thai', serif;
-  font-size: 40px;
-  font-weight: 700;
-  color: var(--navy-100);
-  line-height: 1;
-  margin-bottom: 6px;
+.toc-photo {
+  display: block;
+  height: 168px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--navy-100);
+  transition: transform .5s var(--ease);
 }
 
-.dim-name { font-size: 20px; font-weight: 700; color: var(--navy-900); margin-bottom: 8px; }
-.dim-desc { font-size: 15.5px; color: var(--ink-soft); margin-bottom: 14px; }
-
-.dim-meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  color: var(--navy-600);
-  font-weight: 700;
+.toc-body {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 20px 22px 22px;
 }
 
-/* ---------- กล่องย่อยในหน้าแรก ---------- */
-.vision-head { text-align: center; }
-.vision-rule { margin: 18px auto 0; }
-.skill-text { font-weight: 700; color: var(--navy-800); font-size: 17px; line-height: 1.6; }
+.toc-top { display: flex; align-items: center; gap: 10px; }
 
-.model-letter {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-
-.model-badge {
-  width: 44px; height: 44px;
-  border-radius: 12px;
-  background: var(--navy-700);
+.toc-no {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
   color: #fff;
-  display: grid; place-items: center;
-  font-size: 21px;
-  font-weight: 700;
   font-family: 'Noto Serif Thai', serif;
+  font-size: 19px;
+  font-weight: 700;
+  border-radius: 11px;
+  background: linear-gradient(135deg, var(--navy-700), var(--navy-500));
 }
 
-.model-en { font-weight: 700; color: var(--navy-600); font-size: 14.5px; line-height: 1.4; }
+.toc-weight {
+  padding: 5px 11px;
+  color: var(--navy-800);
+  font-size: 12.5px;
+  font-weight: 700;
+  border-radius: 999px;
+  background: var(--navy-50);
+}
 
+.toc-name {
+  color: var(--navy-900);
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.toc-sub {
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+
+.toc-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  color: var(--navy-600);
+  font-size: 14.5px;
+  font-weight: 800;
+  transition: color .2s var(--ease);
+}
+
+/* iPad แนวนอน (1180px) ยังได้ 3 คอลัมน์ เห็นสารบัญเกือบครบในหน้าเดียว */
+@media (max-width: 900px) { .toc { grid-template-columns: repeat(2, 1fr); } }
+
+/* iPad แนวตั้ง — 2 คอลัมน์ ย่อการ์ดลงเล็กน้อย */
 @media (max-width: 834px) {
-  .hero { padding: calc(var(--nav-h) + 56px) 0 64px; }
+  .toc { gap: 16px; }
+  .toc-photo { height: 140px; }
+  .toc-body { padding: 16px 18px 18px; }
+  .toc-name { font-size: 17px; }
+}
+
+@media (max-width: 560px) {
+  .toc { grid-template-columns: 1fr; }
+  .toc-photo { height: 160px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero::before, .hero::after { animation: none !important; }
-}
-
-@media print {
-  .hero {
-    background: var(--navy-900) !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+  .cover-eyebrow, .cover-title, .cover-rule, .cover-sub, .cover-cta, .cover-scroll {
+    animation: none !important;
   }
-  .dim-card { break-inside: avoid; box-shadow: none; }
+  .cover-slide { transition: opacity .4s linear; transform: none; }
+  .cover-scroll svg { animation: none !important; }
 }
