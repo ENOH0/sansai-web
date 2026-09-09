@@ -283,3 +283,11 @@
 :host ::ng-deep .card .step-item h4,
 :host ::ng-deep .card .step-item p { color: var(--ink-soft); }
 :host ::ng-deep .card .sec-lead { color: var(--ink-soft); }
+
+/* จุดกลมของไทม์ไลน์และป้ายชิปที่อยู่นอกการ์ด */
+:host ::ng-deep .step-item::before { border-color: rgba(255, 255, 255, .6); }
+:host ::ng-deep .chip { border-color: rgba(255, 255, 255, .35); }
+:host ::ng-deep .card .step-item::before { border-color: var(--navy-300); }
+:host ::ng-deep .card .steps { border-left-color: var(--navy-100); }
+:host ::ng-deep .card .chip { border-color: var(--navy-100); }
+:host ::ng-deep .card-title { color: var(--navy-900); }

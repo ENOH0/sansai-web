@@ -236,3 +236,23 @@
   .d2-video { display: none; }
   .d2-bg { background: var(--navy-900) url('/video/school-center-poster.jpg') center/cover; }
 }
+
+/* ---------- ข้อความที่ไม่ได้อยู่ในการ์ด ต้องเป็นสีสว่างเพราะอยู่บนพื้นวิดีโอ ---------- */
+:host ::ng-deep .steps { border-left-color: rgba(255, 255, 255, .28); }
+:host ::ng-deep .step-item h4 { color: #fff; }
+:host ::ng-deep .step-item p { color: #dbe6f7; }
+:host ::ng-deep .step-item::before { border-color: rgba(255, 255, 255, .6); }
+:host ::ng-deep .bullets > li { color: #e4ecfa; }
+:host ::ng-deep .chip { border-color: rgba(255, 255, 255, .35); }
+
+/* กลับมาเป็นสีเข้มเมื่ออยู่ในการ์ดหรือกล่องพื้นขาว */
+:host ::ng-deep .card .step-item h4,
+:host ::ng-deep .callout .step-item h4,
+:host ::ng-deep .acc-ind .step-item h4 { color: var(--navy-900); }
+:host ::ng-deep .card .step-item p,
+:host ::ng-deep .card .bullets > li,
+:host ::ng-deep .callout .bullets > li,
+:host ::ng-deep .acc-ind li { color: var(--ink-soft); }
+:host ::ng-deep .card .steps { border-left-color: var(--navy-100); }
+:host ::ng-deep .card .step-item::before { border-color: var(--navy-300); }
+:host ::ng-deep .card .chip { border-color: var(--navy-100); }
