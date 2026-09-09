@@ -80,3 +80,9 @@
 @media (max-width: 1024px) { .gal-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 834px)  { .gal-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; } }
 @media (max-width: 520px)  { .gal-grid { grid-template-columns: 1fr; } }
+
+/* วางบนพื้นภาพหรือวิดีโอ — ตัวหนังสือสีขาวพร้อมเงาให้อ่านชัด */
+.on-media .sec-title,
+.sec-head.on-media .sec-title { color: #fff; text-shadow: 0 2px 18px rgba(8, 21, 47, .65); }
+.sec-lead.on-media { color: #dbe6f7; }
+.gal-cap.on-media { color: #dbe6f7; text-shadow: 0 1px 10px rgba(8, 21, 47, .6); }

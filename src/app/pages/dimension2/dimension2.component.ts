@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableRow } from '../../core/models';
 import { DIM2 } from '../../data/dimension2.data';
@@ -29,6 +29,44 @@ import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
   styleUrl: './dimension2.component.css'
 })
 export class Dimension2Component {
+  /* ---------- แอคคอร์เดียนหัวข้อตามแบบประเมิน ----------
+     เปิดพร้อมกันได้หลายหัวข้อ กดซ้ำเพื่อปิด */
+  private readonly opened = signal<string[]>(['2.1']);
+
+  private readonly indicatorKeyOf: Record<string, string> = {
+    '2.1': '2.1 การพัฒนาหลักสูตรสถานศึกษา',
+    '2.2': '2.2 การจัดกิจกรรมเสริมหลักสูตร',
+    '2.3': '2.3 สื่อ เทคโนโลยีเพื่อการเรียนรู้ และแหล่งเรียนรู้',
+    '2.4': '2.4 ระบบการวัดและประเมินผล'
+  };
+
+  readonly groups = [
+    { key: '2.1', title: 'การพัฒนาหลักสูตรสถานศึกษา' },
+    { key: '2.2', title: 'การจัดกิจกรรมเสริมหลักสูตร' },
+    { key: '2.3', title: 'สื่อ เทคโนโลยีเพื่อการเรียนรู้ และแหล่งเรียนรู้' },
+    { key: '2.4', title: 'ระบบการวัดและประเมินผล' }
+  ];
+
+  /** กดปุ่มนำทาง: เปิดหัวข้อนั้นถ้ายังปิดอยู่ แล้วเลื่อนไปหา */
+  jumpTo(k: string): void {
+    if (!this.isOpen(k)) this.toggle(k);
+    setTimeout(() => {
+      const el = document.getElementById('acc-' + k);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+  }
+
+  isOpen(k: string): boolean { return this.opened().includes(k); }
+
+  toggle(k: string): void {
+    this.opened.update(v => v.includes(k) ? v.filter(x => x !== k) : [...v, k]);
+  }
+
+  indicatorsOf(k: string): string[] {
+    const all = DIM2.indicators as Record<string, string[]>;
+    return all[this.indicatorKeyOf[k]] ?? [];
+  }
+
   readonly gallery = GALLERY['d2'];
   readonly d = DIM2;
 

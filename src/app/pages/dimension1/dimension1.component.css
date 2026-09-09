@@ -4,3 +4,282 @@
 :host {
   display: block;
 }
+
+/* ═══════════ สารบัญตัวชี้วัดด้านที่ 1 ═══════════ */
+.d1-tabs { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 28px; }
+
+.d1-tab {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1 1 260px;
+  min-height: 76px;
+  padding: 12px 20px;
+  text-align: left;
+  font-family: inherit;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease),
+              border-color .2s var(--ease), background .2s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.d1-tab:active { transform: scale(.98); }
+
+.d1-tab-no {
+  display: grid;
+  place-items: center;
+  width: 52px; height: 52px;
+  flex: none;
+  color: var(--navy-700);
+  font-size: 21px;
+  font-weight: 800;
+  border-radius: 14px;
+  background: var(--navy-50);
+}
+
+.d1-tab-text { font-size: 19px; font-weight: 800; color: var(--navy-900); line-height: 1.35; }
+.d1-tab-text small { display: block; margin-top: 3px; font-size: 14.5px; font-weight: 600; color: var(--ink-mute); }
+
+.d1-tab.is-on {
+  border-color: var(--navy-600);
+  background: linear-gradient(135deg, var(--navy-800), var(--navy-600));
+  box-shadow: 0 12px 28px rgba(30, 77, 158, .32);
+}
+.d1-tab.is-on .d1-tab-no { background: rgba(255, 255, 255, .18); color: #fff; }
+.d1-tab.is-on .d1-tab-text { color: #fff; }
+.d1-tab.is-on .d1-tab-text small { color: #cfe0fa; }
+
+/* ---------- การ์ดตัวชี้วัด ---------- */
+.d1-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+
+.d1-card {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 20px 20px 22px;
+  text-align: left;
+  font-family: inherit;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform .24s var(--ease), box-shadow .24s var(--ease), border-color .24s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.d1-card:active { transform: scale(.985); }
+@media (hover: hover) {
+  .d1-card:hover:not(:disabled) {
+    transform: translateY(-6px);
+    border-color: var(--navy-200);
+    box-shadow: var(--shadow-lg);
+  }
+  .d1-card:hover:not(:disabled) .d1-go { color: var(--gold-600); }
+}
+
+.d1-card.is-empty { opacity: .55; cursor: not-allowed; }
+
+.d1-card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+
+.d1-no {
+  padding: 5px 12px;
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 800;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--navy-700), var(--navy-500));
+  font-variant-numeric: tabular-nums;
+}
+
+.d1-stat {
+  color: var(--navy-800);
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.d1-stat small { margin-left: 3px; font-size: 14px; font-weight: 700; color: var(--ink-mute); }
+
+.d1-title { color: var(--navy-900); font-size: 17px; font-weight: 800; line-height: 1.45; }
+.d1-note { color: var(--ink-mute); font-size: 14.5px; line-height: 1.6; }
+
+.d1-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+  color: var(--navy-600);
+  font-size: 14.5px;
+  font-weight: 800;
+  transition: color .2s var(--ease);
+}
+
+/* ---------- แถบนำทางเมื่อเปิดดูตัวชี้วัด ---------- */
+.d1-bar {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 40;
+  background: rgba(255, 255, 255, .96);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+}
+.d1-bar-inner { display: flex; align-items: center; gap: 18px; padding-top: 12px; padding-bottom: 12px; }
+
+.d1-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  min-height: 46px;
+  padding: 0 18px;
+  color: var(--navy-700);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  border: 1px solid var(--navy-100);
+  border-radius: 999px;
+  background: #fff;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (hover: hover) { .d1-back:hover { background: var(--navy-50); border-color: var(--navy-300); } }
+
+.d1-bar-now {
+  color: var(--ink-mute);
+  font-size: 15.5px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- ปุ่มข้อก่อนหน้า / ข้อถัดไป ---------- */
+.d1-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+.d1-nav-btn {
+  display: grid;
+  gap: 5px;
+  padding: 18px 22px;
+  text-align: left;
+  font-family: inherit;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.d1-nav-btn.next { text-align: right; }
+.d1-nav-btn:disabled { opacity: .45; cursor: not-allowed; }
+@media (hover: hover) { .d1-nav-btn:hover:not(:disabled) { transform: translateY(-3px); box-shadow: var(--shadow-md); } }
+
+.d1-nav-lab { color: var(--ink-mute); font-size: 14px; font-weight: 700; }
+.d1-nav-txt { color: var(--navy-800); font-size: 16.5px; font-weight: 800; line-height: 1.45; }
+
+@media (max-width: 1180px) { .d1-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 834px) {
+  .d1-tabs { gap: 10px; }
+  .d1-tab { min-height: 68px; padding: 10px 14px; }
+  .d1-tab-text { font-size: 17px; }
+  .d1-bar-now { display: none; }
+}
+@media (max-width: 560px) {
+  .d1-grid { grid-template-columns: 1fr; }
+  .d1-nav { grid-template-columns: 1fr; }
+}
+
+/* ═══════════ พื้นหลังวิดีโอของหน้าสารบัญ ═══════════ */
+/* ตรึงกับจอเหมือนหน้าแรก เลื่อนหน้าแล้ววิดีโอไม่ขยับ */
+.d1-bg { position: fixed; inset: 0; z-index: -1; background: var(--navy-900); }
+
+.d1-index { background: transparent; }
+
+.d1-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.d1-veil {
+  position: absolute;
+  inset: 0;
+  /* ตัวเลขท้าย rgba() คือความทึบ 0–1 ลดแล้วเห็นวิดีโอชัดขึ้น */
+  background: linear-gradient(180deg, rgba(8, 21, 47, .82) 0%, rgba(8, 21, 47, .74) 45%, rgba(8, 21, 47, .88) 100%);
+}
+
+/* ตัวหนังสือบนพื้นวิดีโอ */
+.d1-index .sec-title { color: #fff; text-shadow: 0 2px 18px rgba(8, 21, 47, .65); }
+.d1-index .sec-lead { color: #dbe6f7; }
+
+/* การ์ดยังเป็นพื้นขาวเพื่อให้อ่านง่ายบนวิดีโอ */
+.d1-index .d1-card { border-color: rgba(255, 255, 255, .5); box-shadow: 0 14px 34px rgba(8, 21, 47, .28); }
+.d1-index .d1-tab { border-color: rgba(255, 255, 255, .5); box-shadow: 0 12px 28px rgba(8, 21, 47, .26); }
+
+/* การ์ดสูงเท่ากันเมื่อไม่มีตัวเลขเด่นแล้ว */
+.d1-card { min-height: 186px; }
+.d1-card-top { margin-bottom: 2px; }
+
+/* ═══════════ ปุ่มย้อนกลับแบบลอย ═══════════ */
+.d1-fab {
+  position: fixed;
+  right: 20px;
+  /* วางเหนือปุ่มเลื่อนขึ้นบนสุด และเผื่อขอบจอ iPad */
+  bottom: calc(96px + env(safe-area-inset-bottom));
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 52px;
+  padding: 0 20px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--navy-800), var(--navy-600));
+  box-shadow: 0 12px 30px rgba(8, 21, 47, .42);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .18s var(--ease), box-shadow .2s var(--ease);
+}
+.d1-fab:active { transform: scale(.95); }
+@media (hover: hover) {
+  .d1-fab:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(8, 21, 47, .5); }
+}
+
+@media (max-width: 560px) {
+  .d1-fab { right: 14px; bottom: calc(86px + env(safe-area-inset-bottom)); padding: 0 16px; font-size: 15px; }
+  .d1-fab span { display: none; }
+}
+
+/* iPad ประหยัดแบต — ถ้าผู้ใช้ตั้งค่าลดการเคลื่อนไหว ให้หยุดวิดีโอแล้วใช้ภาพนิ่งแทน */
+@media (prefers-reduced-motion: reduce) {
+  .d1-video { display: none; }
+  .d1-bg { background: var(--navy-900) url('/video/school-poster.jpg') center/cover; }
+}
+
+/* ทุกส่วนในหน้านี้อยู่บนพื้นวิดีโอ จึงต้องโปร่งใสและใช้ตัวหนังสือสว่าง */
+:host ::ng-deep .section,
+:host ::ng-deep .section-alt,
+:host ::ng-deep .section-tight { background: transparent; }
+
+/* หัวข้อย่อยที่เขียนไว้ในหน้านี้เอง */
+.d1-topic-title,
+:host ::ng-deep .sec-head > .sec-title { color: #fff; text-shadow: 0 2px 18px rgba(8, 21, 47, .65); }
+
+/* ข้อความที่ไม่ได้อยู่ในการ์ด ต้องเป็นสีสว่างเพราะอยู่บนพื้นวิดีโอ */
+:host ::ng-deep .sec-lead { color: #dbe6f7; }
+:host ::ng-deep .steps { border-left-color: rgba(255, 255, 255, .28); }
+:host ::ng-deep .step-item h4 { color: #fff; }
+:host ::ng-deep .step-item p { color: #dbe6f7; }
+:host ::ng-deep .bullets > li { color: #e4ecfa; }
+:host ::ng-deep .card .bullets > li,
+:host ::ng-deep .card .step-item h4,
+:host ::ng-deep .card .step-item p { color: var(--ink-soft); }
+:host ::ng-deep .card .sec-lead { color: var(--ink-soft); }

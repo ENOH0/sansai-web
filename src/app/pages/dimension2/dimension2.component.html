@@ -1,3 +1,13 @@
+
+<!-- ปุ่มนำทางลอย กดข้ามไปหัวข้อไหนก็ได้จากทุกจุดในหน้า -->
+<nav class="d2-nav" aria-label="ข้ามไปหัวข้อ">
+  <button type="button" class="d2-nav-btn" *ngFor="let g of groups"
+          [class.is-open]="isOpen(g.key)" (click)="jumpTo(g.key)"
+          [attr.aria-label]="g.key + ' ' + g.title">
+    <span class="d2-nav-no">{{ g.key }}</span>
+    <span class="d2-nav-tip">{{ g.title }}</span>
+  </button>
+</nav>
 <app-page-hero [no]="d.no" [weight]="d.weight" [name]="d.name" [subtitle]="d.subtitle" />
 
 <section class="section">
@@ -27,9 +37,28 @@
 </section>
 
 <!-- ═══════════ 2.1 การพัฒนาหลักสูตร ═══════════ -->
-<section class="section section-alt">
+<section class="section acc-sec">
   <div class="wrap">
-    <app-section-header num="2.1" title="การพัฒนาหลักสูตรสถานศึกษา" [lead]="d.curriculum.lead" />
+    <button type="button" class="acc-head" id="acc-2.1" [class.is-open]="isOpen('2.1')"
+            [attr.aria-expanded]="isOpen('2.1')" (click)="toggle('2.1')">
+      <span class="acc-no">2.1</span>
+      <span class="acc-text">การพัฒนาหลักสูตรสถานศึกษา<small>{{ indicatorsOf('2.1').length }} ตัวชี้วัดตามแบบประเมิน</small></span>
+      <svg class="acc-chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 9l6 6 6-6" />
+      </svg>
+    </button>
+
+    <div class="acc-body" *ngIf="isOpen('2.1')">
+      <p class="acc-lead">{{ d.curriculum.lead }}</p>
+
+      <div class="acc-ind">
+        <h4>ตัวชี้วัดตามแบบประเมิน</h4>
+        <ol>
+          <li *ngFor="let i of indicatorsOf('2.1')">{{ i }}</li>
+        </ol>
+      </div>
+
 
     <app-cycle-flow [steps]="d.curriculum.cycle" />
 
@@ -77,13 +106,33 @@
       หลักสูตรวิทยาศาสตร์สุขภาพ (Health Sciences Program) หลักสูตรนวัตกรรม วิทยาศาสตร์ และเทคโนโลยี (IST)
       และหลักสูตรภาษาจีน (Chinese Special Program: CSP)
     </app-callout>
+    </div>
   </div>
 </section>
 
 <!-- ═══════════ 2.2 กิจกรรมเสริมหลักสูตร ═══════════ -->
-<section class="section">
+<section class="section acc-sec">
   <div class="wrap">
-    <app-section-header num="2.2" title="การจัดกิจกรรมเสริมหลักสูตร" [lead]="d.activities.lead" />
+    <button type="button" class="acc-head" id="acc-2.2" [class.is-open]="isOpen('2.2')"
+            [attr.aria-expanded]="isOpen('2.2')" (click)="toggle('2.2')">
+      <span class="acc-no">2.2</span>
+      <span class="acc-text">การจัดกิจกรรมเสริมหลักสูตร<small>{{ indicatorsOf('2.2').length }} ตัวชี้วัดตามแบบประเมิน</small></span>
+      <svg class="acc-chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 9l6 6 6-6" />
+      </svg>
+    </button>
+
+    <div class="acc-body" *ngIf="isOpen('2.2')">
+      <p class="acc-lead">{{ d.activities.lead }}</p>
+
+      <div class="acc-ind">
+        <h4>ตัวชี้วัดตามแบบประเมิน</h4>
+        <ol>
+          <li *ngFor="let i of indicatorsOf('2.2')">{{ i }}</li>
+        </ol>
+      </div>
+
 
     <div class="card card-gold" appReveal style="margin-bottom:32px">
       <h3 class="card-title">{{ d.activities.flagship.name }}</h3>
@@ -107,13 +156,33 @@
         </ul>
       </div>
     </div>
+    </div>
   </div>
 </section>
 
 <!-- ═══════════ 2.3 สื่อและแหล่งเรียนรู้ ═══════════ -->
-<section class="section section-alt">
+<section class="section acc-sec">
   <div class="wrap">
-    <app-section-header num="2.3" title="สื่อ เทคโนโลยีเพื่อการเรียนรู้ และแหล่งเรียนรู้" [lead]="d.media.lead" />
+    <button type="button" class="acc-head" id="acc-2.3" [class.is-open]="isOpen('2.3')"
+            [attr.aria-expanded]="isOpen('2.3')" (click)="toggle('2.3')">
+      <span class="acc-no">2.3</span>
+      <span class="acc-text">สื่อ เทคโนโลยีเพื่อการเรียนรู้ และแหล่งเรียนรู้<small>{{ indicatorsOf('2.3').length }} ตัวชี้วัดตามแบบประเมิน</small></span>
+      <svg class="acc-chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 9l6 6 6-6" />
+      </svg>
+    </button>
+
+    <div class="acc-body" *ngIf="isOpen('2.3')">
+      <p class="acc-lead">{{ d.media.lead }}</p>
+
+      <div class="acc-ind">
+        <h4>ตัวชี้วัดตามแบบประเมิน</h4>
+        <ol>
+          <li *ngFor="let i of indicatorsOf('2.3')">{{ i }}</li>
+        </ol>
+      </div>
+
 
     <app-cycle-flow [steps]="d.media.cycle" />
 
@@ -124,13 +193,33 @@
         <div style="color:#1e4d9e;font-weight:700;font-size:19px">{{ r.detail }}</div>
       </div>
     </div>
+    </div>
   </div>
 </section>
 
 <!-- ═══════════ 2.4 การวัดและประเมินผล ═══════════ -->
-<section class="section">
+<section class="section acc-sec">
   <div class="wrap">
-    <app-section-header num="2.4" title="ระบบการวัดและประเมินผล" [lead]="d.assessment.lead" />
+    <button type="button" class="acc-head" id="acc-2.4" [class.is-open]="isOpen('2.4')"
+            [attr.aria-expanded]="isOpen('2.4')" (click)="toggle('2.4')">
+      <span class="acc-no">2.4</span>
+      <span class="acc-text">ระบบการวัดและประเมินผล<small>{{ indicatorsOf('2.4').length }} ตัวชี้วัดตามแบบประเมิน</small></span>
+      <svg class="acc-chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 9l6 6 6-6" />
+      </svg>
+    </button>
+
+    <div class="acc-body" *ngIf="isOpen('2.4')">
+      <p class="acc-lead">{{ d.assessment.lead }}</p>
+
+      <div class="acc-ind">
+        <h4>ตัวชี้วัดตามแบบประเมิน</h4>
+        <ol>
+          <li *ngFor="let i of indicatorsOf('2.4')">{{ i }}</li>
+        </ol>
+      </div>
+
 
     <app-cycle-flow [steps]="d.assessment.cycle" />
 
@@ -140,6 +229,7 @@
         [headers]="['ระดับชั้น', 'ปี 2566', 'ปี 2567', 'ปี 2568']"
         [rows]="planRows"
         note="ความหลากหลายของหลักสูตรทำให้โรงเรียนต้องพัฒนาระบบการวัดและประเมินผลให้รองรับได้ครบทุกแผนการเรียน จึงนำระบบดิจิทัลเข้ามาช่วยลดภาระงานครูและรายงานผลได้ทันเวลา" />
+    </div>
     </div>
   </div>
 </section>

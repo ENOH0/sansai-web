@@ -1,4 +1,5 @@
 import { Component, NgZone, OnDestroy, OnInit, inject, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RevealDirective } from '../../shared/directives/reveal.directive';
 import { KpiGridComponent } from '../../shared/kpi-grid/kpi-grid.component';
@@ -35,8 +36,39 @@ export class AwardsComponent implements OnInit, OnDestroy {
   readonly current = signal(0);
   private timer?: number;
   private readonly zone = inject(NgZone);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+
+  /* ---------- ปุ่มย้อนกลับไปหน้าที่กดเข้ามา ----------
+     หน้าอื่นส่ง ?from=/dimension-1&t=1.1.8 มาให้ ปุ่มจึงพากลับไปหัวข้อเดิมได้ */
+  readonly fromPath = signal('');
+  readonly fromTopic = signal('');
+
+  private readonly pageNames: Record<string, string> = {
+    '/dimension-1': 'ด้านที่ 1 คุณภาพนักเรียน',
+    '/dimension-2': 'ด้านที่ 2 การบริหารหลักสูตรและงานวิชาการ',
+    '/dimension-3': 'ด้านที่ 3 การบริหารและการจัดการศึกษา',
+    '/dimension-4': 'ด้านที่ 4 การจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ',
+    '/dimension-5': 'ด้านที่ 5 ความดีเด่นของสถานศึกษา',
+    '/': 'หน้าแรก'
+  };
+
+  get backLabel(): string {
+    const t = this.fromTopic();
+    return t ? `กลับไปหัวข้อ ${t}` : `กลับไป${this.pageNames[this.fromPath()] ?? 'หน้าก่อนหน้า'}`;
+  }
+
+  goBack(): void {
+    const t = this.fromTopic();
+    this.router.navigate([this.fromPath()], t ? { queryParams: { t } } : {});
+  }
+
 
   ngOnInit(): void {
+    const q = this.route.snapshot.queryParamMap;
+    this.fromPath.set(q.get('from') ?? '');
+    this.fromTopic.set(q.get('t') ?? '');
+
     this.zone.runOutsideAngular(() => {
       this.timer = window.setInterval(() => {
         this.zone.run(() => this.current.set((this.current() + 1) % this.slides.length));

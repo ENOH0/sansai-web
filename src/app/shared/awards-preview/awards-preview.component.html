@@ -1,0 +1,29 @@
+<div class="ap">
+  <div class="ap-head" [class.on-media]="light">
+    <div>
+      <h3 class="ap-title">ตัวอย่างรางวัลเชิงประจักษ์ของนักเรียน</h3>
+      <p class="ap-sub">แสดง {{ samples.length }} จาก {{ total }} รางวัลที่มีภาพหลักฐานในเล่ม</p>
+    </div>
+    <a class="ap-all" routerLink="/awards" [queryParams]="params">
+      ดูรางวัลทั้งหมด
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 12h14M12 5l7 7-7 7" />
+      </svg>
+    </a>
+  </div>
+
+  <div class="ap-grid">
+    <a class="ap-card" *ngFor="let a of samples; let i = index"
+       routerLink="/awards" [queryParams]="params"
+       appReveal="zoom" [revealDelay]="i * 70"
+       [attr.data-level]="a.level">
+      <span class="ap-photo" [style.background-image]="'url(' + a.photos[0] + ')'" aria-hidden="true"></span>
+      <span class="ap-body">
+        <span class="chip" [class.chip-gold]="a.level === 'ระดับนานาชาติ'">{{ a.level }}</span>
+        <span class="ap-name">{{ a.name }}</span>
+        <span class="ap-award">{{ a.award }}</span>
+      </span>
+    </a>
+  </div>
+</div>

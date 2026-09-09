@@ -4,3 +4,206 @@
 :host {
   display: block;
 }
+
+/* ═══════════ แอคคอร์เดียนหัวข้อตามแบบประเมิน ═══════════ */
+.acc-sec { padding-top: 0; padding-bottom: 0; background: transparent; }
+.acc-sec:first-of-type { padding-top: 28px; }
+
+.acc-head {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  /* 76px แตะสะดวกบน iPad */
+  min-height: 76px;
+  margin-bottom: 14px;
+  padding: 14px 22px;
+  text-align: left;
+  font-family: inherit;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: border-color .2s var(--ease), box-shadow .2s var(--ease), transform .18s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.acc-head:active { transform: scale(.99); }
+@media (hover: hover) {
+  .acc-head:hover { border-color: var(--navy-300); box-shadow: var(--shadow-md); }
+}
+
+.acc-no {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 62px; height: 52px;
+  color: var(--navy-700);
+  font-size: 21px;
+  font-weight: 800;
+  border-radius: 13px;
+  background: var(--navy-50);
+  font-variant-numeric: tabular-nums;
+}
+
+.acc-text {
+  flex: 1;
+  color: var(--navy-900);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+.acc-text small {
+  display: block;
+  margin-top: 4px;
+  color: var(--ink-mute);
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.acc-chev { flex: none; color: var(--navy-500); transition: transform .25s var(--ease); }
+
+.acc-head.is-open {
+  border-color: var(--navy-600);
+  background: linear-gradient(135deg, var(--navy-800), var(--navy-600));
+  box-shadow: 0 12px 28px rgba(30, 77, 158, .3);
+}
+.acc-head.is-open .acc-no { background: rgba(255, 255, 255, .18); color: #fff; }
+.acc-head.is-open .acc-text { color: #fff; }
+.acc-head.is-open .acc-text small { color: #cfe0fa; }
+.acc-head.is-open .acc-chev { color: #fff; transform: rotate(180deg); }
+
+/* ---------- เนื้อหาที่กางออก ---------- */
+.acc-body {
+  padding: 6px 4px 40px;
+  animation: accOpen .32s var(--ease) both;
+}
+
+@keyframes accOpen {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.acc-lead {
+  margin: 0 0 22px;
+  color: var(--ink-soft);
+  font-size: 18px;
+  line-height: 1.9;
+}
+
+/* กล่องรายการตัวชี้วัดตามแบบประเมิน */
+.acc-ind {
+  margin-bottom: 32px;
+  padding: 20px 24px;
+  border: 1px solid var(--navy-100);
+  border-left: 5px solid var(--gold-500);
+  border-radius: var(--radius-sm);
+  background: var(--navy-50);
+}
+.acc-ind h4 {
+  margin: 0 0 10px;
+  color: var(--navy-800);
+  font-size: 16.5px;
+  font-weight: 800;
+}
+.acc-ind ol { margin: 0; padding-left: 22px; }
+.acc-ind li {
+  margin-bottom: 7px;
+  color: var(--ink-soft);
+  font-size: 16px;
+  line-height: 1.75;
+}
+.acc-ind li:last-child { margin-bottom: 0; }
+
+@media (max-width: 834px) {
+  .acc-head { gap: 13px; padding: 12px 16px; min-height: 68px; }
+  .acc-no { width: 54px; height: 46px; font-size: 18px; }
+  .acc-text { font-size: 17.5px; }
+  .acc-ind { padding: 16px 18px; }
+}
+
+@media print {
+  .acc-body { display: block !important; animation: none; }
+  .acc-chev { display: none; }
+}
+
+/* ═══════════ ปุ่มนำทางลอยด้านข้าง ═══════════ */
+.d2-nav {
+  position: fixed;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 60;
+  display: grid;
+  gap: 10px;
+}
+
+.d2-nav-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 54px; height: 54px;
+  color: var(--navy-700);
+  font-family: inherit;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 8px 22px rgba(8, 21, 47, .18);
+  cursor: pointer;
+  transition: transform .18s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.d2-nav-btn:active { transform: scale(.94); }
+
+.d2-nav-no { font-size: 15.5px; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+.d2-nav-btn.is-open {
+  color: #fff;
+  border-color: var(--navy-600);
+  background: linear-gradient(135deg, var(--navy-800), var(--navy-600));
+  box-shadow: 0 10px 26px rgba(30, 77, 158, .42);
+}
+
+/* ป้ายชื่อหัวข้อ โผล่เมื่อชี้ด้วยเมาส์ (จอสัมผัสไม่ต้องใช้) */
+.d2-nav-tip {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%) translateX(8px);
+  padding: 8px 14px;
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  border-radius: 10px;
+  background: rgba(8, 21, 47, .94);
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s var(--ease), transform .2s var(--ease);
+}
+@media (hover: hover) {
+  .d2-nav-btn:hover { transform: scale(1.06); }
+  .d2-nav-btn:hover .d2-nav-tip { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+
+/* iPad แนวตั้งและจอเล็ก — ย้ายไปเป็นแถบแนวนอนล่างจอ ไม่บังเนื้อหา */
+@media (max-width: 900px) {
+  .d2-nav {
+    right: auto;
+    left: 50%;
+    top: auto;
+    bottom: calc(18px + env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    grid-auto-flow: column;
+    padding: 8px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .94);
+    box-shadow: 0 10px 30px rgba(8, 21, 47, .28);
+    backdrop-filter: blur(10px);
+  }
+  .d2-nav-btn { width: 48px; height: 48px; box-shadow: none; border-color: transparent; }
+  .d2-nav-tip { display: none; }
+}
+
+@media print { .d2-nav { display: none !important; } }

@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { BarSeries, LineSeries, MeterRow, TableRow } from '../../core/models';
+import { BarSeries, Kpi, LineSeries, MeterRow, TableRow } from '../../core/models';
 import { DIM1 } from '../../data/dimension1.data';
 import { RevealDirective } from '../../shared/directives/reveal.directive';
 import { PageHeroComponent } from '../../shared/page-hero/page-hero.component';
 import { SectionHeaderComponent } from '../../shared/section-header/section-header.component';
 import { KpiGridComponent } from '../../shared/kpi-grid/kpi-grid.component';
+import { CycleFlowComponent } from '../../shared/cycle-flow/cycle-flow.component';
+import { AwardsPreviewComponent } from '../../shared/awards-preview/awards-preview.component';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { CalloutComponent } from '../../shared/callout/callout.component';
 import { PhotoGalleryComponent } from '../../shared/photo-gallery/photo-gallery.component';
@@ -20,15 +23,75 @@ import { OnetChartComponent } from '../../shared/onet-chart/onet-chart.component
   selector: 'app-dimension1',
   standalone: true,
   imports: [
-    PhotoGalleryComponent,
+    PhotoGalleryComponent, AwardsPreviewComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
-    KpiGridComponent, DataTableComponent, CalloutComponent, PagerComponent,
+    KpiGridComponent, DataTableComponent, CalloutComponent, PagerComponent, CycleFlowComponent,
     LineChartComponent, BarChartComponent, MeterListComponent, OnetChartComponent
   ],
   templateUrl: './dimension1.component.html',
   styleUrl: './dimension1.component.css'
 })
-export class Dimension1Component {
+export class Dimension1Component implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+
+  /** เปิดหัวข้อเดิมอัตโนมัติเมื่อกลับมาจากหน้ารางวัล (?t=1.1.8) */
+  ngOnInit(): void {
+    const t = this.route.snapshot.queryParamMap.get('t');
+    if (t && this.topics.some(x => x.key === t)) this.open.set(t);
+  }
+
+  /* ---------- สารบัญตัวชี้วัด 16 ข้อ ตามแบบประเมิน ----------
+     กด "เปิดดู" ที่การ์ดเพื่อแสดงเนื้อหาของข้อนั้น กดย้อนกลับเพื่อกลับมาที่สารบัญ
+     ตัว key ใช้อ้างอิงกับบล็อกเนื้อหาในไฟล์ .html */
+  readonly topics = [
+    { key: '1.1.1', group: '1.1', title: 'ผลสัมฤทธิ์ทางการเรียนระดับชาติ (O-NET) มีพัฒนาการต่อเนื่อง 3 ปี', note: 'คณิตศาสตร์ ม.3 เพิ่มขึ้นรวม 3 ปี', ready: true },
+    { key: '1.1.2', group: '1.1', title: 'ความสามารถในการอ่าน–เขียนภาษาไทย การสื่อสาร และการคิดคำนวณ', note: 'ค่าเฉลี่ยผลการคัดกรองระดับดี ปี 2568', ready: true },
+    { key: '1.1.3', group: '1.1', title: 'ความสามารถในการใช้ภาษาอังกฤษเพื่อการสื่อสาร', note: 'ผลการเรียนเฉลี่ยเพิ่มขึ้นต่อเนื่อง', ready: true },
+    { key: '1.1.4', group: '1.1', title: 'ความสามารถในการคิด วิเคราะห์ แก้ปัญหา และประยุกต์ใช้', note: 'ผลการประเมินการอ่าน คิดวิเคราะห์ ระดับดีขึ้นไป', ready: true },
+    { key: '1.1.5', group: '1.1', title: 'ความสามารถในการใช้เทคโนโลยีสารสนเทศและการสื่อสาร (ICT)', note: 'ผลสัมฤทธิ์รายวิชาเทคโนโลยีระดับ 3–4', ready: true },
+    { key: '1.1.6', group: '1.1', title: 'ความก้าวหน้าทางการเรียนตามหลักสูตรทุกกลุ่มสาระการเรียนรู้', note: 'อยู่ระหว่างรวบรวมข้อมูลจากเล่มเอกสาร', ready: false },
+    { key: '1.1.7', group: '1.1', title: 'ความพร้อมในการศึกษาต่อ การฝึกงาน หรือการทำงาน', note: 'ม.3 ที่ศึกษาต่อในสถานศึกษาเดิม ปี 2568', ready: true },
+    { key: '1.1.8', group: '1.1', title: 'ความรู้ความสามารถรอบด้าน ความสามารถพิเศษ และผลงานเป็นเลิศ', note: 'รางวัลเชิงประจักษ์ที่มีภาพหลักฐาน', ready: true },
+
+    { key: '1.2.1', group: '1.2', title: 'คุณธรรม จริยธรรม ค่านิยม และจิตสำนึกถึงประโยชน์ส่วนรวม', note: 'ผลประเมินคุณลักษณะอันพึงประสงค์ ปี 2567', ready: true },
+    { key: '1.2.2', group: '1.2', title: 'ตระหนักและมีส่วนร่วมในการอนุรักษ์ทรัพยากรธรรมชาติและสิ่งแวดล้อม', note: 'ได้รับพระราชทานป้ายสนองพระราชดำริ ปี 2567', ready: true },
+    { key: '1.2.3', group: '1.2', title: 'ยอมรับเหตุผลและความคิดเห็นของผู้อื่น', note: 'ผู้มาใช้สิทธิ์เลือกตั้งสภานักเรียน ปี 2568', ready: true },
+    { key: '1.2.4', group: '1.2', title: 'ทำงานเป็นทีม มีความรับผิดชอบ มุ่งมั่น และทำงานอย่างมีประสิทธิภาพ', note: 'ผ่านการประเมินกิจกรรมลูกเสือ ปี 2568', ready: true },
+    { key: '1.2.5', group: '1.2', title: 'ภาคภูมิใจในความเป็นไทยและนำภูมิปัญญาท้องถิ่นไปใช้', note: 'จากกิจกรรมทัศนศึกษาแหล่งเรียนรู้จังหวัดเชียงใหม่', ready: true },
+    { key: '1.2.6', group: '1.2', title: 'มั่นใจในตนเอง และมีเจตคติที่ดีต่อการเรียน', note: 'กิจกรรมหลักที่ส่งเสริมความมั่นใจในตนเอง', ready: true },
+    { key: '1.2.7', group: '1.2', title: 'รักษาสุขภาพกายและสุขภาพจิตได้', note: 'นักเรียนที่มีผลสุขภาพจิตปกติ ปี 2568', ready: true },
+    { key: '1.2.8', group: '1.2', title: 'ปลอดภัยจากสารเสพติด ปัญหาทางเพศ และอบายมุขทุกชนิด', note: 'พฤติกรรมไม่พึงประสงค์ลดลงจาก 59.63%', ready: true }
+  ];
+
+  readonly tab = signal<'1.1' | '1.2'>('1.1');
+  readonly open = signal('');
+
+  get shown() { return this.topics.filter(t => t.group === this.tab()); }
+
+  get currentIndex(): number { return this.topics.findIndex(t => t.key === this.open()); }
+  get current(): (typeof this.topics)[number] | undefined { return this.topics[this.currentIndex]; }
+  get prevTopic(): (typeof this.topics)[number] | undefined { return this.topics[this.currentIndex - 1]; }
+  get nextTopic(): (typeof this.topics)[number] | undefined { return this.topics[this.currentIndex + 1]; }
+
+  select(key: string): void {
+    this.open.set(key);
+    this.tab.set(key.startsWith('1.1') ? '1.1' : '1.2');
+    window.scrollTo({ top: 0 });
+  }
+
+  /* Chrome/Safari บางเครื่องไม่เริ่มเล่นเองแม้ใส่ autoplay
+     จึงสั่งเล่นซ้ำเมื่อวิดีโอพร้อม และกลืน error ถ้าเบราว์เซอร์ยังปฏิเสธ */
+  playBg(v: HTMLVideoElement): void {
+    v.muted = true;
+    const p = v.play();
+    if (p && typeof p.catch === 'function') p.catch(() => { /* ใช้ภาพ poster แทน */ });
+  }
+
+  backToIndex(): void {
+    this.open.set('');
+    window.scrollTo({ top: 0 });
+  }
+
   readonly gallery = GALLERY['d1'];
   readonly d = DIM1;
 
@@ -227,6 +290,35 @@ export class Dimension1Component {
     .map(n => DIM1.section12.health.mindRows.find(r => r.name === n))
     .filter((r): r is { name: string; values: number[] } => !!r)
     .map(r => ({ name: r.name, values: r.values, color: this.mindColor[r.name] }));
+
+  // ---------- ข้อมูลสำหรับตัวชี้วัดที่เพิ่มใหม่ ----------
+  readonly excellenceKpis: Kpi[] = DIM1.section11.excellence.stats.map(x => ({
+    value: x.value, unit: x.unit, label: x.label, note: ''
+  }));
+
+  readonly teamSeries: LineSeries[] = DIM1.section12.teamwork.rows.map((r, i) => ({
+    name: r.name,
+    values: r.values.map(v => (v === null ? NaN : v)),
+    color: this.gradePalette[i % 6]
+  }));
+
+  readonly teamRows: TableRow[] = DIM1.section12.teamwork.rows.map(r => ({
+    cells: [r.name, ...r.values.map(v => (v === null ? '—' : v.toFixed(2)))]
+  }));
+
+  readonly safetySeries: LineSeries[] = [
+    { name: 'ภาพรวมทั้งโรงเรียน', values: DIM1.section12.safety.riskPct, color: '#b4433a' },
+    ...DIM1.section12.safety.byLevel.map((r, i) => ({
+      name: r.name, values: r.values, color: this.gradePalette[i % 6]
+    }))
+  ];
+
+  readonly safetyRows: TableRow[] = [
+    ...DIM1.section12.safety.byLevel.map(r => ({
+      cells: [r.name, ...r.values.map(v => v.toFixed(2))]
+    })),
+    { cells: ['รวมทั้งโรงเรียน', ...DIM1.section12.safety.riskPct.map(v => v.toFixed(2))], total: true }
+  ];
 
   private signed(v: number): string {
     return (v >= 0 ? '+' : '') + v.toFixed(2);

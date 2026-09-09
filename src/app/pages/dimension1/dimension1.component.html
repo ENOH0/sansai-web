@@ -10,24 +10,81 @@
   </div>
 </section>
 
-<!-- ═══════════ 1.1 ผลสัมฤทธิ์ทางวิชาการ ═══════════ -->
-<section class="section section-alt">
-  <div class="wrap">
-    <app-section-header num="1.1" title="ผลสัมฤทธิ์ทางวิชาการ" [lead]="d.section11.lead" />
+<!-- ═══════════ สารบัญตัวชี้วัด ═══════════ -->
+<!-- พื้นหลังวิดีโอ ตรึงเต็มจอ เลื่อนหน้าแล้วมีแต่เนื้อหาที่ขยับ -->
+<div class="d1-bg" aria-hidden="true">
+  <video #bgv class="d1-video" autoplay muted loop playsinline preload="auto"
+         poster="video/school-poster.jpg"
+         (loadedmetadata)="playBg(bgv)" (canplay)="playBg(bgv)">
+    <source src="video/school.mp4" type="video/mp4" />
+  </video>
+  <div class="d1-veil"></div>
+</div>
 
-    <div class="card" appReveal style="margin-bottom:28px">
-      <h3 class="card-title">ตัวชี้วัดทั้ง 8 ข้อ</h3>
-      <ol class="bullets" style="columns:2;column-gap:34px">
-        <li *ngFor="let i of d.indicators['1.1']" style="break-inside:avoid">{{ i }}</li>
-      </ol>
+<section class="section d1-index" *ngIf="!open()">
+  <div class="wrap">
+    <div class="sec-head" appReveal>
+      <h2 class="sec-title">ตัวชี้วัดด้านที่ 1 — 16 ข้อ ตามแบบประเมิน</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <p class="sec-lead" style="margin:-8px 0 24px">
+      เลือกหัวข้อย่อยที่ต้องการดู ระบบจะแสดงข้อมูล กราฟ และตารางของตัวชี้วัดนั้นเต็มหน้า
+      พร้อมปุ่มไปข้อก่อนหน้าและข้อถัดไป
+    </p>
+
+    <div class="d1-tabs" role="tablist">
+      <button type="button" class="d1-tab" role="tab" [class.is-on]="tab() === '1.1'"
+              [attr.aria-selected]="tab() === '1.1'" (click)="tab.set('1.1')">
+        <span class="d1-tab-no">๑.๑</span>
+        <span class="d1-tab-text">ผลสัมฤทธิ์ทางวิชาการ<small>8 ตัวชี้วัด</small></span>
+      </button>
+      <button type="button" class="d1-tab" role="tab" [class.is-on]="tab() === '1.2'"
+              [attr.aria-selected]="tab() === '1.2'" (click)="tab.set('1.2')">
+        <span class="d1-tab-no">๑.๒</span>
+        <span class="d1-tab-text">คุณลักษณะที่พึงประสงค์<small>8 ตัวชี้วัด</small></span>
+      </button>
+    </div>
+
+    <div class="d1-grid">
+      <button type="button" class="d1-card" *ngFor="let t of shown; let i = index"
+              [class.is-empty]="!t.ready" [disabled]="!t.ready"
+              appReveal="zoom" [revealDelay]="i * 60" (click)="select(t.key)">
+        <span class="d1-card-top">
+          <span class="d1-no">{{ t.key }}</span>
+        </span>
+        <span class="d1-title">{{ t.title }}</span>
+        <span class="d1-note">{{ t.note }}</span>
+        <span class="d1-go" *ngIf="t.ready">เปิดดู
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </span>
+      </button>
     </div>
   </div>
 </section>
 
+<!-- แถบนำทางเมื่อเปิดดูตัวชี้วัด -->
+<div class="d1-bar" *ngIf="open()">
+  <div class="wrap d1-bar-inner">
+    <button type="button" class="d1-back" (click)="backToIndex()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 12H5M12 19l-7-7 7-7" />
+      </svg>
+      สารบัญตัวชี้วัด
+    </button>
+    <span class="d1-bar-now">{{ current?.key }} · {{ current?.title }}</span>
+  </div>
+</div>
+
+
 <!-- ── 1.1.1 O-NET ── -->
+<ng-container *ngIf="open() === '1.1.1'">
 <section class="section">
   <div class="wrap">
-    <app-section-header num="1.1.1" [title]="onetTitle" [lead]="d.section11.onet.narrative" />
+    <app-section-header [light]="true" num="1.1.1" [title]="onetTitle" [lead]="d.section11.onet.narrative" />
 
     <div class="stack">
       <!-- ม.6 — เลือกดูรายวิชาได้ -->
@@ -71,11 +128,13 @@
     </div>
   </div>
 </section>
+</ng-container>
 
 <!-- ── 1.1.2 ภาษาไทย ── -->
+<ng-container *ngIf="open() === '1.1.2'">
 <section class="section section-alt">
   <div class="wrap">
-    <app-section-header num="1.1.2" [title]="thaiTitle" [lead]="d.section11.thai.narrative" />
+    <app-section-header [light]="true" num="1.1.2" [title]="thaiTitle" [lead]="d.section11.thai.narrative" />
 
     <div class="stack">
       <app-line-chart
@@ -96,11 +155,13 @@
     </div>
   </div>
 </section>
+</ng-container>
 
 <!-- ── 1.1.3 ภาษาอังกฤษ ── -->
+<ng-container *ngIf="open() === '1.1.3'">
 <section class="section">
   <div class="wrap">
-    <app-section-header num="1.1.3" [title]="engTitle" [lead]="d.section11.english.narrative" />
+    <app-section-header [light]="true" num="1.1.3" [title]="engTitle" [lead]="d.section11.english.narrative" />
 
     <div class="grid grid-2" style="margin-bottom:24px">
       <div class="card" appReveal="left">
@@ -136,11 +197,13 @@
     </div>
   </div>
 </section>
+</ng-container>
 
 <!-- ── 1.1.4 คิดวิเคราะห์ ── -->
+<ng-container *ngIf="open() === '1.1.4'">
 <section class="section section-alt">
   <div class="wrap">
-    <app-section-header num="1.1.4" [title]="thinkTitle" [lead]="d.section11.thinking.narrative" />
+    <app-section-header [light]="true" num="1.1.4" [title]="thinkTitle" [lead]="d.section11.thinking.narrative" />
 
     <div class="stack">
       <app-bar-chart
@@ -165,11 +228,13 @@
     </div>
   </div>
 </section>
+</ng-container>
 
 <!-- ── 1.1.5 ICT ── -->
+<ng-container *ngIf="open() === '1.1.5'">
 <section class="section">
   <div class="wrap">
-    <app-section-header num="1.1.5" [title]="ictTitle" [lead]="d.section11.ict.narrative" />
+    <app-section-header [light]="true" num="1.1.5" [title]="ictTitle" [lead]="d.section11.ict.narrative" />
 
     <div class="grid grid-2">
       <app-line-chart
@@ -197,11 +262,13 @@
     </div>
   </div>
 </section>
+</ng-container>
 
 <!-- ── 1.1.7 การศึกษาต่อ ── -->
+<ng-container *ngIf="open() === '1.1.7'">
 <section class="section section-alt">
   <div class="wrap">
-    <app-section-header num="1.1.7" [title]="pathTitle" [lead]="d.section11.pathway.narrative" />
+    <app-section-header [light]="true" num="1.1.7" [title]="pathTitle" [lead]="d.section11.pathway.narrative" />
 
     <!-- ╔══════════════════════════════════════════════════════════╗
          ║ ตัวเลือกที่ 1 : กราฟเส้น                                  ║
@@ -232,11 +299,13 @@
     <!-- จบตัวเลือกที่ 2 -->
   </div>
 </section>
+</ng-container>
 
 <!-- ═══════════ 1.2 คุณลักษณะที่พึงประสงค์ ═══════════ -->
+<ng-container *ngIf="open() === '1.2.1'">
 <section class="section">
   <div class="wrap">
-    <app-section-header num="1.2" title="คุณลักษณะที่พึงประสงค์" [lead]="d.section12.lead" />
+    <app-section-header [light]="true" num="1.2" title="คุณลักษณะที่พึงประสงค์" [lead]="d.section12.lead" />
 
     <div class="card" appReveal style="margin-bottom:28px">
       <h3 class="card-title">ตัวชี้วัดทั้ง 8 ข้อ</h3>
@@ -268,11 +337,13 @@
     </div>
   </div>
 </section>
+</ng-container>
 
 <!-- ── 1.2.3 การเลือกตั้ง ── -->
+<ng-container *ngIf="open() === '1.2.3'">
 <section class="section section-alt">
   <div class="wrap">
-    <app-section-header num="1.2.3" [title]="electionTitle" [lead]="d.section12.election.narrative" />
+    <app-section-header [light]="true" num="1.2.3" [title]="electionTitle" [lead]="d.section12.election.narrative" />
 
     <div class="stack">
       <app-bar-chart
@@ -292,11 +363,13 @@
     </div>
   </div>
 </section>
+</ng-container>
 
 <!-- ── 1.2.7 สุขภาพ ── -->
+<ng-container *ngIf="open() === '1.2.7'">
 <section class="section">
   <div class="wrap">
-    <app-section-header num="1.2.7" [title]="healthTitle" [lead]="d.section12.health.narrative" />
+    <app-section-header [light]="true" num="1.2.7" [title]="healthTitle" [lead]="d.section12.health.narrative" />
 
     <div class="grid grid-2">
       <app-line-chart
@@ -328,14 +401,192 @@
     </div>
   </div>
 </section>
+</ng-container>
+
+
+<!-- ── 1.1.8 ความสามารถพิเศษและผลงานเป็นเลิศ ── -->
+<ng-container *ngIf="open() === '1.1.8'">
+<section class="section">
+  <div class="wrap">
+    <app-section-header [light]="true" num="1.1.8" title="ความรู้ความสามารถรอบด้าน ความสามารถพิเศษ และผลงานเป็นเลิศ"
+                        [lead]="d.section11.excellence.narrative" />
+    <app-kpi-grid [items]="excellenceKpis" />
+    <div class="sec-head" style="margin-top:44px" appReveal>
+      <h3 class="sec-title" style="font-size:22px">กระบวนการพัฒนาผู้เรียนสู่ความเป็นเลิศ</h3>
+      <div class="sec-rule"></div>
+    </div>
+    <app-cycle-flow [steps]="d.section11.excellence.cycle" />
+    <app-callout label="สรุปผล:">{{ d.section11.excellence.conclusion }}</app-callout>
+
+    <app-awards-preview [count]="4" from="/dimension-1" topic="1.1.8" [light]="true" />
+  </div>
+</section>
+</ng-container>
+
+<!-- ── 1.2.2 อนุรักษ์สิ่งแวดล้อม ── -->
+<ng-container *ngIf="open() === '1.2.2'">
+<section class="section">
+  <div class="wrap">
+    <app-section-header [light]="true" num="1.2.2" title="ตระหนักและมีส่วนร่วมในการอนุรักษ์ทรัพยากรธรรมชาติและสิ่งแวดล้อม"
+                        [lead]="d.section12.environment.narrative" />
+    <div class="card card-gold" appReveal style="margin-bottom:30px">
+      <h3 class="card-title">ผลงานเด่น</h3>
+      <p class="card-body" style="margin:0">{{ d.section12.environment.highlight }}</p>
+    </div>
+    <div class="sec-head" appReveal>
+      <h3 class="sec-title" style="font-size:22px">โครงการและกิจกรรมที่ดำเนินการ</h3>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="steps">
+      <div class="step-item" *ngFor="let a of d.section12.environment.activities; let i = index"
+           appReveal="left" [revealDelay]="i * 70">
+        <h4>{{ a }}</h4>
+      </div>
+    </div>
+    <app-callout label="สรุปผล:">{{ d.section12.environment.conclusion }}</app-callout>
+  </div>
+</section>
+</ng-container>
+
+<!-- ── 1.2.4 การทำงานเป็นทีม ── -->
+<ng-container *ngIf="open() === '1.2.4'">
+<section class="section">
+  <div class="wrap">
+    <app-section-header [light]="true" num="1.2.4" title="ทำงานเป็นทีม มีความรับผิดชอบ มุ่งมั่น และทำงานอย่างมีประสิทธิภาพ"
+                        [lead]="d.section12.teamwork.narrative" />
+    <app-cycle-flow [steps]="d.section12.teamwork.cycle" />
+    <div class="stack" style="margin-top:44px">
+      <app-line-chart
+        title="ร้อยละของผลการประเมิน “ผ่าน” ในกิจกรรมพัฒนาผู้เรียน"
+        subtitle="ปีการศึกษา 2566–2568"
+        [labels]="d.section12.teamwork.years"
+        [series]="teamSeries"
+        [min]="96" [max]="100"
+        [note]="d.section12.teamwork.note" />
+      <app-data-table
+        [caption]="d.section12.teamwork.caption"
+        [headers]="yearHeaders3"
+        [rows]="teamRows" />
+    </div>
+    <app-callout label="สรุปผล:">{{ d.section12.teamwork.conclusion }}</app-callout>
+  </div>
+</section>
+</ng-container>
+
+<!-- ── 1.2.5 ความภาคภูมิใจในความเป็นไทย ── -->
+<ng-container *ngIf="open() === '1.2.5'">
+<section class="section">
+  <div class="wrap">
+    <app-section-header [light]="true" num="1.2.5" title="ภาคภูมิใจในความเป็นไทยและนำภูมิปัญญาท้องถิ่นไปใช้"
+                        [lead]="d.section12.thaiPride.narrative" />
+    <div class="grid grid-3">
+      <div class="card card-hover" *ngFor="let pj of d.section12.thaiPride.projects; let i = index"
+           appReveal [revealDelay]="i * 90">
+        <div class="chip chip-gold" style="margin-bottom:10px" *ngIf="pj.value">
+          นักเรียนร้อยละ {{ pj.value }}
+        </div>
+        <h3 class="card-title">{{ pj.name }}</h3>
+        <p class="card-body" style="margin:0">{{ pj.text }}</p>
+      </div>
+    </div>
+    <app-callout label="สรุปผล:">{{ d.section12.thaiPride.conclusion }}</app-callout>
+  </div>
+</section>
+</ng-container>
+
+<!-- ── 1.2.6 ความมั่นใจในตนเอง ── -->
+<ng-container *ngIf="open() === '1.2.6'">
+<section class="section">
+  <div class="wrap">
+    <app-section-header [light]="true" num="1.2.6" title="มั่นใจในตนเอง และมีเจตคติที่ดีต่อการเรียน"
+                        [lead]="d.section12.confidence.narrative" />
+    <div class="steps">
+      <div class="step-item" *ngFor="let a of d.section12.confidence.activities; let i = index"
+           appReveal="left" [revealDelay]="i * 70">
+        <h4>{{ a }}</h4>
+      </div>
+    </div>
+    <app-callout label="สรุปผล:">{{ d.section12.confidence.conclusion }}</app-callout>
+  </div>
+</section>
+</ng-container>
+
+<!-- ── 1.2.8 ความปลอดภัยจากสารเสพติดและอบายมุข ── -->
+<ng-container *ngIf="open() === '1.2.8'">
+<section class="section">
+  <div class="wrap">
+    <app-section-header [light]="true" num="1.2.8" title="ปลอดภัยจากสารเสพติด ปัญหาทางเพศ และอบายมุขทุกชนิด"
+                        [lead]="d.section12.safety.narrative" />
+    <div class="grid grid-2">
+      <div class="card" appReveal="left">
+        <h3 class="card-title">โครงการและกิจกรรมที่ดำเนินการ</h3>
+        <ul class="bullets">
+          <li *ngFor="let a of d.section12.safety.activities">{{ a }}</li>
+        </ul>
+      </div>
+      <div class="card card-accent" appReveal="right">
+        <h3 class="card-title">ระบบดูแลช่วยเหลือนักเรียน</h3>
+        <p class="card-body">
+          ครูที่ปรึกษา ครูผู้รับผิดชอบงานระบบดูแลช่วยเหลือนักเรียน ฝ่ายบริหาร และผู้ปกครอง
+          ร่วมกันติดตาม ดูแล และให้ความช่วยเหลือผู้เรียนตามสภาพปัญหาและความจำเป็นของแต่ละบุคคล
+          พร้อมสร้างช่องทางให้ผู้เรียนขอคำปรึกษา แจ้งเหตุ หรือขอความช่วยเหลือได้อย่างปลอดภัย
+        </p>
+        <p class="card-body" style="margin-bottom:0">
+          ตลอดจนส่งเสริมการมีส่วนร่วมของผู้ปกครอง ชุมชน และภาคีเครือข่าย
+          ในการสร้างสภาพแวดล้อมที่ปลอดภัยทั้งภายในและภายนอกสถานศึกษา
+        </p>
+      </div>
+    </div>
+
+    <div class="stack" style="margin-top:44px">
+      <app-line-chart
+        title="ร้อยละของนักเรียนที่มีพฤติกรรมไม่พึงประสงค์"
+        subtitle="ภาพรวมทั้งโรงเรียน ปีการศึกษา 2566–2568 (ยิ่งต่ำยิ่งดี)"
+        [labels]="d.section12.safety.years"
+        [series]="safetySeries"
+        [min]="0" [max]="70"
+        [note]="d.section12.safety.conclusion" />
+      <app-data-table
+        [caption]="d.section12.safety.caption"
+        [headers]="yearHeaders3"
+        [rows]="safetyRows" />
+    </div>
+  </div>
+</section>
+</ng-container>
+
+<!-- ปุ่มย้อนกลับแบบลอย อยู่คู่กับปุ่มเลื่อนขึ้นบนสุด -->
+<button type="button" class="d1-fab" *ngIf="open()" (click)="backToIndex()"
+        aria-label="กลับไปสารบัญตัวชี้วัด">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M19 12H5M12 19l-7-7 7-7" />
+  </svg>
+  <span>สารบัญ</span>
+</button>
+
+<!-- ไปข้อก่อนหน้า / ข้อถัดไป -->
+<section class="section-tight" *ngIf="open()">
+  <div class="wrap d1-nav">
+    <button type="button" class="d1-nav-btn" *ngIf="prevTopic as pv" [disabled]="!pv.ready" (click)="select(pv.key)">
+      <span class="d1-nav-lab">ข้อก่อนหน้า</span>
+      <span class="d1-nav-txt">{{ pv.key }} {{ pv.title }}</span>
+    </button>
+    <button type="button" class="d1-nav-btn next" *ngIf="nextTopic as nx" [disabled]="!nx.ready" (click)="select(nx.key)">
+      <span class="d1-nav-lab">ข้อถัดไป</span>
+      <span class="d1-nav-txt">{{ nx.key }} {{ nx.title }}</span>
+    </button>
+  </div>
+</section>
 
 <!-- ═══════════ แกลเลอรีภาพกิจกรรม ═══════════ -->
-<section class="section">
+<section class="section" *ngIf="!open()">
   <div class="wrap">
     <app-photo-gallery
       title="ภาพกิจกรรมประกอบด้านที่ 1"
       lead="ภาพกิจกรรมที่สะท้อนคุณลักษณะและคุณภาพของผู้เรียน จากเอกสารประกอบการประเมินด้านที่ 1"
-      [items]="gallery" />
+      [items]="gallery"
+      [light]="true" />
   </div>
 </section>
 

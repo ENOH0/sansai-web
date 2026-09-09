@@ -15,6 +15,8 @@ export class PhotoGalleryComponent {
   @Input() title = 'ภาพกิจกรรม';
   @Input() lead = '';
   @Input() items: GalleryPhoto[] = [];
+  /** true = ใช้บนพื้นภาพหรือวิดีโอ ตัวหนังสือจะเป็นสีขาว */
+  @Input() light = false;
 
   lightbox: GalleryPhoto | null = null;
 

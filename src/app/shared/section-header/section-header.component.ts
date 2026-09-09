@@ -18,4 +18,6 @@ export class SectionHeaderComponent {
   @Input() title = '';
   /** คำอธิบายนำใต้หัวข้อ */
   @Input() lead = '';
+  /** true = ใช้บนพื้นภาพหรือวิดีโอ ตัวหนังสือจะเป็นสีขาว */
+  @Input() light = false;
 }
