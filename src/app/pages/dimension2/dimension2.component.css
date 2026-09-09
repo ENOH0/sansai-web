@@ -207,3 +207,32 @@
 }
 
 @media print { .d2-nav { display: none !important; } }
+
+/* ═══════════ พื้นหลังวิดีโอ ตรึงเต็มจอ ═══════════ */
+.d2-bg { position: fixed; inset: 0; z-index: -1; background: var(--navy-900); }
+.d2-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.d2-veil {
+  position: absolute;
+  inset: 0;
+  /* ตัวเลขท้าย rgba() คือความทึบ 0–1 ลดแล้วเห็นวิดีโอชัดขึ้น */
+  background: linear-gradient(180deg, rgba(8, 21, 47, .84) 0%, rgba(8, 21, 47, .76) 45%, rgba(8, 21, 47, .88) 100%);
+}
+
+/* ทุกส่วนโปร่งใสเพื่อให้เห็นวิดีโอ และตัวหนังสือนอกการ์ดใช้สีสว่าง */
+:host ::ng-deep .section,
+:host ::ng-deep .section-alt,
+:host ::ng-deep .section-tight { background: transparent; }
+
+:host ::ng-deep .sec-head > .sec-title { color: #fff; text-shadow: 0 2px 18px rgba(8, 21, 47, .65); }
+:host ::ng-deep .sec-lead { color: #dbe6f7; }
+:host ::ng-deep .card .sec-lead { color: var(--ink-soft); }
+
+/* แถบหัวข้อและกล่องเนื้อหายังเป็นพื้นขาว จึงอ่านง่ายบนวิดีโอ */
+.acc-head { border-color: rgba(255, 255, 255, .5); box-shadow: 0 12px 30px rgba(8, 21, 47, .26); }
+.acc-lead { color: #dbe6f7; }
+
+@media (prefers-reduced-motion: reduce) {
+  .d2-video { display: none; }
+  .d2-bg { background: var(--navy-900) url('/video/school-center-poster.jpg') center/cover; }
+}

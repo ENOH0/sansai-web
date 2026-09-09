@@ -1,3 +1,13 @@
+<!-- พื้นหลังวิดีโอ ตรึงเต็มจอ เลื่อนหน้าแล้วมีแต่เนื้อหาที่ขยับ -->
+<div class="d2-bg" aria-hidden="true">
+  <video #bgv class="d2-video" autoplay muted loop playsinline preload="auto"
+         poster="video/school-center-poster.jpg"
+         (loadedmetadata)="playBg(bgv)" (canplay)="playBg(bgv)">
+    <source src="video/school-center.mp4" type="video/mp4" />
+  </video>
+  <div class="d2-veil"></div>
+</div>
+
 
 <!-- ปุ่มนำทางลอย กดข้ามไปหัวข้อไหนก็ได้จากทุกจุดในหน้า -->
 <nav class="d2-nav" aria-label="ข้ามไปหัวข้อ">
@@ -241,7 +251,8 @@
     <app-photo-gallery
       title="ภาพกิจกรรมประกอบด้านที่ 2"
       lead="ภาพกิจกรรมพัฒนาผู้เรียนและงานวิชาการ จากเอกสารประกอบการประเมินด้านที่ 2"
-      [items]="gallery" />
+      [items]="gallery"
+      [light]="true" />
   </div>
 </section>
 
@@ -269,3 +280,6 @@
     </div>
   </div>
 </section>
+
+<!-- ปุ่มกลับหน้าแรกแบบลอย -->
+<app-home-fab />

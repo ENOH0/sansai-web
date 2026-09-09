@@ -9,6 +9,7 @@ import { KpiGridComponent } from '../../shared/kpi-grid/kpi-grid.component';
 import { CycleFlowComponent } from '../../shared/cycle-flow/cycle-flow.component';
 import { PhotoGalleryComponent } from '../../shared/photo-gallery/photo-gallery.component';
 import { GALLERY } from '../../data/gallery.data';
+import { HomeFabComponent } from '../../shared/home-fab/home-fab.component';
 import { PagerComponent } from '../../shared/pager/pager.component';
 import { LineChartComponent } from '../../shared/line-chart/line-chart.component';
 
@@ -16,6 +17,7 @@ import { LineChartComponent } from '../../shared/line-chart/line-chart.component
   selector: 'app-dimension4',
   standalone: true,
   imports: [
+    HomeFabComponent,
     PhotoGalleryComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
     KpiGridComponent, CycleFlowComponent, PagerComponent,

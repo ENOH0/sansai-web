@@ -12,6 +12,7 @@ import { CalloutComponent } from '../../shared/callout/callout.component';
 import { SmartWheelComponent } from '../../shared/smart-wheel/smart-wheel.component';
 import { PhotoGalleryComponent } from '../../shared/photo-gallery/photo-gallery.component';
 import { GALLERY } from '../../data/gallery.data';
+import { HomeFabComponent } from '../../shared/home-fab/home-fab.component';
 import { PagerComponent } from '../../shared/pager/pager.component';
 import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
 
@@ -19,6 +20,7 @@ import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
   selector: 'app-dimension2',
   standalone: true,
   imports: [
+    HomeFabComponent,
     SmartWheelComponent,
     PhotoGalleryComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
@@ -31,7 +33,7 @@ import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
 export class Dimension2Component {
   /* ---------- แอคคอร์เดียนหัวข้อตามแบบประเมิน ----------
      เปิดพร้อมกันได้หลายหัวข้อ กดซ้ำเพื่อปิด */
-  private readonly opened = signal<string[]>(['2.1']);
+  private readonly opened = signal<string[]>([]);
 
   private readonly indicatorKeyOf: Record<string, string> = {
     '2.1': '2.1 การพัฒนาหลักสูตรสถานศึกษา',
@@ -54,6 +56,13 @@ export class Dimension2Component {
       const el = document.getElementById('acc-' + k);
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 60);
+  }
+
+  /* Chrome/Safari บางเครื่องไม่เริ่มเล่นเองแม้ใส่ autoplay จึงสั่งเล่นซ้ำเมื่อพร้อม */
+  playBg(v: HTMLVideoElement): void {
+    v.muted = true;
+    const p = v.play();
+    if (p && typeof p.catch === 'function') p.catch(() => { /* ใช้ภาพ poster แทน */ });
   }
 
   isOpen(k: string): boolean { return this.opened().includes(k); }

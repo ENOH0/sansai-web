@@ -9,12 +9,14 @@ import { CycleFlowComponent } from '../../shared/cycle-flow/cycle-flow.component
 import { CalloutComponent } from '../../shared/callout/callout.component';
 import { PhotoGalleryComponent } from '../../shared/photo-gallery/photo-gallery.component';
 import { GALLERY } from '../../data/gallery.data';
+import { HomeFabComponent } from '../../shared/home-fab/home-fab.component';
 import { PagerComponent } from '../../shared/pager/pager.component';
 
 @Component({
   selector: 'app-dimension5',
   standalone: true,
   imports: [
+    HomeFabComponent,
     PhotoGalleryComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
     KpiGridComponent, CycleFlowComponent, CalloutComponent, PagerComponent

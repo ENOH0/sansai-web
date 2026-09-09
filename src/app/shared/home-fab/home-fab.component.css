@@ -1,0 +1,39 @@
+/* ปุ่มลอยมุมซ้ายล่าง — ไม่ชนกับปุ่มเลื่อนขึ้นบนสุดและปุ่มสารบัญที่อยู่มุมขวา */
+.home-fab {
+  position: fixed;
+  left: 20px;
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  z-index: 92;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 52px;
+  padding: 0 20px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, .26);
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--navy-800), var(--navy-600));
+  box-shadow: 0 12px 30px rgba(8, 21, 47, .42);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .18s var(--ease), box-shadow .2s var(--ease);
+}
+.home-fab:active { transform: scale(.95); }
+@media (hover: hover) {
+  .home-fab:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(8, 21, 47, .5); }
+}
+
+/* iPad แนวตั้งของด้านที่ 2 มีแถบนำทางอยู่กลางขอบล่าง จึงยกปุ่มนี้ขึ้นเล็กน้อย */
+@media (max-width: 900px) {
+  .home-fab { bottom: calc(84px + env(safe-area-inset-bottom)); }
+}
+
+@media (max-width: 560px) {
+  .home-fab { left: 14px; padding: 0 15px; font-size: 15px; }
+  .home-fab span { display: none; }
+}
+
+@media print { .home-fab { display: none !important; } }

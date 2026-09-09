@@ -11,12 +11,14 @@ import { CalloutComponent } from '../../shared/callout/callout.component';
 import { BanchuenModelComponent } from '../../shared/banchuen-model/banchuen-model.component';
 import { PhotoGalleryComponent } from '../../shared/photo-gallery/photo-gallery.component';
 import { GALLERY } from '../../data/gallery.data';
+import { HomeFabComponent } from '../../shared/home-fab/home-fab.component';
 import { PagerComponent } from '../../shared/pager/pager.component';
 
 @Component({
   selector: 'app-dimension3',
   standalone: true,
   imports: [
+    HomeFabComponent,
     PhotoGalleryComponent,
     BanchuenModelComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,

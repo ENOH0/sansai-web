@@ -13,6 +13,7 @@ import { DataTableComponent } from '../../shared/data-table/data-table.component
 import { CalloutComponent } from '../../shared/callout/callout.component';
 import { PhotoGalleryComponent } from '../../shared/photo-gallery/photo-gallery.component';
 import { GALLERY } from '../../data/gallery.data';
+import { HomeFabComponent } from '../../shared/home-fab/home-fab.component';
 import { PagerComponent } from '../../shared/pager/pager.component';
 import { LineChartComponent } from '../../shared/line-chart/line-chart.component';
 import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
@@ -23,6 +24,7 @@ import { OnetChartComponent } from '../../shared/onet-chart/onet-chart.component
   selector: 'app-dimension1',
   standalone: true,
   imports: [
+    HomeFabComponent,
     PhotoGalleryComponent, AwardsPreviewComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
     KpiGridComponent, DataTableComponent, CalloutComponent, PagerComponent, CycleFlowComponent,
