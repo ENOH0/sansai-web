@@ -5,6 +5,172 @@
   display: block;
 }
 
+/* ═══════════ Hybrid: ภาพรวม 5 หมวด → ตัวชี้วัด → หลักฐาน ═══════════ */
+.d3-index { background: var(--paper-alt); }
+
+.d3-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.d3-card {
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  min-height: 196px;
+  padding: 22px;
+  color: var(--ink-soft);
+  text-align: left;
+  font-family: inherit;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--navy-600);
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform .22s var(--ease), box-shadow .22s var(--ease), border-color .22s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.d3-card:active { transform: scale(.985); }
+@media (hover: hover) {
+  .d3-card:hover { transform: translateY(-4px); border-color: var(--navy-300); box-shadow: var(--shadow-md); }
+}
+
+.d3-card-no {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 42px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  border-radius: 11px;
+  background: var(--navy-700);
+  font-variant-numeric: tabular-nums;
+}
+.d3-card-title { color: var(--navy-900); font-size: 19px; font-weight: 800; line-height: 1.38; }
+.d3-card-count { color: var(--ink-mute); font-size: 15px; font-weight: 600; }
+.d3-card-go { margin-top: auto; color: var(--navy-600); font-size: 15px; font-weight: 800; }
+
+.d3-detail { background: var(--paper-alt); scroll-margin-top: var(--nav-h); }
+.d3-detail-head { display: flex; align-items: flex-start; gap: 18px; }
+.d3-detail-head h2 { margin: 0; color: var(--navy-900); font-size: clamp(23px, 2.6vw, 31px); line-height: 1.3; }
+.d3-detail-kicker { margin: 0 0 3px; color: var(--navy-600); font-size: 14px; font-weight: 800; letter-spacing: .06em; }
+
+.d3-back {
+  flex: none;
+  min-height: 44px;
+  padding: 0 15px;
+  color: var(--navy-700);
+  font-family: inherit;
+  font-size: 15.5px;
+  font-weight: 800;
+  border: 1px solid var(--navy-200);
+  border-radius: 999px;
+  background: var(--paper);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (hover: hover) { .d3-back:hover { background: var(--navy-50); border-color: var(--navy-400); } }
+
+/* ปุ่มนำทางลอยด้านข้าง — รูปแบบเดียวกับด้าน 1 และ 2 */
+.d3-nav {
+  position: fixed;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 60;
+  display: grid;
+  gap: 10px;
+}
+.d3-nav-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  color: var(--navy-700);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgba(247, 251, 255, .96);
+  box-shadow: 0 8px 22px rgba(8, 21, 47, .18);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.d3-nav-btn:active { transform: scale(.94); }
+.d3-nav-no { font-variant-numeric: tabular-nums; }
+.d3-nav-btn.is-open {
+  color: #fff;
+  border-color: var(--navy-600);
+  background: linear-gradient(135deg, var(--navy-800), var(--navy-600));
+  box-shadow: 0 10px 26px rgba(30, 77, 158, .42);
+}
+.d3-nav-tip {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%) translateX(8px);
+  max-width: min(330px, calc(100vw - 110px));
+  padding: 8px 14px;
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 10px;
+  background: rgba(8, 21, 47, .94);
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s var(--ease), transform .2s var(--ease);
+}
+@media (hover: hover) {
+  .d3-nav-btn:hover { transform: scale(1.06); }
+  .d3-nav-btn:hover .d3-nav-tip { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+
+.d3-indicators {
+  padding: 18px 22px;
+  border: 1px solid var(--navy-100);
+  border-left: 5px solid var(--gold-500);
+  border-radius: var(--radius-sm);
+  background: var(--navy-50);
+}
+.d3-indicators h3 { margin: 0 0 10px; color: var(--navy-800); font-size: 17px; }
+.d3-indicators ol { margin: 0; padding-left: 23px; }
+.d3-indicators li { margin-bottom: 7px; color: var(--ink-soft); font-size: 16px; line-height: 1.65; }
+.d3-indicators li:last-child { margin-bottom: 0; }
+
+@media (max-width: 900px) { .d3-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 900px) {
+  .d3-nav {
+    right: auto;
+    left: 50%;
+    top: auto;
+    bottom: calc(18px + env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    grid-auto-flow: column;
+    padding: 8px 10px;
+    border-radius: 999px;
+    background: rgba(247, 251, 255, .94);
+    box-shadow: 0 10px 30px rgba(8, 21, 47, .28);
+    backdrop-filter: blur(10px);
+  }
+  .d3-nav-btn { width: 48px; height: 48px; box-shadow: none; border-color: transparent; }
+  .d3-nav-tip { display: none; }
+}
+@media (max-width: 560px) {
+  .d3-grid { grid-template-columns: 1fr; }
+  .d3-card { min-height: 164px; padding: 18px; }
+  .d3-detail-head { display: grid; gap: 12px; }
+}
+
 /* การ์ดตัวอักษรของ BANCHUEN Model */
 .model-letter {
   display: flex;

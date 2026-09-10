@@ -1,5 +1,15 @@
 <app-page-hero [no]="d.no" [weight]="d.weight" [name]="d.name" [subtitle]="d.subtitle" />
 
+<!-- ปุ่มนำทางลอย: เลือกดูแต่ละหมวดได้จากทุกจุดในหน้า -->
+<nav class="d3-nav" aria-label="ข้ามไปหมวดประเมินด้านที่ 3">
+  <button type="button" class="d3-nav-btn" *ngFor="let group of groups"
+          [class.is-open]="open() === group.key" (click)="selectGroup(group.key)"
+          [attr.aria-label]="group.key + ' ' + group.title">
+    <span class="d3-nav-no">{{ group.key }}</span>
+    <span class="d3-nav-tip">{{ group.title }}</span>
+  </button>
+</nav>
+
 <section class="section">
   <div class="wrap">
     <div class="card card-accent" appReveal style="margin-bottom:32px">
@@ -9,8 +19,48 @@
   </div>
 </section>
 
+<!-- ═══════════ สารบัญ 5 หมวดตามแบบประเมิน ═══════════ -->
+<section class="section d3-index" *ngIf="!open()">
+  <div class="wrap">
+    <div class="sec-head" appReveal>
+      <h2 class="sec-title">เลือกหมวดประเมินด้านที่ 3</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <p class="sec-lead" style="margin:-8px 0 24px">เลือกหมวดเพื่อดูตัวชี้วัดตามแบบประเมินและหลักฐานประกอบของหมวดนั้น</p>
+
+    <div class="d3-grid">
+      <button type="button" class="d3-card" *ngFor="let group of groups; let i = index"
+              appReveal="zoom" [revealDelay]="i * 70" (click)="selectGroup(group.key)">
+        <span class="d3-card-no">{{ group.key }}</span>
+        <span class="d3-card-title">{{ group.title }}</span>
+        <span class="d3-card-count">{{ group.count }} ตัวชี้วัดตามแบบประเมิน</span>
+        <span class="d3-card-go">ดูตัวชี้วัดและหลักฐาน ›</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ หัวข้อและตัวชี้วัดของหมวดที่เลือก ═══════════ -->
+<section class="section-tight d3-detail" *ngIf="currentGroup as group">
+  <div class="wrap">
+    <div class="d3-detail-head">
+      <button type="button" class="d3-back" (click)="backToIndex()">‹ กลับภาพรวม 5 หมวด</button>
+      <div>
+        <p class="d3-detail-kicker">หมวดที่เลือก</p>
+        <h2>{{ group.key }} {{ group.title }}</h2>
+      </div>
+    </div>
+    <div class="d3-indicators">
+      <h3>ตัวชี้วัดตามแบบประเมิน {{ group.count }} ข้อ</h3>
+      <ol>
+        <li *ngFor="let indicator of d.indicators[group.indicatorKey]">{{ indicator }}</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════ 3.1 ภาวะผู้นำ ═══════════ -->
-<section class="section section-alt">
+<section class="section section-alt" *ngIf="open() === '3.1'">
   <div class="wrap">
     <app-section-header num="3.1" title="ภาวะผู้นำของผู้บริหาร" [lead]="d.leadership.lead" />
 
@@ -79,7 +129,7 @@
 </section>
 
 <!-- ═══════════ 3.2 การพัฒนาองค์กร ═══════════ -->
-<section class="section">
+<section class="section" *ngIf="open() === '3.2'">
   <div class="wrap">
     <app-section-header num="3.2" title="การพัฒนาองค์กร" [lead]="d.organization.lead" />
 
@@ -97,7 +147,7 @@
 </section>
 
 <!-- ═══════════ 3.3 เทคโนโลยี ═══════════ -->
-<section class="section section-alt">
+<section class="section section-alt" *ngIf="open() === '3.3'">
   <div class="wrap">
     <app-section-header num="3.3" title="เทคโนโลยีและการสื่อสารเพื่อการศึกษา" [lead]="d.technology.lead" />
 
@@ -114,7 +164,7 @@
 </section>
 
 <!-- ═══════════ 3.4 ประกันคุณภาพภายใน ═══════════ -->
-<section class="section">
+<section class="section" *ngIf="open() === '3.4'">
   <div class="wrap">
     <app-section-header num="3.4" title="ระบบการประกันคุณภาพภายใน" [lead]="d.qa.lead" />
 
@@ -134,7 +184,7 @@
 </section>
 
 <!-- ═══════════ 3.5 ข้อมูลและสารสนเทศ ═══════════ -->
-<section class="section section-alt">
+<section class="section section-alt" *ngIf="open() === '3.5'">
   <div class="wrap">
     <app-section-header num="3.5" title="ระบบข้อมูลและสารสนเทศ" [lead]="d.information.lead" />
 
@@ -150,7 +200,7 @@
 
 <!-- ═══════════ ตัวชี้วัด ═══════════ -->
 <!-- ═══════════ แกลเลอรีภาพกิจกรรม ═══════════ -->
-<section class="section">
+<section class="section" *ngIf="!open()">
   <div class="wrap">
     <app-photo-gallery
       title="ภาพกิจกรรมประกอบด้านที่ 3"
@@ -159,7 +209,7 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" *ngIf="!open()">
   <div class="wrap">
     <app-section-header
       kicker="สรุป"
