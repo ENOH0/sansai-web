@@ -98,7 +98,7 @@
   letter-spacing: .08em;
   text-decoration: none;
   text-shadow: 0 2px 14px rgba(8, 21, 47, .9);
-  animation: coverRise .9s .7s var(--ease) both;
+  animation: coverScrollRise .9s .7s var(--ease) both;
 }
 .cover-scroll > span { animation: coverPulse 2.8s ease-in-out infinite; }
 .cover-scroll svg { animation: coverBob 2.2s ease-in-out infinite; }
@@ -106,6 +106,10 @@
 @keyframes coverRise {
   from { opacity: 0; transform: translateY(26px); }
   to { opacity: 1; transform: translateY(0); }
+}
+@keyframes coverScrollRise {
+  from { opacity: 0; transform: translateX(-50%) translateY(26px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 @keyframes coverBob {
   0%, 100% { transform: translateY(0); }

@@ -1,3 +1,13 @@
+<!-- พื้นหลังวิดีโอตรึงเต็มจอ เหมือนด้านที่ 1 และ 2 -->
+<div class="d3-bg" aria-hidden="true">
+  <video #bgv class="d3-video" autoplay muted loop playsinline preload="auto"
+         poster="video/school-poster.jpg"
+         (loadedmetadata)="playBg(bgv)" (canplay)="playBg(bgv)">
+    <source src="video/school.mp4" type="video/mp4" />
+  </video>
+  <div class="d3-veil"></div>
+</div>
+
 <app-page-hero [no]="d.no" [weight]="d.weight" [name]="d.name" [subtitle]="d.subtitle" />
 
 <!-- ปุ่มนำทางลอย: เลือกดูแต่ละหมวดได้จากทุกจุดในหน้า -->
@@ -62,7 +72,7 @@
 <!-- ═══════════ 3.1 ภาวะผู้นำ ═══════════ -->
 <section class="section section-alt" *ngIf="open() === '3.1'">
   <div class="wrap">
-    <app-section-header num="3.1" title="ภาวะผู้นำของผู้บริหาร" [lead]="d.leadership.lead" />
+    <app-section-header [light]="true" num="3.1" title="ภาวะผู้นำของผู้บริหาร" [lead]="d.leadership.lead" />
 
     <!-- BANCHUEN Model -->
     <div class="sec-head" appReveal>
@@ -131,7 +141,7 @@
 <!-- ═══════════ 3.2 การพัฒนาองค์กร ═══════════ -->
 <section class="section" *ngIf="open() === '3.2'">
   <div class="wrap">
-    <app-section-header num="3.2" title="การพัฒนาองค์กร" [lead]="d.organization.lead" />
+    <app-section-header [light]="true" num="3.2" title="การพัฒนาองค์กร" [lead]="d.organization.lead" />
 
     <div class="grid grid-2">
       <div class="card card-hover" *ngFor="let it of d.organization.items; let i = index"
@@ -149,7 +159,7 @@
 <!-- ═══════════ 3.3 เทคโนโลยี ═══════════ -->
 <section class="section section-alt" *ngIf="open() === '3.3'">
   <div class="wrap">
-    <app-section-header num="3.3" title="เทคโนโลยีและการสื่อสารเพื่อการศึกษา" [lead]="d.technology.lead" />
+    <app-section-header [light]="true" num="3.3" title="เทคโนโลยีและการสื่อสารเพื่อการศึกษา" [lead]="d.technology.lead" />
 
     <app-cycle-flow [steps]="d.technology.cycle" />
 
@@ -166,7 +176,7 @@
 <!-- ═══════════ 3.4 ประกันคุณภาพภายใน ═══════════ -->
 <section class="section" *ngIf="open() === '3.4'">
   <div class="wrap">
-    <app-section-header num="3.4" title="ระบบการประกันคุณภาพภายใน" [lead]="d.qa.lead" />
+    <app-section-header [light]="true" num="3.4" title="ระบบการประกันคุณภาพภายใน" [lead]="d.qa.lead" />
 
     <div class="grid grid-3">
       <div class="card card-hover" *ngFor="let s of d.qa.steps; let i = index"
@@ -186,7 +196,7 @@
 <!-- ═══════════ 3.5 ข้อมูลและสารสนเทศ ═══════════ -->
 <section class="section section-alt" *ngIf="open() === '3.5'">
   <div class="wrap">
-    <app-section-header num="3.5" title="ระบบข้อมูลและสารสนเทศ" [lead]="d.information.lead" />
+    <app-section-header [light]="true" num="3.5" title="ระบบข้อมูลและสารสนเทศ" [lead]="d.information.lead" />
 
     <div class="steps">
       <div class="step-item" *ngFor="let it of d.information.items; let i = index"
@@ -205,14 +215,14 @@
     <app-photo-gallery
       title="ภาพกิจกรรมประกอบด้านที่ 3"
       lead="ภาพการบริหารจัดการและการพัฒนาครูและบุคลากร จากเอกสารประกอบการประเมินด้านที่ 3"
-      [items]="gallery" />
+      [items]="gallery" [light]="true" />
   </div>
 </section>
 
 <section class="section" *ngIf="!open()">
   <div class="wrap">
     <app-section-header
-      kicker="สรุป"
+      [light]="true" kicker="สรุป"
       title="ตัวชี้วัดของด้านที่ 3 ทั้ง 5 รายการ"
       lead="ตามแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน ระดับประถมศึกษาและมัธยมศึกษา" />
 

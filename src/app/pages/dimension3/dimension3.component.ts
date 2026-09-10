@@ -54,4 +54,11 @@ export class Dimension3Component {
     this.open.set('');
     setTimeout(() => document.querySelector('.d3-index')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   }
+
+  /** Safari/Chrome บางเครื่องต้องสั่งเล่นซ้ำเมื่อวิดีโอพร้อมใช้งาน */
+  playBg(video: HTMLVideoElement): void {
+    video.muted = true;
+    const playback = video.play();
+    if (playback && typeof playback.catch === 'function') playback.catch(() => { /* ใช้ poster แทน */ });
+  }
 }
