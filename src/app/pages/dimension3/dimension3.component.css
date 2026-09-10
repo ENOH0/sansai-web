@@ -149,6 +149,13 @@
   background: linear-gradient(135deg, var(--navy-800), var(--navy-600));
   box-shadow: 0 10px 26px rgba(30, 77, 158, .42);
 }
+.d3-nav-back {
+  color: #fff;
+  font-size: 27px;
+  border-color: var(--gold-400);
+  background: linear-gradient(135deg, var(--navy-800), var(--navy-600));
+  box-shadow: 0 10px 26px rgba(8, 21, 47, .42);
+}
 .d3-nav-tip {
   position: absolute;
   right: calc(100% + 12px);
@@ -206,6 +213,9 @@
   .d3-nav-tip { display: none; }
 }
 @media (max-width: 560px) {
+  .d3-nav { gap: 4px; padding: 6px 8px; }
+  .d3-nav-btn { width: 44px; height: 44px; font-size: 13px; }
+  .d3-nav-back { font-size: 23px; }
   .d3-grid { grid-template-columns: 1fr; }
   .d3-card { min-height: 164px; padding: 18px; }
   .d3-detail-head { display: grid; gap: 12px; }

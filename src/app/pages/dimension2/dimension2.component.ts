@@ -67,6 +67,14 @@ export class Dimension2Component {
 
   isOpen(k: string): boolean { return this.opened().includes(k); }
 
+  hasOpen(): boolean { return this.opened().length > 0; }
+
+  /** ปุ่ม nav ลอย: ปิดหัวข้อย่อยและกลับสู่หน้าหลักของด้านที่ 2 */
+  backToIndex(): void {
+    this.opened.set([]);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   toggle(k: string): void {
     this.opened.update(v => v.includes(k) ? [] : [k]);
   }

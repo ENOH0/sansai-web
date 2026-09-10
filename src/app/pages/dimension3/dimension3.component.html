@@ -18,6 +18,11 @@
     <span class="d3-nav-no">{{ group.key }}</span>
     <span class="d3-nav-tip">{{ group.title }}</span>
   </button>
+  <button type="button" class="d3-nav-btn d3-nav-back" *ngIf="open()"
+          (click)="backToIndex()" aria-label="กลับหน้าหลักด้านที่ 3">
+    <span class="d3-nav-no" aria-hidden="true">↶</span>
+    <span class="d3-nav-tip">กลับหน้าหลักด้านที่ 3</span>
+  </button>
 </nav>
 
 <section class="section">

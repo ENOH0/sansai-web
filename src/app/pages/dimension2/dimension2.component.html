@@ -17,6 +17,11 @@
     <span class="d2-nav-no">{{ g.key }}</span>
     <span class="d2-nav-tip">{{ g.title }}</span>
   </button>
+  <button type="button" class="d2-nav-btn d2-nav-back" *ngIf="hasOpen()"
+          (click)="backToIndex()" aria-label="กลับหน้าหลักด้านที่ 2">
+    <span class="d2-nav-no" aria-hidden="true">↶</span>
+    <span class="d2-nav-tip">กลับหน้าหลักด้านที่ 2</span>
+  </button>
 </nav>
 <app-page-hero [no]="d.no" [weight]="d.weight" [name]="d.name" [subtitle]="d.subtitle" />
 

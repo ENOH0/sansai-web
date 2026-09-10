@@ -178,6 +178,13 @@
   background: linear-gradient(135deg, var(--navy-800), var(--navy-600));
   box-shadow: 0 10px 26px rgba(30, 77, 158, .42);
 }
+.d1-side-nav-back {
+  color: #fff;
+  font-size: 27px;
+  border-color: var(--gold-400);
+  background: linear-gradient(135deg, var(--navy-800), var(--navy-600));
+  box-shadow: 0 10px 26px rgba(8, 21, 47, .42);
+}
 .d1-side-nav-btn.is-sub { width: 48px; height: 48px; margin-left: 3px; }
 .d1-side-subnav {
   display: grid;
@@ -283,40 +290,6 @@
 /* การ์ดสูงเท่ากันเมื่อไม่มีตัวเลขเด่นแล้ว */
 .d1-card { min-height: 142px; }
 .d1-card-top { margin-bottom: 2px; }
-
-/* ═══════════ ปุ่มย้อนกลับแบบลอย ═══════════ */
-.d1-fab {
-  position: fixed;
-  right: 92px;
-  /* วางเหนือปุ่มเลื่อนขึ้นบนสุด และเผื่อขอบจอ iPad */
-  bottom: calc(96px + env(safe-area-inset-bottom));
-  z-index: 90;
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  min-height: 52px;
-  padding: 0 20px;
-  color: #fff;
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: 800;
-  border: 1px solid rgba(255, 255, 255, .28);
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--navy-800), var(--navy-600));
-  box-shadow: 0 12px 30px rgba(8, 21, 47, .42);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  transition: transform .18s var(--ease), box-shadow .2s var(--ease);
-}
-.d1-fab:active { transform: scale(.95); }
-@media (hover: hover) {
-  .d1-fab:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(8, 21, 47, .5); }
-}
-
-@media (max-width: 560px) {
-  .d1-fab { right: 14px; bottom: calc(86px + env(safe-area-inset-bottom)); padding: 0 16px; font-size: 15px; }
-  .d1-fab span { display: none; }
-}
 
 /* iPad ประหยัดแบต — ถ้าผู้ใช้ตั้งค่าลดการเคลื่อนไหว ให้หยุดวิดีโอแล้วใช้ภาพนิ่งแทน */
 @media (prefers-reduced-motion: reduce) {

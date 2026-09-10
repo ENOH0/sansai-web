@@ -163,6 +163,13 @@
   background: linear-gradient(135deg, var(--navy-800), var(--navy-600));
   box-shadow: 0 10px 26px rgba(30, 77, 158, .42);
 }
+.d2-nav-back {
+  color: #fff;
+  font-size: 27px;
+  border-color: var(--gold-400);
+  background: linear-gradient(135deg, var(--navy-800), var(--navy-600));
+  box-shadow: 0 10px 26px rgba(8, 21, 47, .42);
+}
 
 /* ป้ายชื่อหัวข้อ โผล่เมื่อชี้ด้วยเมาส์ (จอสัมผัสไม่ต้องใช้) */
 .d2-nav-tip {
@@ -204,6 +211,13 @@
   }
   .d2-nav-btn { width: 48px; height: 48px; box-shadow: none; border-color: transparent; }
   .d2-nav-tip { display: none; }
+}
+
+@media (max-width: 560px) {
+  .d2-nav { gap: 4px; padding: 6px 8px; }
+  .d2-nav-btn { width: 44px; height: 44px; }
+  .d2-nav-no { font-size: 13px; }
+  .d2-nav-back { font-size: 23px; }
 }
 
 @media print { .d2-nav { display: none !important; } }
