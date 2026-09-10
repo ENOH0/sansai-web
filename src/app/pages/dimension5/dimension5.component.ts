@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DIM5 } from '../../data/dimension5.data';
 import { RevealDirective } from '../../shared/directives/reveal.directive';
@@ -28,4 +28,28 @@ export class Dimension5Component {
   readonly gallery = GALLERY['d5'];
   readonly d = DIM5;
   readonly indicatorKeys = Object.keys(DIM5.indicators) as (keyof typeof DIM5.indicators)[];
+  readonly criteria = DIM5.indicators['5.1 โครงการ/กิจกรรมดีเด่นของสถานศึกษา'];
+  readonly open = signal<number | null>(null);
+
+  get currentProject() {
+    const index = this.open();
+    return index === null ? undefined : this.d.projects[index];
+  }
+
+  selectProject(index: number): void {
+    this.open.set(index);
+    setTimeout(() => document.querySelector('.d5-detail')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  }
+
+  backToIndex(): void {
+    this.open.set(null);
+    setTimeout(() => document.querySelector('.d5-index')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  }
+
+  /** Safari/Chrome บางเครื่องต้องสั่งเล่นซ้ำเมื่อวิดีโอพร้อมใช้งาน */
+  playBg(video: HTMLVideoElement): void {
+    video.muted = true;
+    const playback = video.play();
+    if (playback && typeof playback.catch === 'function') playback.catch(() => { /* ใช้ poster แทน */ });
+  }
 }

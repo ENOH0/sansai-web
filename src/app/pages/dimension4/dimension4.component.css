@@ -4,3 +4,126 @@
 :host {
   display: block;
 }
+
+/* ═══════════ พื้นหลังวิดีโอเดียวกับด้านที่ 2 ═══════════ */
+.d4-bg { position: fixed; inset: 0; z-index: -1; background: var(--navy-900); }
+.d4-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.d4-veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 21, 47, .84) 0%, rgba(8, 21, 47, .76) 45%, rgba(8, 21, 47, .88) 100%);
+}
+
+/* พื้นส่วนหลักโปร่งใสเพื่อให้เห็นวิดีโอ ข้อความนอกกรอบใช้สีสว่าง */
+:host ::ng-deep .section,
+:host ::ng-deep .section-alt,
+:host ::ng-deep .section-tight { background: transparent; }
+:host ::ng-deep .sec-head > .sec-title { color: #fff; text-shadow: 0 3px 18px rgba(8, 21, 47, .9); }
+:host ::ng-deep .sec-lead { color: #fff; font-weight: 600; text-shadow: 0 2px 14px rgba(8, 21, 47, .9); }
+:host ::ng-deep .sec-kicker { color: #fff; font-weight: 800; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
+:host ::ng-deep .sec-rule { background: var(--gold-400); box-shadow: 0 2px 12px rgba(8, 21, 47, .72); }
+:host ::ng-deep .steps { border-left-color: rgba(255, 255, 255, .28); }
+:host ::ng-deep .step-item h4,
+:host ::ng-deep .step-item p,
+:host ::ng-deep .bullets > li { color: #fff; font-weight: 600; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
+:host ::ng-deep .step-item::before { border-color: rgba(255, 255, 255, .6); }
+:host ::ng-deep .chip { color: #fff; border-color: rgba(255, 255, 255, .48); background: rgba(8, 21, 47, .38); text-shadow: 0 2px 10px rgba(8, 21, 47, .9); }
+
+/* ข้อความในกรอบไม่ต้องมีเงา */
+:host ::ng-deep .card .step-item h4 { color: var(--navy-900); }
+:host ::ng-deep .card .step-item p,
+:host ::ng-deep .card .bullets > li { color: var(--ink-soft); }
+:host ::ng-deep .card .steps { border-left-color: var(--navy-100); }
+:host ::ng-deep .card .step-item::before { border-color: var(--navy-300); }
+:host ::ng-deep .card .chip { color: var(--navy-700); border-color: var(--navy-100); background: var(--navy-50); text-shadow: none; }
+:host ::ng-deep .card *,
+:host ::ng-deep .chart-card *,
+:host ::ng-deep .table-scroll *,
+:host ::ng-deep app-cycle-flow * { text-shadow: none !important; filter: none !important; }
+
+/* ═══════════ Hybrid: ภาพรวม 4 หมวด → ตัวชี้วัด → หลักฐาน ═══════════ */
+.d4-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.d4-card {
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  min-height: 164px;
+  padding: 18px;
+  color: var(--ink-soft);
+  text-align: left;
+  font-family: inherit;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--navy-600);
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform .22s var(--ease), box-shadow .22s var(--ease), border-color .22s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.d4-card:active { transform: scale(.985); }
+@media (hover: hover) { .d4-card:hover { transform: translateY(-4px); border-color: var(--navy-300); box-shadow: var(--shadow-md); } }
+.d4-card-no {
+  display: grid; place-items: center; width: 50px; height: 42px;
+  color: #fff; font-size: 18px; font-weight: 800; border-radius: 11px;
+  background: var(--navy-700); font-variant-numeric: tabular-nums;
+}
+.d4-card-title { color: var(--navy-900); font-size: 19px; font-weight: 800; line-height: 1.38; }
+.d4-card-count { color: var(--ink-mute); font-size: 15px; font-weight: 600; }
+.d4-card-go { margin-top: auto; color: var(--navy-600); font-size: 15px; font-weight: 800; }
+
+.d4-detail { background: transparent; scroll-margin-top: var(--nav-h); }
+.d4-detail-head { display: flex; align-items: flex-start; gap: 18px; }
+.d4-detail-head h2 { margin: 0; color: #fff; font-size: clamp(23px, 2.6vw, 31px); line-height: 1.3; text-shadow: 0 3px 18px rgba(8, 21, 47, .9); }
+.d4-detail-kicker { margin: 0 0 3px; color: #fff; font-size: 14px; font-weight: 800; letter-spacing: .06em; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
+.d4-back {
+  flex: none; min-height: 44px; padding: 0 15px; color: var(--navy-700);
+  font-family: inherit; font-size: 15.5px; font-weight: 800;
+  border: 1px solid var(--navy-200); border-radius: 999px; background: var(--paper);
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+@media (hover: hover) { .d4-back:hover { background: var(--navy-50); border-color: var(--navy-400); } }
+.d4-indicators { margin-top: 18px; padding: 18px 22px; border: 1px solid var(--navy-100); border-left: 5px solid var(--gold-500); border-radius: var(--radius-sm); background: var(--navy-50); }
+.d4-indicators h3 { margin: 0 0 10px; color: var(--navy-800); font-size: 17px; }
+.d4-indicators ol { margin: 0; padding-left: 23px; }
+.d4-indicators li { margin-bottom: 7px; color: var(--ink-soft); font-size: 16px; line-height: 1.65; }
+.d4-indicators li:last-child { margin-bottom: 0; }
+
+/* nav ลอยด้านข้าง — แบบเดียวกับด้านที่ 3 */
+.d4-nav { position: fixed; right: 18px; top: 50%; transform: translateY(-50%); z-index: 60; display: grid; gap: 10px; }
+.d4-nav-btn {
+  position: relative; display: grid; place-items: center; width: 54px; height: 54px;
+  color: var(--navy-700); font-family: inherit; font-size: 15px; font-weight: 800;
+  border: 1px solid var(--line); border-radius: 50%; background: rgba(247, 251, 255, .96);
+  box-shadow: 0 8px 22px rgba(8, 21, 47, .18); cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.d4-nav-btn:active { transform: scale(.94); }
+.d4-nav-no { font-variant-numeric: tabular-nums; }
+.d4-nav-btn.is-open { color: #fff; border-color: var(--navy-600); background: linear-gradient(135deg, var(--navy-800), var(--navy-600)); box-shadow: 0 10px 26px rgba(30, 77, 158, .42); }
+.d4-nav-back { color: #fff; font-size: 27px; border-color: var(--gold-400); background: linear-gradient(135deg, var(--navy-800), var(--navy-600)); box-shadow: 0 10px 26px rgba(8, 21, 47, .42); }
+.d4-nav-tip {
+  position: absolute; right: calc(100% + 12px); top: 50%; transform: translateY(-50%) translateX(8px);
+  max-width: min(330px, calc(100vw - 110px)); padding: 8px 14px; color: #fff; font-size: 14.5px; font-weight: 700; line-height: 1.35;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-radius: 10px; background: rgba(8, 21, 47, .94);
+  box-shadow: var(--shadow-md); opacity: 0; pointer-events: none; transition: opacity .2s var(--ease), transform .2s var(--ease);
+}
+@media (hover: hover) { .d4-nav-btn:hover { transform: scale(1.06); } .d4-nav-btn:hover .d4-nav-tip { opacity: 1; transform: translateY(-50%) translateX(0); } }
+
+@media (max-width: 900px) {
+  .d4-nav { right: auto; left: 50%; top: auto; bottom: calc(18px + env(safe-area-inset-bottom)); transform: translateX(-50%); grid-auto-flow: column; padding: 8px 10px; border-radius: 999px; background: rgba(247, 251, 255, .94); box-shadow: 0 10px 30px rgba(8, 21, 47, .28); backdrop-filter: blur(10px); }
+  .d4-nav-btn { width: 48px; height: 48px; box-shadow: none; border-color: transparent; }
+  .d4-nav-tip { display: none; }
+}
+@media (max-width: 560px) {
+  .d4-nav { gap: 4px; padding: 6px 8px; }
+  .d4-nav-btn { width: 44px; height: 44px; font-size: 13px; }
+  .d4-nav-back { font-size: 23px; }
+  .d4-grid { grid-template-columns: 1fr; }
+  .d4-card { min-height: 152px; padding: 17px; }
+  .d4-detail-head { display: grid; gap: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d4-video { display: none; }
+  .d4-bg { background: var(--navy-900) url('/video/school-center-poster.jpg') center/cover; }
+}

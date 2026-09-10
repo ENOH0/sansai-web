@@ -1,4 +1,29 @@
+<!-- พื้นหลังวิดีโอเดียวกับด้านที่ 2 -->
+<div class="d4-bg" aria-hidden="true">
+  <video #bgv class="d4-video" autoplay muted loop playsinline preload="auto"
+         poster="video/school-center-poster.jpg"
+         (loadedmetadata)="playBg(bgv)" (canplay)="playBg(bgv)">
+    <source src="video/school-center.mp4" type="video/mp4" />
+  </video>
+  <div class="d4-veil"></div>
+</div>
+
 <app-page-hero [no]="d.no" [weight]="d.weight" [name]="d.name" [subtitle]="d.subtitle" />
+
+<!-- nav ลอย: เลือกดูแต่ละหมวด และปุ่มกลับอยู่ท้ายสุด -->
+<nav class="d4-nav" aria-label="ข้ามไปหมวดประเมินด้านที่ 4">
+  <button type="button" class="d4-nav-btn" *ngFor="let group of groups"
+          [class.is-open]="open() === group.key" (click)="selectGroup(group.key)"
+          [attr.aria-label]="group.key + ' ' + group.title">
+    <span class="d4-nav-no">{{ group.key }}</span>
+    <span class="d4-nav-tip">{{ group.title }}</span>
+  </button>
+  <button type="button" class="d4-nav-btn d4-nav-back" *ngIf="open()"
+          (click)="backToIndex()" aria-label="กลับหน้าหลักด้านที่ 4">
+    <span class="d4-nav-no" aria-hidden="true">↶</span>
+    <span class="d4-nav-tip">กลับหน้าหลักด้านที่ 4</span>
+  </button>
+</nav>
 
 <section class="section">
   <div class="wrap">
@@ -9,18 +34,55 @@
   </div>
 </section>
 
-<!-- ═══════════ 4.1 การออกแบบการจัดการเรียนรู้ ═══════════ -->
-<section class="section section-alt">
+<!-- ═══════════ สารบัญ 4 หมวดตามแบบประเมิน ═══════════ -->
+<section class="section d4-index" *ngIf="!open()">
   <div class="wrap">
-    <app-section-header num="4.1" title="การออกแบบการจัดการเรียนรู้" [lead]="d.design.lead" />
+    <div class="sec-head" appReveal>
+      <h2 class="sec-title">เลือกหมวดประเมินด้านที่ 4</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <p class="sec-lead" style="margin:-8px 0 24px">เลือกหมวดเพื่อดูตัวชี้วัดตามแบบประเมินและหลักฐานประกอบของหมวดนั้น</p>
+    <div class="d4-grid">
+      <button type="button" class="d4-card" *ngFor="let group of groups; let i = index"
+              appReveal="zoom" [revealDelay]="i * 70" (click)="selectGroup(group.key)">
+        <span class="d4-card-no">{{ group.key }}</span>
+        <span class="d4-card-title">{{ group.title }}</span>
+        <span class="d4-card-count">{{ group.count }} ตัวชี้วัดตามแบบประเมิน</span>
+        <span class="d4-card-go">ดูตัวชี้วัดและหลักฐาน ›</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ หัวข้อและตัวชี้วัดของหมวดที่เลือก ═══════════ -->
+<section class="section-tight d4-detail" *ngIf="currentGroup as group">
+  <div class="wrap">
+    <div class="d4-detail-head">
+      <button type="button" class="d4-back" (click)="backToIndex()">‹ กลับภาพรวม 4 หมวด</button>
+      <div>
+        <p class="d4-detail-kicker">หมวดที่เลือก</p>
+        <h2>{{ group.key }} {{ group.title }}</h2>
+      </div>
+    </div>
+    <div class="d4-indicators">
+      <h3>ตัวชี้วัดตามแบบประเมิน {{ group.count }} ข้อ</h3>
+      <ol><li *ngFor="let indicator of d.indicators[group.indicatorKey]">{{ indicator }}</li></ol>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4.1 การออกแบบการจัดการเรียนรู้ ═══════════ -->
+<section class="section section-alt" *ngIf="open() === '4.1'">
+  <div class="wrap">
+    <app-section-header [light]="true" num="4.1" title="การออกแบบการจัดการเรียนรู้" [lead]="d.design.lead" />
     <app-cycle-flow [steps]="d.design.cycle" />
   </div>
 </section>
 
 <!-- ═══════════ 4.2 การจัดการชั้นเรียน ═══════════ -->
-<section class="section">
+<section class="section" *ngIf="open() === '4.2'">
   <div class="wrap">
-    <app-section-header num="4.2" title="การจัดการเรียนรู้และการจัดการชั้นเรียน" [lead]="d.classroom.lead" />
+    <app-section-header [light]="true" num="4.2" title="การจัดการเรียนรู้และการจัดการชั้นเรียน" [lead]="d.classroom.lead" />
 
     <div class="grid grid-2">
       <div class="card card-hover" *ngFor="let p of d.classroom.practices; let i = index"
@@ -36,9 +98,9 @@
 </section>
 
 <!-- ═══════════ 4.3 การวัดและประเมินผล ═══════════ -->
-<section class="section section-alt">
+<section class="section section-alt" *ngIf="open() === '4.3'">
   <div class="wrap">
-    <app-section-header num="4.3" title="การวัดและประเมินผลการเรียนรู้" [lead]="d.assessment.lead" />
+    <app-section-header [light]="true" num="4.3" title="การวัดและประเมินผลการเรียนรู้" [lead]="d.assessment.lead" />
 
     <div class="steps" style="margin-bottom:38px">
       <div class="step-item" *ngFor="let p of d.assessment.points; let i = index"
@@ -59,9 +121,9 @@
 </section>
 
 <!-- ═══════════ 4.4 การนำผลไปใช้ ═══════════ -->
-<section class="section">
+<section class="section" *ngIf="open() === '4.4'">
   <div class="wrap">
-    <app-section-header num="4.4" title="การนำผลการประเมินไปใช้" [lead]="d.useResults.lead" />
+    <app-section-header [light]="true" num="4.4" title="การนำผลการประเมินไปใช้" [lead]="d.useResults.lead" />
 
     <div class="grid grid-4" style="margin-bottom:34px">
       <div class="card card-accent" *ngFor="let s of d.useResults.steps; let i = index"
@@ -100,18 +162,18 @@
 
 <!-- ═══════════ ตัวชี้วัด ═══════════ -->
 <!-- ═══════════ แกลเลอรีภาพกิจกรรม ═══════════ -->
-<section class="section">
+<section class="section" *ngIf="!open()">
   <div class="wrap">
     <app-photo-gallery
       title="ภาพกิจกรรมประกอบด้านที่ 4"
       lead="ภาพการจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ จากเอกสารประกอบการประเมินด้านที่ 4"
-      [items]="gallery" />
+      [items]="gallery" [light]="true" />
   </div>
 </section>
 
-<section class="section section-alt">
+<section class="section section-alt" *ngIf="!open()">
   <div class="wrap">
-    <app-section-header
+    <app-section-header [light]="true"
       kicker="สรุป"
       title="ตัวชี้วัดของด้านที่ 4 ทั้ง 4 รายการ"
       lead="ตามแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน ระดับประถมศึกษาและมัธยมศึกษา" />
