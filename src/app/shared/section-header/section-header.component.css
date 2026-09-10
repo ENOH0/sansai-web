@@ -6,7 +6,7 @@
 }
 
 /* วางบนพื้นภาพหรือวิดีโอ — ตัวหนังสือสีขาวพร้อมเงาให้อ่านชัด */
-.on-media .sec-title { color: #fff; text-shadow: 0 2px 18px rgba(8, 21, 47, .65); }
-.on-media .sec-kicker { color: var(--gold-400); }
-.on-media .sec-lead { color: #dbe6f7; }
+.on-media .sec-title { color: #fff; text-shadow: 0 3px 18px rgba(8, 21, 47, .9); }
+.on-media .sec-kicker { color: #fff; font-weight: 800; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
+.on-media .sec-lead { color: #fff; font-weight: 600; text-shadow: 0 2px 14px rgba(8, 21, 47, .9); }
 .on-media .sec-title .num { background: rgba(255, 255, 255, .16); color: #fff; }

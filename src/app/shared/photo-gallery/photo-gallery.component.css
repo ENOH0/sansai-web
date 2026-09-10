@@ -14,7 +14,7 @@
   padding: 0;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
-  background: #fff;
+  background: var(--paper);
   cursor: zoom-in;
   overflow: hidden;
   box-shadow: var(--shadow-sm);
@@ -83,6 +83,6 @@
 
 /* วางบนพื้นภาพหรือวิดีโอ — ตัวหนังสือสีขาวพร้อมเงาให้อ่านชัด */
 .on-media .sec-title,
-.sec-head.on-media .sec-title { color: #fff; text-shadow: 0 2px 18px rgba(8, 21, 47, .65); }
-.sec-lead.on-media { color: #dbe6f7; }
-.gal-cap.on-media { color: #dbe6f7; text-shadow: 0 1px 10px rgba(8, 21, 47, .6); }
+.sec-head.on-media .sec-title { color: #fff; text-shadow: 0 3px 18px rgba(8, 21, 47, .9); }
+.sec-lead.on-media { color: #fff; font-weight: 600; text-shadow: 0 2px 14px rgba(8, 21, 47, .9); }
+.gal-cap.on-media { color: #fff; font-weight: 600; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }

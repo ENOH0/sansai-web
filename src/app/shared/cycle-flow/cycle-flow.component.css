@@ -10,7 +10,7 @@
 
 .cycle-step {
   position: relative;
-  background: #fff;
+  background: var(--paper);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 24px 22px 22px;

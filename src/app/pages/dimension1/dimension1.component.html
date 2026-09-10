@@ -21,6 +21,28 @@
   <div class="d1-veil"></div>
 </div>
 
+<!-- ปุ่มนำทางลอย: เลือกหมวดหลักก่อน แล้วจึงแสดงข้อย่อยของหมวดนั้น -->
+<nav class="d1-side-nav" aria-label="ข้ามไปตัวชี้วัดด้านที่ 1">
+  <ng-container *ngFor="let g of groups">
+    <button type="button" class="d1-side-nav-btn"
+            [class.is-on]="tab() === g.key" (click)="selectGroup(g.key)"
+            [attr.aria-label]="g.key + ' ' + g.title">
+      <span class="d1-side-nav-no">{{ g.key }}</span>
+      <span class="d1-side-nav-tip">{{ g.title }}</span>
+    </button>
+    <div class="d1-side-subnav" [class.is-open]="tab() === g.key">
+      <div class="d1-side-subnav-inner">
+        <button type="button" class="d1-side-nav-btn is-sub" *ngFor="let t of topicsOf(g.key)"
+                [class.is-current]="open() === t.key" [class.is-empty]="!t.ready" [disabled]="!t.ready"
+                (click)="select(t.key)" [attr.aria-label]="t.key + ' ' + t.title">
+          <span class="d1-side-nav-no">{{ t.key }}</span>
+          <span class="d1-side-nav-tip">{{ t.title }}</span>
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</nav>
+
 <section class="section d1-index" *ngIf="!open()">
   <div class="wrap">
     <div class="sec-head" appReveal>
@@ -35,13 +57,13 @@
       <button type="button" class="d1-tab" role="tab" [class.is-on]="tab() === '1.1'"
               [attr.aria-selected]="tab() === '1.1'" [attr.aria-expanded]="tab() === '1.1'"
               (click)="toggleTab('1.1')">
-        <span class="d1-tab-no">๑.๑</span>
+        <span class="d1-tab-no">1.1</span>
         <span class="d1-tab-text">ผลสัมฤทธิ์ทางวิชาการ<small>8 ตัวชี้วัด</small></span>
       </button>
       <button type="button" class="d1-tab" role="tab" [class.is-on]="tab() === '1.2'"
               [attr.aria-selected]="tab() === '1.2'" [attr.aria-expanded]="tab() === '1.2'"
               (click)="toggleTab('1.2')">
-        <span class="d1-tab-no">๑.๒</span>
+        <span class="d1-tab-no">1.2</span>
         <span class="d1-tab-text">คุณลักษณะที่พึงประสงค์<small>8 ตัวชี้วัด</small></span>
       </button>
     </div>
@@ -65,21 +87,6 @@
     </div>
   </div>
 </section>
-
-<!-- แถบนำทางเมื่อเปิดดูตัวชี้วัด -->
-<div class="d1-bar" *ngIf="open()">
-  <div class="wrap d1-bar-inner">
-    <button type="button" class="d1-back" (click)="backToIndex()">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M19 12H5M12 19l-7-7 7-7" />
-      </svg>
-      สารบัญตัวชี้วัด
-    </button>
-    <span class="d1-bar-now">{{ current?.key }} · {{ current?.title }}</span>
-  </div>
-</div>
-
 
 <!-- ── 1.1.1 O-NET ── -->
 <ng-container *ngIf="open() === '1.1.1'">
@@ -417,7 +424,7 @@
       <div class="sec-rule"></div>
     </div>
     <app-cycle-flow [steps]="d.section11.excellence.cycle" />
-    <app-callout label="สรุปผล:">{{ d.section11.excellence.conclusion }}</app-callout>
+    <app-callout label="สรุปผล:" style="display:block;margin-top:24px">{{ d.section11.excellence.conclusion }}</app-callout>
 
     <app-awards-preview [count]="4" from="/dimension-1" topic="1.1.8" [light]="true" />
   </div>
@@ -469,7 +476,7 @@
         [headers]="yearHeaders3"
         [rows]="teamRows" />
     </div>
-    <app-callout label="สรุปผล:">{{ d.section12.teamwork.conclusion }}</app-callout>
+    <app-callout label="สรุปผล:" style="display:block;margin-top:24px">{{ d.section12.teamwork.conclusion }}</app-callout>
   </div>
 </section>
 </ng-container>
@@ -490,7 +497,7 @@
         <p class="card-body" style="margin:0">{{ pj.text }}</p>
       </div>
     </div>
-    <app-callout label="สรุปผล:">{{ d.section12.thaiPride.conclusion }}</app-callout>
+    <app-callout label="สรุปผล:" style="display:block;margin-top:24px">{{ d.section12.thaiPride.conclusion }}</app-callout>
   </div>
 </section>
 </ng-container>
@@ -545,7 +552,7 @@
         subtitle="ภาพรวมทั้งโรงเรียน ปีการศึกษา 2566–2568 (ยิ่งต่ำยิ่งดี)"
         [labels]="d.section12.safety.years"
         [series]="safetySeries"
-        [min]="0" [max]="70"
+        [min]="0" [max]="100"
         [note]="d.section12.safety.conclusion" />
       <app-data-table
         [caption]="d.section12.safety.caption"
@@ -570,12 +577,12 @@
 <section class="section-tight" *ngIf="open()">
   <div class="wrap d1-nav">
     <button type="button" class="d1-nav-btn" *ngIf="prevTopic as pv" [disabled]="!pv.ready" (click)="select(pv.key)">
-      <span class="d1-nav-lab">ข้อก่อนหน้า</span>
       <span class="d1-nav-txt">{{ pv.key }} {{ pv.title }}</span>
+      <span class="d1-nav-lab">ข้อก่อนหน้า</span>
     </button>
     <button type="button" class="d1-nav-btn next" *ngIf="nextTopic as nx" [disabled]="!nx.ready" (click)="select(nx.key)">
-      <span class="d1-nav-lab">ข้อถัดไป</span>
       <span class="d1-nav-txt">{{ nx.key }} {{ nx.title }}</span>
+      <span class="d1-nav-lab">ข้อถัดไป</span>
     </button>
   </div>
 </section>

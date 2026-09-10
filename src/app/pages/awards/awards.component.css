@@ -5,7 +5,7 @@
 
 /* ---------- ตัวกรอง ---------- */
 .filters {
-  background: #fff;
+  background: var(--paper);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 20px 22px;
@@ -38,7 +38,7 @@
   padding: 0 15px;
   border-radius: 11px;
   border: 1px solid var(--navy-100);
-  background: #fff;
+  background: var(--paper);
   color: var(--ink-soft);
   font-family: inherit;
   font-size: 17px;
@@ -91,7 +91,7 @@
   padding: 0 16px;
   border-radius: 10px;
   border: 1px solid var(--navy-200);
-  background: #fff;
+  background: var(--paper);
   color: var(--navy-700);
   font-family: inherit;
   font-size: 16px;
@@ -110,7 +110,7 @@
 .teacher-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
 .award-card {
-  background: #fff;
+  background: var(--paper);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   overflow: hidden;
@@ -356,7 +356,7 @@
 .rail-nav.next { right: -18px; }
 @media (hover: hover) {
   .rail-nav { display: grid; }
-  .rail-nav:hover { background: #fff; transform: scale(1.06); }
+  .rail-nav:hover { background: var(--paper); transform: scale(1.06); }
 }
 
 .award-empty { color: #dbe6f7; }
@@ -649,7 +649,7 @@ header.awards-hero::after { display: none; }
 .fchip {
   border-radius: 999px;
   border-color: var(--navy-100);
-  background: #fff;
+  background: var(--paper);
   box-shadow: 0 2px 8px rgba(8, 21, 47, .07);
 }
 

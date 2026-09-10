@@ -65,11 +65,18 @@ export class Dimension1Component implements OnInit {
     { key: '1.2.8', group: '1.2', title: 'ปลอดภัยจากสารเสพติด ปัญหาทางเพศ และอบายมุขทุกชนิด', note: 'พฤติกรรมไม่พึงประสงค์ลดลงจาก 59.63%', ready: true }
   ];
 
+  readonly groups = [
+    { key: '1.1' as const, title: 'ผลสัมฤทธิ์ทางวิชาการ' },
+    { key: '1.2' as const, title: 'คุณลักษณะที่พึงประสงค์' }
+  ];
+
   /** เริ่มต้นให้เห็นเพียง 2 หมวดหลัก แล้วค่อยเผยข้อย่อยเมื่อกรรมการเลือก */
   readonly tab = signal<'1.1' | '1.2' | ''>('');
   readonly open = signal('');
 
   get shown() { return this.topics.filter(t => t.group === this.tab()); }
+
+  topicsOf(group: '1.1' | '1.2') { return this.topics.filter(t => t.group === group); }
 
   get currentIndex(): number { return this.topics.findIndex(t => t.key === this.open()); }
   get current(): (typeof this.topics)[number] | undefined { return this.topics[this.currentIndex]; }
@@ -84,6 +91,17 @@ export class Dimension1Component implements OnInit {
 
   toggleTab(group: '1.1' | '1.2'): void {
     this.tab.update(current => current === group ? '' : group);
+  }
+
+  /** ปุ่มนำทางลอย: กลับไปหน้ารายการของหมวดที่เลือกเสมอ */
+  selectGroup(group: '1.1' | '1.2'): void {
+    if (this.open()) {
+      this.open.set('');
+      this.tab.set(group);
+    } else {
+      this.toggleTab(group);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   /* Chrome/Safari บางเครื่องไม่เริ่มเล่นเองแม้ใส่ autoplay

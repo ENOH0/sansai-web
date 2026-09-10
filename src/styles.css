@@ -40,8 +40,8 @@
   --ink-soft: #43536f;
   --ink-mute: #6b7a94;
   --line: #dfe7f2;
-  --paper: #ffffff;
-  --paper-alt: #f5f8fd;
+  --paper: #f7fbff;
+  --paper-alt: #edf5ff;
 
   /* ---------- ระยะและเงา ---------- */
   --radius: 18px;
@@ -196,7 +196,7 @@ a { color: var(--navy-600); text-decoration: none; }
   -webkit-overflow-scrolling: touch;
   border-radius: var(--radius);
   border: 1px solid var(--line);
-  background: #fff;
+  background: var(--paper);
 }
 
 table.tbl {
@@ -248,7 +248,7 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
    (แอนิเมชันเฉพาะของแต่ละกราฟอยู่ในไฟล์ .css ของกราฟนั้น)
    ============================================================ */
 .chart-card {
-  background: #fff;
+  background: var(--paper);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 24px;
@@ -376,7 +376,7 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
 
 .btn-primary { background: var(--gold-500); color: var(--navy-950); box-shadow: 0 8px 24px rgba(212, 165, 55, .34); }
 .btn-ghost   { background: rgba(255, 255, 255, .1); color: #fff; border-color: rgba(255, 255, 255, .35); }
-.btn-outline { background: #fff; color: var(--navy-700); border-color: var(--navy-200); }
+.btn-outline { background: var(--paper); color: var(--navy-700); border-color: var(--navy-200); }
 
 /* ============================================================
    แอนิเมชันเลื่อนเข้ามุมมอง

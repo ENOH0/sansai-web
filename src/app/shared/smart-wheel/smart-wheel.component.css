@@ -126,7 +126,7 @@
   border: 1px solid var(--line);
   border-left: 6px solid var(--gold-500);
   border-radius: var(--radius-sm);
-  background: #fff;
+  background: var(--paper);
   box-shadow: var(--shadow-sm);
 }
 .sw-detail-label { margin: 0 0 8px; color: var(--ink-mute); font-size: 14.5px; font-weight: 800; letter-spacing: .06em; }

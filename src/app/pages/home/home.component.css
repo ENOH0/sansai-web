@@ -84,28 +84,6 @@
   animation: coverRise .9s .36s var(--ease) both;
 }
 
-.cover-cta {
-  display: inline-flex;
-  align-items: center;
-  min-height: 56px;
-  margin-top: 38px;
-  padding: 0 40px;
-  color: var(--navy-900);
-  font-size: 19px;
-  font-weight: 800;
-  text-decoration: none;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--gold-400), var(--gold-500));
-  box-shadow: 0 14px 34px rgba(212, 165, 55, .34);
-  animation: coverRise .9s .48s var(--ease) both;
-  transition: transform .22s var(--ease), box-shadow .22s var(--ease);
-  -webkit-tap-highlight-color: transparent;
-}
-.cover-cta:active { transform: scale(.97); }
-@media (hover: hover) {
-  .cover-cta:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(212, 165, 55, .45); }
-}
-
 .cover-scroll {
   position: absolute;
   bottom: max(26px, env(safe-area-inset-bottom));
@@ -114,13 +92,15 @@
   display: grid;
   justify-items: center;
   gap: 6px;
-  color: #cfe0fa;
-  font-size: 14.5px;
-  font-weight: 700;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 800;
   letter-spacing: .08em;
   text-decoration: none;
+  text-shadow: 0 2px 14px rgba(8, 21, 47, .9);
   animation: coverRise .9s .7s var(--ease) both;
 }
+.cover-scroll > span { animation: coverPulse 2.8s ease-in-out infinite; }
 .cover-scroll svg { animation: coverBob 2.2s ease-in-out infinite; }
 
 @keyframes coverRise {
@@ -131,6 +111,10 @@
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(6px); }
 }
+@keyframes coverPulse {
+  0%, 100% { opacity: .58; transform: scale(.96); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
 
 /* ═══════════ สารบัญ ═══════════ */
 /* พื้นโปร่งเพื่อให้เห็นภาพพื้นหลังที่ตรึงอยู่ */
@@ -140,7 +124,7 @@
 .toc {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  gap: 16px;
 }
 
 .toc-card {
@@ -149,7 +133,7 @@
   text-decoration: none;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: #fff;
+  background: var(--paper);
   box-shadow: var(--shadow-sm);
   overflow: hidden;
   transition: transform .26s var(--ease), box-shadow .26s var(--ease), border-color .26s var(--ease);
@@ -164,7 +148,7 @@
 
 .toc-photo {
   display: block;
-  height: 168px;
+  height: 132px;
   background-size: cover;
   background-position: center;
   background-color: var(--navy-100);
@@ -174,8 +158,8 @@
 .toc-body {
   display: grid;
   align-content: start;
-  gap: 8px;
-  padding: 20px 22px 22px;
+  gap: 6px;
+  padding: 15px 18px 17px;
 }
 
 .toc-top { display: flex; align-items: center; gap: 10px; }
@@ -187,7 +171,7 @@
   height: 38px;
   color: #fff;
   font-family: 'Sarabun', sans-serif;
-  font-size: 21.5px;
+  font-size: 20px;
   font-weight: 700;
   border-radius: 11px;
   background: linear-gradient(135deg, var(--navy-700), var(--navy-500));
@@ -211,8 +195,8 @@
 
 .toc-sub {
   color: var(--ink-soft);
-  font-size: 16px;
-  line-height: 1.65;
+  font-size: 15px;
+  line-height: 1.55;
 }
 
 .toc-go {
@@ -232,7 +216,7 @@
 /* iPad แนวตั้ง — 2 คอลัมน์ ย่อการ์ดลงเล็กน้อย */
 @media (max-width: 834px) {
   .toc { gap: 16px; }
-  .toc-photo { height: 140px; }
+  .toc-photo { height: 116px; }
   .toc-body { padding: 16px 18px 18px; }
   .toc-name { font-size: 19px; }
 }
@@ -243,7 +227,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cover-eyebrow, .cover-title, .cover-rule, .cover-sub, .cover-cta, .cover-scroll {
+  .cover-eyebrow, .cover-title, .cover-rule, .cover-sub, .cover-scroll, .cover-scroll > span {
     animation: none !important;
   }
   .cover-slide { transition: opacity .4s linear; transform: none; }

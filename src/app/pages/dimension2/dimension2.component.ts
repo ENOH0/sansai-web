@@ -32,7 +32,7 @@ import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
 })
 export class Dimension2Component {
   /* ---------- แอคคอร์เดียนหัวข้อตามแบบประเมิน ----------
-     เปิดพร้อมกันได้หลายหัวข้อ กดซ้ำเพื่อปิด */
+     เปิดได้ทีละหัวข้อ กดหัวข้อใหม่จะปิดหัวข้อเดิมอัตโนมัติ */
   private readonly opened = signal<string[]>([]);
 
   private readonly indicatorKeyOf: Record<string, string> = {
@@ -68,7 +68,7 @@ export class Dimension2Component {
   isOpen(k: string): boolean { return this.opened().includes(k); }
 
   toggle(k: string): void {
-    this.opened.update(v => v.includes(k) ? v.filter(x => x !== k) : [...v, k]);
+    this.opened.update(v => v.includes(k) ? [] : [k]);
   }
 
   indicatorsOf(k: string): string[] {

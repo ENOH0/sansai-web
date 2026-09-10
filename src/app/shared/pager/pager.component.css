@@ -9,14 +9,14 @@
   align-items: center;
 }
 
-.pager-spacer { flex: 1 1 240px; }
+.pager-spacer { flex: 1 1 auto; }
 
 .pager-link {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  flex: 1 1 240px;
-  background: #fff;
+  flex: 0 1 540px;
+  background: var(--paper);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 18px 22px;
@@ -46,6 +46,11 @@
 }
 
 .pager-link.next { text-align: right; align-items: flex-end; }
+
+@media (max-width: 560px) {
+  .pager-link { flex: 1 1 100%; }
+  .pager-spacer { display: none; }
+}
 
 @media print {
   .pager { display: none !important; }

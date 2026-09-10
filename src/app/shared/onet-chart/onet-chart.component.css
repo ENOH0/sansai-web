@@ -15,7 +15,7 @@
   padding: 0 18px;
   border-radius: 12px;
   border: 1px solid var(--navy-100);
-  background: #fff;
+  background: var(--paper);
   color: var(--ink-soft);
   font-family: inherit;
   font-size: 17.5px;
@@ -54,7 +54,7 @@
 }
 
 .onet-diff {
-  background: #fff;
+  background: var(--paper);
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   padding: 16px 18px;

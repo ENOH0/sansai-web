@@ -22,7 +22,7 @@
   font-family: inherit;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: #fff;
+  background: var(--paper);
   box-shadow: var(--shadow-sm);
   cursor: pointer;
   transition: border-color .2s var(--ease), box-shadow .2s var(--ease), transform .18s var(--ease);
@@ -224,13 +224,15 @@
 :host ::ng-deep .section-alt,
 :host ::ng-deep .section-tight { background: transparent; }
 
-:host ::ng-deep .sec-head > .sec-title { color: #fff; text-shadow: 0 2px 18px rgba(8, 21, 47, .65); }
-:host ::ng-deep .sec-lead { color: #dbe6f7; }
+:host ::ng-deep .sec-head > .sec-title { color: #fff; text-shadow: 0 3px 18px rgba(8, 21, 47, .9); }
+:host ::ng-deep .sec-lead { color: #fff; font-weight: 600; text-shadow: 0 2px 14px rgba(8, 21, 47, .9); }
+:host ::ng-deep .sec-kicker { color: #fff; font-weight: 800; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
+:host ::ng-deep .sec-rule { background: var(--gold-400); box-shadow: 0 2px 12px rgba(8, 21, 47, .72); }
 :host ::ng-deep .card .sec-lead { color: var(--ink-soft); }
 
 /* แถบหัวข้อและกล่องเนื้อหายังเป็นพื้นขาว จึงอ่านง่ายบนวิดีโอ */
 .acc-head { border-color: rgba(255, 255, 255, .5); box-shadow: 0 12px 30px rgba(8, 21, 47, .26); }
-.acc-lead { color: #dbe6f7; }
+.acc-lead { color: #fff; font-weight: 600; text-shadow: 0 2px 14px rgba(8, 21, 47, .9); }
 
 @media (prefers-reduced-motion: reduce) {
   .d2-video { display: none; }
@@ -239,11 +241,11 @@
 
 /* ---------- ข้อความที่ไม่ได้อยู่ในการ์ด ต้องเป็นสีสว่างเพราะอยู่บนพื้นวิดีโอ ---------- */
 :host ::ng-deep .steps { border-left-color: rgba(255, 255, 255, .28); }
-:host ::ng-deep .step-item h4 { color: #fff; }
-:host ::ng-deep .step-item p { color: #dbe6f7; }
+:host ::ng-deep .step-item h4 { color: #fff; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
+:host ::ng-deep .step-item p { color: #fff; font-weight: 600; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
 :host ::ng-deep .step-item::before { border-color: rgba(255, 255, 255, .6); }
-:host ::ng-deep .bullets > li { color: #e4ecfa; }
-:host ::ng-deep .chip { border-color: rgba(255, 255, 255, .35); }
+:host ::ng-deep .bullets > li { color: #fff; font-weight: 600; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
+:host ::ng-deep .chip { color: #fff; border-color: rgba(255, 255, 255, .48); background: rgba(8, 21, 47, .38); text-shadow: 0 2px 10px rgba(8, 21, 47, .9); }
 
 /* กลับมาเป็นสีเข้มเมื่ออยู่ในการ์ดหรือกล่องพื้นขาว */
 :host ::ng-deep .card .step-item h4,
@@ -255,4 +257,10 @@
 :host ::ng-deep .acc-ind li { color: var(--ink-soft); }
 :host ::ng-deep .card .steps { border-left-color: var(--navy-100); }
 :host ::ng-deep .card .step-item::before { border-color: var(--navy-300); }
-:host ::ng-deep .card .chip { border-color: var(--navy-100); }
+:host ::ng-deep .card .chip { color: var(--navy-700); border-color: var(--navy-100); background: var(--navy-50); text-shadow: none; }
+:host ::ng-deep .card *,
+:host ::ng-deep .chart-card *,
+:host ::ng-deep .table-scroll *,
+:host ::ng-deep .callout *,
+:host ::ng-deep .acc-ind *,
+:host ::ng-deep app-cycle-flow * { text-shadow: none !important; filter: none !important; }
