@@ -6,15 +6,15 @@
 }
 
 /* ═══════════ สารบัญตัวชี้วัดด้านที่ 1 ═══════════ */
-.d1-tabs { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 28px; }
+.d1-tabs { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; }
 
 .d1-tab {
   display: flex;
   align-items: center;
   gap: 14px;
   flex: 1 1 260px;
-  min-height: 76px;
-  padding: 12px 20px;
+  min-height: 64px;
+  padding: 9px 16px;
   text-align: left;
   font-family: inherit;
   color: var(--ink-soft);
@@ -32,7 +32,7 @@
 .d1-tab-no {
   display: grid;
   place-items: center;
-  width: 52px; height: 52px;
+  width: 46px; height: 46px;
   flex: none;
   color: var(--navy-700);
   font-size: 21px;
@@ -41,7 +41,7 @@
   background: var(--navy-50);
 }
 
-.d1-tab-text { font-size: 19px; font-weight: 800; color: var(--navy-900); line-height: 1.35; }
+.d1-tab-text { font-size: 18px; font-weight: 800; color: var(--navy-900); line-height: 1.35; }
 .d1-tab-text small { display: block; margin-top: 3px; font-size: 14.5px; font-weight: 600; color: var(--ink-mute); }
 
 .d1-tab.is-on {
@@ -54,18 +54,18 @@
 .d1-tab.is-on .d1-tab-text small { color: #cfe0fa; }
 
 /* ---------- การ์ดตัวชี้วัด ---------- */
-.d1-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.d1-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 
 .d1-card {
   display: grid;
   align-content: start;
-  gap: 10px;
-  padding: 20px 20px 22px;
+  gap: 7px;
+  padding: 14px 16px 16px;
   text-align: left;
   font-family: inherit;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: #fff;
+  background: rgba(255, 255, 255, .94);
   box-shadow: var(--shadow-sm);
   cursor: pointer;
   transition: transform .24s var(--ease), box-shadow .24s var(--ease), border-color .24s var(--ease);
@@ -104,8 +104,8 @@
 }
 .d1-stat small { margin-left: 3px; font-size: 14px; font-weight: 700; color: var(--ink-mute); }
 
-.d1-title { color: var(--navy-900); font-size: 17px; font-weight: 800; line-height: 1.45; }
-.d1-note { color: var(--ink-mute); font-size: 14.5px; line-height: 1.6; }
+.d1-title { color: var(--navy-900); font-size: 16px; font-weight: 800; line-height: 1.42; }
+.d1-note { color: var(--ink-mute); font-size: 14px; line-height: 1.5; }
 
 .d1-go {
   display: inline-flex;
@@ -213,15 +213,15 @@
 }
 
 /* ตัวหนังสือบนพื้นวิดีโอ */
-.d1-index .sec-title { color: #fff; text-shadow: 0 2px 18px rgba(8, 21, 47, .65); }
-.d1-index .sec-lead { color: #dbe6f7; }
+.d1-index .sec-title { color: #fff; text-shadow: 0 3px 18px rgba(8, 21, 47, .9); }
+.d1-index .sec-lead { color: #fff; font-weight: 600; text-shadow: 0 2px 14px rgba(8, 21, 47, .9); }
 
 /* การ์ดยังเป็นพื้นขาวเพื่อให้อ่านง่ายบนวิดีโอ */
 .d1-index .d1-card { border-color: rgba(255, 255, 255, .5); box-shadow: 0 14px 34px rgba(8, 21, 47, .28); }
 .d1-index .d1-tab { border-color: rgba(255, 255, 255, .5); box-shadow: 0 12px 28px rgba(8, 21, 47, .26); }
 
 /* การ์ดสูงเท่ากันเมื่อไม่มีตัวเลขเด่นแล้ว */
-.d1-card { min-height: 186px; }
+.d1-card { min-height: 142px; }
 .d1-card-top { margin-bottom: 2px; }
 
 /* ═══════════ ปุ่มย้อนกลับแบบลอย ═══════════ */
@@ -271,14 +271,14 @@
 
 /* หัวข้อย่อยที่เขียนไว้ในหน้านี้เอง */
 .d1-topic-title,
-:host ::ng-deep .sec-head > .sec-title { color: #fff; text-shadow: 0 2px 18px rgba(8, 21, 47, .65); }
+:host ::ng-deep .sec-head > .sec-title { color: #fff; text-shadow: 0 3px 18px rgba(8, 21, 47, .9); }
 
 /* ข้อความที่ไม่ได้อยู่ในการ์ด ต้องเป็นสีสว่างเพราะอยู่บนพื้นวิดีโอ */
-:host ::ng-deep .sec-lead { color: #dbe6f7; }
+:host ::ng-deep .sec-lead { color: #fff; font-weight: 600; text-shadow: 0 2px 14px rgba(8, 21, 47, .9); }
 :host ::ng-deep .steps { border-left-color: rgba(255, 255, 255, .28); }
-:host ::ng-deep .step-item h4 { color: #fff; }
-:host ::ng-deep .step-item p { color: #dbe6f7; }
-:host ::ng-deep .bullets > li { color: #e4ecfa; }
+:host ::ng-deep .step-item h4 { color: #fff; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
+:host ::ng-deep .step-item p { color: #fff; font-weight: 600; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
+:host ::ng-deep .bullets > li { color: #fff; font-weight: 600; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
 :host ::ng-deep .card .bullets > li,
 :host ::ng-deep .card .step-item h4,
 :host ::ng-deep .card .step-item p { color: var(--ink-soft); }

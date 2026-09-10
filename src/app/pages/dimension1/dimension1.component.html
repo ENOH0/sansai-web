@@ -24,28 +24,29 @@
 <section class="section d1-index" *ngIf="!open()">
   <div class="wrap">
     <div class="sec-head" appReveal>
-      <h2 class="sec-title">ตัวชี้วัดด้านที่ 1 — 16 ข้อ ตามแบบประเมิน</h2>
+      <h2 class="sec-title">ตัวชี้วัดด้านที่ 1</h2>
       <div class="sec-rule"></div>
     </div>
     <p class="sec-lead" style="margin:-8px 0 24px">
-      เลือกหัวข้อย่อยที่ต้องการดู ระบบจะแสดงข้อมูล กราฟ และตารางของตัวชี้วัดนั้นเต็มหน้า
-      พร้อมปุ่มไปข้อก่อนหน้าและข้อถัดไป
+      เลือกหมวด 1.1 หรือ 1.2 เพื่อดูตัวชี้วัดย่อย ข้อมูล กราฟ และตารางของแต่ละหัวข้อ
     </p>
 
     <div class="d1-tabs" role="tablist">
       <button type="button" class="d1-tab" role="tab" [class.is-on]="tab() === '1.1'"
-              [attr.aria-selected]="tab() === '1.1'" (click)="tab.set('1.1')">
+              [attr.aria-selected]="tab() === '1.1'" [attr.aria-expanded]="tab() === '1.1'"
+              (click)="toggleTab('1.1')">
         <span class="d1-tab-no">๑.๑</span>
         <span class="d1-tab-text">ผลสัมฤทธิ์ทางวิชาการ<small>8 ตัวชี้วัด</small></span>
       </button>
       <button type="button" class="d1-tab" role="tab" [class.is-on]="tab() === '1.2'"
-              [attr.aria-selected]="tab() === '1.2'" (click)="tab.set('1.2')">
+              [attr.aria-selected]="tab() === '1.2'" [attr.aria-expanded]="tab() === '1.2'"
+              (click)="toggleTab('1.2')">
         <span class="d1-tab-no">๑.๒</span>
         <span class="d1-tab-text">คุณลักษณะที่พึงประสงค์<small>8 ตัวชี้วัด</small></span>
       </button>
     </div>
 
-    <div class="d1-grid">
+    <div class="d1-grid" *ngIf="tab()">
       <button type="button" class="d1-card" *ngFor="let t of shown; let i = index"
               [class.is-empty]="!t.ready" [disabled]="!t.ready"
               appReveal="zoom" [revealDelay]="i * 60" (click)="select(t.key)">

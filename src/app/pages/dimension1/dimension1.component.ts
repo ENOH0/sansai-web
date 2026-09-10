@@ -65,7 +65,8 @@ export class Dimension1Component implements OnInit {
     { key: '1.2.8', group: '1.2', title: 'ปลอดภัยจากสารเสพติด ปัญหาทางเพศ และอบายมุขทุกชนิด', note: 'พฤติกรรมไม่พึงประสงค์ลดลงจาก 59.63%', ready: true }
   ];
 
-  readonly tab = signal<'1.1' | '1.2'>('1.1');
+  /** เริ่มต้นให้เห็นเพียง 2 หมวดหลัก แล้วค่อยเผยข้อย่อยเมื่อกรรมการเลือก */
+  readonly tab = signal<'1.1' | '1.2' | ''>('');
   readonly open = signal('');
 
   get shown() { return this.topics.filter(t => t.group === this.tab()); }
@@ -81,6 +82,10 @@ export class Dimension1Component implements OnInit {
     window.scrollTo({ top: 0 });
   }
 
+  toggleTab(group: '1.1' | '1.2'): void {
+    this.tab.update(current => current === group ? '' : group);
+  }
+
   /* Chrome/Safari บางเครื่องไม่เริ่มเล่นเองแม้ใส่ autoplay
      จึงสั่งเล่นซ้ำเมื่อวิดีโอพร้อม และกลืน error ถ้าเบราว์เซอร์ยังปฏิเสธ */
   playBg(v: HTMLVideoElement): void {
@@ -91,6 +96,7 @@ export class Dimension1Component implements OnInit {
 
   backToIndex(): void {
     this.open.set('');
+    this.tab.set('');
     window.scrollTo({ top: 0 });
   }
 
