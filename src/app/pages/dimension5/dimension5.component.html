@@ -1,4 +1,29 @@
+<!-- พื้นหลังวิดีโอเดียวกับด้านที่ 1 -->
+<div class="d5-bg" aria-hidden="true">
+  <video #bgv class="d5-video" autoplay muted loop playsinline preload="auto"
+         poster="video/school-poster.jpg"
+         (loadedmetadata)="playBg(bgv)" (canplay)="playBg(bgv)">
+    <source src="video/school.mp4" type="video/mp4" />
+  </video>
+  <div class="d5-veil"></div>
+</div>
+
 <app-page-hero [no]="d.no" [weight]="d.weight" [name]="d.name" [subtitle]="d.subtitle" />
+
+<!-- nav ลอย: เลือกโครงการ และปุ่มกลับอยู่ท้ายสุด -->
+<nav class="d5-nav" aria-label="เลือกโครงการดีเด่นด้านที่ 5">
+  <button type="button" class="d5-nav-btn" *ngFor="let project of d.projects; let i = index"
+          [class.is-open]="open() === i" (click)="selectProject(i)"
+          [attr.aria-label]="project.no + ' ' + project.name">
+    <span class="d5-nav-no">{{ project.no }}</span>
+    <span class="d5-nav-tip">{{ project.name }}</span>
+  </button>
+  <button type="button" class="d5-nav-btn d5-nav-back" *ngIf="open() !== null"
+          (click)="backToIndex()" aria-label="กลับหน้าหลักด้านที่ 5">
+    <span class="d5-nav-no" aria-hidden="true">↶</span>
+    <span class="d5-nav-tip">กลับหน้าหลักด้านที่ 5</span>
+  </button>
+</nav>
 
 <section class="section">
   <div class="wrap">
@@ -9,11 +34,51 @@
   </div>
 </section>
 
+<!-- หลักฐานตามเกณฑ์ประเมินมาก่อน แล้วจึงเลือกโครงการที่ต้องการดู -->
+<section class="section d5-index" *ngIf="open() === null">
+  <div class="wrap">
+    <div class="sec-head" appReveal>
+      <p class="sec-kicker">5.1 โครงการ/กิจกรรมดีเด่นของสถานศึกษา</p>
+      <h2 class="sec-title">หลักฐานตามตัวชี้วัด 4 ข้อ</h2>
+      <div class="sec-rule"></div>
+      <p class="sec-lead">โครงการทั้ง 3 โครงการร่วมกันแสดงให้เห็นการดำเนินงานตามเกณฑ์ประเมินครบทุกข้อ</p>
+    </div>
+    <div class="d5-criteria">
+      <article class="d5-criterion" *ngFor="let criterion of criteria; let i = index" appReveal [revealDelay]="i * 70">
+        <span class="d5-criterion-no">{{ i + 1 }}</span><p>{{ criterion }}</p>
+      </article>
+    </div>
+
+    <div class="sec-head" style="margin-top:52px" appReveal>
+      <h2 class="sec-title">เลือกโครงการเพื่อดูหลักฐาน</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="d5-project-grid">
+      <button type="button" class="d5-project-card" *ngFor="let project of d.projects; let i = index"
+              appReveal="zoom" [revealDelay]="i * 80" (click)="selectProject(i)">
+        <span class="d5-project-no">{{ project.no }}</span>
+        <span class="d5-project-name">{{ project.name }}</span>
+        <span class="d5-project-summary">{{ project.summary }}</span>
+        <span class="d5-project-go">ดูรายละเอียดโครงการ ›</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="section-tight d5-detail" *ngIf="currentProject as project">
+  <div class="wrap">
+    <div class="d5-detail-head">
+      <button type="button" class="d5-back" (click)="backToIndex()">‹ กลับภาพรวม 3 โครงการ</button>
+      <div><p class="d5-detail-kicker">โครงการที่เลือก</p><h2>{{ project.no }} {{ project.name }}</h2></div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════ โครงการดีเด่นทั้ง 3 ═══════════ -->
-<ng-container *ngFor="let p of d.projects; let pi = index">
-  <section class="section" [class.section-alt]="pi % 2 === 0">
+<ng-container *ngIf="currentProject as p">
+  <section class="section">
     <div class="wrap">
-      <app-section-header
+      <app-section-header [light]="true"
         [num]="p.no"
         [title]="p.name"
         [lead]="p.summary" />
@@ -63,9 +128,9 @@
 </ng-container>
 
 <!-- ═══════════ การเผยแพร่ ═══════════ -->
-<section class="section section-alt">
+<section class="section section-alt" *ngIf="open() === null">
   <div class="wrap">
-    <app-section-header
+    <app-section-header [light]="true"
       kicker="ผลการดำเนินงาน"
       [title]="d.dissemination.title"
       [lead]="d.dissemination.lead" />
@@ -82,16 +147,16 @@
 
 <!-- ═══════════ ตัวชี้วัด ═══════════ -->
 <!-- ═══════════ แกลเลอรีภาพกิจกรรม ═══════════ -->
-<section class="section">
+<section class="section" *ngIf="open() === null">
   <div class="wrap">
     <app-photo-gallery
       title="ภาพกิจกรรมประกอบด้านที่ 5"
       lead="ภาพความดีเด่นและการพัฒนาคุณภาพอย่างต่อเนื่อง จากเอกสารประกอบการประเมินด้านที่ 5"
-      [items]="gallery" />
+      [items]="gallery" [light]="true" />
   </div>
 </section>
 
-<section class="section">
+<section class="section" *ngIf="open() === null">
   <div class="wrap">
     <app-section-header
       kicker="สรุป"
