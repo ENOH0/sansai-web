@@ -1,7 +1,7 @@
 <app-page-hero [no]="d.no" [weight]="d.weight" [name]="d.name" [subtitle]="d.subtitle" />
 
 <!-- ═══════════ บทนำ ═══════════ -->
-<section class="section" *ngIf="!open()">
+<section class="section d1-intro" *ngIf="!open()">
   <div class="wrap">
     <div class="card card-accent" appReveal style="margin-bottom:32px">
       <p class="card-body" style="margin:0">{{ d.intro }}</p>
@@ -99,11 +99,19 @@
   </div>
 </section>
 
+<ng-template #d1Indicator>
+  <div class="assessment-indicators assessment-indicators--single" *ngIf="current as topic">
+    <h3>ตัวชี้วัดตามแบบประเมิน</h3>
+    <ol><li>{{ topic.title }}</li></ol>
+  </div>
+</ng-template>
+
 <!-- ── 1.1.1 O-NET ── -->
 <ng-container *ngIf="open() === '1.1.1'">
 <section class="section">
   <div class="wrap">
     <app-section-header [light]="true" num="1.1.1" [title]="onetTitle" [lead]="d.section11.onet.narrative" />
+    <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
     <div class="stack">
       <!-- ม.6 — เลือกดูรายวิชาได้ -->
@@ -154,6 +162,7 @@
 <section class="section section-alt">
   <div class="wrap">
     <app-section-header [light]="true" num="1.1.2" [title]="thaiTitle" [lead]="d.section11.thai.narrative" />
+    <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
     <div class="stack">
       <app-bar-chart
@@ -178,6 +187,7 @@
 <section class="section">
   <div class="wrap">
     <app-section-header [light]="true" num="1.1.3" [title]="engTitle" [lead]="d.section11.english.narrative" />
+    <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
     <div class="grid grid-2" style="margin-bottom:24px">
       <div class="card" appReveal="left">
@@ -220,6 +230,7 @@
 <section class="section section-alt">
   <div class="wrap">
     <app-section-header [light]="true" num="1.1.4" [title]="thinkTitle" [lead]="d.section11.thinking.narrative" />
+    <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
     <div class="stack">
       <app-bar-chart
@@ -251,6 +262,7 @@
 <section class="section">
   <div class="wrap">
     <app-section-header [light]="true" num="1.1.5" [title]="ictTitle" [lead]="d.section11.ict.narrative" />
+    <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
     <div class="grid grid-2">
       <app-line-chart
@@ -285,6 +297,7 @@
 <section class="section section-alt">
   <div class="wrap">
     <app-section-header [light]="true" num="1.1.7" [title]="pathTitle" [lead]="d.section11.pathway.narrative" />
+    <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
     <app-bar-chart
       title="ร้อยละของนักเรียนชั้น ม.3 จำแนกตามเส้นทางหลังจบการศึกษา"
@@ -303,6 +316,7 @@
 <section class="section">
   <div class="wrap">
     <app-section-header [light]="true" num="1.2" title="คุณลักษณะที่พึงประสงค์" [lead]="d.section12.lead" />
+    <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
     <div class="card" appReveal style="margin-bottom:28px">
       <h3 class="card-title">ตัวชี้วัดทั้ง 8 ข้อ</h3>
@@ -334,6 +348,7 @@
 <section class="section section-alt">
   <div class="wrap">
     <app-section-header [light]="true" num="1.2.3" [title]="electionTitle" [lead]="d.section12.election.narrative" />
+    <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
     <div class="stack">
       <app-bar-chart
@@ -360,6 +375,7 @@
 <section class="section">
   <div class="wrap">
     <app-section-header [light]="true" num="1.2.7" [title]="healthTitle" [lead]="d.section12.health.narrative" />
+    <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
     <div class="grid grid-2">
       <app-line-chart
@@ -400,6 +416,7 @@
   <div class="wrap">
     <app-section-header [light]="true" num="1.1.8" title="ความรู้ความสามารถรอบด้าน ความสามารถพิเศษ และผลงานเป็นเลิศ"
                         [lead]="d.section11.excellence.narrative" />
+    <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
     <app-kpi-grid [items]="excellenceKpis" />
     <div class="sec-head" style="margin-top:44px" appReveal>
       <h3 class="sec-title" style="font-size:22px">กระบวนการพัฒนาผู้เรียนสู่ความเป็นเลิศ</h3>
@@ -419,6 +436,7 @@
   <div class="wrap">
     <app-section-header [light]="true" num="1.2.2" title="ตระหนักและมีส่วนร่วมในการอนุรักษ์ทรัพยากรธรรมชาติและสิ่งแวดล้อม"
                         [lead]="d.section12.environment.narrative" />
+    <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
     <div class="card card-gold" appReveal style="margin-bottom:30px">
       <h3 class="card-title">ผลงานเด่น</h3>
       <p class="card-body" style="margin:0">{{ d.section12.environment.highlight }}</p>
@@ -444,6 +462,7 @@
   <div class="wrap">
     <app-section-header [light]="true" num="1.2.4" title="ทำงานเป็นทีม มีความรับผิดชอบ มุ่งมั่น และทำงานอย่างมีประสิทธิภาพ"
                         [lead]="d.section12.teamwork.narrative" />
+    <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
     <app-cycle-flow [steps]="d.section12.teamwork.cycle" />
     <div class="stack" style="margin-top:44px">
       <app-line-chart
@@ -469,6 +488,7 @@
   <div class="wrap">
     <app-section-header [light]="true" num="1.2.5" title="ภาคภูมิใจในความเป็นไทยและนำภูมิปัญญาท้องถิ่นไปใช้"
                         [lead]="d.section12.thaiPride.narrative" />
+    <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
     <div class="grid grid-3">
       <div class="card card-hover" *ngFor="let pj of d.section12.thaiPride.projects; let i = index"
            appReveal [revealDelay]="i * 90">
@@ -490,6 +510,7 @@
   <div class="wrap">
     <app-section-header [light]="true" num="1.2.6" title="มั่นใจในตนเอง และมีเจตคติที่ดีต่อการเรียน"
                         [lead]="d.section12.confidence.narrative" />
+    <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
     <div class="steps">
       <div class="step-item" *ngFor="let a of d.section12.confidence.activities; let i = index"
            appReveal="left" [revealDelay]="i * 70">
@@ -507,6 +528,7 @@
   <div class="wrap">
     <app-section-header [light]="true" num="1.2.8" title="ปลอดภัยจากสารเสพติด ปัญหาทางเพศ และอบายมุขทุกชนิด"
                         [lead]="d.section12.safety.narrative" />
+    <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
     <div class="grid grid-2">
       <div class="card" appReveal="left">
         <h3 class="card-title">โครงการและกิจกรรมที่ดำเนินการ</h3>

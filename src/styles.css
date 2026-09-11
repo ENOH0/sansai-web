@@ -411,6 +411,46 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
   html { scroll-behavior: auto; }
 }
 
+/* กล่องตัวชี้วัดตามแบบประเมิน: ใช้รูปแบบเดียวกันทุกด้าน */
+.assessment-indicators {
+  margin-top: 24px;
+  padding: 20px 22px;
+  border: 1px solid var(--navy-100);
+  border-left: 5px solid var(--gold-500);
+  border-radius: var(--radius-sm);
+  background: var(--navy-50);
+  box-shadow: 0 8px 22px rgba(8, 21, 47, .08);
+}
+.assessment-indicators h3 {
+  margin: 0 0 14px;
+  color: var(--navy-800);
+  font-size: 17px;
+  font-weight: 800;
+}
+.assessment-indicators ol {
+  display: grid !important;
+  gap: 9px !important;
+  margin: 0 !important;
+  padding-left: 22px !important;
+  list-style: disc !important;
+}
+.assessment-indicators li {
+  min-height: auto;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--ink-soft) !important;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0;
+}
+.assessment-indicators li::before {
+  content: none;
+}
+.assessment-indicators li strong { color: var(--navy-800); }
+.assessment-indicators--single { margin-top: 20px; }
+
 /* ============================================================
    Responsive — เน้น iPad (768–1180px) ทั้งแนวตั้งและแนวนอน
    ============================================================ */
@@ -439,6 +479,9 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
   .wrap, .wrap-wide { padding: 0 18px; }
   body { font-size: 18.5px; }
   .sec-title .num { min-width: 42.5px; height: 42.5px; font-size: 17px; margin-right: 10px; }
+  .assessment-indicators { margin-top: 20px; padding: 16px; }
+  .assessment-indicators ol { padding-left: 20px !important; }
+  .assessment-indicators li { padding: 0 !important; font-size: 15px !important; }
 }
 
 /* ============================================================

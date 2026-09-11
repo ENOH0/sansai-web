@@ -25,7 +25,7 @@
   </button>
 </nav>
 
-<section class="section" *ngIf="open() === null">
+<section class="section d5-intro" *ngIf="open() === null">
   <div class="wrap">
     <div class="card card-accent" appReveal style="margin-bottom:32px">
       <p class="card-body" style="margin:0">{{ d.intro }}</p>
@@ -36,16 +36,17 @@
 <!-- หลักฐานตามเกณฑ์ประเมินมาก่อน แล้วจึงเลือกโครงการที่ต้องการดู -->
 <section class="section d5-index" *ngIf="open() === null">
   <div class="wrap">
+    <app-section-header [light]="true" num="5.1" title="โครงการ/กิจกรรมดีเด่นของสถานศึกษา"
+      lead="โครงการทั้ง 3 โครงการร่วมกันแสดงให้เห็นการดำเนินงานตามเกณฑ์ประเมินครบทุกข้อ" />
     <div class="sec-head" appReveal>
-      <p class="sec-kicker">5.1 โครงการ/กิจกรรมดีเด่นของสถานศึกษา</p>
       <h2 class="sec-title">หลักฐานตามตัวชี้วัด 4 ข้อ</h2>
       <div class="sec-rule"></div>
-      <p class="sec-lead">โครงการทั้ง 3 โครงการร่วมกันแสดงให้เห็นการดำเนินงานตามเกณฑ์ประเมินครบทุกข้อ</p>
     </div>
-    <div class="d5-criteria">
-      <article class="d5-criterion" *ngFor="let criterion of criteria; let i = index" appReveal [revealDelay]="i * 70">
-        <span class="d5-criterion-no">{{ i + 1 }}</span><p>{{ criterion }}</p>
-      </article>
+    <div class="assessment-indicators d5-criteria" appReveal>
+      <h3>ตัวชี้วัดตามแบบประเมิน 4 ข้อ</h3>
+      <ol>
+        <li *ngFor="let criterion of criteria">{{ criterion }}</li>
+      </ol>
     </div>
 
     <div class="sec-head" style="margin-top:52px" appReveal>
@@ -68,14 +69,13 @@
   <div class="wrap">
     <div class="d5-detail-head">
       <button type="button" class="d5-back" (click)="backToIndex()">‹ กลับภาพรวม 3 โครงการ</button>
-      <div><p class="d5-detail-kicker">โครงการที่เลือก</p><h2>{{ project.no }} {{ project.name }}</h2></div>
     </div>
   </div>
 </section>
 
 <!-- ═══════════ โครงการดีเด่นทั้ง 3 ═══════════ -->
 <ng-container *ngIf="currentProject as p">
-  <section class="section">
+  <section class="section d5-project-detail">
     <div class="wrap">
       <app-section-header [light]="true"
         [num]="p.no"

@@ -5,6 +5,11 @@
   display: block;
 }
 
+/* ลดเฉพาะช่องว่างระหว่างบทนำกับสารบัญ */
+.d1-intro { padding-bottom: 28px; }
+.d1-index { padding-top: 36px; }
+.assessment-indicators--single { margin-bottom: 30px; }
+
 /* ═══════════ สารบัญตัวชี้วัดด้านที่ 1 ═══════════ */
 .d1-tabs { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; }
 

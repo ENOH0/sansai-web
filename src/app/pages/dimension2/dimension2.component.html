@@ -10,7 +10,8 @@
 
 
 <!-- ปุ่มนำทางลอย กดข้ามไปหัวข้อไหนก็ได้จากทุกจุดในหน้า -->
-<nav class="d2-nav" aria-label="ข้ามไปหัวข้อ">
+<nav class="d2-nav" aria-label="ข้ามไปหัวข้อ"
+     style="right:auto;left:50%;top:auto;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;padding:0;background:transparent;box-shadow:none">
   <button type="button" class="d2-nav-btn" *ngFor="let g of groups"
           [class.is-open]="isOpen(g.key)" (click)="jumpTo(g.key)"
           [attr.aria-label]="g.key + ' ' + g.title">
@@ -25,7 +26,7 @@
 </nav>
 <app-page-hero [no]="d.no" [weight]="d.weight" [name]="d.name" [subtitle]="d.subtitle" />
 
-<section class="section">
+<section class="section d2-intro">
   <div class="wrap">
     <div class="card card-accent" appReveal style="margin-bottom:32px">
       <p class="card-body" style="margin:0">{{ d.intro }}</p>
@@ -66,7 +67,7 @@
     <div class="acc-body" *ngIf="isOpen('2.1')">
       <p class="acc-lead">{{ d.curriculum.lead }}</p>
 
-      <div class="acc-ind">
+      <div class="acc-ind assessment-indicators">
         <h4>ตัวชี้วัดตามแบบประเมิน</h4>
         <ol>
           <li *ngFor="let i of indicatorsOf('2.1')">{{ i }}</li>
@@ -140,7 +141,7 @@
     <div class="acc-body" *ngIf="isOpen('2.2')">
       <p class="acc-lead">{{ d.activities.lead }}</p>
 
-      <div class="acc-ind">
+      <div class="acc-ind assessment-indicators">
         <h4>ตัวชี้วัดตามแบบประเมิน</h4>
         <ol>
           <li *ngFor="let i of indicatorsOf('2.2')">{{ i }}</li>
@@ -190,7 +191,7 @@
     <div class="acc-body" *ngIf="isOpen('2.3')">
       <p class="acc-lead">{{ d.media.lead }}</p>
 
-      <div class="acc-ind">
+      <div class="acc-ind assessment-indicators">
         <h4>ตัวชี้วัดตามแบบประเมิน</h4>
         <ol>
           <li *ngFor="let i of indicatorsOf('2.3')">{{ i }}</li>
@@ -227,7 +228,7 @@
     <div class="acc-body" *ngIf="isOpen('2.4')">
       <p class="acc-lead">{{ d.assessment.lead }}</p>
 
-      <div class="acc-ind">
+      <div class="acc-ind assessment-indicators">
         <h4>ตัวชี้วัดตามแบบประเมิน</h4>
         <ol>
           <li *ngFor="let i of indicatorsOf('2.4')">{{ i }}</li>

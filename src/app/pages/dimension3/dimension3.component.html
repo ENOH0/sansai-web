@@ -25,7 +25,14 @@
   </button>
 </nav>
 
-<section class="section" *ngIf="!open()">
+<ng-template #d3Indicators>
+  <div class="assessment-indicators" style="margin-bottom:40px" *ngIf="currentGroup as group">
+    <h3>ตัวชี้วัดตามแบบประเมิน {{ group.count }} ข้อ</h3>
+    <ol><li *ngFor="let indicator of d.indicators[group.indicatorKey]">{{ indicator }}</li></ol>
+  </div>
+</ng-template>
+
+<section class="section d3-intro" *ngIf="!open()">
   <div class="wrap">
     <div class="card card-accent" appReveal style="margin-bottom:32px">
       <p class="card-body" style="margin:0">{{ d.intro }}</p>
@@ -59,16 +66,6 @@
   <div class="wrap">
     <div class="d3-detail-head">
       <button type="button" class="d3-back" (click)="backToIndex()">‹ กลับภาพรวม 5 หมวด</button>
-      <div>
-        <p class="d3-detail-kicker">หมวดที่เลือก</p>
-        <h2>{{ group.key }} {{ group.title }}</h2>
-      </div>
-    </div>
-    <div class="d3-indicators">
-      <h3>ตัวชี้วัดตามแบบประเมิน {{ group.count }} ข้อ</h3>
-      <ol>
-        <li *ngFor="let indicator of d.indicators[group.indicatorKey]">{{ indicator }}</li>
-      </ol>
     </div>
   </div>
 </section>
@@ -77,6 +74,7 @@
 <section class="section section-alt" *ngIf="open() === '3.1'">
   <div class="wrap">
     <app-section-header [light]="true" num="3.1" title="ภาวะผู้นำของผู้บริหาร" [lead]="d.leadership.lead" />
+    <ng-container [ngTemplateOutlet]="d3Indicators"></ng-container>
 
     <!-- BANCHUEN Model -->
     <div class="sec-head" appReveal>
@@ -146,6 +144,7 @@
 <section class="section" *ngIf="open() === '3.2'">
   <div class="wrap">
     <app-section-header [light]="true" num="3.2" title="การพัฒนาองค์กร" [lead]="d.organization.lead" />
+    <ng-container [ngTemplateOutlet]="d3Indicators"></ng-container>
 
     <div class="grid grid-2">
       <div class="card card-hover" *ngFor="let it of d.organization.items; let i = index"
@@ -164,6 +163,7 @@
 <section class="section section-alt" *ngIf="open() === '3.3'">
   <div class="wrap">
     <app-section-header [light]="true" num="3.3" title="เทคโนโลยีและการสื่อสารเพื่อการศึกษา" [lead]="d.technology.lead" />
+    <ng-container [ngTemplateOutlet]="d3Indicators"></ng-container>
 
     <app-cycle-flow [steps]="d.technology.cycle" />
 
@@ -181,6 +181,7 @@
 <section class="section" *ngIf="open() === '3.4'">
   <div class="wrap">
     <app-section-header [light]="true" num="3.4" title="ระบบการประกันคุณภาพภายใน" [lead]="d.qa.lead" />
+    <ng-container [ngTemplateOutlet]="d3Indicators"></ng-container>
 
     <div class="grid grid-3">
       <div class="card card-hover" *ngFor="let s of d.qa.steps; let i = index"
@@ -201,6 +202,7 @@
 <section class="section section-alt" *ngIf="open() === '3.5'">
   <div class="wrap">
     <app-section-header [light]="true" num="3.5" title="ระบบข้อมูลและสารสนเทศ" [lead]="d.information.lead" />
+    <ng-container [ngTemplateOutlet]="d3Indicators"></ng-container>
 
     <div class="steps">
       <div class="step-item" *ngFor="let it of d.information.items; let i = index"

@@ -92,6 +92,7 @@
 }
 
 /* กล่องรายการตัวชี้วัดตามแบบประเมิน */
+.d2-intro { padding-bottom: 28px; }
 .acc-ind {
   margin-bottom: 32px;
   padding: 20px 24px;

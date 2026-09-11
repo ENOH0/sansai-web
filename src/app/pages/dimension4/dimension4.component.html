@@ -25,7 +25,14 @@
   </button>
 </nav>
 
-<section class="section" *ngIf="!open()">
+<ng-template #d4Indicators>
+  <div class="assessment-indicators" style="margin-bottom:40px" *ngIf="currentGroup as group">
+    <h3>ตัวชี้วัดตามแบบประเมิน {{ group.count }} ข้อ</h3>
+    <ol><li *ngFor="let indicator of d.indicators[group.indicatorKey]">{{ indicator }}</li></ol>
+  </div>
+</ng-template>
+
+<section class="section d4-intro" *ngIf="!open()">
   <div class="wrap">
     <div class="card card-accent" appReveal style="margin-bottom:32px">
       <p class="card-body" style="margin:0">{{ d.intro }}</p>
@@ -58,14 +65,6 @@
   <div class="wrap">
     <div class="d4-detail-head">
       <button type="button" class="d4-back" (click)="backToIndex()">‹ กลับภาพรวม 4 หมวด</button>
-      <div>
-        <p class="d4-detail-kicker">หมวดที่เลือก</p>
-        <h2>{{ group.key }} {{ group.title }}</h2>
-      </div>
-    </div>
-    <div class="d4-indicators">
-      <h3>ตัวชี้วัดตามแบบประเมิน {{ group.count }} ข้อ</h3>
-      <ol><li *ngFor="let indicator of d.indicators[group.indicatorKey]">{{ indicator }}</li></ol>
     </div>
   </div>
 </section>
@@ -74,6 +73,7 @@
 <section class="section section-alt" *ngIf="open() === '4.1'">
   <div class="wrap">
     <app-section-header [light]="true" num="4.1" title="การออกแบบการจัดการเรียนรู้" [lead]="d.design.lead" />
+    <ng-container [ngTemplateOutlet]="d4Indicators"></ng-container>
     <app-cycle-flow [steps]="d.design.cycle" />
   </div>
 </section>
@@ -82,6 +82,7 @@
 <section class="section" *ngIf="open() === '4.2'">
   <div class="wrap">
     <app-section-header [light]="true" num="4.2" title="การจัดการเรียนรู้และการจัดการชั้นเรียน" [lead]="d.classroom.lead" />
+    <ng-container [ngTemplateOutlet]="d4Indicators"></ng-container>
 
     <div class="grid grid-2">
       <div class="card card-hover" *ngFor="let p of d.classroom.practices; let i = index"
@@ -100,6 +101,7 @@
 <section class="section section-alt" *ngIf="open() === '4.3'">
   <div class="wrap">
     <app-section-header [light]="true" num="4.3" title="การวัดและประเมินผลการเรียนรู้" [lead]="d.assessment.lead" />
+    <ng-container [ngTemplateOutlet]="d4Indicators"></ng-container>
 
     <div class="steps" style="margin-bottom:38px">
       <div class="step-item" *ngFor="let p of d.assessment.points; let i = index"
@@ -123,6 +125,7 @@
 <section class="section" *ngIf="open() === '4.4'">
   <div class="wrap">
     <app-section-header [light]="true" num="4.4" title="การนำผลการประเมินไปใช้" [lead]="d.useResults.lead" />
+    <ng-container [ngTemplateOutlet]="d4Indicators"></ng-container>
 
     <div class="grid grid-4" style="margin-bottom:34px">
       <div class="card card-accent" *ngFor="let s of d.useResults.steps; let i = index"

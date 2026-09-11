@@ -72,9 +72,13 @@
 .d4-card-count { color: var(--ink-mute); font-size: 15px; font-weight: 600; }
 .d4-card-go { margin-top: auto; color: var(--navy-600); font-size: 15px; font-weight: 800; }
 
-.d4-detail { background: transparent; scroll-margin-top: var(--nav-h); }
-.d4-detail-head { display: grid; gap: 12px; }
-.d4-detail-head h2 { margin: 0; color: #fff; font-size: clamp(23px, 2.6vw, 31px); line-height: 1.3; text-shadow: 0 3px 18px rgba(8, 21, 47, .9); }
+.d4-intro { padding-bottom: 28px; }
+.d4-index { padding-top: 36px; padding-bottom: 48px; }
+.d4-detail { padding-bottom: 8px; background: transparent; scroll-margin-top: var(--nav-h); }
+.d4-detail + .section { padding-top: 30px; }
+:host ::ng-deep app-section-header + .assessment-indicators { margin-bottom: 32px; }
+.d4-detail-head { margin-bottom: 12px; }
+.d4-detail-title h2 { margin: 0; color: #fff; font-size: clamp(23px, 2.6vw, 31px); line-height: 1.3; text-shadow: 0 3px 18px rgba(8, 21, 47, .9); }
 .d4-detail-kicker { margin: 0 0 3px; color: #fff; font-size: 14px; font-weight: 800; letter-spacing: .06em; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
 .d4-back {
   flex: none; min-height: 44px; padding: 0 15px; color: var(--navy-700);
@@ -120,7 +124,7 @@
   .d4-nav-back { font-size: 23px; }
   .d4-grid { grid-template-columns: 1fr; }
   .d4-card { min-height: 152px; padding: 17px; }
-  .d4-detail-head { display: grid; gap: 12px; }
+  .d4-detail-head { margin-bottom: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
