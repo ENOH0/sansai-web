@@ -10,6 +10,46 @@
 .d1-index { padding-top: 36px; }
 .assessment-indicators--single { margin-bottom: 30px; }
 
+/* ปุ่มหลักฐาน O-NET: รายงานไฟล์เดียวมีข้อมูลทั้ง ม.3 และ ม.6 แยกให้กดตามปี */
+.evidence-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: -4px 0 8px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, .56);
+  border-radius: 14px;
+  background: rgba(247, 251, 255, .96);
+  box-shadow: var(--shadow-sm);
+}
+.evidence-label {
+  margin-right: 4px;
+  color: var(--navy-800);
+  font-size: 15px;
+  font-weight: 800;
+}
+.evidence-links a {
+  min-height: 36px;
+  padding: 7px 13px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.45;
+  text-decoration: none;
+  border-radius: 999px;
+  background: var(--navy-700);
+  box-shadow: 0 3px 9px rgba(8, 21, 47, .18);
+  transition: transform .18s var(--ease), background .18s var(--ease);
+}
+@media (hover: hover) {
+  .evidence-links a:hover { background: var(--navy-500); transform: translateY(-1px); }
+}
+@media (max-width: 560px) {
+  .evidence-links { align-items: flex-start; }
+  .evidence-label { width: 100%; }
+}
+
 /* ═══════════ สารบัญตัวชี้วัดด้านที่ 1 ═══════════ */
 .d1-tabs { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; }
 
