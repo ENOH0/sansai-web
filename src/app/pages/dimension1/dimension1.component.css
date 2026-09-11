@@ -234,6 +234,22 @@
   pointer-events: none;
   transition: opacity .2s var(--ease), transform .2s var(--ease);
 }
+
+.d1-detail-head { padding-bottom: 0; }
+.d1-back {
+  min-height: 44px;
+  padding: 0 15px;
+  color: var(--navy-700);
+  font-family: inherit;
+  font-size: 15.5px;
+  font-weight: 800;
+  border: 1px solid var(--navy-200);
+  border-radius: 999px;
+  background: var(--paper);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (hover: hover) { .d1-back:hover { background: var(--navy-50); border-color: var(--navy-400); } }
 @media (hover: hover) {
   .d1-side-nav-btn:hover:not(:disabled) { transform: scale(1.06); }
   .d1-side-nav-btn:hover .d1-side-nav-tip { opacity: 1; transform: translateY(-50%) translateX(0); }

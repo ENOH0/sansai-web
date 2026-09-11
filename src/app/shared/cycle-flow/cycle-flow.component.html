@@ -1,13 +1,21 @@
 <div class="cycle">
-  <div class="cycle-step"
-       *ngFor="let s of steps; let i = index"
-       appReveal="zoom" [revealDelay]="i * 110">
-    <div class="cycle-no">{{ i + 1 }}</div>
-    <div class="chip cycle-chip">{{ s.step }}</div>
-    <h4>{{ s.title }}</h4>
-    <p>{{ s.text }}</p>
-    <ul *ngIf="s.bullets?.length">
-      <li *ngFor="let b of s.bullets">{{ b }}</li>
-    </ul>
-  </div>
+  <article class="cycle-step" *ngFor="let s of steps; let i = index"
+           [class.is-open]="isOpen(i)" appReveal="zoom" [revealDelay]="i * 110">
+    <button type="button" class="cycle-head" (click)="toggle(i)"
+            [attr.aria-expanded]="isOpen(i)" [attr.aria-controls]="'cycle-detail-' + i">
+      <span class="cycle-no">{{ i + 1 }}</span>
+      <span class="cycle-head-text">
+        <span class="chip cycle-chip">{{ s.step }}</span>
+        <span class="cycle-title">{{ s.title }}</span>
+      </span>
+      <svg class="cycle-chevron" width="30" height="30" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </button>
+    <div class="cycle-detail" *ngIf="isOpen(i)" [id]="'cycle-detail-' + i">
+      <p>{{ s.text }}</p>
+      <ul *ngIf="s.bullets?.length"><li *ngFor="let b of s.bullets">{{ b }}</li></ul>
+    </div>
+  </article>
 </div>

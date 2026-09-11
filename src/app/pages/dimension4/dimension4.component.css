@@ -73,7 +73,7 @@
 .d4-card-go { margin-top: auto; color: var(--navy-600); font-size: 15px; font-weight: 800; }
 
 .d4-detail { background: transparent; scroll-margin-top: var(--nav-h); }
-.d4-detail-head { display: flex; align-items: flex-start; gap: 18px; }
+.d4-detail-head { display: grid; gap: 12px; }
 .d4-detail-head h2 { margin: 0; color: #fff; font-size: clamp(23px, 2.6vw, 31px); line-height: 1.3; text-shadow: 0 3px 18px rgba(8, 21, 47, .9); }
 .d4-detail-kicker { margin: 0 0 3px; color: #fff; font-size: 14px; font-weight: 800; letter-spacing: .06em; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
 .d4-back {
@@ -126,4 +126,21 @@
 @media (prefers-reduced-motion: reduce) {
   .d4-video { display: none; }
   .d4-bg { background: var(--navy-900) url('/video/school-center-poster.jpg') center/cover; }
+}
+
+/* nav ทุกขนาดจอ: ปุ่มเดี่ยวลอยกึ่งกลางล่าง แบบเดียวกับด้านที่ 1 */
+.d4-nav {
+  right: auto;
+  left: 50%;
+  top: auto;
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  max-width: calc(100vw - 28px);
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
 }

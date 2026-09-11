@@ -300,7 +300,7 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
   position: absolute;
   left: 13px; top: 6px; bottom: 6px;
   width: 2px;
-  background: linear-gradient(180deg, var(--navy-300), var(--navy-100));
+  background: var(--gold-400);
 }
 
 .step-item { position: relative; margin-bottom: 22px; }
@@ -312,7 +312,7 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
   width: 12px; height: 12px;
   border-radius: 50%;
   background: #fff;
-  border: 3px solid var(--navy-500);
+  border: 3px solid var(--gold-400);
   box-shadow: 0 0 0 4px var(--navy-50);
 }
 
@@ -1379,20 +1379,24 @@ body {
 /* ปุ่มนำทางลอยด้านที่ 1: เริ่มด้วย 1.1/1.2 แล้วเผยข้อย่อยตามหมวดที่เลือก */
 .d1-side-nav {
   position: fixed;
-  right: 18px;
-  top: 50%;
-  transform: translateY(-50%);
+  right: auto;
+  left: 50%;
+  top: auto;
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
   z-index: 60;
-  display: grid;
+  display: flex;
+  align-items: center;
   gap: 10px;
+  max-width: calc(100vw - 28px);
 }
 
 .d1-side-nav-btn {
   position: relative;
   display: grid;
   place-items: center;
-  width: 54px;
-  height: 54px;
+  width: 44px;
+  height: 44px;
   color: var(--navy-700);
   font-family: inherit;
   border: 1px solid var(--line);
@@ -1420,21 +1424,29 @@ body {
   background: linear-gradient(135deg, var(--navy-800), var(--navy-600));
   box-shadow: 0 10px 26px rgba(8, 21, 47, .42);
 }
-.d1-side-nav-btn.is-sub { width: 48px; height: 48px; margin-left: 3px; }
+.d1-side-nav-btn.is-sub { width: 44px; height: 44px; margin-left: 0; }
 .d1-side-subnav {
   display: grid;
-  grid-template-rows: 0fr;
+  flex: 0 1 auto;
+  width: 0;
+  grid-template-columns: minmax(0, 1fr);
   opacity: 0;
-  transform: scale(.88);
-  transform-origin: top center;
-  transition: grid-template-rows .28s var(--ease), opacity .2s var(--ease), transform .28s var(--ease);
+  transform: translateX(-12px);
+  transform-origin: left center;
+  overflow: hidden;
+  transition: width .28s var(--ease), opacity .2s var(--ease), transform .28s var(--ease);
 }
-.d1-side-subnav.is-open { grid-template-rows: 1fr; opacity: 1; transform: scale(1); }
+.d1-side-subnav.is-open { width: min(380px, calc(100vw - 132px)); opacity: 1; transform: translateX(0); }
 .d1-side-subnav-inner {
   display: grid;
-  gap: 10px;
+  gap: 4px;
+  grid-auto-flow: column;
+  grid-template-rows: 44px;
+  grid-auto-columns: 44px;
+  min-width: 0;
   min-height: 0;
-  overflow: hidden;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 .d1-side-nav-tip {
   position: absolute;
@@ -1469,24 +1481,9 @@ body {
   .d1-tab-text { font-size: 17px; }
 }
 @media (max-width: 900px) {
-  .d1-side-nav {
-    right: auto;
-    left: 50%;
-    top: auto;
-    bottom: calc(18px + env(safe-area-inset-bottom));
-    transform: translateX(-50%);
-    grid-auto-flow: column;
-    grid-template-rows: repeat(2, auto);
-    max-width: calc(100vw - 28px);
-    padding: 8px 10px;
-    border-radius: 18px;
-    background: rgba(247, 251, 255, .94);
-    box-shadow: 0 10px 30px rgba(8, 21, 47, .28);
-    backdrop-filter: blur(10px);
-  }
   .d1-side-nav-btn, .d1-side-nav-btn.is-sub { width: 44px; height: 44px; margin-left: 0; box-shadow: none; border-color: transparent; }
-  .d1-side-subnav { grid-template-rows: 0fr; grid-column: span 1; }
-  .d1-side-subnav-inner { grid-auto-flow: column; grid-template-rows: repeat(2, 44px); gap: 4px; }
+  .d1-side-subnav { width: 0; grid-template-columns: minmax(0, 1fr); }
+  .d1-side-subnav-inner { grid-auto-flow: column; grid-template-rows: 44px; gap: 4px; }
   .d1-side-nav-tip { display: none; }
 }
 @media (max-width: 560px) {
@@ -1545,10 +1542,11 @@ body ::ng-deep .sec-head > .sec-title { color: #fff; text-shadow: 0 3px 18px rgb
 body ::ng-deep .sec-lead { color: #fff; font-weight: 600; text-shadow: 0 2px 14px rgba(8, 21, 47, .9); }
 body ::ng-deep .sec-kicker { color: #fff; font-weight: 800; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
 body ::ng-deep .sec-rule { background: var(--gold-400); box-shadow: 0 2px 12px rgba(8, 21, 47, .72); }
-body ::ng-deep .steps { border-left-color: rgba(255, 255, 255, .28); }
+/* เส้นแนวตั้งและวงแหวนภายนอกของ step ใช้สีทอง โดยคงแกนกลางสีขาว */
+body ::ng-deep .steps::before { background: var(--gold-400); }
 body ::ng-deep .step-item h4 { color: #fff; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
-body ::ng-deep .step-item p { color: #fff; font-weight: 600; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
-body ::ng-deep .bullets > li { color: #fff; font-weight: 600; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
+body ::ng-deep .step-item p { color: #ffffff; font-weight: 600; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
+body ::ng-deep .bullets > li { color: #ffffff; font-weight: 600; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
 body ::ng-deep .card .bullets > li,
 body ::ng-deep .card .step-item h4,
 body ::ng-deep .card .step-item p { color: var(--ink-soft); }
@@ -1565,10 +1563,10 @@ body ::ng-deep app-cycle-flow * {
 }
 
 /* จุดกลมของไทม์ไลน์และป้ายชิปที่อยู่นอกการ์ด */
-body ::ng-deep .step-item::before { border-color: rgba(255, 255, 255, .6); }
+body ::ng-deep .step-item::before { border-color: var(--gold-400); }
 body ::ng-deep .chip { color: #fff; border-color: rgba(255, 255, 255, .48); background: rgba(8, 21, 47, .38); text-shadow: 0 2px 10px rgba(8, 21, 47, .9); }
-body ::ng-deep .card .step-item::before { border-color: var(--navy-300); }
-body ::ng-deep .card .steps { border-left-color: var(--navy-100); }
+body ::ng-deep .card .step-item::before { border-color: var(--gold-400); }
+body ::ng-deep .card .steps::before { background: var(--gold-400); }
 body ::ng-deep .card .chip { color: var(--navy-700); border-color: var(--navy-100); background: var(--navy-50); text-shadow: none; }
 body ::ng-deep .card-title { color: var(--navy-900); }
 
@@ -1830,10 +1828,10 @@ body ::ng-deep .card .sec-lead { color: var(--ink-soft); }
 }
 
 /* ---------- ข้อความที่ไม่ได้อยู่ในการ์ด ต้องเป็นสีสว่างเพราะอยู่บนพื้นวิดีโอ ---------- */
-body ::ng-deep .steps { border-left-color: rgba(255, 255, 255, .28); }
+body ::ng-deep .steps::before { background: var(--gold-400); }
 body ::ng-deep .step-item h4 { color: #fff; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
 body ::ng-deep .step-item p { color: #fff; font-weight: 600; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
-body ::ng-deep .step-item::before { border-color: rgba(255, 255, 255, .6); }
+body ::ng-deep .step-item::before { border-color: var(--gold-400); }
 body ::ng-deep .bullets > li { color: #fff; font-weight: 600; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
 body ::ng-deep .chip { color: #fff; border-color: rgba(255, 255, 255, .48); background: rgba(8, 21, 47, .38); text-shadow: 0 2px 10px rgba(8, 21, 47, .9); }
 
@@ -1845,8 +1843,8 @@ body ::ng-deep .card .step-item p,
 body ::ng-deep .card .bullets > li,
 body ::ng-deep .callout .bullets > li,
 body ::ng-deep .acc-ind li { color: var(--ink-soft); }
-body ::ng-deep .card .steps { border-left-color: var(--navy-100); }
-body ::ng-deep .card .step-item::before { border-color: var(--navy-300); }
+body ::ng-deep .card .steps::before { background: var(--gold-400); }
+body ::ng-deep .card .step-item::before { border-color: var(--gold-400); }
 body ::ng-deep .card .chip { color: var(--navy-700); border-color: var(--navy-100); background: var(--navy-50); text-shadow: none; }
 body ::ng-deep .card *,
 body ::ng-deep .chart-card *,
@@ -1882,11 +1880,11 @@ body ::ng-deep .sec-head > .sec-title { color: #fff; text-shadow: 0 3px 18px rgb
 body ::ng-deep .sec-lead { color: #fff; font-weight: 600; text-shadow: 0 2px 14px rgba(8, 21, 47, .9); }
 body ::ng-deep .sec-kicker { color: #fff; font-weight: 800; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
 body ::ng-deep .sec-rule { background: var(--gold-400); box-shadow: 0 2px 12px rgba(8, 21, 47, .72); }
-body ::ng-deep .steps { border-left-color: rgba(255, 255, 255, .28); }
+body ::ng-deep .steps::before { background: var(--gold-400); }
 body ::ng-deep .step-item h4 { color: #fff; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
 body ::ng-deep .step-item p { color: #fff; font-weight: 600; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
 body ::ng-deep .bullets > li { color: #fff; font-weight: 600; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
-body ::ng-deep .step-item::before { border-color: rgba(255, 255, 255, .6); }
+body ::ng-deep .step-item::before { border-color: var(--gold-400); }
 body ::ng-deep .chip { color: #fff; border-color: rgba(255, 255, 255, .48); background: rgba(8, 21, 47, .38); text-shadow: 0 2px 10px rgba(8, 21, 47, .9); }
 
 /* ข้อความบนพื้นกรอบอ่านได้อยู่แล้ว จึงใช้สีเข้มและไม่ใส่เงา */
@@ -1895,8 +1893,8 @@ body ::ng-deep .callout .step-item h4 { color: var(--navy-900); }
 body ::ng-deep .card .step-item p,
 body ::ng-deep .card .bullets > li,
 body ::ng-deep .callout .bullets > li { color: var(--ink-soft); }
-body ::ng-deep .card .steps { border-left-color: var(--navy-100); }
-body ::ng-deep .card .step-item::before { border-color: var(--navy-300); }
+body ::ng-deep .card .steps::before { background: var(--gold-400); }
+body ::ng-deep .card .step-item::before { border-color: var(--gold-400); }
 body ::ng-deep .card .chip { color: var(--navy-700); border-color: var(--navy-100); background: var(--navy-50); text-shadow: none; }
 body ::ng-deep .card *,
 body ::ng-deep .chart-card *,
@@ -2137,19 +2135,19 @@ body ::ng-deep .sec-head > .sec-title { color: #fff; text-shadow: 0 3px 18px rgb
 body ::ng-deep .sec-lead { color: #fff; font-weight: 600; text-shadow: 0 2px 14px rgba(8, 21, 47, .9); }
 body ::ng-deep .sec-kicker { color: #fff; font-weight: 800; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
 body ::ng-deep .sec-rule { background: var(--gold-400); box-shadow: 0 2px 12px rgba(8, 21, 47, .72); }
-body ::ng-deep .steps { border-left-color: rgba(255, 255, 255, .28); }
+body ::ng-deep .steps::before { background: var(--gold-400); }
 body ::ng-deep .step-item h4,
 body ::ng-deep .step-item p,
 body ::ng-deep .bullets > li { color: #fff; font-weight: 600; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
-body ::ng-deep .step-item::before { border-color: rgba(255, 255, 255, .6); }
+body ::ng-deep .step-item::before { border-color: var(--gold-400); }
 body ::ng-deep .chip { color: #fff; border-color: rgba(255, 255, 255, .48); background: rgba(8, 21, 47, .38); text-shadow: 0 2px 10px rgba(8, 21, 47, .9); }
 
 /* ข้อความในกรอบไม่ต้องมีเงา */
 body ::ng-deep .card .step-item h4 { color: var(--navy-900); }
 body ::ng-deep .card .step-item p,
 body ::ng-deep .card .bullets > li { color: var(--ink-soft); }
-body ::ng-deep .card .steps { border-left-color: var(--navy-100); }
-body ::ng-deep .card .step-item::before { border-color: var(--navy-300); }
+body ::ng-deep .card .steps::before { background: var(--gold-400); }
+body ::ng-deep .card .step-item::before { border-color: var(--gold-400); }
 body ::ng-deep .card .chip { color: var(--navy-700); border-color: var(--navy-100); background: var(--navy-50); text-shadow: none; }
 body ::ng-deep .card *,
 body ::ng-deep .chart-card *,
@@ -2266,17 +2264,17 @@ body ::ng-deep .sec-kicker,
 body ::ng-deep .sec-lead { color: #fff; text-shadow: 0 3px 18px rgba(8, 21, 47, .9); }
 body ::ng-deep .sec-lead { font-weight: 600; }
 body ::ng-deep .sec-rule { background: var(--gold-400); box-shadow: 0 2px 12px rgba(8, 21, 47, .72); }
-body ::ng-deep .steps { border-left-color: rgba(255,255,255,.28); }
+body ::ng-deep .steps::before { background: var(--gold-400); }
 body ::ng-deep .step-item h4,
 body ::ng-deep .step-item p,
 body ::ng-deep .bullets > li { color: #fff; font-weight: 600; text-shadow: 0 2px 12px rgba(8,21,47,.9); }
-body ::ng-deep .step-item::before { border-color: rgba(255,255,255,.6); }
+body ::ng-deep .step-item::before { border-color: var(--gold-400); }
 body ::ng-deep .chip { color:#fff; border-color:rgba(255,255,255,.48); background:rgba(8,21,47,.38); text-shadow:0 2px 10px rgba(8,21,47,.9); }
 body ::ng-deep .card .step-item h4 { color: var(--navy-900); }
 body ::ng-deep .card .step-item p,
 body ::ng-deep .card .bullets > li { color: var(--ink-soft); }
-body ::ng-deep .card .steps { border-left-color: var(--navy-100); }
-body ::ng-deep .card .step-item::before { border-color: var(--navy-300); }
+body ::ng-deep .card .steps::before { background: var(--gold-400); }
+body ::ng-deep .card .step-item::before { border-color: var(--gold-400); }
 body ::ng-deep .card .chip { color:var(--navy-700); border-color:var(--navy-100); background:var(--navy-50); text-shadow:none; }
 body ::ng-deep .card *,
 body ::ng-deep .chart-card *,
@@ -3073,8 +3071,9 @@ body { display: block; }
 
 .cycle {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: start;
 }
 
 .cycle-step {
@@ -3082,15 +3081,36 @@ body { display: block; }
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 24px 22px 22px;
   box-shadow: var(--shadow-sm);
   border-top: 4px solid var(--navy-600);
+  overflow: hidden;
+  transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
 }
+.cycle-step.is-open { border-color: var(--navy-300); box-shadow: var(--shadow-md); }
 
 /* ไล่เฉดสีจากน้ำเงินเข้มไปอ่อน แล้วจบด้วยสีทองที่ขั้นพัฒนาต่อยอด */
 .cycle-step:nth-child(2) { border-top-color: var(--navy-500); }
 .cycle-step:nth-child(3) { border-top-color: var(--navy-400); }
 .cycle-step:nth-child(4) { border-top-color: var(--gold-500); }
+
+.cycle-head {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) 30px;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 108px;
+  padding: 18px 20px;
+  color: inherit;
+  text-align: left;
+  font-family: inherit;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.cycle-head:active { background: var(--navy-50); }
+.cycle-head-text { display: grid; gap: 6px; min-width: 0; }
 
 .cycle-no {
   width: 38px; height: 38px;
@@ -3100,7 +3120,6 @@ body { display: block; }
   color: var(--navy-700);
   font-weight: 700;
   font-size: 18px;
-  margin-bottom: 12px;
   border: 1px solid var(--navy-100);
 }
 
@@ -3110,18 +3129,26 @@ body { display: block; }
   border-color: #f2e2b8;
 }
 
-.cycle-chip { margin-bottom: 10px; }
+.cycle-chip { justify-self: start; }
+.cycle-title { color: var(--navy-900); font-size: 19px; font-weight: 800; line-height: 1.38; }
+.cycle-chevron { color: var(--navy-500); transition: transform .22s var(--ease); }
+.cycle-step.is-open .cycle-chevron { transform: rotate(180deg); }
 
-.cycle-step h4 { font-size: 19.5px; margin-bottom: 9px; }
-.cycle-step p { font-size: 17.5px; color: var(--ink-soft); margin: 0; }
+.cycle-detail { padding: 0 20px 22px 72px; animation: cycleDetailIn .24s var(--ease) both; }
+.cycle-detail p { font-size: 17.5px; color: var(--ink-soft); margin: 0; }
 
-.cycle-step ul {
+.cycle-detail ul {
   margin: 8px 0 0;
   padding-left: 20px;
   font-size: 17.5px;
   color: var(--ink-soft);
 }
-.cycle-step li { margin-bottom: 5px; }
+.cycle-detail li { margin-bottom: 5px; }
+
+@keyframes cycleDetailIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 /* ลูกศรเชื่อมระหว่างขั้น */
 .cycle-step::after {
@@ -3129,7 +3156,7 @@ body { display: block; }
   position: absolute;
   right: -16px; top: 50%;
   transform: translateY(-50%);
-  font-size: 33.5px;
+  font-size: 42px;
   color: var(--navy-300);
   line-height: 1;
   z-index: 2;
@@ -3137,16 +3164,24 @@ body { display: block; }
 }
 .cycle-step:last-child::after { display: none; }
 
-/* iPad Pro และจอกลาง — เหลือ 2 คอลัมน์ */
-@media (max-width: 1180px) {
-  .cycle { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-  .cycle-step:nth-child(2)::after { display: none; }
-}
+/* แสดงลูกศรเฉพาะระหว่างการ์ดในแถวเดียวกัน */
+.cycle-step:nth-child(2)::after { display: none; }
 
 /* iPad แนวตั้ง — เรียงลงมาทีละขั้น */
 @media (max-width: 834px) {
   .cycle { grid-template-columns: 1fr; }
   .cycle-step::after { display: none; }
+}
+
+@media (max-width: 560px) {
+  .cycle-head { min-height: 94px; padding: 15px; gap: 10px; }
+  .cycle-title { font-size: 17px; }
+  .cycle-detail { padding: 0 15px 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cycle-chevron { transition: none; }
+  .cycle-detail { animation: none; }
 }
 
 
@@ -3521,16 +3556,10 @@ body { display: block; }
 .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
 
 .brand-mark {
-  width: 40px; height: 40px;
+  width: 44px; height: 44px;
   flex: none;
-  border-radius: 11px;
-  background: linear-gradient(150deg, var(--navy-600), var(--navy-900));
-  color: #fff;
-  display: grid; place-items: center;
-  font-family: 'Sarabun', sans-serif;
-  font-weight: 700;
-  font-size: 19px;
-  box-shadow: 0 4px 14px rgba(19, 47, 99, .35);
+  display: block;
+  object-fit: contain;
 }
 
 .brand-text { line-height: 1.25; min-width: 0; }
@@ -3638,7 +3667,6 @@ body { display: block; }
 @media print {
   .nav, .nav-drawer, .progress { display: none !important; }
 }
-
 
 
 /* ===== src\app\shared\onet-chart\onet-chart.component.css ===== */

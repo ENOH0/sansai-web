@@ -1,7 +1,7 @@
 <app-page-hero [no]="d.no" [weight]="d.weight" [name]="d.name" [subtitle]="d.subtitle" />
 
 <!-- ═══════════ บทนำ ═══════════ -->
-<section class="section">
+<section class="section" *ngIf="!open()">
   <div class="wrap">
     <div class="card card-accent" appReveal style="margin-bottom:32px">
       <p class="card-body" style="margin:0">{{ d.intro }}</p>
@@ -89,6 +89,13 @@
         </span>
       </button>
     </div>
+  </div>
+</section>
+
+<!-- ปุ่มกลับภาพรวม วางเหนือเนื้อหาของหัวข้อย่อยทุกข้อ -->
+<section class="section-tight d1-detail-head" *ngIf="open()">
+  <div class="wrap">
+    <button type="button" class="d1-back" (click)="backToIndex()">‹ กลับภาพรวมตัวชี้วัดด้านที่ 1</button>
   </div>
 </section>
 

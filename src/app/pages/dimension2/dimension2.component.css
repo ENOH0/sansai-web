@@ -222,6 +222,23 @@
 
 @media print { .d2-nav { display: none !important; } }
 
+/* nav ทุกขนาดจอ: ปุ่มเดี่ยวลอยกึ่งกลางล่าง แบบเดียวกับด้านที่ 1 */
+.d2-nav {
+  right: auto !important;
+  left: 50% !important;
+  top: auto !important;
+  bottom: calc(18px + env(safe-area-inset-bottom)) !important;
+  transform: translateX(-50%) !important;
+  display: flex !important;
+  align-items: center;
+  max-width: calc(100vw - 28px);
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
 /* ═══════════ พื้นหลังวิดีโอ ตรึงเต็มจอ ═══════════ */
 .d2-bg { position: fixed; inset: 0; z-index: -1; background: var(--navy-900); }
 .d2-video { width: 100%; height: 100%; object-fit: cover; display: block; }
