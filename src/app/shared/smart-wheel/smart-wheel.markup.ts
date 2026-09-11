@@ -29,8 +29,9 @@ const piece = (it: WheelItem, i: number): string => `
     <span class="sw-name">${it.title}</span>
   </button>`;
 
-export const SMART_WHEEL_HTML = `
-<div class="sw-layout">
+export function smartWheelHtml(items: WheelItem[], hubLabel: string, hubTitle: string, hubSubtitle = '', theme = ''): string {
+return `
+<div class="sw-layout${theme ? ` sw-theme-${theme}` : ''}">
   <div class="sw-diagram">
     <svg class="sw-cycle" viewBox="0 0 600 600" aria-hidden="true">
       <path d="M68 322A232 232 0 0 1 278 68" />
@@ -45,10 +46,11 @@ export const SMART_WHEEL_HTML = `
 
     <div class="sw-wheel">
       <div class="sw-hub">
-        <span>SMART</span>
-        <strong>Student</strong>
+        <span>${hubLabel}</span>
+        <strong>${hubTitle}</strong>
+        ${hubSubtitle ? `<small>${hubSubtitle}</small>` : ''}
       </div>
-      ${WHEEL_ITEMS.map(piece).join('')}
+      ${items.map(piece).join('')}
     </div>
   </div>
 
@@ -60,6 +62,9 @@ export const SMART_WHEEL_HTML = `
     <p class="sw-hint">แตะตัวอักษรบนวงล้อเพื่อดูความหมายของแต่ละองค์ประกอบ</p>
   </aside>
 </div>`;
+}
+
+export const SMART_WHEEL_HTML = smartWheelHtml(WHEEL_ITEMS, 'SMART', 'Student');
 
 export function initSmartWheel(root: HTMLElement, items: WheelItem[]): void {
   const pieces = Array.from(root.querySelectorAll<HTMLElement>('.sw-piece'));

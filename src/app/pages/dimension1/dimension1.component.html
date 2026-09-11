@@ -9,6 +9,18 @@
   </div>
 </section>
 
+<!-- วงล้อคุณภาพผู้เรียน: สรุปตัวชี้วัด 1.1 ทั้ง 8 ข้อ -->
+<section class="section d1-quality-wheel" *ngIf="!open()">
+  <div class="wrap">
+    <div class="sec-head" appReveal>
+      <h2 class="sec-title">ACADEMIC MODEL</h2>
+      <div class="sec-rule"></div>
+      <p class="sec-lead">กระบวนการบริหารงานวิชาการเพื่อพัฒนาคุณภาพผู้เรียน — แตะแต่ละองค์ประกอบเพื่อดูรายละเอียด</p>
+    </div>
+    <app-student-quality-wheel appReveal></app-student-quality-wheel>
+  </div>
+</section>
+
 <!-- ═══════════ สารบัญตัวชี้วัด ═══════════ -->
 <!-- พื้นหลังวิดีโอ ตรึงเต็มจอ เลื่อนหน้าแล้วมีแต่เนื้อหาที่ขยับ -->
 <div class="d1-bg" aria-hidden="true">

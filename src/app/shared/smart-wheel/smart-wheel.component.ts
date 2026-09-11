@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, ViewEncapsulation, inject } from '@angular/core';
-import { SMART_WHEEL_HTML, WHEEL_ITEMS, initSmartWheel } from './smart-wheel.markup';
+import { AfterViewInit, Component, ElementRef, Input, ViewEncapsulation, inject } from '@angular/core';
+import { WHEEL_ITEMS, WheelItem, initSmartWheel, smartWheelHtml } from './smart-wheel.markup';
 
 /** วงล้อ SMART Student — โครงสร้างและการโต้ตอบอยู่ใน smart-wheel.markup.ts */
 @Component({
@@ -11,10 +11,15 @@ import { SMART_WHEEL_HTML, WHEEL_ITEMS, initSmartWheel } from './smart-wheel.mar
 })
 export class SmartWheelComponent implements AfterViewInit {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  @Input() items: WheelItem[] = WHEEL_ITEMS;
+  @Input() hubLabel = 'SMART';
+  @Input() hubTitle = 'Student';
+  @Input() hubSubtitle = '';
+  @Input() theme = '';
 
   ngAfterViewInit(): void {
     const el = this.host.nativeElement;
-    el.innerHTML = SMART_WHEEL_HTML;
-    initSmartWheel(el, WHEEL_ITEMS);
+    el.innerHTML = smartWheelHtml(this.items, this.hubLabel, this.hubTitle, this.hubSubtitle, this.theme);
+    initSmartWheel(el, this.items);
   }
 }

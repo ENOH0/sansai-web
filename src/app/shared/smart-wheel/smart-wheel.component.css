@@ -77,6 +77,22 @@
   font-size: clamp(21.5px, 3.2vw, 33.5px);
   font-weight: 700;
 }
+.sw-hub small { display:block; color:var(--navy-700); font-size:clamp(10px, 1.35vw, 13px); font-weight:800; }
+
+/* ACADEMIC MODEL: โครงวงล้อเดียวกับ SMART Student แต่ใช้โทนตามภาพอ้างอิง */
+.sw-theme-academic .sw-cycle path { stroke: #bfe9df; }
+.sw-theme-academic .sw-cycle path:nth-of-type(even) { stroke: #b7c9ef; }
+.sw-theme-academic .sw-cycle text { fill: #fff; text-shadow: 0 1px 4px rgba(17, 56, 105, .45); }
+.sw-theme-academic .sw-wheel { background: conic-gradient(from -112.5deg, #a8ddd0 0 12.5%, #e8f7f2 12.5% 25%, #ffd7aa 25% 37.5%, #fff0df 37.5% 50%, #a6bee9 50% 62.5%, #e3ebff 62.5% 75%, #c7b7e4 75% 87.5%, #eee9fb 87.5% 100%); }
+.sw-theme-academic .sw-wheel::after { border-color: #1b356f; }
+.sw-theme-academic .sw-hub span { color: #d74d42; }
+.sw-theme-academic .sw-hub strong { color: #18356f; }
+.sw-theme-academic .sw-piece, .sw-theme-academic .sw-piece.is-light, .sw-theme-academic .sw-piece .sw-letter { color: #bd3e39; }
+.sw-theme-academic .sw-piece .sw-name { color: #18356f; font-size: clamp(9px, 1.1vw, 12.5px); }
+.sw-theme-academic .sw-piece.is-on { box-shadow: 0 0 0 3px #e8a43c; }
+.sw-theme-academic .sw-detail { border-left-color: #d74d42; }
+.sw-theme-academic .sw-detail-title { color: #18356f; }
+.sw-theme-academic .sw-detail-key { background: linear-gradient(135deg, #ffd7aa, #e8a43c); }
 
 /* ---------- ปุ่มแต่ละองค์ประกอบ ---------- */
 .sw-piece {

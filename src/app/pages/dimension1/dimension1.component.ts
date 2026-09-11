@@ -19,6 +19,7 @@ import { LineChartComponent } from '../../shared/line-chart/line-chart.component
 import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
 import { MeterListComponent } from '../../shared/meter-list/meter-list.component';
 import { OnetChartComponent } from '../../shared/onet-chart/onet-chart.component';
+import { StudentQualityWheelComponent } from '../../shared/student-quality-wheel/student-quality-wheel.component';
 
 @Component({
   selector: 'app-dimension1',
@@ -28,7 +29,7 @@ import { OnetChartComponent } from '../../shared/onet-chart/onet-chart.component
     PhotoGalleryComponent, AwardsPreviewComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
     KpiGridComponent, DataTableComponent, CalloutComponent, PagerComponent, CycleFlowComponent,
-    LineChartComponent, BarChartComponent, MeterListComponent, OnetChartComponent
+    LineChartComponent, BarChartComponent, MeterListComponent, OnetChartComponent, StudentQualityWheelComponent
   ],
   templateUrl: './dimension1.component.html',
   styleUrl: './dimension1.component.css'
