@@ -5,7 +5,6 @@ import { DIM4 } from '../../data/dimension4.data';
 import { RevealDirective } from '../../shared/directives/reveal.directive';
 import { PageHeroComponent } from '../../shared/page-hero/page-hero.component';
 import { SectionHeaderComponent } from '../../shared/section-header/section-header.component';
-import { KpiGridComponent } from '../../shared/kpi-grid/kpi-grid.component';
 import { CycleFlowComponent } from '../../shared/cycle-flow/cycle-flow.component';
 import { PhotoGalleryComponent } from '../../shared/photo-gallery/photo-gallery.component';
 import { GALLERY } from '../../data/gallery.data';
@@ -20,7 +19,7 @@ import { LineChartComponent } from '../../shared/line-chart/line-chart.component
     HomeFabComponent,
     PhotoGalleryComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
-    KpiGridComponent, CycleFlowComponent, PagerComponent,
+    CycleFlowComponent, PagerComponent,
     LineChartComponent
   ],
   templateUrl: './dimension4.component.html',

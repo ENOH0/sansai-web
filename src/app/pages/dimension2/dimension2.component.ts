@@ -5,7 +5,6 @@ import { DIM2 } from '../../data/dimension2.data';
 import { RevealDirective } from '../../shared/directives/reveal.directive';
 import { PageHeroComponent } from '../../shared/page-hero/page-hero.component';
 import { SectionHeaderComponent } from '../../shared/section-header/section-header.component';
-import { KpiGridComponent } from '../../shared/kpi-grid/kpi-grid.component';
 import { CycleFlowComponent } from '../../shared/cycle-flow/cycle-flow.component';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { CalloutComponent } from '../../shared/callout/callout.component';
@@ -24,7 +23,7 @@ import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
     SmartWheelComponent,
     PhotoGalleryComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
-    KpiGridComponent, CycleFlowComponent, DataTableComponent, CalloutComponent,
+    CycleFlowComponent, DataTableComponent, CalloutComponent,
     PagerComponent, BarChartComponent
   ],
   templateUrl: './dimension2.component.html',
