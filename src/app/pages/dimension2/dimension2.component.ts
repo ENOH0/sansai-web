@@ -8,7 +8,6 @@ import { SectionHeaderComponent } from '../../shared/section-header/section-head
 import { CycleFlowComponent } from '../../shared/cycle-flow/cycle-flow.component';
 import { DataTableComponent } from '../../shared/data-table/data-table.component';
 import { CalloutComponent } from '../../shared/callout/callout.component';
-import { SmartWheelComponent } from '../../shared/smart-wheel/smart-wheel.component';
 import { PhotoGalleryComponent } from '../../shared/photo-gallery/photo-gallery.component';
 import { GALLERY } from '../../data/gallery.data';
 import { HomeFabComponent } from '../../shared/home-fab/home-fab.component';
@@ -20,7 +19,6 @@ import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
   standalone: true,
   imports: [
     HomeFabComponent,
-    SmartWheelComponent,
     PhotoGalleryComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
     CycleFlowComponent, DataTableComponent, CalloutComponent,

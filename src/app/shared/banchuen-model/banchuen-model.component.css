@@ -8,14 +8,20 @@
 
 /* ---------- คอลัมน์ซ้าย/ขวา ---------- */
 .bc-side-head {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 9px;
   margin: 0 0 13px;
-  color: var(--navy-800);
+  padding: 8px 12px;
+  color: #fff;
   font-size: 15px;
   font-weight: 800;
   letter-spacing: .06em;
+  border: 1px solid rgba(255, 255, 255, .35);
+  border-radius: 999px;
+  background: rgba(8, 21, 47, .78);
+  box-shadow: 0 3px 14px rgba(8, 21, 47, .42);
+  text-shadow: 0 1px 4px rgba(8, 21, 47, .9);
 }
 .bc-side-head::before {
   content: "";

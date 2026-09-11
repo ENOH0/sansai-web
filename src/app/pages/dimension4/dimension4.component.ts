@@ -11,6 +11,7 @@ import { GALLERY } from '../../data/gallery.data';
 import { HomeFabComponent } from '../../shared/home-fab/home-fab.component';
 import { PagerComponent } from '../../shared/pager/pager.component';
 import { LineChartComponent } from '../../shared/line-chart/line-chart.component';
+import { SmartWheelComponent } from '../../shared/smart-wheel/smart-wheel.component';
 
 @Component({
   selector: 'app-dimension4',
@@ -20,7 +21,7 @@ import { LineChartComponent } from '../../shared/line-chart/line-chart.component
     PhotoGalleryComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
     CycleFlowComponent, PagerComponent,
-    LineChartComponent
+    LineChartComponent, SmartWheelComponent
   ],
   templateUrl: './dimension4.component.html',
   styleUrl: './dimension4.component.css'
