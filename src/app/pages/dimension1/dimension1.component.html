@@ -113,11 +113,11 @@
         [rows]="m6Rows" />
 
       <!-- ม.3 พัฒนาการ -->
-      <app-line-chart
+      <app-bar-chart
         title="พัฒนาการผลสัมฤทธิ์ O-NET ชั้น ม.3"
         subtitle="ค่าเฉลี่ยระดับโรงเรียน ปีการศึกษา 2566–2568"
         [labels]="d.section11.onet.m3Trend.years"
-        [series]="m3TrendSeries"
+        [series]="m3TrendBars"
         [note]="d.section11.onet.m3Trend.conclusion + '  ' + d.section11.onet.m3Trend.footnote" />
 
       <app-callout label="จุดเด่น:" [gold]="true">
@@ -149,15 +149,12 @@
     <app-section-header [light]="true" num="1.1.2" [title]="thaiTitle" [lead]="d.section11.thai.narrative" />
 
     <div class="stack">
-      <app-line-chart
+      <app-bar-chart
         title="ร้อยละของผู้เรียนที่มีผลการคัดกรองการอ่าน–เขียนภาษาไทยในระดับดี"
         subtitle="จำแนกรายระดับชั้น ปีการศึกษา 2566–2568"
         [labels]="d.section11.thai.years"
-        [series]="thaiSeries"
-        [showValues]="false"
-        [min]="70"
-        [max]="95"
-        [height]="480"
+        [series]="thaiBars"
+        [max]="100"
         [note]="d.section11.thai.conclusion" />
 
       <app-data-table
@@ -282,33 +279,14 @@
   <div class="wrap">
     <app-section-header [light]="true" num="1.1.7" [title]="pathTitle" [lead]="d.section11.pathway.narrative" />
 
-    <!-- ╔══════════════════════════════════════════════════════════╗
-         ║ ตัวเลือกที่ 1 : กราฟเส้น                                  ║
-         ║ ถ้าไม่ใช้ ให้ลบตั้งแต่บรรทัดนี้ถึงบรรทัด "จบตัวเลือกที่ 1"  ║
-         ╚══════════════════════════════════════════════════════════╝ -->
-    <app-line-chart
+    <app-bar-chart
       title="ร้อยละของนักเรียนชั้น ม.3 จำแนกตามเส้นทางหลังจบการศึกษา"
       subtitle="ปีการศึกษา 2565–2568"
       [labels]="d.section11.pathway.years"
-      [series]="pathSeries"
+      [series]="pathBars"
+      [max]="80"
+      valueFormat="1.2-2"
       [note]="d.section11.pathway.conclusion" />
-    <!-- จบตัวเลือกที่ 1 -->
-
-    <!-- ╔══════════════════════════════════════════════════════════╗
-         ║ ตัวเลือกที่ 2 : กราฟแท่ง                                  ║
-         ║ ถ้าไม่ใช้ ให้ลบตั้งแต่บรรทัดนี้ถึงบรรทัด "จบตัวเลือกที่ 2"  ║
-         ╚══════════════════════════════════════════════════════════╝ -->
-    <div style="margin-top:24px">
-      <app-bar-chart
-        title="ร้อยละของนักเรียนชั้น ม.3 จำแนกตามเส้นทางหลังจบการศึกษา"
-        subtitle="ปีการศึกษา 2565–2568"
-        [labels]="d.section11.pathway.years"
-        [series]="pathBars"
-        [max]="80"
-        valueFormat="1.2-2"
-        [note]="d.section11.pathway.conclusion" />
-    </div>
-    <!-- จบตัวเลือกที่ 2 -->
   </div>
 </section>
 </ng-container>
@@ -339,13 +317,6 @@
         [headers]="desiredHeaders"
         [rows]="desiredRows" />
 
-      <app-line-chart
-        title="ผลการประเมินคุณลักษณะอันพึงประสงค์ในภาพรวม"
-        subtitle="เทียบกับค่าเป้าหมายมาตรฐานการศึกษาของโรงเรียน (ร้อยละ 90)"
-        [labels]="d.section12.desired.years"
-        [series]="overallSeries"
-        [min]="85" [max]="100"
-        note="ผลการประเมินภาพรวมสูงกว่าค่าเป้าหมายร้อยละ 90 อย่างต่อเนื่องทุกปีการศึกษา โดยปีการศึกษา 2567 สูงที่สุดที่ร้อยละ 98.69" />
     </div>
   </div>
 </section>
@@ -551,12 +522,12 @@
     </div>
 
     <div class="stack" style="margin-top:44px">
-      <app-line-chart
+      <app-bar-chart
         title="ร้อยละของนักเรียนที่มีพฤติกรรมไม่พึงประสงค์"
         subtitle="ภาพรวมทั้งโรงเรียน ปีการศึกษา 2566–2568 (ยิ่งต่ำยิ่งดี)"
         [labels]="d.section12.safety.years"
-        [series]="safetySeries"
-        [min]="0" [max]="100"
+        [series]="safetyBars"
+        [max]="100"
         [note]="d.section12.safety.conclusion" />
       <app-data-table
         [caption]="d.section12.safety.caption"

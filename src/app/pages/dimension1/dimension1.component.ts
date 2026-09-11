@@ -153,7 +153,7 @@ export class Dimension1Component implements OnInit {
   }));
 
   // ---------- O-NET ม.3 ----------
-  readonly m3TrendSeries: LineSeries[] = DIM1.section11.onet.m3Trend.subjects.map((s, i) => ({
+  readonly m3TrendBars: BarSeries[] = DIM1.section11.onet.m3Trend.subjects.map((s, i) => ({
     name: s.name,
     values: s.values,
     color: this.palette[i % 5]
@@ -177,7 +177,7 @@ export class Dimension1Component implements OnInit {
      ถ้าใช้ชุด 5 สีเดิม ม.6 จะได้สีซ้ำกับ ม.1 จนแยกเส้นไม่ออก */
   private readonly gradePalette = ['#1e4d9e', '#d4a537', '#4f88d4', '#0f7a4d', '#8a4fbd', '#b4433a'];
 
-  readonly thaiSeries: LineSeries[] = [
+  readonly thaiBars: BarSeries[] = [
     ...DIM1.section11.thai.rows.map((r, i) => ({
       name: r.name, values: r.values, color: this.gradePalette[i % 6]
     })),
@@ -251,10 +251,6 @@ export class Dimension1Component implements OnInit {
   }];
 
   // ---------- การศึกษาต่อ ----------
-  readonly pathSeries: LineSeries[] = DIM1.section11.pathway.rows.map((r, i) => ({
-    name: r.name, values: r.values, color: this.palette[i % 5]
-  }));
-
   /* ชุดข้อมูลเดียวกันในรูปกราฟแท่ง (ตัวเลือกที่ 2 ของหัวข้อ 1.1.7) */
   readonly pathBars: BarSeries[] = DIM1.section11.pathway.rows.map((r, i) => ({
     name: r.name, values: r.values, color: this.palette[i % 5]
@@ -279,11 +275,6 @@ export class Dimension1Component implements OnInit {
       ],
       total: true
     }
-  ];
-
-  readonly overallSeries: LineSeries[] = [
-    { name: 'ผลการประเมินภาพรวม', values: DIM1.section12.desired.overall, color: '#1e4d9e' },
-    { name: 'ค่าเป้าหมายของโรงเรียน', values: [90, 90, 90], color: '#b4433a', dashed: true }
   ];
 
   // ---------- การเลือกตั้ง ----------
@@ -332,7 +323,7 @@ export class Dimension1Component implements OnInit {
     cells: [r.name, ...r.values.map(v => (v === null ? '—' : v.toFixed(2)))]
   }));
 
-  readonly safetySeries: LineSeries[] = [
+  readonly safetyBars: BarSeries[] = [
     { name: 'ภาพรวมทั้งโรงเรียน', values: DIM1.section12.safety.riskPct, color: '#b4433a' },
     ...DIM1.section12.safety.byLevel.map((r, i) => ({
       name: r.name, values: r.values, color: this.gradePalette[i % 6]
