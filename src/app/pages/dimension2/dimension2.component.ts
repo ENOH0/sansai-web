@@ -31,6 +31,7 @@ export class Dimension2Component {
   /* ---------- แอคคอร์เดียนหัวข้อตามแบบประเมิน ----------
      เปิดได้ทีละหัวข้อ กดหัวข้อใหม่จะปิดหัวข้อเดิมอัตโนมัติ */
   private readonly opened = signal<string[]>([]);
+  readonly competencyOpen = signal(false);
 
   private readonly indicatorKeyOf: Record<string, string> = {
     '2.1': '2.1 การพัฒนาหลักสูตรสถานศึกษา',
@@ -73,7 +74,12 @@ export class Dimension2Component {
   }
 
   toggle(k: string): void {
+    if (k !== '2.2' || this.isOpen('2.2')) this.competencyOpen.set(false);
     this.opened.update(v => v.includes(k) ? [] : [k]);
+  }
+
+  toggleCompetency(): void {
+    this.competencyOpen.update(open => !open);
   }
 
   indicatorsOf(k: string): string[] {
@@ -94,7 +100,9 @@ export class Dimension2Component {
 
   readonly upperRows: TableRow[] = [
     ...DIM2.curriculum.upperCourses.map(c => ({
-      cells: [c.name, ...c.y.map(v => (v ? '✓' : '–'))]
+      cells: [c.name, ...c.y.map((v, yearIndex) =>
+        'specialYears' in c && c.specialYears?.includes(yearIndex) ? 'พิเศษ*' : (v ? '✓' : '–')
+      )]
     })),
     { cells: ['รวมแผนการเรียน ม.ปลาย', ...DIM2.assessment.planCount.upper.map(String)], total: true }
   ];
