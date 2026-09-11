@@ -125,6 +125,7 @@
 
 /* ---------- ปุ่มข้อก่อนหน้า / ข้อถัดไป ---------- */
 .d1-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.d1-nav.only-next .next { grid-column: 2; }
 
 .d1-nav-btn {
   display: grid;

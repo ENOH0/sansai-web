@@ -569,7 +569,7 @@
 
 <!-- ไปข้อก่อนหน้า / ข้อถัดไป -->
 <section class="section-tight" *ngIf="open()">
-  <div class="wrap d1-nav">
+  <div class="wrap d1-nav" [class.only-next]="!prevTopic && !!nextTopic">
     <button type="button" class="d1-nav-btn" *ngIf="prevTopic as pv" [disabled]="!pv.ready" (click)="select(pv.key)">
       <span class="d1-nav-txt">{{ pv.key }} {{ pv.title }}</span>
       <span class="d1-nav-lab">ข้อก่อนหน้า</span>
