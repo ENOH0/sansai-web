@@ -93,6 +93,18 @@
 
 /* กล่องรายการตัวชี้วัดตามแบบประเมิน */
 .d2-intro { padding-bottom: 28px; }
+.d2-curriculum-model { padding-top: 16px; padding-bottom: 46px; }
+.school-curriculum-frame {
+  overflow: hidden;
+  background: transparent;
+}
+.school-curriculum-frame iframe {
+  display: block;
+  width: 100%;
+  height: clamp(440px, 70.3125vw, 900px);
+  border: 0;
+  background: transparent;
+}
 .acc-ind {
   margin-bottom: 32px;
   padding: 20px 24px;

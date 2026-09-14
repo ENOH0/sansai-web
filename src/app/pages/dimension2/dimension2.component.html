@@ -1,8 +1,7 @@
 <!-- พื้นหลังวิดีโอ ตรึงเต็มจอ เลื่อนหน้าแล้วมีแต่เนื้อหาที่ขยับ -->
 <div class="d2-bg" aria-hidden="true">
-  <video #bgv class="d2-video" autoplay muted loop playsinline preload="auto"
-         poster="video/school-center-poster.jpg"
-         (loadedmetadata)="playBg(bgv)" (canplay)="playBg(bgv)">
+  <video #bgv class="d2-video" autoplay muted loop playsinline preload="auto" poster="video/school-center-poster.jpg"
+    (loadedmetadata)="playBg(bgv)" (canplay)="playBg(bgv)">
     <source src="video/school-center.mp4" type="video/mp4" />
   </video>
   <div class="d2-veil"></div>
@@ -11,15 +10,14 @@
 
 <!-- ปุ่มนำทางลอย กดข้ามไปหัวข้อไหนก็ได้จากทุกจุดในหน้า -->
 <nav class="d2-nav" aria-label="ข้ามไปหัวข้อ"
-     style="right:auto;left:50%;top:auto;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;padding:0;background:transparent;box-shadow:none">
-  <button type="button" class="d2-nav-btn" *ngFor="let g of groups"
-          [class.is-open]="isOpen(g.key)" (click)="jumpTo(g.key)"
-          [attr.aria-label]="g.key + ' ' + g.title">
+  style="right:auto;left:50%;top:auto;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;padding:0;background:transparent;box-shadow:none">
+  <button type="button" class="d2-nav-btn" *ngFor="let g of groups" [class.is-open]="isOpen(g.key)"
+    (click)="jumpTo(g.key)" [attr.aria-label]="g.key + ' ' + g.title">
     <span class="d2-nav-no">{{ g.key }}</span>
     <span class="d2-nav-tip">{{ g.title }}</span>
   </button>
-  <button type="button" class="d2-nav-btn d2-nav-back" *ngIf="hasOpen()"
-          (click)="backToIndex()" aria-label="กลับหน้าหลักด้านที่ 2">
+  <button type="button" class="d2-nav-btn d2-nav-back" *ngIf="hasOpen()" (click)="backToIndex()"
+    aria-label="กลับหน้าหลักด้านที่ 2">
     <span class="d2-nav-no" aria-hidden="true">↶</span>
     <span class="d2-nav-tip">กลับหน้าหลักด้านที่ 2</span>
   </button>
@@ -34,15 +32,31 @@
   </div>
 </section>
 
+<!-- โมเดลหลักสูตรสถานศึกษา: แสดงในหน้าหลักของด้านที่ 2 เช่นเดียวกับโมเดลของด้านอื่น -->
+<section class="section d2-curriculum-model" *ngIf="!hasOpen()">
+  <div class="wrap">
+    <div class="sec-head" appReveal>
+      <h2 class="sec-title">SCHOOL CURRICULUM</h2>
+      <div class="sec-rule"></div>
+      <p class="sec-lead">โมเดลหลักสูตรสถานศึกษาโรงเรียนสันทรายวิทยาคม — แตะองค์ประกอบเพื่อดูรายละเอียด
+        หรือลากเพื่อหมุนโมเดล</p>
+    </div>
+    <div class="school-curriculum-frame" appReveal>
+      <iframe src="/models/school-curriculum.html" title="SCHOOL CURRICULUM model" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════ 2.1 การพัฒนาหลักสูตร ═══════════ -->
 <section class="section acc-sec">
   <div class="wrap">
     <button type="button" class="acc-head" id="acc-2.1" [class.is-open]="isOpen('2.1')"
-            [attr.aria-expanded]="isOpen('2.1')" (click)="toggle('2.1')">
+      [attr.aria-expanded]="isOpen('2.1')" (click)="toggle('2.1')">
       <span class="acc-no">2.1</span>
-      <span class="acc-text">การพัฒนาหลักสูตรสถานศึกษา<small>{{ indicatorsOf('2.1').length }} ตัวชี้วัดตามแบบประเมิน</small></span>
+      <span class="acc-text">การพัฒนาหลักสูตรสถานศึกษา<small>{{ indicatorsOf('2.1').length }}
+          ตัวชี้วัดตามแบบประเมิน</small></span>
       <svg class="acc-chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M6 9l6 6 6-6" />
       </svg>
     </button>
@@ -58,53 +72,47 @@
       </div>
 
 
-    <app-cycle-flow [steps]="d.curriculum.cycle" [showEvidence]="true" />
+      <app-cycle-flow [steps]="d.curriculum.cycle" [showEvidence]="true" />
 
-    <div class="sec-head" style="margin-top:52px" appReveal>
-      <h3 class="sec-title" style="font-size:22px">พัฒนาการของหลักสูตรสถานศึกษา 3 ปีการศึกษา</h3>
-      <div class="sec-rule"></div>
-    </div>
-
-    <div class="steps">
-      <div class="step-item" *ngFor="let t of d.curriculum.timeline; let i = index"
-           appReveal="left" [revealDelay]="i * 110">
-        <h4>{{ t.year }}</h4>
-        <p>{{ t.text }}</p>
+      <div class="sec-head" style="margin-top:52px" appReveal>
+        <h3 class="sec-title" style="font-size:22px">พัฒนาการของหลักสูตรสถานศึกษา 3 ปีการศึกษา</h3>
+        <div class="sec-rule"></div>
       </div>
-    </div>
 
-    <div style="margin-top:34px">
-      <app-bar-chart
-        title="จำนวนหลักสูตร/แผนการเรียนที่เปิดสอน"
-        subtitle="จำแนกตามระดับชั้น ปีการศึกษา 2566–2568"
-        [labels]="d.curriculum.courseYears"
-        [series]="courseSeries"
-        valueFormat="1.0-0"
-        note="จำนวนแผนการเรียนรวมเพิ่มจาก 26 แผนการเรียนในปีการศึกษา 2566–2567 เป็น 27 แผนการเรียนในปีการศึกษา 2568 จากการเพิ่มแผนการเรียนวิทยาศาสตร์นวัตกรรมและเทคโนโลยี (IST)" />
-    </div>
-
-    <div class="grid grid-2" style="margin-top:24px">
-      <div class="card" appReveal="left">
-        <h3 class="card-title">หลักสูตรระดับชั้นมัธยมศึกษาตอนต้น</h3>
-        <ol class="bullets">
-          <li *ngFor="let c of d.curriculum.lowerCourses">{{ c }}</li>
-        </ol>
+      <div class="steps">
+        <div class="step-item" *ngFor="let t of d.curriculum.timeline; let i = index" appReveal="left"
+          [revealDelay]="i * 110">
+          <h4>{{ t.year }}</h4>
+          <p>{{ t.text }}</p>
+        </div>
       </div>
-      <div appReveal="right">
-        <app-data-table
-          caption="แผนการเรียนระดับชั้นมัธยมศึกษาตอนปลาย"
-          [headers]="['แผนการเรียน', '2566', '2567', '2568']"
-          [rows]="upperRows"
-          note="พิเศษ* = ห้องเรียนพิเศษเทียบเคียง" />
-      </div>
-    </div>
 
-    <app-callout label="ห้องเรียนพิเศษ:" [gold]="true" style="display:block;margin-top:22px">
-      โรงเรียนได้ดำเนินการขอเปิดหลักสูตรห้องเรียนพิเศษ ประเภทความสามารถพิเศษด้านวิชาการ จำนวน 4 หลักสูตร ได้แก่
-      ระดับชั้นมัธยมศึกษาตอนต้น หลักสูตรห้องเรียนภาษาจีน–ภาษาอังกฤษ (CEP) และระดับชั้นมัธยมศึกษาตอนปลาย
-      หลักสูตรวิทยาศาสตร์สุขภาพ (Health Sciences Program) หลักสูตรนวัตกรรม วิทยาศาสตร์ และเทคโนโลยี (IST)
-      และหลักสูตรภาษาจีน (Chinese Special Program: CSP)
-    </app-callout>
+      <div style="margin-top:34px">
+        <app-bar-chart title="จำนวนหลักสูตร/แผนการเรียนที่เปิดสอน" subtitle="จำแนกตามระดับชั้น ปีการศึกษา 2566–2568"
+          [labels]="d.curriculum.courseYears" [series]="courseSeries" valueFormat="1.0-0"
+          note="จำนวนแผนการเรียนรวมเพิ่มจาก 26 แผนการเรียนในปีการศึกษา 2566–2567 เป็น 27 แผนการเรียนในปีการศึกษา 2568 จากการเพิ่มแผนการเรียนวิทยาศาสตร์นวัตกรรมและเทคโนโลยี (IST)" />
+      </div>
+
+      <div class="grid grid-2" style="margin-top:24px">
+        <div class="card" appReveal="left">
+          <h3 class="card-title">หลักสูตรระดับชั้นมัธยมศึกษาตอนต้น</h3>
+          <ol class="bullets">
+            <li *ngFor="let c of d.curriculum.lowerCourses">{{ c }}</li>
+          </ol>
+        </div>
+        <div appReveal="right">
+          <app-data-table caption="แผนการเรียนระดับชั้นมัธยมศึกษาตอนปลาย"
+            [headers]="['แผนการเรียน', '2566', '2567', '2568']" [rows]="upperRows"
+            note="พิเศษ* = ห้องเรียนพิเศษเทียบเคียง" />
+        </div>
+      </div>
+
+      <app-callout label="ห้องเรียนพิเศษ:" [gold]="true" style="display:block;margin-top:22px">
+        โรงเรียนได้ดำเนินการขอเปิดหลักสูตรห้องเรียนพิเศษ ประเภทความสามารถพิเศษด้านวิชาการ จำนวน 4 หลักสูตร ได้แก่
+        ระดับชั้นมัธยมศึกษาตอนต้น หลักสูตรห้องเรียนภาษาจีน–ภาษาอังกฤษ (CEP) และระดับชั้นมัธยมศึกษาตอนปลาย
+        หลักสูตรวิทยาศาสตร์สุขภาพ (Health Sciences Program) หลักสูตรนวัตกรรม วิทยาศาสตร์ และเทคโนโลยี (IST)
+        และหลักสูตรภาษาจีน (Chinese Special Program: CSP)
+      </app-callout>
     </div>
   </div>
 </section>
@@ -113,11 +121,12 @@
 <section class="section acc-sec">
   <div class="wrap">
     <button type="button" class="acc-head" id="acc-2.2" [class.is-open]="isOpen('2.2')"
-            [attr.aria-expanded]="isOpen('2.2')" (click)="toggle('2.2')">
+      [attr.aria-expanded]="isOpen('2.2')" (click)="toggle('2.2')">
       <span class="acc-no">2.2</span>
-      <span class="acc-text">การจัดกิจกรรมเสริมหลักสูตร<small>{{ indicatorsOf('2.2').length }} ตัวชี้วัดตามแบบประเมิน</small></span>
+      <span class="acc-text">การจัดกิจกรรมเสริมหลักสูตร<small>{{ indicatorsOf('2.2').length }}
+          ตัวชี้วัดตามแบบประเมิน</small></span>
       <svg class="acc-chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M6 9l6 6 6-6" />
       </svg>
     </button>
@@ -133,47 +142,47 @@
       </div>
 
 
-    <div class="card card-gold" appReveal style="margin-bottom:32px">
-      <h3 class="card-title">{{ d.activities.flagship.name }}</h3>
-      <p class="card-body" style="margin:0">{{ d.activities.flagship.text }}</p>
-    </div>
+      <div class="card card-gold" appReveal style="margin-bottom:32px">
+        <h3 class="card-title">{{ d.activities.flagship.name }}</h3>
+        <p class="card-body" style="margin:0">{{ d.activities.flagship.text }}</p>
+      </div>
 
-    <app-cycle-flow [steps]="d.activities.cycle" [showEvidence]="true" />
+      <app-cycle-flow [steps]="d.activities.cycle" [showEvidence]="true" />
 
-    <div class="competency-section" appReveal>
-      <button type="button" class="competency-card card card-gold" [class.is-open]="competencyOpen()"
-              [attr.aria-expanded]="competencyOpen()" (click)="toggleCompetency()">
-        <span class="competency-copy">
-          <span class="chip">เปิดดูตามกลุ่มสาระการเรียนรู้</span>
-          <span class="card-title">{{ d.activities.competency.name }}</span>
-          <span class="card-body">{{ d.activities.competency.text }}</span>
-          <span class="competency-highlights" aria-hidden="true">
-            <span *ngFor="let item of d.activities.competency.highlights">{{ item }}</span>
+      <div class="competency-section" appReveal>
+        <button type="button" class="competency-card card card-gold" [class.is-open]="competencyOpen()"
+          [attr.aria-expanded]="competencyOpen()" (click)="toggleCompetency()">
+          <span class="competency-copy">
+            <span class="chip">เปิดดูตามกลุ่มสาระการเรียนรู้</span>
+            <span class="card-title">{{ d.activities.competency.name }}</span>
+            <span class="card-body">{{ d.activities.competency.text }}</span>
+            <span class="competency-highlights" aria-hidden="true">
+              <span *ngFor="let item of d.activities.competency.highlights">{{ item }}</span>
+            </span>
           </span>
-        </span>
-        <svg class="competency-chev" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-             stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 9l6 6 6-6" />
-        </svg>
-      </button>
+          <svg class="competency-chev" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </button>
 
-      <div class="competency-panel" *ngIf="competencyOpen()">
-        <div class="sec-head competency-panel-head">
-          <h3 class="sec-title" style="font-size:22px">กิจกรรมเสริมหลักสูตรจำแนกตามกลุ่มสาระการเรียนรู้</h3>
-          <div class="sec-rule"></div>
-        </div>
-        <div class="grid grid-2">
-          <div class="card card-hover" *ngFor="let g of d.activities.groups; let i = index"
-               appReveal [revealDelay]="i * 80">
-            <div class="chip" style="margin-bottom:12px">กลุ่มสาระการเรียนรู้</div>
-            <h3 class="card-title">{{ g.subject }}</h3>
-            <ul class="bullets" style="margin-top:8px">
-              <li *ngFor="let it of g.items">{{ it }}</li>
-            </ul>
+        <div class="competency-panel" *ngIf="competencyOpen()">
+          <div class="sec-head competency-panel-head">
+            <h3 class="sec-title" style="font-size:22px">กิจกรรมเสริมหลักสูตรจำแนกตามกลุ่มสาระการเรียนรู้</h3>
+            <div class="sec-rule"></div>
+          </div>
+          <div class="grid grid-2">
+            <div class="card card-hover" *ngFor="let g of d.activities.groups; let i = index" appReveal
+              [revealDelay]="i * 80">
+              <div class="chip" style="margin-bottom:12px">กลุ่มสาระการเรียนรู้</div>
+              <h3 class="card-title">{{ g.subject }}</h3>
+              <ul class="bullets" style="margin-top:8px">
+                <li *ngFor="let it of g.items">{{ it }}</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </div>
   </div>
 </section>
@@ -182,11 +191,12 @@
 <section class="section acc-sec">
   <div class="wrap">
     <button type="button" class="acc-head" id="acc-2.3" [class.is-open]="isOpen('2.3')"
-            [attr.aria-expanded]="isOpen('2.3')" (click)="toggle('2.3')">
+      [attr.aria-expanded]="isOpen('2.3')" (click)="toggle('2.3')">
       <span class="acc-no">2.3</span>
-      <span class="acc-text">สื่อ เทคโนโลยีเพื่อการเรียนรู้ และแหล่งเรียนรู้<small>{{ indicatorsOf('2.3').length }} ตัวชี้วัดตามแบบประเมิน</small></span>
+      <span class="acc-text">สื่อ เทคโนโลยีเพื่อการเรียนรู้ และแหล่งเรียนรู้<small>{{ indicatorsOf('2.3').length }}
+          ตัวชี้วัดตามแบบประเมิน</small></span>
       <svg class="acc-chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M6 9l6 6 6-6" />
       </svg>
     </button>
@@ -202,15 +212,15 @@
       </div>
 
 
-    <app-cycle-flow [steps]="d.media.cycle" [showEvidence]="true" />
+      <app-cycle-flow [steps]="d.media.cycle" [showEvidence]="true" />
 
-    <div class="grid grid-3" style="margin-top:38px">
-      <div class="card card-accent" *ngFor="let r of d.media.resources; let i = index"
-           appReveal="zoom" [revealDelay]="i * 70">
-        <div style="font-weight:700;color:#132f63;font-size:16.5px;margin-bottom:6px">{{ r.name }}</div>
-        <div style="color:#1e4d9e;font-weight:700;font-size:19px">{{ r.detail }}</div>
+      <div class="grid grid-3" style="margin-top:38px">
+        <div class="card card-accent" *ngFor="let r of d.media.resources; let i = index" appReveal="zoom"
+          [revealDelay]="i * 70">
+          <div style="font-weight:700;color:#132f63;font-size:16.5px;margin-bottom:6px">{{ r.name }}</div>
+          <div style="color:#1e4d9e;font-weight:700;font-size:19px">{{ r.detail }}</div>
+        </div>
       </div>
-    </div>
     </div>
   </div>
 </section>
@@ -219,11 +229,12 @@
 <section class="section acc-sec">
   <div class="wrap">
     <button type="button" class="acc-head" id="acc-2.4" [class.is-open]="isOpen('2.4')"
-            [attr.aria-expanded]="isOpen('2.4')" (click)="toggle('2.4')">
+      [attr.aria-expanded]="isOpen('2.4')" (click)="toggle('2.4')">
       <span class="acc-no">2.4</span>
-      <span class="acc-text">ระบบการวัดและประเมินผล<small>{{ indicatorsOf('2.4').length }} ตัวชี้วัดตามแบบประเมิน</small></span>
+      <span class="acc-text">ระบบการวัดและประเมินผล<small>{{ indicatorsOf('2.4').length }}
+          ตัวชี้วัดตามแบบประเมิน</small></span>
       <svg class="acc-chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M6 9l6 6 6-6" />
       </svg>
     </button>
@@ -239,15 +250,13 @@
       </div>
 
 
-    <app-cycle-flow [steps]="d.assessment.cycle" [showEvidence]="true" />
+      <app-cycle-flow [steps]="d.assessment.cycle" [showEvidence]="true" />
 
-    <div style="margin-top:38px">
-      <app-data-table
-        [caption]="d.assessment.planCount.caption"
-        [headers]="['ระดับชั้น', 'ปี 2566', 'ปี 2567', 'ปี 2568']"
-        [rows]="planRows"
-        note="ความหลากหลายของหลักสูตรทำให้โรงเรียนต้องพัฒนาระบบการวัดและประเมินผลให้รองรับได้ครบทุกแผนการเรียน จึงนำระบบดิจิทัลเข้ามาช่วยลดภาระงานครูและรายงานผลได้ทันเวลา" />
-    </div>
+      <div style="margin-top:38px">
+        <app-data-table [caption]="d.assessment.planCount.caption"
+          [headers]="['ระดับชั้น', 'ปี 2566', 'ปี 2567', 'ปี 2568']" [rows]="planRows"
+          note="ความหลากหลายของหลักสูตรทำให้โรงเรียนต้องพัฒนาระบบการวัดและประเมินผลให้รองรับได้ครบทุกแผนการเรียน จึงนำระบบดิจิทัลเข้ามาช่วยลดภาระงานครูและรายงานผลได้ทันเวลา" />
+      </div>
     </div>
   </div>
 </section>
@@ -256,24 +265,18 @@
 <!-- ═══════════ แกลเลอรีภาพกิจกรรม ═══════════ -->
 <section class="section">
   <div class="wrap">
-    <app-photo-gallery
-      title="ภาพกิจกรรมประกอบด้านที่ 2"
-      lead="ภาพกิจกรรมพัฒนาผู้เรียนและงานวิชาการ จากเอกสารประกอบการประเมินด้านที่ 2"
-      [items]="gallery"
-      [light]="true" />
+    <app-photo-gallery title="ภาพกิจกรรมประกอบด้านที่ 2"
+      lead="ภาพกิจกรรมพัฒนาผู้เรียนและงานวิชาการ จากเอกสารประกอบการประเมินด้านที่ 2" [items]="gallery" [light]="true" />
   </div>
 </section>
 
 <section class="section section-alt">
   <div class="wrap">
-    <app-section-header
-      kicker="สรุป"
-      title="ตัวชี้วัดของด้านที่ 2 ทั้ง 4 รายการ"
+    <app-section-header kicker="สรุป" title="ตัวชี้วัดของด้านที่ 2 ทั้ง 4 รายการ"
       lead="ตามแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน ระดับประถมศึกษาและมัธยมศึกษา" />
 
     <div class="grid grid-2">
-      <div class="card" *ngFor="let key of indicatorKeys; let i = index"
-           appReveal [revealDelay]="i * 90">
+      <div class="card" *ngFor="let key of indicatorKeys; let i = index" appReveal [revealDelay]="i * 90">
         <h3 class="card-title" style="font-size:17.5px">{{ key }}</h3>
         <ol class="bullets" style="font-size:15.5px">
           <li *ngFor="let it of d.indicators[key]">{{ it }}</li>
@@ -282,9 +285,8 @@
     </div>
 
     <div style="margin-top:34px">
-      <app-pager
-        prevPath="/dimension-1" prevName="ด้านที่ 1 คุณภาพนักเรียน"
-        nextPath="/dimension-3" nextName="ด้านที่ 3 การบริหารและการจัดการศึกษา" />
+      <app-pager prevPath="/dimension-1" prevName="ด้านที่ 1 คุณภาพนักเรียน" nextPath="/dimension-3"
+        nextName="ด้านที่ 3 การบริหารและการจัดการศึกษา" />
     </div>
   </div>
 </section>
