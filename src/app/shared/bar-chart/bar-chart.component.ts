@@ -19,6 +19,8 @@ export class BarChartComponent {
   @Input() series: BarSeries[] = [];
   @Input() showValues = true;
   @Input() valueFormat = '1.0-2';
+  @Input() valueFontSize = 14;
+  @Input() showEvidence = false;
   @Input() max?: number;
 
   readonly W = 900;

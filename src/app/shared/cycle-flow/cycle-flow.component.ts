@@ -17,6 +17,7 @@ import { CycleStep } from '../../core/models';
 export class CycleFlowComponent {
   private _steps: CycleStep[] = [];
   readonly openIndex = signal<number | null>(null);
+  @Input() showEvidence = false;
 
   @Input()
   set steps(value: CycleStep[]) {

@@ -23,12 +23,17 @@ export class LineChartComponent {
   @Input() series: LineSeries[] = [];
   @Input() showValues = true;
   @Input() valueFormat = '1.2-2';
+  @Input() showEvidence = false;
+  @Input() evidenceLabel = '';
+  @Input() evidenceLinks: { label: string; href: string }[] = [];
   /** กำหนดช่วงแกน Y เอง ถ้าไม่กำหนดจะคำนวณอัตโนมัติ */
   @Input() min?: number;
   @Input() max?: number;
 
   /** ความสูงพื้นที่วาด — เพิ่มค่าได้เมื่อมีหลายเส้นซ้อนกันในช่วงแคบ */
   @Input() height = 400;
+
+  get hasEvidence(): boolean { return this.showEvidence || this.evidenceLinks.length > 0; }
 
   // ขนาดพื้นที่วาด (หน่วย viewBox — สเกลอัตโนมัติตามความกว้างจริง)
   readonly W = 900;

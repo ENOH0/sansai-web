@@ -34,6 +34,8 @@ export class OnetChartComponent {
   /** ป้ายแกน X เช่น ['2566','2567','2568'] */
   @Input() years: string[] = [];
   @Input() subjects: OnetSubject[] = [];
+  @Input() evidenceLabel = '';
+  @Input() evidenceLinks: { label: string; href: string }[] = [];
 
   /** ลำดับวิชาที่เลือกอยู่ (-1 = แสดงทุกวิชา) */
   selectedIndex = -1;

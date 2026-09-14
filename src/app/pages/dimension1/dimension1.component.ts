@@ -141,6 +141,11 @@ export class Dimension1Component implements OnInit {
     'ร.ร. 2567', 'ประเทศ 2567', 'ต่าง',
     'ร.ร. 2568', 'ประเทศ 2568', 'ต่าง'
   ];
+  readonly onetEvidenceLinks = [
+    { label: 'รายงาน 2566', href: '/evidence/1.1.1/onet/onet-2566.pdf' },
+    { label: 'รายงาน 2567', href: '/evidence/1.1.1/onet/onet-2567.pdf' },
+    { label: 'รายงาน 2568', href: '/evidence/1.1.1/onet/onet-2568.pdf' }
+  ];
 
   readonly m6Rows: TableRow[] = DIM1.section11.onet.m6.subjects.map(s => ({
     cells: [

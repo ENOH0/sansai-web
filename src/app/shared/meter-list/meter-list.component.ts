@@ -18,6 +18,7 @@ export class MeterListComponent {
   @Input() rows: MeterRow[] = [];
   @Input() max = 100;
   @Input() suffix = '%';
+  @Input() showEvidence = false;
 
   pct(v: number): number {
     return Math.max(0, Math.min(100, (v / this.max) * 100));

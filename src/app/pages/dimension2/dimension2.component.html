@@ -58,7 +58,7 @@
       </div>
 
 
-    <app-cycle-flow [steps]="d.curriculum.cycle" />
+    <app-cycle-flow [steps]="d.curriculum.cycle" [showEvidence]="true" />
 
     <div class="sec-head" style="margin-top:52px" appReveal>
       <h3 class="sec-title" style="font-size:22px">พัฒนาการของหลักสูตรสถานศึกษา 3 ปีการศึกษา</h3>
@@ -138,7 +138,7 @@
       <p class="card-body" style="margin:0">{{ d.activities.flagship.text }}</p>
     </div>
 
-    <app-cycle-flow [steps]="d.activities.cycle" />
+    <app-cycle-flow [steps]="d.activities.cycle" [showEvidence]="true" />
 
     <div class="competency-section" appReveal>
       <button type="button" class="competency-card card card-gold" [class.is-open]="competencyOpen()"
@@ -202,7 +202,7 @@
       </div>
 
 
-    <app-cycle-flow [steps]="d.media.cycle" />
+    <app-cycle-flow [steps]="d.media.cycle" [showEvidence]="true" />
 
     <div class="grid grid-3" style="margin-top:38px">
       <div class="card card-accent" *ngFor="let r of d.media.resources; let i = index"
@@ -239,7 +239,7 @@
       </div>
 
 
-    <app-cycle-flow [steps]="d.assessment.cycle" />
+    <app-cycle-flow [steps]="d.assessment.cycle" [showEvidence]="true" />
 
     <div style="margin-top:38px">
       <app-data-table

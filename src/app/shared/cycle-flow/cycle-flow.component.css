@@ -79,6 +79,22 @@
   color: var(--ink-soft);
 }
 .cycle-detail li { margin-bottom: 5px; }
+.cycle-evidence {
+  min-height: 40px;
+  margin-top: 16px;
+  padding: 8px 18px;
+  color: var(--navy-800);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  border: 2px solid var(--gold-500);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(154, 105, 0, .2);
+  cursor: pointer;
+}
+.cycle-evidence:active { transform: scale(.97); }
+@media (hover: hover) { .cycle-evidence:hover { background: #fffaf0; } }
 
 @keyframes cycleDetailIn {
   from { opacity: 0; transform: translateY(-8px); }

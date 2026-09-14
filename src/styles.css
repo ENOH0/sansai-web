@@ -275,6 +275,42 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
 /* touch-action: pan-y ให้เลื่อนหน้าผ่านกราฟได้ปกติบนจอสัมผัส */
 .chart-svg  { display: block; width: 100%; height: auto; touch-action: pan-y; }
 .chart-note { font-size: 15.5px; color: var(--ink-mute); margin-top: 13.5px; line-height: 1.7; }
+.chart-evidence { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.chart-evidence-label {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 4px;
+  color: var(--navy-800);
+  font-size: 15px;
+  font-weight: 800;
+}
+.chart-evidence a,
+.chart-evidence button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 18px;
+  color: var(--navy-800);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.35;
+  text-decoration: none;
+  border: 2px solid var(--gold-500);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(154, 105, 0, .2);
+  cursor: pointer;
+  transition: transform .18s var(--ease), background .18s var(--ease), color .18s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.chart-evidence a:active,
+.chart-evidence button:active { transform: scale(.97); }
+@media (hover: hover) {
+  .chart-evidence a:hover { color: #fff; background: var(--gold-600); }
+  .chart-evidence button:hover { background: #fffaf0; }
+}
 
 .axis-line   { stroke: var(--line); stroke-width: 1; }
 .axis-text   { font-size: 14px; fill: var(--ink-mute); font-family: inherit; }

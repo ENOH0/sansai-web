@@ -75,4 +75,14 @@
   </p>
 
   <p class="chart-note" *ngIf="note">{{ note }}</p>
+
+  <div class="chart-evidence" *ngIf="hasEvidence">
+    <span class="chart-evidence-label" *ngIf="evidenceLabel">{{ evidenceLabel }}</span>
+    <ng-container *ngIf="evidenceLinks.length; else evidencePlaceholder">
+      <a *ngFor="let link of evidenceLinks" [href]="link.href" target="_blank" rel="noopener">{{ link.label }}</a>
+    </ng-container>
+    <ng-template #evidencePlaceholder>
+      <button type="button" title="รอแนบไฟล์หลักฐาน">หลักฐาน</button>
+    </ng-template>
+  </div>
 </div>

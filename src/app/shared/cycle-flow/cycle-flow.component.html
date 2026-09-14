@@ -16,6 +16,7 @@
     <div class="cycle-detail" *ngIf="isOpen(i)" [id]="'cycle-detail-' + i">
       <p>{{ s.text }}</p>
       <ul *ngIf="s.bullets?.length"><li *ngFor="let b of s.bullets">{{ b }}</li></ul>
+      <button type="button" class="cycle-evidence" *ngIf="showEvidence" title="รอแนบไฟล์หลักฐาน">หลักฐาน</button>
     </div>
   </article>
 </div>
