@@ -295,7 +295,7 @@
   position: absolute;
   inset: 0;
   /* ตัวเลขท้าย rgba() คือความทึบ 0–1 ลดแล้วเห็นวิดีโอชัดขึ้น */
-  background: linear-gradient(180deg, rgba(8, 21, 47, .82) 0%, rgba(8, 21, 47, .74) 45%, rgba(8, 21, 47, .88) 100%);
+  background: linear-gradient(180deg, rgba(8, 21, 47, .72) 0%, rgba(8, 21, 47, .64) 45%, rgba(8, 21, 47, .78) 100%);
 }
 
 /* ตัวหนังสือบนพื้นวิดีโอ */

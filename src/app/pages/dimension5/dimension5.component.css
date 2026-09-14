@@ -8,7 +8,7 @@
 /* ═══════════ พื้นหลังวิดีโอเดียวกับด้านที่ 1 ═══════════ */
 .d5-bg { position: fixed; inset: 0; z-index: -1; background: var(--navy-900); }
 .d5-video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.d5-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8, 21, 47, .82), rgba(8, 21, 47, .74) 45%, rgba(8, 21, 47, .88)); }
+.d5-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8, 21, 47, .72), rgba(8, 21, 47, .64) 45%, rgba(8, 21, 47, .78)); }
 
 /* พื้นหลังวิดีโอ: ข้อความนอกการ์ดสว่าง ส่วนข้อความในกรอบไม่ใช้เงา */
 :host ::ng-deep .section,

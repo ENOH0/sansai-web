@@ -11,7 +11,7 @@
 .d3-veil {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(8, 21, 47, .82) 0%, rgba(8, 21, 47, .74) 45%, rgba(8, 21, 47, .88) 100%);
+  background: linear-gradient(180deg, rgba(8, 21, 47, .72) 0%, rgba(8, 21, 47, .64) 45%, rgba(8, 21, 47, .78) 100%);
 }
 
 /* พื้นส่วนหลักโปร่งใสเพื่อให้เห็นวิดีโอ ข้อความที่ไม่มีพื้นใช้สีสว่าง */

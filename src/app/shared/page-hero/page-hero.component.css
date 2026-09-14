@@ -4,18 +4,18 @@
 .page-hero {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(140deg, var(--navy-900), var(--navy-700) 60%, var(--navy-600));
+  background: linear-gradient(135deg, #0752cad8 0%, #84adffca 34%, #93b7ff 70%, #d7eeff 100%);
   color: #fff;
   padding: calc(var(--nav-h) + 54px) 0 56px;
 }
 
-/* ลายเส้นทแยงบาง ๆ เพิ่มมิติให้พื้นหลัง */
+/* คงผิวพื้นหลังให้สะอาดตามเฉดกราเดียนต์อ้างอิง */
 .page-hero::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: repeating-linear-gradient(115deg, rgba(255, 255, 255, .05) 0 2px, transparent 2px 22px);
-  opacity: .5;
+  background: none;
+  opacity: 0;
   pointer-events: none;
 }
 
