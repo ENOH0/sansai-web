@@ -320,7 +320,7 @@
 
 /* ---------- ข้อความที่ไม่ได้อยู่ในการ์ด ต้องเป็นสีสว่างเพราะอยู่บนพื้นวิดีโอ ---------- */
 :host ::ng-deep .steps::before { background: var(--gold-400); }
-:host ::ng-deep .step-item h4 { color: #fff; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
+:host ::ng-deep .step-item h4 { color: #DAA520; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
 :host ::ng-deep .step-item p { color: #fff; font-weight: 600; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }
 :host ::ng-deep .step-item::before { border-color: var(--gold-400); }
 :host ::ng-deep .bullets > li { color: #fff; font-weight: 600; text-shadow: 0 2px 12px rgba(8, 21, 47, .9); }

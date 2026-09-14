@@ -1,8 +1,7 @@
 <!-- พื้นหลังวิดีโอเดียวกับด้านที่ 2 -->
 <div class="d4-bg" aria-hidden="true">
-  <video #bgv class="d4-video" autoplay muted loop playsinline preload="auto"
-         poster="video/school-center-poster.jpg"
-         (loadedmetadata)="playBg(bgv)" (canplay)="playBg(bgv)">
+  <video #bgv class="d4-video" autoplay muted loop playsinline preload="auto" poster="video/school-center-poster.jpg"
+    (loadedmetadata)="playBg(bgv)" (canplay)="playBg(bgv)">
     <source src="video/school-center.mp4" type="video/mp4" />
   </video>
   <div class="d4-veil"></div>
@@ -12,14 +11,13 @@
 
 <!-- nav ลอย: เลือกดูแต่ละหมวด และปุ่มกลับอยู่ท้ายสุด -->
 <nav class="d4-nav" aria-label="ข้ามไปหมวดประเมินด้านที่ 4">
-  <button type="button" class="d4-nav-btn" *ngFor="let group of groups"
-          [class.is-open]="open() === group.key" (click)="selectGroup(group.key)"
-          [attr.aria-label]="group.key + ' ' + group.title">
+  <button type="button" class="d4-nav-btn" *ngFor="let group of groups" [class.is-open]="open() === group.key"
+    (click)="selectGroup(group.key)" [attr.aria-label]="group.key + ' ' + group.title">
     <span class="d4-nav-no">{{ group.key }}</span>
     <span class="d4-nav-tip">{{ group.title }}</span>
   </button>
-  <button type="button" class="d4-nav-btn d4-nav-back" *ngIf="open()"
-          (click)="backToIndex()" aria-label="กลับหน้าหลักด้านที่ 4">
+  <button type="button" class="d4-nav-btn d4-nav-back" *ngIf="open()" (click)="backToIndex()"
+    aria-label="กลับหน้าหลักด้านที่ 4">
     <span class="d4-nav-no" aria-hidden="true">↶</span>
     <span class="d4-nav-tip">กลับหน้าหลักด้านที่ 4</span>
   </button>
@@ -28,7 +26,9 @@
 <ng-template #d4Indicators>
   <div class="assessment-indicators" style="margin-bottom:40px" *ngIf="currentGroup as group">
     <h3>ตัวชี้วัดตามแบบประเมิน {{ group.count }} ข้อ</h3>
-    <ol><li *ngFor="let indicator of d.indicators[group.indicatorKey]">{{ indicator }}</li></ol>
+    <ol>
+      <li *ngFor="let indicator of d.indicators[group.indicatorKey]">{{ indicator }}</li>
+    </ol>
   </div>
 </ng-template>
 
@@ -44,7 +44,7 @@
 <section class="section section-alt" *ngIf="!open()">
   <div class="wrap">
     <div class="sec-head" appReveal>
-      <h3 class="sec-title" style="font-size:22px">SMART Student — วงล้อ ACTIVITY</h3>
+      <h3 class="sec-title" style="font-size:33.5px"> ACTIVITY MODEL</h3>
       <div class="sec-rule"></div>
     </div>
     <p class="sec-lead" style="margin:-8px 0 26px">
@@ -64,8 +64,8 @@
     </div>
     <p class="sec-lead" style="margin:-8px 0 24px">เลือกหมวดเพื่อดูตัวชี้วัดตามแบบประเมินและหลักฐานประกอบของหมวดนั้น</p>
     <div class="d4-grid">
-      <button type="button" class="d4-card" *ngFor="let group of groups; let i = index"
-              appReveal="zoom" [revealDelay]="i * 70" (click)="selectGroup(group.key)">
+      <button type="button" class="d4-card" *ngFor="let group of groups; let i = index" appReveal="zoom"
+        [revealDelay]="i * 70" (click)="selectGroup(group.key)">
         <span class="d4-card-no">{{ group.key }}</span>
         <span class="d4-card-title">{{ group.title }}</span>
         <span class="d4-card-count">{{ group.count }} ตัวชี้วัดตามแบบประเมิน</span>
@@ -96,12 +96,13 @@
 <!-- ═══════════ 4.2 การจัดการชั้นเรียน ═══════════ -->
 <section class="section" *ngIf="open() === '4.2'">
   <div class="wrap">
-    <app-section-header [light]="true" num="4.2" title="การจัดการเรียนรู้และการจัดการชั้นเรียน" [lead]="d.classroom.lead" />
+    <app-section-header [light]="true" num="4.2" title="การจัดการเรียนรู้และการจัดการชั้นเรียน"
+      [lead]="d.classroom.lead" />
     <ng-container [ngTemplateOutlet]="d4Indicators"></ng-container>
 
     <div class="grid grid-2">
-      <div class="card card-hover" *ngFor="let p of d.classroom.practices; let i = index"
-           appReveal [revealDelay]="i * 70">
+      <div class="card card-hover" *ngFor="let p of d.classroom.practices; let i = index" appReveal
+        [revealDelay]="i * 70">
         <div style="width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
                     background:#eef4fc;color:#183d80;font-weight:700;border:1px solid #d8e6f8;
                     margin-bottom:12px">{{ i + 1 }}</div>
@@ -119,19 +120,16 @@
     <ng-container [ngTemplateOutlet]="d4Indicators"></ng-container>
 
     <div class="steps" style="margin-bottom:38px">
-      <div class="step-item" *ngFor="let p of d.assessment.points; let i = index"
-           appReveal="left" [revealDelay]="i * 90">
+      <div class="step-item" *ngFor="let p of d.assessment.points; let i = index" appReveal="left"
+        [revealDelay]="i * 90">
         <h4>{{ p.title }}</h4>
         <p>{{ p.text }}</p>
       </div>
     </div>
 
-    <app-line-chart
-      [title]="d.assessment.outcome.caption"
+    <app-line-chart [title]="d.assessment.outcome.caption"
       subtitle="ผลจากการวัดและประเมินผลที่นำกลับมาพัฒนาการเรียนการสอน ปีการศึกษา 2566–2568"
-      [labels]="d.assessment.outcome.years"
-      [series]="outcomeSeries"
-      [min]="50" [max]="100"
+      [labels]="d.assessment.outcome.years" [series]="outcomeSeries" [min]="50" [max]="100"
       [note]="d.assessment.outcome.note" />
   </div>
 </section>
@@ -143,8 +141,8 @@
     <ng-container [ngTemplateOutlet]="d4Indicators"></ng-container>
 
     <div class="grid grid-4" style="margin-bottom:34px">
-      <div class="card card-accent" *ngFor="let s of d.useResults.steps; let i = index"
-           appReveal="zoom" [revealDelay]="i * 90">
+      <div class="card card-accent" *ngFor="let s of d.useResults.steps; let i = index" appReveal="zoom"
+        [revealDelay]="i * 90">
         <div class="chip" style="margin-bottom:10px">ขั้นที่ {{ i + 1 }}</div>
         <h3 class="card-title" style="font-size:17px">{{ s.title }}</h3>
         <p class="card-body" style="margin:0;font-size:15.5px">{{ s.text }}</p>
@@ -154,12 +152,13 @@
     <div class="sec-head" appReveal>
       <h3 class="sec-title" style="font-size:22px">หลักฐานเชิงประจักษ์ของการนำผลไปใช้</h3>
       <div class="sec-rule"></div>
-      <p class="sec-lead">เปรียบเทียบผลลัพธ์ที่เกิดกับผู้เรียนระหว่างปีการศึกษา 2566 และ 2568 หลังจากครูนำผลการประเมินมาปรับแผนการจัดการเรียนรู้</p>
+      <p class="sec-lead">เปรียบเทียบผลลัพธ์ที่เกิดกับผู้เรียนระหว่างปีการศึกษา 2566 และ 2568
+        หลังจากครูนำผลการประเมินมาปรับแผนการจัดการเรียนรู้</p>
     </div>
 
     <div class="grid grid-2">
-      <div class="card card-gold" *ngFor="let e of d.useResults.evidence; let i = index"
-           appReveal [revealDelay]="i * 80">
+      <div class="card card-gold" *ngFor="let e of d.useResults.evidence; let i = index" appReveal
+        [revealDelay]="i * 80">
         <h3 class="card-title" style="font-size:17px">{{ e.label }}</h3>
         <div style="display:flex;align-items:baseline;gap:14px;margin:14px 0 8px">
           <span style="font-family:'Sarabun',sans-serif;font-size:29px;font-weight:700;color:#6b7a94">
@@ -181,23 +180,19 @@
 <!-- ═══════════ แกลเลอรีภาพกิจกรรม ═══════════ -->
 <section class="section" *ngIf="!open()">
   <div class="wrap">
-    <app-photo-gallery
-      title="ภาพกิจกรรมประกอบด้านที่ 4"
-      lead="ภาพการจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ จากเอกสารประกอบการประเมินด้านที่ 4"
-      [items]="gallery" [light]="true" />
+    <app-photo-gallery title="ภาพกิจกรรมประกอบด้านที่ 4"
+      lead="ภาพการจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ จากเอกสารประกอบการประเมินด้านที่ 4" [items]="gallery"
+      [light]="true" />
   </div>
 </section>
 
 <section class="section section-alt" *ngIf="!open()">
   <div class="wrap">
-    <app-section-header [light]="true"
-      kicker="สรุป"
-      title="ตัวชี้วัดของด้านที่ 4 ทั้ง 4 รายการ"
+    <app-section-header [light]="true" kicker="สรุป" title="ตัวชี้วัดของด้านที่ 4 ทั้ง 4 รายการ"
       lead="ตามแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน ระดับประถมศึกษาและมัธยมศึกษา" />
 
     <div class="grid grid-2">
-      <div class="card" *ngFor="let key of indicatorKeys; let i = index"
-           appReveal [revealDelay]="i * 80">
+      <div class="card" *ngFor="let key of indicatorKeys; let i = index" appReveal [revealDelay]="i * 80">
         <h3 class="card-title" style="font-size:17.5px">{{ key }}</h3>
         <ol class="bullets" style="font-size:15.5px">
           <li *ngFor="let it of d.indicators[key]">{{ it }}</li>
@@ -206,9 +201,8 @@
     </div>
 
     <div style="margin-top:34px">
-      <app-pager
-        prevPath="/dimension-3" prevName="ด้านที่ 3 การบริหารและการจัดการศึกษา"
-        nextPath="/dimension-5" nextName="ด้านที่ 5 ความดีเด่นของสถานศึกษา" />
+      <app-pager prevPath="/dimension-3" prevName="ด้านที่ 3 การบริหารและการจัดการศึกษา" nextPath="/dimension-5"
+        nextName="ด้านที่ 5 ความดีเด่นของสถานศึกษา" />
     </div>
   </div>
 </section>

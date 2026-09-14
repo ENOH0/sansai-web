@@ -85,7 +85,7 @@ export const SCHOOL = {
 
   // รูปแบบการบริหารแบบมีส่วนร่วมของโรงเรียน
   model: {
-    name: 'BANCHUEN Model',
+    name: 'BANCHUEN MODEL',
     tagline: 'รูปแบบการบริหารแบบมีส่วนร่วม เพื่อพัฒนาคุณภาพผู้เรียนในศตวรรษที่ 21',
     letters: [
       { letter: 'B', en: 'Brainstorming', th: 'ระดมความคิดแบบมีส่วนร่วมในการพัฒนาคุณภาพผู้เรียน' },
