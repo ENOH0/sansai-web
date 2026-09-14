@@ -3,8 +3,21 @@
 <!-- ═══════════ บทนำ ═══════════ -->
 <section class="section d1-intro" *ngIf="!open()">
   <div class="wrap">
-    <div class="card card-accent" appReveal style="margin-bottom:32px">
-      <p class="card-body" style="margin:0">{{ d.intro }}</p>
+    <div class="card d1-intro-card" appReveal>
+      <div class="d1-intro-copy">
+        <p style="text-indent: 2em;">โรงเรียนสันทรายวิทยาคมเชื่อมั่นว่า<strong>คุณภาพของสถานศึกษา
+            สะท้อนผ่านคุณภาพของผู้เรียน</strong></p>
+        <p style="text-indent: 2em;">โรงเรียนจึงมุ่งพัฒนาผู้เรียนอย่างรอบด้าน ให้เป็นผู้มีความรู้ มีสมรรถนะรอบด้าน
+          มีคุณธรรม จริยธรรม
+          และเจตคติที่ดี มีสุขภาวะที่ดี ทักษะการเรียนรู้และนวัตกรรม ทักษะด้านสารสนเทศ ด้านการสื่อสารและเทคโนโลยี
+          ทักษะชีวิตและอาชีพ แสดงถึงความสามารถของผู้เรียนในการคิดอย่างมีวิจารณญาณ มีเหตุผล มีการคิดอย่างเป็นระบบ
+          และทำงานอย่างสร้างสรรค์ร่วมกับผู้อื่น</p>
+        <p style="text-indent: 2em;">นี่คือ <strong>“คุณภาพผู้เรียน”
+            ที่โรงเรียนสันทรายวิทยาคมเชื่อมั่นและภาคภูมิใจ</strong></p>
+        <p style="text-indent: 2em;">เพราะเราเชื่อว่า <strong>ผู้เรียนทุกคนคือเมล็ดพันธุ์แห่งอนาคต
+            และการศึกษาที่มีคุณภาพ
+            คือพลังที่จะทำให้เมล็ดพันธุ์เหล่านั้นเติบโต งอกงาม และสร้างความงดงามให้แก่สังคมสืบไป</strong></p>
+      </div>
     </div>
   </div>
 </section>
@@ -126,14 +139,15 @@
         <!-- ม.6 — เลือกดูรายวิชาได้ -->
         <app-onet-chart title="ค่าเฉลี่ย O-NET ชั้น ม.6 — โรงเรียนเทียบกับระดับประเทศ"
           subtitle="ปีการศึกษา 2566–2568 · แตะชื่อวิชาเพื่อดูทีละรายวิชา" [years]="d.section11.onet.m6.years"
-          [subjects]="d.section11.onet.m6.subjects" evidenceLabel="รายงานสรุปผล O-NET" [evidenceLinks]="onetEvidenceLinks" [note]="d.section11.onet.m6.conclusion" />
+          [subjects]="d.section11.onet.m6.subjects" evidenceLabel="รายงานสรุปผล O-NET"
+          [evidenceLinks]="onetEvidenceLinks" [note]="d.section11.onet.m6.conclusion" />
 
         <app-data-table [caption]="d.section11.onet.m6.caption" [headers]="onetHeaders" [rows]="m6Rows" />
 
         <!-- ม.3 พัฒนาการ -->
         <app-bar-chart title="พัฒนาการผลสัมฤทธิ์ O-NET ชั้น ม.3" subtitle="ค่าเฉลี่ยระดับโรงเรียน ปีการศึกษา 2566–2568"
-          [labels]="d.section11.onet.m3Trend.years" [series]="m3TrendBars"
-          [showEvidence]="true" [note]="d.section11.onet.m3Trend.conclusion + '  ' + d.section11.onet.m3Trend.footnote" />
+          [labels]="d.section11.onet.m3Trend.years" [series]="m3TrendBars" [showEvidence]="true"
+          [note]="d.section11.onet.m3Trend.conclusion + '  ' + d.section11.onet.m3Trend.footnote" />
 
         <app-callout label="จุดเด่น:" [gold]="true">
           รายวิชาคณิตศาสตร์ชั้น ม.3 มีพัฒนาการเพิ่มขึ้นอย่างต่อเนื่องครบ 3 ปีการศึกษา
@@ -145,7 +159,8 @@
 
         <app-onet-chart title="ค่าเฉลี่ย O-NET ชั้น ม.3 — โรงเรียนเทียบกับระดับประเทศ"
           subtitle="ปีการศึกษา 2566–2568 · แตะชื่อวิชาเพื่อดูทีละรายวิชา" [years]="d.section11.onet.m3.years"
-          [subjects]="d.section11.onet.m3.subjects" evidenceLabel="รายงานสรุปผล O-NET" [evidenceLinks]="onetEvidenceLinks" [note]="d.section11.onet.m3.conclusion" />
+          [subjects]="d.section11.onet.m3.subjects" evidenceLabel="รายงานสรุปผล O-NET"
+          [evidenceLinks]="onetEvidenceLinks" [note]="d.section11.onet.m3.conclusion" />
       </div>
     </div>
   </section>
@@ -159,8 +174,8 @@
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
       <div class="stack">
-      <app-bar-chart title="ร้อยละของผู้เรียนที่มีผลการคัดกรองการอ่าน–เขียนภาษาไทยในระดับดี"
-        subtitle="จำแนกรายระดับชั้น ปีการศึกษา 2566–2568" [labels]="d.section11.thai.years" [series]="thaiBars"
+        <app-bar-chart title="ร้อยละของผู้เรียนที่มีผลการคัดกรองการอ่าน–เขียนภาษาไทยในระดับดี"
+          subtitle="จำแนกรายระดับชั้น ปีการศึกษา 2566–2568" [labels]="d.section11.thai.years" [series]="thaiBars"
           [max]="100" [valueFontSize]="10" [showEvidence]="true" [note]="d.section11.thai.conclusion" />
 
         <app-data-table [caption]="d.section11.thai.caption" [headers]="yearHeaders3" [rows]="thaiRows" />
@@ -196,8 +211,8 @@
       </div>
 
       <app-bar-chart title="ร้อยละของผู้เรียนที่มีผลสัมฤทธิ์ภาษาอังกฤษระดับดีขึ้นไป (ระดับคะแนน 3–4)"
-        subtitle="ปีการศึกษา 2566–2568" [labels]="d.section11.english.years" [series]="engSeries"
-        [showEvidence]="true" [note]="d.section11.english.conclusion" />
+        subtitle="ปีการศึกษา 2566–2568" [labels]="d.section11.english.years" [series]="engSeries" [showEvidence]="true"
+        [note]="d.section11.english.conclusion" />
 
       <div style="margin-top:22px">
         <app-data-table [caption]="d.section11.english.caption" [headers]="gradeHeaders" [rows]="engRows"
@@ -217,7 +232,8 @@
       <div class="stack">
         <app-bar-chart title="ร้อยละของผู้เรียนที่มีผลการเรียนรายวิชา IS ในระดับ 3–4"
           subtitle="จำแนกตามระดับชั้น ม.2 และ ม.5 ปีการศึกษา 2566–2568" [labels]="isYears" [series]="isSeries"
-          [showEvidence]="true" [note]="'ค่าเฉลี่ยรวม 3 ปี ร้อยละ ' + d.section11.thinking.isAverage + ' แสดงถึงความสามารถในการแก้ปัญหา คิดวิเคราะห์ คิดริเริ่มสร้างสรรค์ และสามารถอภิปรายแลกเปลี่ยนความคิดเห็นอย่างเป็นขั้นเป็นตอน'" />
+          [showEvidence]="true"
+          [note]="'ค่าเฉลี่ยรวม 3 ปี ร้อยละ ' + d.section11.thinking.isAverage + ' แสดงถึงความสามารถในการแก้ปัญหา คิดวิเคราะห์ คิดริเริ่มสร้างสรรค์ และสามารถอภิปรายแลกเปลี่ยนความคิดเห็นอย่างเป็นขั้นเป็นตอน'" />
 
         <app-line-chart title="ร้อยละของนักเรียนที่มีผลการประเมินการอ่าน คิดวิเคราะห์ เขียนสื่อความ ในระดับดีขึ้นไป"
           subtitle="ภาพรวมทุกระดับชั้น ปีการศึกษา 2566–2568" [labels]="d.section11.thinking.years" [series]="readSeries"
@@ -270,8 +286,8 @@
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
       <app-bar-chart title="ร้อยละของนักเรียนชั้น ม.3 จำแนกตามเส้นทางหลังจบการศึกษา" subtitle="ปีการศึกษา 2565–2568"
-        [labels]="d.section11.pathway.years" [series]="pathBars" [max]="80" valueFormat="1.2-2"
-        [showEvidence]="true" [note]="d.section11.pathway.conclusion" />
+        [labels]="d.section11.pathway.years" [series]="pathBars" [max]="80" valueFormat="1.2-2" [showEvidence]="true"
+        [note]="d.section11.pathway.conclusion" />
     </div>
   </section>
 </ng-container>
@@ -312,11 +328,12 @@
       <div class="stack">
         <app-bar-chart title="การเข้าร่วมกิจกรรมเลือกตั้งสภาผู้แทนนักเรียน"
           subtitle="จำนวนผู้มีสิทธิ์และผู้มาใช้สิทธิ์ ปีการศึกษา 2566–2568 (หน่วย: คน)"
-          [labels]="d.section12.election.years" [series]="electionSeries" valueFormat="1.0-0"
-          [showEvidence]="true" [note]="d.section12.election.conclusion" />
+          [labels]="d.section12.election.years" [series]="electionSeries" valueFormat="1.0-0" [showEvidence]="true"
+          [note]="d.section12.election.conclusion" />
 
         <app-line-chart title="ร้อยละของผู้มาใช้สิทธิ์เลือกตั้ง" subtitle="เทียบกับเกณฑ์ที่กำหนดไว้ไม่ต่ำกว่าร้อยละ 80"
-          [labels]="d.section12.election.years" [series]="electionPctSeries" [min]="70" [max]="100" [showEvidence]="true" />
+          [labels]="d.section12.election.years" [series]="electionPctSeries" [min]="70" [max]="100"
+          [showEvidence]="true" />
       </div>
     </div>
   </section>
@@ -332,21 +349,21 @@
       <div class="grid grid-2">
         <div>
           <app-line-chart title="สมรรถภาพทางกายของนักเรียน" subtitle="ร้อยละจำแนกตามระดับสมรรถภาพ ปีการศึกษา 2566–2568"
-            [labels]="d.section12.health.years" [series]="fitSeries" [showValues]="false"
-            [showEvidence]="true" note="กลุ่มสมรรถภาพดีมากและดีเพิ่มขึ้นทุกปี ขณะที่กลุ่มที่ต้องปรับปรุงลดลงอย่างต่อเนื่องจากร้อยละ 20.28 เหลือร้อยละ 12.32" />
+            [labels]="d.section12.health.years" [series]="fitSeries" [showValues]="false" [showEvidence]="true"
+            note="กลุ่มสมรรถภาพดีมากและดีเพิ่มขึ้นทุกปี ขณะที่กลุ่มที่ต้องปรับปรุงลดลงอย่างต่อเนื่องจากร้อยละ 20.28 เหลือร้อยละ 12.32" />
         </div>
 
         <div>
           <app-line-chart title="สัดส่วนร่างกายของนักเรียน" subtitle="ร้อยละจำแนกตามเกณฑ์ ปีการศึกษา 2566–2568"
-            [labels]="d.section12.health.years" [series]="bodySeries" [showValues]="false"
-            [showEvidence]="true" note="นักเรียนที่มีสัดส่วนร่างกายปกติเพิ่มขึ้นเป็นร้อยละ 90.81 ในปีการศึกษา 2568 ขณะที่กลุ่มอ้วนลดลงจากร้อยละ 16.63 เหลือร้อยละ 5.09" />
+            [labels]="d.section12.health.years" [series]="bodySeries" [showValues]="false" [showEvidence]="true"
+            note="นักเรียนที่มีสัดส่วนร่างกายปกติเพิ่มขึ้นเป็นร้อยละ 90.81 ในปีการศึกษา 2568 ขณะที่กลุ่มอ้วนลดลงจากร้อยละ 16.63 เหลือร้อยละ 5.09" />
         </div>
       </div>
 
       <div style="margin-top:24px">
         <app-bar-chart title="ผลสุขภาพจิตของนักเรียน" subtitle="ร้อยละของนักเรียนทั้งหมด ปีการศึกษา 2566–2568"
-          [labels]="d.section12.health.years" [series]="mindBars" [max]="100" valueFormat="1.2-2"
-          [showEvidence]="true" [note]="d.section12.health.conclusion" />
+          [labels]="d.section12.health.years" [series]="mindBars" [max]="100" valueFormat="1.2-2" [showEvidence]="true"
+          [note]="d.section12.health.conclusion" />
       </div>
     </div>
   </section>
@@ -412,8 +429,8 @@
       <app-cycle-flow [steps]="d.section12.teamwork.cycle" />
       <div class="stack" style="margin-top:44px">
         <app-line-chart title="ร้อยละของผลการประเมิน “ผ่าน” ในกิจกรรมพัฒนาผู้เรียน" subtitle="ปีการศึกษา 2566–2568"
-          [labels]="d.section12.teamwork.years" [series]="teamSeries" [min]="96" [max]="100"
-          [showEvidence]="true" [note]="d.section12.teamwork.note" />
+          [labels]="d.section12.teamwork.years" [series]="teamSeries" [min]="96" [max]="100" [showEvidence]="true"
+          [note]="d.section12.teamwork.note" />
         <app-data-table [caption]="d.section12.teamwork.caption" [headers]="yearHeaders3" [rows]="teamRows" />
       </div>
       <app-callout label="สรุปผล:" style="display:block;margin-top:24px">{{ d.section12.teamwork.conclusion
