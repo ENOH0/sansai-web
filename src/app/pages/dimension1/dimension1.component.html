@@ -3,7 +3,7 @@
 <!-- ═══════════ บทนำ ═══════════ -->
 <section class="section d1-intro" *ngIf="!open()">
   <div class="wrap">
-    <div class="card card-accent" appReveal style="margin-bottom:32px">
+    <div class="card card-accent font-family: 'Sarabun'font-size: 23.5px;" appReveal style="margin-bottom:32px">
       <p style="text-indent: 2em;">โรงเรียนสันทรายวิทยาคมเชื่อมั่นว่า<strong>คุณภาพของสถานศึกษา
           สะท้อนผ่านคุณภาพของผู้เรียน</strong></p>
       <p style="text-indent: 2em;">โรงเรียนจึงมุ่งพัฒนาผู้เรียนอย่างรอบด้าน ให้เป็นผู้มีความรู้ มีสมรรถนะรอบด้าน
@@ -86,14 +86,17 @@
           <span class="d1-tab-text">ผลสัมฤทธิ์ทางวิชาการ<small>8 ตัวชี้วัด</small></span>
         </button>
         <div class="d1-grid" *ngIf="tab() === '1.1'">
-          <button type="button" class="d1-card" *ngFor="let t of topicsOf('1.1'); let i = index" [class.is-empty]="!t.ready"
-            [disabled]="!t.ready" appReveal="zoom" [revealDelay]="i * 60" (click)="select(t.key)">
+          <button type="button" class="d1-card" *ngFor="let t of topicsOf('1.1'); let i = index"
+            [class.is-empty]="!t.ready" [disabled]="!t.ready" appReveal="zoom" [revealDelay]="i * 60"
+            (click)="select(t.key)">
             <span class="d1-card-top"><span class="d1-no">{{ t.key }}</span></span>
             <span class="d1-title">{{ t.title }}</span>
             <span class="d1-note">{{ t.note }}</span>
             <span class="d1-go" *ngIf="t.ready">เปิดดู
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
             </span>
           </button>
         </div>
@@ -105,14 +108,17 @@
           <span class="d1-tab-text">คุณลักษณะที่พึงประสงค์<small>8 ตัวชี้วัด</small></span>
         </button>
         <div class="d1-grid" *ngIf="tab() === '1.2'">
-          <button type="button" class="d1-card" *ngFor="let t of topicsOf('1.2'); let i = index" [class.is-empty]="!t.ready"
-            [disabled]="!t.ready" appReveal="zoom" [revealDelay]="i * 60" (click)="select(t.key)">
+          <button type="button" class="d1-card" *ngFor="let t of topicsOf('1.2'); let i = index"
+            [class.is-empty]="!t.ready" [disabled]="!t.ready" appReveal="zoom" [revealDelay]="i * 60"
+            (click)="select(t.key)">
             <span class="d1-card-top"><span class="d1-no">{{ t.key }}</span></span>
             <span class="d1-title">{{ t.title }}</span>
             <span class="d1-note">{{ t.note }}</span>
             <span class="d1-go" *ngIf="t.ready">เปิดดู
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
             </span>
           </button>
         </div>
@@ -334,8 +340,8 @@
 <ng-container *ngIf="open() === '1.2.1'">
   <section class="section">
     <div class="wrap">
-      <app-section-header [light]="true" num="1.2.1"
-        title="คุณธรรม จริยธรรม ค่านิยม และจิตสำนึกถึงประโยชน์ส่วนรวม" [lead]="d.section12.lead" />
+      <app-section-header [light]="true" num="1.2.1" title="คุณธรรม จริยธรรม ค่านิยม และจิตสำนึกถึงประโยชน์ส่วนรวม"
+        [lead]="d.section12.lead" />
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
       <div class="stack">
