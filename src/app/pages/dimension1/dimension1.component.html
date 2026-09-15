@@ -249,28 +249,34 @@
         [ngTemplateOutletContext]="{ text: d.section11.english.narrative }"></ng-container>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
-      <div class="grid grid-2" style="margin-bottom:24px">
-        <div class="card" appReveal="left">
-          <h3 class="card-title">กิจกรรมและโครงการพัฒนาทักษะภาษาอังกฤษ</h3>
-          <ul class="bullets">
-            <li *ngFor="let a of d.section11.english.activities">{{ a }}</li>
-          </ul>
-        </div>
-        <div class="card card-gold" appReveal="right">
-          <h3 class="card-title">รางวัลด้านการใช้ภาษาอังกฤษ</h3>
-          <ul class="bullets">
-            <li>สอบได้ลำดับที่ 19 จากผู้เข้าสอบ 1,306 คน ในโครงการทดสอบความรู้วิชา TGAT ระดับชั้นมัธยมศึกษาตอนปลาย
-              ปีการศึกษา 2567</li>
-            <li>ผลการสอบวัดระดับความสามารถทางภาษาอังกฤษ 4 ทักษะ ตามกรอบมาตรฐานสากล CEFR ระดับ A1–A2 เต็ม 50 คะแนน</li>
-            <li>ได้คะแนนเต็ม 100 คะแนน ในการทดสอบ O-NET รายวิชาภาษาอังกฤษ (สทศ.)</li>
-            <li>เหรียญทอง การแข่งขัน BSK 101 “A-Math Crossword Kumkom Challenge 2023”</li>
-          </ul>
-        </div>
-      </div>
-
       <app-bar-chart title="ร้อยละของผู้เรียนที่มีผลสัมฤทธิ์ภาษาอังกฤษระดับดีขึ้นไป (ระดับคะแนน 3–4)"
         subtitle="ปีการศึกษา 2566–2568" [labels]="d.section11.english.years" [series]="engSeries" [showEvidence]="true"
         [note]="d.section11.english.conclusion" />
+
+      <div class="grid grid-2" style="margin-bottom:24px">
+        <div class="card" appReveal="left">
+          <h3 class="card-title">กิจกรรมและโครงการพัฒนาทักษะภาษาอังกฤษ</h3>
+          <div class="d1-english-activities">
+            <article class="d1-english-activity" *ngFor="let activity of englishActivities">
+              <h4>{{ activity.title }}</h4>
+              <div class="d1-english-photos">
+                <figure *ngFor="let image of activity.images">
+                  <img [src]="image" [alt]="activity.title" loading="lazy">
+                </figure>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="card card-gold" appReveal="right">
+          <h3 class="card-title">รางวัลด้านการใช้ภาษาอังกฤษ</h3>
+          <div class="d1-english-awards">
+            <article class="d1-english-award" *ngFor="let award of englishAwards">
+              <h4>{{ award.title }}</h4>
+              <img [src]="award.image" [alt]="award.title" loading="lazy">
+            </article>
+          </div>
+        </div>
+      </div>
 
       <div style="margin-top:22px">
         <app-data-table [caption]="d.section11.english.caption" [headers]="gradeHeaders" [rows]="engRows"
@@ -370,13 +376,9 @@
         [ngTemplateOutletContext]="{ text: d.section11.pathway.narrative }"></ng-container>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
-      <app-bar-chart title="ร้อยละของนักเรียนชั้น ม.3 จำแนกตามเส้นทางหลังจบการศึกษา" subtitle="ปีการศึกษา 2565–2568"
-        [labels]="d.section11.pathway.years" [series]="pathBars" [max]="80" valueFormat="1.2-2" [showEvidence]="true"
-        [note]="d.section11.pathway.conclusion" />
-
       <div class="d1-pathway-images" appReveal>
         <figure>
-          <img src="/evidence/1.1.7/pathway-m3.jpg" alt="ข้อมูลเส้นทางศึกษาต่อและประกอบอาชีพของนักเรียน ม.3" />
+          <img src="/evidence/1.1.7/pathway-m3-infographic.png" alt="อินโฟกราฟิกเส้นทางศึกษาต่อและประกอบอาชีพของนักเรียน ม.3" />
           <figcaption>ข้อมูลเรียนต่อ ม.3</figcaption>
         </figure>
         <figure>

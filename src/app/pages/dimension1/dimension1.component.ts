@@ -238,6 +238,29 @@ export class Dimension1Component implements OnInit {
     color: '#1e4d9e'
   }];
 
+  readonly englishActivities = DIM1.section11.english.activities.map((title, index) => ({
+    title,
+    images: [
+      `/evidence/1.1.3/english-activities/${String(index * 2 + 1).padStart(2, '0')}.png`,
+      `/evidence/1.1.3/english-activities/${String(index * 2 + 2).padStart(2, '0')}.png`
+    ]
+  }));
+
+  readonly englishAwards = [
+    {
+      title: 'สอบได้ลำดับที่ 19 จากผู้เข้าสอบ 1,306 คน ในโครงการทดสอบความรู้วิชา TGAT ระดับชั้นมัธยมศึกษาตอนปลาย ปีการศึกษา 2567',
+      image: '/evidence/1.1.3/english-awards/01-tgat.png'
+    },
+    {
+      title: 'ผลการสอบวัดระดับความสามารถทางภาษาอังกฤษ 4 ทักษะ ตามกรอบมาตรฐานสากล CEFR ระดับ A1–A2 เต็ม 50 คะแนน',
+      image: '/evidence/1.1.3/english-awards/02-cefr.png'
+    },
+    {
+      title: 'ได้คะแนนเต็ม 100 คะแนน ในการทดสอบ O-NET รายวิชาภาษาอังกฤษ (สทศ.)',
+      image: '/evidence/1.1.3/english-awards/03-onet.png'
+    }
+  ];
+
   readonly gradeHeaders = ['ปีการศึกษา', ...DIM1.section11.english.gradeLabels, 'ร้อยละ 3–4'];
 
   readonly engRows: TableRow[] = [

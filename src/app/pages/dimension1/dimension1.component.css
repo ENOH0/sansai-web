@@ -351,6 +351,21 @@
 .d1-pathway-images img { display: block; width: 100%; height: auto; }
 .d1-pathway-images figcaption { padding: 0 14px 13px; }
 
+/* ภาพหลักฐานกิจกรรมภาษาอังกฤษ ข้อ 1.1.3 */
+.d1-english-activities { display: grid; gap: 22px; margin-top: 18px; }
+.d1-english-activity { padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+.d1-english-activity:last-child { padding-bottom: 0; border-bottom: 0; }
+.d1-english-activity h4 { margin: 0 0 11px; color: var(--navy-800); font-size: 16.5px; font-weight: 800; line-height: 1.45; }
+.d1-english-photos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.d1-english-photos figure { min-width: 0; margin: 0; overflow: hidden; border: 1px solid var(--navy-100); border-radius: 10px; background: var(--navy-50); }
+.d1-english-photos img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.d1-english-awards { display: grid; gap: 22px; margin-top: 18px; }
+.d1-english-award { padding-bottom: 22px; border-bottom: 1px solid var(--gold-200); }
+.d1-english-award:last-child { padding-bottom: 0; border-bottom: 0; }
+.d1-english-award h4 { margin: 0 0 11px; color: var(--navy-800); font-size: 16.5px; font-weight: 800; line-height: 1.45; }
+.d1-english-award img { display: block; width: 100%; max-height: 300px; object-fit: cover; border: 1px solid var(--gold-200); border-radius: 10px; }
+@media (max-width: 560px) { .d1-english-photos { grid-template-columns: 1fr; } }
+
 /* ผลงานเด่น O-NET — ใช้สีและถ้อยคำจากหลักฐานเปรียบเทียบรายวิชา */
 .d1-onet-highlight {
   padding: 22px;
