@@ -30,14 +30,17 @@ export class Dimension5Component {
   readonly criteria = DIM5.indicators['5.1 โครงการ/กิจกรรมดีเด่นของสถานศึกษา'];
   readonly open = signal<number | null>(null);
   readonly successModelHeight = signal(620);
+  readonly disseminationWheelHeight = signal(700);
 
   /** รับความสูงจริงจากโมเดลใน iframe เพื่อไม่ให้เกิดแถบเลื่อนภายใน */
   @HostListener('window:message', ['$event'])
   resizeSuccessModel(event: MessageEvent<{ type?: string; height?: number }>): void {
     if (typeof window === 'undefined' || event.origin !== window.location.origin) return;
-    if (event.data?.type !== 'd5-success-model-height') return;
     const height = Number(event.data.height);
-    if (Number.isFinite(height)) this.successModelHeight.set(Math.max(360, Math.min(1400, height)));
+    if (!Number.isFinite(height)) return;
+    const fitHeight = Math.max(360, Math.min(1400, height));
+    if (event.data?.type === 'd5-success-model-height') this.successModelHeight.set(fitHeight);
+    if (event.data?.type === 'd5-dissemination-wheel-height') this.disseminationWheelHeight.set(fitHeight);
   }
 
   get currentProject() {

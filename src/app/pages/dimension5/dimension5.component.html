@@ -49,26 +49,17 @@
       </ol>
     </div>
 
+    <div class="sec-head" style="margin-top:40px" appReveal>
+      <h2 class="sec-title">เลือกโครงการเพื่อดูหลักฐาน</h2>
+      <div class="sec-rule"></div>
+    </div>
+
     <!-- โมเดลนี้แก้ข้อมูลได้โดยตรงที่ public/models/dimension5-success-model.html ในตัวแปร DATA -->
     <div class="d5-success-model" appReveal>
       <div class="d5-success-model-frame">
         <iframe src="/models/dimension5-success-model.html" title="โมเดลปัจจัยและกลไกสู่ความสำเร็จ"
           loading="lazy" [style.height.px]="successModelHeight()"></iframe>
       </div>
-    </div>
-
-    <div class="sec-head" style="margin-top:28px" appReveal>
-      <h2 class="sec-title">เลือกโครงการเพื่อดูหลักฐาน</h2>
-      <div class="sec-rule"></div>
-    </div>
-    <div class="d5-project-grid">
-      <button type="button" class="d5-project-card" *ngFor="let project of d.projects; let i = index"
-              appReveal="zoom" [revealDelay]="i * 80" (click)="selectProject(i)">
-        <span class="d5-project-no">{{ project.no }}</span>
-        <span class="d5-project-name">{{ project.name }}</span>
-        <span class="d5-project-summary">{{ project.summary }}</span>
-        <span class="d5-project-go">ดูรายละเอียดโครงการ ›</span>
-      </button>
     </div>
   </div>
 </section>
@@ -142,12 +133,10 @@
       [title]="d.dissemination.title"
       [lead]="d.dissemination.lead" />
 
-    <div class="grid grid-4">
-      <div class="card card-accent" *ngFor="let c of d.dissemination.channels; let i = index"
-           appReveal="zoom" [revealDelay]="i * 90">
-        <h3 class="card-title" style="font-size:17px">{{ c.name }}</h3>
-        <p class="card-body" style="margin:0;font-size:15.5px">{{ c.text }}</p>
-      </div>
+    <!-- แก้เนื้อหาวงล้อได้ที่ public/models/dimension5-dissemination-wheel.html ในตัวแปร BLOCKS -->
+    <div class="d5-dissemination-wheel" appReveal>
+      <iframe src="/models/dimension5-dissemination-wheel.html" title="วงล้อการเผยแพร่และแลกเปลี่ยนเรียนรู้"
+        loading="lazy" [style.height.px]="disseminationWheelHeight()"></iframe>
     </div>
   </div>
 </section>

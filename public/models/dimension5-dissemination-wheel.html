@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>โมเดลวงล้อ 4 ช่องทาง</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:transparent;
+  --ink:#0f1e45; --ink-2:#56637e; --ink-3:#8a95ab;
+  --line:#dde3ef;
+  --spin:72s;
+  --font:"IBM Plex Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{min-height:0;overflow-x:hidden;background:transparent;-webkit-text-size-adjust:100%}
+body{
+  margin:0;color:#fff;font-family:var(--font);font-size:16px;
+  background:transparent;
+  background-attachment:initial;
+  min-height:0;overflow-x:hidden;
+  padding:env(safe-area-inset-top,0px) 0 calc(env(safe-area-inset-bottom,0px) + 28px);
+}
+[hidden]{display:none!important}
+h1,h2,h3,p,span,button{overflow-wrap:anywhere;word-break:break-word;line-break:loose}
+
+.wrap{max-width:1100px;margin:0 auto;padding:22px clamp(16px,3vw,28px) 40px}
+
+header.top{text-align:center}
+.kicker{display:inline-block;font-size:12px;letter-spacing:.2em;color:hsl(224 62% 42%);
+  border:1px solid hsl(224 50% 82%);background:hsl(224 80% 96%);border-radius:999px;padding:7px 16px}
+h1{font-size:clamp(23px,4.2vw,34px);line-height:1.34;margin:14px 0 6px;font-weight:600;color:#fff;text-shadow:0 2px 12px rgba(8,21,47,.9)}
+.sub{color:rgba(255,255,255,.94);font-weight:400;font-size:clamp(14px,2vw,16px);margin:0 auto;max-width:52ch;line-height:1.7;text-shadow:0 2px 12px rgba(8,21,47,.9)}
+
+/* ---------- ปุ่มควบคุม ---------- */
+.tools{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:22px 0 4px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-height:52px;padding:0 20px;border-radius:15px;cursor:pointer;
+  font-family:inherit;font-size:15.5px;font-weight:500;color:var(--ink);
+  background:#fff;border:1px solid var(--line);
+  box-shadow:0 2px 0 0 #e6ebf5, 0 6px 14px -8px rgba(20,40,90,.3);
+  transition:background .18s, transform .12s, box-shadow .18s
+}
+.btn:active{transform:translateY(2px);box-shadow:0 0 0 0 #e6ebf5;background:#eff3fb}
+.btn svg{width:17px;height:17px}
+
+/* ---------- วงล้อ ---------- */
+.stage{width:min(600px,92vw);aspect-ratio:1;margin:8px auto 0;display:grid;place-items:center;position:relative}
+.wheel{
+  width:70.7%;height:70.7%;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px;
+  animation:spin var(--spin) linear infinite;
+}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes unspin{from{transform:rotate(0deg)}to{transform:rotate(-360deg)}}
+.stage.paused .wheel,.stage.paused .inner{animation-play-state:paused}
+
+.tile{
+  position:relative;padding:0;border:0;cursor:pointer;font-family:inherit;color:#fff;
+  border-radius:18px;overflow:hidden;
+  background:linear-gradient(155deg, hsl(var(--h) 66% var(--l1)), hsl(var(--h) 72% var(--l2)));
+  border:1px solid hsl(var(--h) 60% 62% / .55);
+  box-shadow:0 14px 26px -12px hsl(224 55% 30% / .5), inset 0 1px 0 rgba(255,255,255,.3);
+  transition:box-shadow .2s, filter .2s, transform .16s;
+}
+.tile:active{transform:scale(.97)}
+.tile.on{filter:saturate(1.15) brightness(1.06);box-shadow:0 0 0 4px hsl(var(--h) 75% 62% / .45),0 18px 30px -12px hsl(224 55% 30% / .6)}
+.inner{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:9px;padding:clamp(10px,2.6vw,20px);text-align:center;
+  animation:unspin var(--spin) linear infinite;
+}
+.dotline{width:34px;height:3px;border-radius:999px;background:rgba(255,255,255,.85)}
+.t-name{font-size:clamp(13px,2.3vw,18px);font-weight:600;line-height:1.4}
+.t-hint{font-size:clamp(11px,1.6vw,12.5px);font-weight:300;color:rgba(255,255,255,.8)}
+
+/* ---------- แผงข้อมูล ---------- */
+.panel{
+  max-width:720px;margin:26px auto 0;background:#fff;border:1px solid var(--line);
+  border-radius:22px;padding:clamp(20px,3vw,30px);
+  box-shadow:0 10px 0 0 #e7ecf6, 0 26px 40px -22px rgba(20,40,90,.42);
+  animation:pop .35s cubic-bezier(.2,.9,.3,1) backwards
+}
+@keyframes pop{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.panel .cap{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.swatch{width:36px;height:6px;border-radius:999px;background:hsl(var(--h) 70% 48%)}
+.panel h2{margin:0 0 10px;font-size:clamp(19px,2.8vw,25px);font-weight:600;line-height:1.35}
+.panel p.lead{margin:0 0 16px;color:var(--ink-2);font-weight:300;line-height:1.8}
+.items{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.items li{
+  display:flex;gap:11px;align-items:flex-start;background:#f6f8fd;border:1px solid var(--line);
+  border-radius:13px;padding:13px 15px;font-size:15px;font-weight:300;color:var(--ink-2);line-height:1.6
+}
+.items li::before{content:"";flex:0 0 auto;width:8px;height:8px;border-radius:50%;margin-top:8px;background:hsl(var(--h) 70% 55%)}
+.panel .close{margin-top:18px;width:100%}
+.empty{text-align:center;color:#fff;font-size:14.5px;font-weight:400;margin:26px auto 0;max-width:46ch;line-height:1.7;text-shadow:0 2px 10px rgba(8,21,47,.9)}
+
+@media (max-width:520px){
+  .stage{width:min(460px,96vw)}
+  .wheel{gap:9px}
+  .tile{border-radius:15px}
+}
+@media (prefers-reduced-motion:reduce){
+  .wheel,.inner{animation:none!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+    <h1>การเผยแพร่และแลกเปลี่ยนเรียนรู้</h1>
+    <p class="sub">สี่เหลี่ยม 4 บล็อกประกบกันเป็นวงล้อ หมุนตามเข็มนาฬิกาช้า ๆ — แตะบล็อกใดก็ได้เพื่อดูข้อมูล</p>
+  </header>
+
+  <div class="tools">
+    <button class="btn" id="toggle">
+      <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+      <span id="toggleText">หยุดหมุน</span>
+    </button>
+  </div>
+
+  <div class="stage" id="stage">
+    <div class="wheel" id="wheel"></div>
+  </div>
+
+  <div id="out"><p class="empty">แตะบล็อกเพื่อเปิดข้อมูล — วงล้อจะหยุดหมุนให้อัตโนมัติ</p></div>
+</div>
+
+<script>
+/* =========================================================================
+   แก้เนื้อหาได้ที่ BLOCKS — name = ชื่อบล็อก, lead = คำอธิบาย, items = หัวข้อย่อย
+   ========================================================================= */
+const BLOCKS = [
+  {
+    id:'visit', h:224, l1:'44%', l2:'27%',
+    name:'การต้อนรับคณะศึกษาดูงาน',
+    lead:'รอกำหนดเนื้อหา — ใส่รายละเอียดการต้อนรับคณะศึกษาดูงานได้ที่นี่',
+    items:['รอกำหนดเนื้อหา','รอกำหนดเนื้อหา','รอกำหนดเนื้อหา']
+  },
+  {
+    id:'speaker', h:218, l1:'52%', l2:'34%',
+    name:'การรับเชิญเป็นวิทยากร',
+    lead:'รอกำหนดเนื้อหา — ใส่รายละเอียดการรับเชิญเป็นวิทยากรได้ที่นี่',
+    items:['รอกำหนดเนื้อหา','รอกำหนดเนื้อหา','รอกำหนดเนื้อหา']
+  },
+  {
+    id:'exhibit', h:210, l1:'58%', l2:'41%',
+    name:'การจัดนิทรรศการและเวทีแลกเปลี่ยนเรียนรู้',
+    lead:'รอกำหนดเนื้อหา — ใส่รายละเอียดการจัดนิทรรศการและเวทีแลกเปลี่ยนเรียนรู้ได้ที่นี่',
+    items:['รอกำหนดเนื้อหา','รอกำหนดเนื้อหา','รอกำหนดเนื้อหา']
+  },
+  {
+    id:'online', h:204, l1:'64%', l2:'47%',
+    name:'ช่องทางออนไลน์',
+    lead:'รอกำหนดเนื้อหา — ใส่รายละเอียดช่องทางออนไลน์ได้ที่นี่',
+    items:['รอกำหนดเนื้อหา','รอกำหนดเนื้อหา','รอกำหนดเนื้อหา']
+  }
+];
+
+const wheel = document.getElementById('wheel');
+const stage = document.getElementById('stage');
+const out = document.getElementById('out');
+const toggle = document.getElementById('toggle');
+const toggleText = document.getElementById('toggleText');
+let openId = null;
+
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+BLOCKS.forEach(b => {
+  const el = document.createElement('button');
+  el.type = 'button';
+  el.className = 'tile';
+  el.dataset.id = b.id;
+  el.style.setProperty('--h', b.h);
+  el.style.setProperty('--l1', b.l1);
+  el.style.setProperty('--l2', b.l2);
+  el.innerHTML =
+    '<span class="inner">' +
+      '<span class="dotline"></span>' +
+      '<span class="t-name">' + esc(b.name) + '</span>' +
+      '<span class="t-hint">แตะเพื่อดูข้อมูล</span>' +
+    '</span>';
+  el.addEventListener('click', () => open(b.id));
+  wheel.appendChild(el);
+});
+
+function setPaused(p){
+  stage.classList.toggle('paused', p);
+  toggleText.textContent = p ? 'หมุนต่อ' : 'หยุดหมุน';
+}
+
+function open(id){
+  if(openId === id){ close(); return; }
+  openId = id;
+  const b = BLOCKS.find(x => x.id === id);
+  setPaused(true);
+  document.querySelectorAll('.tile').forEach(t => t.classList.toggle('on', t.dataset.id === id));
+  out.innerHTML =
+    '<div class="panel" style="--h:' + b.h + '">' +
+      '<div class="cap"><span class="swatch"></span></div>' +
+      '<h2>' + esc(b.name) + '</h2>' +
+      '<p class="lead">' + esc(b.lead) + '</p>' +
+      '<ul class="items">' + b.items.map(i => '<li>' + esc(i) + '</li>').join('') + '</ul>' +
+      '<button class="btn close" type="button" id="closeBtn">ปิดข้อมูล</button>' +
+    '</div>';
+  document.getElementById('closeBtn').addEventListener('click', close);
+  out.querySelector('.panel').scrollIntoView({behavior:'smooth', block:'nearest'});
+  reportHeight();
+}
+
+function close(){
+  openId = null;
+  document.querySelectorAll('.tile').forEach(t => t.classList.remove('on'));
+  out.innerHTML = '<p class="empty">แตะบล็อกเพื่อเปิดข้อมูล — วงล้อจะหยุดหมุนให้อัตโนมัติ</p>';
+  setPaused(false);
+  reportHeight();
+}
+
+/* ส่งความสูงจริงให้หน้าแม่ เพื่อให้ iframe พอดีกับเนื้อหาและไม่มีตัวเลื่อน */
+function reportHeight(){
+  requestAnimationFrame(() => {
+    const height = Math.ceil(Math.max(document.body.scrollHeight, document.documentElement.scrollHeight));
+    window.parent.postMessage({ type: 'd5-dissemination-wheel-height', height }, window.location.origin);
+  });
+}
+new ResizeObserver(reportHeight).observe(document.body);
+
+toggle.addEventListener('click', () => setPaused(!stage.classList.contains('paused')));
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && openId) close(); });
+window.addEventListener('load', reportHeight);
+</script>
+</body>
+</html>
