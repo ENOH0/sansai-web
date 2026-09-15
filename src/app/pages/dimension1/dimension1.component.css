@@ -11,13 +11,14 @@
 .assessment-indicators--single { margin-bottom: 30px; }
 
 /* ═══════════ สารบัญตัวชี้วัดด้านที่ 1 ═══════════ */
-.d1-tabs { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; }
+.d1-tabs { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 20px; }
+.d1-tab-group { display: grid; gap: 14px; scroll-margin-top: 18px; }
 
 .d1-tab {
   display: flex;
   align-items: center;
   gap: 14px;
-  flex: 1 1 260px;
+  width: 100%;
   min-height: 64px;
   padding: 9px 16px;
   text-align: left;

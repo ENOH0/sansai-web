@@ -96,13 +96,16 @@ export class Dimension1Component implements OnInit {
 
   /** ปุ่มนำทางลอย: กลับไปหน้ารายการของหมวดที่เลือกเสมอ */
   selectGroup(group: '1.1' | '1.2'): void {
-    if (this.open()) {
-      this.open.set('');
-      this.tab.set(group);
-    } else {
-      this.toggleTab(group);
-    }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // แสดงรายการย่อยของหมวดที่เลือกเสมอ แล้วเลื่อนไปยังรายการนั้นโดยตรง
+    // (รอให้ Angular วาดหน้าสารบัญก่อน จึงหา element สำหรับเลื่อนได้)
+    this.open.set('');
+    this.tab.set(group);
+    window.setTimeout(() => {
+      document.getElementById(`d1-group-${group.replace('.', '-')}`)?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }, 60);
   }
 
   /* Chrome/Safari บางเครื่องไม่เริ่มเล่นเองแม้ใส่ autoplay
