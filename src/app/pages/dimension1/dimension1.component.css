@@ -311,6 +311,23 @@
 .d1-card { min-height: 142px; }
 .d1-card-top { margin-bottom: 2px; }
 
+/* บทนำ O-NET: อยู่บนพื้นวิดีโอเหนือกล่องตัวชี้วัด โดยไม่มีพื้นหลังการ์ด */
+.d1-onet-narrative,
+.d1-narrative { margin: 0 0 26px; }
+.d1-onet-narrative p,
+.d1-narrative p {
+  margin: 0 0 10px;
+  color: #fff;
+  font-size: 18px;
+  line-height: 1.75;
+  text-align: left;
+  text-indent: 2em;
+  text-shadow: 0 2px 12px rgba(8, 21, 47, .9);
+}
+.d1-onet-narrative p:last-child,
+.d1-narrative p:last-child { margin-bottom: 0; }
+.d1-onet-narrative strong { color: #fff; font-weight: 800; }
+
 /* ผลงานเด่น O-NET — ใช้สีและถ้อยคำจากหลักฐานเปรียบเทียบรายวิชา */
 .d1-onet-highlight {
   padding: 22px;
