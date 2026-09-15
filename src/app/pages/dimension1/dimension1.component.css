@@ -311,6 +311,60 @@
 .d1-card { min-height: 142px; }
 .d1-card-top { margin-bottom: 2px; }
 
+/* ผลงานเด่น O-NET — ใช้สีและถ้อยคำจากหลักฐานเปรียบเทียบรายวิชา */
+.d1-onet-highlight {
+  padding: 22px;
+  border: 1px solid rgba(212, 165, 55, .75);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 16px 38px rgba(8, 21, 47, .24);
+}
+.d1-onet-highlight-head { margin-bottom: 20px; }
+.d1-onet-highlight-head > span {
+  display: inline-flex;
+  padding: 4px 10px;
+  color: var(--navy-800);
+  font-size: 13px;
+  font-weight: 800;
+  border-radius: 999px;
+  background: var(--gold-100);
+}
+.d1-onet-highlight h3 { margin: 8px 0 5px; color: var(--navy-900); font-size: clamp(20px, 2.3vw, 28px); line-height: 1.25; }
+.d1-onet-highlight p { margin: 0; color: var(--ink-mute); font-size: 15.5px; line-height: 1.55; }
+.d1-onet-option { margin-top: 22px; }
+.d1-onet-option-label {
+  display: inline-flex;
+  margin-bottom: 12px;
+  padding: 5px 10px;
+  color: var(--navy-800);
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: 8px;
+  background: var(--navy-50);
+}
+.d1-onet-option--row .grid { grid-template-columns: 1fr; gap: 18px; }
+/* แบบ A: เรียงเต็มความกว้างแนวตั้ง เพื่ออ่านตัวเลขได้ชัดโดยไม่ต้องเลื่อน */
+:host ::ng-deep .d1-onet-option--row .chart-card { min-height: 430px; }
+:host ::ng-deep .d1-onet-option--row .chart-svg { min-height: 270px; }
+
+/* แบบ B: การ์ดกว้างขึ้นเพื่อให้อ่านตัวเลขบน iPad ได้ชัด และปัดเลื่อนในแนวนอนได้ */
+.d1-onet-scroll {
+  overflow-x: auto;
+  padding: 2px 2px 14px;
+  scrollbar-color: var(--navy-300) transparent;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.d1-onet-scroll-track { display: flex; gap: 18px; width: max-content; }
+.d1-onet-scroll-track > app-bar-chart {
+  display: block;
+  flex: 0 0 min(720px, calc(100vw - 100px));
+  scroll-snap-align: start;
+}
+:host ::ng-deep .d1-onet-option--scroll .chart-card { min-height: 490px; }
+:host ::ng-deep .d1-onet-option--scroll .chart-svg { min-height: 300px; }
+@media (max-width: 560px) { .d1-onet-highlight { padding: 16px; } }
+
 /* iPad ประหยัดแบต — ถ้าผู้ใช้ตั้งค่าลดการเคลื่อนไหว ให้หยุดวิดีโอแล้วใช้ภาพนิ่งแทน */
 @media (prefers-reduced-motion: reduce) {
   .d1-video { display: none; }

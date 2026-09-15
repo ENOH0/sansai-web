@@ -150,6 +150,38 @@ export class Dimension1Component implements OnInit {
     { label: 'รายงาน 2568', href: '/evidence/1.1.1/onet/onet-2568.pdf' }
   ];
 
+  /** ผลงานเด่น O-NET: คัดเฉพาะรายวิชา/ระดับชั้นที่สูงกว่าค่าเฉลี่ยประเทศครบ 3 ปี
+   * ตัวเลขถอดจากหลักฐาน M3_ไทย, M6_ไทย และ M6_สังคมฯ ที่แนบโดยโรงเรียน */
+  readonly onetHighlights: Array<{ title: string; subtitle: string; series: BarSeries[]; note: string }> = [
+    {
+      title: 'ม.3 ภาษาไทย',
+      subtitle: 'สูงกว่าระดับประเทศต่อเนื่อง 3 ปี',
+      series: [
+        { name: 'ระดับโรงเรียน', values: [54.87, 56.52, 49.22], color: '#57c878' },
+        { name: 'ระดับประเทศ', values: [37.35, 34.40, 33.92], color: '#f0b48f' }
+      ],
+      note: 'สูงกว่าระดับประเทศ +17.52, +22.12 และ +15.30 คะแนนตามลำดับ'
+    },
+    {
+      title: 'ม.6 ภาษาไทย',
+      subtitle: 'สูงกว่าระดับประเทศต่อเนื่อง 3 ปี',
+      series: [
+        { name: 'ระดับโรงเรียน', values: [45.23, 47.41, 46.73], color: '#123b82' },
+        { name: 'ระดับประเทศ', values: [40.78, 42.21, 40.32], color: '#93bce3' }
+      ],
+      note: 'สูงกว่าระดับประเทศ +4.45, +5.20 และ +6.41 คะแนนตามลำดับ'
+    },
+    {
+      title: 'ม.6 สังคมศึกษา',
+      subtitle: 'สูงกว่าระดับประเทศต่อเนื่อง 3 ปี',
+      series: [
+        { name: 'ระดับโรงเรียน', values: [34.65, 39.11, 39.12], color: '#ee5c91' },
+        { name: 'ระดับประเทศ', values: [33.09, 35.77, 36.96], color: '#e9df4e' }
+      ],
+      note: 'สูงกว่าระดับประเทศ +1.56, +3.34 และ +2.16 คะแนนตามลำดับ'
+    }
+  ];
+
   readonly m6Rows: TableRow[] = DIM1.section11.onet.m6.subjects.map(s => ({
     cells: [
       s.name,

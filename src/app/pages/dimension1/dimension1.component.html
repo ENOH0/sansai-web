@@ -145,6 +145,35 @@
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
       <div class="stack">
+        <div class="d1-onet-highlight" appReveal>
+          <div class="d1-onet-highlight-head">
+            <span>ผลงานเด่น</span>
+            <h3>คะแนนเฉลี่ย O-NET สูงกว่าระดับประเทศต่อเนื่อง 3 ปี</h3>
+            <p>คัดเลือกผลการเปรียบเทียบที่โรงเรียนมีคะแนนสูงกว่าค่าเฉลี่ยระดับประเทศครบทุกปีการศึกษา</p>
+          </div>
+          <!-- ตัวเลือก A: ถ้าเลือกแบบ B ให้ลบบล็อก .d1-onet-option--row นี้ทั้งบล็อก -->
+          <div class="d1-onet-option d1-onet-option--row">
+            <div class="d1-onet-option-label">ตัวเลือก A · กราฟ 3 ใบเรียงแนวตั้ง</div>
+            <div class="grid grid-3">
+              <app-bar-chart *ngFor="let chart of onetHighlights" [title]="chart.title" [subtitle]="chart.subtitle"
+                [labels]="d.section11.onet.m6.years" [series]="chart.series" [max]="60" valueFormat="1.2-2"
+                [valueFontSize]="12" [note]="chart.note" />
+            </div>
+          </div>
+
+          <!-- ตัวเลือก B: ถ้าเลือกแบบ A ให้ลบบล็อก .d1-onet-option--scroll นี้ทั้งบล็อก -->
+          <div class="d1-onet-option d1-onet-option--scroll">
+            <div class="d1-onet-option-label">ตัวเลือก B · กราฟขนาดใหญ่ เลื่อนซ้าย–ขวาเพื่อดู</div>
+            <div class="d1-onet-scroll" tabindex="0" aria-label="เลื่อนดูกราฟผลงานเด่น O-NET">
+              <div class="d1-onet-scroll-track">
+                <app-bar-chart *ngFor="let chart of onetHighlights" [title]="chart.title" [subtitle]="chart.subtitle"
+                  [labels]="d.section11.onet.m6.years" [series]="chart.series" [max]="60" valueFormat="1.2-2"
+                  [valueFontSize]="15" [note]="chart.note" />
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- ม.6 — เลือกดูรายวิชาได้ -->
         <app-onet-chart title="ค่าเฉลี่ย O-NET ชั้น ม.6 — โรงเรียนเทียบกับระดับประเทศ"
           subtitle="ปีการศึกษา 2566–2568 · แตะชื่อวิชาเพื่อดูทีละรายวิชา" [years]="d.section11.onet.m6.years"
