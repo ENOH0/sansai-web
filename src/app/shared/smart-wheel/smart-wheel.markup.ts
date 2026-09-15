@@ -102,6 +102,9 @@ export function initSmartWheel(root: HTMLElement, items: WheelItem[]): void {
           ${it.evidence.map((item, index) => `<figure class="sw-evidence-card sw-evidence-card--${index + 1}">
             <img src="${item.src}" alt="${item.caption}" loading="lazy">
             <figcaption>${item.caption}</figcaption>
+            <span class="sw-process-arrow sw-process-arrow--${index + 1}" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false"><path d="M4 12h14M13 6l6 6-6 6" /></svg>
+            </span>
           </figure>`).join('')}
         </div>`
       : `<p class="sw-evidence-label">พื้นที่ใส่ภาพหลักฐาน 4 รูป</p>

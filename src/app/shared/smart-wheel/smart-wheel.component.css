@@ -174,12 +174,22 @@
   background: var(--navy-50);
 }
 .sw-evidence-grid--process {
+  /* ปรับระยะลูกศรได้จาก 3 ค่านี้ในที่เดียว */
+  --process-column-gap: 30px;
+  --process-row-gap: 56px;
+  --process-arrow-size: 30px;
+  /* จุดกึ่งกลางของรูป: การ์ดกว้างครึ่งหนึ่งของ grid และรูปเป็น 16:10 */
+  --process-photo-middle: 15.625cqw;
+  container-type: inline-size;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px 30px;
+  /* เว้นช่องให้ลูกศรอยู่กึ่งกลางระหว่างการ์ด ไม่ทับขอบรูป */
+  column-gap: var(--process-column-gap);
+  row-gap: var(--process-row-gap);
   padding: 4px 2px;
 }
 .sw-evidence-card {
   position: relative;
+  z-index: 1;
   min-width: 0;
   margin: 0;
   overflow: visible;
@@ -202,25 +212,42 @@
   font-weight: 700;
   line-height: 1.42;
 }
-.sw-evidence-card::after {
+.sw-process-arrow {
   position: absolute;
-  z-index: 2;
+  /* ลูกศรอยู่ชั้นเดียวกับภาพหลักฐานและอยู่เหนือการ์ดทุกใบ */
+  z-index: 10;
   display: grid;
-  width: 28px;
-  height: 28px;
+  width: var(--process-arrow-size);
+  height: var(--process-arrow-size);
   place-items: center;
-  color: #fff;
-  font-size: 19px;
-  font-weight: 800;
   border-radius: 50%;
   background: var(--navy-600);
   box-shadow: 0 3px 8px rgba(9, 37, 86, .25);
 }
-.sw-evidence-card--1::after { content: '→'; top: 50%; right: -44px; transform: translateY(-50%); }
-.sw-evidence-card--2::after { content: '↓'; bottom: -40px; left: 50%; transform: translateX(-50%); }
+.sw-process-arrow svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.6;
+}
+.sw-process-arrow--1 {
+  top: var(--process-photo-middle);
+  right: calc(-1 * var(--process-arrow-size));
+  transform: translateY(-50%);
+}
+.sw-process-arrow--2 { bottom: -43px; left: 50%; transform: translateX(-50%) rotate(90deg); }
 .sw-evidence-card--3 { grid-column: 2; grid-row: 2; }
-.sw-evidence-card--3::after { content: '←'; top: 50%; left: -44px; transform: translateY(-50%); }
+.sw-process-arrow--3 {
+  top: var(--process-photo-middle);
+  left: calc(-1 * var(--process-arrow-size));
+  transform: translateY(-50%) rotate(180deg);
+}
 .sw-evidence-card--4 { grid-column: 1; grid-row: 2; }
+.sw-process-arrow--4 { top: -42px; left: 50%; transform: translateX(-50%) rotate(-90deg); }
 .sw-hint { margin: 20px 0 0; color: var(--ink-mute); font-size: 15px; }
 
 @media (max-width: 900px) {
@@ -235,5 +262,6 @@
   .sw-evidence-slot { min-height: 82px; }
   .sw-evidence-grid--process { grid-template-columns: 1fr; gap: 28px; }
   .sw-evidence-card--3, .sw-evidence-card--4 { grid-column: auto; grid-row: auto; }
-  .sw-evidence-card--1::after, .sw-evidence-card--2::after, .sw-evidence-card--3::after { content: '↓'; top: auto; right: auto; bottom: -40px; left: 50%; transform: translateX(-50%); }
+  .sw-process-arrow--1, .sw-process-arrow--2, .sw-process-arrow--3 { top: auto; right: auto; bottom: -40px; left: 50%; transform: translateX(-50%) rotate(90deg); }
+  .sw-process-arrow--4 { top: 50%; right: -40px; bottom: auto; left: auto; transform: translateY(-50%) rotate(-90deg); }
 }
