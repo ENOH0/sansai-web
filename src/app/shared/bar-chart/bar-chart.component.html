@@ -32,7 +32,7 @@
         <text class="axis-text" *ngIf="showValues"
               [attr.x]="barX(gi, si) + barW() / 2"
               [attr.y]="yPos(s.values[gi]) - 8"
-              text-anchor="middle" [attr.font-size]="valueFontSize" style="font-weight:700"
+              text-anchor="middle" [style.font-size.px]="valueFontSize" style="font-weight:700"
               [attr.fill]="colorOf(s, si)">{{ s.values[gi] | number: valueFormat }}</text>
       </g>
       <text class="axis-text b" [attr.x]="groupCenter(gi)" [attr.y]="H - PB + 26"

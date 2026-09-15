@@ -52,7 +52,7 @@ export class Dimension1Component implements OnInit {
     { key: '1.1.3', group: '1.1', title: 'ความสามารถในการใช้ภาษาอังกฤษเพื่อการสื่อสาร', note: 'ผลการเรียนเฉลี่ยเพิ่มขึ้นต่อเนื่อง', ready: true },
     { key: '1.1.4', group: '1.1', title: 'ความสามารถในการคิด วิเคราะห์ แก้ปัญหา และประยุกต์ใช้', note: 'ผลการประเมินการอ่าน คิดวิเคราะห์ ระดับดีขึ้นไป', ready: true },
     { key: '1.1.5', group: '1.1', title: 'ความสามารถในการใช้เทคโนโลยีสารสนเทศและการสื่อสาร (ICT)', note: 'ผลสัมฤทธิ์รายวิชาเทคโนโลยีระดับ 3–4', ready: true },
-    { key: '1.1.6', group: '1.1', title: 'ความก้าวหน้าทางการเรียนตามหลักสูตรทุกกลุ่มสาระการเรียนรู้', note: 'อยู่ระหว่างรวบรวมข้อมูลจากเล่มเอกสาร', ready: false },
+    { key: '1.1.6', group: '1.1', title: 'ผู้เรียนมีความก้าวหน้าทางการเรียนตามหลักสูตรทุกกลุ่มสาระการเรียนรู้', note: 'ผลการเรียนระดับดีขึ้นไป (เกรด 3–4) เพิ่มเป็นร้อยละ 74.07', ready: true },
     { key: '1.1.7', group: '1.1', title: 'ความพร้อมในการศึกษาต่อ การฝึกงาน หรือการทำงาน', note: 'ม.3 ที่ศึกษาต่อในสถานศึกษาเดิม ปี 2568', ready: true },
     { key: '1.1.8', group: '1.1', title: 'ความรู้ความสามารถรอบด้าน ความสามารถพิเศษ และผลงานเป็นเลิศ', note: 'รางวัลเชิงประจักษ์ที่มีภาพหลักฐาน', ready: true },
 
@@ -131,6 +131,7 @@ export class Dimension1Component implements OnInit {
   readonly engTitle = 'ความสามารถในการใช้ภาษาอังกฤษเพื่อการสื่อสาร';
   readonly thinkTitle = 'ความสามารถในการคิด วิเคราะห์ แก้ปัญหา และประยุกต์ใช้';
   readonly ictTitle = 'ความสามารถในการใช้เทคโนโลยีสารสนเทศและการสื่อสาร (ICT)';
+  readonly curriculumProgressTitle = 'ผู้เรียนมีความก้าวหน้าทางการเรียนตามหลักสูตรทุกกลุ่มสาระการเรียนรู้';
   readonly pathTitle = 'ความพร้อมในการศึกษาต่อ การฝึกงาน หรือการทำงาน';
   readonly electionTitle = 'การยอมรับเหตุผลและความคิดเห็นของผู้อื่น';
   readonly healthTitle = 'การรักษาสุขภาพกายและสุขภาพจิต';
@@ -290,6 +291,16 @@ export class Dimension1Component implements OnInit {
     values: DIM1.section11.ict.values,
     color: '#1e4d9e'
   }];
+
+  // ---------- ความก้าวหน้าตามหลักสูตร ----------
+  readonly curriculumProgressBars: BarSeries[] = DIM1.section11.curriculumProgress.rows.map((r, i) => ({
+    name: r.name, values: r.values, color: this.palette[i % this.palette.length]
+  }));
+  readonly curriculumProgressHeaders = ['กลุ่มสาระการเรียนรู้', 'ปี 2566', 'ปี 2567', 'ปี 2568'];
+  readonly curriculumProgressRows: TableRow[] = [
+    ...DIM1.section11.curriculumProgress.rows.map(r => ({ cells: [r.name, ...r.values.map(v => v.toFixed(2))] })),
+    { cells: ['รวมเฉลี่ย', ...DIM1.section11.curriculumProgress.average.map(v => v.toFixed(2))], total: true }
+  ];
 
   // ---------- การศึกษาต่อ ----------
   /* ชุดข้อมูลเดียวกันในรูปกราฟแท่ง (ตัวเลือกที่ 2 ของหัวข้อ 1.1.7) */
