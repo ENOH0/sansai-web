@@ -51,6 +51,15 @@ export function smartWheelHtml(items, hubLabel, hubTitle, hubSubtitle = '', them
     <h4 class="sw-detail-title">Activity Based</h4>
     <p class="sw-detail-text">เรียนรู้ผ่านการลงมือทำ ทดลอง ตั้งคำถาม และสะท้อนสิ่งที่ค้นพบจากกิจกรรมจริง</p>
     <span class="sw-detail-key">A — Activity Based</span>
+    <div class="sw-evidence" aria-label="พื้นที่เตรียมใส่ภาพหลักฐาน">
+      <p class="sw-evidence-label">พื้นที่ใส่ภาพหลักฐาน 4 รูป</p>
+      <div class="sw-evidence-grid">
+        <div class="sw-evidence-slot"><span>รูปที่ 1</span></div>
+        <div class="sw-evidence-slot"><span>รูปที่ 2</span></div>
+        <div class="sw-evidence-slot"><span>รูปที่ 3</span></div>
+        <div class="sw-evidence-slot"><span>รูปที่ 4</span></div>
+      </div>
+    </div>
     <p class="sw-hint">แตะตัวอักษรบนวงล้อเพื่อดูความหมายของแต่ละองค์ประกอบ</p>
   </aside>
 </div>`;
@@ -61,12 +70,14 @@ export function initSmartWheel(root, items) {
     const t = root.querySelector('.sw-detail-title');
     const d = root.querySelector('.sw-detail-text');
     const k = root.querySelector('.sw-detail-key');
+    const evidence = root.querySelector('.sw-evidence');
     const select = (i) => {
         const it = items[i];
         pieces.forEach(p => p.classList.toggle('is-on', Number(p.dataset['i']) === i));
         t.textContent = it.title;
         d.textContent = it.detail;
         k.textContent = `${it.letter} — ${it.title}`;
+        evidence.setAttribute('aria-label', `พื้นที่ใส่ภาพหลักฐานของ ${it.title}`);
     };
     pieces.forEach(p => p.addEventListener('click', () => select(Number(p.dataset['i']))));
     select(0);

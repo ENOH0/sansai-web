@@ -59,6 +59,15 @@ return `
     <h4 class="sw-detail-title">Activity Based</h4>
     <p class="sw-detail-text">เรียนรู้ผ่านการลงมือทำ ทดลอง ตั้งคำถาม และสะท้อนสิ่งที่ค้นพบจากกิจกรรมจริง</p>
     <span class="sw-detail-key">A — Activity Based</span>
+    <div class="sw-evidence" aria-label="พื้นที่เตรียมใส่ภาพหลักฐาน">
+      <p class="sw-evidence-label">พื้นที่ใส่ภาพหลักฐาน 4 รูป</p>
+      <div class="sw-evidence-grid">
+        <div class="sw-evidence-slot"><span>รูปที่ 1</span></div>
+        <div class="sw-evidence-slot"><span>รูปที่ 2</span></div>
+        <div class="sw-evidence-slot"><span>รูปที่ 3</span></div>
+        <div class="sw-evidence-slot"><span>รูปที่ 4</span></div>
+      </div>
+    </div>
     <p class="sw-hint">แตะตัวอักษรบนวงล้อเพื่อดูความหมายของแต่ละองค์ประกอบ</p>
   </aside>
 </div>`;
@@ -71,6 +80,7 @@ export function initSmartWheel(root: HTMLElement, items: WheelItem[]): void {
   const t = root.querySelector('.sw-detail-title') as HTMLElement;
   const d = root.querySelector('.sw-detail-text') as HTMLElement;
   const k = root.querySelector('.sw-detail-key') as HTMLElement;
+  const evidence = root.querySelector('.sw-evidence') as HTMLElement;
 
   const select = (i: number) => {
     const it = items[i];
@@ -78,6 +88,7 @@ export function initSmartWheel(root: HTMLElement, items: WheelItem[]): void {
     t.textContent = it.title;
     d.textContent = it.detail;
     k.textContent = `${it.letter} — ${it.title}`;
+    evidence.setAttribute('aria-label', `พื้นที่ใส่ภาพหลักฐานของ ${it.title}`);
   };
 
   pieces.forEach(p => p.addEventListener('click', () => select(Number(p.dataset['i']))));
