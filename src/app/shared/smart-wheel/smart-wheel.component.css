@@ -173,6 +173,54 @@
   border-radius: 8px;
   background: var(--navy-50);
 }
+.sw-evidence-grid--process {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 30px;
+  padding: 4px 2px;
+}
+.sw-evidence-card {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  overflow: visible;
+  border: 1px solid var(--navy-200);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 6px 16px rgba(18, 56, 112, .12);
+}
+.sw-evidence-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 9px 9px 0 0;
+}
+.sw-evidence-card figcaption {
+  padding: 9px 10px 10px;
+  color: var(--navy-800);
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.42;
+}
+.sw-evidence-card::after {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 800;
+  border-radius: 50%;
+  background: var(--navy-600);
+  box-shadow: 0 3px 8px rgba(9, 37, 86, .25);
+}
+.sw-evidence-card--1::after { content: '→'; top: 50%; right: -44px; transform: translateY(-50%); }
+.sw-evidence-card--2::after { content: '↓'; bottom: -40px; left: 50%; transform: translateX(-50%); }
+.sw-evidence-card--3 { grid-column: 2; grid-row: 2; }
+.sw-evidence-card--3::after { content: '←'; top: 50%; left: -44px; transform: translateY(-50%); }
+.sw-evidence-card--4 { grid-column: 1; grid-row: 2; }
 .sw-hint { margin: 20px 0 0; color: var(--ink-mute); font-size: 15px; }
 
 @media (max-width: 900px) {
@@ -185,4 +233,7 @@
   .sw-name { font-size: 10px; }
   .sw-evidence-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .sw-evidence-slot { min-height: 82px; }
+  .sw-evidence-grid--process { grid-template-columns: 1fr; gap: 28px; }
+  .sw-evidence-card--3, .sw-evidence-card--4 { grid-column: auto; grid-row: auto; }
+  .sw-evidence-card--1::after, .sw-evidence-card--2::after, .sw-evidence-card--3::after { content: '↓'; top: auto; right: auto; bottom: -40px; left: 50%; transform: translateX(-50%); }
 }

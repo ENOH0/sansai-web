@@ -75,9 +75,25 @@ export function initSmartWheel(root, items) {
         const it = items[i];
         pieces.forEach(p => p.classList.toggle('is-on', Number(p.dataset['i']) === i));
         t.textContent = it.title;
-        d.textContent = it.detail;
+        d.hidden = !!it.evidence?.length;
+        d.textContent = it.detail ?? '';
         k.textContent = `${it.letter} — ${it.title}`;
         evidence.setAttribute('aria-label', `พื้นที่ใส่ภาพหลักฐานของ ${it.title}`);
+        evidence.innerHTML = it.evidence?.length
+            ? `<p class="sw-evidence-label">ภาพกิจกรรมตามลำดับกระบวนการ</p>
+        <div class="sw-evidence-grid sw-evidence-grid--process">
+          ${it.evidence.map((item, index) => `<figure class="sw-evidence-card sw-evidence-card--${index + 1}">
+            <img src="${item.src}" alt="${item.caption}" loading="lazy">
+            <figcaption>${item.caption}</figcaption>
+          </figure>`).join('')}
+        </div>`
+            : `<p class="sw-evidence-label">พื้นที่ใส่ภาพหลักฐาน 4 รูป</p>
+        <div class="sw-evidence-grid">
+          <div class="sw-evidence-slot"><span>รูปที่ 1</span></div>
+          <div class="sw-evidence-slot"><span>รูปที่ 2</span></div>
+          <div class="sw-evidence-slot"><span>รูปที่ 3</span></div>
+          <div class="sw-evidence-slot"><span>รูปที่ 4</span></div>
+        </div>`;
     };
     pieces.forEach(p => p.addEventListener('click', () => select(Number(p.dataset['i']))));
     select(0);
