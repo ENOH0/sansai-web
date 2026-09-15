@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, HostListener, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BarSeries, Kpi, LineSeries, MeterRow, TableRow } from '../../core/models';
@@ -36,6 +36,20 @@ import { StudentQualityWheelComponent } from '../../shared/student-quality-wheel
 })
 export class Dimension1Component implements OnInit {
   private readonly route = inject(ActivatedRoute);
+  readonly studentQualityModelHeight = signal(820);
+
+  @HostListener('window:message', ['$event'])
+  resizeStudentQualityModel(event: MessageEvent<{ type?: string; height?: number; topic?: string }>): void {
+    if (typeof window === 'undefined' || event.origin !== window.location.origin) return;
+    if (event.data?.type === 'd1-student-quality-model-height') {
+      const height = Number(event.data.height);
+      if (Number.isFinite(height)) this.studentQualityModelHeight.set(Math.max(620, Math.min(4200, height)));
+      return;
+    }
+    if (event.data?.type === 'd1-student-quality-open-topic' && event.data.topic && this.topics.some(topic => topic.key === event.data.topic)) {
+      this.select(event.data.topic);
+    }
+  }
 
   /** เปิดหัวข้อเดิมอัตโนมัติเมื่อกลับมาจากหน้ารางวัล (?t=1.1.8) */
   ngOnInit(): void {

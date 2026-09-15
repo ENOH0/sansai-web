@@ -20,6 +20,16 @@
   </div>
 </section>
 
+<!-- โมเดลคุณภาพผู้เรียน: แก้เนื้อหาได้ที่ public/models/student-quality-overview.html -->
+<section class="section d1-student-quality-model" *ngIf="!open()">
+  <div class="wrap">
+    <div class="d1-student-quality-model-frame" appReveal>
+      <iframe src="/models/student-quality-overview.html" title="โมเดลคุณภาพนักเรียน" loading="lazy"
+        [style.height.px]="studentQualityModelHeight()"></iframe>
+    </div>
+  </div>
+</section>
+
 <!-- วงล้อคุณภาพผู้เรียน: สรุปตัวชี้วัด 1.1 ทั้ง 8 ข้อ -->
 <section class="section d1-quality-wheel" *ngIf="!open()">
   <div class="wrap">
