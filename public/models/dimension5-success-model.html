@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>โมเดลอินโฟกราฟิก 3 มิติ — ปัจจัยและกลไกสู่ความสำเร็จ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:transparent;
+  --ink:#0f1e45; --ink-2:#56637e; --ink-3:#8a95ab;
+  --line:#dde3ef;
+  --navy:224; --blue:212;
+  --r:24px;
+  --font:"IBM Plex Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --tap:56px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{min-height:0;overflow-x:hidden;background:transparent;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:transparent;
+  background-attachment:initial;
+  color:#fff;font-family:var(--font);font-size:16px;
+  min-height:0;overflow-x:hidden;
+  padding:env(safe-area-inset-top,0px) 0 calc(env(safe-area-inset-bottom,0px) + 24px);
+}
+img{max-width:100%}
+[hidden]{display:none!important}
+/* ภาษาไทยไม่มีช่องว่างระหว่างคำ — กันข้อความดันหน้าเว็บกว้างเกินจอ */
+h1,h2,p,span,button{overflow-wrap:anywhere;word-break:break-word;line-break:loose}
+
+.wrap{position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:20px clamp(16px,3vw,28px) 48px}
+
+/* ---------------- หัวเรื่อง ---------------- */
+header.top{text-align:center;padding:10px 0 2px}
+.kicker{
+  display:inline-block;font-size:12px;letter-spacing:.22em;color:hsl(var(--navy) 62% 42%);
+  border:1px solid hsl(var(--navy) 50% 82%);background:hsl(var(--navy) 80% 96%);
+  border-radius:999px;padding:7px 16px
+}
+h1{font-size:clamp(24px,4.4vw,38px);line-height:1.32;margin:14px 0 6px;font-weight:600;letter-spacing:-.01em;color:#fff;text-shadow:0 2px 12px rgba(8,21,47,.9)}
+.sub{color:rgba(255,255,255,.94);font-size:clamp(14px,2vw,16px);font-weight:400;margin:0 auto;max-width:54ch;line-height:1.7;text-shadow:0 2px 12px rgba(8,21,47,.9)}
+
+/* ---------------- แถบนำทาง (แตะง่าย) ---------------- */
+.navbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;margin:26px auto 4px;width:100%}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-height:var(--tap);padding:0 22px;border-radius:16px;cursor:pointer;
+  font-family:inherit;font-size:16px;font-weight:500;color:var(--ink);
+  border:1px solid var(--line);background:#fff;
+  box-shadow:0 2px 0 0 #e6ebf5, 0 6px 14px -8px rgba(20,40,90,.3);
+  transition:background .18s, transform .12s, box-shadow .18s;
+}
+.btn:active{transform:translateY(2px);background:#eff3fb;box-shadow:0 0 0 0 #e6ebf5}
+.btn svg{width:18px;height:18px;flex:0 0 auto}
+.crumbs{display:flex;align-items:center;gap:4px;flex-wrap:wrap;justify-content:center;min-width:0}
+.crumb{
+  border:0;background:transparent;color:#fff;font-family:inherit;font-size:15px;
+  min-height:44px;padding:0 12px;border-radius:12px;cursor:pointer;transition:.18s
+}
+.crumb:active{background:#e8edf8}
+.crumb.now{color:var(--ink);font-weight:600;background:#e6ecf9;cursor:default}
+.sep{color:rgba(255,255,255,.82);font-size:14px;user-select:none}
+
+/* ---------------- เวที ---------------- */
+.stage{margin-top:30px;perspective:1600px}
+.scene{transform-style:preserve-3d}
+
+.grid{display:grid;gap:clamp(18px,2.4vw,26px);justify-content:center;margin:0 auto}
+.grid.c2{grid-template-columns:repeat(2,minmax(0,1fr));max-width:860px}
+.grid.c3{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1140px}
+.grid.c5{grid-template-columns:repeat(5,minmax(0,1fr))}
+
+/* แถวราก : บล็อก 1 → ลูกศร → บล็อก 2 */
+.flow{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(14px,2vw,22px);align-items:center;max-width:1040px;margin:0 auto}
+.arrow-link{display:flex;flex-direction:column;align-items:center;gap:10px;padding:6px 2px;min-width:96px}
+.arrow-label{
+  font-size:12.5px;letter-spacing:.14em;color:var(--ink-2);white-space:nowrap;
+  border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:#fff
+}
+.rail{position:relative;width:92px;height:16px;animation:pulse 2.6s ease-in-out infinite}
+.rail::before{
+  content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:100%;height:3px;border-radius:2px;
+  background:linear-gradient(90deg,hsl(var(--navy) 55% 45% / .3),hsl(var(--blue) 72% 48%))
+}
+.rail::after{
+  content:"";position:absolute;right:-3px;top:50%;transform:translateY(-50%);
+  border-left:15px solid hsl(var(--blue) 72% 48%);
+  border-top:9px solid transparent;border-bottom:9px solid transparent
+}
+@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
+
+/* ---------------- บล็อก 3 มิติ (แตะง่าย) ---------------- */
+.node{
+  --edge:hsl(var(--h) 72% 21%);
+  position:relative;display:block;width:100%;padding:0;border:0;background:transparent;
+  font-family:inherit;color:inherit;text-align:left;cursor:pointer;
+  transform:translateZ(0);
+  transition:transform .2s cubic-bezier(.2,.8,.3,1);
+  animation:rise .45s cubic-bezier(.2,.9,.3,1) backwards;
+}
+@keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.card{
+  position:relative;display:flex;flex-direction:column;gap:12px;color:#fff;
+  min-height:clamp(178px,20vw,214px);
+  padding:clamp(20px,2.3vw,26px);
+  border-radius:var(--r);
+  background:linear-gradient(158deg, hsl(var(--h) 62% 46%), hsl(var(--h) 70% 32%) 58%, hsl(var(--h) 74% 26%));
+  border:1px solid hsl(var(--h) 55% 56% / .55);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.3),
+    0 12px 0 0 var(--edge),
+    0 26px 36px -16px hsl(var(--h) 55% 28% / .55);
+  transition:box-shadow .2s, border-color .2s;
+}
+/* เส้นเรืองแสงขอบบน */
+.card::before{
+  content:"";position:absolute;top:-1px;left:16%;right:16%;height:2px;border-radius:2px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent)
+}
+
+.bar{width:46px;height:4px;border-radius:999px;flex:0 0 auto;display:block;
+  background:linear-gradient(90deg,#fff,rgba(255,255,255,.45))}
+.ttl{display:block;font-size:clamp(19px,2.2vw,24px);font-weight:600;line-height:1.36;color:#fff}
+.desc{display:block;font-size:clamp(14px,1.7vw,15.5px);font-weight:300;color:rgba(255,255,255,.84);line-height:1.65}
+.cta{
+  margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  min-height:48px;padding:0 6px 0 16px;border-radius:14px;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.34);
+  font-size:15px;font-weight:500;color:#fff
+}
+.cta i{
+  display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:11px;
+  background:rgba(255,255,255,.24);font-style:normal;font-size:17px;transition:transform .2s
+}
+
+/* สถานะกด — ยุบลงเหมือนปุ่มจริง */
+@media (hover:hover) and (pointer:fine){
+  .node:hover{transform:translateY(-6px)}
+  .node:hover .card{border-color:rgba(255,255,255,.7);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 16px 0 0 var(--edge),0 34px 44px -18px hsl(var(--h) 55% 26% / .6)}
+  .node:hover .cta i{transform:translateX(4px)}
+}
+.node:active{transform:translateY(8px)}
+.node:active .card{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 3px 0 0 var(--edge),0 10px 16px -10px hsl(var(--h) 55% 28% / .6)}
+.node:focus-visible{outline:3px solid hsl(var(--h) 65% 45%);outline-offset:6px;border-radius:var(--r)}
+
+/* สายที่ 2 : ฟ้าอ่อนกว่า เพื่อแยกจากสายน้ำเงินเข้ม */
+.node.light{--edge:hsl(var(--h) 68% 34%)}
+.node.light .card{
+  background:linear-gradient(158deg, hsl(var(--h) 74% 62%), hsl(var(--h) 76% 50%) 56%, hsl(var(--h) 78% 44%));
+  border-color:hsl(var(--h) 70% 72% / .7)}
+.detail.light{
+  background:linear-gradient(158deg,hsl(var(--h) 74% 62%),hsl(var(--h) 78% 46%));
+  box-shadow:0 12px 0 0 hsl(var(--h) 68% 34%),0 30px 44px -20px hsl(var(--h) 55% 40% / .6)}
+
+/* บล็อกที่ยังไม่กำหนดเนื้อหา — โทนขาว-เทา */
+.node.todo{--h:220;--edge:#c9d3e6}
+.node.todo .card{
+  background:#fff;border:1.5px dashed #c4cddf;color:var(--ink);
+  box-shadow:0 12px 0 0 var(--edge),0 22px 30px -18px rgba(20,40,90,.3)}
+.node.todo .card::before{display:none}
+.node.todo .ttl{color:var(--ink)}
+.node.todo .desc{color:var(--ink-2)}
+.node.todo .bar{background:linear-gradient(90deg,#aab6cd,#d3dae8)}
+.node.todo .cta{background:#f1f4fb;border-color:var(--line);color:var(--ink-2)}
+.node.todo .cta i{background:#e4eaf6;color:var(--ink)}
+@media (hover:hover) and (pointer:fine){
+  .node.todo:hover .card{border-color:#9fadc8;
+    box-shadow:0 16px 0 0 var(--edge),0 28px 38px -20px rgba(20,40,90,.34)}
+}
+.node.todo:active .card{box-shadow:0 3px 0 0 var(--edge),0 10px 16px -12px rgba(20,40,90,.3)}
+
+/* ---------------- แผงรายละเอียด ---------------- */
+.detail{
+  max-width:760px;margin:0 auto;border-radius:26px;padding:clamp(24px,3.4vw,38px);color:#fff;
+  background:linear-gradient(158deg,hsl(var(--h) 62% 46%),hsl(var(--h) 72% 28%));
+  border:1px solid hsl(var(--h) 55% 56% / .55);
+  box-shadow:0 12px 0 0 hsl(var(--h) 72% 21%),0 30px 44px -20px hsl(var(--h) 55% 28% / .6);
+  animation:rise .45s cubic-bezier(.2,.9,.3,1) backwards
+}
+.detail h2{margin:16px 0 10px;font-size:clamp(21px,3vw,29px);font-weight:600;line-height:1.35;color:#fff}
+.detail p{color:rgba(255,255,255,.88);font-weight:300;line-height:1.85;font-size:16px;margin:0}
+.note{margin-top:20px;border-left:3px solid rgba(255,255,255,.85);padding:12px 16px;border-radius:0 12px 12px 0;
+  background:rgba(255,255,255,.16);color:#fff;font-size:14.5px;line-height:1.75}
+
+/* ---------------- ท้ายหน้า ---------------- */
+.hint{text-align:center;margin:32px auto 0;color:#fff;font-size:14px;font-weight:500;text-shadow:0 2px 10px rgba(8,21,47,.9)}
+.legend{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:14px;font-size:13px;color:#fff;font-weight:500;text-shadow:0 2px 10px rgba(8,21,47,.9)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+/* ---------------- ปรับตามขนาดจอ (iPad เป็นหลัก) ---------------- */
+@media (max-width:1240px){ .grid.c5{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1000px} }
+@media (max-width:820px){
+  .grid.c5,.grid.c3{grid-template-columns:repeat(2,minmax(0,1fr));max-width:720px}
+  .flow{grid-template-columns:1fr;max-width:520px}
+  .arrow-link{gap:6px;min-width:0;padding:0}
+  .rail{width:64px;transform:rotate(90deg);margin:26px 0 24px}
+}
+@media (max-width:600px){
+  .grid.c2,.grid.c3,.grid.c5{grid-template-columns:1fr;max-width:460px}
+  .card{min-height:0}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-delay:0ms!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">INTERACTIVE 3D MODEL</div>
+    <h1>ปัจจัยและกลไกสู่ความสำเร็จ</h1>
+    <p class="sub">แตะบล็อกเพื่อเปิดดูองค์ประกอบย่อยทีละชั้น</p>
+  </header>
+
+  <div class="navbar">
+    <button class="btn" id="back" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      ย้อนกลับ
+    </button>
+    <nav class="crumbs" id="crumbs"></nav>
+  </div>
+
+  <div class="stage"><div class="scene" id="scene"></div></div>
+
+  <p class="hint" id="hint">แตะบล็อกเพื่อดูองค์ประกอบย่อย</p>
+  <div class="legend">
+    <span><i class="dot" style="background:#1c3f96"></i> ปัจจัยสู่ความสำเร็จ</span>
+    <span><i class="dot" style="background:#2f86d8"></i> กลไกสู่ความสำเร็จ</span>
+    <span><i class="dot" style="background:#ffffff;border:1.5px dashed #b6c0d6"></i> รอกำหนดเนื้อหา</span>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   แก้เนื้อหาทั้งหมดได้ที่ DATA ที่เดียว
+   title = ชื่อบล็อก | desc = คำอธิบาย | todo:true = ยังไม่กำหนดเนื้อหา
+   children = บล็อกย่อย (เพิ่ม/ลบได้ไม่จำกัด)
+   ========================================================================= */
+const DATA = {
+  id:'root', title:'ภาพรวม', children:[
+    {
+      id:'b1', hue:224,
+      title:'ปัจจัยสู่ความสำเร็จ',
+      desc:'องค์ประกอบพื้นฐานที่หนุนให้การดำเนินงานบรรลุเป้าหมาย',
+      children:[
+        {
+          id:'b1-mou', title:'MOU',
+          desc:'บันทึกข้อตกลงความร่วมมือกับหน่วยงานภาคี',
+          children:[
+            {id:'mou-1', title:'หัวข้อย่อยที่ 1', desc:'รอกำหนดเนื้อหา', todo:true},
+            {id:'mou-2', title:'หัวข้อย่อยที่ 2', desc:'รอกำหนดเนื้อหา', todo:true},
+            {id:'mou-3', title:'หัวข้อย่อยที่ 3', desc:'รอกำหนดเนื้อหา', todo:true}
+          ]
+        },
+        {
+          id:'b1-x', title:'องค์ประกอบที่ 2', desc:'รอกำหนดชื่อหัวข้อ', todo:true,
+          children:[
+            {id:'x-1', title:'หัวข้อย่อยที่ 1', desc:'รอกำหนดเนื้อหา', todo:true},
+            {id:'x-2', title:'หัวข้อย่อยที่ 2', desc:'รอกำหนดเนื้อหา', todo:true},
+            {id:'x-3', title:'หัวข้อย่อยที่ 3', desc:'รอกำหนดเนื้อหา', todo:true}
+          ]
+        },
+        {
+          id:'b1-5m', title:'5M',
+          desc:'ทรัพยากรบริหารจัดการ 5 ด้าน',
+          children:[
+            {id:'m-man',      title:'Man · คน',           desc:'บุคลากร ครู นักเรียน และเครือข่ายผู้มีส่วนร่วม'},
+            {id:'m-money',    title:'Money · งบประมาณ',    desc:'งบประมาณและทรัพยากรสนับสนุนการดำเนินงาน'},
+            {id:'m-machine',  title:'Machine · เครื่องมือ', desc:'อุปกรณ์ เทคโนโลยี และระบบสารสนเทศ'},
+            {id:'m-material', title:'Material · วัสดุ',     desc:'สื่อ วัสดุ และแหล่งเรียนรู้'},
+            {id:'m-method',   title:'Method · วิธีการ',     desc:'กระบวนการและรูปแบบการดำเนินงาน'}
+          ]
+        }
+      ]
+    },
+    {
+      id:'b2', hue:212, tone:'light',
+      title:'กลไกสู่ความสำเร็จ',
+      desc:'กระบวนการขับเคลื่อนที่แปลงปัจจัยให้เกิดผลลัพธ์',
+      children:[
+        {
+          id:'b2-1', title:'กลไกที่ 1', desc:'รอกำหนดชื่อหัวข้อ', todo:true,
+          children:[
+            {id:'g1-1', title:'หัวข้อย่อยที่ 1', desc:'รอกำหนดเนื้อหา', todo:true},
+            {id:'g1-2', title:'หัวข้อย่อยที่ 2', desc:'รอกำหนดเนื้อหา', todo:true},
+            {id:'g1-3', title:'หัวข้อย่อยที่ 3', desc:'รอกำหนดเนื้อหา', todo:true}
+          ]
+        },
+        {
+          id:'b2-2', title:'กลไกที่ 2', desc:'รอกำหนดชื่อหัวข้อ', todo:true,
+          children:[
+            {id:'g2-1', title:'หัวข้อย่อยที่ 1', desc:'รอกำหนดเนื้อหา', todo:true},
+            {id:'g2-2', title:'หัวข้อย่อยที่ 2', desc:'รอกำหนดเนื้อหา', todo:true},
+            {id:'g2-3', title:'หัวข้อย่อยที่ 3', desc:'รอกำหนดเนื้อหา', todo:true}
+          ]
+        },
+        {
+          id:'b2-3', title:'กลไกที่ 3', desc:'รอกำหนดชื่อหัวข้อ', todo:true,
+          children:[
+            {id:'g3-1', title:'หัวข้อย่อยที่ 1', desc:'รอกำหนดเนื้อหา', todo:true},
+            {id:'g3-2', title:'หัวข้อย่อยที่ 2', desc:'รอกำหนดเนื้อหา', todo:true},
+            {id:'g3-3', title:'หัวข้อย่อยที่ 3', desc:'รอกำหนดเนื้อหา', todo:true}
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+/* ---------- เตรียมข้อมูล ---------- */
+const INDEX = {};
+(function prep(n, parent){
+  n._parent = parent || null;
+  if(n.hue === undefined && parent && parent.hue !== undefined) n.hue = parent.hue;
+  if(n.tone === undefined && parent && parent.tone) n.tone = parent.tone;
+  INDEX[n.id] = n;
+  (n.children||[]).forEach(c => prep(c, n));
+})(DATA, null);
+
+const scene = document.getElementById('scene');
+const crumbs = document.getElementById('crumbs');
+const backBtn = document.getElementById('back');
+const hint = document.getElementById('hint');
+let current = DATA;
+
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function makeNode(k, i){
+  const hasKids = !!(k.children && k.children.length);
+  const el = document.createElement('button');
+  el.type = 'button';
+  el.className = 'node' + (k.tone === 'light' ? ' light' : '') + (k.todo ? ' todo' : '');
+  el.style.setProperty('--h', k.hue ?? 224);
+  el.style.animationDelay = (i * 60) + 'ms';
+  el.innerHTML =
+    '<span class="card">' +
+      '<span class="bar"></span>' +
+      '<span class="ttl">' + esc(k.title) + '</span>' +
+      '<span class="desc">' + esc(k.desc || '') + '</span>' +
+      '<span class="cta">' +
+        (hasKids ? 'ดูองค์ประกอบย่อย · ' + k.children.length : 'ดูรายละเอียด') +
+        '<i>&rarr;</i>' +
+      '</span>' +
+    '</span>';
+  el.addEventListener('click', () => hasKids ? render(k) : showDetail(k));
+  return el;
+}
+
+function render(node){
+  current = node;
+  const kids = node.children || [];
+  scene.innerHTML = '';
+
+  if(!kids.length){ showDetail(node); return; }
+
+  if(node === DATA && kids.length === 2){
+    const flow = document.createElement('div');
+    flow.className = 'flow';
+    flow.appendChild(makeNode(kids[0], 0));
+    const link = document.createElement('div');
+    link.className = 'arrow-link';
+    link.innerHTML = '<span class="arrow-label">นำไปสู่</span><span class="rail"></span>';
+    flow.appendChild(link);
+    flow.appendChild(makeNode(kids[1], 1));
+    scene.appendChild(flow);
+    hint.textContent = 'แตะบล็อกเพื่อดูองค์ประกอบย่อย';
+  }else{
+    const grid = document.createElement('div');
+    grid.className = 'grid ' + (kids.length >= 5 ? 'c5' : kids.length >= 3 ? 'c3' : 'c2');
+    kids.forEach((k, i) => grid.appendChild(makeNode(k, i)));
+    scene.appendChild(grid);
+    hint.textContent = 'แตะเพื่อเจาะลึกต่อ หรือกด “ย้อนกลับ” เพื่อขึ้นชั้นบน';
+  }
+  finish(node);
+}
+
+function showDetail(node){
+  current = node;
+  scene.innerHTML =
+    '<div class="detail' + (node.tone === 'light' ? ' light' : '') + '" style="--h:' + (node.hue ?? 224) + '">' +
+      '<span class="bar"></span>' +
+      '<h2>' + esc(node.title) + '</h2>' +
+      '<p>' + esc(node.desc || '') + '</p>' +
+      (node.todo ? '<div class="note">หัวข้อนี้ยังรอกำหนดเนื้อหา — แก้ไขได้ที่ตัวแปร <b>DATA</b> ท้ายไฟล์</div>' : '') +
+    '</div>';
+  hint.textContent = 'กด “ย้อนกลับ” เพื่อขึ้นชั้นบน';
+  finish(node);
+}
+
+function finish(node){
+  buildCrumbs(node);
+  backBtn.hidden = (node === DATA);
+  setHash(node);
+  window.scrollTo({top:0, behavior:'smooth'});
+  reportHeight();
+}
+
+/* แจ้งความสูงจริงให้หน้าแม่ปรับ iframe ตามเนื้อหา จึงไม่มีตัวเลื่อนหรือพื้นที่ว่าง */
+function reportHeight(){
+  requestAnimationFrame(() => {
+    const height = Math.ceil(Math.max(document.body.scrollHeight, document.documentElement.scrollHeight));
+    window.parent.postMessage({ type: 'd5-success-model-height', height }, window.location.origin);
+  });
+}
+new ResizeObserver(reportHeight).observe(document.body);
+
+function buildCrumbs(node){
+  const path = [];
+  for(let n = node; n; n = n._parent) path.unshift(n);
+  crumbs.innerHTML = '';
+  path.forEach((n, i) => {
+    if(i){
+      const s = document.createElement('span');
+      s.className = 'sep'; s.textContent = '›';
+      crumbs.appendChild(s);
+    }
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'crumb' + (i === path.length - 1 ? ' now' : '');
+    b.textContent = (n === DATA) ? 'ภาพรวม' : n.title;
+    if(i < path.length - 1) b.addEventListener('click', () => render(n));
+    crumbs.appendChild(b);
+  });
+}
+
+let lockHash = false;
+function setHash(node){
+  lockHash = true;
+  const h = node === DATA ? '' : '#' + node.id;
+  if(location.hash !== h) history.replaceState(null, '', h || location.pathname);
+  setTimeout(function(){ lockHash = false; }, 0);
+}
+window.addEventListener('hashchange', () => {
+  if(lockHash) return;
+  const n = INDEX[location.hash.slice(1)];
+  if(n) (n.children && n.children.length) ? render(n) : showDetail(n);
+});
+
+backBtn.addEventListener('click', () => { if(current._parent) render(current._parent); });
+document.addEventListener('keydown', e => {
+  if((e.key === 'Escape' || e.key === 'Backspace') && current._parent){ e.preventDefault(); render(current._parent); }
+});
+
+const start = INDEX[location.hash.slice(1)] || DATA;
+(start.children && start.children.length) ? render(start) : showDetail(start);
+window.addEventListener('load', reportHeight);
+</script>
+</body>
+</html>

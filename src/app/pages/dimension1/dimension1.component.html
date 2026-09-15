@@ -188,18 +188,6 @@
                 [valueFontSize]="12" [note]="chart.note" />
             </div>
           </div>
-
-          <!-- ตัวเลือก B: ถ้าเลือกแบบ A ให้ลบบล็อก .d1-onet-option--scroll นี้ทั้งบล็อก -->
-          <div class="d1-onet-option d1-onet-option--scroll">
-            <div class="d1-onet-option-label">ตัวเลือก B · กราฟขนาดใหญ่ เลื่อนซ้าย–ขวาเพื่อดู</div>
-            <div class="d1-onet-scroll" tabindex="0" aria-label="เลื่อนดูกราฟผลงานเด่น O-NET">
-              <div class="d1-onet-scroll-track">
-                <app-bar-chart *ngFor="let chart of onetHighlights" [title]="chart.title" [subtitle]="chart.subtitle"
-                  [labels]="d.section11.onet.m6.years" [series]="chart.series" [max]="60" valueFormat="1.2-2"
-                  [valueFontSize]="15" [note]="chart.note" />
-              </div>
-            </div>
-          </div>
         </div>
 
         <!-- ม.6 — เลือกดูรายวิชาได้ -->
