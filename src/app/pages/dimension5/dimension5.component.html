@@ -1,8 +1,7 @@
 <!-- พื้นหลังวิดีโอเดียวกับด้านที่ 1 -->
 <div class="d5-bg" aria-hidden="true">
-  <video #bgv class="d5-video" autoplay muted loop playsinline preload="auto"
-         poster="video/school-poster.jpg"
-         (loadedmetadata)="playBg(bgv)" (canplay)="playBg(bgv)">
+  <video #bgv class="d5-video" autoplay muted loop playsinline preload="auto" poster="video/school-poster.jpg"
+    (loadedmetadata)="playBg(bgv)" (canplay)="playBg(bgv)">
     <source src="video/school.mp4" type="video/mp4" />
   </video>
   <div class="d5-veil"></div>
@@ -13,13 +12,12 @@
 <!-- nav ลอย: เลือกโครงการ และปุ่มกลับอยู่ท้ายสุด -->
 <nav class="d5-nav" aria-label="เลือกโครงการดีเด่นด้านที่ 5">
   <button type="button" class="d5-nav-btn" *ngFor="let project of d.projects; let i = index"
-          [class.is-open]="open() === i" (click)="selectProject(i)"
-          [attr.aria-label]="project.no + ' ' + project.name">
+    [class.is-open]="open() === i" (click)="selectProject(i)" [attr.aria-label]="project.no + ' ' + project.name">
     <span class="d5-nav-no">{{ project.no }}</span>
     <span class="d5-nav-tip">{{ project.name }}</span>
   </button>
-  <button type="button" class="d5-nav-btn d5-nav-back" *ngIf="open() !== null"
-          (click)="backToIndex()" aria-label="กลับหน้าหลักด้านที่ 5">
+  <button type="button" class="d5-nav-btn d5-nav-back" *ngIf="open() !== null" (click)="backToIndex()"
+    aria-label="กลับหน้าหลักด้านที่ 5">
     <span class="d5-nav-no" aria-hidden="true">↶</span>
     <span class="d5-nav-tip">กลับหน้าหลักด้านที่ 5</span>
   </button>
@@ -27,8 +25,15 @@
 
 <section class="section d5-intro" *ngIf="open() === null">
   <div class="wrap">
-    <div class="card card-accent" appReveal style="margin-bottom:32px">
-      <p class="card-body" style="margin:0">{{ d.intro }}</p>
+    <div class="card card-accent font-family: 'Sarabun'font-size: 23.5px;" appReveal style="margin-bottom:32px">
+      <p style="text-indent: 2em;">โรงเรียนน้อมนำแนวพระราชดำริสู่การปฏิบัติ ผ่าน สวนพฤกษศาสตร์โรงเรียน
+        เพื่อสร้างจิตสำนึกในการอนุรักษ์ทรัพยากรธรรมชาติและสิ่งแวดล้อมอย่างยั่งยืน
+        บูรณาการองค์ความรู้สู่การจัดการเรียนรู้ ส่งเสริมให้ผู้เรียนเรียนรู้จากประสบการณ์จริงและพัฒนาศักยภาพอย่างรอบด้าน
+        ส่งเสริมผู้เรียนตาม ศักยภาพ ความถนัด และความสนใจ</p>
+      <p style="text-indent: 2em;">เปิดโอกาสสู่การแสดงความสามารถและพัฒนาความเป็นเลิศ สนับสนุนการเข้าร่วม
+        การแข่งขันภายนอก เพื่อเสริมประสบการณ์ สร้างความภาคภูมิใจ และยกระดับความสามารถสู่เวทีที่สูงขึ้น
+        พัฒนาระบบประกันคุณภาพการศึกษาภายในอย่างเป็นระบบ เชื่อมโยงมาตรฐาน เป้าหมาย การดำเนินงาน และการพัฒนาอย่างต่อเนื่อง
+        มุ่งสร้าง วัฒนธรรมคุณภาพ และผลลัพธ์เชิงประจักษ์ ยกระดับคุณภาพการศึกษาสู่ รางวัล IQA Award อย่างยั่งยืน</p>
     </div>
   </div>
 </section>
@@ -57,8 +62,8 @@
     <!-- โมเดลนี้แก้ข้อมูลได้โดยตรงที่ public/models/dimension5-success-model.html ในตัวแปร DATA -->
     <div class="d5-success-model" appReveal>
       <div class="d5-success-model-frame">
-        <iframe src="/models/dimension5-success-model.html" title="โมเดลปัจจัยและกลไกสู่ความสำเร็จ"
-          loading="lazy" [style.height.px]="successModelHeight()"></iframe>
+        <iframe src="/models/dimension5-success-model.html" title="โมเดลปัจจัยและกลไกสู่ความสำเร็จ" loading="lazy"
+          [style.height.px]="successModelHeight()"></iframe>
       </div>
     </div>
   </div>
@@ -76,10 +81,7 @@
 <ng-container *ngIf="currentProject as p">
   <section class="section d5-project-detail">
     <div class="wrap">
-      <app-section-header [light]="true"
-        [num]="p.no"
-        [title]="p.name"
-        [lead]="p.summary" />
+      <app-section-header [light]="true" [num]="p.no" [title]="p.name" [lead]="p.summary" />
 
       <app-callout label="ที่มาของโครงการ:" [gold]="true" style="display:block;margin-bottom:30px">
         {{ p.royal }}
@@ -114,8 +116,8 @@
           <div class="sec-rule"></div>
         </div>
         <div class="grid grid-2">
-          <div class="card card-hover" *ngFor="let g of p.subjectGroups; let gi = index"
-               appReveal [revealDelay]="gi * 70">
+          <div class="card card-hover" *ngFor="let g of p.subjectGroups; let gi = index" appReveal
+            [revealDelay]="gi * 70">
             <h3 class="card-title" style="font-size:17.5px">{{ g.name }}</h3>
             <p class="card-body" style="margin:0;font-size:15.5px">{{ g.text }}</p>
           </div>
@@ -128,9 +130,7 @@
 <!-- ═══════════ การเผยแพร่ ═══════════ -->
 <section class="section section-alt" *ngIf="open() === null">
   <div class="wrap">
-    <app-section-header [light]="true"
-      kicker="ผลการดำเนินงาน"
-      [title]="d.dissemination.title"
+    <app-section-header [light]="true" kicker="ผลการดำเนินงาน" [title]="d.dissemination.title"
       [lead]="d.dissemination.lead" />
 
     <!-- แก้เนื้อหาวงล้อได้ที่ public/models/dimension5-dissemination-wheel.html ในตัวแปร BLOCKS -->
@@ -145,18 +145,15 @@
 <!-- ═══════════ แกลเลอรีภาพกิจกรรม ═══════════ -->
 <section class="section" *ngIf="open() === null">
   <div class="wrap">
-    <app-photo-gallery
-      title="ภาพกิจกรรมประกอบด้านที่ 5"
-      lead="ภาพความดีเด่นและการพัฒนาคุณภาพอย่างต่อเนื่อง จากเอกสารประกอบการประเมินด้านที่ 5"
-      [items]="gallery" [light]="true" />
+    <app-photo-gallery title="ภาพกิจกรรมประกอบด้านที่ 5"
+      lead="ภาพความดีเด่นและการพัฒนาคุณภาพอย่างต่อเนื่อง จากเอกสารประกอบการประเมินด้านที่ 5" [items]="gallery"
+      [light]="true" />
   </div>
 </section>
 
 <section class="section" *ngIf="open() === null">
   <div class="wrap">
-    <app-section-header
-      kicker="สรุป"
-      title="ตัวชี้วัดของด้านที่ 5"
+    <app-section-header kicker="สรุป" title="ตัวชี้วัดของด้านที่ 5"
       lead="ตามแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน ระดับประถมศึกษาและมัธยมศึกษา" />
 
     <div class="card" *ngFor="let key of indicatorKeys" appReveal>
@@ -172,9 +169,8 @@
     </app-callout>
 
     <div style="margin-top:34px">
-      <app-pager
-        prevPath="/dimension-4" prevName="ด้านที่ 4 การจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ"
-        nextPath="/" nextName="กลับสู่หน้าแรก" />
+      <app-pager prevPath="/dimension-4" prevName="ด้านที่ 4 การจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ" nextPath="/"
+        nextName="กลับสู่หน้าแรก" />
     </div>
   </div>
 </section>
