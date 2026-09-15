@@ -328,6 +328,29 @@
 .d1-narrative p:last-child { margin-bottom: 0; }
 .d1-onet-narrative strong { color: #fff; font-weight: 800; }
 
+/* หลักฐานภาพประกอบกราฟเส้นทางศึกษาต่อ 1.1.7 */
+.d1-pathway-images {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-top: 22px;
+}
+.d1-pathway-images figure {
+  margin: 0;
+  display: grid;
+  gap: 9px;
+  overflow: hidden;
+  color: var(--navy-800);
+  font-size: 15px;
+  font-weight: 800;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+.d1-pathway-images img { display: block; width: 100%; height: auto; }
+.d1-pathway-images figcaption { padding: 0 14px 13px; }
+
 /* ผลงานเด่น O-NET — ใช้สีและถ้อยคำจากหลักฐานเปรียบเทียบรายวิชา */
 .d1-onet-highlight {
   padding: 22px;
