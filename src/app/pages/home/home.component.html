@@ -53,12 +53,11 @@
 
 <ng-template #card let-l>
   <span class="toc-photo" [style.background-image]="'url(' + l.image + ')'" aria-hidden="true"></span>
-  <span class="toc-body">
-    <span class="toc-top">
-      <span class="toc-no">{{ l.no }}</span>
-      <span class="toc-weight" *ngIf="l.weight">น้ำหนัก {{ l.weight }} คะแนน</span>
-    </span>
-    <span class="toc-name">{{ l.name }}</span>
+    <span class="toc-body">
+      <span class="toc-top">
+        <span class="toc-no">{{ l.no }}</span>
+        <span class="toc-name">{{ l.name }}</span>
+      </span>
     <span class="toc-sub">{{ l.sub }}</span>
     <span class="toc-go">เปิดดู
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
