@@ -45,6 +45,8 @@
   -webkit-tap-highlight-color: transparent;
 }
 .cycle-head:active { background: var(--navy-50); }
+.all-expanded .cycle-head { cursor: default; }
+.all-expanded .cycle-chevron { display: none; }
 .cycle-head-text { display: grid; gap: 6px; min-width: 0; }
 
 .cycle-no {

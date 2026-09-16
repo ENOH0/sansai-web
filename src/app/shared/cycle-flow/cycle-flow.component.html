@@ -1,7 +1,7 @@
-<div class="cycle">
+<div class="cycle" [class.all-expanded]="expandAll">
   <article class="cycle-step" *ngFor="let s of steps; let i = index"
            [class.is-open]="isOpen(i)" appReveal="zoom" [revealDelay]="i * 110">
-    <button type="button" class="cycle-head" (click)="toggle(i)"
+    <button type="button" class="cycle-head" (click)="toggle(i)" [disabled]="expandAll"
             [attr.aria-expanded]="isOpen(i)" [attr.aria-controls]="'cycle-detail-' + i">
       <span class="cycle-no">{{ i + 1 }}</span>
       <span class="cycle-head-text">

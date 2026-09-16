@@ -567,7 +567,7 @@
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section12.teamwork.narrative }"></ng-container>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
-      <app-cycle-flow [steps]="d.section12.teamwork.cycle" />
+      <app-cycle-flow [steps]="d.section12.teamwork.cycle" [expandAll]="true" />
       <div class="stack" style="margin-top:44px">
         <app-line-chart title="ร้อยละของผลการประเมิน “ผ่าน” ในกิจกรรมพัฒนาผู้เรียน" subtitle="ปีการศึกษา 2566–2568"
           [labels]="d.section12.teamwork.years" [series]="teamSeries" [min]="96" [max]="100" [showEvidence]="true"

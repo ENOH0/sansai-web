@@ -18,6 +18,8 @@ export class CycleFlowComponent {
   private _steps: CycleStep[] = [];
   readonly openIndex = signal<number | null>(null);
   @Input() showEvidence = false;
+  /** แสดงรายละเอียดทุกขั้นทันที (ใช้เฉพาะหน้าที่ต้องการอ่านพร้อมกัน) */
+  @Input() expandAll = false;
 
   @Input()
   set steps(value: CycleStep[]) {
@@ -26,10 +28,11 @@ export class CycleFlowComponent {
   }
   get steps(): CycleStep[] { return this._steps; }
 
-  isOpen(index: number): boolean { return this.openIndex() === index; }
+  isOpen(index: number): boolean { return this.expandAll || this.openIndex() === index; }
 
   /** เปิดได้ทีละขั้น เพื่อให้ดูข้อมูลบน iPad ได้กระชับ */
   toggle(index: number): void {
+    if (this.expandAll) return;
     this.openIndex.update(open => open === index ? null : index);
   }
 }
