@@ -350,6 +350,20 @@ export class Dimension1Component implements OnInit {
       `/evidence/1.2.6/confidence-activities/${String(index * 3 + imageIndex + 1).padStart(2, '0')}.png`)
   }));
 
+  readonly healthActivities = [
+    'ให้บริการชั่งน้ำหนักและวัดส่วนสูงนักเรียน',
+    'ให้บริการร่วมกับศูนย์สุขภาพชุมชน ต.หนองหาร ในการฉีดวัคซีนป้องกันโรคมะเร็งปากมดลูก (HPV) นักเรียนชั้น ม.1- ม.6',
+    'ให้บริการร่วมกับสำนักงานเทศบาลแม่โจ้ ตรวจคัดกรองและแก้ไขความผิดปกติทางสายตา ให้กับนักเรียน ครูและบุคลากรทางการศึกษา',
+    'บริการตรวจสุขภาพประจำปีร่วมกับคณะเทคนิคการแพทย์ มหาวิทยาลัยเชียงใหม่',
+    'รับการตรวจสุขภาพ และการตรวจสอบภาชนะ'
+  ].map((title, index) => ({
+    title,
+    images: [
+      `/evidence/1.2.7/health-activities/${String(index * 2 + 1).padStart(2, '0')}.png`,
+      `/evidence/1.2.7/health-activities/${String(index * 2 + 2).padStart(2, '0')}.png`
+    ]
+  }));
+
   readonly muenSanWorkshopImages = [
     '/evidence/1.2.5/muen-san-workshop/01.png',
     '/evidence/1.2.5/muen-san-workshop/02.png'

@@ -480,13 +480,13 @@
 
       <div class="grid grid-2">
         <div>
-          <app-line-chart title="สมรรถภาพทางกายของนักเรียน" subtitle="ร้อยละจำแนกตามระดับสมรรถภาพ ปีการศึกษา 2566–2568"
+          <app-bar-chart title="สมรรถภาพทางกายของนักเรียน" subtitle="ร้อยละจำแนกตามระดับสมรรถภาพ ปีการศึกษา 2566–2568"
             [labels]="d.section12.health.years" [series]="fitSeries" [showValues]="false" [showEvidence]="true"
             note="กลุ่มสมรรถภาพดีมากและดีเพิ่มขึ้นทุกปี ขณะที่กลุ่มที่ต้องปรับปรุงลดลงอย่างต่อเนื่องจากร้อยละ 20.28 เหลือร้อยละ 12.32" />
         </div>
 
         <div>
-          <app-line-chart title="สัดส่วนร่างกายของนักเรียน" subtitle="ร้อยละจำแนกตามเกณฑ์ ปีการศึกษา 2566–2568"
+          <app-bar-chart title="สัดส่วนร่างกายของนักเรียน" subtitle="ร้อยละจำแนกตามเกณฑ์ ปีการศึกษา 2566–2568"
             [labels]="d.section12.health.years" [series]="bodySeries" [showValues]="false" [showEvidence]="true"
             note="นักเรียนที่มีสัดส่วนร่างกายปกติเพิ่มขึ้นเป็นร้อยละ 90.81 ในปีการศึกษา 2568 ขณะที่กลุ่มอ้วนลดลงจากร้อยละ 16.63 เหลือร้อยละ 5.09" />
         </div>
@@ -497,6 +497,20 @@
           [labels]="d.section12.health.years" [series]="mindBars" [max]="100" valueFormat="1.2-2" [showEvidence]="true"
           [note]="d.section12.health.conclusion" />
       </div>
+      <section class="d1-health-activities" appReveal>
+        <h3>กิจกรรมและบริการด้านสุขภาพ</h3>
+        <div class="d1-environment-activities">
+          <article class="d1-environment-activity" *ngFor="let activity of healthActivities; let i = index" appReveal="left"
+            [revealDelay]="i * 70">
+            <h4>{{ activity.title }}</h4>
+            <div class="d1-environment-photos">
+              <figure *ngFor="let image of activity.images">
+                <img [src]="image" [alt]="activity.title" loading="lazy">
+              </figure>
+            </div>
+          </article>
+        </div>
+      </section>
     </div>
   </section>
 </ng-container>
