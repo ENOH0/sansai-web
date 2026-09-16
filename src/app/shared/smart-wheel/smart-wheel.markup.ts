@@ -9,7 +9,7 @@ export interface WheelEvidence {
 }
 
 export interface WheelItem {
-  letter: string; title: string; detail?: string;
+  letter: string; title: string; thaiTitle?: string; detail?: string;
   x: number; y: number; light: boolean;
   evidence?: WheelEvidence[];
 }
@@ -94,7 +94,7 @@ export function initSmartWheel(root: HTMLElement, items: WheelItem[]): void {
     t.textContent = it.title;
     d.hidden = !!it.evidence?.length;
     d.textContent = it.detail ?? '';
-    k.textContent = `${it.letter} — ${it.title}`;
+    k.textContent = `${it.letter} — ${it.thaiTitle ?? it.title}`;
     evidence.setAttribute('aria-label', `พื้นที่ใส่ภาพหลักฐานของ ${it.title}`);
     evidence.innerHTML = it.evidence?.length
       ? `<p class="sw-evidence-label">ภาพกิจกรรมตามลำดับกระบวนการ</p>

@@ -420,6 +420,11 @@
 .d1-safety-support .card { max-width:780px; }
 .d1-safety-activities { margin-top:30px; }
 .d1-safety-activities > h3 { margin:0 0 16px; color:#fff; font-size:24px; font-weight:900; line-height:1.4; text-shadow:0 2px 8px rgba(0,0,0,.45); }
+.d1-tech-award-photos { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; margin-top:12px; }
+.d1-tech-award-photos figure { margin:0; overflow:hidden; border:1px solid var(--navy-100); border-radius:9px; background:#fff; }
+.d1-tech-award-photos img { display:block; width:100%; height:130px; object-fit:cover; }
+.d1-tech-award-photos figure:only-child { grid-column:1 / -1; }
+@media (max-width:560px) { .d1-tech-award-photos img { height:170px; } }
 
 /* ผลงานเด่น O-NET — ใช้สีและถ้อยคำจากหลักฐานเปรียบเทียบรายวิชา */
 .d1-onet-highlight {

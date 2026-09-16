@@ -373,6 +373,11 @@
                 <span class="chip">ปีการศึกษา {{ a.year }}</span>
               </div>
               <p style="font-size:14.5px;color:#6b7a94;margin-top:6px">{{ a.org }}</p>
+              <div class="d1-tech-award-photos" *ngIf="a.photos?.length">
+                <figure *ngFor="let photo of a.photos">
+                  <img [src]="photo" [alt]="a.name" loading="lazy">
+                </figure>
+              </div>
             </div>
           </div>
         </div>

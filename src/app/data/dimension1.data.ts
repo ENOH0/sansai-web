@@ -199,14 +199,19 @@ export const DIM1 = {
           award: 'รางวัลระดับเหรียญทอง การแข่งขันพัฒนา Responsive and Applications Web',
           org: 'สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน กระทรวงศึกษาธิการ',
           year: '2569',
-          level: 'ระดับชาติ'
+          level: 'ระดับชาติ',
+          photos: [
+            '/evidence/1.1.5/technology-awards/01-pitakphon.jpg',
+            '/evidence/1.1.5/technology-awards/02-chutipon.jpg'
+          ]
         },
         {
-          name: 'เด็กชายชนะพล รูปงาม และคณะ',
+          name: 'เด็กชายชนะพล รูปงาม เด็กชายธนัตถ์ภาธร วงค์แพทย์ เด็กชายธีรภัทร์ หลวงละ และเด็กชายนันทพันธ์ คำดวงดาว',
           award: 'รางวัลโครงงานเพื่อสังคม Social Impact Project Award — โครงการวิจัยพัฒนาแพลตฟอร์มการเรียนรู้สะเต็มศึกษาและทักษะด้านดิจิทัล ชุดสมองกลเพื่อการเรียนรู้ GOGO BOARD',
           org: 'ศูนย์นวัตกรรมการสอนและการเรียนรู้ มหาวิทยาลัยเชียงใหม่',
           year: '2568',
-          level: 'ระดับชาติ'
+          level: 'ระดับชาติ',
+          photos: ['/evidence/1.1.5/technology-awards/03-team.jpg']
         }
       ]
     },
