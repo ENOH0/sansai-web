@@ -117,6 +117,19 @@
   border: 0;
   background: transparent;
 }
+/* โมเดลหลักสูตรที่มีความยืดหยุ่น (PDCA) */
+.d2-flexible-model {
+  margin-top: 34px;
+  overflow: hidden;
+  background: transparent;
+  border-radius: var(--radius-md);
+}
+.d2-flexible-model iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+}
 .acc-ind {
   margin-bottom: 32px;
   padding: 20px 24px;

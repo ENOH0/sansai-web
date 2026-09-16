@@ -29,10 +29,16 @@ import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
 })
 export class Dimension2Component {
   readonly diversityModelHeight = signal(860);
+  readonly flexibleModelHeight = signal(980);
 
   @HostListener('window:message', ['$event'])
   resizeDiversityModel(event: MessageEvent<{ type?: string; height?: number }>): void {
     if (typeof window === 'undefined' || event.origin !== window.location.origin) return;
+    if (event.data?.type === 'd2-flexible-model-height') {
+      const h = Number(event.data.height);
+      if (Number.isFinite(h)) this.flexibleModelHeight.set(Math.max(620, Math.min(2000, h)));
+      return;
+    }
     if (event.data?.type !== 'd2-diversity-model-height') return;
     const height = Number(event.data.height);
     if (Number.isFinite(height)) this.diversityModelHeight.set(Math.max(620, Math.min(1600, height)));
