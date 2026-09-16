@@ -53,7 +53,6 @@ html{
 
 body{
     margin:0;
-    min-height:100vh;
 
     font-family:
         "TH Sarabun PSK",
@@ -2743,6 +2742,12 @@ function toggleMain(panelId, mainId){
         drawConnectors,
         500
     );
+
+    // รอให้แอนิเมชันพับ/ขยายจบ แล้วแจ้งความสูงจริงกลับไปยังหน้าแม่
+    setTimeout(
+        reportEmbedHeight,
+        600
+    );
 }
 
 
@@ -2778,6 +2783,11 @@ function toggleCategory(event,button){
     setTimeout(
         drawConnectors,
         500
+    );
+
+    setTimeout(
+        reportEmbedHeight,
+        600
     );
 }
 
@@ -3170,7 +3180,12 @@ window.addEventListener(
 /* แจ้งความสูงให้หน้าเว็บแม่ เพื่อไม่ให้ iframe มีแถบเลื่อน */
 function reportEmbedHeight(){
     requestAnimationFrame(()=>{
-        const height = Math.ceil(Math.max(document.body.scrollHeight, document.documentElement.scrollHeight));
+        const footer = document.querySelector('.footer-note');
+        // scrollHeight ของ document จะไม่เล็กลงเมื่อ iframe ถูกขยายแล้ว
+        // จึงวัดจากขอบล่างของเนื้อหาจริง เพื่อให้พับกลับได้ทันที
+        const height = Math.ceil(footer
+            ? footer.getBoundingClientRect().bottom + window.scrollY + 4
+            : document.body.scrollHeight);
         window.parent.postMessage({ type:'d1-student-quality-model-height', height }, window.location.origin);
     });
 }

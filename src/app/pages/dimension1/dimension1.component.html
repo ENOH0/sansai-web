@@ -246,6 +246,31 @@
 
         <app-data-table [caption]="d.section11.thai.caption" [headers]="yearHeaders3" [rows]="thaiRows" />
       </div>
+
+      <div class="grid grid-2" style="margin-top:24px">
+        <div class="card" appReveal="left">
+          <h3 class="card-title">กิจกรรมและโครงการพัฒนาทักษะภาษาไทย การสื่อสาร และคณิตศาสตร์</h3>
+          <div class="d1-english-activities">
+            <article class="d1-english-activity" *ngFor="let activity of thaiActivities">
+              <h4>{{ activity.title }}</h4>
+              <div class="d1-english-photos">
+                <figure *ngFor="let image of activity.images">
+                  <img [src]="image" [alt]="activity.title" loading="lazy">
+                </figure>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="card card-gold" appReveal="right">
+          <h3 class="card-title">ผลงานและรางวัลที่เกี่ยวข้อง</h3>
+          <div class="d1-english-awards">
+            <article class="d1-english-award" *ngFor="let award of thaiAwards">
+              <h4>{{ award.title }}</h4>
+              <img [src]="award.image" [alt]="award.title" loading="lazy">
+            </article>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </ng-container>

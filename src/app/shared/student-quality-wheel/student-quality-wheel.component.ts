@@ -27,8 +27,8 @@ export class StudentQualityWheelComponent {
       evidence: [
         { src: '/evidence/academic-model/alignment/01-plan.png', caption: 'P - การประชุมเพื่อแนวทางการวิเคราะห์มาตรฐาน หลักสูตร และเป้าหมายคุณภาพผู้เรียน ระหว่างคณะกรรมการสถานศึกษาขั้นพื้นฐาน ผู้บริหาร และคณะครูโรงเรียนสันทรายวิทยาคม' },
         { src: '/evidence/academic-model/alignment/02-do.png', caption: 'D - จัดทำแผนปฏิบัติการประจำปี' },
-        { src: '/evidence/academic-model/alignment/03-check.png', caption: 'C - มีการดำเนินการตามแผนปฏิบัติการ' },
-        { src: '/evidence/academic-model/alignment/04-act.png', caption: 'A - ตามลำดับ' }
+        { src: '/evidence/academic-model/alignment/03-check-revised.png', caption: 'C - มีการดำเนินการตามแผนปฏิบัติการ' },
+        { src: '/evidence/academic-model/alignment/04-act.png', caption: 'A - สรุปแผนปฏิบัติการประจำปี เพื่อนำไปปรับแก้ในปีการศึกษาต่อไป' }
       ]
     },
     {

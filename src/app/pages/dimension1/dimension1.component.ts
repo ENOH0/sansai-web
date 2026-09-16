@@ -36,14 +36,14 @@ import { StudentQualityWheelComponent } from '../../shared/student-quality-wheel
 })
 export class Dimension1Component implements OnInit {
   private readonly route = inject(ActivatedRoute);
-  readonly studentQualityModelHeight = signal(820);
+  readonly studentQualityModelHeight = signal(620);
 
   @HostListener('window:message', ['$event'])
   resizeStudentQualityModel(event: MessageEvent<{ type?: string; height?: number; topic?: string }>): void {
     if (typeof window === 'undefined' || event.origin !== window.location.origin) return;
     if (event.data?.type === 'd1-student-quality-model-height') {
       const height = Number(event.data.height);
-      if (Number.isFinite(height)) this.studentQualityModelHeight.set(Math.max(620, Math.min(4200, height)));
+      if (Number.isFinite(height)) this.studentQualityModelHeight.set(Math.max(560, Math.min(4200, height)));
       return;
     }
     if (event.data?.type === 'd1-student-quality-open-topic' && event.data.topic && this.topics.some(topic => topic.key === event.data.topic)) {
@@ -248,6 +248,42 @@ export class Dimension1Component implements OnInit {
   readonly thaiRows: TableRow[] = [
     ...DIM1.section11.thai.rows.map(r => ({ cells: [r.name, ...r.values.map(v => v.toFixed(2))] })),
     { cells: ['ค่าเฉลี่ย', ...DIM1.section11.thai.average.map(v => v.toFixed(2))], total: true }
+  ];
+
+  readonly thaiActivities = [
+    'กิจกรรมการพัฒนาทักษะการพูดในที่ประชุมชน',
+    'การฝึกปฏิบัติหน้าที่ผู้ประกาศข่าว ณ สถานีวิทยุมหาวิทยาลัยเกษตรศาสตร์แม่โจ้',
+    'กิจกรรมวันสุนทรภู่',
+    'กิจกรรมการประกวดบันทึกรักการอ่าน',
+    'การประกวดจัดทำสื่ออิเล็กทรอนิกส์จากหนังสือสารานุกรมไทยฉบับเยาวชนฯ',
+    'การจัดกิจกรรมการเรียนรู้แบบ Active Learning กลุ่มสาระการเรียนรู้คณิตศาสตร์',
+    'การใช้โปรแกรมทางคณิตศาสตร์ประยุกต์ใช้ร่วมกับการจัดการเรียนการสอน',
+    'กิจกรรมการแข่งขันคณิตคิดเลขเร็ว',
+    'กิจกรรมการแข่งขัน Battle of the Numbers',
+    'การเตรียมความพร้อมในการแข่งขัน Battle of the Numbers และตอบปัญหาทางคณิตศาสตร์',
+    'การเตรียมความพร้อมผู้เรียนเพื่อเข้าการทดสอบระดับชาติ',
+    'ค่าย Math Summer Camp และค่ายพัฒนานวัตกรรมด้านคณิตศาสตร์เพื่อยอดสู่โครงงานคณิตศาสตร์'
+  ].map((title, index) => ({
+    title,
+    images: [
+      `/evidence/1.1.2/thai-activities/${String(index * 2 + 1).padStart(2, '0')}.jpg`,
+      `/evidence/1.1.2/thai-activities/${String(index * 2 + 2).padStart(2, '0')}.jpg`
+    ]
+  }));
+
+  readonly thaiAwards = [
+    {
+      title: 'รางวัลจากการประกวดจัดทำสื่ออิเล็กทรอนิกส์จากหนังสือสารานุกรมไทยสำหรับเยาวชนฯ',
+      image: '/evidence/1.1.2/thai-activities/09.jpg'
+    },
+    {
+      title: 'ผลงานรางวัลจากกิจกรรมการใช้โปรแกรมทางคณิตศาสตร์ประยุกต์ร่วมกับการจัดการเรียนการสอน',
+      image: '/evidence/1.1.2/thai-activities/13.jpg'
+    },
+    {
+      title: 'ผลงานรางวัลจากกิจกรรมการแข่งขันคณิตคิดเลขเร็ว',
+      image: '/evidence/1.1.2/thai-activities/16.jpg'
+    }
   ];
 
   // ---------- ภาษาอังกฤษ ----------
