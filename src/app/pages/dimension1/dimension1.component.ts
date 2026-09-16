@@ -337,6 +337,19 @@ export class Dimension1Component implements OnInit {
     ]
   }));
 
+  readonly confidenceActivities = [
+    'นักเรียนร่วมกับครูวางแผนจัดกิจกรรมการเรียนรู้และกิจกรรมเสริมหลักสูตรในรายวิชาต่าง ๆ',
+    'จัดการเรียนรู้เชิงรุกที่เน้นให้นักเรียนกล้าคิด กล้าทำ กล้าแสดงออก นำเสนอหน้าชั้นเรียน และอภิปรายร่วมกับครูอย่างมีเหตุผล',
+    'โครงการศึกษาแหล่งเรียนรู้ภายในและภายนอกโรงเรียน ทัศนศึกษา และการออกฝึกงานในสถานประกอบการ',
+    'กิจกรรม TOUR & LEARN นักเรียนสัมภาษณ์นักท่องเที่ยวชาวต่างชาติ',
+    'การเรียนรู้แบบโครงงานในรายวิชาโรงเรียนมาตรฐานสากล (IS1–IS3) พร้อมนำผลไปใช้บริการสังคม',
+    'กิจกรรม TO BE NUMBER ONE เพื่อวางรากฐานการพัฒนาศักยภาพและบุคลิกภาพความมั่นใจในตนเอง'
+  ].map((title, index) => ({
+    title,
+    images: Array.from({ length: 3 }, (_, imageIndex) =>
+      `/evidence/1.2.6/confidence-activities/${String(index * 3 + imageIndex + 1).padStart(2, '0')}.png`)
+  }));
+
   readonly muenSanWorkshopImages = [
     '/evidence/1.2.5/muen-san-workshop/01.png',
     '/evidence/1.2.5/muen-san-workshop/02.png'

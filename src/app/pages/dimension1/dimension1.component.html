@@ -662,11 +662,16 @@
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section12.confidence.narrative }"></ng-container>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
-      <div class="steps">
-        <div class="step-item" *ngFor="let a of d.section12.confidence.activities; let i = index" appReveal="left"
+      <div class="d1-environment-activities">
+        <article class="d1-environment-activity" *ngFor="let activity of confidenceActivities; let i = index" appReveal="left"
           [revealDelay]="i * 70">
-          <h4>{{ a }}</h4>
-        </div>
+          <h4>{{ activity.title }}</h4>
+          <div class="d1-confidence-photos">
+            <figure *ngFor="let image of activity.images">
+              <img [src]="image" [alt]="activity.title" loading="lazy">
+            </figure>
+          </div>
+        </article>
       </div>
       <app-callout label="สรุปผล:">{{ d.section12.confidence.conclusion }}</app-callout>
     </div>
