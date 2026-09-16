@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, HostListener, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableRow } from '../../core/models';
 import { DIM2 } from '../../data/dimension2.data';
@@ -28,6 +28,16 @@ import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
   styleUrl: './dimension2.component.css'
 })
 export class Dimension2Component {
+  readonly diversityModelHeight = signal(860);
+
+  @HostListener('window:message', ['$event'])
+  resizeDiversityModel(event: MessageEvent<{ type?: string; height?: number }>): void {
+    if (typeof window === 'undefined' || event.origin !== window.location.origin) return;
+    if (event.data?.type !== 'd2-diversity-model-height') return;
+    const height = Number(event.data.height);
+    if (Number.isFinite(height)) this.diversityModelHeight.set(Math.max(620, Math.min(1600, height)));
+  }
+
   /* ---------- แอคคอร์เดียนหัวข้อตามแบบประเมิน ----------
      เปิดได้ทีละหัวข้อ กดหัวข้อใหม่จะปิดหัวข้อเดิมอัตโนมัติ */
   private readonly opened = signal<string[]>([]);
