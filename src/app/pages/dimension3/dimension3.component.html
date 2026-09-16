@@ -40,6 +40,18 @@
   </div>
 </section>
 
+<!-- ═══════════ โมเดลการบริหารและการจัดการศึกษา ═══════════ -->
+<!-- แก้เนื้อหาได้ที่ public/models/banchuen-admin-model.html ในตัวแปร pdcaData / pdcaDetails -->
+<section class="section-tight" *ngIf="!open()">
+  <div class="wrap">
+    <div class="d3-admin-model" appReveal>
+      <iframe src="/models/banchuen-admin-model.html"
+        title="รูปแบบการบริหารแบบมีส่วนร่วม BANCHUEN Model"
+        loading="lazy" scrolling="no" [style.height.px]="adminModelHeight()"></iframe>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════ BANCHUEN Model ═══════════ -->
 <section class="section section-alt" *ngIf="!open()">
   <div class="wrap">

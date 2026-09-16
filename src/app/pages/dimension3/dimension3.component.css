@@ -271,3 +271,16 @@
   font-size: 16px;
   line-height: 1.4;
 }
+
+/* โมเดลการบริหารและการจัดการศึกษา (ฝังเป็น iframe) */
+.d3-admin-model {
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: transparent;
+}
+.d3-admin-model iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+}

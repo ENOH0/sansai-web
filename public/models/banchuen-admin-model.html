@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BANCHUEN Model - การบริหารการจัดการศึกษา</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#35506b;
+  --muted:#6f8193;
+  --pink:#ff9fc7;
+  --purple:#a89af5;
+  --blue:#79cfee;
+  --mint:#88ddb4;
+  --gold:#ffd58a;
+  --bg1:#fff8fc;
+  --bg2:#f5fbff;
+  --card:rgba(255,255,255,.78);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:"TH SarabunPSK","TH Sarabun New","Sarabun",Tahoma,sans-serif;color:var(--ink)}
+body{
+  background:
+    radial-gradient(circle at 10% 10%, rgba(255,185,219,.25), transparent 30%),
+    radial-gradient(circle at 90% 16%, rgba(151,208,255,.23), transparent 30%),
+    radial-gradient(circle at 50% 95%, rgba(155,232,196,.18), transparent 35%);
+  background-color:transparent;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.35;
+  background-image:radial-gradient(rgba(85,127,170,.2) 1px, transparent 1px);
+  background-size:28px 28px;
+  mask-image:linear-gradient(to bottom, transparent, #000 15%, #000 80%, transparent);
+}
+.wrapper{width:min(1480px,96vw);margin:auto;padding:26px 18px 42px;position:relative;z-index:1}
+.hero{text-align:center;margin-bottom:20px}
+.hero .eyebrow{font-size:22px;color:#8e78c3;font-weight:700;letter-spacing:.5px}
+.hero h1{margin:0;font-size:clamp(38px,5vw,66px);line-height:1;color:#355a84;text-shadow:0 4px 18px rgba(92,142,192,.13)}
+.hero h1 .model-name{display:inline-block;background:linear-gradient(90deg,var(--pink),var(--purple),var(--blue),var(--mint));-webkit-background-clip:text;background-clip:text;color:transparent;background-size:250% auto;animation:titleFlow 7s linear infinite}
+@keyframes titleFlow{to{background-position:250% center}}
+.hero p{margin:8px auto 0;max-width:980px;font-size:25px;line-height:1.25;color:#63778a}
+.hero-line{width:220px;height:5px;border-radius:99px;margin:14px auto 0;background:linear-gradient(90deg,var(--pink),var(--purple),var(--blue),var(--mint));box-shadow:0 0 20px rgba(145,174,240,.3)}
+
+.stage{position:relative;min-height:690px;display:flex;align-items:center;justify-content:center;padding:22px 0}
+.stage::before{content:"";position:absolute;width:min(1100px,88vw);height:410px;border-radius:50%;border:1px dashed rgba(128,159,196,.28);box-shadow:inset 0 0 70px rgba(160,190,225,.08);animation:slowSpin 28s linear infinite}
+@keyframes slowSpin{to{transform:rotate(360deg)}}
+.flow{position:relative;width:min(1240px,96%);display:grid;grid-template-columns:1fr 120px 1fr 120px 1fr;align-items:center;gap:8px}
+.main-node{position:relative;min-height:300px;border-radius:42px;padding:34px 24px 24px;background:var(--card);border:1px solid rgba(180,202,228,.55);backdrop-filter:blur(10px);box-shadow:0 18px 55px rgba(75,105,145,.13), inset 0 0 35px rgba(255,255,255,.7);cursor:pointer;transition:.45s cubic-bezier(.2,.8,.2,1);overflow:hidden}
+.main-node:hover{transform:translateY(-10px) scale(1.025);box-shadow:0 26px 70px rgba(75,105,145,.19),0 0 34px rgba(151,198,240,.28)}
+.main-node::before{content:"";position:absolute;inset:-35%;border-radius:50%;opacity:.18;filter:blur(4px);animation:haloRotate 13s linear infinite}
+@keyframes haloRotate{to{transform:rotate(360deg)}}
+.node-gear::before{background:conic-gradient(from 0deg,var(--pink),transparent 24%,var(--gold),transparent 48%,var(--pink))}
+.node-success::before{background:conic-gradient(from 0deg,var(--purple),transparent 25%,var(--blue),transparent 50%,var(--purple))}
+.node-result::before{background:conic-gradient(from 0deg,var(--mint),transparent 25%,var(--blue),transparent 52%,var(--mint))}
+.main-node>*{position:relative;z-index:2}
+.main-node::after{content:"";position:absolute;left:24px;right:24px;top:0;height:6px;border-radius:0 0 14px 14px;background:linear-gradient(90deg,var(--pink),var(--purple),var(--blue),var(--mint));opacity:.9;box-shadow:0 0 18px rgba(145,174,240,.22)}
+.node-number{font-family:Arial,sans-serif;font-size:16px;font-weight:800;letter-spacing:1.5px;opacity:.65;text-align:center;margin-bottom:4px}
+.main-node h2{font-size:34px;line-height:1.05;text-align:center;margin:0 0 10px;color:#415f7d}
+.main-node p{font-size:22px;line-height:1.2;text-align:center;margin:0;color:#6d8093}
+.mini-tags{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:18px}
+.tag{font-size:18px;padding:4px 12px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid rgba(165,190,218,.42);color:#63778c}
+.click-hint{margin-top:18px;text-align:center;font-size:19px;font-weight:700;color:#9279bd;animation:hintPulse 1.8s ease-in-out infinite}@keyframes hintPulse{50%{opacity:.45;transform:translateY(2px)}}
+.node-actions{display:flex;justify-content:center;margin-top:14px}.image-btn,.detail-btn{position:relative;border:1px solid rgba(255,255,255,.92);border-radius:999px;padding:8px 20px;font-family:inherit;font-size:19px;font-weight:700;color:#55708b;background:linear-gradient(135deg,rgba(255,232,244,.96),rgba(230,244,255,.96),rgba(231,251,241,.96));box-shadow:0 8px 22px rgba(104,145,190,.14),0 0 18px rgba(168,154,245,.2);cursor:pointer;transition:.3s ease;overflow:hidden}.image-btn::before,.detail-btn::before{content:"";position:absolute;inset:-2px;background:linear-gradient(100deg,transparent 20%,rgba(255,255,255,.9) 48%,transparent 76%);transform:translateX(-120%);animation:buttonShine 3.8s ease-in-out infinite}.image-btn:hover,.detail-btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 11px 28px rgba(104,145,190,.2),0 0 26px rgba(255,159,199,.34)}@keyframes buttonShine{0%,55%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+.connector{position:relative;height:6px;border-radius:99px;background:linear-gradient(90deg,rgba(255,164,201,.35),rgba(142,154,239,.75),rgba(104,203,231,.55));box-shadow:0 0 18px rgba(130,165,220,.28)}
+.connector::after{content:"";position:absolute;right:-3px;top:50%;transform:translateY(-50%);border-left:16px solid #8da4e5;border-top:10px solid transparent;border-bottom:10px solid transparent;filter:drop-shadow(0 0 7px rgba(125,153,225,.25))}
+.connector::before{content:"";position:absolute;width:15px;height:15px;border-radius:50%;top:50%;transform:translateY(-50%);background:#fff;box-shadow:0 0 10px #a8b9ef,0 0 24px #a8b9ef;animation:travel 2.2s linear infinite}@keyframes travel{from{left:0}to{left:calc(100% - 15px)}}
+
+/* particles */
+.spark{position:absolute;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 12px currentColor;opacity:.7;animation:floatSpark 5s ease-in-out infinite}
+.s1{left:7%;top:15%;color:#ff9fc7}.s2{right:8%;top:22%;color:#79cfee;animation-delay:1s}.s3{left:15%;bottom:15%;color:#8bdcb5;animation-delay:2s}.s4{right:16%;bottom:17%;color:#a89af5;animation-delay:3s}.s5{left:50%;top:8%;color:#ffd58a;animation-delay:1.5s}
+@keyframes floatSpark{0%,100%{transform:translateY(0) scale(.75);opacity:.35}50%{transform:translateY(-22px) scale(1.4);opacity:1}}
+
+/* Modal base */
+.modal{position:fixed;inset:0;background:rgba(222,235,249,.18);backdrop-filter:blur(9px);display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;visibility:hidden;transition:.35s ease;z-index:9999}
+.modal.show{opacity:1;visibility:visible}
+.modal-card{position:relative;width:min(1060px,96vw);max-height:90vh;overflow:auto;border-radius:34px;background:linear-gradient(145deg,rgba(255,255,255,.76),rgba(251,246,255,.62),rgba(240,251,255,.68));border:1px solid rgba(255,255,255,.82);backdrop-filter:blur(24px) saturate(125%);box-shadow:0 30px 100px rgba(48,78,112,.2),inset 0 0 34px rgba(255,255,255,.35);padding:30px;transform:translateY(35px) scale(.92);opacity:0;transition:.45s cubic-bezier(.18,.85,.25,1.12)}
+.modal.show .modal-card{transform:translateY(0) scale(1);opacity:1}
+.modal-card::before{content:"";position:absolute;inset:-2px;border-radius:36px;padding:2px;background:linear-gradient(120deg,var(--modalA,#ff9fc7),transparent 30%,var(--modalB,#79cfee),transparent 70%,var(--modalA,#ff9fc7));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;animation:borderGlow 4s linear infinite;background-size:220% auto}@keyframes borderGlow{to{background-position:220% center}}
+.close-btn{position:sticky;top:0;margin-left:auto;display:flex;min-width:72px;height:42px;padding:0 18px;border:none;border-radius:14px;align-items:center;justify-content:center;font-family:inherit;font-size:20px;font-weight:700;background:#f0f5fb;color:#66809b;cursor:pointer;z-index:20;box-shadow:0 8px 18px rgba(70,105,140,.1)}
+.modal-header{display:flex;align-items:center;gap:18px;margin:-35px 60px 18px 0}
+.modal-badge{width:82px;height:82px;flex:none;border-radius:26px;display:flex;align-items:center;justify-content:center;color:white;font-family:Arial,sans-serif;font-size:36px;font-weight:900;background:linear-gradient(145deg,var(--modalA,#ff9fc7),var(--modalB,#79cfee));box-shadow:0 12px 30px color-mix(in srgb,var(--modalA,#ff9fc7) 40%, transparent)}
+.modal-title h2{font-size:40px;margin:0;line-height:1;color:#3d5d7b}.modal-title p{font-size:23px;margin:6px 0 0;color:#728498}
+.section-box{border-radius:24px;padding:20px 22px;margin:14px 0;background:linear-gradient(135deg,rgba(247,251,255,.66),rgba(255,249,253,.58));border:1px solid rgba(255,255,255,.76);backdrop-filter:blur(15px);box-shadow:0 10px 28px rgba(80,110,145,.07)}
+.section-box h3{font-size:29px;margin:0 0 8px;color:#4d6884}.section-box p,.section-box li{font-size:22px;line-height:1.35;color:#60758a}.section-box ul{margin:7px 0 0;padding-left:28px}
+.resource-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:14px}
+.resource-card{position:relative;border-radius:22px;padding:17px 12px;text-align:center;background:#fff;border:1px solid rgba(185,205,225,.7);box-shadow:0 10px 25px rgba(82,112,145,.08);transition:.3s ease;overflow:hidden}.resource-card:hover{transform:translateY(-5px);box-shadow:0 16px 32px rgba(80,110,145,.14)}.resource-card::before{content:"";position:absolute;inset:0;background:linear-gradient(145deg,var(--rc,#e9f6ff),transparent);opacity:.75}.resource-card>*{position:relative}.resource-card strong{display:block;font-family:Arial,sans-serif;font-size:23px;color:#4d6a87}.resource-card span{display:block;margin-top:6px;font-size:18px;color:#6d8193;line-height:1.15}
+.four-party{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}.party{border-radius:20px;padding:22px 12px;text-align:center;background:#fff;border:1px solid rgba(190,205,225,.65);box-shadow:0 9px 22px rgba(90,115,145,.07);position:relative;overflow:hidden}.party::before{content:"";position:absolute;left:16px;right:16px;top:0;height:4px;border-radius:0 0 10px 10px;background:linear-gradient(90deg,#f2a7c7,#a99be8,#7dcde7,#83d4af)}.party span{font-size:21px;font-weight:700;color:#5a7188}
+
+/* PDCA Modal */
+.pdca-layout{display:grid;grid-template-columns:minmax(470px,1fr) minmax(340px,.8fr);gap:26px;align-items:center}
+.pdca-stage{position:relative;width:min(540px,90vw);aspect-ratio:1;margin:auto}
+.pdca-ring{position:absolute;border-radius:50%;pointer-events:none}.pdca-ring.r1{inset:5%;border:2px dashed rgba(137,154,205,.28);animation:ccw 24s linear infinite}.pdca-ring.r2{inset:14%;border:2px solid rgba(120,205,230,.2);animation:cw 32s linear infinite}.pdca-ring.r3{inset:23%;border:1px dashed rgba(229,153,197,.27);animation:ccw 18s linear infinite}@keyframes ccw{to{transform:rotate(-360deg)}}@keyframes cw{to{transform:rotate(360deg)}}
+.pdca-rotor{position:absolute;inset:0;transition:transform 1.15s cubic-bezier(.18,.85,.25,1);transform:rotate(var(--rot,0deg))}
+.pdca-node{position:absolute;width:116px;height:116px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:rgba(255,255,255,.92);border:4px solid var(--c);box-shadow:0 14px 30px rgba(70,95,130,.12),0 0 0 rgba(0,0,0,0);transition:.45s ease;transform:translate(-50%,-50%) rotate(calc(var(--rot,0deg) * -1));z-index:8}
+.pdca-node strong{font-family:Arial,sans-serif;font-size:48px;color:var(--c);line-height:.9}.pdca-node span{font-size:19px;font-weight:700;margin-top:7px;color:#566e84}.pdca-node.active{scale:1.16;box-shadow:0 14px 35px rgba(70,95,130,.16),0 0 35px var(--c)}.pdca-node.active::after{content:"";position:absolute;inset:-15px;border-radius:50%;border:3px solid var(--c);opacity:.35;animation:pulseRing 1.6s ease-out infinite}@keyframes pulseRing{0%{transform:scale(.82);opacity:.45}100%{transform:scale(1.35);opacity:0}}
+.nodeP{left:50%;top:7%;--c:#ef8fbd}.nodeD{left:93%;top:50%;--c:#968be8}.nodeC{left:50%;top:93%;--c:#6fc8e5}.nodeA{left:7%;top:50%;--c:#77c99a}
+.pdca-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:210px;height:210px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 35% 28%,#fff,#f3f0ff 48%,#e8f8ff 100%);border:6px solid rgba(255,255,255,.88);box-shadow:0 0 0 12px rgba(164,149,237,.08),0 15px 45px rgba(85,105,140,.14),0 0 40px rgba(168,154,245,.18);z-index:3}.pdca-center b{font-size:30px;color:#786eb6}.pdca-center span{display:block;font-size:21px;color:#60798e;margin-top:6px}.pdca-center small{display:block;font-size:17px;color:#8a98a8;margin-top:5px}
+.pdca-info{position:relative;min-height:430px;border-radius:28px;padding:24px;background:linear-gradient(145deg,rgba(248,251,255,.7),rgba(255,248,252,.6));border:1px solid rgba(255,255,255,.78);backdrop-filter:blur(18px);box-shadow:0 14px 34px rgba(85,110,145,.08),0 0 28px rgba(168,154,245,.1)}
+.info-top{display:flex;align-items:center;gap:14px}.info-letter{width:66px;height:66px;border-radius:20px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:Arial,sans-serif;font-size:36px;font-weight:900;background:var(--info,#ef8fbd);box-shadow:0 8px 22px color-mix(in srgb,var(--info,#ef8fbd) 40%, transparent)}.info-title h3{font-size:31px;margin:0;color:#46627d}.info-title p{font-size:21px;margin:3px 0 0;color:#806fa6}.info-desc{font-size:21px;line-height:1.35;margin-top:18px;color:#60758a;background:rgba(255,255,255,.48);border-radius:20px;padding:16px 18px;border:1px solid rgba(255,255,255,.72);backdrop-filter:blur(12px)}
+.pdca-data-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pdca-control{display:flex;gap:9px;margin-top:16px;flex-wrap:wrap}.control-btn{border:none;border-radius:14px;padding:8px 17px;font-family:inherit;font-size:20px;font-weight:700;cursor:pointer;background:#eef4fb;color:#5d738a;box-shadow:0 6px 16px rgba(70,100,135,.07)}.control-btn.active{background:linear-gradient(145deg,#a69af0,#78cde9);color:#fff}
+.detail-btn{margin-top:16px;border-radius:15px;padding:9px 19px;color:#fff;background:linear-gradient(135deg,#ee9bc2,#a99aed,#75cce8);box-shadow:0 9px 24px rgba(137,142,218,.22),0 0 22px rgba(168,154,245,.28)}
+.pdca-progress{display:flex;gap:7px;margin-top:18px}.pdca-progress span{flex:1;height:6px;border-radius:99px;background:#dde8f1;transition:.35s}.pdca-progress span.active{background:var(--bar,#8da4e4);box-shadow:0 0 10px var(--bar,#8da4e4)}
+
+.subdetail-list{display:grid;gap:12px;margin-top:16px}.subdetail-item{display:flex;gap:13px;align-items:flex-start;border-radius:20px;padding:15px 17px;background:linear-gradient(135deg,rgba(255,247,252,.96),rgba(244,250,255,.96));border:1px solid rgba(185,205,229,.62);box-shadow:0 9px 24px rgba(83,111,146,.07),0 0 16px rgba(168,154,245,.08)}.subdetail-index{width:34px;height:34px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font:700 16px Arial,sans-serif;background:linear-gradient(145deg,var(--modalA,#a89af5),var(--modalB,#79cfee));box-shadow:0 0 16px color-mix(in srgb,var(--modalA,#a89af5) 32%, transparent)}.subdetail-item p{margin:1px 0 0;font-size:21px;line-height:1.35;color:#60758a}.image-placeholder{min-height:340px;border-radius:28px;border:2px dashed rgba(145,164,209,.42);display:flex;align-items:center;justify-content:center;text-align:center;padding:30px;background:radial-gradient(circle at 50% 35%,rgba(255,255,255,.96),rgba(242,248,255,.92) 56%,rgba(255,241,248,.88));box-shadow:inset 0 0 34px rgba(159,183,231,.1),0 0 28px rgba(168,154,245,.12)}.image-placeholder strong{display:block;font-size:30px;color:#7184a0}.image-placeholder span{display:block;font-size:21px;color:#8a99aa;margin-top:8px}.image-placeholder-icon{font-size:58px;filter:drop-shadow(0 0 14px rgba(121,207,238,.45))}
+
+.result-emblem{width:180px;height:180px;border-radius:50%;margin:5px auto 18px;display:flex;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle,#fff 20%,#ecfff6 65%,#dcf8ec 100%);border:4px solid #a7e3c5;box-shadow:0 0 0 10px rgba(137,220,180,.08),0 20px 45px rgba(76,139,111,.12)}.result-emblem strong{font-size:28px;color:#4d9476}.result-emblem span{display:block;font-size:20px;color:#648b7a;margin-top:5px}
+.result-path{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}.result-chip{padding:10px 18px;border-radius:18px;background:#fff;border:1px solid #d7ece3;font-size:21px;color:#557c6c;box-shadow:0 8px 20px rgba(75,120,100,.07)}
+
+@media(max-width:1120px){.flow{grid-template-columns:1fr;gap:16px;max-width:700px}.connector{width:6px;height:70px;margin:auto;background:linear-gradient(180deg,rgba(255,164,201,.35),rgba(142,154,239,.75),rgba(104,203,231,.55))}.connector::after{right:auto;left:50%;top:auto;bottom:-3px;transform:translateX(-50%);border-left:10px solid transparent;border-right:10px solid transparent;border-top:16px solid #8da4e5;border-bottom:0}.connector::before{left:50%!important;transform:translateX(-50%);animation:travelV 2.2s linear infinite}@keyframes travelV{from{top:0}to{top:calc(100% - 15px)}}.stage::before{display:none}.main-node{min-height:250px}.pdca-layout{grid-template-columns:1fr}.pdca-info{min-height:auto}}
+@media(max-width:760px){.wrapper{padding:18px 10px 30px}.hero p{font-size:21px}.main-node h2{font-size:29px}.main-node p{font-size:20px}.resource-grid{grid-template-columns:1fr 1fr}.resource-grid .resource-card:last-child{grid-column:1/-1}.four-party{grid-template-columns:1fr 1fr}.modal-card{padding:22px 16px}.modal-header{margin:-35px 52px 15px 0}.modal-badge{width:64px;height:64px;border-radius:20px}.modal-title h2{font-size:31px}.pdca-stage{width:min(430px,90vw)}.pdca-node{width:92px;height:92px}.pdca-node strong{font-size:37px}.pdca-node span{font-size:16px}.pdca-center{width:160px;height:160px}.pdca-center b{font-size:25px}.pdca-center span{font-size:18px}.pdca-center small{font-size:14px}.section-box p,.section-box li{font-size:20px}}
+@media(max-width:470px){.hero h1{font-size:38px}.main-node{padding:22px 15px}.resource-grid,.four-party{grid-template-columns:1fr}.resource-grid .resource-card:last-child{grid-column:auto}.pdca-node{width:76px;height:76px}.pdca-node strong{font-size:31px}.pdca-node span{font-size:14px}.pdca-center{width:135px;height:135px}.pdca-center b{font-size:21px}.pdca-center span{font-size:16px}.pdca-center small{display:none}}
+
+/* =========================================================
+   EMBED + ON DARK BACKGROUND
+   ฝังในหน้าด้านที่ 3 ซึ่งมีวิดีโอพื้นหลังสีเข้ม
+   ถอดพื้นหลังของโมเดลออก และเปลี่ยนตัวอักษรที่ไม่มีพื้นของตัวเองให้สว่าง
+   กล่อง modal มีพื้นสว่างของตัวเองอยู่แล้ว คงสีเดิม
+========================================================= */
+
+html,body{ min-height:auto; }
+
+body{
+  background:none;
+  background-color:transparent;
+  color:#e8f0ff;
+  font-family:"Sarabun","TH SarabunPSK",Tahoma,sans-serif;
+}
+
+/* ปิดลายจุดพื้นหลัง */
+body::before{ display:none; }
+
+.wrapper{ padding:10px 14px 16px; }
+
+.hero .eyebrow{ color:#e2d4ff; }
+
+.hero h1{
+  color:#ffffff;
+  text-shadow:0 2px 20px rgba(8,21,47,.75);
+}
+
+.hero p{
+  color:#dbe6f7;
+  text-shadow:0 1px 10px rgba(8,21,47,.6);
+}
+
+.stage{ min-height:auto; padding:10px 0 4px; }
+
+/* การ์ด 3 ใบ: กระจกสีเข้ม ให้อ่านออกบนวิดีโอ */
+.main-node{
+  min-height:auto;
+  padding:24px 20px 20px;
+  border-radius:26px;
+  background:rgba(10,24,52,.46);
+  border-color:rgba(255,255,255,.22);
+  box-shadow:0 16px 40px rgba(0,0,0,.22);
+}
+
+.main-node h2{ color:#ffffff; font-size:27px; }
+.main-node p{ color:#dbe6f7; font-size:19px; }
+.node-number{ color:#e2d4ff; opacity:1; }
+
+.tag{
+  font-size:16px;
+  color:#eaf2ff;
+  background:rgba(255,255,255,.16);
+  border-color:rgba(255,255,255,.24);
+}
+
+.click-hint{ color:#e7c7ff; font-size:17px; }
+
+.image-btn,.detail-btn{ min-height:44px; }
+
+/* modal เด้งในกรอบโมเดล ไม่ใช่เต็มจอ เพราะโมเดลอยู่ใน iframe */
+.wrapper{ position:relative; }
+.modal{ position:absolute; background:rgba(8,21,47,.55); }
+.modal-card{ max-height:none; }
+
+/* ไม่ล็อกการเลื่อนของหน้าแม่ */
+body[style*="overflow"]{ overflow:visible !important; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <header class="hero">
+    <div class="eyebrow">MODEL การบริหารการจัดการศึกษา</div>
+    <h1>รูปแบบการบริหารแบบมีส่วนร่วม<br><span class="model-name">“BANCHUEN Model”</span></h1>
+    <p>เพื่อพัฒนาคุณภาพผู้เรียนในศตวรรษที่ 21 ด้วยการขับเคลื่อนทรัพยากร การบริหารวงจรคุณภาพ และการมีส่วนร่วมของทุกภาคส่วน</p>
+    <div class="hero-line"></div>
+  </header>
+
+  <section class="stage">
+    <span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span class="spark s4"></span><span class="spark s5"></span>
+    <div class="flow">
+      <article class="main-node node-gear" onclick="openMainModal('gear')">
+        <div class="node-number">01 • INPUT</div>
+        <h2>ฟันเฟืองแห่งการขับเคลื่อน</h2>
+        <p>ปัจจัยสำคัญที่สนับสนุนให้การบริหารจัดการศึกษาเดินหน้าอย่างเป็นระบบ</p>
+        <div class="mini-tags"><span class="tag">5M</span><span class="tag">คณะกรรมการภาคี 4 ฝ่าย</span></div>
+        <div class="click-hint">คลิกเพื่อดูรายละเอียด</div>
+      </article>
+
+      <div class="connector"></div>
+
+      <article class="main-node node-success" onclick="openMainModal('success')">
+        <div class="node-number">02 • PROCESS</div>
+        <h2>กลไกสู่ความสำเร็จ</h2>
+        <p>บริหารวงจรคุณภาพของเดมมิง โดยใช้ “BANCHUEN Model” เป็นกลไกในการขับเคลื่อน</p>
+        <div class="mini-tags"><span class="tag">Plan</span><span class="tag">Do</span><span class="tag">Check</span><span class="tag">Act</span></div>
+        <div class="click-hint">คลิกเพื่อเปิด PDCA MODEL</div>
+      </article>
+
+      <div class="connector"></div>
+
+      <article class="main-node node-result" onclick="openMainModal('result')">
+        <div class="node-number">03 • OUTCOME</div>
+        <h2>ผลลัพธ์ที่ภาคภูมิใจ</h2>
+        <p>ผลลัพธ์จากการบริหารจัดการแบบมีส่วนร่วม ผ่านการบริหารงาน 4 ฝ่าย</p>
+        <div class="mini-tags"><span class="tag">บริหารงาน 4 ฝ่าย</span><span class="tag">คุณภาพผู้เรียน</span></div>
+        <div class="click-hint">คลิกเพื่อดูผลลัพธ์</div>
+      </article>
+    </div>
+  </section>
+
+<!-- ฟันเฟือง -->
+<div class="modal" id="gearModal" onclick="outsideClose(event,'gearModal')">
+  <div class="modal-card" style="--modalA:#ff9fc7;--modalB:#ffd58a">
+    <button class="close-btn" onclick="closeModal('gearModal')">ปิด</button>
+    <div class="modal-header"><div class="modal-badge">01</div><div class="modal-title"><h2>ฟันเฟืองแห่งการขับเคลื่อน</h2><p>ปัจจัยนำเข้าสู่กลไกความสำเร็จ</p></div></div>
+    <div class="section-box">
+      <h3>คณะกรรมการภาคี 4 ฝ่าย</h3>
+      <p>ฟันเฟืองแห่งการขับเคลื่อนคือปัจจัยที่จะนำไปสู่กลไกความสำเร็จที่สำคัญ โดยอาศัยการมีส่วนร่วมของคณะกรรมการภาคี 4 ฝ่าย</p>
+      <div class="four-party">
+        <div class="party"><span>ผู้แทนครู</span></div>
+        <div class="party"><span>ผู้แทนผู้ปกครอง</span></div>
+        <div class="party"><span>ผู้แทนชุมชน</span></div>
+        <div class="party"><span>ผู้แทนนักเรียน</span></div>
+      </div>
+    </div>
+    <div class="section-box">
+      <h3>การบริหารจัดการทรัพยากรและปัจจัยพื้นฐาน 5M</h3>
+      <div class="resource-grid">
+        <div class="resource-card" style="--rc:#ffe6f1"><strong>Man</strong><span>คน / บุคลากร</span></div>
+        <div class="resource-card" style="--rc:#fff1d8"><strong>Money</strong><span>งบประมาณ / การเงิน</span></div>
+        <div class="resource-card" style="--rc:#e6f4ff"><strong>Material</strong><span>วัสดุ / อุปกรณ์</span></div>
+        <div class="resource-card" style="--rc:#eee7ff"><strong>Machine</strong><span>เครื่องมือ เทคโนโลยี และอุปกรณ์อำนวยความสะดวก</span></div>
+        <div class="resource-card" style="--rc:#e5f8ee"><strong>Method</strong><span>ขั้นตอน ระเบียบปฏิบัติ หรือกระบวนการทำงานที่มีระบบ</span></div>
+      </div>
+      <div class="node-actions"><button class="image-btn" onclick="openImageModal(event,'gear')">ดูรูปภาพเพิ่มเติม</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- PDCA -->
+<div class="modal" id="successModal" onclick="outsideClose(event,'successModal')">
+  <div class="modal-card" style="--modalA:#a89af5;--modalB:#79cfee">
+    <button class="close-btn" onclick="closeModal('successModal')">ปิด</button>
+    <div class="modal-header"><div class="modal-badge">02</div><div class="modal-title"><h2>กลไกสู่ความสำเร็จ</h2><p>การบริหารวงจรคุณภาพของเดมมิง (PDCA) โดยใช้ “BANCHUEN Model” ในการขับเคลื่อน</p></div></div>
+    <div class="pdca-layout">
+      <div class="pdca-stage">
+        <div class="pdca-ring r1"></div><div class="pdca-ring r2"></div><div class="pdca-ring r3"></div>
+        <div class="pdca-rotor" id="pdcaRotor">
+          <div class="pdca-node nodeP active" data-step="P" onclick="selectPDCA('P',true)"><strong>P</strong><span>PLAN</span></div>
+          <div class="pdca-node nodeD" data-step="D" onclick="selectPDCA('D',true)"><strong>D</strong><span>DO</span></div>
+          <div class="pdca-node nodeC" data-step="C" onclick="selectPDCA('C',true)"><strong>C</strong><span>CHECK</span></div>
+          <div class="pdca-node nodeA" data-step="A" onclick="selectPDCA('A',true)"><strong>A</strong><span>ACT</span></div>
+        </div>
+        <div class="pdca-center"><div><b>BANCHUEN<br>Model</b><span>การบริหารแบบมีส่วนร่วม</span><small>ขับเคลื่อนด้วย PDCA</small></div></div>
+      </div>
+      <aside class="pdca-info" id="pdcaInfo">
+        <div class="info-top"><div class="info-letter" id="infoLetter">P</div><div class="info-title"><h3 id="infoTitle">PLAN : การวางแผน</h3><p id="infoSub">เริ่มต้นจากการวางแผน</p></div></div>
+        <div class="info-desc" id="infoDesc"></div>
+        <div class="pdca-data-actions"><button class="detail-btn" onclick="openPdcaDetail()">ดูข้อมูลย่อยของขั้นตอนนี้</button><button class="image-btn" id="pdcaImageBtn" onclick="openPDCAImage(event)">ดูรูปภาพ PLAN</button></div>
+        <div class="pdca-control"><button class="control-btn active" id="playBtn" onclick="startPDCA()">▶ เล่นอัตโนมัติ</button><button class="control-btn" id="pauseBtn" onclick="pausePDCA()">⏸ หยุดอ่าน</button></div>
+        <div class="pdca-progress"><span data-bar="P" class="active" style="--bar:#ef8fbd"></span><span data-bar="D" style="--bar:#968be8"></span><span data-bar="C" style="--bar:#6fc8e5"></span><span data-bar="A" style="--bar:#77c99a"></span></div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- ผลลัพธ์ -->
+<div class="modal" id="resultModal" onclick="outsideClose(event,'resultModal')">
+  <div class="modal-card" style="--modalA:#88ddb4;--modalB:#79cfee">
+    <button class="close-btn" onclick="closeModal('resultModal')">ปิด</button>
+    <div class="modal-header"><div class="modal-badge">03</div><div class="modal-title"><h2>ผลลัพธ์ที่ภาคภูมิใจ</h2><p>ผลจากการบริหารจัดการแบบมีส่วนร่วม</p></div></div>
+    <div class="section-box">
+      <div class="result-emblem"><div><strong>ผลลัพธ์<br>ที่ภาคภูมิใจ</strong><span>ผ่านการบริหารงาน 4 ฝ่าย</span></div></div>
+      <div class="result-path"><div class="result-chip">การบริหารแบบมีส่วนร่วม</div><div class="result-chip">BANCHUEN Model</div><div class="result-chip">การบริหารงาน 4 ฝ่าย</div><div class="result-chip">คุณภาพผู้เรียนในศตวรรษที่ 21</div></div>
+      <p style="font-size:22px;line-height:1.35;text-align:center;color:#607b6e;margin:18px 0 0">ผลลัพธ์เกิดจากการเชื่อมโยงปัจจัยการขับเคลื่อน กระบวนการบริหารคุณภาพ และการดำเนินงานผ่านโครงสร้างการบริหารงาน 4 ฝ่ายอย่างเป็นระบบ</p>
+      <div class="node-actions"><button class="image-btn" onclick="openImageModal(event,'result')">ดูรูปภาพเพิ่มเติม</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ข้อมูลย่อย PDCA -->
+<div class="modal" id="pdcaDetailModal" onclick="outsideClose(event,'pdcaDetailModal')">
+  <div class="modal-card" style="--modalA:#a89af5;--modalB:#79cfee">
+    <button class="close-btn" onclick="closeModal('pdcaDetailModal')">ปิด</button>
+    <div class="modal-header"><div class="modal-badge" id="detailBadge">P</div><div class="modal-title"><h2 id="detailTitle">ข้อมูลย่อย PLAN</h2><p id="detailSub">รายละเอียดของขั้นตอนการวางแผน</p></div></div>
+    <div class="subdetail-list" id="subdetailList"></div>
+  </div>
+</div>
+
+<!-- พื้นที่รูปภาพสำหรับ 3 หัวข้อหลัก -->
+<div class="modal" id="imageModal" onclick="outsideClose(event,'imageModal')">
+  <div class="modal-card" style="--modalA:#ff9fc7;--modalB:#79cfee">
+    <button class="close-btn" onclick="closeModal('imageModal')">ปิด</button>
+    <div class="modal-header"><div class="modal-badge">ภาพ</div><div class="modal-title"><h2 id="imageModalTitle">รูปภาพประกอบ</h2><p>พื้นที่สำหรับรูปภาพที่จะนำมาแนบภายหลัง</p></div></div>
+    <div class="image-placeholder"><div><div class="image-placeholder-icon">▧</div><strong>เตรียมพื้นที่สำหรับรูปภาพ</strong><span id="imagePlaceholderText">สามารถนำรูปภาพของหัวข้อนี้มาใส่แทนพื้นที่นี้ได้ภายหลัง</span></div></div>
+  </div>
+</div>
+</div>
+
+<script>
+const pdcaData={
+ P:{title:"PLAN : การวางแผน",sub:"เริ่มต้นจากการวางแผน",color:"#ef8fbd",desc:"เริ่มต้นจากการวางแผนโดยผ่านแผนพัฒนาการศึกษา ที่สอดคล้องกับมาตรฐานการศึกษา เป็นการบริหารที่ทำให้เกิดการเชื่อมโยงของวิสัยทัศน์ พันธกิจ และกลยุทธ์ของโรงเรียนตามแผนพัฒนาการจัดการศึกษาของโรงเรียน"},
+ D:{title:"DO : การดำเนินงาน",sub:"ใช้ BANCHUEN Model ขับเคลื่อน",color:"#968be8",desc:"การใช้ “BANCHUEN Model” ในการขับเคลื่อนการบริหารงานอย่างเป็นระบบ โดยมอบหมายผ่านกลุ่มบริหารงาน 4 ฝ่าย"},
+ C:{title:"CHECK : การตรวจสอบ",sub:"นิเทศ กำกับ ติดตาม และประเมินผล",color:"#6fc8e5",desc:"วางกรอบการตรวจสอบผลการดำเนินงาน การนำแผนพัฒนามาตรฐานการเรียนรู้ของผู้เรียนไปใช้ ดำเนินการนิเทศ กำกับ ติดตาม และประเมินผล เพื่อเป็นส่วนหนึ่งในการประกันคุณภาพการศึกษา ตามมาตรฐานการศึกษาและค่าเป้าหมายที่ตั้งไว้"},
+ A:{title:"ACT : การปรับปรุง",sub:"สรุป วิเคราะห์ และพัฒนาต่อเนื่อง",color:"#77c99a",desc:"สรุปรายงานผลการดำเนินงานตามโครงการ/กิจกรรม พร้อมทั้งเสนอแนะแนวทางการปรับปรุงแก้ไข รายงานข้อจำกัดในการดำเนินงาน และนำผลการประเมินการใช้แผนพัฒนาคุณภาพการศึกษามาวิเคราะห์ วางแผน และปรับปรุงผลการดำเนินงานในส่วนที่ควรพัฒนา"}
+};
+const order=['P','D','C','A'];let current=0;let timer=null;let playing=true;let rotation=0;
+const pdcaDetails={
+ P:["จัดทำแผนพัฒนาการศึกษาให้สอดคล้องกับมาตรฐานการศึกษา","เชื่อมโยงวิสัยทัศน์ พันธกิจ และกลยุทธ์ของโรงเรียน","ดำเนินการตามแผนพัฒนาการจัดการศึกษาของโรงเรียน"],
+ D:["ใช้ BANCHUEN Model เป็นกลไกในการขับเคลื่อน","บริหารงานอย่างเป็นระบบ","มอบหมายการดำเนินงานผ่านกลุ่มบริหารงาน 4 ฝ่าย"],
+ C:["วางกรอบการตรวจสอบผลการดำเนินงาน","นิเทศ กำกับ ติดตาม และประเมินผล","ตรวจสอบตามมาตรฐานการศึกษาและค่าเป้าหมายที่ตั้งไว้","นำผลมาใช้เป็นส่วนหนึ่งของการประกันคุณภาพการศึกษา"],
+ A:["สรุปและรายงานผลการดำเนินงานตามโครงการหรือกิจกรรม","เสนอแนะแนวทางปรับปรุงแก้ไขและรายงานข้อจำกัด","วิเคราะห์ผลการประเมินการใช้แผนพัฒนาคุณภาพการศึกษา","วางแผนและปรับปรุงส่วนที่ควรพัฒนาอย่างต่อเนื่อง"]
+};
+const imageTopics={gear:"ฟันเฟืองแห่งการขับเคลื่อน",result:"ผลลัพธ์ที่ภาคภูมิใจ",P:"PLAN : การวางแผน",D:"DO : การดำเนินงาน",C:"CHECK : การตรวจสอบ",A:"ACT : การปรับปรุง"};
+function openMainModal(type){
+ const id=type==='gear'?'gearModal':type==='success'?'successModal':'resultModal';
+ document.getElementById(id).classList.add('show');document.body.style.overflow='hidden';
+ if(type==='success'){renderPDCA(order[current]);startPDCA();}
+}
+function closeModal(id){document.getElementById(id).classList.remove('show');document.body.style.overflow='';if(id==='successModal')pausePDCA(false)}
+function outsideClose(e,id){if(e.target.id===id)closeModal(id)}
+function openImageModal(event,type){event.stopPropagation();const title=imageTopics[type];document.getElementById('imageModalTitle').textContent='รูปภาพ : '+title;document.getElementById('imagePlaceholderText').textContent='สามารถนำรูปภาพของขั้นตอน “'+title+'” มาใส่แทนพื้นที่นี้ได้ภายหลัง';document.getElementById('imageModal').classList.add('show');document.body.style.overflow='hidden'}
+function openPDCAImage(event){openImageModal(event,order[current])}
+function openPdcaDetail(){const step=order[current],d=pdcaData[step];document.getElementById('detailBadge').textContent=step;document.getElementById('detailTitle').textContent='ข้อมูลย่อย '+d.title;document.getElementById('detailSub').textContent=d.sub;document.getElementById('subdetailList').innerHTML=pdcaDetails[step].map((item,index)=>'<div class="subdetail-item"><span class="subdetail-index">'+(index+1)+'</span><p>'+item+'</p></div>').join('');const modal=document.getElementById('pdcaDetailModal');modal.style.setProperty('--modalA',d.color);modal.classList.add('show');pausePDCA(false)}
+function renderPDCA(step){
+ const d=pdcaData[step];
+ document.querySelectorAll('.pdca-node').forEach(n=>n.classList.toggle('active',n.dataset.step===step));
+ document.querySelectorAll('[data-bar]').forEach(b=>b.classList.toggle('active',b.dataset.bar===step));
+ document.getElementById('infoLetter').textContent=step;document.getElementById('infoLetter').style.background=d.color;
+ document.getElementById('infoTitle').textContent=d.title;document.getElementById('infoSub').textContent=d.sub;document.getElementById('infoDesc').textContent=d.desc;document.getElementById('pdcaImageBtn').textContent='ดูรูปภาพ '+step;
+}
+function rotateToIndex(index){
+ const diff=(index-current+4)%4;
+ rotation-=diff*90;
+ current=index;
+ document.getElementById('pdcaRotor').style.setProperty('--rot',rotation+'deg');
+ document.getElementById('pdcaRotor').querySelectorAll('.pdca-node').forEach(n=>n.style.setProperty('--rot',rotation+'deg'));
+ renderPDCA(order[current]);
+}
+function selectPDCA(step,manual=false){const index=order.indexOf(step);rotateToIndex(index);if(manual)pausePDCA();}
+function nextPDCA(){if(!playing)return;rotateToIndex((current+1)%4)}
+function startPDCA(){playing=true;document.getElementById('playBtn').classList.add('active');document.getElementById('pauseBtn').classList.remove('active');clearInterval(timer);timer=setInterval(nextPDCA,4200)}
+function pausePDCA(update=true){playing=false;clearInterval(timer);if(update){document.getElementById('playBtn').classList.remove('active');document.getElementById('pauseBtn').classList.add('active')}}
+document.addEventListener('keydown',e=>{if(!document.hasFocus())return;if(e.key==='Escape'){document.querySelectorAll('.modal.show').forEach(m=>closeModal(m.id))}if(['p','d','c','a'].includes(e.key.toLowerCase())&&document.getElementById('successModal').classList.contains('show'))selectPDCA(e.key.toUpperCase(),true)});
+renderPDCA('P');
+
+/* ปรับความสูงของกรอบที่ครอบอยู่ให้พอดีเนื้อหา (อยู่โดเมนเดียวกัน) */
+function reportHeight(){
+  requestAnimationFrame(()=>{
+    const el=document.querySelector('.wrapper');
+    const height=Math.ceil(el?el.getBoundingClientRect().height+6:document.body.scrollHeight);
+    if(window.frameElement) window.frameElement.style.height=height+'px';
+    window.parent.postMessage({type:'d3-banchuen-model-height',height},window.location.origin);
+  });
+}
+new ResizeObserver(reportHeight).observe(document.body);
+window.addEventListener('load',reportHeight);
+</script>
+</body>
+</html>

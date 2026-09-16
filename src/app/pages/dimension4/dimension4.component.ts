@@ -31,8 +31,15 @@ export class Dimension4Component {
   readonly pdcarModelHeight = signal(900);
 
   @HostListener('window:message', ['$event'])
-  resizePdcarModel(event: MessageEvent<{ type?: string; height?: number }>): void {
+  resizePdcarModel(event: MessageEvent<{ type?: string; height?: number; group?: string }>): void {
     if (typeof window === 'undefined' || event.origin !== window.location.origin) return;
+    /* ปุ่ม "ดูข้อมูลเพิ่มเติม" ในโมเดล PDCAR ขอให้เปิดหัวข้อ 4.1–4.4 */
+    if (event.data?.type === 'd4-pdcar-open-group') {
+      const key = event.data.group;
+      const group = this.groups.find(g => g.key === key);
+      if (group) this.selectGroup(group.key);
+      return;
+    }
     if (event.data?.type !== 'd4-pdcar-model-height') return;
     const height = Number(event.data.height);
     if (Number.isFinite(height)) this.pdcarModelHeight.set(Math.max(620, Math.min(2200, height)));

@@ -53,20 +53,6 @@
 </section>
 
 <!-- ═══════════ วงล้อ SMART Student ═══════════ -->
-<section class="section section-alt" *ngIf="!open()">
-  <div class="wrap">
-    <div class="sec-head" appReveal>
-      <h3 class="sec-title" style="font-size:33.5px"> ACTIVITY MODEL</h3>
-      <div class="sec-rule"></div>
-    </div>
-    <p class="sec-lead" style="margin:-8px 0 26px">
-      กรอบการจัดการเรียนรู้ที่ยึดผู้เรียนเป็นศูนย์กลาง ประกอบด้วย 8 องค์ประกอบที่ทำงานต่อเนื่องกันเป็นวงจร
-      ตั้งแต่การวางแผน ลงมือปฏิบัติ ตรวจสอบผล และปรับปรุงเพื่อพัฒนาคุณภาพผู้เรียนอย่างต่อเนื่อง
-    </p>
-    <div appReveal><app-smart-wheel /></div>
-  </div>
-</section>
-
 <!-- ═══════════ สารบัญ 4 หมวดตามแบบประเมิน ═══════════ -->
 <section class="section d4-index" *ngIf="!open()">
   <div class="wrap">
@@ -111,6 +97,17 @@
     <app-section-header [light]="true" num="4.2" title="การจัดการเรียนรู้และการจัดการชั้นเรียน"
       [lead]="d.classroom.lead" />
     <ng-container [ngTemplateOutlet]="d4Indicators"></ng-container>
+
+    <!-- ═══════════ ACTIVITY MODEL ═══════════ -->
+    <div class="sec-head" appReveal style="margin-top:8px">
+      <h3 class="sec-title" style="font-size:28px">ACTIVITY MODEL</h3>
+      <div class="sec-rule"></div>
+    </div>
+    <p class="sec-lead" style="margin:-8px 0 24px">
+      กรอบการจัดการเรียนรู้ที่ยึดผู้เรียนเป็นศูนย์กลาง ประกอบด้วย 8 องค์ประกอบที่ทำงานต่อเนื่องกันเป็นวงจร
+      ตั้งแต่การวางแผน ลงมือปฏิบัติ ตรวจสอบผล และปรับปรุงเพื่อพัฒนาคุณภาพผู้เรียนอย่างต่อเนื่อง
+    </p>
+    <div appReveal style="margin-bottom:34px"><app-smart-wheel /></div>
 
     <div class="grid grid-2">
       <div class="card card-hover" *ngFor="let p of d.classroom.practices; let i = index" appReveal

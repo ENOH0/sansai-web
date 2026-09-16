@@ -1,0 +1,3045 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ACTIVITY MODEL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   FONT
+========================================================= */
+
+@font-face{
+    font-family:"THSarabunPSK";
+    src:local("TH Sarabun PSK"),
+        local("TH Sarabun New");
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html,
+body{
+    margin:0;
+    padding:0;
+    width:100%;
+    min-height:100%;
+}
+
+body{
+    font-family:
+        "THSarabunPSK",
+        "TH Sarabun PSK",
+        "TH Sarabun New",
+        Sarabun,
+        Arial,
+        sans-serif;
+
+    background:transparent;
+
+    color:#53677d;
+
+    overflow-x:hidden;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.activity-wrapper{
+
+    width:100%;
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:20px;
+
+}
+
+.activity-model{
+
+    width:min(1200px,100%);
+
+    min-height:820px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:transparent;
+
+    --active-color:#f39bc6;
+
+}
+
+
+/* =========================================================
+   BACKGROUND LIGHT
+========================================================= */
+
+.activity-model::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:620px;
+    height:620px;
+
+    left:50%;
+    top:43%;
+
+    transform:translate(-50%,-50%);
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,190,220,.16) 0%,
+            rgba(183,203,247,.08) 35%,
+            transparent 70%
+        );
+
+    filter:blur(15px);
+
+    pointer-events:none;
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.activity-header{
+
+    position:relative;
+
+    z-index:20;
+
+    text-align:center;
+
+    padding-top:2px;
+
+}
+
+.activity-header h1{
+
+    margin:0;
+
+    font-family:Arial,sans-serif;
+
+    font-size:
+        clamp(38px,5vw,64px);
+
+    font-weight:900;
+
+    letter-spacing:5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #f39bc6,
+            #a998e8,
+            #75c9e8,
+            #86d6a3,
+            #f2b278,
+            #f39bc6
+        );
+
+    background-size:350% auto;
+
+    -webkit-background-clip:text;
+    background-clip:text;
+
+    color:transparent;
+
+    animation:titleFlow 9s linear infinite;
+
+    filter:
+        drop-shadow(
+            0 4px 10px
+            rgba(130,140,180,.10)
+        );
+
+}
+
+@keyframes titleFlow{
+
+    0%{
+        background-position:0% center;
+    }
+
+    100%{
+        background-position:350% center;
+    }
+
+}
+
+.activity-header p{
+
+    margin:0;
+
+    font-size:25px;
+
+    color:#8b98a9;
+
+}
+
+.header-line{
+
+    width:180px;
+
+    height:4px;
+
+    margin:7px auto 0;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #f4a9cb,
+            #aaa0e8,
+            #7ccfe8,
+            #98dcae
+        );
+
+    box-shadow:
+        0 0 15px
+        rgba(166,168,235,.35);
+
+}
+
+
+/* =========================================================
+   CONTROL BUTTON
+========================================================= */
+
+.control-area{
+
+    position:absolute;
+
+    top:20px;
+
+    right:15px;
+
+    z-index:100;
+
+    display:flex;
+
+    gap:8px;
+
+}
+
+.control-btn{
+
+    border:1px solid
+        rgba(176,193,218,.45);
+
+    background:
+        rgba(255,255,255,.65);
+
+    color:#687b90;
+
+    border-radius:15px;
+
+    padding:5px 16px;
+
+    font-family:
+        "THSarabunPSK",
+        "TH Sarabun PSK",
+        "TH Sarabun New",
+        sans-serif;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s ease;
+
+    backdrop-filter:blur(8px);
+
+}
+
+.control-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(120,140,175,.15);
+
+}
+
+.control-btn.active{
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #a79ae8,
+            #7dcce8
+        );
+
+    box-shadow:
+        0 0 20px
+        rgba(156,172,239,.4);
+
+}
+
+
+/* =========================================================
+   STAGE
+========================================================= */
+
+.activity-stage{
+
+    position:relative;
+
+    width:100%;
+
+    height:690px;
+
+}
+
+
+/* =========================================================
+   ORBIT
+========================================================= */
+
+.orbit{
+
+    position:absolute;
+
+    width:850px;
+    height:850px;
+
+    left:50%;
+    top:45%;
+
+    transform:
+        translate(-50%,-50%);
+
+    border-radius:50%;
+
+    border:
+        1px dashed
+        rgba(173,163,224,.20);
+
+    animation:
+        orbitRotate 38s linear infinite;
+
+    pointer-events:none;
+
+}
+
+.orbit::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:65px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(119,203,230,.16);
+
+}
+
+.orbit::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:125px;
+
+    border-radius:50%;
+
+    border:
+        1px dotted
+        rgba(244,170,208,.20);
+
+}
+
+@keyframes orbitRotate{
+
+    to{
+        transform:
+            translate(-50%,-50%)
+            rotate(360deg);
+    }
+
+}
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+.particle{
+
+    position:absolute;
+
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+        0 0 9px var(--active-color),
+        0 0 20px var(--active-color);
+
+    opacity:.65;
+
+    z-index:3;
+
+    animation:
+        particleFloat 5s ease-in-out infinite;
+
+}
+
+.p1{
+    left:10%;
+    top:22%;
+}
+
+.p2{
+    left:18%;
+    top:68%;
+    animation-delay:1s;
+}
+
+.p3{
+    right:10%;
+    top:25%;
+    animation-delay:2s;
+}
+
+.p4{
+    right:18%;
+    bottom:20%;
+    animation-delay:3s;
+}
+
+.p5{
+    left:50%;
+    top:14%;
+    animation-delay:1.5s;
+}
+
+@keyframes particleFloat{
+
+    0%,100%{
+        transform:
+            translate(0,0)
+            scale(.7);
+        opacity:.25;
+    }
+
+    50%{
+        transform:
+            translate(15px,-22px)
+            scale(1.4);
+        opacity:1;
+    }
+
+}
+
+
+/* =========================================================
+   ACTIVE LETTER
+========================================================= */
+
+.active-zone{
+
+    position:absolute;
+
+    top:25px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:100%;
+
+    height:150px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:15;
+
+}
+
+.active-glow{
+
+    position:absolute;
+
+    width:230px;
+    height:230px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            var(--active-color),
+            transparent 68%
+        );
+
+    opacity:.16;
+
+    filter:blur(12px);
+
+    animation:
+        activeGlow 2.5s ease-in-out infinite;
+
+}
+
+@keyframes activeGlow{
+
+    0%,100%{
+        transform:scale(.88);
+        opacity:.10;
+    }
+
+    50%{
+        transform:scale(1.13);
+        opacity:.25;
+    }
+
+}
+
+.active-letter{
+
+    position:relative;
+
+    width:135px;
+    height:135px;
+
+    border-radius:38px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.96),
+            rgba(255,255,255,.68)
+        );
+
+    border:
+        5px solid var(--active-color);
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    box-shadow:
+        0 15px 35px
+        rgba(90,110,145,.12),
+
+        0 0 30px
+        var(--active-color),
+
+        inset 0 0 20px
+        rgba(255,255,255,.9);
+
+    animation:
+        activePop .75s ease;
+
+}
+
+@keyframes activePop{
+
+    0%{
+        opacity:0;
+        transform:
+            translateY(-20px)
+            scale(.75);
+    }
+
+    65%{
+        transform:
+            translateY(3px)
+            scale(1.08);
+    }
+
+    100%{
+        opacity:1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+}
+
+.active-letter .character{
+
+    font-family:Arial,sans-serif;
+
+    font-size:65px;
+
+    line-height:.8;
+
+    font-weight:900;
+
+    color:var(--active-color);
+
+    text-shadow:
+        0 0 10px white,
+        0 0 20px var(--active-color);
+
+}
+
+.active-letter .name{
+
+    margin-top:12px;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    color:#61758a;
+
+}
+
+
+/* =========================================================
+   LIGHT CONNECTOR
+========================================================= */
+
+.connector{
+
+    position:absolute;
+
+    top:140px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:3px;
+
+    height:48px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--active-color),
+            transparent
+        );
+
+    box-shadow:
+        0 0 12px
+        var(--active-color);
+
+}
+
+.connector::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:0;
+
+    transform:translateX(-50%);
+
+    width:13px;
+    height:13px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+        0 0 10px var(--active-color),
+        0 0 25px var(--active-color);
+
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content-card{
+
+    position:absolute;
+
+    top:185px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:min(900px,88%);
+
+    min-height:340px;
+
+    padding:
+        25px 38px 30px;
+
+    border-radius:32px;
+
+    background:
+        rgba(255,255,255,.48);
+
+    border:
+        1px solid
+        rgba(184,202,228,.40);
+
+    box-shadow:
+        0 18px 50px
+        rgba(85,105,140,.07),
+
+        inset 0 0 30px
+        rgba(255,255,255,.58);
+
+    backdrop-filter:blur(9px);
+
+    overflow:hidden;
+
+    animation:contentIn .7s ease;
+
+}
+
+@keyframes contentIn{
+
+    0%{
+        opacity:0;
+        transform:
+            translateX(-50%)
+            translateY(18px)
+            scale(.98);
+    }
+
+    100%{
+        opacity:1;
+        transform:
+            translateX(-50%)
+            translateY(0)
+            scale(1);
+    }
+
+}
+
+.content-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:270px;
+    height:270px;
+
+    right:-110px;
+    top:-130px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            var(--active-color),
+            transparent 70%
+        );
+
+    opacity:.14;
+
+}
+
+.content-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:170px;
+    height:170px;
+
+    left:-90px;
+    bottom:-100px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            var(--active-color),
+            transparent 70%
+        );
+
+    opacity:.08;
+
+}
+
+
+/* =========================================================
+   CONTENT TITLE
+========================================================= */
+
+.content-title{
+
+    position:relative;
+
+    z-index:5;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:10px;
+
+}
+
+.content-tag{
+
+    width:54px;
+    height:54px;
+
+    flex:none;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:17px;
+
+    color:white;
+
+    font-family:Arial,sans-serif;
+
+    font-size:29px;
+
+    font-weight:900;
+
+    background:var(--active-color);
+
+    box-shadow:
+        0 0 20px
+        var(--active-color);
+
+}
+
+.content-title h2{
+
+    margin:0;
+
+    font-size:
+        clamp(28px,3vw,38px);
+
+    line-height:1;
+
+    color:#52687d;
+
+}
+
+.content-title h2 span{
+
+    color:var(--active-color);
+
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.content-description{
+
+    position:relative;
+
+    z-index:5;
+
+    font-size:25px;
+
+    line-height:1.4;
+
+    color:#5d7186;
+
+    margin-bottom:12px;
+
+}
+
+
+/* =========================================================
+   SUBTITLE
+========================================================= */
+
+.sub-heading{
+
+    position:relative;
+
+    z-index:5;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    color:#8174ab;
+
+    margin-bottom:8px;
+
+}
+
+
+/* =========================================================
+   SUB ITEMS
+========================================================= */
+
+.sub-items{
+
+    position:relative;
+
+    z-index:5;
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+}
+
+.sub-item{
+
+    padding:
+        5px 14px;
+
+    border-radius:15px;
+
+    background:
+        rgba(255,255,255,.72);
+
+    border:
+        1px solid
+        rgba(180,198,223,.42);
+
+    font-size:20px;
+
+    color:#64778a;
+
+    cursor:pointer;
+
+    transition:.3s ease;
+
+}
+
+.sub-item:hover{
+
+    transform:
+        translateY(-3px)
+        scale(1.02);
+
+    box-shadow:
+        0 7px 18px
+        rgba(100,120,155,.12);
+
+    background:white;
+
+}
+
+
+/* =========================================================
+   DETAIL
+========================================================= */
+
+.detail-box{
+
+    position:relative;
+
+    z-index:5;
+
+    max-height:0;
+
+    opacity:0;
+
+    overflow:hidden;
+
+    margin-top:0;
+
+    padding:
+        0 15px;
+
+    border-radius:14px;
+
+    background:
+        rgba(255,255,255,.72);
+
+    font-size:20px;
+
+    line-height:1.4;
+
+    transition:.4s ease;
+
+}
+
+.detail-box.show{
+
+    max-height:130px;
+
+    opacity:1;
+
+    margin-top:10px;
+
+    padding:
+        10px 15px;
+
+}
+
+
+/* =========================================================
+   BOTTOM ACTIVITY BAR
+========================================================= */
+
+.activity-selector{
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:8px;
+
+    transform:translateX(-50%);
+
+    width:min(820px,92%);
+
+    height:100px;
+
+    z-index:50;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+
+/* =========================================================
+   ACTIVITY TEXT BAR
+========================================================= */
+
+.activity-track{
+
+    position:relative;
+
+    width:100%;
+
+    height:70px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:24px;
+
+    background:
+        rgba(255,255,255,.38);
+
+    border:
+        1px solid
+        rgba(183,201,225,.32);
+
+    box-shadow:
+        0 8px 30px
+        rgba(100,120,155,.05);
+
+    backdrop-filter:blur(8px);
+
+}
+
+
+/* =========================================================
+   LIGHT FRAME
+========================================================= */
+
+.light-frame{
+
+    position:absolute;
+
+    top:7px;
+
+    left:0;
+
+    width:62px;
+
+    height:56px;
+
+    border-radius:17px;
+
+    border:
+        2px solid
+        var(--active-color);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.35),
+            rgba(255,255,255,.12)
+        );
+
+    box-shadow:
+
+        0 0 10px
+        var(--active-color),
+
+        0 0 25px
+        var(--active-color),
+
+        inset 0 0 15px
+        rgba(255,255,255,.7);
+
+    pointer-events:none;
+
+    z-index:1;
+
+    transition:
+        left .9s
+        cubic-bezier(.22,.75,.2,1),
+
+        width .5s ease;
+
+}
+
+.light-frame::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:8px;
+    right:8px;
+
+    top:-5px;
+
+    height:3px;
+
+    border-radius:10px;
+
+    background:
+        var(--active-color);
+
+    box-shadow:
+        0 0 10px
+        var(--active-color);
+
+}
+
+.light-frame::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:9px;
+    height:9px;
+
+    border-radius:50%;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    background:white;
+
+    box-shadow:
+        0 0 8px var(--active-color),
+        0 0 20px var(--active-color);
+
+    opacity:.8;
+
+}
+
+
+/* =========================================================
+   ACTIVITY LETTERS
+========================================================= */
+
+.activity-letters{
+
+    position:relative;
+
+    z-index:5;
+
+    height:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+.activity-letter{
+
+    width:62px;
+    height:56px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:17px;
+
+    font-family:Arial,sans-serif;
+
+    font-size:31px;
+
+    font-weight:900;
+
+    color:#7b8999;
+
+    cursor:pointer;
+
+    position:relative;
+
+    transition:
+
+        transform .55s cubic-bezier(.22,.75,.2,1),
+
+        color .4s ease,
+
+        text-shadow .4s ease;
+
+}
+
+.activity-letter:hover{
+
+    color:var(--letter-color);
+
+    transform:
+        translateY(-4px)
+        scale(1.08);
+
+}
+
+.activity-letter.active{
+
+    color:var(--letter-color);
+
+    transform:
+        scale(1.15);
+
+    text-shadow:
+        0 0 7px white,
+        0 0 15px var(--letter-color);
+
+}
+
+
+/* =========================================================
+   UNDERLINE ACTIVE
+========================================================= */
+
+.activity-letter.active::after{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:1px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:25px;
+
+    height:3px;
+
+    border-radius:10px;
+
+    background:
+        var(--letter-color);
+
+    box-shadow:
+        0 0 10px
+        var(--letter-color);
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status{
+
+    position:absolute;
+
+    left:20px;
+
+    bottom:35px;
+
+    z-index:60;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    font-size:18px;
+
+    color:#8996a7;
+
+}
+
+.status-dot{
+
+    width:10px;
+    height:10px;
+
+    border-radius:50%;
+
+    background:
+        var(--active-color);
+
+    box-shadow:
+        0 0 10px
+        var(--active-color);
+
+    animation:
+        statusPulse 1.6s infinite;
+
+}
+
+@keyframes statusPulse{
+
+    50%{
+        transform:scale(.65);
+        opacity:.4;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:900px){
+
+    .control-area{
+
+        position:relative;
+
+        top:auto;
+        right:auto;
+
+        justify-content:center;
+
+        margin-top:8px;
+
+    }
+
+    .activity-stage{
+
+        height:720px;
+
+    }
+
+    .orbit{
+
+        width:700px;
+        height:700px;
+
+    }
+
+    .content-card{
+
+        width:94%;
+
+    }
+
+    .status{
+
+        display:none;
+
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .activity-wrapper{
+
+        padding:7px;
+
+    }
+
+    .activity-model{
+
+        min-height:880px;
+
+    }
+
+    .activity-stage{
+
+        height:750px;
+
+    }
+
+    .activity-header h1{
+
+        font-size:36px;
+
+        letter-spacing:2px;
+
+    }
+
+    .activity-header p{
+
+        font-size:20px;
+
+    }
+
+    .active-letter{
+
+        width:110px;
+        height:110px;
+
+    }
+
+    .active-letter .character{
+
+        font-size:54px;
+
+    }
+
+    .active-letter .name{
+
+        font-size:18px;
+
+    }
+
+    .content-card{
+
+        top:175px;
+
+        width:95%;
+
+        min-height:410px;
+
+        padding:
+            20px;
+
+    }
+
+    .content-title h2{
+
+        font-size:27px;
+
+    }
+
+    .content-description{
+
+        font-size:21px;
+
+    }
+
+    .activity-selector{
+
+        width:98%;
+
+    }
+
+    .activity-letters{
+
+        gap:2px;
+
+    }
+
+    .activity-letter{
+
+        width:40px;
+
+        font-size:25px;
+
+    }
+
+    .light-frame{
+
+        width:40px;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUCE MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+
+        animation-duration:.01ms !important;
+
+        animation-iteration-count:1 !important;
+
+        transition-duration:.01ms !important;
+
+    }
+
+}
+
+
+/* =========================================================
+   EMBED  ฝังอยู่ในกรอบ ACTIVITY MODEL ของโมเดล PDCAR
+   ย่อขนาดให้พอดีคอลัมน์ขวา และเปลี่ยนตัวอักษรให้อ่านออกบนพื้นเข้ม
+========================================================= */
+
+body{
+    font-family:"Sarabun","TH Sarabun PSK",Arial,sans-serif;
+    color:#e8f0ff;
+}
+
+.activity-wrapper{
+    min-height:auto;
+    padding:0;
+    align-items:flex-start;
+}
+
+.activity-model{
+    min-height:auto;
+}
+
+.activity-stage{
+    height:470px;
+}
+
+.orbit{
+    width:450px;
+    height:450px;
+}
+
+.orbit::before{ inset:42px; }
+.orbit::after{ inset:80px; }
+
+.activity-header h1{
+    font-size:clamp(23px,3.2vw,31px);
+    letter-spacing:2px;
+}
+
+.activity-header p{
+    font-size:16px;
+    color:#dbe6f7;
+}
+
+.header-line{
+    width:120px;
+    height:3px;
+    margin-top:5px;
+}
+
+/* ไม่มีปุ่มเล่น/หยุด — โมเดลเล่นต่อเนื่องเสมอ */
+.control-area{ display:none; }
+
+.active-zone{
+    top:8px;
+    height:92px;
+}
+
+.active-letter{
+    width:82px;
+    height:82px;
+    border-radius:24px;
+    border-width:3px;
+}
+
+.active-letter .character{ font-size:37px; }
+.active-letter .name{ font-size:14px; margin-top:6px; }
+
+.active-glow{ width:140px; height:140px; }
+
+.connector{
+    height:22px;
+}
+
+/* -----------------------------------------------------
+   จัดใหม่เป็นการไหลตามเนื้อหา แทนการวางแบบ absolute
+   ของเดิมตรึงตำแหน่งไว้ตายตัว การ์ดจึงมีที่ว่างเหลือมาก
+   และมีช่องโหว่ก่อนถึงแถบ A C T I V I T Y
+----------------------------------------------------- */
+
+.activity-stage{
+    height:auto;
+    padding-bottom:0;
+}
+
+.active-zone{
+    position:relative;
+
+    /* ของเดิมตั้ง left:50% ไว้คู่กับ transform:translateX(-50%)
+       พอเอา transform ออก ต้องล้าง left/top ด้วย ไม่งั้นกล่องจะถูกดันไปมุมขวา */
+    left:auto;
+    top:auto;
+    right:auto;
+    bottom:auto;
+
+    transform:none;
+
+    width:100%;
+    height:auto;
+    margin-top:4px;
+}
+
+/* กลับมาวางแบบลอย เพื่อไม่ให้ไปเบียดตัวอักษรหลักออกจากกึ่งกลาง */
+.active-glow{
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+}
+
+.connector{
+    position:absolute;
+    top:100%;
+    left:50%;
+    transform:translateX(-50%);
+    margin:0;
+}
+
+.activity-selector{
+    position:static;
+    transform:none;
+    width:min(560px,97%);
+    height:auto;
+    margin:8px auto 0;
+}
+
+/* การ์ดคำอธิบาย: สูงเท่าเนื้อหาจริง ไม่มีที่ว่างเหลือ */
+.content-card{
+    position:static;
+    transform:none;
+    margin:26px auto 0;
+
+    width:min(620px,97%);
+    min-height:0;
+
+    padding:13px 16px 15px;
+    border-radius:18px;
+
+    /* กระจกสีเข้ม ให้อ่านออกบนวิดีโอพื้นหลังของหน้า */
+    background:rgba(10,24,52,.46);
+    border-color:rgba(255,255,255,.22);
+    box-shadow:0 12px 28px rgba(0,0,0,.2);
+
+    animation:contentInFlow .5s ease;
+}
+
+/* แอนิเมชันเดิมเลื่อนด้วย translateX(-50%) ซึ่งใช้กับ absolute
+   พอเปลี่ยนเป็นการไหลตามเนื้อหาจึงต้องใช้ชุดใหม่ ไม่งั้นการ์ดจะเบี้ยวไปทางซ้าย */
+@keyframes contentInFlow{
+    0%{ opacity:0; transform:translateY(12px); }
+    100%{ opacity:1; transform:none; }
+}
+
+.content-card::before{ width:170px; height:170px; right:-80px; top:-90px; }
+.content-card::after{ width:110px; height:110px; left:-60px; bottom:-70px; }
+
+.content-title{ gap:10px; margin-bottom:7px; }
+
+.content-tag{
+    width:34px;
+    height:34px;
+    border-radius:11px;
+    font-size:18px;
+}
+
+.content-title h2{
+    font-size:clamp(17px,2vw,21px);
+    color:#ffffff;
+}
+
+.content-description{
+    font-size:15.5px;
+    line-height:1.45;
+    color:#eaf2ff;
+    margin-bottom:9px;
+}
+
+.sub-items{ gap:6px; }
+
+.sub-item{
+    padding:4px 10px;
+    border-radius:11px;
+    font-size:14px;
+    color:#eaf2ff;
+    background:rgba(255,255,255,.14);
+    border-color:rgba(255,255,255,.24);
+}
+
+@media (hover:hover){
+    .sub-item:hover{ background:rgba(255,255,255,.26); }
+}
+
+.detail-box{
+    font-size:14px;
+    line-height:1.45;
+    color:#dbe6f7;
+    background:rgba(255,255,255,.12);
+    border-radius:11px;
+}
+
+.detail-box.show{ max-height:120px; padding:8px 12px; margin-top:8px; }
+
+.activity-selector{
+    bottom:0;
+    width:min(560px,97%);
+    height:68px;
+}
+
+.activity-track{
+    height:50px;
+    border-radius:17px;
+    background:rgba(10,24,52,.42);
+    border-color:rgba(255,255,255,.20);
+}
+
+.light-frame{ top:4px; height:42px; width:42px; border-radius:13px; }
+
+.activity-letters{ gap:8px; }
+
+.activity-letter{
+    width:42px;
+    height:42px;
+    border-radius:13px;
+    font-size:21px;
+    color:#c3d2e6;
+}
+
+.particle{ width:5px; height:5px; }
+
+.status{ display:none; }
+
+@media(max-width:560px){
+    .orbit{ width:380px; height:380px; }
+    .activity-letters{ gap:3px; }
+    .activity-letter{ width:32px; font-size:18px; }
+    .light-frame{ width:32px; }
+}
+</style>
+</head>
+
+
+<body>
+
+<div class="activity-wrapper">
+
+<div
+    class="activity-model"
+    id="activityModel">
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<div class="activity-header">
+
+    <h1>ACTIVITY MODEL</h1>
+
+    <p>
+        กระบวนการจัดการเรียนรู้เชิงรุก
+        เพื่อพัฒนาผู้เรียนรอบด้าน
+    </p>
+
+    <div class="header-line"></div>
+
+</div>
+
+
+<!-- =====================================================
+     CONTROL
+===================================================== -->
+
+<div class="control-area">
+
+    <button
+        class="control-btn active"
+        id="playBtn"
+        onclick="playModel()">
+
+        ▶ เล่น
+
+    </button>
+
+    <button
+        class="control-btn"
+        id="pauseBtn"
+        onclick="pauseModel()">
+
+        ⏸ หยุดอ่าน
+
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     STAGE
+===================================================== -->
+
+<div class="activity-stage">
+
+
+    <!-- ORBIT -->
+
+    <div class="orbit"></div>
+
+
+    <!-- PARTICLES -->
+
+    <div class="particle p1"></div>
+    <div class="particle p2"></div>
+    <div class="particle p3"></div>
+    <div class="particle p4"></div>
+    <div class="particle p5"></div>
+
+
+    <!-- =================================================
+         ACTIVE LETTER
+    ================================================== -->
+
+    <div class="active-zone">
+
+        <div
+            class="active-glow"
+            id="activeGlow">
+        </div>
+
+        <div
+            class="active-letter"
+            id="activeLetter">
+
+            <div
+                class="character"
+                id="activeCharacter">
+
+                A
+
+            </div>
+
+            <div
+                class="name"
+                id="activeName">
+
+                Action
+
+            </div>
+
+        </div>
+
+        <div class="connector"></div>
+
+    </div>
+
+
+    <!-- =================================================
+         CONTENT
+    ================================================== -->
+
+    <div
+        class="content-card"
+        id="contentCard">
+
+
+        <div class="content-title">
+
+            <div
+                class="content-tag"
+                id="contentTag">
+
+                A
+
+            </div>
+
+            <h2 id="contentTitle">
+
+                <span>A</span>
+                เรียนรู้ผ่านการลงมือทำ
+
+            </h2>
+
+        </div>
+
+
+        <div
+            class="content-description"
+            id="contentDescription">
+
+            ใช้กิจกรรมเป็นฐาน
+            และสะท้อนสิ่งที่ค้นพบจากกิจกรรมจริง
+
+        </div>
+
+
+        <div
+            class="sub-items"
+            id="subItems">
+        </div>
+
+
+        <div
+            class="detail-box"
+            id="detailBox">
+        </div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         ACTIVITY BAR
+         อยู่ด้านล่างตรงกลาง
+    ================================================== -->
+
+    <div class="activity-selector">
+
+
+        <div class="activity-track"
+             id="activityTrack">
+
+
+            <!--
+                กรอบแสงเพียงกรอบเดียว
+                จะเลื่อนไปตามตัวอักษร
+            -->
+
+            <div
+                class="light-frame"
+                id="lightFrame">
+            </div>
+
+
+            <div class="activity-letters">
+
+
+                <div
+                    class="activity-letter active"
+                    data-key="A"
+                    style="--letter-color:#f39bc6"
+                    onclick="selectActivity('A')">
+
+                    A
+
+                </div>
+
+
+                <div
+                    class="activity-letter"
+                    data-key="C"
+                    style="--letter-color:#a695e8"
+                    onclick="selectActivity('C')">
+
+                    C
+
+                </div>
+
+
+                <div
+                    class="activity-letter"
+                    data-key="T"
+                    style="--letter-color:#74c9e9"
+                    onclick="selectActivity('T')">
+
+                    T
+
+                </div>
+
+
+                <div
+                    class="activity-letter"
+                    data-key="I1"
+                    style="--letter-color:#8ed6a5"
+                    onclick="selectActivity('I1')">
+
+                    I
+
+                </div>
+
+
+                <div
+                    class="activity-letter"
+                    data-key="V"
+                    style="--letter-color:#f2b579"
+                    onclick="selectActivity('V')">
+
+                    V
+
+                </div>
+
+
+                <div
+                    class="activity-letter"
+                    data-key="I2"
+                    style="--letter-color:#88cce0"
+                    onclick="selectActivity('I2')">
+
+                    I
+
+                </div>
+
+
+                <div
+                    class="activity-letter"
+                    data-key="T2"
+                    style="--letter-color:#c29be9"
+                    onclick="selectActivity('T2')">
+
+                    T
+
+                </div>
+
+
+                <div
+                    class="activity-letter"
+                    data-key="Y"
+                    style="--letter-color:#ed91bb"
+                    onclick="selectActivity('Y')">
+
+                    Y
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- STATUS -->
+
+<div class="status">
+
+    <span
+        class="status-dot"
+        id="statusDot">
+    </span>
+
+    <span id="statusText">
+        กำลังแสดง A
+    </span>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   ACTIVITY DATA
+========================================================= */
+
+const activityData = {
+
+    A:{
+        letter:"A",
+        name:"Action",
+        color:"#f39bc6",
+
+        title:
+        "เรียนรู้ผ่านการลงมือทำ",
+
+        description:
+        "ใช้กิจกรรมเป็นฐาน และสะท้อนสิ่งที่ค้นพบจากกิจกรรมจริง",
+
+        sub:[
+            {
+                title:"Activity-Based Learning",
+                detail:
+                "ออกแบบการเรียนรู้โดยใช้กิจกรรมเป็นฐาน เปิดโอกาสให้ผู้เรียนได้ลงมือปฏิบัติจริง"
+            },
+            {
+                title:"Learning by Doing",
+                detail:
+                "ผู้เรียนเรียนรู้ผ่านการลงมือทำ ทดลอง สังเกต และสร้างประสบการณ์ด้วยตนเอง"
+            },
+            {
+                title:"Reflection",
+                detail:
+                "สะท้อนสิ่งที่ค้นพบจากกิจกรรม เพื่อนำประสบการณ์ไปเชื่อมโยงกับองค์ความรู้"
+            }
+        ]
+    },
+
+
+    C:{
+        letter:"C",
+        name:"Competency",
+        color:"#a695e8",
+
+        title:
+        "พัฒนาสมรรถนะ",
+
+        description:
+        "พัฒนาสมรรถนะที่ช่วยให้ผู้เรียนประยุกต์ความรู้และทักษะ เพื่อนำไปสู่ความสำเร็จตามศักยภาพเฉพาะบุคคล",
+
+        sub:[
+            {
+                title:"ประยุกต์ความรู้",
+                detail:
+                "นำความรู้ที่เรียนมาเชื่อมโยงกับสถานการณ์และปัญหาที่เกิดขึ้นจริง"
+            },
+            {
+                title:"ประยุกต์ทักษะ",
+                detail:
+                "ฝึกใช้ทักษะอย่างเหมาะสมกับบริบท เพื่อสร้างผลงานและแก้ปัญหา"
+            },
+            {
+                title:"ศักยภาพเฉพาะบุคคล",
+                detail:
+                "ส่งเสริมผู้เรียนให้พัฒนาตามความสามารถ ความสนใจ และศักยภาพของตนเอง"
+            }
+        ]
+    },
+
+
+    T:{
+        letter:"T",
+        name:"Technology",
+        color:"#74c9e9",
+
+        title:
+        "เลือกใช้เทคโนโลยีอย่างรู้เท่าทัน",
+
+        description:
+        "สร้างสรรค์ และปลอดภัย เพื่อขยายโอกาสในการเรียนรู้",
+
+        sub:[
+            {
+                title:"รู้เท่าทันเทคโนโลยี",
+                detail:
+                "พิจารณาข้อมูล แหล่งที่มา และผลกระทบก่อนเลือกใช้เทคโนโลยี"
+            },
+            {
+                title:"สร้างสรรค์",
+                detail:
+                "ใช้เทคโนโลยีเป็นเครื่องมือในการสร้างสรรค์ผลงานและแนวทางการเรียนรู้ใหม่"
+            },
+            {
+                title:"ปลอดภัย",
+                detail:
+                "ใช้งานเทคโนโลยีอย่างรับผิดชอบ คำนึงถึงความปลอดภัยและสิทธิของผู้อื่น"
+            }
+        ]
+    },
+
+
+    I1:{
+        letter:"I",
+        name:"Innovation",
+        color:"#8ed6a5",
+
+        title:
+        "มองหาแนวคิดใหม่",
+
+        description:
+        "สร้างทางเลือก และพัฒนาวิธีแก้ปัญหาที่ตอบโจทย์ผู้เรียน",
+
+        sub:[
+            {
+                title:"แนวคิดใหม่",
+                detail:
+                "เปิดมุมมองใหม่และค้นหาแนวคิดที่แตกต่างจากวิธีการเดิม"
+            },
+            {
+                title:"สร้างทางเลือก",
+                detail:
+                "พิจารณาทางเลือกหลายรูปแบบก่อนตัดสินใจเลือกแนวทางที่เหมาะสม"
+            },
+            {
+                title:"แก้ปัญหา",
+                detail:
+                "ออกแบบวิธีการแก้ปัญหาที่ตอบสนองต่อบริบทและความต้องการของผู้เรียน"
+            }
+        ]
+    },
+
+
+    V:{
+        letter:"V",
+        name:"Value Resources",
+        color:"#f2b579",
+
+        title:
+        "ประยุกต์ใช้คลังความรู้และแหล่งเรียนรู้",
+
+        description:
+        "การประยุกต์ใช้คลังความรู้ สื่อ แหล่งเรียนรู้ และข้อมูลที่มีคุณค่าเพื่อส่งเสริมกระบวนการเรียนรู้",
+
+        sub:[
+            {
+                title:"คลังความรู้",
+                detail:
+                "ค้นหาและประยุกต์ใช้ความรู้ที่มีอยู่ให้เหมาะสมกับกิจกรรมและเป้าหมาย"
+            },
+            {
+                title:"สื่อและแหล่งเรียนรู้",
+                detail:
+                "เลือกใช้สื่อและแหล่งเรียนรู้ที่หลากหลายเพื่อเพิ่มประสบการณ์การเรียนรู้"
+            },
+            {
+                title:"ข้อมูลที่มีคุณค่า",
+                detail:
+                "คัดเลือกข้อมูลที่มีความน่าเชื่อถือและสามารถนำไปใช้ประโยชน์ได้"
+            }
+        ]
+    },
+
+
+    I2:{
+        letter:"I",
+        name:"Intelligence",
+        color:"#88cce0",
+
+        title:
+        "การพัฒนาความชาญฉลาดรอบด้าน",
+
+        description:
+        "คิดวิเคราะห์ เชื่อมโยงข้อมูล และตัดสินใจอย่างมีเหตุผลในสถานการณ์ที่หลากหลาย",
+
+        sub:[
+            {
+                title:"คิดวิเคราะห์",
+                detail:
+                "แยกแยะข้อมูลและพิจารณาความสัมพันธ์ขององค์ประกอบต่าง ๆ อย่างเป็นระบบ"
+            },
+            {
+                title:"เชื่อมโยงข้อมูล",
+                detail:
+                "เชื่อมโยงข้อมูลจากหลายแหล่งเพื่อสร้างความเข้าใจที่ลึกซึ้ง"
+            },
+            {
+                title:"ตัดสินใจอย่างมีเหตุผล",
+                detail:
+                "ใช้ข้อมูล หลักฐาน และเหตุผลประกอบการตัดสินใจ"
+            }
+        ]
+    },
+
+
+    T2:{
+        letter:"T",
+        name:"Transferable Skills",
+        color:"#c29be9",
+
+        title:
+        "ฝึกทักษะที่นำไปใช้ได้ข้ามวิชา",
+
+        description:
+        "คิดวิเคราะห์ แก้ปัญหา สื่อสาร และการทำงานร่วมกัน",
+
+        sub:[
+            {
+                title:"คิดวิเคราะห์",
+                detail:
+                "นำกระบวนการคิดวิเคราะห์ไปใช้กับปัญหาและเนื้อหาที่หลากหลาย"
+            },
+            {
+                title:"แก้ปัญหา",
+                detail:
+                "พัฒนากระบวนการคิดเพื่อค้นหาแนวทางแก้ปัญหาอย่างเป็นระบบ"
+            },
+            {
+                title:"สื่อสาร",
+                detail:
+                "สื่อสารความคิด ข้อมูล และผลงานให้ผู้อื่นเข้าใจได้อย่างเหมาะสม"
+            },
+            {
+                title:"ทำงานร่วมกัน",
+                detail:
+                "ร่วมมือกับผู้อื่น แบ่งบทบาท รับฟังความคิดเห็น และสร้างผลงานร่วมกัน"
+            }
+        ]
+    },
+
+
+    Y:{
+        letter:"Y",
+        name:"Yield / Outcome",
+        color:"#ed91bb",
+
+        title:
+        "มุ่งสร้างผลลัพธ์ของการเรียนรู้",
+
+        description:
+        "มุ่งสร้างผลลัพธ์ของการเรียนรู้ที่จับต้องได้และนำไปต่อยอดได้",
+
+        sub:[
+            {
+                title:"ผลลัพธ์ที่จับต้องได้",
+                detail:
+                "ผู้เรียนสามารถแสดงผลการเรียนรู้ผ่านผลงาน ภาระงาน หรือการปฏิบัติจริง"
+            },
+            {
+                title:"นำไปต่อยอด",
+                detail:
+                "นำความรู้ ทักษะ และประสบการณ์ไปใช้ในบริบทใหม่หรือพัฒนาต่อยอดได้"
+            },
+            {
+                title:"สร้างคุณค่า",
+                detail:
+                "ผลลัพธ์การเรียนรู้สามารถนำไปสร้างคุณค่าให้กับตนเอง ผู้อื่น หรือบริบทที่เกี่ยวข้อง"
+            }
+        ]
+    }
+
+};
+
+
+/* =========================================================
+   ORDER
+========================================================= */
+
+const activityOrder = [
+    "A",
+    "C",
+    "T",
+    "I1",
+    "V",
+    "I2",
+    "T2",
+    "Y"
+];
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const model =
+    document.getElementById(
+        "activityModel"
+    );
+
+const activeLetter =
+    document.getElementById(
+        "activeLetter"
+    );
+
+const activeCharacter =
+    document.getElementById(
+        "activeCharacter"
+    );
+
+const activeName =
+    document.getElementById(
+        "activeName"
+    );
+
+const activeGlow =
+    document.getElementById(
+        "activeGlow"
+    );
+
+const contentCard =
+    document.getElementById(
+        "contentCard"
+    );
+
+const contentTag =
+    document.getElementById(
+        "contentTag"
+    );
+
+const contentTitle =
+    document.getElementById(
+        "contentTitle"
+    );
+
+const contentDescription =
+    document.getElementById(
+        "contentDescription"
+    );
+
+const subItems =
+    document.getElementById(
+        "subItems"
+    );
+
+const detailBox =
+    document.getElementById(
+        "detailBox"
+    );
+
+const lightFrame =
+    document.getElementById(
+        "lightFrame"
+    );
+
+const activityTrack =
+    document.getElementById(
+        "activityTrack"
+    );
+
+const letters =
+    document.querySelectorAll(
+        ".activity-letter"
+    );
+
+const playBtn =
+    document.getElementById(
+        "playBtn"
+    );
+
+const pauseBtn =
+    document.getElementById(
+        "pauseBtn"
+    );
+
+const statusText =
+    document.getElementById(
+        "statusText"
+    );
+
+const statusDot =
+    document.getElementById(
+        "statusDot"
+    );
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let currentIndex = 0;
+
+let isPlaying = true;
+
+let timer = null;
+
+
+/* =========================================================
+   GET CURRENT LETTER
+========================================================= */
+
+function getCurrentLetter(){
+
+    return letters[currentIndex];
+
+}
+
+
+/* =========================================================
+   MOVE LIGHT FRAME
+========================================================= */
+
+function moveLightFrame(){
+
+    const current =
+        getCurrentLetter();
+
+    if(!current)
+        return;
+
+
+    const trackRect =
+        activityTrack.getBoundingClientRect();
+
+    const letterRect =
+        current.getBoundingClientRect();
+
+
+    const left =
+        letterRect.left
+        -
+        trackRect.left;
+
+
+    lightFrame.style.left =
+        `${left}px`;
+
+
+    lightFrame.style.width =
+        `${letterRect.width}px`;
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderActivity(
+    key,
+    animate=true
+){
+
+    const data =
+        activityData[key];
+
+
+    /* Active color */
+
+    model.style.setProperty(
+        "--active-color",
+        data.color
+    );
+
+
+    /* Active letter */
+
+    activeCharacter.textContent =
+        data.letter;
+
+    activeName.textContent =
+        data.name;
+
+
+    activeLetter.style
+        .setProperty(
+            "--active-color",
+            data.color
+        );
+
+
+    activeGlow.style
+        .setProperty(
+            "--active-color",
+            data.color
+        );
+
+
+    /* Content */
+
+    contentTag.textContent =
+        data.letter;
+
+    contentTag.style.background =
+        data.color;
+
+
+    contentTitle.innerHTML =
+        `<span>${data.letter}</span>
+         ${data.title}`;
+
+
+    contentDescription.textContent =
+        data.description;
+
+
+    /* Reset detail */
+
+    detailBox.classList.remove(
+        "show"
+    );
+
+    detailBox.textContent = "";
+
+
+    /* Sub items */
+
+    subItems.innerHTML = "";
+
+
+    data.sub.forEach(
+        item=>{
+
+            const el =
+                document.createElement(
+                    "div"
+                );
+
+            el.className =
+                "sub-item";
+
+            el.textContent =
+                item.title;
+
+
+            el.onclick =
+                ()=>{
+                    detailBox.textContent =
+                        item.detail;
+
+                    detailBox.classList.add(
+                        "show"
+                    );
+                };
+
+
+            subItems.appendChild(el);
+
+        }
+    );
+
+
+    /* Active bottom letter */
+
+    letters.forEach(
+        letter=>{
+
+            letter.classList.remove(
+                "active"
+            );
+
+            if(
+                letter.dataset.key === key
+            ){
+
+                letter.classList.add(
+                    "active"
+                );
+
+            }
+
+        }
+    );
+
+
+    /* Status */
+
+    statusText.textContent =
+        (
+            isPlaying
+            ? "กำลังแสดง : "
+            : "หยุดอ่าน : "
+        )
+        +
+        data.name;
+
+
+    statusDot.style.background =
+        data.color;
+
+    statusDot.style.boxShadow =
+        `0 0 10px ${data.color}`;
+
+
+    /* Content animation */
+
+    if(animate){
+
+        contentCard.style.animation =
+            "none";
+
+        activeLetter.style.animation =
+            "none";
+
+        void contentCard.offsetWidth;
+
+        contentCard.style.animation =
+            "";
+
+        activeLetter.style.animation =
+            "";
+
+    }
+
+
+    /*
+       รอให้ DOM จัดตำแหน่ง
+       แล้วเลื่อนกรอบแสง
+    */
+
+    requestAnimationFrame(
+        ()=>{
+
+            moveLightFrame();
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+function selectActivity(key){
+
+    const index =
+        activityOrder.indexOf(key);
+
+
+    if(index === -1)
+        return;
+
+
+    /*
+       คลิกเพื่ออ่าน =
+       หยุดระบบอัตโนมัติ
+    */
+
+    pauseModel(false);
+
+
+    currentIndex =
+        index;
+
+
+    renderActivity(
+        key,
+        true
+    );
+
+}
+
+
+/* =========================================================
+   NEXT
+========================================================= */
+
+function nextActivity(){
+
+    if(!isPlaying)
+        return;
+
+
+    currentIndex =
+        (
+            currentIndex + 1
+        )
+        %
+        activityOrder.length;
+
+
+    const key =
+        activityOrder[
+            currentIndex
+        ];
+
+
+    renderActivity(
+        key,
+        true
+    );
+
+}
+
+
+/* =========================================================
+   PLAY
+========================================================= */
+
+function playModel(){
+
+    if(isPlaying)
+        return;
+
+
+    isPlaying = true;
+
+
+    playBtn.classList.add(
+        "active"
+    );
+
+    pauseBtn.classList.remove(
+        "active"
+    );
+
+
+    statusText.textContent =
+        "กำลังแสดง : "
+        +
+        activityData[
+            activityOrder[currentIndex]
+        ].name;
+
+
+    startTimer();
+
+}
+
+
+/* =========================================================
+   PAUSE
+========================================================= */
+
+function pauseModel(
+    updateStatus=true
+){
+
+    /*
+       โมเดลนี้เล่นต่อเนื่องเสมอ ไม่มีการหยุด
+       การคลิกหรือปัดเลือกตัวอักษร เป็นเพียงการข้ามไปดูตัวนั้นก่อน
+       แล้วจับเวลาใหม่ให้ได้อ่านเต็มรอบ
+    */
+
+    isPlaying = true;
+
+    startTimer();
+
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function startTimer(){
+
+    clearInterval(timer);
+
+
+    timer =
+        setInterval(
+            ()=>{
+
+                if(isPlaying){
+
+                    nextActivity();
+
+                }
+
+            },
+            4200
+        );
+
+}
+
+
+/* =========================================================
+   INITIAL
+========================================================= */
+
+renderActivity(
+    "A",
+    false
+);
+
+
+/*
+   เริ่มเล่นอัตโนมัติ
+*/
+
+startTimer();
+
+
+/* =========================================================
+   REPORT HEIGHT  แจ้งความสูงจริงให้กรอบแม่
+========================================================= */
+
+function reportHeight(){
+
+    requestAnimationFrame(()=>{
+
+        const el =
+            document.querySelector(".activity-model");
+
+        const height =
+            Math.ceil(
+                el
+                ? el.getBoundingClientRect().height + 4
+                : document.body.scrollHeight
+            );
+
+        /* ปรับกรอบที่ครอบอยู่โดยตรง (อยู่โดเมนเดียวกัน) วิธีนี้ไม่พลาดเหมือนการส่งข้อความ */
+        if(window.frameElement){
+
+            window.frameElement.style.height =
+                height + "px";
+
+        }
+
+        /* ส่งข้อความเป็นทางสำรอง เผื่อกรอบแม่ต้องคำนวณความสูงของตัวเองต่อ */
+        window.parent.postMessage(
+            {
+                type:"activity-model-height",
+                height
+            },
+            window.location.origin
+        );
+
+    });
+
+}
+
+new ResizeObserver(reportHeight)
+    .observe(document.body);
+
+window.addEventListener("load", reportHeight);
+
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+window.addEventListener(
+    "resize",
+    ()=>{
+
+        moveLightFrame();
+
+    }
+);
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event=>{
+
+        /* ทำงานเฉพาะตอนโฟกัสอยู่ในโมเดลนี้ */
+        if(!document.hasFocus()) return;
+
+        if(
+            event.code === "Space"
+        ){
+
+            event.preventDefault();
+
+
+            if(isPlaying){
+
+                pauseModel();
+
+            }else{
+
+                playModel();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SWIPE
+========================================================= */
+
+let touchStartX = 0;
+
+
+activityTrack.addEventListener(
+    "touchstart",
+    event=>{
+
+        touchStartX =
+            event.touches[0]
+            .clientX;
+
+    },
+    {
+        passive:true
+    }
+);
+
+
+activityTrack.addEventListener(
+    "touchend",
+    event=>{
+
+        const endX =
+            event.changedTouches[0]
+            .clientX;
+
+        const distance =
+            endX - touchStartX;
+
+
+        if(
+            Math.abs(distance) < 40
+        )
+            return;
+
+
+        pauseModel(false);
+
+
+        if(distance < 0){
+
+            currentIndex =
+                (
+                    currentIndex + 1
+                )
+                %
+                activityOrder.length;
+
+        }else{
+
+            currentIndex =
+                (
+                    currentIndex - 1
+                    +
+                    activityOrder.length
+                )
+                %
+                activityOrder.length;
+
+        }
+
+
+        renderActivity(
+            activityOrder[currentIndex],
+            true
+        );
+
+    },
+    {
+        passive:true
+    }
+);
+
+</script>
+
+</body>
+</html>

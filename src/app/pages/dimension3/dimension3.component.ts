@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, HostListener, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DIM3 } from '../../data/dimension3.data';
 import { SCHOOL } from '../../data/school.data';
@@ -27,6 +27,17 @@ import { PagerComponent } from '../../shared/pager/pager.component';
   styleUrl: './dimension3.component.css'
 })
 export class Dimension3Component {
+  /* ความสูงจริงของโมเดลการบริหาร ที่ส่งมาจาก iframe */
+  readonly adminModelHeight = signal(900);
+
+  @HostListener('window:message', ['$event'])
+  resizeAdminModel(event: MessageEvent<{ type?: string; height?: number }>): void {
+    if (typeof window === 'undefined' || event.origin !== window.location.origin) return;
+    if (event.data?.type !== 'd3-banchuen-model-height') return;
+    const height = Number(event.data.height);
+    if (Number.isFinite(height)) this.adminModelHeight.set(Math.max(420, Math.min(2400, height)));
+  }
+
   readonly gallery = GALLERY['d3'];
   readonly d = DIM3;
   readonly school = SCHOOL;

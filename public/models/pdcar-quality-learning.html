@@ -1718,6 +1718,86 @@ body{
 
 
 /* =========================================================
+   ACTIVITY FRAME  โมเดล ACTIVITY ที่ฝังอยู่ในขั้น D
+========================================================= */
+
+.activity-placeholder{
+    margin-top:12px;
+    padding:2px;
+    border-radius:14px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.16);
+}
+
+.activity-placeholder::before{ display:none; }
+
+.activity-frame{
+    display:block;
+    width:100%;
+    height:420px;
+    border:0;
+    background:transparent;
+}
+
+
+/* =========================================================
+   MORE BUTTON  ปุ่มข้ามไปหัวข้อของหน้าด้านที่ 4
+========================================================= */
+
+.more-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+
+    min-height:44px;
+
+    margin:6px 0 4px;
+    padding:9px 20px;
+
+    border:0;
+    border-radius:16px;
+
+    font-family:inherit;
+    font-size:20px;
+    font-weight:700;
+
+    color:#fff;
+
+    cursor:pointer;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--active-color,#b79cf0),
+            rgba(255,255,255,.28)
+        ),
+        var(--active-color,#b79cf0);
+
+    box-shadow:
+        0 10px 26px
+        color-mix(in srgb, var(--active-color,#b79cf0) 45%, transparent),
+        inset 0 1px 0 rgba(255,255,255,.45);
+
+    transition:.3s ease;
+}
+
+.more-btn[hidden]{ display:none; }
+
+.more-btn svg{ transition:transform .3s ease; }
+
+@media (hover:hover){
+    .more-btn:hover{
+        transform:translateY(-2px);
+        box-shadow:
+            0 14px 32px
+            color-mix(in srgb, var(--active-color,#b79cf0) 55%, transparent),
+            inset 0 1px 0 rgba(255,255,255,.5);
+    }
+    .more-btn:hover svg{ transform:translateX(4px); }
+}
+
+
+/* =========================================================
    REDUCED MOTION
 ========================================================= */
 @media (prefers-reduced-motion: reduce){
@@ -2196,6 +2276,23 @@ body{
 
 
 
+    <!-- ปุ่มข้ามไปหัวข้อ 4.1–4.4 ของหน้าด้านที่ 4 (ขั้น R ไม่มีปุ่ม) -->
+    <button
+        type="button"
+        class="more-btn"
+        id="moreBtn"
+        hidden>
+
+        <span id="moreLabel">ดูข้อมูลเพิ่มเติม</span>
+
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+
+    </button>
+
+
     <div class="section-label">
         องค์ประกอบสำคัญ
     </div>
@@ -2221,18 +2318,13 @@ body{
         id="activityPlaceholder"
         style="display:none;">
 
-        <div class="activity-icon">
-            D
-        </div>
-
-        <h3>
-            พื้นที่สำหรับ ACTIVITY MODEL
-        </h3>
-
-        <p>
-            สามารถนำไฟล์หรือโค้ด ACTIVITY MODEL
-            มาใส่ในพื้นที่นี้ได้ในอนาคต
-        </p>
+        <iframe
+            class="activity-frame"
+            id="activityFrame"
+            title="ACTIVITY MODEL"
+            loading="lazy"
+            scrolling="no"
+            src=""></iframe>
 
     </div>
 
@@ -2553,6 +2645,65 @@ const statusText =
 const controlHint =
     document.getElementById("controlHint");
 
+const activityFrame =
+    document.getElementById("activityFrame");
+
+
+/* โมเดล ACTIVITY แจ้งความสูงจริงมา จึงปรับกรอบให้พอดี ไม่มีแถบเลื่อนซ้อน */
+window.addEventListener("message", event => {
+
+    if(event.origin !== window.location.origin) return;
+
+    if(event.data?.type !== "activity-model-height") return;
+
+    const height = Number(event.data.height);
+
+    if(Number.isFinite(height)){
+
+        activityFrame.style.height =
+            Math.max(320, Math.min(1400, height)) + "px";
+
+        reportHeight();
+
+    }
+
+});
+
+
+const moreBtn =
+    document.getElementById("moreBtn");
+
+const moreLabel =
+    document.getElementById("moreLabel");
+
+
+/* ขั้นในวงจร → หัวข้อในหน้าด้านที่ 4 */
+const GROUP_OF = {
+    P: "4.1",
+    D: "4.2",
+    C: "4.3",
+    A: "4.4"
+};
+
+
+moreBtn.addEventListener("click", () => {
+
+    const target =
+        moreBtn.dataset.target;
+
+    if(!target) return;
+
+    window.parent.postMessage(
+        {
+            type: "d4-pdcar-open-group",
+            group: target
+        },
+        window.location.origin
+    );
+
+});
+
+
 const playBtn =
     document.getElementById("playBtn");
 
@@ -2696,12 +2847,45 @@ function renderInfo(key){
     );
 
 
+    /* ปุ่มดูข้อมูลเพิ่มเติม: P→4.1 D→4.2 C→4.3 A→4.4 ส่วน R ไม่มีปุ่ม */
+
+    const target =
+        GROUP_OF[key];
+
+    if(target){
+
+        moreBtn.hidden = false;
+
+        moreBtn.dataset.target = target;
+
+        moreLabel.textContent =
+            "ดูข้อมูลเพิ่มเติม หัวข้อ " + target;
+
+    }else{
+
+        moreBtn.hidden = true;
+
+        delete moreBtn.dataset.target;
+
+    }
+
+
     /* D แสดงพื้นที่ ACTIVITY MODEL */
 
     if(key === "D"){
 
         activityPlaceholder.style.display =
             "block";
+
+        /* โหลดครั้งแรกที่เข้าขั้น D เท่านั้น */
+        if(!activityFrame.getAttribute("src")){
+
+            activityFrame.setAttribute(
+                "src",
+                "/models/activity-model.html"
+            );
+
+        }
 
     }else{
 
