@@ -542,11 +542,16 @@
         <h3 class="sec-title" style="font-size:22px">โครงการและกิจกรรมที่ดำเนินการ</h3>
         <div class="sec-rule"></div>
       </div>
-      <div class="steps">
-        <div class="step-item" *ngFor="let a of d.section12.environment.activities; let i = index" appReveal="left"
+      <div class="d1-environment-activities">
+        <article class="d1-environment-activity" *ngFor="let activity of environmentActivities; let i = index" appReveal="left"
           [revealDelay]="i * 70">
-          <h4>{{ a }}</h4>
-        </div>
+          <h4>{{ activity.title }}</h4>
+          <div class="d1-environment-photos">
+            <figure *ngFor="let image of activity.images">
+              <img [src]="image" [alt]="activity.title" loading="lazy">
+            </figure>
+          </div>
+        </article>
       </div>
       <app-callout label="สรุปผล:">{{ d.section12.environment.conclusion }}</app-callout>
     </div>
