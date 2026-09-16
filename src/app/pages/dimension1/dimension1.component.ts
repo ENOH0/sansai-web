@@ -51,6 +51,27 @@ export class Dimension1Component implements OnInit {
     }
   }
 
+  /* ---------- ดูภาพขนาดเต็ม ----------
+     ใช้การดักคลิกที่ระดับหน้า (event delegation) แทนการใส่ (click) ทีละรูป
+     ทำให้ทุกภาพในทุกหัวข้อย่อยกดดูเต็มจอได้ โดยไม่ต้องแก้เทมเพลตทีละจุด */
+  readonly zoom = signal<{ src: string; cap: string } | null>(null);
+
+  @HostListener('click', ['$event'])
+  onImageClick(ev: MouseEvent): void {
+    const el = ev.target as HTMLElement | null;
+    if (!el || el.tagName !== 'IMG') return;
+    // app-photo-gallery มีตัวดูภาพของตัวเองอยู่แล้ว และไม่ดักซ้ำในชั้นดูภาพเต็ม
+    if (el.closest('app-photo-gallery') || el.closest('.d1-zoom')) return;
+    const img = el as HTMLImageElement;
+    const src = img.currentSrc || img.src;
+    if (!src) return;
+    ev.preventDefault();
+    this.zoom.set({ src, cap: img.alt || '' });
+  }
+
+  @HostListener('document:keydown.escape')
+  closeZoom(): void { this.zoom.set(null); }
+
   /** เปิดหัวข้อเดิมอัตโนมัติเมื่อกลับมาจากหน้ารางวัล (?t=1.1.8) */
   ngOnInit(): void {
     const t = this.route.snapshot.queryParamMap.get('t');

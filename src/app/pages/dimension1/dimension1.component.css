@@ -526,3 +526,52 @@
 :host ::ng-deep .card .steps::before { background: var(--gold-400); }
 :host ::ng-deep .card .chip { color: var(--navy-700); border-color: var(--navy-100); background: var(--navy-50); text-shadow: none; }
 :host ::ng-deep .card-title { color: var(--navy-900); }
+
+/* ═══════════ ดูภาพขนาดเต็ม ═══════════ */
+/* บอกผู้ใช้ว่ากดได้ (แกลเลอรีมีปุ่มของตัวเองอยู่แล้ว) */
+:host ::ng-deep img { cursor: zoom-in; }
+
+.d1-zoom {
+  position: fixed;
+  inset: 0;
+  z-index: 240;
+  display: grid;
+  place-content: center;
+  gap: 14px;
+  padding: 28px;
+  padding-top: max(28px, env(safe-area-inset-top));
+  padding-bottom: max(28px, env(safe-area-inset-bottom));
+  background: rgba(8, 21, 47, .93);
+  cursor: zoom-out;
+  animation: d1ZoomIn .18s var(--ease);
+}
+.d1-zoom img {
+  max-width: min(1200px, 94vw);
+  max-height: 80vh;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, .5);
+}
+.d1-zoom-cap {
+  margin: 0;
+  max-width: min(1200px, 94vw);
+  color: #e8f0ff;
+  font-size: 17px;
+  line-height: 1.7;
+  text-align: center;
+}
+.d1-zoom-close {
+  position: fixed;
+  top: max(16px, env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  font-size: 20px;
+  color: #fff;
+  background: rgba(255, 255, 255, .16);
+  cursor: pointer;
+}
+@keyframes d1ZoomIn { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .d1-zoom { animation: none; } }

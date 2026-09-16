@@ -775,3 +775,10 @@
 
 <!-- ปุ่มกลับหน้าแรกแบบลอย -->
 <app-home-fab />
+
+<!-- ชั้นดูภาพขนาดเต็ม: แตะที่ภาพใดก็ได้ในหน้านี้เพื่อเปิด แตะอีกครั้งหรือกด Esc เพื่อปิด -->
+<div class="d1-zoom" *ngIf="zoom() as z" (click)="closeZoom()" role="dialog" aria-modal="true">
+  <button type="button" class="d1-zoom-close" aria-label="ปิดภาพขนาดเต็ม">&#10005;</button>
+  <img [src]="z.src" [alt]="z.cap" />
+  <p class="d1-zoom-cap" *ngIf="z.cap">{{ z.cap }}</p>
+</div>
