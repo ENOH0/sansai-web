@@ -480,7 +480,7 @@ export class Dimension1Component implements OnInit {
   ];
 
   // ---------- ICT ----------
-  readonly ictSeries: LineSeries[] = [{
+  readonly ictSeries: BarSeries[] = [{
     name: 'รายวิชาเทคโนโลยี (ระดับ 3–4)',
     values: DIM1.section11.ict.values,
     color: '#1e4d9e'
