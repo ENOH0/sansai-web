@@ -337,6 +337,27 @@ export class Dimension1Component implements OnInit {
     ]
   }));
 
+  readonly muenSanWorkshopImages = [
+    '/evidence/1.2.5/muen-san-workshop/01.png',
+    '/evidence/1.2.5/muen-san-workshop/02.png'
+  ];
+
+  readonly khokNongNaImages = [
+    '/evidence/1.2.5/khok-nong-na/01.png',
+    '/evidence/1.2.5/khok-nong-na/02.png'
+  ];
+
+  readonly thaiMusicActivitySets = [
+    {
+      images: ['/evidence/1.2.5/thai-music/01.png', '/evidence/1.2.5/thai-music/02.png'],
+      caption: 'ภาพประกอบการทำการจัดการเรียนการสอนกิจกรรมพัฒนาผู้เรียนชุมนุมดนตรีพื้นเมืองดนตรีไทย ณ ห้องปฏิบัติการดนตรี โรงเรียนสันทรายวิทยาคม อำเภอเมือง จังหวัดเชียงใหม่'
+    },
+    {
+      images: ['/evidence/1.2.5/thai-music/03.png', '/evidence/1.2.5/thai-music/04.png'],
+      caption: 'ภาพประกอบการแสดงและบรรเลงดนตรีของนักเรียนชุมนุมดนตรีพื้นเมือง ดนตรีไทยและดนตรีลูกทุ่ง โรงเรียนสันทรายวิทยาคม เนื่องในโอกาสถวายการต้อนรับพระบาทสมเด็จพระเจ้าอยู่หัว ณ กองบิน ๔๑ กองทัพอากาศ อำเภอเมือง จังหวัดเชียงใหม่'
+    }
+  ];
+
   // ---------- ภาษาอังกฤษ ----------
   readonly engSeries = [{
     name: 'ระดับดีขึ้นไป (3–4)',

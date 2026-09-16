@@ -620,6 +620,32 @@
           </div>
           <h3 class="card-title">{{ pj.name }}</h3>
           <p class="card-body" style="margin:0">{{ pj.text }}</p>
+          <div *ngIf="i === 0" class="d1-muen-san-workshop">
+            <div class="d1-muen-san-photos">
+              <figure *ngFor="let image of muenSanWorkshopImages">
+                <img [src]="image" alt="ทัศนศึกษาแหล่งเรียนรู้ ชุมชนหมื่นสาร" loading="lazy">
+              </figure>
+            </div>
+            <p>ภาพประกอบการทัศนศึกษาแหล่งเรียนรู้ร่วมกิจกรรม workshop ตอกลายเงิน ณ ชุมชนหมื่นสาร อำเภอเมือง จังหวัดเชียงใหม่</p>
+          </div>
+          <div *ngIf="i === 1" class="d1-muen-san-workshop">
+            <div class="d1-muen-san-photos">
+              <figure *ngFor="let image of khokNongNaImages">
+                <img [src]="image" alt="โครงการปรับปรุงโคกหนองนา" loading="lazy">
+              </figure>
+            </div>
+            <p>ภาพประกอบการทำกิจกรรมโครงการปรับปรุงโคกหนองนาของนักเรียน ณ แหล่งเรียนรู้โคกหนองนา โรงเรียนสันทรายวิทยาคม อำเภอเมือง จังหวัดเชียงใหม่</p>
+          </div>
+          <div *ngIf="i === 2" class="d1-thai-music-activities">
+            <section *ngFor="let activitySet of thaiMusicActivitySets" class="d1-muen-san-workshop">
+              <div class="d1-muen-san-photos">
+                <figure *ngFor="let image of activitySet.images">
+                  <img [src]="image" alt="กิจกรรมดนตรีไทยและดนตรีพื้นเมือง" loading="lazy">
+                </figure>
+              </div>
+              <p>{{ activitySet.caption }}</p>
+            </section>
+          </div>
         </div>
       </div>
       <app-callout label="สรุปผล:" style="display:block;margin-top:24px">{{ d.section12.thaiPride.conclusion

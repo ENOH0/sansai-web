@@ -401,6 +401,12 @@
 @media (max-width:900px) { .d1-teamwork-plan-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media (max-width:560px) { .d1-teamwork-plan-grid { grid-template-columns:1fr; } .d1-teamwork-plan-grid img { height:165px; } }
 .d1-student-development { margin-top:30px; }
+.d1-muen-san-workshop { margin-top:16px; }
+.d1-muen-san-photos { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+.d1-muen-san-photos figure { margin:0; overflow:hidden; border:1px solid var(--navy-100); border-radius:9px; }
+.d1-muen-san-photos img { display:block; width:100%; height:130px; object-fit:cover; }
+.d1-muen-san-workshop > p { margin:10px 0 0; color:#173d71; font-size:14px; font-weight:700; line-height:1.5; }
+.d1-thai-music-activities > .d1-muen-san-workshop + .d1-muen-san-workshop { margin-top:18px; padding-top:18px; border-top:1px solid var(--navy-100); }
 
 /* ผลงานเด่น O-NET — ใช้สีและถ้อยคำจากหลักฐานเปรียบเทียบรายวิชา */
 .d1-onet-highlight {
