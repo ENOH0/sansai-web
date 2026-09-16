@@ -50,9 +50,11 @@
     <div class="school-curriculum-frame" appReveal>
       <iframe src="/models/school-curriculum.html" title="SCHOOL CURRICULUM model" loading="lazy"></iframe>
     </div>
-    <div class="d2-diversity-model" appReveal>
-      <iframe src="/models/diversity-curriculum-model.html" title="โมเดลกระบวนการพัฒนาหลักสูตรด้านความหลากหลาย"
-        loading="lazy" scrolling="no" [style.height.px]="diversityModelHeight()"></iframe>
+    <!-- แก้เนื้อหาได้ที่ public/models/curriculum-continuity-model.html ในตัวแปร data -->
+    <div class="d2-continuity-model" appReveal>
+      <iframe src="/models/curriculum-continuity-model.html"
+        title="กระบวนการพัฒนาหลักสูตรที่มีความต่อเนื่องเชื่อมโยง PDCA"
+        loading="lazy" scrolling="no" [style.height.px]="continuityModelHeight()"></iframe>
     </div>
 
     <!-- แก้เนื้อหาได้ที่ public/models/pdca-flexible-curriculum.html ในตัวแปร data -->
@@ -200,7 +202,15 @@
               <div class="chip" style="margin-bottom:12px">กลุ่มสาระการเรียนรู้</div>
               <h3 class="card-title">{{ g.subject }}</h3>
               <ul class="bullets" style="margin-top:8px">
-                <li *ngFor="let it of g.items">{{ it }}</li>
+                <li *ngFor="let it of g.items">
+                  {{ it.text }}
+                  <div class="d2-item-photos" *ngIf="photosOf(it).length">
+                    <figure *ngFor="let p of photosOf(it)">
+                      <img [src]="p.src" [alt]="p.caption" loading="lazy" decoding="async" />
+                      <figcaption>{{ p.caption }}</figcaption>
+                    </figure>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
@@ -316,3 +326,10 @@
 
 <!-- ปุ่มกลับหน้าแรกแบบลอย -->
 <app-home-fab />
+
+<!-- ชั้นดูภาพขนาดเต็ม: แตะที่ภาพใดก็ได้ในหน้านี้เพื่อเปิด แตะอีกครั้งหรือกด Esc เพื่อปิด -->
+<div class="d2-zoom" *ngIf="zoom() as z" (click)="closeZoom()" role="dialog" aria-modal="true">
+  <button type="button" class="d2-zoom-close" aria-label="ปิดภาพขนาดเต็ม">&#10005;</button>
+  <img [src]="z.src" [alt]="z.cap" />
+  <p class="d2-zoom-cap" *ngIf="z.cap">{{ z.cap }}</p>
+</div>

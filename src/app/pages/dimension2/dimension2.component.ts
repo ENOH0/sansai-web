@@ -28,7 +28,7 @@ import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
   styleUrl: './dimension2.component.css'
 })
 export class Dimension2Component {
-  readonly diversityModelHeight = signal(860);
+  readonly continuityModelHeight = signal(960);
   readonly flexibleModelHeight = signal(980);
   readonly diversityPdcaHeight = signal(1000);
 
@@ -45,9 +45,9 @@ export class Dimension2Component {
       if (Number.isFinite(h)) this.flexibleModelHeight.set(Math.max(620, Math.min(2000, h)));
       return;
     }
-    if (event.data?.type !== 'd2-diversity-model-height') return;
+    if (event.data?.type !== 'd2-continuity-model-height') return;
     const height = Number(event.data.height);
-    if (Number.isFinite(height)) this.diversityModelHeight.set(Math.max(620, Math.min(1600, height)));
+    if (Number.isFinite(height)) this.continuityModelHeight.set(Math.max(620, Math.min(2400, height)));
   }
 
   /* ---------- แอคคอร์เดียนหัวข้อตามแบบประเมิน ----------
@@ -108,6 +108,28 @@ export class Dimension2Component {
     const all = DIM2.indicators as Record<string, string[]>;
     return all[this.indicatorKeyOf[k]] ?? [];
   }
+
+  /** รูปประกอบของกิจกรรมนั้น ๆ (กิจกรรมที่ยังไม่มีภาพหลักฐานจะไม่แสดงรูป) */
+  photosOf(item: { photos?: { src: string; caption: string }[] }) { return item.photos ?? []; }
+
+  /* ---------- ดูภาพขนาดเต็ม ----------
+     ดักคลิกที่ระดับหน้า ทำให้ทุกภาพในหน้านี้กดดูเต็มจอได้ */
+  readonly zoom = signal<{ src: string; cap: string } | null>(null);
+
+  @HostListener('click', ['$event'])
+  onImageClick(ev: MouseEvent): void {
+    const el = ev.target as HTMLElement | null;
+    if (!el || el.tagName !== 'IMG') return;
+    if (el.closest('app-photo-gallery') || el.closest('.d2-zoom')) return;
+    const img = el as HTMLImageElement;
+    const src = img.currentSrc || img.src;
+    if (!src) return;
+    ev.preventDefault();
+    this.zoom.set({ src, cap: img.alt || '' });
+  }
+
+  @HostListener('document:keydown.escape')
+  closeZoom(): void { this.zoom.set(null); }
 
   readonly gallery = GALLERY['d2'];
   readonly d = DIM2;

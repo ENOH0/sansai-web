@@ -105,13 +105,13 @@
   border: 0;
   background: transparent;
 }
-.d2-diversity-model {
+.d2-continuity-model {
   margin-top: 34px;
   overflow: hidden;
   background: transparent;
   border-radius: var(--radius-md);
 }
-.d2-diversity-model iframe {
+.d2-continuity-model iframe {
   display: block;
   width: 100%;
   border: 0;
@@ -406,4 +406,71 @@
   width: 100%;
   border: 0;
   background: transparent;
+}
+
+/* ═══════════ รูปประกอบของแต่ละกิจกรรม ═══════════ */
+.d2-item-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 10px 0 4px;
+}
+.d2-item-photos figure { margin: 0; }
+.d2-item-photos img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  cursor: zoom-in;
+}
+.d2-item-photos figcaption {
+  margin-top: 5px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-mute);
+}
+
+/* ═══════════ ดูภาพขนาดเต็ม ═══════════ */
+.d2-zoom {
+  position: fixed;
+  inset: 0;
+  z-index: 240;
+  display: grid;
+  place-content: center;
+  gap: 14px;
+  padding: 28px;
+  padding-top: max(28px, env(safe-area-inset-top));
+  padding-bottom: max(28px, env(safe-area-inset-bottom));
+  background: rgba(8, 21, 47, .93);
+  cursor: zoom-out;
+}
+.d2-zoom img {
+  max-width: min(1200px, 94vw);
+  max-height: 80vh;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, .5);
+}
+.d2-zoom-cap {
+  margin: 0;
+  max-width: min(1200px, 94vw);
+  color: #e8f0ff;
+  font-size: 17px;
+  line-height: 1.7;
+  text-align: center;
+}
+.d2-zoom-close {
+  position: fixed;
+  top: max(16px, env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  font-size: 20px;
+  color: #fff;
+  background: rgba(255, 255, 255, .16);
+  cursor: pointer;
 }
