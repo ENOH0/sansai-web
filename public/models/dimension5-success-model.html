@@ -117,6 +117,11 @@ h1{font-size:clamp(24px,4.4vw,38px);line-height:1.32;margin:14px 0 6px;font-weig
     0 26px 36px -16px hsl(var(--h) 55% 28% / .55);
   transition:box-shadow .2s, border-color .2s;
 }
+.partner-logo{
+  width:76px;height:76px;object-fit:contain;align-self:center;padding:6px;
+  border-radius:18px;background:rgba(255,255,255,.96);
+  box-shadow:0 5px 14px rgba(8,21,47,.18)
+}
 /* เส้นเรืองแสงขอบบน */
 .card::before{
   content:"";position:absolute;top:-1px;left:16%;right:16%;height:2px;border-radius:2px;pointer-events:none;
@@ -149,6 +154,14 @@ h1{font-size:clamp(24px,4.4vw,38px);line-height:1.32;margin:14px 0 6px;font-weig
 .node:active .card{
   box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 3px 0 0 var(--edge),0 10px 16px -10px hsl(var(--h) 55% 28% / .6)}
 .node:focus-visible{outline:3px solid hsl(var(--h) 65% 45%);outline-offset:6px;border-radius:var(--r)}
+.node.logo-node{cursor:default}
+.node.logo-node:active{transform:none}
+.node.logo-node .card{min-height:0}
+.node.logo-node .cta{display:none}
+@media (hover:hover) and (pointer:fine){
+  .node.logo-node:hover{transform:none}
+  .node.logo-node:hover .card{border-color:hsl(var(--h) 55% 56% / .55);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 12px 0 0 var(--edge),0 26px 36px -16px hsl(var(--h) 55% 28% / .55)}
+}
 
 /* สายที่ 2 : ฟ้าอ่อนกว่า เพื่อแยกจากสายน้ำเงินเข้ม */
 .node.light{--edge:hsl(var(--h) 68% 34%)}
@@ -254,9 +267,14 @@ const DATA = {
           id:'b1-mou', title:'MOU',
           desc:'บันทึกข้อตกลงความร่วมมือกับหน่วยงานภาคี',
           children:[
-            {id:'mou-1', title:'หัวข้อย่อยที่ 1', desc:'รอกำหนดเนื้อหา', todo:true},
-            {id:'mou-2', title:'หัวข้อย่อยที่ 2', desc:'รอกำหนดเนื้อหา', todo:true},
-            {id:'mou-3', title:'หัวข้อย่อยที่ 3', desc:'รอกำหนดเนื้อหา', todo:true}
+            {id:'mou-mju', title:'มหาวิทยาลัยแม่โจ้', desc:'ความร่วมมือกับ 7 คณะ', logo:'/evidence/dimension5/mou/01-image1.png'},
+            {id:'mou-bcnc', title:'วิทยาลัยพยาบาลบรมราชชนนี', desc:'ภาคีความร่วมมือ', logo:'/evidence/dimension5/mou/02-image2.png'},
+            {id:'mou-ku', title:'คณะวนศาสตร์ มหาวิทยาลัยเกษตรศาสตร์', desc:'ภาคีความร่วมมือ', logo:'/evidence/dimension5/mou/03-image3.jfif'},
+            {id:'mou-kmitl', title:'คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าคุณทหารลาดกระบัง', desc:'ภาคีความร่วมมือ', logo:'/evidence/dimension5/mou/04-image4.webp'},
+            {id:'mou-cmvc', title:'วิทยาลัยอาชีวศึกษาเชียงใหม่', desc:'ภาคีความร่วมมือ', logo:'/evidence/dimension5/mou/05-image5.png'},
+            {id:'mou-saraphi', title:'วิทยาลัยเทคนิคสารภี', desc:'ภาคีความร่วมมือ', logo:'/evidence/dimension5/mou/06-image6.jpg'},
+            {id:'mou-pim', title:'สถาบันการจัดการปัญญาภิวัฒน์', desc:'ภาคีความร่วมมือ', logo:'/evidence/dimension5/mou/07-image7.png'},
+            {id:'mou-swun', title:'มหาวิทยาลัยซีหนาน 西南大学', desc:'ณ มณฑลฉงชิ่ง ประเทศจีน', logo:'/evidence/dimension5/mou/08-image8.jfif'}
           ]
         },
         {
@@ -334,22 +352,24 @@ const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;
 
 function makeNode(k, i){
   const hasKids = !!(k.children && k.children.length);
-  const el = document.createElement('button');
-  el.type = 'button';
-  el.className = 'node' + (k.tone === 'light' ? ' light' : '') + (k.todo ? ' todo' : '');
+  const isLogo = !!k.logo;
+  const el = document.createElement(isLogo ? 'div' : 'button');
+  if(!isLogo) el.type = 'button';
+  el.className = 'node' + (isLogo ? ' logo-node' : '') + (k.tone === 'light' ? ' light' : '') + (k.todo ? ' todo' : '');
   el.style.setProperty('--h', k.hue ?? 224);
   el.style.animationDelay = (i * 60) + 'ms';
   el.innerHTML =
     '<span class="card">' +
       '<span class="bar"></span>' +
+      (k.logo ? '<img class="partner-logo" src="' + esc(k.logo) + '" alt="ตราสัญลักษณ์ ' + esc(k.title) + '" loading="lazy">' : '') +
       '<span class="ttl">' + esc(k.title) + '</span>' +
       '<span class="desc">' + esc(k.desc || '') + '</span>' +
-      '<span class="cta">' +
+      (isLogo ? '' : '<span class="cta">' +
         (hasKids ? 'ดูองค์ประกอบย่อย · ' + k.children.length : 'ดูรายละเอียด') +
         '<i>&rarr;</i>' +
-      '</span>' +
+      '</span>') +
     '</span>';
-  el.addEventListener('click', () => hasKids ? render(k) : showDetail(k));
+  if(!isLogo) el.addEventListener('click', () => hasKids ? render(k) : showDetail(k));
   return el;
 }
 
@@ -405,7 +425,10 @@ function finish(node){
 /* แจ้งความสูงจริงให้หน้าแม่ปรับ iframe ตามเนื้อหา จึงไม่มีตัวเลื่อนหรือพื้นที่ว่าง */
 function reportHeight(){
   requestAnimationFrame(() => {
-    const height = Math.ceil(Math.max(document.body.scrollHeight, document.documentElement.scrollHeight));
+    const wrap = document.querySelector('.wrap');
+    const height = Math.ceil(wrap
+      ? wrap.getBoundingClientRect().bottom + window.scrollY + 24
+      : document.body.scrollHeight);
     window.parent.postMessage({ type: 'd5-success-model-height', height }, window.location.origin);
   });
 }
