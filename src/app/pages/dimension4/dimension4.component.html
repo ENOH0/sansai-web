@@ -40,6 +40,18 @@
   </div>
 </section>
 
+<!-- ═══════════ วงจรการควบคุมคุณภาพการจัดการเรียนรู้ (PDCAR) ═══════════ -->
+<!-- แก้เนื้อหาได้ที่ public/models/pdcar-quality-learning.html ในตัวแปร pdcaData -->
+<section class="section-tight" *ngIf="!open()">
+  <div class="wrap">
+    <div class="d4-pdcar" appReveal>
+      <iframe src="/models/pdcar-quality-learning.html"
+        title="วงจรการควบคุมคุณภาพการจัดการเรียนรู้ PDCAR" loading="lazy" scrolling="no"
+        [style.height.px]="pdcarModelHeight()"></iframe>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════ วงล้อ SMART Student ═══════════ -->
 <section class="section section-alt" *ngIf="!open()">
   <div class="wrap">

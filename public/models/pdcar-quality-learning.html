@@ -1,0 +1,3282 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PDCAR Quality Learning Model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    box-sizing:border-box;
+}
+
+html,
+body{
+    margin:0;
+    padding:0;
+    width:100%;
+    min-height:100%;
+}
+
+body{
+    font-family:
+        "TH Sarabun PSK",
+        "TH Sarabun New",
+        "Sarabun",
+        Arial,
+        sans-serif;
+
+    color:#30435a;
+
+    overflow-x:hidden;
+
+    /* ไม่มีพื้นหลัง */
+    background:transparent;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app{
+    width:100%;
+    min-height:auto;
+
+    padding:25px 25px 10px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    width:min(1450px,100%);
+
+    text-align:center;
+
+    margin-bottom:15px;
+}
+
+.header h1{
+    margin:0;
+
+    font-size:
+        clamp(30px,4vw,52px);
+
+    font-weight:bold;
+
+    letter-spacing:1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ec78b4,
+            #8d83ef,
+            #54bfe4,
+            #63c993,
+            #ec78b4
+        );
+
+    background-size:300% auto;
+
+    -webkit-background-clip:text;
+    background-clip:text;
+
+    color:transparent;
+
+    animation:titleGradient 8s linear infinite;
+}
+
+@keyframes titleGradient{
+
+    to{
+        background-position:300% center;
+    }
+
+}
+
+.header .subtitle{
+
+    margin-top:2px;
+
+    font-size:
+        clamp(18px,2vw,27px);
+
+    color:#65758b;
+}
+
+.header-line{
+
+    width:180px;
+
+    height:4px;
+
+    margin:8px auto 0;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffb6d9,
+            #bcaeff,
+            #8fdfff,
+            #a8e8bc
+        );
+
+    box-shadow:
+        0 0 10px rgba(175,157,255,.4);
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+========================================================= */
+
+.main{
+
+    width:min(1450px,100%);
+
+    display:grid;
+
+    grid-template-columns:
+        minmax(470px,1.05fr)
+        minmax(430px,.95fr);
+
+    gap:25px;
+
+    align-items:center;
+}
+
+
+/* =========================================================
+   MODEL PANEL
+========================================================= */
+
+.model-panel{
+
+    position:relative;
+
+    min-height:700px;
+
+    border-radius:35px;
+
+    background:transparent;
+
+    border:none;
+
+    box-shadow:none;
+
+    overflow:hidden;
+}
+
+
+/* =========================================================
+   MODEL TITLE
+========================================================= */
+
+.model-title{
+
+    position:absolute;
+
+    top:18px;
+
+    left:0;
+    right:0;
+
+    text-align:center;
+
+    font-size:25px;
+
+    font-weight:bold;
+
+    color:#63758a;
+
+    z-index:50;
+}
+
+.model-title span{
+
+    color:#a17ee9;
+
+}
+
+
+/* =========================================================
+   CONTROL BAR
+========================================================= */
+
+.control-bar{
+
+    position:absolute;
+
+    top:62px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    display:flex;
+
+    gap:9px;
+
+    z-index:100;
+
+    padding:5px;
+
+    border-radius:18px;
+
+    background:
+        rgba(255,255,255,.72);
+
+    border:
+        1px solid rgba(190,205,230,.45);
+
+    box-shadow:
+        0 7px 25px rgba(100,120,160,.10);
+
+    backdrop-filter:blur(8px);
+}
+
+.control-btn{
+
+    border:none;
+
+    padding:
+        6px 17px;
+
+    border-radius:13px;
+
+    font-family:
+        "TH Sarabun PSK",
+        "TH Sarabun New",
+        "Sarabun",
+        sans-serif;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    color:#61738a;
+
+    background:
+        rgba(240,244,255,.8);
+
+    transition:
+        .3s ease;
+}
+
+.control-btn:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 5px 15px
+        rgba(120,140,180,.15);
+}
+
+.control-btn.play.active{
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #9e91eb,
+            #7bcbe5
+        );
+
+    box-shadow:
+        0 0 18px
+        rgba(145,174,240,.35);
+}
+
+.control-btn.pause.active{
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f19fc7,
+            #c39ce9
+        );
+}
+
+
+/* =========================================================
+   ORBIT STAGE
+========================================================= */
+
+.orbit-stage{
+
+    position:absolute;
+
+    width:min(580px,90%);
+
+    aspect-ratio:1;
+
+    left:50%;
+
+    top:53%;
+
+    transform:
+        translate(-50%,-50%);
+}
+
+
+/* =========================================================
+   ORBITS
+========================================================= */
+
+.orbit{
+
+    position:absolute;
+
+    border-radius:50%;
+
+    pointer-events:none;
+}
+
+.orbit.one{
+
+    inset:11%;
+
+    border:
+        2px dashed
+        rgba(158,176,214,.25);
+
+    animation:
+        orbitSpin 28s linear infinite;
+}
+
+.orbit.two{
+
+    inset:4%;
+
+    border:
+        2px solid
+        rgba(238,170,207,.16);
+
+    animation:
+        orbitSpinReverse 42s linear infinite;
+}
+
+.orbit.three{
+
+    inset:17%;
+
+    border:
+        2px solid
+        rgba(125,218,231,.18);
+}
+
+@keyframes orbitSpin{
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+@keyframes orbitSpinReverse{
+
+    to{
+        transform:rotate(-360deg);
+    }
+
+}
+
+
+/* =========================================================
+   ENERGY DOTS
+========================================================= */
+
+.energy-dot{
+
+    position:absolute;
+
+    width:12px;
+    height:12px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+        0 0 8px currentColor,
+        0 0 20px currentColor;
+
+    animation:
+        pulseDot 2s ease-in-out infinite;
+}
+
+.energy-dot:nth-of-type(1){
+
+    color:#ff9ecb;
+
+    top:7%;
+    left:50%;
+}
+
+.energy-dot:nth-of-type(2){
+
+    color:#86d8ff;
+
+    right:9%;
+    top:50%;
+
+    animation-delay:.5s;
+}
+
+.energy-dot:nth-of-type(3){
+
+    color:#a7e7b9;
+
+    bottom:8%;
+    left:50%;
+
+    animation-delay:1s;
+}
+
+.energy-dot:nth-of-type(4){
+
+    color:#c4a5ff;
+
+    left:8%;
+    top:50%;
+
+    animation-delay:1.5s;
+}
+
+@keyframes pulseDot{
+
+    0%,100%{
+
+        transform:scale(.7);
+
+        opacity:.55;
+    }
+
+    50%{
+
+        transform:scale(1.5);
+
+        opacity:1;
+    }
+
+}
+
+
+/* =========================================================
+   ROTATING DECORATIVE RING
+========================================================= */
+
+.rotating-ring{
+
+    position:absolute;
+
+    inset:19%;
+
+    border-radius:50%;
+
+    transition:
+        transform 1.25s
+        cubic-bezier(.22,.75,.2,1);
+}
+
+.rotating-ring::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:50%;
+
+    border:
+        3px solid transparent;
+
+    border-top-color:
+        rgba(255,163,208,.75);
+
+    border-right-color:
+        rgba(157,224,255,.75);
+
+    border-bottom-color:
+        rgba(165,232,190,.75);
+
+    border-left-color:
+        rgba(197,168,255,.75);
+
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(175,163,240,.35)
+        );
+}
+
+.rotating-ring::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-5px;
+
+    border-radius:50%;
+
+    border:
+        1px dashed
+        rgba(142,163,203,.28);
+}
+
+
+/* =========================================================
+   PDCAR NODES
+========================================================= */
+
+.pdca-node{
+
+    --node-color:#aaa;
+
+    position:absolute;
+
+    width:118px;
+    height:118px;
+
+    left:50%;
+    top:50%;
+
+    margin-left:-59px;
+    margin-top:-59px;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    z-index:30;
+
+    transform:
+        rotate(var(--angle))
+        translateY(-175px)
+        rotate(calc(var(--angle) * -1));
+
+    transition:
+        transform 1.2s
+        cubic-bezier(.22,.75,.2,1),
+
+        filter .4s ease;
+}
+
+
+/* Glow */
+
+.pdca-node::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-12px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            var(--node-color),
+            transparent 68%
+        );
+
+    opacity:.10;
+
+    filter:blur(10px);
+
+    transition:.4s ease;
+}
+
+.pdca-node:hover::before,
+.pdca-node.active::before{
+
+    opacity:.50;
+}
+
+
+/* =========================================================
+   NODE INNER
+========================================================= */
+
+.node-inner{
+
+    width:100%;
+    height:100%;
+
+    border-radius:50%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    position:relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.96),
+            rgba(255,255,255,.72)
+        );
+
+    border:
+        4px solid
+        var(--node-color);
+
+    box-shadow:
+        0 10px 30px
+        rgba(93,108,140,.15),
+
+        inset 0 0 20px
+        rgba(255,255,255,.8);
+
+    transition:.45s ease;
+}
+
+
+/* =========================================================
+   LETTER
+========================================================= */
+
+.node-letter{
+
+    font-family:Arial,sans-serif;
+
+    font-size:58px;
+
+    line-height:.8;
+
+    font-weight:900;
+
+    color:var(--node-color);
+
+    text-shadow:
+        0 0 8px white,
+        0 0 18px
+        rgba(170,160,230,.45);
+}
+
+
+/* =========================================================
+   NAME
+========================================================= */
+
+.node-name{
+
+    margin-top:9px;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    color:#53677d;
+}
+
+
+/* =========================================================
+   ACTIVE NODE
+========================================================= */
+
+.pdca-node.active{
+
+    filter:
+        drop-shadow(
+            0 0 17px
+            var(--node-color)
+        );
+}
+
+.pdca-node.active .node-inner{
+
+    transform:
+        scale(1.23);
+
+    box-shadow:
+        0 15px 45px
+        rgba(98,111,150,.22),
+
+        0 0 30px
+        var(--node-color),
+
+        inset 0 0 24px
+        rgba(255,255,255,.9);
+
+    animation:
+        activeBounce 1.2s ease;
+}
+
+@keyframes activeBounce{
+
+    0%{
+        transform:scale(1);
+    }
+
+    45%{
+        transform:scale(1.29);
+    }
+
+    70%{
+        transform:scale(1.18);
+    }
+
+    100%{
+        transform:scale(1.23);
+    }
+
+}
+
+.pdca-node:hover .node-inner{
+
+    transform:
+        scale(1.08);
+}
+
+
+/* =========================================================
+   CENTER CORE
+========================================================= */
+
+.center-core{
+
+    position:absolute;
+
+    width:190px;
+    height:190px;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    border-radius:50%;
+
+    z-index:15;
+
+    background:
+        radial-gradient(
+            circle at 35% 28%,
+            rgba(255,255,255,.98),
+            rgba(248,239,255,.92) 42%,
+            rgba(226,246,255,.88) 70%,
+            rgba(255,255,255,.78)
+        );
+
+    border:
+        5px solid
+        rgba(255,255,255,.9);
+
+    box-shadow:
+        0 0 0 8px
+        rgba(185,166,239,.10),
+
+        0 0 0 16px
+        rgba(145,213,235,.07),
+
+        0 15px 45px
+        rgba(102,119,153,.16),
+
+        0 0 45px
+        rgba(193,166,255,.25);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+}
+
+.center-core::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-22px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(174,157,229,.25);
+
+    animation:
+        centerPulse 3s
+        ease-in-out infinite;
+}
+
+.center-core::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:13px;
+    height:13px;
+
+    top:10px;
+    right:26px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+        0 0 10px white,
+        0 0 25px #bba4ff;
+
+    animation:
+        coreLight 2s infinite;
+}
+
+@keyframes centerPulse{
+
+    0%,100%{
+
+        transform:scale(.96);
+
+        opacity:.5;
+    }
+
+    50%{
+
+        transform:scale(1.04);
+
+        opacity:1;
+    }
+
+}
+
+@keyframes coreLight{
+
+    0%,100%{
+        opacity:.3;
+    }
+
+    50%{
+        opacity:1;
+    }
+
+}
+
+.center-main{
+
+    font-size:32px;
+
+    font-weight:bold;
+
+    color:#8170bc;
+
+    line-height:1;
+}
+
+.center-sub{
+
+    font-size:22px;
+
+    color:#60778c;
+
+    margin-top:5px;
+}
+
+.center-small{
+
+    font-size:17px;
+
+    color:#91a0b2;
+
+    margin-top:4px;
+}
+
+
+/* =========================================================
+   TOP DIRECTION ARROW
+========================================================= */
+
+.direction-arrow{
+
+    position:absolute;
+
+    left:50%;
+
+    top:5%;
+
+    width:3px;
+
+    height:20%;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            to bottom,
+            transparent,
+            rgba(150,133,213,.55)
+        );
+
+    z-index:5;
+}
+
+.direction-arrow::after{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:-3px;
+
+    left:50%;
+
+    transform:
+        translateX(-50%);
+
+    width:0;
+    height:0;
+
+    border-left:
+        9px solid transparent;
+
+    border-right:
+        9px solid transparent;
+
+    border-top:
+        15px solid
+        rgba(150,133,213,.65);
+}
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+.particle{
+
+    position:absolute;
+
+    width:5px;
+    height:5px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+        0 0 10px
+        rgba(173,153,230,.8);
+
+    opacity:.7;
+
+    animation:
+        particleFloat 5s
+        ease-in-out infinite;
+}
+
+.p1{
+    left:12%;
+    top:27%;
+}
+
+.p2{
+    right:14%;
+    top:32%;
+    animation-delay:1s;
+}
+
+.p3{
+    left:18%;
+    bottom:22%;
+    animation-delay:2s;
+}
+
+.p4{
+    right:20%;
+    bottom:18%;
+    animation-delay:3s;
+}
+
+.p5{
+    left:47%;
+    top:12%;
+    animation-delay:1.5s;
+}
+
+.p6{
+    right:40%;
+    bottom:10%;
+    animation-delay:2.5s;
+}
+
+@keyframes particleFloat{
+
+    0%,100%{
+
+        transform:
+            translateY(0)
+            scale(.8);
+
+        opacity:.3;
+    }
+
+    50%{
+
+        transform:
+            translateY(-25px)
+            scale(1.5);
+
+        opacity:1;
+    }
+
+}
+
+
+/* =========================================================
+   INFO PANEL
+========================================================= */
+
+.info-panel{
+
+    min-height:auto;
+
+    border-radius:35px;
+
+    padding:30px;
+
+    background:transparent;
+
+    border:none;
+
+    box-shadow:none;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+
+/* =========================================================
+   INFO TOP
+========================================================= */
+
+.info-top{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    position:relative;
+
+    z-index:2;
+}
+
+
+/* =========================================================
+   ACTIVE BADGE
+========================================================= */
+
+.active-badge{
+
+    width:78px;
+    height:78px;
+
+    border-radius:25px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+        var(--active-color,#b79cf0);
+
+    flex:none;
+
+    box-shadow:
+        0 10px 28px
+        rgba(160,150,220,.22),
+
+        0 0 25px
+        var(--active-color,#b79cf0);
+}
+
+.active-badge span{
+
+    color:white;
+
+    font-family:Arial,sans-serif;
+
+    font-size:46px;
+
+    font-weight:900;
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.info-heading{
+
+    flex:1;
+}
+
+.info-heading h2{
+
+    margin:0;
+
+    font-size:38px;
+
+    line-height:1;
+
+    color:#4f647b;
+}
+
+.info-heading p{
+
+    margin:5px 0 0;
+
+    font-size:23px;
+
+    color:#8b7bb5;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.info-description{
+
+    margin:23px 0;
+
+    padding:18px 20px;
+
+    border-radius:20px;
+
+    background:
+        rgba(255,255,255,.52);
+
+    border:
+        1px solid
+        rgba(200,213,235,.42);
+
+    font-size:23px;
+
+    line-height:1.35;
+
+    color:#596e83;
+
+    box-shadow:
+        0 8px 25px
+        rgba(110,130,165,.06);
+}
+
+
+/* =========================================================
+   SECTION LABEL
+========================================================= */
+
+.section-label{
+
+    font-size:23px;
+
+    font-weight:bold;
+
+    color:#677a90;
+
+    margin:12px 0 10px;
+}
+
+
+/* =========================================================
+   DETAIL LIST
+========================================================= */
+
+.detail-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+}
+
+
+/* =========================================================
+   DETAIL CARD
+========================================================= */
+
+.detail-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:17px;
+
+    border:
+        1px solid
+        rgba(192,208,230,.48);
+
+    background:
+        rgba(255,255,255,.48);
+
+    transition:.3s ease;
+}
+
+.detail-card:hover{
+
+    transform:
+        translateX(5px);
+
+    background:
+        rgba(255,255,255,.72);
+
+    box-shadow:
+        0 8px 22px
+        rgba(112,126,160,.10);
+}
+
+
+/* =========================================================
+   DETAIL HEAD
+========================================================= */
+
+.detail-head{
+
+    min-height:52px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:
+        8px 15px;
+
+    cursor:pointer;
+}
+
+.number{
+
+    width:33px;
+    height:33px;
+
+    border-radius:11px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+        var(--active-color,#b79cf0);
+
+    color:white;
+
+    font-family:Arial,sans-serif;
+
+    font-weight:bold;
+
+    flex:none;
+}
+
+.detail-title{
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    color:#53697e;
+
+    flex:1;
+}
+
+.plus{
+
+    width:28px;
+    height:28px;
+
+    border-radius:50%;
+
+    background:
+        rgba(176,160,229,.15);
+
+    color:#9a84d4;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-family:Arial,sans-serif;
+
+    font-size:20px;
+
+    transition:.3s ease;
+}
+
+
+/* =========================================================
+   DETAIL CONTENT
+========================================================= */
+
+.detail-content{
+
+    max-height:0;
+
+    overflow:hidden;
+
+    padding:
+        0 15px 0 60px;
+
+    font-size:20px;
+
+    line-height:1.3;
+
+    color:#718196;
+
+    transition:
+        max-height .4s ease,
+        padding .4s ease;
+}
+
+.detail-card.open
+.detail-content{
+
+    max-height:180px;
+
+    padding-bottom:14px;
+}
+
+.detail-card.open
+.plus{
+
+    transform:
+        rotate(45deg);
+}
+
+
+/* =========================================================
+   ACTIVITY MODEL PLACEHOLDER
+========================================================= */
+
+.activity-placeholder{
+
+    margin-top:16px;
+
+    padding:20px;
+
+    border-radius:23px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,235,247,.55),
+            rgba(233,247,255,.55)
+        );
+
+    border:
+        2px dashed
+        rgba(157,169,221,.55);
+
+    text-align:center;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.activity-placeholder::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    border-radius:50%;
+
+    left:-90px;
+    top:-90px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,177,217,.30),
+            transparent 70%
+        );
+}
+
+.activity-icon{
+
+    font-family:Arial,sans-serif;
+
+    font-size:34px;
+
+    font-weight:bold;
+
+    color:#9b86d3;
+}
+
+.activity-placeholder h3{
+
+    margin:3px 0;
+
+    font-size:25px;
+
+    color:#63758a;
+}
+
+.activity-placeholder p{
+
+    margin:0;
+
+    font-size:19px;
+
+    color:#8b98aa;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status{
+
+    margin-top:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:12px;
+
+    font-size:19px;
+
+    color:#8190a1;
+}
+
+.status-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+}
+
+.status-dot{
+
+    width:11px;
+    height:11px;
+
+    border-radius:50%;
+
+    background:#82d99f;
+
+    box-shadow:
+        0 0 8px #82d99f;
+
+    animation:
+        statusPulse 1.7s infinite;
+}
+
+@keyframes statusPulse{
+
+    50%{
+
+        opacity:.35;
+
+        transform:scale(.7);
+    }
+
+}
+
+.control-hint{
+
+    padding:
+        5px 12px;
+
+    border-radius:12px;
+
+    background:
+        rgba(238,232,255,.5);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+
+    width:min(1450px,100%);
+
+    margin-top:10px;
+
+    text-align:center;
+
+    font-size:19px;
+
+    color:#8997a8;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1050px){
+
+    .main{
+
+        grid-template-columns:1fr;
+    }
+
+    .model-panel,
+    .info-panel{
+
+        min-height:650px;
+    }
+
+    .orbit-stage{
+
+        width:min(570px,88%);
+    }
+
+}
+
+
+@media(max-width:650px){
+
+    .app{
+
+        padding:10px;
+    }
+
+    .model-panel{
+
+        height:535px;
+
+        min-height:535px;
+    }
+
+    .info-panel{
+
+        min-height:auto;
+
+        padding:20px;
+    }
+
+    .orbit-stage{
+
+        width:430px;
+
+        max-width:95%;
+
+        top:55%;
+    }
+
+    .pdca-node{
+
+        width:85px;
+        height:85px;
+
+        margin-left:-42.5px;
+        margin-top:-42.5px;
+
+        transform:
+            rotate(var(--angle))
+            translateY(-130px)
+            rotate(calc(var(--angle) * -1));
+    }
+
+    .node-letter{
+
+        font-size:40px;
+    }
+
+    .node-name{
+
+        font-size:17px;
+
+        margin-top:4px;
+    }
+
+    .center-core{
+
+        width:135px;
+        height:135px;
+    }
+
+    .center-main{
+
+        font-size:24px;
+    }
+
+    .center-sub{
+
+        font-size:18px;
+    }
+
+    .center-small{
+
+        font-size:14px;
+    }
+
+    .info-heading h2{
+
+        font-size:31px;
+    }
+
+    .info-heading p{
+
+        font-size:20px;
+    }
+
+    .info-description{
+
+        font-size:20px;
+    }
+
+    .detail-title{
+
+        font-size:20px;
+    }
+
+    .detail-content{
+
+        font-size:18px;
+    }
+
+    .active-badge{
+
+        width:62px;
+        height:62px;
+
+        border-radius:20px;
+    }
+
+    .active-badge span{
+
+        font-size:37px;
+    }
+
+    .status{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+@media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{
+        animation:none !important;
+        transition:none !important;
+    }
+}
+
+/* =========================================================
+   ON DARK BACKGROUND
+   โมเดลนี้วางทับวิดีโอพื้นหลังสีเข้มของหน้าด้านที่ 4
+   จึงต้องเปลี่ยนตัวอักษรที่ "ไม่มีพื้นหลังของตัวเอง" ให้สว่าง
+   ส่วนตัวอักษรที่อยู่ในวงกลมขาว (node / center) คงสีเดิมไว้
+========================================================= */
+
+body{
+    color:#e8f0ff;
+}
+
+/* หัวเรื่องรอง */
+.header .subtitle{
+    color:#dbe6f7;
+    text-shadow:0 2px 14px rgba(8,21,47,.75);
+}
+
+.model-title{
+    color:#ffffff;
+    text-shadow:0 2px 16px rgba(8,21,47,.8);
+}
+
+.model-title span{
+    color:#e7c7ff;
+}
+
+/* ฝั่งข้อมูล */
+.info-heading h2{
+    color:#ffffff;
+    text-shadow:0 2px 18px rgba(8,21,47,.75);
+}
+
+.info-heading p{
+    color:#e4d4ff;
+    text-shadow:0 1px 10px rgba(8,21,47,.65);
+}
+
+.section-label{
+    color:#ffffff;
+    text-shadow:0 2px 14px rgba(8,21,47,.7);
+}
+
+/* กล่องคำอธิบาย: เปลี่ยนจากกระจกขาวเป็นกระจกเข้ม */
+.info-description{
+    color:#eaf2ff;
+    background:rgba(10,24,52,.46);
+    border-color:rgba(255,255,255,.22);
+    box-shadow:0 8px 25px rgba(0,0,0,.18);
+    backdrop-filter:blur(6px);
+}
+
+/* การ์ดองค์ประกอบ */
+.detail-card{
+    background:rgba(10,24,52,.40);
+    border-color:rgba(255,255,255,.20);
+    backdrop-filter:blur(6px);
+}
+
+.detail-card:hover{
+    background:rgba(10,24,52,.56);
+}
+
+.detail-title{
+    color:#ffffff;
+}
+
+.detail-content{
+    color:#dbe6f7;
+}
+
+.plus{
+    color:#e7d7ff;
+    background:rgba(255,255,255,.18);
+}
+
+/* พื้นที่ ACTIVITY MODEL */
+.activity-placeholder{
+    background:linear-gradient(135deg,rgba(255,235,247,.16),rgba(233,247,255,.16));
+    border-color:rgba(255,255,255,.35);
+}
+
+.activity-placeholder h3{
+    color:#ffffff;
+}
+
+.activity-placeholder p{
+    color:#dbe6f7;
+}
+
+.activity-icon{
+    color:#e7c7ff;
+}
+
+/* สถานะและท้ายโมเดล */
+.status{
+    color:#dbe6f7;
+}
+
+.control-hint{
+    color:#f0e9ff;
+    background:rgba(255,255,255,.16);
+}
+
+.footer{
+    color:#dbe6f7;
+    text-shadow:0 1px 10px rgba(8,21,47,.6);
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- =======================================================
+     HEADER
+======================================================== -->
+
+<header class="header">
+
+    <h1>
+        วงจรการควบคุมคุณภาพการจัดการเรียนรู้
+    </h1>
+
+    <div class="subtitle">
+        PDCAR Quality Learning Management Model
+    </div>
+
+    <div class="header-line"></div>
+
+</header>
+
+
+
+<!-- =======================================================
+     MAIN
+======================================================== -->
+
+<main class="main">
+
+
+<!-- =======================================================
+     LEFT MODEL
+======================================================== -->
+
+<section class="model-panel">
+
+
+    <div class="model-title">
+
+        วงจร
+        <span>PDCAR</span>
+        เพื่อพัฒนาคุณภาพการจัดการเรียนรู้
+
+    </div>
+
+
+
+    <!-- CONTROL -->
+
+    <div class="control-bar">
+
+        <button
+            class="control-btn play active"
+            id="playBtn"
+            onclick="playCycle()">
+
+            ▶ เล่นวงจร
+
+        </button>
+
+
+        <button
+            class="control-btn pause"
+            id="pauseBtn"
+            onclick="pauseCycle()">
+
+            ⏸ หยุดอ่าน
+
+        </button>
+
+    </div>
+
+
+
+    <!-- ORBIT -->
+
+    <div class="orbit-stage">
+
+
+        <!-- วงแหวน -->
+
+        <div class="orbit two"></div>
+
+        <div class="orbit one"></div>
+
+        <div class="orbit three"></div>
+
+
+
+        <!-- ENERGY -->
+
+        <div class="energy-dot"></div>
+        <div class="energy-dot"></div>
+        <div class="energy-dot"></div>
+        <div class="energy-dot"></div>
+
+
+
+        <!-- PARTICLES -->
+
+        <div class="particle p1"></div>
+        <div class="particle p2"></div>
+        <div class="particle p3"></div>
+        <div class="particle p4"></div>
+        <div class="particle p5"></div>
+        <div class="particle p6"></div>
+
+
+
+        <!-- TOP ARROW -->
+
+        <div class="direction-arrow"></div>
+
+
+
+        <!-- DECORATIVE ROTATING RING -->
+
+        <div
+            class="rotating-ring"
+            id="rotatingRing">
+        </div>
+
+
+
+        <!-- =================================================
+             P
+        ================================================== -->
+
+        <div
+            class="pdca-node active"
+            data-key="P"
+            style="
+                --angle:0deg;
+                --node-color:#f39bc6;
+            "
+            onclick="selectPDCA('P')">
+
+            <div class="node-inner">
+
+                <div class="node-letter">
+                    P
+                </div>
+
+                <div class="node-name">
+                    Plan
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             D
+        ================================================== -->
+
+        <div
+            class="pdca-node"
+            data-key="D"
+            style="
+                --angle:72deg;
+                --node-color:#9b9bea;
+            "
+            onclick="selectPDCA('D')">
+
+            <div class="node-inner">
+
+                <div class="node-letter">
+                    D
+                </div>
+
+                <div class="node-name">
+                    Do
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             C
+        ================================================== -->
+
+        <div
+            class="pdca-node"
+            data-key="C"
+            style="
+                --angle:144deg;
+                --node-color:#74c9e9;
+            "
+            onclick="selectPDCA('C')">
+
+            <div class="node-inner">
+
+                <div class="node-letter">
+                    C
+                </div>
+
+                <div class="node-name">
+                    Check
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             A
+        ================================================== -->
+
+        <div
+            class="pdca-node"
+            data-key="A"
+            style="
+                --angle:216deg;
+                --node-color:#8ed6a5;
+            "
+            onclick="selectPDCA('A')">
+
+            <div class="node-inner">
+
+                <div class="node-letter">
+                    A
+                </div>
+
+                <div class="node-name">
+                    Act
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             R
+        ================================================== -->
+
+        <div
+            class="pdca-node"
+            data-key="R"
+            style="
+                --angle:288deg;
+                --node-color:#e9af72;
+            "
+            onclick="selectPDCA('R')">
+
+            <div class="node-inner">
+
+                <div class="node-letter">
+                    R
+                </div>
+
+                <div class="node-name">
+                    Reflection
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             CENTER
+        ================================================== -->
+
+        <div class="center-core">
+
+            <div class="center-main">
+                QUALITY
+            </div>
+
+            <div class="center-sub">
+                การจัดการเรียนรู้
+            </div>
+
+            <div class="center-small">
+                พัฒนาอย่างต่อเนื่อง
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =======================================================
+     RIGHT INFORMATION
+======================================================== -->
+
+<section
+    class="info-panel"
+    id="infoPanel">
+
+
+    <!-- INFO HEADER -->
+
+    <div class="info-top">
+
+
+        <div
+            class="active-badge"
+            id="activeBadge">
+
+            <span id="activeLetter">
+                P
+            </span>
+
+        </div>
+
+
+
+        <div class="info-heading">
+
+            <h2 id="infoTitle">
+                Plan : วางแผน
+            </h2>
+
+            <p id="infoSubtitle">
+                ศึกษาหลักสูตรและวิเคราะห์ผู้เรียน
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- DESCRIPTION -->
+
+    <div
+        class="info-description"
+        id="infoDescription">
+
+        ศึกษาหลักสูตร วิเคราะห์ผู้เรียนรายบุคคล
+        และร่วมกันวางแผนออกแบบการจัดการเรียนรู้
+        อย่างหลากหลาย เพื่อให้การจัดการเรียนรู้
+        ตอบสนองต่อความแตกต่างและความต้องการของผู้เรียน
+
+    </div>
+
+
+
+    <div class="section-label">
+        องค์ประกอบสำคัญ
+    </div>
+
+
+
+    <!-- DETAILS -->
+
+    <div
+        class="detail-list"
+        id="detailList">
+
+    </div>
+
+
+
+    <!-- =================================================
+         ACTIVITY MODEL PLACEHOLDER
+    ================================================== -->
+
+    <div
+        class="activity-placeholder"
+        id="activityPlaceholder"
+        style="display:none;">
+
+        <div class="activity-icon">
+            D
+        </div>
+
+        <h3>
+            พื้นที่สำหรับ ACTIVITY MODEL
+        </h3>
+
+        <p>
+            สามารถนำไฟล์หรือโค้ด ACTIVITY MODEL
+            มาใส่ในพื้นที่นี้ได้ในอนาคต
+        </p>
+
+    </div>
+
+
+
+    <!-- STATUS -->
+
+    <div class="status">
+
+
+        <div class="status-left">
+
+            <span class="status-dot"></span>
+
+            <span id="statusText">
+                หยุดอ่าน : PLAN
+            </span>
+
+        </div>
+
+
+        <div
+            class="control-hint"
+            id="controlHint">
+
+            กด ▶ เล่นวงจรเพื่อเริ่มหมุน
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+</main>
+
+
+
+<footer class="footer">
+
+    PDCAR :
+    Plan → Do → Check → Act → Reflection
+    | วงจรการพัฒนาคุณภาพอย่างต่อเนื่อง
+
+</footer>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   PDCAR DATA
+========================================================= */
+
+const pdcaData = {
+
+    P:{
+
+        title:"Plan : วางแผน",
+
+        subtitle:
+        "ศึกษาหลักสูตรและวิเคราะห์ผู้เรียน",
+
+        color:"#f39bc6",
+
+        description:
+        "ศึกษาหลักสูตร วิเคราะห์ผู้เรียนรายบุคคล และร่วมกันวางแผนออกแบบการจัดการเรียนรู้อย่างหลากหลาย เพื่อให้การจัดการเรียนรู้ตอบสนองต่อความแตกต่างและความต้องการของผู้เรียน",
+
+        items:[
+
+            {
+                title:"ศึกษาหลักสูตร",
+
+                text:
+                "ศึกษาหลักสูตรและสาระการเรียนรู้ เพื่อใช้เป็นกรอบในการออกแบบการจัดการเรียนรู้ให้สอดคล้องกับเป้าหมายของหลักสูตร"
+            },
+
+            {
+                title:"วิเคราะห์ผู้เรียนรายบุคคล",
+
+                text:
+                "วิเคราะห์ข้อมูลพื้นฐาน ความต้องการ ความแตกต่าง และศักยภาพของผู้เรียนรายบุคคล เพื่อนำมาใช้ในการวางแผนการเรียนรู้"
+            },
+
+            {
+                title:
+                "ร่วมกันวางแผนออกแบบการจัดการเรียนรู้",
+
+                text:
+                "ร่วมกันวางแผนและออกแบบการจัดการเรียนรู้อย่างหลากหลาย โดยคำนึงถึงเนื้อหา รูปแบบกิจกรรม และความเหมาะสมกับผู้เรียน"
+            }
+
+        ]
+
+    },
+
+
+    D:{
+
+        title:"Do : ลงมือปฏิบัติ",
+
+        subtitle:
+        "ขับเคลื่อนการจัดการเรียนรู้สู่ห้องเรียนเชิงรุก",
+
+        color:"#9b9bea",
+
+        description:
+        "นำแผนการจัดการเรียนรู้และโมเดลขับเคลื่อนไปสู่การปฏิบัติจริงในห้องเรียน โดยใช้แนวคิด Active Learning และจัดการเรียนรู้ด้วย ACTIVITY Model",
+
+        items:[
+
+            {
+                title:
+                "นำแผนการจัดการเรียนรู้สู่การปฏิบัติ",
+
+                text:
+                "นำแผนที่ผ่านการออกแบบไปใช้จริงในห้องเรียน พร้อมปรับกิจกรรมให้เหมาะสมกับบริบทของผู้เรียน"
+            },
+
+            {
+                title:
+                "จัดการเรียนรู้เชิงรุก (Active Learning)",
+
+                text:
+                "เปิดโอกาสให้ผู้เรียนมีส่วนร่วม คิด ลงมือปฏิบัติ แลกเปลี่ยนเรียนรู้ และสร้างองค์ความรู้ด้วยตนเอง"
+            },
+
+            {
+                title:"ACTIVITY Model",
+
+                text:
+                "ใช้ ACTIVITY Model เป็นแนวทางในการขับเคลื่อนกระบวนการจัดการเรียนรู้ โดยสามารถนำโมเดลฉบับเต็มมาใส่ในพื้นที่ด้านล่างได้ในอนาคต"
+            }
+
+        ]
+
+    },
+
+
+    C:{
+
+        title:"Check : ตรวจสอบ",
+
+        subtitle:
+        "นิเทศ ติดตาม ตรวจสอบ และวัดประเมินผล",
+
+        color:"#74c9e9",
+
+        description:
+        "นิเทศ ติดตาม ตรวจสอบ และวัดประเมินผลสัมฤทธิ์ทางการเรียนรู้ของผู้เรียน เพื่อนำข้อมูลที่ได้มาใช้เป็นสารสนเทศในการพัฒนาคุณภาพการจัดการเรียนรู้",
+
+        items:[
+
+            {
+                title:"นิเทศ ติดตาม",
+
+                text:
+                "นิเทศและติดตามการจัดกิจกรรมการเรียนรู้ เพื่อสะท้อนข้อมูลและตรวจสอบกระบวนการจัดการเรียนรู้"
+            },
+
+            {
+                title:"วัดผล",
+
+                text:
+                "วัดผลการเรียนรู้ของผู้เรียนด้วยวิธีการและเครื่องมือที่เหมาะสมกับจุดประสงค์การเรียนรู้"
+            },
+
+            {
+                title:"หลากหลาย",
+
+                text:
+                "ใช้วิธีการประเมินที่หลากหลาย เพื่อให้เห็นพัฒนาการ ความสามารถ และผลการเรียนรู้ของผู้เรียนในหลายมิติ"
+            },
+
+            {
+                title:"ยุติธรรม",
+
+                text:
+                "ดำเนินการประเมินอย่างเป็นธรรม โปร่งใส และสอดคล้องกับสภาพจริงของผู้เรียน"
+            }
+
+        ]
+
+    },
+
+
+    A:{
+
+        title:"Act : ปรับปรุงและพัฒนา",
+
+        subtitle:
+        "นำผลการประเมินสู่การพัฒนา",
+
+        color:"#8ed6a5",
+
+        description:
+        "นำผลการประเมินมาปรับปรุง พัฒนา และสร้างนวัตกรรมการเรียนรู้อย่างต่อเนื่อง เพื่อให้ได้ข้อมูลสารสนเทศเชิงประจักษ์ที่มีความน่าเชื่อถือ และนำไปใช้ในการพัฒนางานอย่างต่อเนื่อง",
+
+        items:[
+
+            {
+                title:
+                "นำผลการประเมินมาวิเคราะห์",
+
+                text:
+                "นำข้อมูลจากการวัดและประเมินผลมาวิเคราะห์ เพื่อค้นหาจุดเด่น จุดที่ควรพัฒนา และแนวทางในการปรับปรุง"
+            },
+
+            {
+                title:
+                "ปรับปรุงและพัฒนา",
+
+                text:
+                "นำข้อมูลและข้อค้นพบไปปรับปรุงกระบวนการจัดการเรียนรู้ เพื่อให้เกิดการพัฒนาอย่างต่อเนื่อง"
+            },
+
+            {
+                title:
+                "สร้างนวัตกรรมการเรียนรู้",
+
+                text:
+                "ต่อยอดผลการพัฒนาไปสู่การสร้างหรือพัฒนานวัตกรรมการเรียนรู้ที่เหมาะสมกับบริบทของผู้เรียนและสถานศึกษา"
+            },
+
+            {
+                title:
+                "ข้อมูลสารสนเทศเชิงประจักษ์",
+
+                text:
+                "จัดเก็บข้อมูลและหลักฐานที่สะท้อนคุณภาพของการจัดการศึกษา เพื่อนำไปใช้ประกอบการปรับปรุงและพัฒนางานอย่างต่อเนื่อง"
+            }
+
+        ]
+
+    },
+
+
+    R:{
+
+        title:"Reflection : สะท้อนคิด",
+
+        subtitle:
+        "สะท้อนการจัดการเรียนรู้ร่วมกัน",
+
+        color:"#e9af72",
+
+        description:
+        "สะท้อนคิด สะท้อนการจัดการเรียนรู้ร่วมกัน เพื่อนำประสบการณ์และข้อมูลจริงมาปรับปรุงกระบวนการจัดการเรียนรู้",
+
+        items:[
+
+            {
+                title:
+                "สะท้อนการจัดการเรียนรู้ร่วมกัน",
+
+                text:
+                "ร่วมกันสะท้อนคิดจากการจัดการเรียนรู้ เพื่อแลกเปลี่ยนประสบการณ์ ข้อค้นพบ และข้อมูลที่เกิดขึ้นจริง"
+            },
+
+            {
+                title:
+                "นำประสบการณ์และข้อมูลจริงมาปรับปรุง",
+
+                text:
+                "นำผลจากการสะท้อนคิด ประสบการณ์ และข้อมูลจริงไปใช้ปรับปรุงกระบวนการจัดการเรียนรู้ให้เหมาะสมและพัฒนาอย่างต่อเนื่อง"
+            }
+
+        ]
+
+    }
+
+};
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const nodes =
+    document.querySelectorAll(".pdca-node");
+
+const rotatingRing =
+    document.getElementById("rotatingRing");
+
+const infoPanel =
+    document.getElementById("infoPanel");
+
+const activeBadge =
+    document.getElementById("activeBadge");
+
+const activeLetter =
+    document.getElementById("activeLetter");
+
+const infoTitle =
+    document.getElementById("infoTitle");
+
+const infoSubtitle =
+    document.getElementById("infoSubtitle");
+
+const infoDescription =
+    document.getElementById("infoDescription");
+
+const detailList =
+    document.getElementById("detailList");
+
+const activityPlaceholder =
+    document.getElementById(
+        "activityPlaceholder"
+    );
+
+const statusText =
+    document.getElementById("statusText");
+
+const controlHint =
+    document.getElementById("controlHint");
+
+const playBtn =
+    document.getElementById("playBtn");
+
+const pauseBtn =
+    document.getElementById("pauseBtn");
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+const order =
+    ["P","D","C","A","R"];
+
+let currentIndex = 0;
+
+let isPlaying = true;
+
+let isAnimating = false;
+
+
+/* =========================================================
+   RENDER INFO
+========================================================= */
+
+function renderInfo(key){
+
+    const data =
+        pdcaData[key];
+
+
+    infoPanel.style.setProperty(
+        "--active-color",
+        data.color
+    );
+
+
+    activeBadge.style.background =
+        data.color;
+
+
+    activeBadge.style.boxShadow =
+        `
+        0 10px 28px ${data.color}66,
+        0 0 25px ${data.color}55
+        `;
+
+
+    activeLetter.textContent =
+        key;
+
+
+    infoTitle.textContent =
+        data.title;
+
+
+    infoSubtitle.textContent =
+        data.subtitle;
+
+
+    infoDescription.textContent =
+        data.description;
+
+
+    statusText.textContent =
+        (
+            isPlaying
+            ? "กำลังเล่น : "
+            : "หยุดอ่าน : "
+        )
+        +
+        data.title.toUpperCase();
+
+
+    detailList.innerHTML = "";
+
+
+    data.items.forEach(
+        (item,index)=>{
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+            card.className =
+                "detail-card";
+
+
+            card.innerHTML = `
+
+                <div class="detail-head">
+
+                    <div
+                        class="number"
+                        style="
+                            background:${data.color};
+                        "
+                    >
+                        ${index+1}
+                    </div>
+
+                    <div class="detail-title">
+                        ${item.title}
+                    </div>
+
+                    <div class="plus">
+                        +
+                    </div>
+
+                </div>
+
+                <div class="detail-content">
+                    ${item.text}
+                </div>
+
+            `;
+
+
+            card
+            .querySelector(
+                ".detail-head"
+            )
+            .addEventListener(
+                "click",
+                ()=>{
+
+                    card.classList.toggle(
+                        "open"
+                    );
+
+                }
+            );
+
+
+            detailList.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    /* D แสดงพื้นที่ ACTIVITY MODEL */
+
+    if(key === "D"){
+
+        activityPlaceholder.style.display =
+            "block";
+
+    }else{
+
+        activityPlaceholder.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =========================================================
+   UPDATE NODE POSITIONS
+========================================================= */
+
+function updateNodes(){
+
+    const baseAngles = {
+
+        P:0,
+        D:72,
+        C:144,
+        A:216,
+        R:288
+
+    };
+
+
+    nodes.forEach(
+        node=>{
+
+            const key =
+                node.dataset.key;
+
+
+            let angle =
+                baseAngles[key]
+                -
+                currentIndex * 72;
+
+
+            node.style.setProperty(
+                "--angle",
+                `${angle}deg`
+            );
+
+
+            node.classList.remove(
+                "active"
+            );
+
+
+            if(
+                key ===
+                order[currentIndex]
+            ){
+
+                node.classList.add(
+                    "active"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SELECT PDCAR
+========================================================= */
+
+function selectPDCA(key){
+
+    const index =
+        order.indexOf(key);
+
+
+    if(index === -1)
+        return;
+
+
+    /*
+       เมื่อผู้ใช้กดอ่าน
+       ให้หยุด Auto Play ทันที
+    */
+
+    pauseCycle(false);
+
+
+    /*
+       คำนวณระยะทางตามเข็มนาฬิกา
+    */
+
+    let diff =
+        index - currentIndex;
+
+
+    if(diff < 0){
+
+        diff += 5;
+
+    }
+
+
+    if(diff === 0){
+
+        renderInfo(key);
+
+        return;
+
+    }
+
+
+    isAnimating = true;
+
+
+    /*
+       หมุนวงแหวนตกแต่ง
+    */
+
+    rotatingRing.style.transform =
+        `
+        rotate(${diff * 72}deg)
+        `;
+
+
+    currentIndex =
+        index;
+
+
+    updateNodes();
+
+
+    /*
+       Animation โมเดลขยับซ้าย
+    */
+
+    document
+    .querySelector(".model-panel")
+    .animate(
+
+        [
+            {
+                transform:
+                "translateX(0)"
+            },
+
+            {
+                transform:
+                "translateX(-10px)"
+            },
+
+            {
+                transform:
+                "translateX(0)"
+            }
+
+        ],
+
+        {
+            duration:900,
+            easing:"ease-out"
+        }
+
+    );
+
+
+    /*
+       แสงฝั่งข้อมูล
+    */
+
+    infoPanel.animate(
+
+        [
+
+            {
+                filter:
+                "brightness(1)"
+            },
+
+            {
+                filter:
+                "brightness(1.08)"
+            },
+
+            {
+                filter:
+                "brightness(1)"
+            }
+
+        ],
+
+        {
+
+            duration:900,
+
+            easing:
+            "ease-in-out"
+
+        }
+
+    );
+
+
+    renderInfo(key);
+
+
+    setTimeout(
+        ()=>{
+
+            isAnimating =
+                false;
+
+        },
+
+        1250
+    );
+
+}
+
+
+/* =========================================================
+   NEXT PDCAR
+========================================================= */
+
+function nextPDCA(){
+
+    if(!isPlaying)
+        return;
+
+
+    if(isAnimating)
+        return;
+
+
+    const nextIndex =
+        (currentIndex + 1) % 5;
+
+
+    const key =
+        order[nextIndex];
+
+
+    /*
+       เล่นต่อเนื่องตามเข็ม
+    */
+
+    const diff =
+        1;
+
+
+    isAnimating = true;
+
+
+    rotatingRing.style.transform =
+        `
+        rotate(${diff * 72}deg)
+        `;
+
+
+    currentIndex =
+        nextIndex;
+
+
+    updateNodes();
+
+
+    renderInfo(key);
+
+
+    setTimeout(
+        ()=>{
+
+            isAnimating =
+                false;
+
+        },
+
+        1250
+    );
+
+}
+
+
+/* =========================================================
+   PLAY
+========================================================= */
+
+function playCycle(){
+
+    if(isPlaying)
+        return;
+
+
+    isPlaying = true;
+
+
+    playBtn.classList.add(
+        "active"
+    );
+
+
+    pauseBtn.classList.remove(
+        "active"
+    );
+
+
+    controlHint.textContent =
+        "กำลังหมุน P → D → C → A → R";
+
+
+    renderInfo(
+        order[currentIndex]
+    );
+
+}
+
+
+/* =========================================================
+   PAUSE
+========================================================= */
+
+function pauseCycle(
+    updateUI = true
+){
+
+    isPlaying = false;
+
+
+    playBtn.classList.remove(
+        "active"
+    );
+
+
+    pauseBtn.classList.add(
+        "active"
+    );
+
+
+    controlHint.textContent =
+        "หยุดแล้ว — คลิก P / D / C / A / R เพื่ออ่าน";
+
+
+    if(updateUI){
+
+        renderInfo(
+            order[currentIndex]
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   AUTO PLAY TIMER
+========================================================= */
+
+setInterval(
+
+    ()=>{
+
+        if(
+            isPlaying &&
+            !isAnimating
+        ){
+
+            nextPDCA();
+
+        }
+
+    },
+
+    5500
+
+);
+
+
+/* =========================================================
+   INITIAL
+========================================================= */
+
+updateNodes();
+
+renderInfo("P");
+
+
+/* =========================================================
+   REPORT HEIGHT  แจ้งความสูงจริงให้หน้าแม่ปรับ iframe
+========================================================= */
+
+function reportHeight(){
+
+    requestAnimationFrame(()=>{
+
+        const app =
+            document.querySelector(".app");
+
+        const height =
+            Math.ceil(
+                app
+                ? app.getBoundingClientRect().height + 8
+                : document.body.scrollHeight
+            );
+
+        window.parent.postMessage(
+            {
+                type:"d4-pdcar-model-height",
+                height
+            },
+            window.location.origin
+        );
+
+    });
+
+}
+
+new ResizeObserver(reportHeight)
+    .observe(document.body);
+
+window.addEventListener("load", reportHeight);
+
+
+/* หยุดเล่นอัตโนมัติ ถ้าเครื่องตั้งค่าลดการเคลื่อนไหว */
+
+if(
+    window.matchMedia &&
+    window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    ).matches
+){
+    pauseCycle();
+}
+
+
+/* =========================================================
+   TOUCH SWIPE
+========================================================= */
+
+let touchStartX = 0;
+
+
+document
+.querySelector(".model-panel")
+.addEventListener(
+
+    "touchstart",
+
+    event=>{
+
+        touchStartX =
+            event.touches[0].clientX;
+
+    },
+
+    {
+        passive:true
+    }
+
+);
+
+
+document
+.querySelector(".model-panel")
+.addEventListener(
+
+    "touchend",
+
+    event=>{
+
+        const touchEndX =
+            event.changedTouches[0].clientX;
+
+
+        const distance =
+            touchEndX - touchStartX;
+
+
+        if(
+            Math.abs(distance) < 60
+        )
+            return;
+
+
+        /*
+           การปัดก็ถือว่าเป็นการอ่าน
+           ดังนั้นหยุด Auto Play
+        */
+
+        pauseCycle(false);
+
+
+        if(distance < 0){
+
+            const next =
+                (currentIndex + 1) % 5;
+
+            selectPDCA(
+                order[next]
+            );
+
+        }else{
+
+            const previous =
+                (currentIndex + 4) % 5;
+
+            selectPDCA(
+                order[previous]
+            );
+
+        }
+
+    },
+
+    {
+        passive:true
+    }
+
+);
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener(
+
+    "keydown",
+
+    event=>{
+
+        if(!document.hasFocus()) return;
+
+        const key =
+            event.key.toUpperCase();
+
+
+        if(
+            ["P","D","C","A","R"]
+            .includes(key)
+        ){
+
+            selectPDCA(key);
+
+        }
+
+
+        /*
+           Space = เล่น / หยุด
+        */
+
+        if(event.code === "Space"){
+
+            event.preventDefault();
+
+
+            if(isPlaying){
+
+                pauseCycle();
+
+            }else{
+
+                playCycle();
+
+            }
+
+        }
+
+    }
+
+);
+
+</script>
+
+</body>
+</html>

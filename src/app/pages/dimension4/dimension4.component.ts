@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, HostListener, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LineSeries } from '../../core/models';
 import { DIM4 } from '../../data/dimension4.data';
@@ -27,6 +27,17 @@ import { SmartWheelComponent } from '../../shared/smart-wheel/smart-wheel.compon
   styleUrl: './dimension4.component.css'
 })
 export class Dimension4Component {
+  /* ความสูงจริงของโมเดล PDCAR ที่ส่งมาจาก iframe ทำให้ไม่มีแถบเลื่อนซ้อน */
+  readonly pdcarModelHeight = signal(900);
+
+  @HostListener('window:message', ['$event'])
+  resizePdcarModel(event: MessageEvent<{ type?: string; height?: number }>): void {
+    if (typeof window === 'undefined' || event.origin !== window.location.origin) return;
+    if (event.data?.type !== 'd4-pdcar-model-height') return;
+    const height = Number(event.data.height);
+    if (Number.isFinite(height)) this.pdcarModelHeight.set(Math.max(620, Math.min(2200, height)));
+  }
+
   readonly gallery = GALLERY['d4'];
   readonly d = DIM4;
   readonly indicatorKeys = Object.keys(DIM4.indicators) as (keyof typeof DIM4.indicators)[];

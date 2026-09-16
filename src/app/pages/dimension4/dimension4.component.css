@@ -148,3 +148,17 @@
   box-shadow: none;
   backdrop-filter: none;
 }
+
+/* ═══════════ โมเดลวงจร PDCAR ═══════════ */
+/* วางทับวิดีโอพื้นหลังโดยตรง สีตัวอักษรถูกปรับให้สว่างในไฟล์โมเดลเอง */
+.d4-pdcar {
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: transparent;
+}
+.d4-pdcar iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+}
