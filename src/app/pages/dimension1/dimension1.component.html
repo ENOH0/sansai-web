@@ -574,6 +574,30 @@
           [note]="d.section12.teamwork.note" />
         <app-data-table [caption]="d.section12.teamwork.caption" [headers]="yearHeaders3" [rows]="teamRows" />
       </div>
+      <h2 class="d1-student-development-title" appReveal>กิจกรรมพัฒนาผู้เรียน</h2>
+      <article class="d1-teamwork-curriculum" appReveal>
+        <h3>กิจกรรมการเรียนการสอนในหลักสูตรทุกรายวิชา</h3>
+        <p>เน้นกระบวนการกลุ่มและโครงงาน</p>
+        <div class="d1-teamwork-plan-grid">
+          <figure *ngFor="let plan of teamworkCurriculumPlans">
+            <img [src]="plan.image" [alt]="plan.title" loading="lazy">
+            <figcaption>{{ plan.title }}</figcaption>
+          </figure>
+        </div>
+      </article>
+      <section class="d1-student-development" appReveal>
+        <div class="d1-environment-activities">
+          <article class="d1-environment-activity" *ngFor="let activity of studentDevelopmentActivities; let i = index"
+            appReveal="left" [revealDelay]="i * 70">
+            <h4>{{ activity.title }}</h4>
+            <div class="d1-environment-photos">
+              <figure *ngFor="let image of activity.images">
+                <img [src]="image" [alt]="activity.title" loading="lazy">
+              </figure>
+            </div>
+          </article>
+        </div>
+      </section>
       <app-callout label="สรุปผล:" style="display:block;margin-top:24px">{{ d.section12.teamwork.conclusion
         }}</app-callout>
     </div>

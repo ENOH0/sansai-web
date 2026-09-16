@@ -17,6 +17,7 @@ export interface CycleStep {
   title: string;
   text: string;
   bullets?: string[];
+  image?: string;
 }
 
 /** แถวหนึ่งแถวในตารางข้อมูล */

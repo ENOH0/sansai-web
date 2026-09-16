@@ -306,6 +306,37 @@ export class Dimension1Component implements OnInit {
     ]
   }));
 
+  readonly teamworkCurriculumPlans = [
+    'แผนการเรียนธุรกิจ',
+    'แผนการเรียนคหกรรม',
+    'แผนการเรียนศิลปะ',
+    'แผนการเรียนวิทย์',
+    'แผนการเรียนภาษาญี่ปุ่น',
+    'แผนการเรียนกีฬา',
+    'แผนการเรียนภาษาจีน',
+    'แผนการเรียนภาษาจีน-ภาษาอังกฤษ'
+  ].map((title, index) => ({
+    title,
+    image: `/evidence/1.2.4/curriculum-activities/${String(index + 1).padStart(2, '0')}.png`
+  }));
+
+  readonly studentDevelopmentActivities = [
+    'กิจกรรมพัฒนาสมรรถนะ (วิชาการและอาชีพ)',
+    'กิจกรรมชุมนุม และกิจกรรม 1 คน 1 ความสามารถ',
+    'กิจกรรมค่ายพักแรมลูกเสือ – เนตรนารี - ยุวกาชาด',
+    'กิจกรรมอบรมนักศึกษาวิชาทหาร',
+    'กิจกรรมค่ายเยาวชนอาสาป้องกันและบรรเทาสาธารณภัย และกิจกรรมบำเพ็ญประโยชน์',
+    'กิจกรรมกีฬาสี',
+    'กิจกรรมทัศนศึกษา',
+    'กิจกรรมส่งเสริมประชาธิปไตยในโรงเรียน'
+  ].map((title, index) => ({
+    title,
+    images: [
+      `/evidence/1.2.4/student-development-activities/${String(index * 2 + 1).padStart(2, '0')}.png`,
+      `/evidence/1.2.4/student-development-activities/${String(index * 2 + 2).padStart(2, '0')}.png`
+    ]
+  }));
+
   // ---------- ภาษาอังกฤษ ----------
   readonly engSeries = [{
     name: 'ระดับดีขึ้นไป (3–4)',
