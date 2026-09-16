@@ -1,0 +1,2240 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>กระบวนการพัฒนาหลักสูตรอย่างต่อเนื่อง</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg1:#f8fbff;
+  --bg2:#fff8fd;
+  --text:#34445c;
+  --muted:#7c8aa0;
+
+  --p:#7f9cff;
+  --p-soft:#e9eeff;
+
+  --d:#60cfaa;
+  --d-soft:#e2f8f0;
+
+  --c:#f3b86b;
+  --c-soft:#fff0da;
+
+  --a:#d78ce8;
+  --a-soft:#f8e5fc;
+
+  --shadow:0 22px 55px rgba(81,101,145,.15);
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+}
+
+body{
+  font-family:
+    "TH SarabunPSK",
+    "TH Sarabun PSK",
+    "TH Sarabun New",
+    "Sarabun",
+    sans-serif;
+
+  color:var(--text);
+  overflow-x:hidden;
+
+  background:
+    radial-gradient(
+      circle at 8% 10%,
+      rgba(127,156,255,.18),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 92% 12%,
+      rgba(215,140,232,.17),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 50% 95%,
+      rgba(96,207,170,.15),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      var(--bg1),
+      var(--bg2)
+    );
+}
+
+/* ================= BACKGROUND ================= */
+
+.bg{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:-2;
+}
+
+.blob{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(80px);
+  opacity:.28;
+  animation:float 11s ease-in-out infinite alternate;
+}
+
+.b1{
+  width:390px;
+  height:390px;
+  background:#9cb2ff;
+  left:-120px;
+  top:-100px;
+}
+
+.b2{
+  width:420px;
+  height:420px;
+  background:#e6a8f0;
+  right:-160px;
+  top:90px;
+  animation-delay:2s;
+}
+
+.b3{
+  width:360px;
+  height:360px;
+  background:#89ddc2;
+  left:38%;
+  bottom:-160px;
+  animation-delay:4s;
+}
+
+@keyframes float{
+  to{
+    transform:
+      translate(26px,-18px)
+      scale(1.06);
+  }
+}
+
+/* ================= HEADER ================= */
+
+header{
+  text-align:center;
+  padding:30px 20px 8px;
+}
+
+header .badge{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+
+  padding:7px 18px;
+
+  border-radius:999px;
+
+  background:
+    rgba(255,255,255,.78);
+
+  border:
+    1px solid
+    rgba(128,149,196,.16);
+
+  box-shadow:
+    0 8px 22px
+    rgba(78,96,140,.09);
+
+  font-size:20px;
+  color:#6e7d92;
+}
+
+header h1{
+  margin:12px auto 2px;
+
+  font-size:
+    clamp(38px,4.3vw,66px);
+
+  line-height:1;
+
+  font-weight:700;
+
+  max-width:1100px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #6f8ce6,
+      #52b99d,
+      #e5a85f,
+      #c77edb
+    );
+
+  -webkit-background-clip:text;
+  background-clip:text;
+
+  color:transparent;
+}
+
+header p{
+  margin:7px auto 0;
+
+  max-width:900px;
+
+  font-size:
+    clamp(22px,2vw,30px);
+
+  color:#7a889d;
+}
+
+/* ================= MAIN LAYOUT ================= */
+
+.layout{
+  width:min(1480px,95%);
+
+  margin:
+    20px auto
+    38px;
+
+  display:grid;
+
+  grid-template-columns:
+    minmax(410px,.82fr)
+    minmax(560px,1.18fr);
+
+  gap:34px;
+
+  align-items:start;
+}
+
+/* ================= LEFT PANEL ================= */
+
+.model-panel{
+  position:relative;
+
+  min-height:690px;
+
+  border-radius:34px;
+
+  background:
+    rgba(255,255,255,.62);
+
+  border:
+    1px solid
+    rgba(125,150,200,.16);
+
+  box-shadow:
+    var(--shadow);
+
+  backdrop-filter:
+    blur(14px);
+
+  overflow:hidden;
+
+  padding:28px 26px;
+}
+
+.model-panel:before{
+  content:"";
+
+  position:absolute;
+
+  width:330px;
+  height:330px;
+
+  border-radius:50%;
+
+  left:-120px;
+  bottom:-130px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(126,158,240,.18),
+      transparent 70%
+    );
+}
+
+.model-title{
+  position:relative;
+  z-index:2;
+
+  display:flex;
+
+  justify-content:
+    space-between;
+
+  gap:16px;
+
+  align-items:flex-start;
+
+  padding:
+    5px 4px
+    12px;
+}
+
+.model-title h2{
+  margin:0;
+
+  font-size:34px;
+
+  line-height:1.05;
+}
+
+.model-title small{
+  display:block;
+
+  margin-top:5px;
+
+  font-size:21px;
+
+  color:#8390a3;
+}
+
+.auto-indicator{
+  flex:none;
+
+  padding:
+    7px 12px;
+
+  border-radius:999px;
+
+  background:#fff;
+
+  border:
+    1px solid
+    rgba(130,150,190,.15);
+
+  color:#7d8ba0;
+
+  font-size:18px;
+
+  box-shadow:
+    0 7px 20px
+    rgba(85,103,140,.08);
+}
+
+.dot{
+  width:8px;
+  height:8px;
+
+  border-radius:50%;
+
+  background:#6ac5a9;
+
+  display:inline-block;
+
+  margin-right:7px;
+
+  box-shadow:
+    0 0 0 5px
+    rgba(106,197,169,.14);
+}
+
+/* ================= VERTICAL FLOW ================= */
+
+.flow-wrap{
+  position:relative;
+
+  height:560px;
+
+  margin-top:4px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+}
+
+.flow-line{
+  position:absolute;
+
+  left:50%;
+
+  top:42px;
+  bottom:42px;
+
+  width:4px;
+
+  transform:
+    translateX(-50%);
+
+  border-radius:99px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      var(--p),
+      var(--d),
+      var(--c),
+      var(--a),
+      var(--p)
+    );
+
+  opacity:.22;
+}
+
+.flow-light{
+  position:absolute;
+
+  left:50%;
+
+  top:48px;
+
+  width:11px;
+  height:78px;
+
+  transform:
+    translateX(-50%);
+
+  border-radius:99px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      #fff,
+      rgba(128,156,255,.95),
+      transparent
+    );
+
+  filter:
+    blur(.3px)
+    drop-shadow(
+      0 0 12px
+      rgba(129,158,250,.78)
+    );
+
+  animation:
+    travel 5.6s
+    ease-in-out
+    infinite;
+}
+
+@keyframes travel{
+
+  0%{
+    top:50px;
+    opacity:0;
+  }
+
+  10%{
+    opacity:1;
+  }
+
+  85%{
+    opacity:1;
+  }
+
+  100%{
+    top:430px;
+    opacity:0;
+  }
+
+}
+
+.flow{
+  position:relative;
+
+  width:100%;
+
+  max-width:430px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  gap:15px;
+}
+
+.node{
+  width:100%;
+
+  min-height:108px;
+
+  display:grid;
+
+  grid-template-columns:
+    104px
+    1fr
+    42px;
+
+  gap:18px;
+
+  align-items:center;
+
+  padding:
+    12px 18px
+    12px 14px;
+
+  border-radius:28px;
+
+  cursor:pointer;
+
+  user-select:none;
+
+  background:
+    rgba(255,255,255,.88);
+
+  border:
+    2px solid
+    transparent;
+
+  box-shadow:
+    0 13px 30px
+    rgba(77,95,135,.09);
+
+  transition:
+    all .45s
+    var(--ease);
+
+  position:relative;
+}
+
+.node:hover{
+  transform:
+    translateX(7px);
+
+  box-shadow:
+    0 17px 34px
+    rgba(77,95,135,.14);
+}
+
+.node.active{
+  transform:
+    scale(1.06);
+
+  z-index:4;
+}
+
+.node.active:after{
+
+  content:"";
+
+  position:absolute;
+
+  inset:-6px;
+
+  border-radius:32px;
+
+  border:
+    1px solid
+    currentColor;
+
+  opacity:.22;
+
+  animation:
+    pulse 1.8s
+    ease-out
+    infinite;
+}
+
+@keyframes pulse{
+
+  0%{
+    transform:scale(.98);
+    opacity:.38;
+  }
+
+  100%{
+    transform:scale(1.06);
+    opacity:0;
+  }
+
+}
+
+.node.p{
+  color:var(--p);
+
+  border-color:
+    rgba(127,156,255,.30);
+}
+
+.node.d{
+  color:var(--d);
+
+  border-color:
+    rgba(96,207,170,.30);
+}
+
+.node.c{
+  color:var(--c);
+
+  border-color:
+    rgba(243,184,107,.32);
+}
+
+.node.a{
+  color:var(--a);
+
+  border-color:
+    rgba(215,140,232,.30);
+}
+
+.node.p.active{
+  background:
+    linear-gradient(
+      135deg,
+      #fff,
+      var(--p-soft)
+    );
+
+  box-shadow:
+    0 18px 44px
+    rgba(127,156,255,.22);
+}
+
+.node.d.active{
+  background:
+    linear-gradient(
+      135deg,
+      #fff,
+      var(--d-soft)
+    );
+
+  box-shadow:
+    0 18px 44px
+    rgba(96,207,170,.22);
+}
+
+.node.c.active{
+  background:
+    linear-gradient(
+      135deg,
+      #fff,
+      var(--c-soft)
+    );
+
+  box-shadow:
+    0 18px 44px
+    rgba(243,184,107,.22);
+}
+
+.node.a.active{
+  background:
+    linear-gradient(
+      135deg,
+      #fff,
+      var(--a-soft)
+    );
+
+  box-shadow:
+    0 18px 44px
+    rgba(215,140,232,.22);
+}
+
+.letter{
+  width:92px;
+  height:82px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  border-radius:24px;
+
+  font-size:68px;
+
+  line-height:1;
+
+  font-weight:700;
+
+  background:#fff;
+
+  border:
+    2px solid
+    currentColor;
+
+  box-shadow:
+    inset 0 0 18px
+    rgba(255,255,255,.9);
+}
+
+.node.p .letter{
+  background:var(--p-soft);
+}
+
+.node.d .letter{
+  background:var(--d-soft);
+}
+
+.node.c .letter{
+  background:var(--c-soft);
+}
+
+.node.a .letter{
+  background:var(--a-soft);
+}
+
+.node-text strong{
+  display:block;
+
+  font-size:29px;
+
+  line-height:.95;
+
+  color:#3c495c;
+}
+
+.node-text span{
+  display:block;
+
+  margin-top:6px;
+
+  font-size:21px;
+
+  line-height:1.05;
+
+  color:#78869a;
+}
+
+.arrow{
+  font-size:30px;
+
+  color:currentColor;
+
+  opacity:.7;
+
+  transition:
+    transform .3s ease;
+}
+
+.node.active .arrow{
+  transform:
+    translateX(5px);
+}
+
+.continuity{
+  position:absolute;
+
+  left:24px;
+  right:24px;
+  bottom:18px;
+
+  text-align:center;
+
+  font-size:19px;
+
+  color:#8492a6;
+}
+
+.continuity b{
+  color:#62738b;
+}
+
+/* ================= RIGHT DETAIL PANEL ================= */
+
+.detail-panel{
+  min-height:690px;
+
+  position:sticky;
+
+  top:18px;
+
+  border-radius:34px;
+
+  padding:30px;
+
+  background:
+    rgba(255,255,255,.89);
+
+  border:
+    1px solid
+    rgba(128,149,195,.16);
+
+  box-shadow:
+    var(--shadow);
+
+  overflow:hidden;
+}
+
+.detail-panel:before{
+
+  content:"";
+
+  position:absolute;
+
+  width:350px;
+  height:350px;
+
+  border-radius:50%;
+
+  right:-175px;
+  top:-165px;
+
+  background:
+    radial-gradient(
+      circle,
+      var(--accent-soft),
+      transparent 68%
+    );
+
+  opacity:.9;
+
+  transition:.45s;
+}
+
+.detail-head{
+
+  position:relative;
+
+  z-index:2;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:18px;
+
+  padding-bottom:18px;
+
+  border-bottom:
+    1px solid
+    rgba(120,140,180,.14);
+}
+
+.detail-letter{
+
+  flex:none;
+
+  width:88px;
+  height:88px;
+
+  display:flex;
+
+  justify-content:center;
+  align-items:center;
+
+  border-radius:28px;
+
+  font-size:58px;
+
+  font-weight:700;
+
+  color:var(--accent);
+
+  background:
+    var(--accent-soft);
+
+  border:
+    2px solid
+    var(--accent);
+
+  box-shadow:
+    0 11px 28px
+    rgba(75,95,140,.10);
+
+  transition:.4s;
+}
+
+.detail-head h2{
+
+  margin:0;
+
+  font-size:39px;
+
+  line-height:1;
+}
+
+.detail-head p{
+
+  margin:
+    6px 0 0;
+
+  font-size:22px;
+
+  color:#8491a3;
+}
+
+.detail-intro{
+
+  position:relative;
+
+  z-index:2;
+
+  margin:
+    20px 0
+    14px;
+
+  font-size:25px;
+
+  line-height:1.35;
+
+  color:#5b697e;
+}
+
+.cards{
+
+  position:relative;
+
+  z-index:2;
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:12px;
+}
+
+.card{
+
+  position:relative;
+
+  padding:
+    14px 16px
+    14px 58px;
+
+  border-radius:20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.98),
+      rgba(247,250,255,.90)
+    );
+
+  border:
+    1px solid
+    rgba(126,148,190,.12);
+
+  box-shadow:
+    0 8px 22px
+    rgba(80,98,140,.06);
+
+  font-size:22px;
+
+  line-height:1.34;
+
+  color:#536176;
+
+  transform:
+    translateY(10px);
+
+  opacity:0;
+
+  animation:
+    cardIn .5s forwards;
+}
+
+.card:before{
+
+  content:
+    attr(data-no);
+
+  position:absolute;
+
+  left:15px;
+  top:13px;
+
+  width:30px;
+  height:30px;
+
+  border-radius:11px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  font-weight:700;
+
+  font-size:19px;
+
+  color:
+    var(--accent);
+
+  background:
+    var(--accent-soft);
+
+  border:
+    1px solid
+    rgba(120,140,180,.15);
+}
+
+@keyframes cardIn{
+
+  to{
+    transform:none;
+    opacity:1;
+  }
+
+}
+
+/* ================= BUTTONS ================= */
+
+.footer-controls{
+
+  position:absolute;
+
+  z-index:3;
+
+  right:26px;
+
+  bottom:24px;
+
+  display:flex;
+
+  gap:9px;
+}
+
+.btn{
+
+  border:none;
+
+  cursor:pointer;
+
+  font-family:inherit;
+
+  font-size:19px;
+
+  padding:
+    8px 15px;
+
+  border-radius:14px;
+
+  background:#fff;
+
+  color:#6f7d91;
+
+  border:
+    1px solid
+    rgba(125,145,185,.17);
+
+  box-shadow:
+    0 8px 20px
+    rgba(75,95,140,.08);
+
+  transition:.25s;
+}
+
+.btn:hover{
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 12px 24px
+    rgba(75,95,140,.13);
+}
+
+.btn.primary{
+
+  background:
+    linear-gradient(
+      135deg,
+      #edf2ff,
+      #f9f5ff
+    );
+
+  color:#667dc8;
+}
+
+.status{
+
+  position:absolute;
+
+  left:30px;
+
+  bottom:28px;
+
+  font-size:19px;
+
+  color:#8b97a8;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+
+  .layout{
+    grid-template-columns:1fr;
+    max-width:820px;
+  }
+
+  .model-panel,
+  .detail-panel{
+    min-height:auto;
+  }
+
+  .flow-wrap{
+    height:540px;
+  }
+
+  .detail-panel{
+    padding-bottom:85px;
+  }
+
+}
+
+@media(max-width:600px){
+
+  header{
+    padding-top:20px;
+  }
+
+  header h1{
+    font-size:38px;
+  }
+
+  .layout{
+    width:94%;
+    gap:18px;
+  }
+
+  .model-panel,
+  .detail-panel{
+    border-radius:24px;
+    padding:20px 16px;
+  }
+
+  .model-title h2{
+    font-size:29px;
+  }
+
+  .auto-indicator{
+    display:none;
+  }
+
+  .flow-wrap{
+    height:500px;
+  }
+
+  .flow{
+    max-width:100%;
+  }
+
+  .node{
+    grid-template-columns:
+      82px
+      1fr
+      25px;
+
+    gap:12px;
+
+    padding:
+      10px 12px;
+
+    min-height:98px;
+  }
+
+  .letter{
+    width:76px;
+    height:72px;
+    font-size:54px;
+    border-radius:20px;
+  }
+
+  .node-text strong{
+    font-size:25px;
+  }
+
+  .node-text span{
+    font-size:18px;
+  }
+
+  .detail-letter{
+    width:72px;
+    height:72px;
+    font-size:48px;
+  }
+
+  .detail-head h2{
+    font-size:31px;
+  }
+
+  .detail-head p,
+  .detail-intro{
+    font-size:20px;
+  }
+
+  .card{
+    font-size:20px;
+    padding-left:52px;
+  }
+
+  .status{
+    left:18px;
+    bottom:24px;
+  }
+
+  .footer-controls{
+    right:16px;
+  }
+
+}
+
+/* =========================================================
+   EMBED + ON DARK BACKGROUND
+   ฝังในหน้าด้านที่ 2 ซึ่งมีวิดีโอพื้นหลังสีเข้ม
+   จึงถอดพื้นหลังของโมเดลออก และเปลี่ยนแผงสองฝั่งเป็นกระจกสีเข้ม
+   ส่วนการ์ด P D C A และการ์ดรายการมีพื้นสว่างของตัวเองอยู่แล้ว คงสีเดิม
+========================================================= */
+
+html,body{ min-height:auto; }
+
+body{
+  background:transparent;
+  color:#e8f0ff;
+  font-family:"Sarabun","TH SarabunPSK",sans-serif;
+}
+
+/* ปิดวงกลมเบลอพื้นหลัง */
+.bg{ display:none; }
+
+header{ padding:10px 20px 4px; }
+
+header .badge{
+  color:#f0e9ff;
+  background:rgba(255,255,255,.18);
+  border-color:rgba(255,255,255,.26);
+  box-shadow:none;
+}
+
+header p{
+  color:#dbe6f7;
+  text-shadow:0 1px 10px rgba(8,21,47,.6);
+}
+
+.layout{ margin:16px auto 18px; }
+
+/* แผงซ้าย–ขวา เปลี่ยนจากกระจกขาวเป็นกระจกน้ำเงินเข้ม */
+.model-panel,
+.detail-panel{
+  min-height:auto;
+  background:rgba(10,24,52,.46);
+  border-color:rgba(255,255,255,.22);
+  box-shadow:0 18px 44px rgba(0,0,0,.22);
+  backdrop-filter:blur(8px);
+}
+
+.detail-panel{ position:relative; top:auto; }
+
+.model-title h2,
+.detail-head h2{
+  color:#ffffff;
+}
+
+.model-title small,
+.detail-head p{
+  color:#dbe6f7;
+}
+
+.detail-head{
+  border-bottom-color:rgba(255,255,255,.18);
+}
+
+.detail-intro{
+  color:#eaf2ff;
+}
+
+.continuity{
+  position:static;
+  margin-top:10px;
+  color:#dbe6f7;
+}
+
+.continuity b{ color:#ffffff; }
+
+.status{
+  position:static;
+  margin-top:16px;
+  color:#dbe6f7;
+}
+
+.footer-controls{
+  position:static;
+  margin-top:14px;
+  justify-content:flex-end;
+}
+
+/* ปุ่มอย่างน้อย 44px ตามเกณฑ์นิ้วสัมผัสบน iPad */
+.btn{ min-height:44px; }
+
+@media (prefers-reduced-motion: reduce){
+  .flow-light,.node.active:after{ animation:none; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+
+  <div class="blob b1"></div>
+
+  <div class="blob b2"></div>
+
+  <div class="blob b3"></div>
+
+</div>
+
+
+<header>
+
+  <div class="badge">
+    ✦ CONTINUOUS CURRICULUM DEVELOPMENT ✦
+  </div>
+
+  <h1>
+    กระบวนการพัฒนาหลักสูตรที่มีความต่อเนื่องเชื่อมโยง
+  </h1>
+
+  <p>
+    วางแผน • พัฒนา • ตรวจสอบ • ปรับปรุง
+    เพื่อยกระดับหลักสูตรอย่างเป็นระบบและต่อเนื่อง
+  </p>
+
+</header>
+
+
+<main class="layout">
+
+
+<!-- ================= LEFT ================= -->
+
+<section class="model-panel">
+
+  <div class="model-title">
+
+    <div>
+
+      <h2>
+        วงจรการพัฒนาหลักสูตร
+      </h2>
+
+      <small>
+        คลิกแต่ละขั้นเพื่อดูรายละเอียด
+        หรือปล่อยให้เลื่อนอัตโนมัติ
+      </small>
+
+    </div>
+
+
+    <div
+      class="auto-indicator"
+      id="autoIndicator"
+    >
+
+      <span class="dot"></span>
+
+      กำลังเลื่อนอัตโนมัติ
+
+    </div>
+
+  </div>
+
+
+  <div class="flow-wrap">
+
+
+    <div class="flow-line"></div>
+
+
+    <div class="flow-light"></div>
+
+
+    <div
+      class="flow"
+      id="flow"
+    >
+
+
+      <!-- P -->
+
+      <article
+        class="node p active"
+        data-index="0"
+      >
+
+        <div class="letter">
+          P
+        </div>
+
+        <div class="node-text">
+
+          <strong>
+            Plan
+          </strong>
+
+          <span>
+            การวางแผนและออกแบบหลักสูตร
+          </span>
+
+        </div>
+
+        <div class="arrow">
+          ›
+        </div>
+
+      </article>
+
+
+      <!-- D -->
+
+      <article
+        class="node d"
+        data-index="1"
+      >
+
+        <div class="letter">
+          D
+        </div>
+
+        <div class="node-text">
+
+          <strong>
+            Do
+          </strong>
+
+          <span>
+            การปฏิบัติและพัฒนาหลักสูตร
+          </span>
+
+        </div>
+
+        <div class="arrow">
+          ›
+        </div>
+
+      </article>
+
+
+      <!-- C -->
+
+      <article
+        class="node c"
+        data-index="2"
+      >
+
+        <div class="letter">
+          C
+        </div>
+
+        <div class="node-text">
+
+          <strong>
+            Check
+          </strong>
+
+          <span>
+            การตรวจสอบและประเมินผล
+          </span>
+
+        </div>
+
+        <div class="arrow">
+          ›
+        </div>
+
+      </article>
+
+
+      <!-- A -->
+
+      <article
+        class="node a"
+        data-index="3"
+      >
+
+        <div class="letter">
+          A
+        </div>
+
+        <div class="node-text">
+
+          <strong>
+            Act
+          </strong>
+
+          <span>
+            การปรับปรุงและพัฒนาต่อเนื่อง
+          </span>
+
+        </div>
+
+        <div class="arrow">
+          ›
+        </div>
+
+      </article>
+
+
+    </div>
+
+  </div>
+
+
+  <div class="continuity">
+
+    <b>
+      P → D → C → A → P
+    </b>
+
+    วงจรหมุนเวียนเพื่อให้การพัฒนาหลักสูตร
+    เกิดความต่อเนื่องเชื่อมโยง
+
+  </div>
+
+</section>
+
+
+<!-- ================= RIGHT DETAIL ================= -->
+
+<section
+  class="detail-panel"
+  id="detailPanel"
+  style="
+    --accent:var(--p);
+    --accent-soft:var(--p-soft);
+  "
+>
+
+
+  <div class="detail-head">
+
+
+    <div
+      class="detail-letter"
+      id="detailLetter"
+    >
+
+      P
+
+    </div>
+
+
+    <div>
+
+      <h2 id="detailTitle">
+
+        Plan :
+        การวางแผนและออกแบบหลักสูตร
+
+      </h2>
+
+
+      <p id="detailSubtitle">
+
+        วิเคราะห์ข้อมูล
+        กำหนดทิศทาง
+        และสร้างเครือข่าย
+
+      </p>
+
+    </div>
+
+
+  </div>
+
+
+  <p
+    class="detail-intro"
+    id="detailIntro"
+  ></p>
+
+
+  <div
+    class="cards"
+    id="cards"
+  ></div>
+
+
+  <div
+    class="status"
+    id="status"
+  ></div>
+
+
+  <div class="footer-controls">
+
+
+    <button
+      class="btn"
+      id="prevBtn"
+    >
+
+      ◀ ก่อนหน้า
+
+    </button>
+
+
+    <button
+      class="btn primary"
+      id="playBtn"
+    >
+
+      ⏸ หยุดอัตโนมัติ
+
+    </button>
+
+
+    <button
+      class="btn"
+      id="nextBtn"
+    >
+
+      ถัดไป ▶
+
+    </button>
+
+
+  </div>
+
+
+</section>
+
+
+</main>
+
+
+<script>
+
+/* ================= DATA ================= */
+
+const data = [
+
+{
+
+  key:"P",
+
+  name:"Plan",
+
+  title:
+    "Plan : การวางแผนและออกแบบหลักสูตร",
+
+  subtitle:
+    "วิเคราะห์ข้อมูล กำหนดทิศทาง และสร้างเครือข่าย",
+
+  intro:
+    "เริ่มต้นจากการศึกษาข้อมูลพื้นฐานและความต้องการ เพื่อกำหนดเป้าหมายและออกแบบหลักสูตรให้มีความหลากหลาย เชื่อมโยงทุกระดับการศึกษา และตอบโจทย์ผู้เรียน",
+
+  color:"#7f9cff",
+
+  soft:"#e9eeff",
+
+  items:[
+
+    "วิเคราะห์ข้อมูลพื้นฐาน สำรวจความต้องการ และวิเคราะห์ SWOT เพื่อใช้เป็นฐานข้อมูลสำคัญในการพัฒนาหลักสูตร",
+
+    "แต่งตั้งคณะกรรมการ กำหนดเป้าหมาย และสร้างความร่วมมือกับสถาบันคู่พัฒนาและภาคีเครือข่ายกว่า 10 แห่ง",
+
+    "กำหนดเป้าหมายของหลักสูตรให้มีความหลากหลาย และเชื่อมโยงการเรียนรู้ในทุกระดับการศึกษา"
+
+  ]
+
+},
+
+
+{
+
+  key:"D",
+
+  name:"Do",
+
+  title:
+    "Do : การปฏิบัติและพัฒนาหลักสูตร",
+
+  subtitle:
+    "พัฒนาหลักสูตร สร้างรายวิชา และจัดการเรียนรู้จริง",
+
+  intro:
+    "นำแนวทางที่วางไว้สู่การปฏิบัติจริง ผ่านการพัฒนาหลักสูตร การทำความร่วมมือกับเครือข่าย และการจัดการเรียนรู้ที่เน้นสมรรถนะของผู้เรียน",
+
+  color:"#60cfaa",
+
+  soft:"#e2f8f0",
+
+  items:[
+
+    "พัฒนาหลักสูตรและลงนามบันทึกความร่วมมือกับภาคีเครือข่าย เพื่อร่วมกันสนับสนุนการจัดการศึกษา",
+
+    "ออกแบบรายวิชาเพิ่มเติมที่เน้นสมรรถนะ รองรับระบบสะสมหน่วยกิต (Credit Bank) และการจัดการศึกษาแบบทวิศึกษา",
+
+    "จัดการเรียนรู้แบบ Active Learning และประยุกต์ใช้เทคโนโลยีที่ทันสมัย เพื่อส่งเสริมการมีส่วนร่วมและการเรียนรู้เชิงรุกของผู้เรียน",
+
+    "จัดหลักสูตรระยะสั้นตามความสนใจ เพื่อเปิดโอกาสให้ผู้เรียนเลือกพัฒนาทักษะได้อย่างยืดหยุ่นและหลากหลาย"
+
+  ]
+
+},
+
+
+{
+
+  key:"C",
+
+  name:"Check",
+
+  title:
+    "Check : การตรวจสอบและประเมินผล",
+
+  subtitle:
+    "นิเทศ ติดตาม กำกับ และประเมินคุณภาพหลักสูตร",
+
+  intro:
+    "ตรวจสอบคุณภาพก่อนและระหว่างการนำหลักสูตรไปใช้ เพื่อให้กระบวนการเรียนรู้และการวัดผลเป็นไปอย่างมีประสิทธิภาพและสอดคล้องกับเป้าหมาย",
+
+  color:"#f3b86b",
+
+  soft:"#fff0da",
+
+  items:[
+
+    "วิพากษ์หลักสูตรโดยผู้ทรงคุณวุฒิก่อนนำไปใช้จริง เพื่อพิจารณาความเหมาะสม ความสอดคล้อง และคุณภาพของหลักสูตร",
+
+    "นิเทศ ติดตาม และกำกับดูแลการนำหลักสูตรไปใช้ รวมถึงกระบวนการจัดการเรียนรู้ในชั้นเรียน",
+
+    "ตรวจสอบและประเมินกระบวนการวัดผลให้มีประสิทธิภาพ สอดคล้องกับสมรรถนะและผลลัพธ์การเรียนรู้ที่กำหนด"
+
+  ]
+
+},
+
+
+{
+
+  key:"A",
+
+  name:"Act",
+
+  title:
+    "Act : การปรับปรุงและพัฒนาต่อเนื่อง",
+
+  subtitle:
+    "ทบทวนข้อมูล นำผลประเมินสู่การปรับปรุง และสร้างนวัตกรรม",
+
+  intro:
+    "นำข้อมูลจากการประเมินและข้อเสนอแนะที่เกิดขึ้นจริงมาใช้ทบทวนและปรับปรุงหลักสูตร เพื่อให้หลักสูตรทันสมัย มีคุณภาพ และพัฒนาได้อย่างต่อเนื่อง",
+
+  color:"#d78ce8",
+
+  soft:"#f8e5fc",
+
+  items:[
+
+    "ทบทวนผลการดำเนินงานและผลการประเมินรอบ 1 ปี เพื่อค้นหาจุดที่ควรรักษาและประเด็นที่ควรพัฒนา",
+
+    "นำเสียงสะท้อนและข้อเสนอแนะจากช่องทางออนไลน์มาใช้เป็นข้อมูลประกอบการปรับปรุงหลักสูตร",
+
+    "ปรับปรุงและพัฒนาหลักสูตรอย่างต่อเนื่อง เพื่อนำไปสู่การพัฒนาแนวทางใหม่และการสร้างนวัตกรรมทางการศึกษา",
+
+    "นำผลการพัฒนาเข้าสู่วงจร P → D → C → A รอบถัดไป เพื่อให้กระบวนการพัฒนาหลักสูตรมีความต่อเนื่องเชื่อมโยง"
+
+  ]
+
+}
+
+];
+
+
+/* ================= ELEMENTS ================= */
+
+const nodes =
+  [
+    ...document.querySelectorAll(
+      ".node"
+    )
+  ];
+
+
+const panel =
+  document.getElementById(
+    "detailPanel"
+  );
+
+
+const letter =
+  document.getElementById(
+    "detailLetter"
+  );
+
+
+const title =
+  document.getElementById(
+    "detailTitle"
+  );
+
+
+const subtitle =
+  document.getElementById(
+    "detailSubtitle"
+  );
+
+
+const intro =
+  document.getElementById(
+    "detailIntro"
+  );
+
+
+const cards =
+  document.getElementById(
+    "cards"
+  );
+
+
+const status =
+  document.getElementById(
+    "status"
+  );
+
+
+const playBtn =
+  document.getElementById(
+    "playBtn"
+  );
+
+
+const autoIndicator =
+  document.getElementById(
+    "autoIndicator"
+  );
+
+
+let current = 0;
+
+let auto = true;
+
+let timer = null;
+
+
+/* ================= RENDER ================= */
+
+function render(index){
+
+  current = index;
+
+  const d =
+    data[index];
+
+
+  nodes.forEach(
+
+    (node,i)=>{
+
+      node.classList.toggle(
+
+        "active",
+
+        i === index
+
+      );
+
+    }
+
+  );
+
+
+  panel.style.setProperty(
+
+    "--accent",
+
+    d.color
+
+  );
+
+
+  panel.style.setProperty(
+
+    "--accent-soft",
+
+    d.soft
+
+  );
+
+
+  letter.textContent =
+    d.key;
+
+
+  title.textContent =
+    d.title;
+
+
+  subtitle.textContent =
+    d.subtitle;
+
+
+  intro.textContent =
+    d.intro;
+
+
+  status.textContent =
+    `กำลังแสดง : ${d.key} — ${d.name}`;
+
+
+  cards.innerHTML =
+    "";
+
+
+  d.items.forEach(
+
+    (item,i)=>{
+
+      const element =
+        document.createElement(
+          "div"
+        );
+
+
+      element.className =
+        "card";
+
+
+      element.dataset.no =
+        i + 1;
+
+
+      element.textContent =
+        item;
+
+
+      element.style.animationDelay =
+        `${i * .07}s`;
+
+
+      cards.appendChild(
+        element
+      );
+
+    }
+
+  );
+
+}
+
+
+/* ================= NEXT ================= */
+
+function next(){
+
+  render(
+
+    (current + 1)
+    %
+    data.length
+
+  );
+
+  restart();
+
+}
+
+
+/* ================= PREVIOUS ================= */
+
+function prev(){
+
+  render(
+
+    (
+      current
+      - 1
+      + data.length
+    )
+    %
+    data.length
+
+  );
+
+  restart();
+
+}
+
+
+/* ================= AUTO PLAY ================= */
+
+function start(){
+
+  auto = true;
+
+
+  playBtn.textContent =
+    "⏸ หยุดอัตโนมัติ";
+
+
+  autoIndicator.innerHTML =
+    '<span class="dot"></span>กำลังเลื่อนอัตโนมัติ';
+
+
+  clearInterval(
+    timer
+  );
+
+
+  timer =
+    setInterval(
+
+      ()=>{
+
+        render(
+
+          (current + 1)
+          %
+          data.length
+
+        );
+
+      },
+
+      5200
+
+    );
+
+}
+
+
+function stop(){
+
+  auto = false;
+
+
+  clearInterval(
+    timer
+  );
+
+
+  playBtn.textContent =
+    "▶ เล่นอัตโนมัติ";
+
+
+  autoIndicator.textContent =
+    "หยุดเลื่อนอัตโนมัติ";
+
+}
+
+
+function restart(){
+
+  if(!auto){
+
+    return;
+
+  }
+
+
+  clearInterval(
+    timer
+  );
+
+
+  timer =
+    setInterval(
+
+      ()=>{
+
+        render(
+
+          (current + 1)
+          %
+          data.length
+
+        );
+
+      },
+
+      5200
+
+    );
+
+}
+
+
+/* ================= CLICK NODE ================= */
+
+nodes.forEach(
+
+  node=>{
+
+    node.addEventListener(
+
+      "click",
+
+      ()=>{
+
+        render(
+
+          Number(
+            node.dataset.index
+          )
+
+        );
+
+
+        restart();
+
+      }
+
+    );
+
+  }
+
+);
+
+
+/* ================= BUTTONS ================= */
+
+document
+.getElementById(
+  "nextBtn"
+)
+.addEventListener(
+  "click",
+  next
+);
+
+
+document
+.getElementById(
+  "prevBtn"
+)
+.addEventListener(
+  "click",
+  prev
+);
+
+
+playBtn.addEventListener(
+
+  "click",
+
+  ()=>{
+
+    auto
+    ?
+    stop()
+    :
+    start();
+
+  }
+
+);
+
+
+/* ================= KEYBOARD ================= */
+
+document.addEventListener(
+
+  "keydown",
+
+  event=>{
+
+    /* ทำงานเฉพาะตอนโฟกัสอยู่ในโมเดล ไม่ไปแย่งการเลื่อนของหน้าแม่ */
+    if(!document.hasFocus()) return;
+
+
+    if(
+
+      event.key ===
+      "ArrowDown"
+
+      ||
+
+      event.key ===
+      "ArrowRight"
+
+    ){
+
+      next();
+
+    }
+
+
+    if(
+
+      event.key ===
+      "ArrowUp"
+
+      ||
+
+      event.key ===
+      "ArrowLeft"
+
+    ){
+
+      prev();
+
+    }
+
+
+    if(
+
+      event.key === " "
+
+    ){
+
+      event.preventDefault();
+
+
+      auto
+      ?
+      stop()
+      :
+      start();
+
+    }
+
+  }
+
+);
+
+
+/* ================= REPORT HEIGHT ================= */
+
+function reportHeight(){
+
+  requestAnimationFrame(()=>{
+
+    const height =
+      Math.ceil(
+        document.body.scrollHeight + 8
+      );
+
+    window.parent.postMessage(
+      {
+        type:"d2-linkage-model-height",
+        height
+      },
+      window.location.origin
+    );
+
+  });
+
+}
+
+new ResizeObserver(reportHeight)
+  .observe(document.body);
+
+window.addEventListener("load", reportHeight);
+
+
+/* ================= INITIALIZE ================= */
+
+render(0);
+
+if(
+  window.matchMedia &&
+  window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches
+){
+  stop();
+}else{
+  start();
+}
+
+</script>
+
+</body>
+</html>

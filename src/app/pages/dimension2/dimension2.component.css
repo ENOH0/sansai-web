@@ -393,3 +393,17 @@
   background: rgba(247, 251, 255, .96);
   box-shadow: var(--shadow-sm);
 }
+
+/* โมเดลกระบวนการพัฒนาหลักสูตรด้านความหลากหลาย (PDCA) */
+.d2-diversity-pdca {
+  margin-top: 34px;
+  overflow: hidden;
+  background: transparent;
+  border-radius: var(--radius-md);
+}
+.d2-diversity-pdca iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+}

@@ -1,241 +1,242 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>กระบวนการพัฒนาหลักสูตรด้านความหลากหลาย</title>
+    <title>กระบวนการพัฒนาหลักสูตรให้มีความหลากหลาย</title>
 
-<style>
-
-/* =========================================================
+    <style>
+        /* =========================================================
    BASE
 ========================================================= */
 
-*{
-    box-sizing:border-box;
-}
+        * {
+            box-sizing: border-box;
+        }
 
-html,body{
-    margin:0;
-    padding:0;
-    width:100%;
-    min-height:100%;
-    background:transparent;
-}
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+            background: transparent;
+        }
 
-body{
-    font-family:"TH SarabunPSK","TH Sarabun New",Tahoma,sans-serif;
-    background:transparent;
-    color:#29445f;
-    overflow-x:hidden;
-}
+        body {
+            font-family: "TH SarabunPSK", "TH Sarabun New", Tahoma, sans-serif;
+            background: transparent;
+            color: #29445f;
+            overflow-x: hidden;
+        }
 
-.wrapper{
-    width:100%;
-    max-width:1450px;
-    margin:auto;
-    padding:35px 30px 45px;
-}
+        .wrapper {
+            width: 100%;
+            max-width: 1450px;
+            margin: auto;
+            padding: 35px 30px 45px;
+        }
 
 
-/* =========================================================
+        /* =========================================================
    TITLE
 ========================================================= */
 
-.main-title{
-    text-align:center;
-    margin-bottom:8px;
-}
+        .main-title {
+            text-align: center;
+            margin-bottom: 8px;
+        }
 
-.main-title h1{
-    margin:0;
-    font-size:42px;
-    font-weight:700;
-    color:#fff;
-    text-shadow:0 2px 12px rgba(8,21,47,.75);
-}
+        .main-title h1 {
+            margin: 0;
+            font-size: 42px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 12px rgba(8, 21, 47, .75);
+        }
 
-.main-title p{
-    margin:3px 0 0;
-    font-size:24px;
-    color:rgba(255,255,255,.95);
-    text-shadow:0 2px 10px rgba(8,21,47,.75);
-}
+        .main-title p {
+            margin: 3px 0 0;
+            font-size: 24px;
+            color: rgba(255, 255, 255, .95);
+            text-shadow: 0 2px 10px rgba(8, 21, 47, .75);
+        }
 
 
-/* =========================================================
+        /* =========================================================
    CONTENT
 ========================================================= */
 
-.content{
-    display:grid;
-    grid-template-columns:minmax(650px,1fr) 330px;
-    gap:55px;
-    align-items:center;
-}
+        .content {
+            display: grid;
+            grid-template-columns: minmax(650px, 1fr) 330px;
+            gap: 55px;
+            align-items: center;
+        }
 
 
-/* =========================================================
+        /* =========================================================
    MODEL AREA
 ========================================================= */
 
-.model-area{
-    position:relative;
-    width:100%;
-    min-height:700px;
+        .model-area {
+            position: relative;
+            width: 100%;
+            min-height: 700px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.model{
-    position:relative;
-    width:590px;
-    height:590px;
-}
+        .model {
+            position: relative;
+            width: 590px;
+            height: 590px;
+        }
 
 
-/* =========================================================
+        /* =========================================================
    ROTATING RINGS
 ========================================================= */
 
-.ring{
-    position:absolute;
-    left:50%;
-    top:50%;
+        .ring {
+            position: absolute;
+            left: 50%;
+            top: 50%;
 
-    transform:translate(-50%,-50%);
+            transform: translate(-50%, -50%);
 
-    border-radius:50%;
-    pointer-events:none;
-}
+            border-radius: 50%;
+            pointer-events: none;
+        }
 
-.ring-1{
-    width:560px;
-    height:560px;
-    border:1px dashed rgba(84,153,210,.35);
+        .ring-1 {
+            width: 560px;
+            height: 560px;
+            border: 1px dashed rgba(84, 153, 210, .35);
 
-    animation:rotateClockwise 30s linear infinite;
-}
+            animation: rotateClockwise 30s linear infinite;
+        }
 
-.ring-2{
-    width:475px;
-    height:475px;
-    border:1px solid rgba(160,132,211,.25);
+        .ring-2 {
+            width: 475px;
+            height: 475px;
+            border: 1px solid rgba(160, 132, 211, .25);
 
-    animation:rotateCounter 24s linear infinite;
-}
+            animation: rotateCounter 24s linear infinite;
+        }
 
-.ring-3{
-    width:395px;
-    height:395px;
-    border:1px dashed rgba(91,190,169,.30);
+        .ring-3 {
+            width: 395px;
+            height: 395px;
+            border: 1px dashed rgba(91, 190, 169, .30);
 
-    animation:rotateClockwise 20s linear infinite;
-}
-
-
-@keyframes rotateClockwise{
-
-    from{
-        transform:translate(-50%,-50%) rotate(0deg);
-    }
-
-    to{
-        transform:translate(-50%,-50%) rotate(360deg);
-    }
-
-}
+            animation: rotateClockwise 20s linear infinite;
+        }
 
 
-@keyframes rotateCounter{
+        @keyframes rotateClockwise {
 
-    from{
-        transform:translate(-50%,-50%) rotate(360deg);
-    }
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
 
-    to{
-        transform:translate(-50%,-50%) rotate(0deg);
-    }
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
 
-}
+        }
 
 
-/* =========================================================
+        @keyframes rotateCounter {
+
+            from {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+        }
+
+
+        /* =========================================================
    ORBIT DOTS
 ========================================================= */
 
-.orbit{
-    position:absolute;
-    inset:0;
+        .orbit {
+            position: absolute;
+            inset: 0;
 
-    pointer-events:none;
+            pointer-events: none;
 
-    animation:orbitRotate 25s linear infinite;
-}
-
-
-@keyframes orbitRotate{
-
-    from{
-        transform:rotate(0deg);
-    }
-
-    to{
-        transform:rotate(360deg);
-    }
-
-}
+            animation: orbitRotate 25s linear infinite;
+        }
 
 
-.dot{
-    position:absolute;
+        @keyframes orbitRotate {
 
-    width:12px;
-    height:12px;
+            from {
+                transform: rotate(0deg);
+            }
 
-    border-radius:50%;
+            to {
+                transform: rotate(360deg);
+            }
 
-    box-shadow:0 0 12px currentColor;
-}
-
-
-.dot:nth-child(1){
-    top:15px;
-    left:50%;
-
-    color:#6baed6;
-    background:#6baed6;
-}
-
-.dot:nth-child(2){
-    right:15px;
-    top:50%;
-
-    color:#b59add;
-    background:#b59add;
-}
-
-.dot:nth-child(3){
-    bottom:15px;
-    left:50%;
-
-    color:#78c8b0;
-    background:#78c8b0;
-}
-
-.dot:nth-child(4){
-    left:15px;
-    top:50%;
-
-    color:#e9a6ba;
-    background:#e9a6ba;
-}
+        }
 
 
-/* =========================================================
+        .dot {
+            position: absolute;
+
+            width: 12px;
+            height: 12px;
+
+            border-radius: 50%;
+
+            box-shadow: 0 0 12px currentColor;
+        }
+
+
+        .dot:nth-child(1) {
+            top: 15px;
+            left: 50%;
+
+            color: #6baed6;
+            background: #6baed6;
+        }
+
+        .dot:nth-child(2) {
+            right: 15px;
+            top: 50%;
+
+            color: #b59add;
+            background: #b59add;
+        }
+
+        .dot:nth-child(3) {
+            bottom: 15px;
+            left: 50%;
+
+            color: #78c8b0;
+            background: #78c8b0;
+        }
+
+        .dot:nth-child(4) {
+            left: 15px;
+            top: 50%;
+
+            color: #e9a6ba;
+            background: #e9a6ba;
+        }
+
+
+        /* =========================================================
    ARROWS
    ลูกศรใหม่:
    - เส้นขนานกับแนววงโคจร
@@ -243,1947 +244,1803 @@ body{
    - ไม่ชี้เข้าวงกลมกลาง
 ========================================================= */
 
-.arrow-layer{
-    position:absolute;
-    inset:0;
+        .arrow-layer {
+            position: absolute;
+            inset: 0;
 
-    pointer-events:none;
+            pointer-events: none;
 
-    z-index:8;
-}
+            z-index: 8;
+        }
 
 
-/*
+        /*
     ลูกศรแต่ละตัววางอยู่ตามทิศของแต่ละด้าน
 */
 
-.arrow{
+        .arrow {
 
-    position:absolute;
+            position: absolute;
 
-    width:82px;
-    height:3px;
+            width: 82px;
+            height: 3px;
 
-    border-radius:10px;
+            border-radius: 10px;
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(111,165,201,.12),
-            rgba(111,165,201,.95)
-        );
+            background:
+                linear-gradient(90deg,
+                    rgba(111, 165, 201, .12),
+                    rgba(111, 165, 201, .95));
 
-    box-shadow:
-        0 0 8px rgba(111,165,201,.18);
+            box-shadow:
+                0 0 8px rgba(111, 165, 201, .18);
 
-}
+        }
 
 
-/*
+        /*
     หัวลูกศรชี้ออกด้านนอก
 */
 
-.arrow::after{
+        .arrow::after {
 
-    content:"";
+            content: "";
 
-    position:absolute;
+            position: absolute;
 
-    right:-3px;
+            right: -3px;
 
-    top:50%;
+            top: 50%;
 
-    transform:
-        translateY(-50%);
+            transform:
+                translateY(-50%);
 
-    width:0;
-    height:0;
+            width: 0;
+            height: 0;
 
-    border-top:8px solid transparent;
-    border-bottom:8px solid transparent;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
 
-    border-left:14px solid #76afd2;
+            border-left: 14px solid #76afd2;
 
-}
+        }
 
 
-/*
+        /*
     P
     ลูกศรชี้ขึ้นไปหา P
 */
 
-.arrow-p{
+        .arrow-p {
 
-    left:50%;
-    top:87px;
+            left: 50%;
+            top: 87px;
 
-    transform:
-        translateX(-50%)
-        rotate(-90deg);
+            transform:
+                translateX(-50%) rotate(-90deg);
 
-}
+        }
 
 
-/*
+        /*
     D
     ลูกศรชี้ไปทางขวาหา D
 */
 
-.arrow-d{
+        .arrow-d {
 
-    right:87px;
-    top:50%;
+            right: 87px;
+            top: 50%;
 
-    transform:
-        translateY(-50%)
-        rotate(0deg);
+            transform:
+                translateY(-50%) rotate(0deg);
 
-}
+        }
 
 
-/*
+        /*
     C
     ลูกศรชี้ลงไปหา C
 */
 
-.arrow-c{
+        .arrow-c {
 
-    left:50%;
-    bottom:87px;
+            left: 50%;
+            bottom: 87px;
 
-    transform:
-        translateX(-50%)
-        rotate(90deg);
+            transform:
+                translateX(-50%) rotate(90deg);
 
-}
+        }
 
 
-/*
+        /*
     A
     ลูกศรชี้ไปทางซ้ายหา A
 */
 
-.arrow-a{
+        .arrow-a {
 
-    left:87px;
-    top:50%;
+            left: 87px;
+            top: 50%;
 
-    transform:
-        translateY(-50%)
-        rotate(180deg);
+            transform:
+                translateY(-50%) rotate(180deg);
 
-}
+        }
 
 
-/* =========================================================
+        /* =========================================================
    CENTER
 ========================================================= */
 
-.center{
+        .center {
 
-    position:absolute;
+            position: absolute;
 
-    left:50%;
-    top:50%;
+            left: 50%;
+            top: 50%;
 
-    width:215px;
-    height:215px;
+            width: 215px;
+            height: 215px;
 
-    transform:
-        translate(-50%,-50%);
+            transform:
+                translate(-50%, -50%);
 
-    border-radius:50%;
+            border-radius: 50%;
 
-    background:
-        radial-gradient(
-            circle at 35% 30%,
-            #ffffff 0%,
-            #f5faff 45%,
-            #e9f3fc 100%
-        );
+            background:
+                radial-gradient(circle at 35% 30%,
+                    #ffffff 0%,
+                    #f5faff 45%,
+                    #e9f3fc 100%);
 
-    border:5px solid #dcecf8;
+            border: 5px solid #dcecf8;
 
-    box-shadow:
-        0 15px 45px rgba(65,117,158,.18),
-        inset 0 0 25px rgba(119,176,215,.12);
+            box-shadow:
+                0 15px 45px rgba(65, 117, 158, .18),
+                inset 0 0 25px rgba(119, 176, 215, .12);
 
-    display:flex;
+            display: flex;
 
-    align-items:center;
-    justify-content:center;
+            align-items: center;
+            justify-content: center;
 
-    text-align:center;
+            text-align: center;
 
-    z-index:10;
+            z-index: 10;
 
-    transition:
-        box-shadow .5s ease,
-        transform .5s ease;
-}
+            transition:
+                box-shadow .5s ease,
+                transform .5s ease;
+        }
 
 
-.center::before{
+        .center::before {
 
-    content:"";
+            content: "";
 
-    position:absolute;
+            position: absolute;
 
-    inset:-12px;
+            inset: -12px;
 
-    border-radius:50%;
+            border-radius: 50%;
 
-    border:
-        1px solid
-        rgba(92,158,210,.25);
+            border:
+                1px solid rgba(92, 158, 210, .25);
 
-}
-
-
-.center-content{
-
-    position:relative;
-
-    z-index:2;
-
-}
+        }
 
 
-.center h2{
+        .center-content {
 
-    margin:0;
+            position: relative;
 
-    font-size:28px;
+            z-index: 2;
 
-    color:#315c85;
-}
-
-
-.center p{
-
-    margin:4px 15px 0;
-
-    font-size:19px;
-
-    line-height:1.15;
-
-    color:#70849a;
-}
+        }
 
 
-/* =========================================================
+        .center h2 {
+
+            margin: 0;
+
+            font-size: 28px;
+
+            color: #315c85;
+        }
+
+
+        .center p {
+
+            margin: 4px 15px 0;
+
+            font-size: 19px;
+
+            line-height: 1.15;
+
+            color: #70849a;
+        }
+
+
+        /* =========================================================
    STEP
 ========================================================= */
 
-.step{
+        .step {
 
-    position:absolute;
+            position: absolute;
 
-    width:128px;
-    height:128px;
+            width: 128px;
+            height: 128px;
 
-    border-radius:50%;
+            border-radius: 50%;
 
-    display:flex;
+            display: flex;
 
-    align-items:center;
-    justify-content:center;
+            align-items: center;
+            justify-content: center;
 
-    flex-direction:column;
+            flex-direction: column;
 
-    cursor:pointer;
+            cursor: pointer;
 
-    user-select:none;
+            user-select: none;
 
-    transition:
-        transform .5s cubic-bezier(.2,.8,.2,1),
-        box-shadow .5s ease,
-        filter .5s ease;
+            transition:
+                transform .5s cubic-bezier(.2, .8, .2, 1),
+                box-shadow .5s ease,
+                filter .5s ease;
 
-    z-index:20;
-}
-
-
-.step strong{
-
-    font-family:Arial,sans-serif;
-
-    font-size:38px;
-
-    line-height:1;
-}
+            z-index: 20;
+        }
 
 
-.step span{
+        .step strong {
 
-    font-size:20px;
+            font-family: Arial, sans-serif;
 
-    margin-top:7px;
+            font-size: 38px;
 
-    font-weight:600;
-}
-
-
-.step:hover{
-
-    filter:brightness(1.03);
-
-}
+            line-height: 1;
+        }
 
 
-.step.active{
+        .step span {
 
-    transform:scale(1.16);
+            font-size: 20px;
 
-    z-index:30;
-}
+            margin-top: 7px;
 
-
-.step.active::after{
-
-    content:"";
-
-    position:absolute;
-
-    inset:-13px;
-
-    border-radius:50%;
-
-    border:
-        3px solid currentColor;
-
-    opacity:.35;
-
-    animation:pulse 1.7s ease-in-out infinite;
-}
+            font-weight: 600;
+        }
 
 
-@keyframes pulse{
+        .step:hover {
 
-    0%,100%{
-        transform:scale(.95);
-        opacity:.2;
-    }
+            filter: brightness(1.03);
 
-    50%{
-        transform:scale(1.05);
-        opacity:.55;
-    }
-
-}
+        }
 
 
-/* =========================================================
+        .step.active {
+
+            transform: scale(1.16);
+
+            z-index: 30;
+        }
+
+
+        .step.active::after {
+
+            content: "";
+
+            position: absolute;
+
+            inset: -13px;
+
+            border-radius: 50%;
+
+            border:
+                3px solid currentColor;
+
+            opacity: .35;
+
+            animation: pulse 1.7s ease-in-out infinite;
+        }
+
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(.95);
+                opacity: .2;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: .55;
+            }
+
+        }
+
+
+        /* =========================================================
    P
 ========================================================= */
 
-.step-p{
+        .step-p {
 
-    left:50%;
-    top:30px;
+            left: 50%;
+            top: 30px;
 
-    transform:
-        translateX(-50%);
+            transform:
+                translateX(-50%);
 
-    background:
-        linear-gradient(
-            145deg,
-            #e8f5ff,
-            #cce8fa
-        );
+            background:
+                linear-gradient(145deg,
+                    #e8f5ff,
+                    #cce8fa);
 
-    color:#3e8bc1;
+            color: #3e8bc1;
 
-    box-shadow:
-        0 10px 28px
-        rgba(65,145,200,.25);
-}
+            box-shadow:
+                0 10px 28px rgba(65, 145, 200, .25);
+        }
 
 
-/* =========================================================
+        /* =========================================================
    D
 ========================================================= */
 
-.step-d{
+        .step-d {
 
-    right:25px;
-    top:50%;
+            right: 25px;
+            top: 50%;
 
-    transform:
-        translateY(-50%);
+            transform:
+                translateY(-50%);
 
-    background:
-        linear-gradient(
-            145deg,
-            #f2ebff,
-            #ded0fa
-        );
+            background:
+                linear-gradient(145deg,
+                    #f2ebff,
+                    #ded0fa);
 
-    color:#8668b7;
+            color: #8668b7;
 
-    box-shadow:
-        0 10px 28px
-        rgba(137,105,191,.22);
-}
+            box-shadow:
+                0 10px 28px rgba(137, 105, 191, .22);
+        }
 
 
-/* =========================================================
+        /* =========================================================
    C
 ========================================================= */
 
-.step-c{
+        .step-c {
 
-    left:50%;
-    bottom:30px;
+            left: 50%;
+            bottom: 30px;
 
-    transform:
-        translateX(-50%);
+            transform:
+                translateX(-50%);
 
-    background:
-        linear-gradient(
-            145deg,
-            #e8faf5,
-            #cdeee4
-        );
+            background:
+                linear-gradient(145deg,
+                    #e8faf5,
+                    #cdeee4);
 
-    color:#419a82;
+            color: #419a82;
 
-    box-shadow:
-        0 10px 28px
-        rgba(71,161,135,.22);
-}
+            box-shadow:
+                0 10px 28px rgba(71, 161, 135, .22);
+        }
 
 
-/* =========================================================
+        /* =========================================================
    A
 ========================================================= */
 
-.step-a{
+        .step-a {
 
-    left:25px;
-    top:50%;
+            left: 25px;
+            top: 50%;
 
-    transform:
-        translateY(-50%);
+            transform:
+                translateY(-50%);
 
-    background:
-        linear-gradient(
-            145deg,
-            #fff0f5,
-            #f8dbe6
-        );
+            background:
+                linear-gradient(145deg,
+                    #fff0f5,
+                    #f8dbe6);
 
-    color:#c56e8d;
+            color: #c56e8d;
 
-    box-shadow:
-        0 10px 28px
-        rgba(201,111,143,.22);
-}
+            box-shadow:
+                0 10px 28px rgba(201, 111, 143, .22);
+        }
 
 
-/* =========================================================
+        /* =========================================================
    CENTER ACTIVE GLOW
 ========================================================= */
 
-.model.active-p .center{
+        .model.active-p .center {
 
-    box-shadow:
-        0 0 0 10px
-        rgba(74,157,214,.08),
+            box-shadow:
+                0 0 0 10px rgba(74, 157, 214, .08),
 
-        0 0 45px
-        rgba(74,157,214,.32),
+                0 0 45px rgba(74, 157, 214, .32),
 
-        0 15px 45px
-        rgba(65,117,158,.18);
-}
+                0 15px 45px rgba(65, 117, 158, .18);
+        }
 
 
-.model.active-d .center{
+        .model.active-d .center {
 
-    box-shadow:
-        0 0 0 10px
-        rgba(137,105,191,.08),
+            box-shadow:
+                0 0 0 10px rgba(137, 105, 191, .08),
 
-        0 0 45px
-        rgba(137,105,191,.32),
+                0 0 45px rgba(137, 105, 191, .32),
 
-        0 15px 45px
-        rgba(65,117,158,.18);
-}
+                0 15px 45px rgba(65, 117, 158, .18);
+        }
 
 
-.model.active-c .center{
+        .model.active-c .center {
 
-    box-shadow:
-        0 0 0 10px
-        rgba(71,161,135,.08),
+            box-shadow:
+                0 0 0 10px rgba(71, 161, 135, .08),
 
-        0 0 45px
-        rgba(71,161,135,.32),
+                0 0 45px rgba(71, 161, 135, .32),
 
-        0 15px 45px
-        rgba(65,117,158,.18);
-}
+                0 15px 45px rgba(65, 117, 158, .18);
+        }
 
 
-.model.active-a .center{
+        .model.active-a .center {
 
-    box-shadow:
-        0 0 0 10px
-        rgba(201,111,143,.08),
+            box-shadow:
+                0 0 0 10px rgba(201, 111, 143, .08),
 
-        0 0 45px
-        rgba(201,111,143,.32),
+                0 0 45px rgba(201, 111, 143, .32),
 
-        0 15px 45px
-        rgba(65,117,158,.18);
-}
+                0 15px 45px rgba(65, 117, 158, .18);
+        }
 
 
-/* =========================================================
+        /* =========================================================
    RIGHT PANEL
 ========================================================= */
 
-.side-panel{
+        .side-panel {
 
-    width:100%;
+            width: 100%;
 
-    display:flex;
+            display: flex;
 
-    flex-direction:column;
+            flex-direction: column;
 
-    align-items:center;
-}
-
-
-.side-title{
-
-    width:100%;
-
-    text-align:center;
-
-    margin-bottom:15px;
-}
+            align-items: center;
+        }
 
 
-.side-title h3{
+        .side-title {
 
-    margin:0;
+            width: 100%;
 
-    font-size:27px;
+            text-align: center;
 
-    color:#315c85;
-}
-
-
-.side-title p{
-
-    margin:0;
-
-    font-size:18px;
-
-    color:#8292a3;
-}
+            margin-bottom: 15px;
+        }
 
 
-/* =========================================================
+        .side-title h3 {
+
+            margin: 0;
+
+            font-size: 27px;
+
+            color: #315c85;
+        }
+
+
+        .side-title p {
+
+            margin: 0;
+
+            font-size: 18px;
+
+            color: #8292a3;
+        }
+
+
+        /* =========================================================
    SLIDER FRAME
 ========================================================= */
 
-.slider-wrapper{
+        .slider-wrapper {
 
-    position:relative;
+            position: relative;
 
-    width:100%;
+            width: 100%;
 
-    height:385px;
+            height: 385px;
 
-    border-radius:28px;
+            border-radius: 28px;
 
-    background:
-        linear-gradient(
-            180deg,
-            rgba(248,252,255,.96),
-            rgba(240,247,252,.96)
-        );
+            background:
+                linear-gradient(180deg,
+                    rgba(248, 252, 255, .96),
+                    rgba(240, 247, 252, .96));
 
-    border:
-        1px solid #dceaf4;
+            border:
+                1px solid #dceaf4;
 
-    box-shadow:
-        0 15px 40px
-        rgba(58,104,141,.12),
+            box-shadow:
+                0 15px 40px rgba(58, 104, 141, .12),
 
-        inset 0 0 25px
-        rgba(120,170,205,.06);
+                inset 0 0 25px rgba(120, 170, 205, .06);
 
-    overflow:hidden;
-}
+            overflow: hidden;
+        }
 
 
-/* =========================================================
+        /* =========================================================
    CENTER FOCUS
 ========================================================= */
 
-.center-focus{
+        .center-focus {
 
-    position:absolute;
+            position: absolute;
 
-    left:12px;
-    right:12px;
+            left: 12px;
+            right: 12px;
 
-    top:50%;
+            top: 50%;
 
-    height:92px;
+            height: 92px;
 
-    transform:
-        translateY(-50%);
+            transform:
+                translateY(-50%);
 
-    border-radius:22px;
+            border-radius: 22px;
 
-    border:
-        2px solid
-        rgba(91,157,207,.55);
+            border:
+                2px solid rgba(91, 157, 207, .55);
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(224,242,253,.65),
-            rgba(255,255,255,.85),
-            rgba(224,242,253,.65)
-        );
+            background:
+                linear-gradient(90deg,
+                    rgba(224, 242, 253, .65),
+                    rgba(255, 255, 255, .85),
+                    rgba(224, 242, 253, .65));
 
-    box-shadow:
-        0 0 0 5px
-        rgba(103,170,215,.06),
+            box-shadow:
+                0 0 0 5px rgba(103, 170, 215, .06),
 
-        0 0 25px
-        rgba(103,170,215,.13);
+                0 0 25px rgba(103, 170, 215, .13);
 
-    z-index:5;
+            z-index: 5;
 
-    pointer-events:none;
-}
+            pointer-events: none;
+        }
 
 
-.center-focus::before,
-.center-focus::after{
+        .center-focus::before,
+        .center-focus::after {
 
-    content:"";
+            content: "";
 
-    position:absolute;
+            position: absolute;
 
-    width:7px;
-    height:7px;
+            width: 7px;
+            height: 7px;
 
-    border-radius:50%;
+            border-radius: 50%;
 
-    top:50%;
+            top: 50%;
 
-    transform:
-        translateY(-50%);
+            transform:
+                translateY(-50%);
 
-    background:#70add4;
+            background: #70add4;
 
-    box-shadow:
-        0 0 12px
-        rgba(80,150,205,.65);
-}
-
-
-.center-focus::before{
-    left:-4px;
-}
+            box-shadow:
+                0 0 12px rgba(80, 150, 205, .65);
+        }
 
 
-.center-focus::after{
-    right:-4px;
-}
+        .center-focus::before {
+            left: -4px;
+        }
 
 
-/* =========================================================
+        .center-focus::after {
+            right: -4px;
+        }
+
+
+        /* =========================================================
    SCROLL AREA
 ========================================================= */
 
-.side-scroll{
+        .side-scroll {
 
-    position:absolute;
+            position: absolute;
 
-    inset:0;
+            inset: 0;
 
-    overflow:hidden;
+            overflow: hidden;
 
-    touch-action:none;
+            touch-action: none;
 
-    cursor:grab;
+            cursor: grab;
 
-    z-index:10;
-}
-
-
-.side-scroll.dragging{
-
-    cursor:grabbing;
-}
+            z-index: 10;
+        }
 
 
-/* =========================================================
+        .side-scroll.dragging {
+
+            cursor: grabbing;
+        }
+
+
+        /* =========================================================
    TRACK
 ========================================================= */
 
-.side-track{
+        .side-track {
 
-    position:absolute;
+            position: absolute;
 
-    width:100%;
+            width: 100%;
 
-    left:0;
-    top:0;
+            left: 0;
+            top: 0;
 
-    display:flex;
+            display: flex;
 
-    flex-direction:column;
+            flex-direction: column;
 
-    align-items:center;
+            align-items: center;
 
-    gap:10px;
+            gap: 10px;
 
-    padding-top:0;
-    padding-bottom:0;
+            padding-top: 0;
+            padding-bottom: 0;
 
-    will-change:transform;
-}
+            will-change: transform;
+        }
 
 
-/* =========================================================
+        /* =========================================================
    ITEM
 ========================================================= */
 
-.side-item{
+        .side-item {
 
-    position:relative;
+            position: relative;
 
-    width:calc(100% - 40px);
+            width: calc(100% - 40px);
 
-    height:80px;
-    min-height:80px;
+            height: 80px;
+            min-height: 80px;
 
-    flex:none;
+            flex: none;
 
-    border-radius:20px;
+            border-radius: 20px;
 
-    display:flex;
+            display: flex;
 
-    align-items:center;
+            align-items: center;
 
-    padding:10px 18px;
+            padding: 10px 18px;
 
-    cursor:pointer;
+            cursor: pointer;
 
-    user-select:none;
+            user-select: none;
 
-    opacity:.42;
+            opacity: .42;
 
-    transform:scale(.86);
+            transform: scale(.86);
 
-    transition:
-        opacity .28s ease,
-        transform .35s cubic-bezier(.2,.8,.2,1),
-        box-shadow .35s ease,
-        background .35s ease;
+            transition:
+                opacity .28s ease,
+                transform .35s cubic-bezier(.2, .8, .2, 1),
+                box-shadow .35s ease,
+                background .35s ease;
 
-    border:
-        1px solid
-        rgba(130,165,190,.14);
+            border:
+                1px solid rgba(130, 165, 190, .14);
 
-    background:
-        rgba(255,255,255,.58);
-}
-
-
-.side-item .letter{
-
-    width:52px;
-    height:52px;
-
-    border-radius:50%;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    flex:none;
-
-    font-family:Arial,sans-serif;
-
-    font-size:27px;
-
-    font-weight:bold;
-}
+            background:
+                rgba(255, 255, 255, .58);
+        }
 
 
-.side-item .item-text{
+        .side-item .letter {
 
-    margin-left:14px;
+            width: 52px;
+            height: 52px;
 
-    font-size:22px;
+            border-radius: 50%;
 
-    font-weight:600;
+            display: flex;
 
-    color:#526b83;
+            align-items: center;
+            justify-content: center;
 
-    white-space:nowrap;
-}
+            flex: none;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 27px;
+
+            font-weight: bold;
+        }
 
 
-/* =========================================================
+        .side-item .item-text {
+
+            margin-left: 14px;
+
+            font-size: 22px;
+
+            font-weight: 600;
+
+            color: #526b83;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================================
    COLORS
 ========================================================= */
 
-.side-item[data-step="P"] .letter{
+        .side-item[data-step="P"] .letter {
 
-    background:#d9effc;
-    color:#3986ba;
-}
-
-
-.side-item[data-step="D"] .letter{
-
-    background:#e8defb;
-    color:#8264b4;
-}
+            background: #d9effc;
+            color: #3986ba;
+        }
 
 
-.side-item[data-step="C"] .letter{
+        .side-item[data-step="D"] .letter {
 
-    background:#d9f1e9;
-    color:#3e947d;
-}
-
-
-.side-item[data-step="A"] .letter{
-
-    background:#f8dfe8;
-    color:#c36c8a;
-}
+            background: #e8defb;
+            color: #8264b4;
+        }
 
 
-/* =========================================================
+        .side-item[data-step="C"] .letter {
+
+            background: #d9f1e9;
+            color: #3e947d;
+        }
+
+
+        .side-item[data-step="A"] .letter {
+
+            background: #f8dfe8;
+            color: #c36c8a;
+        }
+
+
+        /* =========================================================
    CENTERED
 ========================================================= */
 
-.side-item.centered{
+        .side-item.centered {
 
-    opacity:1;
+            opacity: 1;
 
-    transform:scale(1.05);
+            transform: scale(1.05);
 
-    background:
-        rgba(255,255,255,.98);
+            background:
+                rgba(255, 255, 255, .98);
 
-    box-shadow:
-        0 8px 25px
-        rgba(73,124,159,.16),
+            box-shadow:
+                0 8px 25px rgba(73, 124, 159, .16),
 
-        0 0 0 1px
-        rgba(92,159,207,.12);
-}
+                0 0 0 1px rgba(92, 159, 207, .12);
+        }
 
 
-.side-item.centered .item-text{
+        .side-item.centered .item-text {
 
-    color:#315c85;
-}
-
-
-.side-item.centered .letter{
-
-    box-shadow:
-        0 0 18px
-        rgba(99,159,202,.22);
-}
+            color: #315c85;
+        }
 
 
-/* =========================================================
+        .side-item.centered .letter {
+
+            box-shadow:
+                0 0 18px rgba(99, 159, 202, .22);
+        }
+
+
+        /* =========================================================
    DESCRIPTION
 ========================================================= */
 
-.auto-description{
+        .auto-description {
 
-    width:100%;
+            width: 100%;
 
-    min-height:145px;
+            min-height: 145px;
 
-    margin-top:17px;
+            margin-top: 17px;
 
-    padding:17px 20px;
+            padding: 17px 20px;
 
-    border-radius:22px;
+            border-radius: 22px;
 
-    background:#f8fbfd;
+            background: #f8fbfd;
 
-    border:
-        1px solid #e2edf4;
+            border:
+                1px solid #e2edf4;
 
-    box-shadow:
-        0 10px 25px
-        rgba(75,119,148,.08);
+            box-shadow:
+                0 10px 25px rgba(75, 119, 148, .08);
 
-    text-align:left;
+            text-align: left;
 
-    opacity:1;
+            opacity: 1;
 
-    transform:
-        translateY(0)
-        scale(1);
+            transform:
+                translateY(0) scale(1);
 
-    transition:
-        opacity .3s ease,
-        transform .3s ease;
-}
+            transition:
+                opacity .3s ease,
+                transform .3s ease;
+        }
 
 
-.auto-description.switching{
+        .auto-description.switching {
 
-    opacity:0;
+            opacity: 0;
 
-    transform:
-        translateY(10px)
-        scale(.97);
-}
-
-
-.auto-description .desc-title{
-
-    font-size:24px;
-
-    font-weight:bold;
-
-    color:#315c85;
-
-    margin-bottom:3px;
-}
+            transform:
+                translateY(10px) scale(.97);
+        }
 
 
-.auto-description .desc-text{
+        .auto-description .desc-title {
 
-    font-size:19px;
+            font-size: 24px;
 
-    line-height:1.25;
+            font-weight: bold;
 
-    color:#63788d;
-}
+            color: #315c85;
+
+            margin-bottom: 3px;
+        }
 
 
-/* =========================================================
+        .auto-description .desc-text {
+
+            font-size: 19px;
+
+            line-height: 1.25;
+
+            color: #63788d;
+        }
+
+
+        /* =========================================================
    PROGRESS
 ========================================================= */
 
-.progress{
+        .progress {
 
-    display:flex;
+            display: flex;
 
-    gap:7px;
+            gap: 7px;
 
-    margin-top:13px;
-}
-
-
-.progress span{
-
-    width:35px;
-    height:5px;
-
-    border-radius:10px;
-
-    background:#dbe7ef;
-
-    transition:
-        width .35s ease,
-        background .35s ease;
-}
+            margin-top: 13px;
+        }
 
 
-.progress span.active{
+        .progress span {
 
-    width:52px;
+            width: 35px;
+            height: 5px;
 
-    background:#78add0;
-}
+            border-radius: 10px;
+
+            background: #dbe7ef;
+
+            transition:
+                width .35s ease,
+                background .35s ease;
+        }
 
 
-/* =========================================================
+        .progress span.active {
+
+            width: 52px;
+
+            background: #78add0;
+        }
+
+
+        /* =========================================================
    MODAL
 ========================================================= */
 
-.modal{
+        .modal {
 
-    position:fixed;
+            position: fixed;
 
-    inset:0;
+            inset: 0;
 
-    background:
-        rgba(29,56,77,.25);
+            background:
+                rgba(29, 56, 77, .25);
 
-    backdrop-filter:blur(7px);
+            backdrop-filter: blur(7px);
 
-    display:flex;
+            display: flex;
 
-    align-items:center;
-    justify-content:center;
+            align-items: center;
+            justify-content: center;
 
-    padding:20px;
+            padding: 20px;
 
-    opacity:0;
+            opacity: 0;
 
-    visibility:hidden;
+            visibility: hidden;
 
-    transition:.35s ease;
+            transition: .35s ease;
 
-    z-index:1000;
-}
+            z-index: 1000;
+        }
 
 
-.modal.show{
+        .modal.show {
 
-    opacity:1;
+            opacity: 1;
 
-    visibility:visible;
-}
+            visibility: visible;
+        }
 
 
-.modal-box{
+        .modal-box {
 
-    width:min(720px,100%);
+            width: min(720px, 100%);
 
-    max-height:85vh;
+            max-height: 85vh;
 
-    overflow:auto;
+            overflow: auto;
 
-    border-radius:30px;
+            border-radius: 30px;
 
-    background:#fff;
+            background: #fff;
 
-    box-shadow:
-        0 30px 80px
-        rgba(35,72,100,.25);
+            box-shadow:
+                0 30px 80px rgba(35, 72, 100, .25);
 
-    padding:35px;
+            padding: 35px;
 
-    transform:
-        scale(.9)
-        translateY(20px);
+            transform:
+                scale(.9) translateY(20px);
 
-    transition:
-        .4s cubic-bezier(.2,.8,.2,1);
-}
+            transition:
+                .4s cubic-bezier(.2, .8, .2, 1);
+        }
 
 
-.modal.show .modal-box{
+        .modal.show .modal-box {
 
-    transform:
-        scale(1)
-        translateY(0);
-}
+            transform:
+                scale(1) translateY(0);
+        }
 
 
-.modal-head{
+        .modal-head {
 
-    display:flex;
+            display: flex;
 
-    align-items:center;
+            align-items: center;
 
-    gap:15px;
+            gap: 15px;
 
-    margin-bottom:20px;
-}
+            margin-bottom: 20px;
+        }
 
 
-.modal-letter{
+        .modal-letter {
 
-    width:60px;
-    height:60px;
+            width: 60px;
+            height: 60px;
 
-    border-radius:50%;
+            border-radius: 50%;
 
-    display:flex;
+            display: flex;
 
-    align-items:center;
-    justify-content:center;
+            align-items: center;
+            justify-content: center;
 
-    font-family:Arial,sans-serif;
+            font-family: Arial, sans-serif;
 
-    font-size:30px;
+            font-size: 30px;
 
-    font-weight:bold;
+            font-weight: bold;
 
-    background:#e5f3fb;
+            background: #e5f3fb;
 
-    color:#3986ba;
-}
+            color: #3986ba;
+        }
 
 
-.modal h2{
+        .modal h2 {
 
-    margin:0;
+            margin: 0;
 
-    font-size:32px;
+            font-size: 32px;
 
-    color:#315c85;
-}
+            color: #315c85;
+        }
 
 
-.modal-content{
+        .modal-content {
 
-    font-size:21px;
+            font-size: 21px;
 
-    line-height:1.45;
+            line-height: 1.45;
 
-    color:#536b80;
-}
+            color: #536b80;
+        }
 
 
-.modal-content ul{
+        .modal-content ul {
 
-    margin-top:7px;
-}
+            margin-top: 7px;
+        }
 
 
-.close{
+        .close {
 
-    margin-top:25px;
+            margin-top: 25px;
 
-    border:none;
+            border: none;
 
-    border-radius:15px;
+            border-radius: 15px;
 
-    padding:9px 28px;
+            padding: 9px 28px;
 
-    background:#e2eef6;
+            background: #e2eef6;
 
-    color:#315c85;
+            color: #315c85;
 
-    font-family:inherit;
+            font-family: inherit;
 
-    font-size:20px;
+            font-size: 20px;
 
-    cursor:pointer;
-}
+            cursor: pointer;
+        }
 
 
-/* =========================================================
+        /* =========================================================
    RESPONSIVE
 ========================================================= */
 
-@media(max-width:1050px){
+        @media(max-width:1050px) {
 
-    .content{
+            .content {
 
-        grid-template-columns:1fr;
+                grid-template-columns: 1fr;
 
-        gap:25px;
-    }
+                gap: 25px;
+            }
 
 
-    .model-area{
+            .model-area {
 
-        min-height:650px;
-    }
+                min-height: 650px;
+            }
 
 
-    .side-panel{
+            .side-panel {
 
-        max-width:430px;
+                max-width: 430px;
 
-        margin:auto;
-    }
+                margin: auto;
+            }
 
-}
+        }
 
 
-@media(max-width:700px){
+        @media(max-width:700px) {
 
-    .wrapper{
+            .wrapper {
 
-        padding:20px 12px 30px;
-    }
+                padding: 20px 12px 30px;
+            }
 
 
-    .main-title h1{
+            .main-title h1 {
 
-        font-size:31px;
-    }
+                font-size: 31px;
+            }
 
 
-    .main-title p{
+            .main-title p {
 
-        font-size:19px;
-    }
+                font-size: 19px;
+            }
 
 
-    .model-area{
+            .model-area {
 
-        min-height:480px;
-    }
+                min-height: 480px;
+            }
 
 
-    .model{
+            .model {
 
-        width:420px;
-        height:420px;
+                width: 420px;
+                height: 420px;
 
-        transform:scale(.88);
-    }
+                transform: scale(.88);
+            }
 
 
-    .center{
+            .center {
 
-        width:155px;
-        height:155px;
-    }
+                width: 155px;
+                height: 155px;
+            }
 
 
-    .center h2{
+            .center h2 {
 
-        font-size:23px;
-    }
+                font-size: 23px;
+            }
 
 
-    .center p{
+            .center p {
 
-        font-size:16px;
-    }
+                font-size: 16px;
+            }
 
 
-    .step{
+            .step {
 
-        width:100px;
-        height:100px;
-    }
+                width: 100px;
+                height: 100px;
+            }
 
 
-    .step strong{
+            .step strong {
 
-        font-size:30px;
-    }
+                font-size: 30px;
+            }
 
 
-    .step span{
+            .step span {
 
-        font-size:17px;
-    }
+                font-size: 17px;
+            }
 
 
-    .step-p{
+            .step-p {
 
-        top:20px;
-    }
+                top: 20px;
+            }
 
 
-    .step-d{
+            .step-d {
 
-        right:10px;
-    }
+                right: 10px;
+            }
 
 
-    .step-c{
+            .step-c {
 
-        bottom:20px;
-    }
+                bottom: 20px;
+            }
 
 
-    .step-a{
+            .step-a {
 
-        left:10px;
-    }
+                left: 10px;
+            }
 
 
-    .ring-1{
+            .ring-1 {
 
-        width:400px;
-        height:400px;
-    }
+                width: 400px;
+                height: 400px;
+            }
 
 
-    .ring-2{
+            .ring-2 {
 
-        width:340px;
-        height:340px;
-    }
+                width: 340px;
+                height: 340px;
+            }
 
 
-    .ring-3{
+            .ring-3 {
 
-        width:280px;
-        height:280px;
-    }
+                width: 280px;
+                height: 280px;
+            }
 
 
-    .arrow{
+            .arrow {
 
-        width:62px;
-    }
+                width: 62px;
+            }
 
 
-    .arrow-p{
+            .arrow-p {
 
-        top:64px;
-    }
+                top: 64px;
+            }
 
 
-    .arrow-d{
+            .arrow-d {
 
-        right:64px;
-    }
+                right: 64px;
+            }
 
 
-    .arrow-c{
+            .arrow-c {
 
-        bottom:64px;
-    }
+                bottom: 64px;
+            }
 
 
-    .arrow-a{
+            .arrow-a {
 
-        left:64px;
-    }
+                left: 64px;
+            }
 
 
-    .slider-wrapper{
+            .slider-wrapper {
 
-        height:350px;
-    }
+                height: 350px;
+            }
 
 
-    .side-item{
+            .side-item {
 
-        width:calc(100% - 28px);
-    }
+                width: calc(100% - 28px);
+            }
 
 
-    .side-item .item-text{
+            .side-item .item-text {
 
-        font-size:20px;
-    }
+                font-size: 20px;
+            }
 
 
-    .auto-description{
+            .auto-description {
 
-        min-height:135px;
-    }
+                min-height: 135px;
+            }
 
-}
+        }
 
 
-@media(max-width:450px){
+        @media(max-width:450px) {
 
-    .model-area{
+            .model-area {
 
-        min-height:390px;
-    }
+                min-height: 390px;
+            }
 
 
-    .model{
+            .model {
 
-        transform:scale(.68);
-    }
+                transform: scale(.68);
+            }
 
 
-    .side-title h3{
+            .side-title h3 {
 
-        font-size:24px;
-    }
+                font-size: 24px;
+            }
 
 
-    .slider-wrapper{
+            .slider-wrapper {
 
-        height:330px;
-    }
+                height: 330px;
+            }
 
 
-    .side-item{
+            .side-item {
 
-        height:74px;
-        min-height:74px;
-    }
+                height: 74px;
+                min-height: 74px;
+            }
 
 
-    .side-item .letter{
+            .side-item .letter {
 
-        width:46px;
-        height:46px;
+                width: 46px;
+                height: 46px;
 
-        font-size:24px;
-    }
+                font-size: 24px;
+            }
 
 
-    .side-item .item-text{
+            .side-item .item-text {
 
-        font-size:18px;
-    }
+                font-size: 18px;
+            }
 
 
-    .auto-description .desc-title{
+            .auto-description .desc-title {
 
-        font-size:21px;
-    }
+                font-size: 21px;
+            }
 
 
-    .auto-description .desc-text{
+            .auto-description .desc-text {
 
-        font-size:17px;
-    }
+                font-size: 17px;
+            }
 
-}
-
-</style>
+        }
+    </style>
 </head>
 
 
 <body>
 
-<div class="wrapper">
+    <div class="wrapper">
 
 
-    <!-- =====================================================
+        <!-- =====================================================
          TITLE
     ====================================================== -->
 
-    <div class="main-title">
+        <div class="main-title">
 
-        <h1>
-            กระบวนการพัฒนาหลักสูตรด้านความหลากหลาย
-        </h1>
+            <h1>
+                กระบวนการพัฒนาหลักสูตรให้มีความหลากหลาย
+            </h1>
 
-        <p>
-            มุ่งเน้นความหลากหลาย ตอบสนองทุกศักยภาพและความต้องการของผู้เรียน
-        </p>
+            <p>
+                มุ่งเน้นความหลากหลาย ตอบสนองทุกศักยภาพและความต้องการของผู้เรียน
+            </p>
 
-    </div>
-
-
-    <div class="content">
+        </div>
 
 
-        <!-- =================================================
+        <div class="content">
+
+
+            <!-- =================================================
              MODEL
         ================================================== -->
 
-        <section class="model-area">
+            <section class="model-area">
 
-            <div
-                class="model"
-                id="model"
-            >
+                <div class="model" id="model">
 
 
-                <!-- วงแหวนหมุน -->
+                    <!-- วงแหวนหมุน -->
 
-                <div class="ring ring-1"></div>
+                    <div class="ring ring-1"></div>
 
-                <div class="ring ring-2"></div>
+                    <div class="ring ring-2"></div>
 
-                <div class="ring ring-3"></div>
+                    <div class="ring ring-3"></div>
 
 
-                <!-- จุดโคจร -->
+                    <!-- จุดโคจร -->
 
-                <div class="orbit">
+                    <div class="orbit">
 
-                    <div class="dot"></div>
+                        <div class="dot"></div>
 
-                    <div class="dot"></div>
+                        <div class="dot"></div>
 
-                    <div class="dot"></div>
+                        <div class="dot"></div>
 
-                    <div class="dot"></div>
+                        <div class="dot"></div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                     ลูกศร
+                     ชี้ออกไปยังแต่ละด้าน
+                ================================================== -->
+
+                    <div class="arrow-layer">
+
+                        <div class="arrow arrow-p"></div>
+
+                        <div class="arrow arrow-d"></div>
+
+                        <div class="arrow arrow-c"></div>
+
+                        <div class="arrow arrow-a"></div>
+
+                    </div>
+
+
+                    <!-- P -->
+
+                    <div class="step step-p" data-step="P" onclick="selectStep('P',true)">
+
+                        <strong>P</strong>
+
+                        <span>
+                            วางแผน
+                        </span>
+
+                    </div>
+
+
+                    <!-- D -->
+
+                    <div class="step step-d" data-step="D" onclick="selectStep('D',true)">
+
+                        <strong>D</strong>
+
+                        <span>
+                            จัดทำร่าง
+                        </span>
+
+                    </div>
+
+
+                    <!-- C -->
+
+                    <div class="step step-c" data-step="C" onclick="selectStep('C',true)">
+
+                        <strong>C</strong>
+
+                        <span>
+                            ตรวจสอบ
+                        </span>
+
+                    </div>
+
+
+                    <!-- A -->
+
+                    <div class="step step-a" data-step="A" onclick="selectStep('A',true)">
+
+                        <strong>A</strong>
+
+                        <span>
+                            อนุมัติ
+                        </span>
+
+                    </div>
+
+
+                    <!-- CENTER -->
+
+                    <div class="center">
+
+                        <div class="center-content">
+
+                            <h2>
+                                หลักสูตร
+                            </h2>
+
+                            <p>
+                                ความหลากหลาย<br>
+                                เพื่อผู้เรียนทุกศักยภาพ
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+             RIGHT PANEL
+        ================================================== -->
+
+            <aside class="side-panel">
+
+
+                <div class="side-title">
+
+                    <h3>
+                        กระบวนการดำเนินงาน
+                    </h3>
+
+                    <p>
+                        เลื่อนเพื่อสำรวจแต่ละขั้นตอน
+                    </p>
 
                 </div>
 
 
                 <!-- =================================================
-                     ลูกศร
-                     ชี้ออกไปยังแต่ละด้าน
-                ================================================== -->
-
-                <div class="arrow-layer">
-
-                    <div
-                        class="arrow arrow-p"
-                    ></div>
-
-                    <div
-                        class="arrow arrow-d"
-                    ></div>
-
-                    <div
-                        class="arrow arrow-c"
-                    ></div>
-
-                    <div
-                        class="arrow arrow-a"
-                    ></div>
-
-                </div>
-
-
-                <!-- P -->
-
-                <div
-                    class="step step-p"
-                    data-step="P"
-                    onclick="selectStep('P',true)"
-                >
-
-                    <strong>P</strong>
-
-                    <span>
-                        วางแผน
-                    </span>
-
-                </div>
-
-
-                <!-- D -->
-
-                <div
-                    class="step step-d"
-                    data-step="D"
-                    onclick="selectStep('D',true)"
-                >
-
-                    <strong>D</strong>
-
-                    <span>
-                        จัดทำร่าง
-                    </span>
-
-                </div>
-
-
-                <!-- C -->
-
-                <div
-                    class="step step-c"
-                    data-step="C"
-                    onclick="selectStep('C',true)"
-                >
-
-                    <strong>C</strong>
-
-                    <span>
-                        ตรวจสอบ
-                    </span>
-
-                </div>
-
-
-                <!-- A -->
-
-                <div
-                    class="step step-a"
-                    data-step="A"
-                    onclick="selectStep('A',true)"
-                >
-
-                    <strong>A</strong>
-
-                    <span>
-                        อนุมัติ
-                    </span>
-
-                </div>
-
-
-                <!-- CENTER -->
-
-                <div class="center">
-
-                    <div class="center-content">
-
-                        <h2>
-                            หลักสูตร
-                        </h2>
-
-                        <p>
-                            ความหลากหลาย<br>
-                            เพื่อผู้เรียนทุกศักยภาพ
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             RIGHT PANEL
-        ================================================== -->
-
-        <aside class="side-panel">
-
-
-            <div class="side-title">
-
-                <h3>
-                    กระบวนการดำเนินงาน
-                </h3>
-
-                <p>
-                    เลื่อนเพื่อสำรวจแต่ละขั้นตอน
-                </p>
-
-            </div>
-
-
-            <!-- =================================================
                  SLIDER
             ================================================== -->
 
-            <div class="slider-wrapper">
+                <div class="slider-wrapper">
 
-                <!-- กรอบเน้นตรงกลาง -->
+                    <!-- กรอบเน้นตรงกลาง -->
 
-                <div class="center-focus"></div>
-
-
-                <!-- พื้นที่เลื่อน -->
-
-                <div
-                    class="side-scroll"
-                    id="sideScroll"
-                >
-
-                    <div
-                        class="side-track"
-                        id="sideTrack"
-                    >
+                    <div class="center-focus"></div>
 
 
-                        <!-- รายการซ้ำเพื่อให้เลื่อนได้ต่อเนื่อง -->
+                    <!-- พื้นที่เลื่อน -->
+
+                    <div class="side-scroll" id="sideScroll">
+
+                        <div class="side-track" id="sideTrack">
 
 
-                        <div
-                            class="side-item"
-                            data-step="P"
-                        >
+                            <!-- รายการซ้ำเพื่อให้เลื่อนได้ต่อเนื่อง -->
 
-                            <div class="letter">
-                                P
+
+                            <div class="side-item" data-step="P">
+
+                                <div class="letter">
+                                    P
+                                </div>
+
+                                <div class="item-text">
+                                    วางแผนและออกแบบหลักสูตร
+                                </div>
+
                             </div>
 
-                            <div class="item-text">
-                                วางแผนและออกแบบหลักสูตร
+
+                            <div class="side-item" data-step="D">
+
+                                <div class="letter">
+                                    D
+                                </div>
+
+                                <div class="item-text">
+                                    จัดทำร่างหลักสูตร
+                                </div>
+
                             </div>
+
+
+                            <div class="side-item" data-step="C">
+
+                                <div class="letter">
+                                    C
+                                </div>
+
+                                <div class="item-text">
+                                    ตรวจสอบและประเมินคุณภาพ
+                                </div>
+
+                            </div>
+
+
+                            <div class="side-item" data-step="A">
+
+                                <div class="letter">
+                                    A
+                                </div>
+
+                                <div class="item-text">
+                                    อนุมัติและประกาศใช้
+                                </div>
+
+                            </div>
+
+
+                            <div class="side-item" data-step="P">
+
+                                <div class="letter">
+                                    P
+                                </div>
+
+                                <div class="item-text">
+                                    วางแผนและออกแบบหลักสูตร
+                                </div>
+
+                            </div>
+
+
+                            <div class="side-item" data-step="D">
+
+                                <div class="letter">
+                                    D
+                                </div>
+
+                                <div class="item-text">
+                                    จัดทำร่างหลักสูตร
+                                </div>
+
+                            </div>
+
+
+                            <div class="side-item" data-step="C">
+
+                                <div class="letter">
+                                    C
+                                </div>
+
+                                <div class="item-text">
+                                    ตรวจสอบและประเมินคุณภาพ
+                                </div>
+
+                            </div>
+
+
+                            <div class="side-item" data-step="A">
+
+                                <div class="letter">
+                                    A
+                                </div>
+
+                                <div class="item-text">
+                                    อนุมัติและประกาศใช้
+                                </div>
+
+                            </div>
+
+
+                            <div class="side-item" data-step="P">
+
+                                <div class="letter">
+                                    P
+                                </div>
+
+                                <div class="item-text">
+                                    วางแผนและออกแบบหลักสูตร
+                                </div>
+
+                            </div>
+
+
+                            <div class="side-item" data-step="D">
+
+                                <div class="letter">
+                                    D
+                                </div>
+
+                                <div class="item-text">
+                                    จัดทำร่างหลักสูตร
+                                </div>
+
+                            </div>
+
+
+                            <div class="side-item" data-step="C">
+
+                                <div class="letter">
+                                    C
+                                </div>
+
+                                <div class="item-text">
+                                    ตรวจสอบและประเมินคุณภาพ
+                                </div>
+
+                            </div>
+
+
+                            <div class="side-item" data-step="A">
+
+                                <div class="letter">
+                                    A
+                                </div>
+
+                                <div class="item-text">
+                                    อนุมัติและประกาศใช้
+                                </div>
+
+                            </div>
+
 
                         </div>
-
-
-                        <div
-                            class="side-item"
-                            data-step="D"
-                        >
-
-                            <div class="letter">
-                                D
-                            </div>
-
-                            <div class="item-text">
-                                จัดทำร่างหลักสูตร
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            class="side-item"
-                            data-step="C"
-                        >
-
-                            <div class="letter">
-                                C
-                            </div>
-
-                            <div class="item-text">
-                                ตรวจสอบและประเมินคุณภาพ
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            class="side-item"
-                            data-step="A"
-                        >
-
-                            <div class="letter">
-                                A
-                            </div>
-
-                            <div class="item-text">
-                                อนุมัติและประกาศใช้
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            class="side-item"
-                            data-step="P"
-                        >
-
-                            <div class="letter">
-                                P
-                            </div>
-
-                            <div class="item-text">
-                                วางแผนและออกแบบหลักสูตร
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            class="side-item"
-                            data-step="D"
-                        >
-
-                            <div class="letter">
-                                D
-                            </div>
-
-                            <div class="item-text">
-                                จัดทำร่างหลักสูตร
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            class="side-item"
-                            data-step="C"
-                        >
-
-                            <div class="letter">
-                                C
-                            </div>
-
-                            <div class="item-text">
-                                ตรวจสอบและประเมินคุณภาพ
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            class="side-item"
-                            data-step="A"
-                        >
-
-                            <div class="letter">
-                                A
-                            </div>
-
-                            <div class="item-text">
-                                อนุมัติและประกาศใช้
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            class="side-item"
-                            data-step="P"
-                        >
-
-                            <div class="letter">
-                                P
-                            </div>
-
-                            <div class="item-text">
-                                วางแผนและออกแบบหลักสูตร
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            class="side-item"
-                            data-step="D"
-                        >
-
-                            <div class="letter">
-                                D
-                            </div>
-
-                            <div class="item-text">
-                                จัดทำร่างหลักสูตร
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            class="side-item"
-                            data-step="C"
-                        >
-
-                            <div class="letter">
-                                C
-                            </div>
-
-                            <div class="item-text">
-                                ตรวจสอบและประเมินคุณภาพ
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            class="side-item"
-                            data-step="A"
-                        >
-
-                            <div class="letter">
-                                A
-                            </div>
-
-                            <div class="item-text">
-                                อนุมัติและประกาศใช้
-                            </div>
-
-                        </div>
-
 
                     </div>
 
                 </div>
 
-            </div>
 
-
-            <!-- =================================================
+                <!-- =================================================
                  DESCRIPTION
             ================================================== -->
 
-            <div
-                class="auto-description"
-                id="description"
-            >
+                <div class="auto-description" id="description">
 
-                <div
-                    class="desc-title"
-                    id="descTitle"
-                >
-                    P — วางแผนและออกแบบหลักสูตร
+                    <div class="desc-title" id="descTitle">
+                        P — วางแผนและออกแบบหลักสูตร
+                    </div>
+
+                    <div class="desc-text" id="descText">
+                        นำผลสำรวจความต้องการและ SWOT
+                        มากำหนดกรอบหลักสูตรความหลากหลาย
+                        แต่งตั้งคณะกรรมการ ประสานผู้เชี่ยวชาญ
+                        และสร้างความร่วมมือกับภาคีเครือข่าย
+                    </div>
+
                 </div>
 
-                <div
-                    class="desc-text"
-                    id="descText"
-                >
-                    นำผลสำรวจความต้องการและ SWOT
-                    มากำหนดกรอบหลักสูตรความหลากหลาย
-                    แต่งตั้งคณะกรรมการ ประสานผู้เชี่ยวชาญ
-                    และสร้างความร่วมมือกับภาคีเครือข่าย
-                </div>
 
-            </div>
-
-
-            <!-- =================================================
+                <!-- =================================================
                  PROGRESS
             ================================================== -->
 
-            <div class="progress">
+                <div class="progress">
 
-                <span data-progress="P"></span>
+                    <span data-progress="P"></span>
 
-                <span data-progress="D"></span>
+                    <span data-progress="D"></span>
 
-                <span data-progress="C"></span>
+                    <span data-progress="C"></span>
 
-                <span data-progress="A"></span>
+                    <span data-progress="A"></span>
 
-            </div>
-
-
-        </aside>
-
-    </div>
-
-</div>
+                </div>
 
 
-<!-- =========================================================
-     MODAL
-========================================================= -->
-
-<div
-    class="modal"
-    id="modal"
-    onclick="closeModalOutside(event)"
->
-
-    <div class="modal-box">
-
-
-        <div class="modal-head">
-
-            <div
-                class="modal-letter"
-                id="modalLetter"
-            >
-                P
-            </div>
-
-            <h2 id="modalTitle">
-                วางแผนและออกแบบหลักสูตร
-            </h2>
+            </aside>
 
         </div>
 
-
-        <div
-            class="modal-content"
-            id="modalContent"
-        ></div>
+    </div>
 
 
-        <button
-            class="close"
-            onclick="closeModal()"
-        >
-            ปิด
-        </button>
+    <!-- =========================================================
+     MODAL
+========================================================= -->
+
+    <div class="modal" id="modal" onclick="closeModalOutside(event)">
+
+        <div class="modal-box">
+
+
+            <div class="modal-head">
+
+                <div class="modal-letter" id="modalLetter">
+                    P
+                </div>
+
+                <h2 id="modalTitle">
+                    วางแผนและออกแบบหลักสูตร
+                </h2>
+
+            </div>
+
+
+            <div class="modal-content" id="modalContent"></div>
+
+
+            <button class="close" onclick="closeModal()">
+                ปิด
+            </button>
+
+        </div>
 
     </div>
 
-</div>
 
+    <script>
 
-<script>
+        /* =========================================================
+           DATA
+        ========================================================= */
 
-/* =========================================================
-   DATA
-========================================================= */
+        const stepData = {
 
-const stepData = {
+            P: {
 
-    P:{
+                title:
+                    "วางแผนและออกแบบหลักสูตร",
 
-        title:
-        "วางแผนและออกแบบหลักสูตร",
+                desc:
+                    "นำผลสำรวจความต้องการและ SWOT มากำหนดกรอบหลักสูตรความหลากหลาย แต่งตั้งคณะกรรมการทำงานร่วมกัน เชิญผู้เชี่ยวชาญให้คำปรึกษาตรวจสอบโครงสร้าง และประสานความร่วมมือกับคู่พัฒนาและภาคีเครือข่ายภายนอก",
 
-        desc:
-        "นำผลสำรวจความต้องการและ SWOT มากำหนดกรอบหลักสูตรความหลากหลาย แต่งตั้งคณะกรรมการทำงานร่วมกัน เชิญผู้เชี่ยวชาญให้คำปรึกษาตรวจสอบโครงสร้าง และประสานความร่วมมือกับคู่พัฒนาและภาคีเครือข่ายภายนอก",
-
-        content:`
+                content: `
 
             <ul>
 
@@ -2205,18 +2062,18 @@ const stepData = {
             </ul>
 
         `
-    },
+            },
 
 
-    D:{
+            D: {
 
-        title:
-        "จัดทำร่างหลักสูตร",
+                title:
+                    "จัดทำร่างหลักสูตร",
 
-        desc:
-        "ยกร่างโครงสร้างหลักสูตรที่มีความหลากหลายทั้งระดับมัธยมศึกษาตอนต้นและตอนปลาย พร้อมธนาคารหน่วยกิต ทวิศึกษา และตรวจสอบความสอดคล้องของรายวิชา",
+                desc:
+                    "ยกร่างโครงสร้างหลักสูตรที่มีความหลากหลายทั้งระดับมัธยมศึกษาตอนต้นและตอนปลาย พร้อมธนาคารหน่วยกิต ทวิศึกษา และตรวจสอบความสอดคล้องของรายวิชา",
 
-        content:`
+                content: `
 
             <p>
                 <b>
@@ -2235,24 +2092,24 @@ const stepData = {
             <ul>
 
                 <li>
-                    พัฒนาสมรรถนะวิทยาศาสตร์
+                    ห้องเรียนพัฒนาสมรรถนะวิทยาศาสตร์
                     คณิตศาสตร์ เทคโนโลยี
                 </li>
 
                 <li>
-                    พัฒนาสมรรถนะภาษา สังคม
+                    ห้องเรียนพัฒนาสมรรถนะภาษา สังคม
                 </li>
 
                 <li>
-                    พัฒนาสมรรถนะสุนทรียศาสตร์ด้านดนตรี
+                    ห้องเรียนพัฒนาสมรรถนะสุนทรียศาสตร์ด้านดนตรี
                 </li>
 
                 <li>
-                    พัฒนาสมรรถนะสุนทรียศาสตร์ด้านศิลปะ
+                    ห้องเรียนพัฒนาสมรรถนะสุนทรียศาสตร์ด้านศิลปะ
                 </li>
 
                 <li>
-                    พัฒนาสมรรถนะสุนทรียศาสตร์ด้านนาฏศิลป์
+                    ห้องเรียนพัฒนาสมรรถนะสุนทรียศาสตร์ด้านนาฏศิลป์
                 </li>
 
                 <li>
@@ -2260,11 +2117,11 @@ const stepData = {
                 </li>
 
                 <li>
-                    พัฒนาสมรรถนะด้านอาชีพ
+                    ห้องเรียนพัฒนาสมรรถนะด้านอาชีพ
                 </li>
 
                 <li>
-                    พัฒนาสมรรถนะทั่วไป
+                    ห้องเรียนพัฒนาสมรรถนะทั่วไป
                 </li>
 
                 <li>
@@ -2314,7 +2171,7 @@ const stepData = {
                 </li>
 
                 <li>
-                    ทวิศึกษา สาขาการโรงแรม
+                    สาขาการโรงแรม (ทวิศึกษา )
                 </li>
 
                 <li>คหกรรม</li>
@@ -2324,8 +2181,8 @@ const stepData = {
                 <li>อุตสาหกรรม</li>
 
                 <li>
-                    ทวิศึกษา
-                    ช่างเชื่อมโลหะอุตสาหกรรม
+                    
+                    ช่างเชื่อมโลหะอุตสาหกรรม (ทวิศึกษา )
                 </li>
 
                 <li>คอมพิวเตอร์</li>
@@ -2357,18 +2214,18 @@ const stepData = {
             </p>
 
         `
-    },
+            },
 
 
-    C:{
+            C: {
 
-        title:
-        "ตรวจสอบและประเมินคุณภาพ",
+                title:
+                    "ตรวจสอบและประเมินคุณภาพ",
 
-        desc:
-        "นำร่างหลักสูตรให้คณะกรรมการและผู้เชี่ยวชาญร่วมประเมินคุณภาพ พร้อมนำข้อเสนอแนะมาปรับปรุงแก้ไขหลักสูตรให้สมบูรณ์ยิ่งขึ้น",
+                desc:
+                    "นำร่างหลักสูตรให้คณะกรรมการและผู้เชี่ยวชาญร่วมประเมินคุณภาพ พร้อมนำข้อเสนอแนะมาปรับปรุงแก้ไขหลักสูตรให้สมบูรณ์ยิ่งขึ้น",
 
-        content:`
+                content: `
 
             <ul>
 
@@ -2385,18 +2242,18 @@ const stepData = {
             </ul>
 
         `
-    },
+            },
 
 
-    A:{
+            A: {
 
-        title:
-        "อนุมัติและประกาศใช้",
+                title:
+                    "อนุมัติและประกาศใช้",
 
-        desc:
-        "นำหลักสูตรที่ผ่านการตรวจสอบและปรับปรุงแล้วเข้าสู่กระบวนการอนุมัติและประกาศใช้",
+                desc:
+                    "นำหลักสูตรที่ผ่านการตรวจสอบและปรับปรุงแล้วเข้าสู่กระบวนการอนุมัติและประกาศใช้",
 
-        content:`
+                content: `
 
             <ul>
 
@@ -2411,1064 +2268,1065 @@ const stepData = {
             </ul>
 
         `
-    }
+            }
 
-};
+        };
 
 
-/* =========================================================
-   ELEMENTS
-========================================================= */
+        /* =========================================================
+           ELEMENTS
+        ========================================================= */
 
-const model =
-    document.getElementById("model");
+        const model =
+            document.getElementById("model");
 
-const track =
-    document.getElementById("sideTrack");
+        const track =
+            document.getElementById("sideTrack");
 
-const scrollArea =
-    document.getElementById("sideScroll");
+        const scrollArea =
+            document.getElementById("sideScroll");
 
-const items =
-    [...document.querySelectorAll(".side-item")];
+        const items =
+            [...document.querySelectorAll(".side-item")];
 
-const description =
-    document.getElementById("description");
+        const description =
+            document.getElementById("description");
 
-const descTitle =
-    document.getElementById("descTitle");
+        const descTitle =
+            document.getElementById("descTitle");
 
-const descText =
-    document.getElementById("descText");
+        const descText =
+            document.getElementById("descText");
 
-const progress =
-    [...document.querySelectorAll(".progress span")];
+        const progress =
+            [...document.querySelectorAll(".progress span")];
 
 
-/* =========================================================
-   STATE
-========================================================= */
+        /* =========================================================
+           STATE
+        ========================================================= */
 
-let currentStep = "P";
+        let currentStep = "P";
 
-let currentIndex = 0;
+        let currentIndex = 0;
 
-let position = 0;
+        let position = 0;
 
-let targetPosition = 0;
+        let targetPosition = 0;
 
-let autoTimer = null;
+        let autoTimer = null;
 
-let resumeTimer = null;
+        let resumeTimer = null;
 
-let isDragging = false;
+        let isDragging = false;
 
-let dragStartY = 0;
+        let dragStartY = 0;
 
-let dragStartPosition = 0;
+        let dragStartPosition = 0;
 
-let lastPointerY = 0;
+        let lastPointerY = 0;
 
-let velocity = 0;
+        let velocity = 0;
 
-let animationFrame = null;
+        let animationFrame = null;
 
-let suppressClick = false;
+        let suppressClick = false;
 
-let centerFrame = null;
+        let centerFrame = null;
 
 
-/* =========================================================
-   ITEM HEIGHT
-========================================================= */
+        /* =========================================================
+           ITEM HEIGHT
+        ========================================================= */
 
-function getItemStepHeight(){
+        function getItemStepHeight() {
 
-    if(!items.length){
-        return 0;
-    }
+            if (!items.length) {
+                return 0;
+            }
 
-    const itemHeight =
-        items[0].getBoundingClientRect().height;
+            const itemHeight =
+                items[0].getBoundingClientRect().height;
 
-    const style =
-        window.getComputedStyle(track);
+            const style =
+                window.getComputedStyle(track);
 
-    const gap =
-        parseFloat(style.gap) || 0;
+            const gap =
+                parseFloat(style.gap) || 0;
 
-    return itemHeight + gap;
+            return itemHeight + gap;
 
-}
+        }
 
 
-/* =========================================================
-   CENTER POSITION
-========================================================= */
+        /* =========================================================
+           CENTER POSITION
+        ========================================================= */
 
-function getCenterPosition(index){
+        function getCenterPosition(index) {
 
-    if(!items[index]){
-        return 0;
-    }
+            if (!items[index]) {
+                return 0;
+            }
 
 
-    const wrapperHeight =
-        scrollArea.getBoundingClientRect().height;
+            const wrapperHeight =
+                scrollArea.getBoundingClientRect().height;
 
 
-    const itemHeight =
-        items[index].getBoundingClientRect().height;
+            const itemHeight =
+                items[index].getBoundingClientRect().height;
 
 
-    const stepHeight =
-        getItemStepHeight();
-
-
-    const itemCenter =
-        index * stepHeight
-        +
-        itemHeight / 2;
-
-
-    return (
-        wrapperHeight / 2
-        -
-        itemCenter
-    );
-
-}
-
-
-/* =========================================================
-   APPLY
-========================================================= */
-
-function applyPosition(){
-
-    track.style.transform =
-        `translate3d(0,${position}px,0)`;
-
-
-    requestCenterDetection();
-
-}
-
-
-/* =========================================================
-   CENTER DETECTION
-========================================================= */
-
-function requestCenterDetection(){
-
-    cancelAnimationFrame(
-        centerFrame
-    );
-
-
-    centerFrame =
-        requestAnimationFrame(
-            updateCenteredItem
-        );
-
-}
-
-
-function updateCenteredItem(){
-
-    const wrapperRect =
-        scrollArea.getBoundingClientRect();
-
-
-    const centerY =
-        wrapperRect.top
-        +
-        wrapperRect.height / 2;
-
-
-    let closestIndex = 0;
-
-    let closestDistance =
-        Infinity;
-
-
-    items.forEach(
-        (item,index)=>{
-
-            const rect =
-                item.getBoundingClientRect();
+            const stepHeight =
+                getItemStepHeight();
 
 
             const itemCenter =
-                rect.top
+                index * stepHeight
                 +
-                rect.height / 2;
+                itemHeight / 2;
 
 
-            const distance =
-                Math.abs(
-                    centerY -
-                    itemCenter
+            return (
+                wrapperHeight / 2
+                -
+                itemCenter
+            );
+
+        }
+
+
+        /* =========================================================
+           APPLY
+        ========================================================= */
+
+        function applyPosition() {
+
+            track.style.transform =
+                `translate3d(0,${position}px,0)`;
+
+
+            requestCenterDetection();
+
+        }
+
+
+        /* =========================================================
+           CENTER DETECTION
+        ========================================================= */
+
+        function requestCenterDetection() {
+
+            cancelAnimationFrame(
+                centerFrame
+            );
+
+
+            centerFrame =
+                requestAnimationFrame(
+                    updateCenteredItem
                 );
 
-
-            if(
-                distance <
-                closestDistance
-            ){
-
-                closestDistance =
-                    distance;
-
-                closestIndex =
-                    index;
-
-            }
-
-        }
-    );
-
-
-    items.forEach(
-        (item,index)=>{
-
-            item.classList.toggle(
-                "centered",
-                index === closestIndex
-            );
-
-        }
-    );
-
-
-    const step =
-        items[closestIndex].dataset.step;
-
-
-    /*
-        เปลี่ยนข้อมูลเฉพาะเมื่อ
-        รายการใหม่ผ่านกลางจริง ๆ
-    */
-
-    if(step !== currentStep){
-
-        currentStep =
-            step;
-
-        updateModel(step);
-
-        updateDescription(step);
-
-    }
-
-
-    currentIndex =
-        closestIndex;
-
-}
-
-
-/* =========================================================
-   SMOOTH POSITION
-========================================================= */
-
-function animateTo(target){
-
-    targetPosition =
-        target;
-
-
-    cancelAnimationFrame(
-        animationFrame
-    );
-
-
-    function animate(){
-
-        const difference =
-            targetPosition -
-            position;
-
-
-        /*
-            easing เล็กน้อย
-            แต่ไม่ snap แข็ง
-        */
-
-        position +=
-            difference * .12;
-
-
-        if(
-            Math.abs(difference)
-            <
-            .15
-        ){
-
-            position =
-                targetPosition;
-
-            applyPosition();
-
-            return;
-
         }
 
 
-        applyPosition();
+        function updateCenteredItem() {
 
+            const wrapperRect =
+                scrollArea.getBoundingClientRect();
 
-        animationFrame =
-            requestAnimationFrame(
-                animate
-            );
 
-    }
+            const centerY =
+                wrapperRect.top
+                +
+                wrapperRect.height / 2;
 
 
-    animationFrame =
-        requestAnimationFrame(
-            animate
-        );
+            let closestIndex = 0;
 
-}
+            let closestDistance =
+                Infinity;
 
 
-/* =========================================================
-   SELECT STEP
-========================================================= */
+            items.forEach(
+                (item, index) => {
 
-function selectStep(
-    step,
-    openPopup=false
-){
+                    const rect =
+                        item.getBoundingClientRect();
 
-    let nearest =
-        null;
 
-    let nearestDistance =
-        Infinity;
+                    const itemCenter =
+                        rect.top
+                        +
+                        rect.height / 2;
 
 
-    items.forEach(
-        (item,index)=>{
+                    const distance =
+                        Math.abs(
+                            centerY -
+                            itemCenter
+                        );
 
-            if(
-                item.dataset.step !==
-                step
-            ){
-                return;
-            }
 
+                    if (
+                        distance <
+                        closestDistance
+                    ) {
 
-            const distance =
-                Math.abs(
-                    index -
-                    currentIndex
-                );
+                        closestDistance =
+                            distance;
 
+                        closestIndex =
+                            index;
 
-            if(
-                distance <
-                nearestDistance
-            ){
+                    }
 
-                nearestDistance =
-                    distance;
-
-                nearest = {
-                    item,
-                    index
-                };
-
-            }
-
-        }
-    );
-
-
-    if(!nearest){
-        return;
-    }
-
-
-    currentIndex =
-        nearest.index;
-
-
-    animateTo(
-        getCenterPosition(
-            currentIndex
-        )
-    );
-
-
-    updateModel(step);
-
-    updateDescription(step);
-
-    pauseAutoPlay();
-
-
-    if(openPopup){
-
-        setTimeout(
-            ()=>{
-                openModal(step);
-            },
-            300
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   MODEL
-========================================================= */
-
-function updateModel(step){
-
-    model.classList.remove(
-        "active-p",
-        "active-d",
-        "active-c",
-        "active-a"
-    );
-
-
-    model.classList.add(
-        "active-" +
-        step.toLowerCase()
-    );
-
-
-    document
-        .querySelectorAll(".step")
-        .forEach(
-            el=>{
-
-                el.classList.toggle(
-                    "active",
-                    el.dataset.step === step
-                );
-
-            }
-        );
-
-
-    progress.forEach(
-        el=>{
-
-            el.classList.toggle(
-                "active",
-                el.dataset.progress === step
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   DESCRIPTION
-========================================================= */
-
-function updateDescription(step){
-
-    const data =
-        stepData[step];
-
-
-    description.classList.add(
-        "switching"
-    );
-
-
-    setTimeout(
-        ()=>{
-
-            descTitle.textContent =
-                step +
-                " — " +
-                data.title;
-
-
-            descText.textContent =
-                data.desc;
-
-
-            description.classList.remove(
-                "switching"
-            );
-
-        },
-        160
-    );
-
-}
-
-
-/* =========================================================
-   AUTO SCROLL
-   เลื่อนเรื่อย ๆ ไม่หยุดรอแต่ละรายการ
-========================================================= */
-
-function startAutoPlay(){
-
-    stopAutoPlay();
-
-
-    autoTimer =
-        setInterval(
-            ()=>{
-
-                if(isDragging){
-                    return;
                 }
+            );
 
 
-                /*
-                    เคลื่อนลงทีละเล็กน้อย
-                    ทำให้เกิด continuous scrolling
-                */
+            items.forEach(
+                (item, index) => {
 
-                position -= .42;
-
-
-                /*
-                    เมื่อใกล้สุดท้าย
-                    ย้ายกลับไปต้นชุดอย่างนุ่มนวล
-                */
-
-                const lastTarget =
-                    getCenterPosition(
-                        items.length - 1
+                    item.classList.toggle(
+                        "centered",
+                        index === closestIndex
                     );
 
+                }
+            );
 
-                if(
-                    position <
-                    lastTarget -
-                    getItemStepHeight()
-                ){
+
+            const step =
+                items[closestIndex].dataset.step;
+
+
+            /*
+                เปลี่ยนข้อมูลเฉพาะเมื่อ
+                รายการใหม่ผ่านกลางจริง ๆ
+            */
+
+            if (step !== currentStep) {
+
+                currentStep =
+                    step;
+
+                updateModel(step);
+
+                updateDescription(step);
+
+            }
+
+
+            currentIndex =
+                closestIndex;
+
+        }
+
+
+        /* =========================================================
+           SMOOTH POSITION
+        ========================================================= */
+
+        function animateTo(target) {
+
+            targetPosition =
+                target;
+
+
+            cancelAnimationFrame(
+                animationFrame
+            );
+
+
+            function animate() {
+
+                const difference =
+                    targetPosition -
+                    position;
+
+
+                /*
+                    easing เล็กน้อย
+                    แต่ไม่ snap แข็ง
+                */
+
+                position +=
+                    difference * .12;
+
+
+                if (
+                    Math.abs(difference)
+                    <
+                    .15
+                ) {
 
                     position =
-                        getCenterPosition(1);
+                        targetPosition;
+
+                    applyPosition();
+
+                    return;
 
                 }
 
 
                 applyPosition();
 
-            },
-            16
-        );
 
-}
+                animationFrame =
+                    requestAnimationFrame(
+                        animate
+                    );
 
-
-function stopAutoPlay(){
-
-    clearInterval(
-        autoTimer
-    );
-
-}
+            }
 
 
-function pauseAutoPlay(){
-
-    stopAutoPlay();
-
-
-    clearTimeout(
-        resumeTimer
-    );
-
-
-    resumeTimer =
-        setTimeout(
-            ()=>{
-                startAutoPlay();
-            },
-            3500
-        );
-
-}
-
-
-/* =========================================================
-   WHEEL
-========================================================= */
-
-scrollArea.addEventListener(
-    "wheel",
-    function(e){
-
-        e.preventDefault();
-
-
-        pauseAutoPlay();
-
-
-        position -=
-            e.deltaY * .65;
-
-
-        clampPosition();
-
-        applyPosition();
-
-
-    },
-    {
-        passive:false
-    }
-);
-
-
-/* =========================================================
-   POINTER DOWN
-========================================================= */
-
-scrollArea.addEventListener(
-    "pointerdown",
-    function(e){
-
-        isDragging = true;
-
-        suppressClick = false;
-
-
-        pauseAutoPlay();
-
-
-        scrollArea.classList.add(
-            "dragging"
-        );
-
-
-        dragStartY =
-            e.clientY;
-
-
-        lastPointerY =
-            e.clientY;
-
-
-        dragStartPosition =
-            position;
-
-
-        velocity = 0;
-
-
-        scrollArea.setPointerCapture(
-            e.pointerId
-        );
-
-    }
-);
-
-
-/* =========================================================
-   POINTER MOVE
-========================================================= */
-
-scrollArea.addEventListener(
-    "pointermove",
-    function(e){
-
-        if(!isDragging){
-            return;
-        }
-
-
-        const dy =
-            e.clientY -
-            dragStartY;
-
-
-        const delta =
-            e.clientY -
-            lastPointerY;
-
-
-        if(
-            Math.abs(dy) > 5
-        ){
-
-            suppressClick = true;
+            animationFrame =
+                requestAnimationFrame(
+                    animate
+                );
 
         }
 
 
-        position =
-            dragStartPosition +
-            dy;
+        /* =========================================================
+           SELECT STEP
+        ========================================================= */
+
+        function selectStep(
+            step,
+            openPopup = false
+        ) {
+
+            let nearest =
+                null;
+
+            let nearestDistance =
+                Infinity;
 
 
-        velocity =
-            delta;
+            items.forEach(
+                (item, index) => {
+
+                    if (
+                        item.dataset.step !==
+                        step
+                    ) {
+                        return;
+                    }
 
 
-        lastPointerY =
-            e.clientY;
+                    const distance =
+                        Math.abs(
+                            index -
+                            currentIndex
+                        );
 
 
-        clampPosition();
+                    if (
+                        distance <
+                        nearestDistance
+                    ) {
 
-        applyPosition();
+                        nearestDistance =
+                            distance;
 
-    }
-);
+                        nearest = {
+                            item,
+                            index
+                        };
 
+                    }
 
-/* =========================================================
-   POINTER UP
-========================================================= */
-
-function finishDrag(e){
-
-    if(!isDragging){
-        return;
-    }
-
-
-    isDragging = false;
-
-
-    scrollArea.classList.remove(
-        "dragging"
-    );
-
-
-    try{
-
-        scrollArea.releasePointerCapture(
-            e.pointerId
-        );
-
-    }catch(error){}
-
-
-    /*
-        momentum
-    */
-
-    position +=
-        velocity * 2.5;
-
-
-    clampPosition();
-
-    applyPosition();
-
-
-    /*
-        ไม่ snap แข็ง
-        แต่ค่อย ๆ เข้าตำแหน่งธรรมชาติ
-    */
-
-    setTimeout(
-        ()=>{
-            startAutoPlay();
-        },
-        120
-    );
-
-
-    setTimeout(
-        ()=>{
-            suppressClick = false;
-        },
-        150
-    );
-
-}
-
-
-scrollArea.addEventListener(
-    "pointerup",
-    finishDrag
-);
-
-
-scrollArea.addEventListener(
-    "pointercancel",
-    finishDrag
-);
-
-
-/* =========================================================
-   CLAMP
-========================================================= */
-
-function clampPosition(){
-
-    const stepHeight =
-        getItemStepHeight();
-
-
-    if(!stepHeight){
-        return;
-    }
-
-
-    const first =
-        getCenterPosition(0);
-
-
-    const last =
-        getCenterPosition(
-            items.length - 1
-        );
-
-
-    const min =
-        Math.min(first,last);
-
-
-    const max =
-        Math.max(first,last);
-
-
-    const extra =
-        stepHeight * 2;
-
-
-    position =
-        Math.max(
-            min-extra,
-            Math.min(
-                max+extra,
-                position
-            )
-        );
-
-}
-
-
-/* =========================================================
-   SIDE ITEM CLICK
-========================================================= */
-
-items.forEach(
-    (item,index)=>{
-
-        item.addEventListener(
-            "click",
-            function(e){
-
-                if(suppressClick){
-                    return;
                 }
+            );
 
 
-                currentIndex =
-                    index;
+            if (!nearest) {
+                return;
+            }
 
 
-                const step =
-                    item.dataset.step;
+            currentIndex =
+                nearest.index;
 
 
-                updateModel(step);
+            animateTo(
+                getCenterPosition(
+                    currentIndex
+                )
+            );
 
-                updateDescription(step);
+
+            updateModel(step);
+
+            updateDescription(step);
+
+            pauseAutoPlay();
+
+
+            if (openPopup) {
+
+                setTimeout(
+                    () => {
+                        openModal(step);
+                    },
+                    300
+                );
+
+            }
+
+        }
+
+
+        /* =========================================================
+           MODEL
+        ========================================================= */
+
+        function updateModel(step) {
+
+            model.classList.remove(
+                "active-p",
+                "active-d",
+                "active-c",
+                "active-a"
+            );
+
+
+            model.classList.add(
+                "active-" +
+                step.toLowerCase()
+            );
+
+
+            document
+                .querySelectorAll(".step")
+                .forEach(
+                    el => {
+
+                        el.classList.toggle(
+                            "active",
+                            el.dataset.step === step
+                        );
+
+                    }
+                );
+
+
+            progress.forEach(
+                el => {
+
+                    el.classList.toggle(
+                        "active",
+                        el.dataset.progress === step
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* =========================================================
+           DESCRIPTION
+        ========================================================= */
+
+        function updateDescription(step) {
+
+            const data =
+                stepData[step];
+
+
+            description.classList.add(
+                "switching"
+            );
+
+
+            setTimeout(
+                () => {
+
+                    descTitle.textContent =
+                        step +
+                        " — " +
+                        data.title;
+
+
+                    descText.textContent =
+                        data.desc;
+
+
+                    description.classList.remove(
+                        "switching"
+                    );
+
+                },
+                160
+            );
+
+        }
+
+
+        /* =========================================================
+           AUTO SCROLL
+           เลื่อนเรื่อย ๆ ไม่หยุดรอแต่ละรายการ
+        ========================================================= */
+
+        function startAutoPlay() {
+
+            stopAutoPlay();
+
+
+            autoTimer =
+                setInterval(
+                    () => {
+
+                        if (isDragging) {
+                            return;
+                        }
+
+
+                        /*
+                            เคลื่อนลงทีละเล็กน้อย
+                            ทำให้เกิด continuous scrolling
+                        */
+
+                        position -= .42;
+
+
+                        /*
+                            เมื่อใกล้สุดท้าย
+                            ย้ายกลับไปต้นชุดอย่างนุ่มนวล
+                        */
+
+                        const lastTarget =
+                            getCenterPosition(
+                                items.length - 1
+                            );
+
+
+                        if (
+                            position <
+                            lastTarget -
+                            getItemStepHeight()
+                        ) {
+
+                            position =
+                                getCenterPosition(1);
+
+                        }
+
+
+                        applyPosition();
+
+                    },
+                    16
+                );
+
+        }
+
+
+        function stopAutoPlay() {
+
+            clearInterval(
+                autoTimer
+            );
+
+        }
+
+
+        function pauseAutoPlay() {
+
+            stopAutoPlay();
+
+
+            clearTimeout(
+                resumeTimer
+            );
+
+
+            resumeTimer =
+                setTimeout(
+                    () => {
+                        startAutoPlay();
+                    },
+                    3500
+                );
+
+        }
+
+
+        /* =========================================================
+           WHEEL
+        ========================================================= */
+
+        scrollArea.addEventListener(
+            "wheel",
+            function (e) {
+
+                e.preventDefault();
 
 
                 pauseAutoPlay();
 
+
+                position -=
+                    e.deltaY * .65;
+
+
+                clampPosition();
+
+                applyPosition();
+
+
+            },
+            {
+                passive: false
             }
         );
 
-    }
-);
+
+        /* =========================================================
+           POINTER DOWN
+        ========================================================= */
+
+        scrollArea.addEventListener(
+            "pointerdown",
+            function (e) {
+
+                isDragging = true;
+
+                suppressClick = false;
 
 
-/* =========================================================
-   MODAL
-========================================================= */
-
-function openModal(step){
-
-    const data =
-        stepData[step];
+                pauseAutoPlay();
 
 
-    document.getElementById(
-        "modalLetter"
-    ).textContent =
-        step;
+                scrollArea.classList.add(
+                    "dragging"
+                );
 
 
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-        data.title;
+                dragStartY =
+                    e.clientY;
 
 
-    document.getElementById(
-        "modalContent"
-    ).innerHTML =
-        data.content;
+                lastPointerY =
+                    e.clientY;
 
 
-    document.getElementById(
-        "modal"
-    ).classList.add(
-        "show"
-    );
-
-}
+                dragStartPosition =
+                    position;
 
 
-function closeModal(){
-
-    document.getElementById(
-        "modal"
-    ).classList.remove(
-        "show"
-    );
-
-}
+                velocity = 0;
 
 
-function closeModalOutside(e){
+                scrollArea.setPointerCapture(
+                    e.pointerId
+                );
 
-    if(
-        e.target ===
-        document.getElementById("modal")
-    ){
-
-        closeModal();
-
-    }
-
-}
-
-
-document.addEventListener(
-    "keydown",
-    function(e){
-
-        if(
-            e.key === "Escape"
-        ){
-
-            closeModal();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
-function initialize(){
-
-    /*
-        เริ่ม P
-    */
-
-    currentIndex = 0;
-
-
-    /*
-        วาง P ให้ตรงกึ่งกลางกรอบ
-    */
-
-    position =
-        getCenterPosition(
-            currentIndex
+            }
         );
 
 
-    targetPosition =
-        position;
+        /* =========================================================
+           POINTER MOVE
+        ========================================================= */
+
+        scrollArea.addEventListener(
+            "pointermove",
+            function (e) {
+
+                if (!isDragging) {
+                    return;
+                }
 
 
-    applyPosition();
+                const dy =
+                    e.clientY -
+                    dragStartY;
 
 
-    updateModel("P");
-
-    updateDescription("P");
-
-
-    /*
-        เริ่มเลื่อนต่อเนื่อง
-    */
-
-    startAutoPlay();
-
-}
+                const delta =
+                    e.clientY -
+                    lastPointerY;
 
 
-/* =========================================================
-   RESIZE
-========================================================= */
+                if (
+                    Math.abs(dy) > 5
+                ) {
 
-window.addEventListener(
-    "resize",
-    function(){
+                    suppressClick = true;
 
-        position =
-            getCenterPosition(
-                currentIndex
+                }
+
+
+                position =
+                    dragStartPosition +
+                    dy;
+
+
+                velocity =
+                    delta;
+
+
+                lastPointerY =
+                    e.clientY;
+
+
+                clampPosition();
+
+                applyPosition();
+
+            }
+        );
+
+
+        /* =========================================================
+           POINTER UP
+        ========================================================= */
+
+        function finishDrag(e) {
+
+            if (!isDragging) {
+                return;
+            }
+
+
+            isDragging = false;
+
+
+            scrollArea.classList.remove(
+                "dragging"
             );
 
 
-        targetPosition =
-            position;
+            try {
+
+                scrollArea.releasePointerCapture(
+                    e.pointerId
+                );
+
+            } catch (error) { }
 
 
-        applyPosition();
+            /*
+                momentum
+            */
 
-    }
-);
+            position +=
+                velocity * 2.5;
 
 
-/* =========================================================
-   LOAD
-========================================================= */
+            clampPosition();
 
-window.addEventListener(
-    "load",
-    function(){
+            applyPosition();
 
-        requestAnimationFrame(
-            ()=>{
-                initialize();
+
+            /*
+                ไม่ snap แข็ง
+                แต่ค่อย ๆ เข้าตำแหน่งธรรมชาติ
+            */
+
+            setTimeout(
+                () => {
+                    startAutoPlay();
+                },
+                120
+            );
+
+
+            setTimeout(
+                () => {
+                    suppressClick = false;
+                },
+                150
+            );
+
+        }
+
+
+        scrollArea.addEventListener(
+            "pointerup",
+            finishDrag
+        );
+
+
+        scrollArea.addEventListener(
+            "pointercancel",
+            finishDrag
+        );
+
+
+        /* =========================================================
+           CLAMP
+        ========================================================= */
+
+        function clampPosition() {
+
+            const stepHeight =
+                getItemStepHeight();
+
+
+            if (!stepHeight) {
+                return;
+            }
+
+
+            const first =
+                getCenterPosition(0);
+
+
+            const last =
+                getCenterPosition(
+                    items.length - 1
+                );
+
+
+            const min =
+                Math.min(first, last);
+
+
+            const max =
+                Math.max(first, last);
+
+
+            const extra =
+                stepHeight * 2;
+
+
+            position =
+                Math.max(
+                    min - extra,
+                    Math.min(
+                        max + extra,
+                        position
+                    )
+                );
+
+        }
+
+
+        /* =========================================================
+           SIDE ITEM CLICK
+        ========================================================= */
+
+        items.forEach(
+            (item, index) => {
+
+                item.addEventListener(
+                    "click",
+                    function (e) {
+
+                        if (suppressClick) {
+                            return;
+                        }
+
+
+                        currentIndex =
+                            index;
+
+
+                        const step =
+                            item.dataset.step;
+
+
+                        updateModel(step);
+
+                        updateDescription(step);
+
+
+                        pauseAutoPlay();
+
+                    }
+                );
+
             }
         );
 
-    }
-);
 
-/* แจ้งความสูงของโมเดลให้หน้าแม่ เพื่อแสดงผลพอดีโดยไม่มีแถบเลื่อน */
-function reportEmbedHeight(){
-    requestAnimationFrame(function(){
-        const wrapper = document.querySelector('.wrapper');
-        const height = Math.ceil(wrapper
-            ? wrapper.getBoundingClientRect().bottom + window.scrollY + 24
-            : document.body.scrollHeight);
-        window.parent.postMessage({ type:'d2-diversity-model-height', height }, window.location.origin);
-    });
-}
+        /* =========================================================
+           MODAL
+        ========================================================= */
 
-const diversityWrapper = document.querySelector('.wrapper');
-if(diversityWrapper) new ResizeObserver(reportEmbedHeight).observe(diversityWrapper);
-window.addEventListener('load', reportEmbedHeight);
+        function openModal(step) {
 
-</script>
+            const data =
+                stepData[step];
+
+
+            document.getElementById(
+                "modalLetter"
+            ).textContent =
+                step;
+
+
+            document.getElementById(
+                "modalTitle"
+            ).textContent =
+                data.title;
+
+
+            document.getElementById(
+                "modalContent"
+            ).innerHTML =
+                data.content;
+
+
+            document.getElementById(
+                "modal"
+            ).classList.add(
+                "show"
+            );
+
+        }
+
+
+        function closeModal() {
+
+            document.getElementById(
+                "modal"
+            ).classList.remove(
+                "show"
+            );
+
+        }
+
+
+        function closeModalOutside(e) {
+
+            if (
+                e.target ===
+                document.getElementById("modal")
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+
+
+        document.addEventListener(
+            "keydown",
+            function (e) {
+
+                if (
+                    e.key === "Escape"
+                ) {
+
+                    closeModal();
+
+                }
+
+            }
+        );
+
+
+        /* =========================================================
+           INITIALIZE
+        ========================================================= */
+
+        function initialize() {
+
+            /*
+                เริ่ม P
+            */
+
+            currentIndex = 0;
+
+
+            /*
+                วาง P ให้ตรงกึ่งกลางกรอบ
+            */
+
+            position =
+                getCenterPosition(
+                    currentIndex
+                );
+
+
+            targetPosition =
+                position;
+
+
+            applyPosition();
+
+
+            updateModel("P");
+
+            updateDescription("P");
+
+
+            /*
+                เริ่มเลื่อนต่อเนื่อง
+            */
+
+            startAutoPlay();
+
+        }
+
+
+        /* =========================================================
+           RESIZE
+        ========================================================= */
+
+        window.addEventListener(
+            "resize",
+            function () {
+
+                position =
+                    getCenterPosition(
+                        currentIndex
+                    );
+
+
+                targetPosition =
+                    position;
+
+
+                applyPosition();
+
+            }
+        );
+
+
+        /* =========================================================
+           LOAD
+        ========================================================= */
+
+        window.addEventListener(
+            "load",
+            function () {
+
+                requestAnimationFrame(
+                    () => {
+                        initialize();
+                    }
+                );
+
+            }
+        );
+
+        /* แจ้งความสูงของโมเดลให้หน้าแม่ เพื่อแสดงผลพอดีโดยไม่มีแถบเลื่อน */
+        function reportEmbedHeight() {
+            requestAnimationFrame(function () {
+                const wrapper = document.querySelector('.wrapper');
+                const height = Math.ceil(wrapper
+                    ? wrapper.getBoundingClientRect().bottom + window.scrollY + 24
+                    : document.body.scrollHeight);
+                window.parent.postMessage({ type: 'd2-diversity-model-height', height }, window.location.origin);
+            });
+        }
+
+        const diversityWrapper = document.querySelector('.wrapper');
+        if (diversityWrapper) new ResizeObserver(reportEmbedHeight).observe(diversityWrapper);
+        window.addEventListener('load', reportEmbedHeight);
+
+    </script>
 
 </body>
+
 </html>
