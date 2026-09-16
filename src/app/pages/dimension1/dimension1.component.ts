@@ -269,9 +269,13 @@ export class Dimension1Component implements OnInit {
       `/evidence/1.1.2/thai-activities/${String(index * 2 + 1).padStart(2, '0')}.jpg`,
       `/evidence/1.1.2/thai-activities/${String(index * 2 + 2).padStart(2, '0')}.jpg`
     ]
-  }));
+  })).filter((_, index) => index !== 6);
 
   readonly thaiAwards = [
+    {
+      title: 'โรงเรียนสันทรายวิทยาคมขอแสดงความยินดีกับนักเรียนที่ผ่านการคัดเลือกเป็นตัวแทนประเทศไทยเข้าแข่งขันคณิตคิดเร็วในระดับนานาชาติ ประจำปี 2569 ระหว่างวันที่ 21–24 เมษายน 2569 ณ โรงเรียน Pancabudi เมืองเมดาน ประเทศอินโดนีเซีย',
+      image: '/evidence/1.1.2/thai-awards/04-international-mental-math.png'
+    },
     {
       title: 'รางวัลจากการประกวดจัดทำสื่ออิเล็กทรอนิกส์จากหนังสือสารานุกรมไทยสำหรับเยาวชนฯ',
       image: '/evidence/1.1.2/thai-activities/09.jpg'

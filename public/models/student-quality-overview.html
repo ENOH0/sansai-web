@@ -3180,12 +3180,13 @@ window.addEventListener(
 /* แจ้งความสูงให้หน้าเว็บแม่ เพื่อไม่ให้ iframe มีแถบเลื่อน */
 function reportEmbedHeight(){
     requestAnimationFrame(()=>{
+        const stage = document.getElementById('modelStage');
         const footer = document.querySelector('.footer-note');
+        const stageBottom = stage ? stage.getBoundingClientRect().bottom + window.scrollY : 0;
+        const footerBottom = footer ? footer.getBoundingClientRect().bottom + window.scrollY : 0;
         // scrollHeight ของ document จะไม่เล็กลงเมื่อ iframe ถูกขยายแล้ว
-        // จึงวัดจากขอบล่างของเนื้อหาจริง เพื่อให้พับกลับได้ทันที
-        const height = Math.ceil(footer
-            ? footer.getBoundingClientRect().bottom + window.scrollY + 4
-            : document.body.scrollHeight);
+        // จึงวัดจากขอบล่างของเนื้อหาจริง และเผื่อระยะท้ายเล็กน้อย
+        const height = Math.ceil(Math.max(stageBottom, footerBottom) + 20);
         window.parent.postMessage({ type:'d1-student-quality-model-height', height }, window.location.origin);
     });
 }
