@@ -133,7 +133,12 @@ export class Dimension1Component implements OnInit {
   backToIndex(): void {
     this.open.set('');
     this.tab.set('');
-    window.scrollTo({ top: 0 });
+    window.setTimeout(() => {
+      document.querySelector('.d1-student-quality-model')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }, 60);
   }
 
   readonly gallery = GALLERY['d1'];
@@ -346,8 +351,9 @@ export class Dimension1Component implements OnInit {
   }));
 
   // ---------- คุณลักษณะอันพึงประสงค์ ----------
+  readonly desiredMeterColors = ['#ff5b7f', '#ff9f43', '#f9c74f', '#35c77a', '#16b9d4', '#4e7cff', '#9b6bff', '#ed6aa5'];
   readonly desiredMeters: MeterRow[] = DIM1.section12.desired.rows
-    .map(r => ({ name: r.name, value: r.avg }))
+    .map((r, index) => ({ name: r.name, value: r.avg, color: this.desiredMeterColors[index % this.desiredMeterColors.length] }))
     .sort((a, b) => b.value - a.value);
 
   readonly desiredHeaders = ['คุณลักษณะที่พึงประสงค์', 'ปี 2566', 'ปี 2567', 'ปี 2568', 'สรุปคุณภาพโดยรวม'];

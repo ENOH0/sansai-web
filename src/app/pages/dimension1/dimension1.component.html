@@ -409,7 +409,7 @@
         [ngTemplateOutletContext]="{ text: d.section12.lead }"></ng-container>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
-      <div class="stack">
+      <div class="stack d1-desired-meter">
         <app-meter-list [title]="'สรุปคุณภาพโดยรวมของคุณลักษณะอันพึงประสงค์ทั้ง 8 ด้าน'"
           subtitle="ค่าเฉลี่ยร้อยละระดับดีขึ้นไป ปีการศึกษา 2566–2568" [rows]="desiredMeters" [max]="100"
           [showEvidence]="true" [note]="d.section12.desired.conclusion" />
@@ -622,10 +622,10 @@
         </div>
       </div>
 
-      <div class="stack" style="margin-top:44px">
+      <div class="stack d1-safety-chart" style="margin-top:44px">
         <app-bar-chart title="ร้อยละของนักเรียนที่มีพฤติกรรมไม่พึงประสงค์"
           subtitle="ภาพรวมทั้งโรงเรียน ปีการศึกษา 2566–2568 (ยิ่งต่ำยิ่งดี)" [labels]="d.section12.safety.years"
-          [series]="safetyBars" [max]="100" [showEvidence]="true" [note]="d.section12.safety.conclusion" />
+          [series]="safetyBars" [max]="100" [valueFontSize]="10" [showEvidence]="true" [note]="d.section12.safety.conclusion" />
         <app-data-table [caption]="d.section12.safety.caption" [headers]="yearHeaders3" [rows]="safetyRows" />
       </div>
     </div>

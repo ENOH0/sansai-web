@@ -16,6 +16,14 @@
 .d1-student-quality-model-frame iframe { display: block; width: 100%; border: 0; background: transparent; }
 .d1-quality-wheel { padding-top: 18px; }
 
+/* ข้อ 1.2.1: ใช้สีแถบสดใสให้แยกคุณลักษณะทั้ง 8 ด้านได้ทันที */
+:host ::ng-deep .d1-desired-meter .meter-track { height: 14px; background: rgba(255,255,255,.26); box-shadow: inset 0 0 0 1px rgba(255,255,255,.24); }
+:host ::ng-deep .d1-desired-meter .meter-fill { box-shadow: 0 3px 10px rgba(17,45,100,.22); }
+:host ::ng-deep .d1-desired-meter .meter-name { font-weight: 800; }
+
+/* ข้อ 1.2.8: ลดตัวอักษรในกราฟเพื่อไม่ให้ตัวเลขและป้ายปีชนกัน */
+:host ::ng-deep .d1-safety-chart .axis-text { font-size: 11px; }
+
 /* ═══════════ สารบัญตัวชี้วัดด้านที่ 1 ═══════════ */
 .d1-tabs { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 20px; }
 .d1-tab-group { display: grid; gap: 14px; scroll-margin-top: 18px; }
