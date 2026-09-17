@@ -40,14 +40,15 @@ return `
 <div class="sw-layout${theme ? ` sw-theme-${theme}` : ''}">
   <div class="sw-diagram">
     <svg class="sw-cycle" viewBox="0 0 600 600" aria-hidden="true">
-      <path d="M68 322A232 232 0 0 1 278 68" />
-      <path d="M322 68A232 232 0 0 1 532 278" />
-      <path d="M532 322A232 232 0 0 1 322 532" />
-      <path d="M278 532A232 232 0 0 1 68 322" />
-      <text x="127" y="127" transform="rotate(-45 127 127)">PLAN</text>
-      <text x="473" y="127" transform="rotate(45 473 127)">DO</text>
-      <text x="473" y="473" transform="rotate(-45 473 473)">CHECK</text>
-      <text x="127" y="473" transform="rotate(45 127 473)">ACTION</text>
+      <!-- 4 ส่วนโค้งต่อกันเป็นวงเดียว รัศมี 248 หนา 64 (ครอบคลุมรัศมี 216–280) ให้ตัวหนังสืออยู่กลางแถบพอดี -->
+      <path d="M52 300A248 248 0 0 1 300 52" />
+      <path d="M300 52A248 248 0 0 1 548 300" />
+      <path d="M548 300A248 248 0 0 1 300 548" />
+      <path d="M300 548A248 248 0 0 1 52 300" />
+      <text x="124.6" y="124.6" transform="rotate(-45 124.6 124.6)">PLAN</text>
+      <text x="475.4" y="124.6" transform="rotate(45 475.4 124.6)">DO</text>
+      <text x="475.4" y="475.4" transform="rotate(-45 475.4 475.4)">CHECK</text>
+      <text x="124.6" y="475.4" transform="rotate(45 124.6 475.4)">ACTION</text>
     </svg>
 
     <div class="sw-wheel">

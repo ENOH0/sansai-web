@@ -16,7 +16,7 @@
 
 /* วงรอบนอก 4 ช่วง = วงจรคุณภาพ */
 .sw-cycle { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.sw-cycle path { fill: none; stroke-width: 44; stroke: var(--navy-100); }
+.sw-cycle path { fill: none; stroke-width: 64; stroke: var(--navy-100); }
 .sw-cycle path:nth-of-type(even) { stroke: var(--navy-200); }
 .sw-cycle text {
   fill: var(--navy-700);
