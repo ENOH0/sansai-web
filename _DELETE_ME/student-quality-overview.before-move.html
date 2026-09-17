@@ -1705,30 +1705,6 @@
                 font-size: 26px;
             }
         }
-        /* =========================================================
-   จัดตำแหน่งหัวข้อ: 1 ซ้าย · 2 ขวา · 3 กลางด้านล่าง
-========================================================= */
-        .model-stage {
-            grid-template-areas:
-                "left center right"
-                "bottom bottom bottom";
-        }
-        .left-column { grid-area: left; }
-        .center-wrap { grid-area: center; }
-        .right-column { grid-area: right; }
-        .bottom-column {
-            grid-area: bottom;
-            justify-self: center;
-            width: min(100%, 560px);
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
-            position: relative;
-            z-index: 5;
-        }
-        @media(max-width:850px) {
-            .bottom-column { width: 100%; }
-        }
     </style>
 </head>
 
@@ -1969,50 +1945,6 @@
             </div>
 
 
-        </section>
-
-
-        <!-- =================================================
-         CENTER
-    ================================================= -->
-
-        <section class="center-wrap">
-
-            <div class="center-model">
-
-                <div class="center-glow"></div>
-
-                <div class="center-content">
-
-                    <div class="center-title">
-                        คุณภาพ<br>
-                        นักเรียน
-                    </div>
-
-                    <div class="center-sub">
-                        พัฒนาผู้เรียน<br>
-                        อย่างรอบด้าน
-                    </div>
-
-                </div>
-
-
-                <div class="orbit-dot dot1"></div>
-                <div class="orbit-dot dot2"></div>
-                <div class="orbit-dot dot3"></div>
-                <div class="orbit-dot dot4"></div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-         RIGHT COLUMN
-    ================================================= -->
-
-        <section class="right-column">
-
             <!-- =================================================
              TOPIC 2
         ================================================= -->
@@ -2124,11 +2056,47 @@
 
         </section>
 
+
         <!-- =================================================
-         BOTTOM CENTER (หัวข้อที่ 3 อยู่กลางด้านล่าง)
+         CENTER
     ================================================= -->
 
-        <section class="bottom-column">
+        <section class="center-wrap">
+
+            <div class="center-model">
+
+                <div class="center-glow"></div>
+
+                <div class="center-content">
+
+                    <div class="center-title">
+                        คุณภาพ<br>
+                        นักเรียน
+                    </div>
+
+                    <div class="center-sub">
+                        พัฒนาผู้เรียน<br>
+                        อย่างรอบด้าน
+                    </div>
+
+                </div>
+
+
+                <div class="orbit-dot dot1"></div>
+                <div class="orbit-dot dot2"></div>
+                <div class="orbit-dot dot3"></div>
+                <div class="orbit-dot dot4"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+         RIGHT COLUMN
+    ================================================= -->
+
+        <section class="right-column">
 
             <div class="topic3">
 
