@@ -34,7 +34,8 @@
   object-fit: contain;
 }
 
-.brand-text { line-height: 1.25; min-width: 0; }
+.brand-text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+.brand-name, .brand-sub { display: block; overflow: hidden; text-overflow: ellipsis; }
 .brand-name { font-weight: 700; color: var(--navy-900); font-size: 18px; white-space: nowrap; }
 .brand-sub { font-size: 13px; color: var(--ink-mute); letter-spacing: .02em; white-space: nowrap; }
 
