@@ -216,18 +216,6 @@
 
 <section class="section" *ngIf="!open()">
   <div class="wrap">
-    <app-section-header [light]="true" kicker="สรุป" title="ตัวชี้วัดของด้านที่ 3 ทั้ง 5 รายการ"
-      lead="ตามแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน ระดับประถมศึกษาและมัธยมศึกษา" />
-
-    <div class="grid grid-2">
-      <div class="card" *ngFor="let key of indicatorKeys; let i = index" appReveal [revealDelay]="i * 80">
-        <h3 class="card-title" style="font-size:17.5px">{{ key }}</h3>
-        <ol class="bullets" style="font-size:15.5px">
-          <li *ngFor="let it of d.indicators[key]">{{ it }}</li>
-        </ol>
-      </div>
-    </div>
-
     <div style="margin-top:34px">
       <app-pager prevPath="/dimension-2" prevName="ด้านที่ 2 การบริหารหลักสูตรและงานวิชาการ" nextPath="/dimension-4"
         nextName="ด้านที่ 4 การจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ" />

@@ -679,8 +679,6 @@ ${pageHero(d.no, d.weight, d.name, d.subtitle)}
 </div></section>
 
 <section class="section section-alt"><div class="wrap">
-  ${secHead('สรุป', '', 'ตัวชี้วัดของด้านที่ 2 ทั้ง 4 รายการ', 'ตามแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน ระดับประถมศึกษาและมัธยมศึกษา')}
-  ${indicatorCards(d.indicators)}
 ${gallery(D, 'd2', 2, 'ภาพกิจกรรมพัฒนาผู้เรียนและงานวิชาการ จากเอกสารประกอบการประเมินด้านที่ 2')}
   <div style="margin-top:34px">${pager('dimension-1', 'ด้านที่ 1 คุณภาพนักเรียน', 'dimension-3', 'ด้านที่ 3 การบริหารและการจัดการศึกษา')}</div>
 </div></section>`;
@@ -740,8 +738,6 @@ ${pageHero(d.no, d.weight, d.name, d.subtitle)}
 </div></section>
 
 <section class="section"><div class="wrap">
-  ${secHead('สรุป', '', 'ตัวชี้วัดของด้านที่ 3 ทั้ง 5 รายการ', 'ตามแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน ระดับประถมศึกษาและมัธยมศึกษา')}
-  ${indicatorCards(d.indicators)}
 ${gallery(D, 'd3', 3, 'ภาพการบริหารจัดการและการพัฒนาครูและบุคลากร จากเอกสารประกอบการประเมินด้านที่ 3')}
   <div style="margin-top:34px">${pager('dimension-2', 'ด้านที่ 2 การบริหารหลักสูตรและงานวิชาการ', 'dimension-4', 'ด้านที่ 4 การจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ')}</div>
 </div></section>`;
@@ -795,8 +791,6 @@ ${pageHero(d.no, d.weight, d.name, d.subtitle)}
 </div></section>
 
 <section class="section section-alt"><div class="wrap">
-  ${secHead('สรุป', '', 'ตัวชี้วัดของด้านที่ 4 ทั้ง 4 รายการ', 'ตามแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน ระดับประถมศึกษาและมัธยมศึกษา')}
-  ${indicatorCards(d.indicators)}
 ${gallery(D, 'd4', 4, 'ภาพการจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ จากเอกสารประกอบการประเมินด้านที่ 4')}
   <div style="margin-top:34px">${pager('dimension-3', 'ด้านที่ 3 การบริหารและการจัดการศึกษา', 'dimension-5', 'ด้านที่ 5 ความดีเด่นของสถานศึกษา')}</div>
 </div></section>`;
@@ -836,10 +830,6 @@ ${projects}
     <p class="card-body" style="margin:0;font-size:15.5px">${esc(c.text)}</p></div>`).join('')}</div>
 </div></section>
 <section class="section"><div class="wrap">
-  ${secHead('สรุป', '', 'ตัวชี้วัดของด้านที่ 5', 'ตามแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน ระดับประถมศึกษาและมัธยมศึกษา')}
-  ${Object.entries(d.indicators).map(([k, v]) => `<div class="card"${rev()}>
-    <h3 class="card-title" style="font-size:17.5px">${esc(k)}</h3>
-    <ol class="bullets">${v.map(x => `<li>${esc(x)}</li>`).join('')}</ol></div>`).join('')}
   <div style="margin-top:24px">${callout('หมายเหตุ:', 'โครงการที่นำเสนอเป็นโครงการตามแนวพระราชดำริของพระบาทสมเด็จพระเจ้าอยู่หัวรัชกาลที่ 9 หรือรัชกาลปัจจุบัน ตามที่กำหนดไว้ในแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน')}</div>
 ${gallery(D, 'd5', 5, 'ภาพความดีเด่นและการพัฒนาคุณภาพอย่างต่อเนื่อง จากเอกสารประกอบการประเมินด้านที่ 5')}
   <div style="margin-top:34px">${pager('dimension-4', 'ด้านที่ 4 การจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ', 'home', 'กลับสู่หน้าแรก')}</div>

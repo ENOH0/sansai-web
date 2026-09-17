@@ -153,16 +153,6 @@
 
 <section class="section" *ngIf="open() === null">
   <div class="wrap">
-    <app-section-header kicker="สรุป" title="ตัวชี้วัดของด้านที่ 5"
-      lead="ตามแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน ระดับประถมศึกษาและมัธยมศึกษา" />
-
-    <div class="card" *ngFor="let key of indicatorKeys" appReveal>
-      <h3 class="card-title" style="font-size:17.5px">{{ key }}</h3>
-      <ol class="bullets">
-        <li *ngFor="let it of d.indicators[key]">{{ it }}</li>
-      </ol>
-    </div>
-
     <app-callout label="หมายเหตุ:" style="display:block;margin-top:24px">
       โครงการที่นำเสนอเป็นโครงการตามแนวพระราชดำริของพระบาทสมเด็จพระเจ้าอยู่หัวรัชกาลที่ 9 หรือรัชกาลปัจจุบัน
       ตามที่กำหนดไว้ในแบบประเมินสถานศึกษาเพื่อรับรางวัลพระราชทาน
