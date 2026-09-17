@@ -265,3 +265,132 @@
   .sw-process-arrow--1, .sw-process-arrow--2, .sw-process-arrow--3 { top: auto; right: auto; bottom: -40px; left: 50%; transform: translateX(-50%) rotate(90deg); }
   .sw-process-arrow--4 { top: 50%; right: -40px; bottom: auto; left: auto; transform: translateY(-50%) rotate(-90deg); }
 }
+
+
+/* ============================================================
+   เอฟเฟกต์ 3 มิติ (ใช้ร่วมกันทั้ง SMART Student และ ACADEMIC MODEL)
+   ชั้นความลึก: เงาพื้น → วงนอก → วงล้อ → วงขาวกลาง → ตัวอักษร/ปุ่ม → แกนกลาง
+   ============================================================ */
+.sw-diagram { perspective: 1200px; }
+.sw-tilt {
+  --rx: 0deg; --ry: 0deg; --gx: 50%; --gy: 30%;
+  position: absolute; inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform .9s cubic-bezier(.2, .8, .2, 1);
+}
+.sw-tilt.sw-active { transition: transform .18s ease-out; }
+.sw-tilt.sw-idle { animation: swFloat 9s ease-in-out infinite; }
+@keyframes swFloat {
+  0%, 100% { transform: rotateX(7deg) rotateY(-7deg); }
+  25%      { transform: rotateX(-5deg) rotateY(-3deg); }
+  50%      { transform: rotateX(-6deg) rotateY(7deg); }
+  75%      { transform: rotateX(5deg) rotateY(4deg); }
+}
+
+/* เงานุ่มบนพื้นใต้โมเดล */
+.sw-shadow {
+  position: absolute; left: 10%; right: 10%; bottom: -5%; height: 14%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(8, 21, 47, .38), transparent 70%);
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+.sw-cycle { transform: translateZ(0); }
+
+/* แสงวิ่งรอบวงนอก (หมุนด้วย transform) */
+.sw-orbit {
+  position: absolute; inset: 0; border-radius: 50%;
+  transform: translateZ(4px);
+  background: conic-gradient(from 0deg, transparent 0 78%, rgba(255, 255, 255, .0) 80%, rgba(255, 255, 255, .85) 90%, transparent 92%);
+  -webkit-mask: radial-gradient(circle, transparent 0 71%, #000 72% 93.5%, transparent 94%);
+          mask: radial-gradient(circle, transparent 0 71%, #000 72% 93.5%, transparent 94%);
+  animation: swSpin 7s linear infinite;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+}
+@keyframes swSpin { to { transform: translateZ(4px) rotate(360deg); } }
+
+/* วงล้อยกขึ้นจากวงนอก มีขอบหนาให้เห็นเป็นแผ่น */
+.sw-wheel {
+  transform-style: preserve-3d;
+  transform: translateZ(16px);
+  box-shadow:
+    inset 0 0 0 3px #fff,
+    0 2px 0 #c9d6ea, 0 4px 0 #b9c8e2, 0 6px 0 #a9bbd9,
+    0 22px 40px rgba(8, 21, 47, .32);
+}
+.sw-wheel::after { transform: translateZ(18px); box-shadow: 0 10px 22px rgba(8, 21, 47, .22); }
+.sw-hub { transform: translateZ(46px); }
+.sw-hub strong { text-shadow: 0 3px 10px rgba(24, 53, 111, .18); }
+
+.sw-piece { transform: translate(-50%, -50%) translateZ(30px); transition: background .2s var(--ease), transform .35s cubic-bezier(.2, .9, .3, 1.3), box-shadow .25s; }
+.sw-piece .sw-letter { text-shadow: 0 3px 8px rgba(8, 21, 47, .28); }
+.sw-piece:active { transform: translate(-50%, -50%) translateZ(22px) scale(.94); }
+.sw-piece.is-on {
+  transform: translate(-50%, -50%) translateZ(58px) scale(1.1);
+  box-shadow: 0 0 0 3px var(--gold-500), 0 16px 26px rgba(8, 21, 47, .35);
+}
+.sw-theme-academic .sw-piece.is-on { box-shadow: 0 0 0 3px #e8a43c, 0 16px 26px rgba(8, 21, 47, .3); }
+@media (hover: hover) {
+  .sw-piece:hover { transform: translate(-50%, -50%) translateZ(44px) scale(1.05); }
+  .sw-piece.is-on:hover { transform: translate(-50%, -50%) translateZ(58px) scale(1.1); }
+}
+
+/* แสงสะท้อนเคลื่อนตามมุมเอียง */
+.sw-glare {
+  position: absolute; inset: 0; z-index: 5; border-radius: 50%;
+  transform: translateZ(64px);
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(255, 255, 255, .42), rgba(255, 255, 255, 0) 45%);
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sw-tilt, .sw-tilt.sw-idle { animation: none; transition: none; transform: none; }
+  .sw-orbit { animation: none; opacity: 0; }
+  .sw-piece, .sw-piece.is-on { transition: none; }
+}
+
+/* ---------- ปรับสำหรับ iPad / จอสัมผัส ---------- */
+.sw-diagram { touch-action: pan-y; -webkit-user-select: none; user-select: none; }
+.sw-tilt.sw-active { transition: transform .9s cubic-bezier(.2, .8, .2, 1); }
+.sw-tilt.sw-active.sw-fast { transition: transform .16s ease-out; }
+
+/* เข้าสู่หน้าจอ: ตั้งขึ้นจากแนวราบ */
+.sw-diagram.sw-enter:not(.sw-entered) .sw-tilt { opacity: 0; transform: rotateX(62deg) scale(.82); animation: none; transition: none; }
+.sw-diagram.sw-entered .sw-tilt:not(.sw-active) { transition: transform 1.1s cubic-bezier(.16, 1, .3, 1), opacity .6s ease; }
+.sw-diagram.sw-entered .sw-tilt.sw-idle { animation: swFloat 9s ease-in-out 1.2s infinite; }
+.sw-diagram.sw-enter:not(.sw-entered) .sw-shadow { opacity: 0; }
+.sw-shadow { transition: opacity .8s ease; }
+
+/* วงคลื่นแสงเมื่อแตะ */
+.sw-ripple {
+  position: absolute; z-index: 6; width: 26%; aspect-ratio: 1;
+  border: 3px solid rgba(232, 164, 60, .9); border-radius: 50%;
+  transform: translate(-50%, -50%) translateZ(60px) scale(.3);
+  opacity: 1; pointer-events: none;
+  animation: swRipple .85s cubic-bezier(.2, .7, .3, 1) forwards;
+}
+@keyframes swRipple { to { transform: translate(-50%, -50%) translateZ(60px) scale(1.9); opacity: 0; } }
+
+/* แกนกลางหายใจเบา ๆ */
+.sw-hub { animation: swBreath 4.5s ease-in-out infinite; }
+@keyframes swBreath { 0%, 100% { transform: translateZ(46px) scale(1); } 50% { transform: translateZ(46px) scale(1.045); } }
+
+/* การ์ดรายละเอียดเลื่อนเข้า */
+.sw-detail.sw-swap .sw-detail-title,
+.sw-detail.sw-swap .sw-detail-key,
+.sw-detail.sw-swap .sw-evidence { animation: swSwap .45s cubic-bezier(.2, .8, .2, 1) both; }
+.sw-detail.sw-swap .sw-detail-key { animation-delay: .05s; }
+.sw-detail.sw-swap .sw-evidence { animation-delay: .1s; }
+@keyframes swSwap { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* ปุ่มบนวงล้อใหญ่พอสำหรับนิ้ว */
+.sw-piece { min-width: 44px; min-height: max(44px, 21%); }
+
+@media (prefers-reduced-motion: reduce) {
+  .sw-diagram.sw-enter .sw-tilt { opacity: 1; transform: none; }
+  .sw-hub, .sw-ripple, .sw-detail.sw-swap * { animation: none !important; }
+}

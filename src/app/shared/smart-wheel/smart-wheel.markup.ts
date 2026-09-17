@@ -39,6 +39,9 @@ export function smartWheelHtml(items: WheelItem[], hubLabel: string, hubTitle: s
 return `
 <div class="sw-layout${theme ? ` sw-theme-${theme}` : ''}">
   <div class="sw-diagram">
+   <div class="sw-shadow" aria-hidden="true"></div>
+   <div class="sw-tilt sw-idle">
+    <div class="sw-orbit" aria-hidden="true"></div>
     <svg class="sw-cycle" viewBox="0 0 600 600" aria-hidden="true">
       <!-- 4 ส่วนโค้งต่อกันเป็นวงเดียว รัศมี 248 หนา 64 (ครอบคลุมรัศมี 216–280) ให้ตัวหนังสืออยู่กลางแถบพอดี -->
       <path d="M52 300A248 248 0 0 1 300 52" />
@@ -58,7 +61,9 @@ return `
         ${hubSubtitle ? `<small>${hubSubtitle}</small>` : ''}
       </div>
       ${items.map(piece).join('')}
+      <div class="sw-glare" aria-hidden="true"></div>
     </div>
+   </div>
   </div>
 
   <aside class="sw-detail" aria-live="polite">
@@ -117,6 +122,121 @@ export function initSmartWheel(root: HTMLElement, items: WheelItem[]): void {
         </div>`;
   };
 
-  pieces.forEach(p => p.addEventListener('click', () => select(Number(p.dataset['i']))));
+  /* ---------- เอฟเฟกต์ 3 มิติ: เอียงตามเมาส์/นิ้ว + แสงสะท้อน ----------
+     ใช้แค่ CSS transform ผ่านตัวแปร --rx/--ry/--gx/--gy (ไม่กระทบเลย์เอาต์)
+     เขียนเป็นฟังก์ชันซ้อนภายใน เพราะ preview.html คัดลอกเฉพาะตัว initSmartWheel ไปใช้ */
+  function initTilt(root: HTMLElement): (it: WheelItem, el?: HTMLElement) => void {
+    const none = () => {};
+    const diagram = root.querySelector<HTMLElement>('.sw-diagram');
+    const tilt = root.querySelector<HTMLElement>('.sw-tilt');
+    if (!diagram || !tilt) return none;
+    const reduce = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) { tilt.classList.remove('sw-idle'); return none; }
+
+    const MAX = 14;             // องศาเอียงสูงสุด
+    let raf = 0;
+    let idleTimer = 0;
+    const set = (rx: number, ry: number, gx: number, gy: number) => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        tilt.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+        tilt.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+        tilt.style.setProperty('--gx', gx.toFixed(1) + '%');
+        tilt.style.setProperty('--gy', gy.toFixed(1) + '%');
+      });
+    };
+    const wake = (fast = true) => {
+      tilt.classList.remove('sw-idle');
+      tilt.classList.add('sw-active');
+      tilt.classList.toggle('sw-fast', fast);
+      clearTimeout(idleTimer);
+    };
+    const rest = (delay = 2600) => {
+      clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(() => {
+        tilt.classList.remove('sw-fast');
+        set(0, 0, 50, 30);
+        idleTimer = window.setTimeout(() => {
+          tilt.classList.remove('sw-active');
+          tilt.classList.add('sw-idle');
+        }, 900);
+      }, delay);
+    };
+    const fromPoint = (clientX: number, clientY: number, k = 1) => {
+      const r = diagram.getBoundingClientRect();
+      const px = Math.min(1, Math.max(0, (clientX - r.left) / r.width));
+      const py = Math.min(1, Math.max(0, (clientY - r.top) / r.height));
+      set((0.5 - py) * 2 * MAX * k, (px - 0.5) * 2 * MAX * k, px * 100, py * 100);
+    };
+
+    // เมาส์/ปากกา: เอียงตามตำแหน่งตลอด
+    diagram.addEventListener('pointermove', e => {
+      if (e.pointerType === 'touch') return;
+      wake(); fromPoint(e.clientX, e.clientY);
+    });
+    diagram.addEventListener('pointerleave', e => { if (e.pointerType !== 'touch') rest(400); });
+
+    // iPad: ใช้นิ้วลากบนวงล้อเพื่อหมุนเอียงดูรอบ ๆ (ลากขึ้นลงยังเลื่อนหน้าได้ตามปกติ)
+    let touchId: number | null = null;
+    diagram.addEventListener('pointerdown', e => {
+      if (e.pointerType !== 'touch') return;
+      touchId = e.pointerId;
+      wake(); fromPoint(e.clientX, e.clientY, 0.8);
+    });
+    diagram.addEventListener('pointermove', e => {
+      if (e.pointerType !== 'touch' || e.pointerId !== touchId) return;
+      fromPoint(e.clientX, e.clientY, 1.1);
+    });
+    const endTouch = (e: PointerEvent) => {
+      if (e.pointerType !== 'touch' || e.pointerId !== touchId) return;
+      touchId = null;
+      rest(1800);
+    };
+    diagram.addEventListener('pointerup', endTouch);
+    diagram.addEventListener('pointercancel', endTouch);
+
+    // เข้าสู่หน้าจอครั้งแรก: วงล้อค่อย ๆ ตั้งขึ้นจากแนวราบ
+    diagram.classList.add('sw-enter');
+    if (typeof IntersectionObserver === 'function') {
+      const io = new IntersectionObserver(entries => {
+        if (entries.some(en => en.isIntersecting)) {
+          diagram.classList.add('sw-entered');
+          io.disconnect();
+        }
+      }, { threshold: 0.25 });
+      io.observe(diagram);
+    } else {
+      diagram.classList.add('sw-entered');
+    }
+
+    // แตะเลือก: เอียงไปหาองค์ประกอบ + วงคลื่นแสงกระจายจากจุดที่แตะ
+    return (it: WheelItem, el?: HTMLElement) => {
+      wake(false);
+      const px = it.x / 100, py = it.y / 100;
+      set((0.5 - py) * 1.6 * MAX, (px - 0.5) * 1.6 * MAX, px * 100, py * 100);
+      if (el) {
+        const wheel = el.parentElement;
+        if (wheel) {
+          const ripple = document.createElement('span');
+          ripple.className = 'sw-ripple';
+          ripple.style.left = it.x + '%';
+          ripple.style.top = it.y + '%';
+          wheel.appendChild(ripple);
+          window.setTimeout(() => ripple.remove(), 900);
+        }
+      }
+      rest();
+    };
+  }
+
+  const leanToward = initTilt(root);
+  pieces.forEach(p => p.addEventListener('click', () => {
+    const i = Number(p.dataset['i']);
+    select(i);
+    leanToward(items[i], p);
+    // การ์ดรายละเอียดเลื่อนเข้าใหม่ทุกครั้งที่เปลี่ยน
+    const detail = root.querySelector<HTMLElement>('.sw-detail');
+    if (detail) { detail.classList.remove('sw-swap'); void detail.offsetWidth; detail.classList.add('sw-swap'); }
+  }));
   select(0);
 }
