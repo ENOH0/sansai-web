@@ -443,6 +443,14 @@ export class Dimension1Component implements OnInit {
     {
       title: 'การนำเสนอผลงาน เรื่อง พลังสำคัญในการต่อยอดความคิดสร้างสรรค์และพัฒนาศักยภาพของผู้เรียน',
       images: [1, 2].map(n => `/evidence/1.1.4/activities/presentation-0${n}.jpg`)
+    },
+    {
+      title: 'การนำเสนอนวัตกรรม ผลงานจากการศึกษาค้นคว้าด้วยตนเอง (Independent Study : IS) และการประกวดโครงงานจากหนังสือสารานุกรมไทยสำหรับเยาวชนฯ',
+      images: [1, 2, 3].map(n => `/evidence/1.1.4/activities/is-innovation-0${n}.jpg`)
+    },
+    {
+      title: 'การนำเสนอรอบคัดเลือก สุดยอดนวัตกรรมทางสังคม ครั้งที่ 2 (SK Social Innovation Award 2026)',
+      images: [1, 2, 3, 4].map(n => `/evidence/1.1.4/activities/sk-social-innovation-0${n}.jpg`)
     }
   ];
 
