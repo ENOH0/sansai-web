@@ -29,6 +29,20 @@ export class Dimension4Component {
   /* ความสูงจริงของโมเดล PDCAR ที่ส่งมาจาก iframe ทำให้ไม่มีแถบเลื่อนซ้อน */
   readonly pdcarModelHeight = signal(900);
   readonly designModelHeight = signal(760);
+  readonly designStepsHeight = signal(900);
+
+  /** เลื่อนหน้าหลักให้เห็นหน้าต่างรายละเอียดที่เปิดใน iframe (iframe สูงเท่าเนื้อหา เลื่อนเองไม่ได้) */
+  private scrollParentTo(selector: string, data: { top?: number; bottom?: number }): void {
+    const frame = document.querySelector<HTMLIFrameElement>(selector);
+    const top = Number(data.top), bottom = Number(data.bottom);
+    if (!frame || !Number.isFinite(top) || !Number.isFinite(bottom)) return;
+    const base = frame.getBoundingClientRect().top;
+    const elTop = base + top, elBottom = base + bottom, navGap = 84;
+    let delta = 0;
+    if (elTop < navGap) delta = elTop - navGap;
+    else if (elBottom > window.innerHeight) delta = Math.min(elBottom - window.innerHeight + 16, elTop - navGap);
+    if (delta) window.scrollBy({ top: delta, behavior: 'smooth' });
+  }
 
   @HostListener('window:message', ['$event'])
   resizePdcarModel(event: MessageEvent<{ type?: string; height?: number; group?: string }>): void {
@@ -38,6 +52,16 @@ export class Dimension4Component {
       const key = event.data.group;
       const group = this.groups.find(g => g.key === key);
       if (group) this.selectGroup(group.key);
+      return;
+    }
+    /* โมเดลขั้นตอนการออกแบบการจัดการเรียนรู้ 8 ขั้น (4.1) */
+    if (event.data?.type === 'd4-design-steps-height') {
+      const h = Number(event.data.height);
+      if (Number.isFinite(h)) this.designStepsHeight.set(Math.max(700, h));
+      return;
+    }
+    if (event.data?.type === 'd4-design-steps-scroll') {
+      this.scrollParentTo('iframe[src="/models/learning-design-steps-model.html"]', event.data as { top?: number; bottom?: number });
       return;
     }
     /* โมเดลการออกแบบการจัดการเรียนรู้ (4.1) */

@@ -1,0 +1,1171 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#fff">
+    <meta name="description" content="MODEL ขั้นตอนการออกแบบการจัดการเรียนรู้ 8 ขั้น">
+    <title>MODEL ขั้นตอนการออกแบบการจัดการเรียนรู้</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%237566d9'/%3E%3Cpath d='M16 45V19h7l9 13 9-13h7v26h-8V31l-8 11-8-11v14z' fill='white'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- ใช้ในด้านที่ 4 หัวข้อ 4.1 (ฝังเป็น iframe เหนือโมเดล 4 ขั้น) · แก้เนื้อหาได้ที่ตัวแปร content ด้านล่าง -->
+    <style>
+        :root {
+            --ink: #292740;
+            --muted: #6f6b80;
+            --violet: #7566d9;
+            --line: #e9e6f1;
+            --shadow: 0 20px 55px rgba(71, 57, 112, .13)
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            margin: 0;
+            background: transparent;
+            color: var(--ink);
+            font-family: "Sarabun", Tahoma, sans-serif;
+            font-size: 18px;
+            line-height: 1.5
+        }
+
+        button {
+            font: inherit
+        }
+
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(16px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        @keyframes pop {
+            0% {
+                transform: translateY(0) scale(1)
+            }
+
+            45% {
+                transform: translateY(-11px) scale(1.025)
+            }
+
+            100% {
+                transform: translateY(-6px) scale(1.012)
+            }
+        }
+
+        @keyframes fill {
+            from {
+                transform: scaleX(0)
+            }
+
+            to {
+                transform: scaleX(1)
+            }
+        }
+
+        @keyframes reveal {
+            from {
+                opacity: 0;
+                transform: translateX(14px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .page {
+            width: 100%;
+            margin: auto;
+            padding: 8px 4px 16px
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 25px;
+            margin-bottom: 24px;
+            animation: rise .6s both
+        }
+
+        .eyebrow {
+            margin: 0 0 4px;
+            color: var(--violet);
+            font-size: .78rem;
+            font-weight: 800;
+            letter-spacing: .12em
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2rem, 4.5vw, 3.8rem);
+            line-height: .96;
+            letter-spacing: -.02em
+        }
+
+        h1 span {
+            display: block;
+            color: var(--violet);
+            margin-top: .13em
+        }
+
+        .intro {
+            max-width: 450px;
+            margin: 0 0 5px;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.32
+        }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: minmax(540px, 1.15fr) minmax(360px, .85fr);
+            gap: 22px;
+            align-items: start
+        }
+
+        .model,
+        .detail {
+            border: 1px solid var(--line);
+            border-radius: 30px;
+            background: #fff;
+            box-shadow: var(--shadow)
+        }
+
+        .model {
+            padding: 24px
+        }
+
+        .model-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 17px
+        }
+
+        .model-head h2 {
+            margin: 0;
+            font-size: 1.25rem
+        }
+
+        .auto {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .status {
+            padding: 5px 12px;
+            border: 1px solid #e6e1fb;
+            border-radius: 999px;
+            color: #6c5bc7;
+            background: #faf9ff;
+            font-size: .75rem;
+            font-weight: 700
+        }
+
+        .toggle {
+            border: 0;
+            border-radius: 999px;
+            background: #7566d9;
+            color: #fff;
+            padding: 6px 16px;
+            font-size: .75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        @media (hover:hover) { .toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(117, 102, 217, .28)
+        } }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 11px
+        }
+
+        .step {
+            --tone: #ee7ba4;
+            --soft: #fff1f6;
+            --glow: rgba(238, 123, 164, .23);
+            position: relative;
+            min-height: 133px;
+            padding: 15px 16px 14px 68px;
+            border: 1px solid color-mix(in srgb, var(--tone) 23%, white);
+            border-radius: 20px;
+            background: linear-gradient(135deg, #fff 35%, var(--soft));
+            color: var(--ink);
+            text-align: left;
+            cursor: pointer;
+            overflow: hidden;
+            transition: .28s ease;
+            animation: rise .45s both
+        }
+
+        .step:nth-child(2) {
+            --tone: #8b75df;
+            --soft: #f0edff;
+            --glow: rgba(139, 117, 223, .23);
+            animation-delay: .04s
+        }
+
+        .step:nth-child(3) {
+            --tone: #ea9c34;
+            --soft: #fff5df;
+            --glow: rgba(234, 156, 52, .23);
+            animation-delay: .08s
+        }
+
+        .step:nth-child(4) {
+            --tone: #35afa8;
+            --soft: #e5faf7;
+            --glow: rgba(53, 175, 168, .22);
+            animation-delay: .12s
+        }
+
+        .step:nth-child(5) {
+            --tone: #ef7774;
+            --soft: #fff0ef;
+            --glow: rgba(239, 119, 116, .22);
+            animation-delay: .16s
+        }
+
+        .step:nth-child(6) {
+            --tone: #5ea5df;
+            --soft: #eaf6ff;
+            --glow: rgba(94, 165, 223, .22);
+            animation-delay: .2s
+        }
+
+        .step:nth-child(7) {
+            --tone: #79a74a;
+            --soft: #f1f8e8;
+            --glow: rgba(121, 167, 74, .22);
+            animation-delay: .24s
+        }
+
+        .step:nth-child(8) {
+            --tone: #c477c7;
+            --soft: #fbecfb;
+            --glow: rgba(196, 119, 199, .22);
+            animation-delay: .28s
+        }
+
+        @media (hover:hover) { .step:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 28px var(--glow)
+        } }
+
+        .step:focus-visible {
+            outline: 4px solid color-mix(in srgb, var(--tone) 30%, white);
+            outline-offset: 2px
+        }
+
+        .step.active {
+            border-color: var(--tone);
+            box-shadow: 0 16px 34px var(--glow);
+            animation: pop .45s cubic-bezier(.2, .9, .25, 1) both
+        }
+
+        .step.active:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 4px;
+            background: var(--tone);
+            transform-origin: left;
+            animation: fill 6s linear both
+        }
+
+        .model.paused .step.active:after {
+            animation-play-state: paused
+        }
+
+        .num {
+            position: absolute;
+            left: 15px;
+            top: 16px;
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: var(--tone);
+            color: #fff;
+            font-weight: 800;
+            font-size: 1.25rem;
+            box-shadow: 0 8px 18px var(--glow)
+        }
+
+        .step small {
+            display: block;
+            margin-bottom: 2px;
+            color: var(--tone);
+            font-size: .67rem;
+            font-weight: 800;
+            letter-spacing: .08em
+        }
+
+        .step h3 {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.17
+        }
+
+        .step .more {
+            display: inline-block;
+            margin-top: 6px;
+            color: var(--tone);
+            font-size: .69rem;
+            font-weight: 800
+        }
+
+        .detail {
+            --tone: #ee7ba4;
+            position: relative;
+            min-height: 650px;
+            padding: 29px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden
+        }
+
+        .detail-top {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start
+        }
+
+        .detail-num {
+            flex: 0 0 auto;
+            width: 53px;
+            height: 53px;
+            display: grid;
+            place-items: center;
+            border-radius: 17px;
+            background: var(--tone);
+            color: #fff;
+            font-size: 1.45rem;
+            font-weight: 800;
+            box-shadow: 0 10px 24px color-mix(in srgb, var(--tone) 28%, transparent)
+        }
+
+        .detail small {
+            display: block;
+            color: var(--tone);
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .09em
+        }
+
+        .detail h2 {
+            margin: 2px 0 0;
+            font-size: 1.48rem;
+            line-height: 1.12
+        }
+
+        .summary {
+            margin: 20px 0 15px;
+            color: #4f4b61;
+            line-height: 1.48;
+            animation: reveal .4s both
+        }
+
+        .detail h4 {
+            margin: 0 0 8px;
+            color: var(--tone);
+            font-size: .88rem
+        }
+
+        .subpoints {
+            display: grid;
+            gap: 8px;
+            margin: 0;
+            padding: 0;
+            list-style: none
+        }
+
+        .subpoints button {
+            position: relative;
+            width: 100%;
+            padding: 11px 14px 11px 31px;
+            border: 1px solid #ece9f2;
+            border-radius: 14px;
+            background: #fff;
+            color: var(--ink);
+            text-align: left;
+            line-height: 1.25;
+            cursor: pointer;
+            animation: reveal .4s both;
+            transition: .2s
+        }
+
+        .subpoints li:nth-child(2) button {
+            animation-delay: .1s
+        }
+
+        .subpoints li:nth-child(3) button {
+            animation-delay: .2s
+        }
+
+        .subpoints button:before {
+            content: "";
+            position: absolute;
+            left: 13px;
+            top: 1.03em;
+            width: 8px;
+            height: 8px;
+            border-radius: 3px;
+            background: var(--tone);
+            transform: rotate(45deg)
+        }
+
+        @media (hover:hover) { .subpoints button:hover,
+        .subpoints button:focus-visible {
+            border-color: var(--tone);
+            background: color-mix(in srgb, var(--tone) 7%, white);
+            outline: none
+        } }
+
+        .subanswer {
+            display: none;
+            margin: 5px 4px 0;
+            padding: 9px 14px;
+            border-left: 3px solid var(--tone);
+            color: #625d73;
+            font-size: .83rem;
+            line-height: 1.35;
+            background: color-mix(in srgb, var(--tone) 5%, white);
+            border-radius: 0 10px 10px 0
+        }
+
+        .subpoints li.open .subanswer {
+            display: block;
+            animation: reveal .3s both
+        }
+
+        .open-modal {
+            margin-top: auto;
+            align-self: flex-start;
+            border: 0;
+            border-radius: 14px;
+            padding: 10px 20px;
+            background: var(--tone);
+            color: #fff;
+            font-weight: 800;
+            font-size: .85rem;
+            cursor: pointer;
+            box-shadow: 0 10px 24px color-mix(in srgb, var(--tone) 28%, transparent);
+            transition: .2s
+        }
+
+        @media (hover:hover) { .open-modal:hover {
+            transform: translateY(-2px)
+        } }
+
+        dialog {
+            width: min(800px, calc(100% - 28px));
+            max-height: 680px;
+            padding: 0;
+            border: 0;
+            border-radius: 28px;
+            background: #fff;
+            color: var(--ink);
+            box-shadow: 0 35px 100px rgba(44, 35, 74, .34);
+            overflow: hidden
+        }
+
+        dialog::backdrop {
+            background: rgba(39, 34, 63, .44);
+            backdrop-filter: blur(7px)
+        }
+
+        dialog[open] {
+            animation: rise .35s cubic-bezier(.2, .9, .2, 1) both
+        }
+
+        .modal-bar {
+            height: 8px;
+            background: var(--tone)
+        }
+
+        .modal-body {
+            padding: clamp(23px, 5vw, 40px);
+            max-height: 672px;
+            overflow: auto
+        }
+
+        .modal-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 18px
+        }
+
+        .modal-kicker {
+            margin: 0;
+            color: var(--tone);
+            font-size: .8rem;
+            font-weight: 800
+        }
+
+        .modal-head h2 {
+            margin: 3px 0 0;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            line-height: 1.08
+        }
+
+        .close {
+            border: 1px solid #e6e2ef;
+            border-radius: 999px;
+            background: #f8f7fb;
+            color: #514b64;
+            padding: 6px 16px;
+            font-size: .75rem;
+            font-weight: 800;
+            cursor: pointer
+        }
+
+        .modal-copy {
+            margin: 20px 0 15px;
+            color: #514d63
+        }
+
+        .modal-list {
+            display: grid;
+            gap: 9px;
+            margin: 0;
+            padding: 0;
+            list-style: none
+        }
+
+        .modal-list li {
+            padding: 13px 16px;
+            border-left: 5px solid var(--tone);
+            border-radius: 7px 14px 14px 7px;
+            background: color-mix(in srgb, var(--tone) 8%, white)
+        }
+
+        .plc {
+            margin-top: 13px;
+            padding: 10px 15px;
+            border: 1px dashed var(--tone);
+            border-radius: 14px;
+            color: #554f66;
+            background: color-mix(in srgb, var(--tone) 6%, white);
+            font-size: .82rem
+        }
+
+        footer {
+            text-align: center;
+            padding-top: 20px;
+            color: var(--muted);
+            font-size: .72rem
+        }
+
+        @media(max-width:990px) {
+            header {
+                align-items: flex-start;
+                flex-direction: column
+            }
+
+            .intro {
+                max-width: 700px
+            }
+
+            .workspace {
+                grid-template-columns: 1fr
+            }
+
+            .detail {
+                position: relative;
+                top: auto;
+                min-height: 520px
+            }
+        }
+
+        @media(max-width:650px) {
+            body {
+                font-size: 19px
+            }
+
+            .page {
+                padding: 22px 12px 32px
+            }
+
+            .model,
+            .detail {
+                border-radius: 23px
+            }
+
+            .model {
+                padding: 15px
+            }
+
+            .model-head {
+                align-items: flex-start
+            }
+
+            .status {
+                display: none
+            }
+
+            .steps {
+                grid-template-columns: 1fr
+            }
+
+            .step {
+                min-height: 118px
+            }
+
+            .detail {
+                padding: 22px
+            }
+
+            .detail h2 {
+                font-size: 1.25rem
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            *,
+            *:before,
+            *:after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+                scroll-behavior: auto !important
+            }
+        }
+
+        /* Algorithm flow layout */
+        .workspace {
+            grid-template-columns: minmax(430px, .9fr) minmax(430px, 1.1fr)
+        }
+
+        .flow-start,
+        .flow-end {
+            position: relative;
+            width: max-content;
+            max-width: 85%;
+            margin-inline: auto;
+            padding: 7px 26px;
+            border-radius: 999px;
+            background: #7566d9;
+            color: #fff;
+            font-size: .78rem;
+            font-weight: 800;
+            text-align: center
+        }
+
+        .flow-start {
+            margin-bottom: 28px
+        }
+
+        .flow-start:after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            width: 2px;
+            height: 20px;
+            background: #b9b0e8;
+            transform: translateX(-50%)
+        }
+
+        .flow-end {
+            margin-top: 28px;
+            background: #4f9880
+        }
+
+        .flow-end:before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 100%;
+            width: 2px;
+            height: 20px;
+            background: #acd3c5;
+            transform: translateX(-50%)
+        }
+
+        .steps {
+            grid-template-columns: 1fr;
+            gap: 28px;
+            max-height: 680px;
+            overflow: auto;
+            position: relative;
+            padding: 10px 14px 15px;
+            scrollbar-width: thin;
+            scrollbar-color: #cfc8ee transparent
+        }
+
+        .step {
+            min-height: 108px;
+            padding: 14px 18px 13px 78px;
+            overflow: visible
+        }
+
+        .step.active {
+            z-index: 2
+        }
+
+        .num {
+            left: 17px;
+            top: 17px;
+            width: 45px;
+            height: 45px
+        }
+
+        .connector {
+            position: absolute;
+            left: 50%;
+            top: calc(100% + 1px);
+            width: 2px;
+            height: 27px;
+            background: color-mix(in srgb, var(--tone) 50%, #d5d0e4);
+            transform: translateX(-50%);
+            pointer-events: none
+        }
+
+        .connector:after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 9px;
+            height: 9px;
+            border-right: 2px solid var(--tone);
+            border-bottom: 2px solid var(--tone);
+            transform: translateX(-50%) rotate(45deg)
+        }
+
+        .step:last-child .connector {
+            display: none
+        }
+
+        @media(max-width:990px) {
+            .workspace {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:650px) {
+            .steps {
+                grid-template-columns: 1fr;
+                max-height: 620px;
+                padding-inline: 6px
+            }
+        }
+
+        /* Enhanced motion and visual polish */
+        @keyframes aura {
+
+            0%,
+            100% {
+                opacity: .34;
+                transform: scale(.88)
+            }
+
+            50% {
+                opacity: .72;
+                transform: scale(1.18)
+            }
+        }
+
+        @keyframes travel {
+            0% {
+                transform: translate(-50%, -8px);
+                opacity: 0
+            }
+
+            18% {
+                opacity: 1
+            }
+
+            82% {
+                opacity: 1
+            }
+
+            100% {
+                transform: translate(-50%, 24px);
+                opacity: 0
+            }
+        }
+
+        @keyframes sheen {
+            0% {
+                transform: translateX(-150%) skewX(-20deg)
+            }
+
+            100% {
+                transform: translateX(340%) skewX(-20deg)
+            }
+        }
+
+        @keyframes floatActive {
+
+            0%,
+            100% {
+                translate: 0 -6px
+            }
+
+            50% {
+                translate: 0 -11px
+            }
+        }
+
+        @keyframes ring {
+            0% {
+                box-shadow: 0 0 0 0 color-mix(in srgb, var(--tone) 38%, transparent)
+            }
+
+            75%,
+            100% {
+                box-shadow: 0 0 0 15px transparent
+            }
+        }
+
+        @keyframes detailIn {
+            from {
+                opacity: .25;
+                transform: translateX(18px) scale(.985)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        h1 span {
+            background: linear-gradient(90deg, #6d5ed0, #d05f9c, #e49a35, #33a9a0);
+            background-size: 220% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: bgMove 8s linear infinite
+        }
+
+        @keyframes bgMove {
+            to {
+                background-position: 220% center
+            }
+        }
+
+        .model,
+        .detail {
+            box-shadow: 0 24px 70px rgba(71, 57, 112, .15), 0 1px 0 #fff inset
+        }
+
+        .model {
+            position: relative
+        }
+
+        .model:before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 30px;
+            padding: 1px;
+            background: linear-gradient(130deg, #f3b0ca, #c5baff, #a9e5df, #ffe0a8);
+            background-size: 260% 260%;
+            animation: borderFlow 7s ease infinite;
+            pointer-events: none;
+            opacity: .72;
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask-composite: exclude;
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor
+        }
+
+        @keyframes borderFlow {
+            50% {
+                background-position: 100% 100%
+            }
+        }
+
+        .flow-start,
+        .flow-end {
+            box-shadow: 0 10px 26px rgba(117, 102, 217, .25);
+            overflow: visible
+        }
+
+        .flow-start {
+            animation: ring 2.4s ease-out infinite
+        }
+
+        .flow-end {
+            box-shadow: 0 10px 26px rgba(79, 152, 128, .25)
+        }
+
+        .step {
+            isolation: isolate
+        }
+
+        .step:before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            top: -45%;
+            bottom: -45%;
+            left: -35%;
+            width: 20%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .86), transparent);
+            opacity: 0
+        }
+
+        @media (hover:hover) { .step:hover:before {
+            opacity: 1;
+            animation: sheen .9s ease
+        } }
+
+        .step.done {
+            filter: saturate(.86)
+        }
+
+        .step.done .num {
+            background: #817a91
+        }
+
+        .step.done .connector {
+            background: linear-gradient(var(--tone), #bdb5dd)
+        }
+
+        .step.active {
+            animation: pop .45s cubic-bezier(.2, .9, .25, 1) both, floatActive 2.8s ease-in-out .45s infinite
+        }
+
+        .step.active .num {
+            animation: ring 1.8s ease-out infinite
+        }
+
+        .step.active:before {
+            z-index: -1;
+            left: 50%;
+            top: 50%;
+            width: 115%;
+            height: 145%;
+            border-radius: 28px;
+            background: radial-gradient(ellipse, color-mix(in srgb, var(--tone) 24%, transparent), transparent 66%);
+            opacity: .7;
+            transform: translate(-50%, -50%);
+            animation: aura 2.2s ease-in-out infinite
+        }
+
+        .step.active .connector:before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid var(--tone);
+            box-shadow: 0 0 12px var(--tone);
+            animation: travel 1.4s linear infinite
+        }
+
+        .detail {
+            transition: border-color .35s, box-shadow .35s
+        }
+
+        .detail>* {
+            animation: detailIn .42s cubic-bezier(.2, .8, .2, 1) both
+        }
+
+        .detail-top {
+            position: relative
+        }
+
+        .detail-top:after {
+            content: "ขั้นตอนที่กำลังทำงาน";
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 3px 10px;
+            border-radius: 999px;
+            background: color-mix(in srgb, var(--tone) 10%, white);
+            color: var(--tone);
+            font-size: .62rem;
+            font-weight: 800;
+            letter-spacing: .03em
+        }
+
+        .detail-num {
+            position: relative
+        }
+
+        .detail-num:after {
+            content: "";
+            position: absolute;
+            inset: -7px;
+            border: 1px solid color-mix(in srgb, var(--tone) 38%, transparent);
+            border-radius: 22px;
+            animation: aura 2s ease-in-out infinite
+        }
+
+        .subpoints button {
+            box-shadow: 0 5px 14px rgba(63, 51, 95, .045)
+        }
+
+        .subpoints li.open button {
+            border-color: var(--tone);
+            color: var(--tone);
+            font-weight: 800
+        }
+
+        .subanswer {
+            box-shadow: 0 8px 20px color-mix(in srgb, var(--tone) 9%, transparent)
+        }
+
+        .toggle {
+            position: relative;
+            overflow: hidden
+        }
+
+        .toggle:after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .46), transparent);
+            transform: translateX(-120%)
+        }
+
+        @media (hover:hover) { .toggle:hover:after {
+            animation: sheen .8s ease
+        } }
+
+        .open-modal {
+            position: relative;
+            overflow: hidden
+        }
+
+        .open-modal:after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .5), transparent);
+            transform: translateX(-120%);
+            animation: sheen 2.8s ease-in-out infinite
+        }
+
+        dialog[open] {
+            animation: modalBurst .42s cubic-bezier(.16, 1, .3, 1) both
+        }
+
+        @keyframes modalBurst {
+            from {
+                opacity: 0;
+                transform: translateY(28px) scale(.9);
+                filter: blur(8px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+                filter: none
+            }
+        }
+
+        .modal-bar {
+            background: linear-gradient(90deg, var(--tone), color-mix(in srgb, var(--tone) 48%, white), var(--tone));
+            background-size: 200% 100%;
+            animation: bgMove 4s linear infinite
+        }
+
+        @media(max-width:650px) {
+            .detail-top:after {
+                position: static;
+                display: inline-block;
+                margin-top: 8px
+            }
+
+            .step.active {
+                animation: pop .45s cubic-bezier(.2, .9, .25, 1) both
+            }
+        }
+        .toggle, .close, .open-modal { min-height: 44px }
+        .subpoints button { min-height: 44px }
+    </style>
+</head>
+
+<body>
+    <main class="page">
+        <section class="workspace" aria-label="อัลกอริทึมขั้นตอนการออกแบบการจัดการเรียนรู้ 8 ขั้น">
+            <div class="model">
+                <div class="model-head">
+                    <h2>อัลกอริทึม 8 ขั้น</h2>
+                    <div class="auto"><span class="status" id="status">กำลังเล่นอัตโนมัติ</span><button class="toggle"
+                            id="toggle" type="button">หยุด</button></div>
+                </div>
+                <div class="flow-start">เริ่มต้นกระบวนการ</div>
+                <div class="steps" id="steps"></div>
+                <div class="flow-end">ผลลัพธ์: พัฒนาการจัดการเรียนรู้อย่างต่อเนื่อง</div>
+            </div>
+            <aside class="detail" id="detail" aria-live="polite"></aside>
+        </section>
+    </main>
+    <dialog id="modal" aria-labelledby="modalTitle">
+        <div class="modal-bar"></div>
+        <div class="modal-body">
+            <div class="modal-head">
+                <div>
+                    <p class="modal-kicker" id="modalKicker"></p>
+                    <h2 id="modalTitle"></h2>
+                </div><button class="close" type="button">ปิด</button>
+            </div>
+            <p class="modal-copy" id="modalCopy"></p>
+            <ul class="modal-list" id="modalList"></ul>
+            <div class="plc" id="modalNote"></div>
+        </div>
+    </dialog>
+    <script>
+        const content = [
+            { title: 'ประชุมร่วมกันเพื่อวางแผน', short: 'ร่วมกำหนดทิศทางก่อนเริ่มออกแบบ', copy: 'งานจัดการศึกษา กลุ่มบริหารวิชาการจัดประชุมร่วมกับครูกลุ่มสาระการเรียนรู้ เพื่อวางแผนการดำเนินงานออกแบบการจัดการเรียนรู้', points: [['กำหนดทิศทางร่วมกัน', 'ทำความเข้าใจเป้าหมายและแนวทางเดียวกันก่อนเริ่มดำเนินงาน'], ['วางแผนการดำเนินงาน', 'กำหนดลำดับงาน ผู้รับผิดชอบ และช่วงเวลาให้ชัดเจน'], ['สร้างการมีส่วนร่วม', 'เปิดโอกาสให้ครูแต่ละกลุ่มสาระแลกเปลี่ยนข้อมูลและข้อเสนอแนะ']], tone: '#ee709f' },
+            { title: 'วิเคราะห์ผู้เรียนและหลักสูตร', short: 'ทำความเข้าใจบริบทก่อนนำหลักสูตรไปใช้', copy: 'ครูวิเคราะห์นักเรียนเป็นรายบุคคล วิเคราะห์หลักสูตรสถานศึกษา และเตรียมความพร้อมก่อนนำหลักสูตรไปใช้ผ่าน BANCHUEN Model', points: [['วิเคราะห์นักเรียนรายบุคคล', 'พิจารณาความพร้อม ความสนใจ ความสามารถ และความต้องการจำเป็นของผู้เรียน'], ['วิเคราะห์หลักสูตรสถานศึกษา', 'ทบทวนมาตรฐาน ตัวชี้วัด จุดเน้น และบริบทของสถานศึกษา'], ['เตรียมความพร้อมด้วย BANCHUEN Model', 'เชื่อมข้อมูลผู้เรียนและหลักสูตรเข้าสู่กรอบการออกแบบของโรงเรียน']], tone: '#856fdb' },
+            { title: 'กำหนดเป้าหมายการเรียนรู้', short: 'กำหนดผลลัพธ์ให้ครบทั้ง K–S–A–C', copy: 'ครูนำผลการวิเคราะห์ผู้เรียนมากำหนดเป้าหมายการเรียนรู้ ทั้งด้านความรู้ ทักษะ คุณลักษณะอันพึงประสงค์ และสมรรถนะ (K, S, A, C)', points: [['Knowledge — ความรู้', 'กำหนดสาระและความเข้าใจสำคัญที่ผู้เรียนควรได้รับ'], ['Skills & Attributes — ทักษะและคุณลักษณะ', 'ระบุทักษะกระบวนการและคุณลักษณะอันพึงประสงค์ที่ต้องการพัฒนา'], ['Competencies — สมรรถนะ', 'กำหนดความสามารถในการประยุกต์ใช้ความรู้และทักษะในสถานการณ์จริง']], tone: '#e49329' },
+            { title: 'ออกแบบโครงสร้างและแผนการเรียนรู้', short: 'วางแผนครบทั้งเนื้อหา ทักษะ เจตคติ และสมรรถนะ', copy: 'ครูออกแบบและจัดทำโครงสร้างรายวิชาและแผนการจัดการเรียนรู้ ครบถ้วนทั้งขั้นตอนการจัดการเรียนรู้ บูรณาการเนื้อหา ทักษะ เจตคติ และสมรรถนะ', points: [['จัดทำโครงสร้างรายวิชา', 'จัดลำดับหน่วย เวลาเรียน สาระสำคัญ และผลลัพธ์การเรียนรู้ให้สัมพันธ์กัน'], ['ออกแบบขั้นตอนการเรียนรู้', 'วางกิจกรรมตั้งแต่การนำเข้าสู่บทเรียน การเรียนรู้ ไปจนถึงการสรุปและประเมิน'], ['บูรณาการองค์ประกอบสำคัญ', 'เชื่อมเนื้อหา ทักษะ เจตคติ และสมรรถนะไว้ในกิจกรรมเดียวกัน']], tone: '#28a9a2' },
+            { title: 'จัดการเรียนรู้ด้วย ACTIVITY Model', short: 'เน้น Active Learning และการเรียนรู้ที่หลากหลาย', copy: 'จัดการเรียนรู้ตามแนวทาง ACTIVITY Model ดำเนินการผ่านกระบวนการ Active Learning โดยใช้การเรียนรู้ที่หลากหลาย และเชื่อมโยงกับหลักสูตรท้องถิ่นและสถาบันคู่พัฒนา', points: [['Active Learning', 'ให้ผู้เรียนลงมือปฏิบัติ คิด วิเคราะห์ สื่อสาร และสร้างองค์ความรู้ด้วยตนเอง'], ['การเรียนรู้ที่หลากหลาย', 'เลือกวิธีจัดการเรียนรู้ให้เหมาะกับเนื้อหา ความแตกต่าง และความสนใจของผู้เรียน'], ['เชื่อมโยงเครือข่ายการเรียนรู้', 'บูรณาการหลักสูตรท้องถิ่นและความร่วมมือกับสถาบันคู่พัฒนา']], tone: '#eb6c68' },
+            { title: 'วัดและประเมินผลการเรียนรู้', short: 'ใช้วิธีหลากหลายและเหมาะกับผู้เรียน', copy: 'ดำเนินการวัดและประเมินผลการเรียนรู้ด้วยวิธีการที่หลากหลาย เหมาะสมกับนักเรียนแต่ละกลุ่ม และครอบคลุมด้านความรู้ ทักษะ คุณลักษณะอันพึงประสงค์ และสมรรถนะ (K, S, A, C)', points: [['ประเมินอย่างหลากหลาย', 'ใช้การสังเกต ชิ้นงาน ภาระงาน แบบทดสอบ และการประเมินตามสภาพจริง'], ['เหมาะสมกับผู้เรียนแต่ละกลุ่ม', 'ปรับวิธี เครื่องมือ และเกณฑ์ให้สะท้อนศักยภาพของผู้เรียน'], ['ครอบคลุม K–S–A–C', 'ประเมินทั้งความรู้ ทักษะ คุณลักษณะ และสมรรถนะอย่างสมดุล']], tone: '#519dd8' },
+            { title: 'นิเทศ ติดตาม และสะท้อนคิด', short: 'วิเคราะห์ผลร่วมกันผ่านกระบวนการ PLC', copy: 'ฝ่ายบริหารและหัวหน้ากลุ่มสาระการเรียนรู้นิเทศ ติดตาม และวิเคราะห์ผลการออกแบบการเรียนรู้ ก่อนประเมินและสะท้อนคิดร่วมกันผ่านกระบวนการ PLC เพื่อการปรับปรุงและพัฒนา', points: [['นิเทศและติดตาม', 'ติดตามการนำแผนไปใช้ พร้อมให้คำแนะนำที่เชื่อมโยงกับสภาพจริงในชั้นเรียน'], ['วิเคราะห์ผลการออกแบบ', 'พิจารณาความสอดคล้องของเป้าหมาย กิจกรรม และผลการเรียนรู้'], ['PLC เพื่อปรับปรุงและพัฒนา', 'ร่วมสะท้อนผล แลกเปลี่ยนแนวปฏิบัติ และกำหนดสิ่งที่จะพัฒนาในรอบต่อไป']], tone: '#70a141', note: 'หากผลยังไม่มีคุณภาพ ให้นำข้อค้นพบย้อนกลับไปปรับการออกแบบและการจัดการเรียนรู้ แล้วดำเนินการใหม่อย่างต่อเนื่อง' },
+            { title: 'สรุปผลและนำไปพัฒนางาน', short: 'ต่อยอดสู่การวิจัยและนวัตกรรมการเรียนรู้', copy: 'สรุปรายงานผลและนำไปใช้ในการจัดการเรียนรู้ จัดทำวิจัยในชั้นเรียน หรือสร้างนวัตกรรมการเรียนรู้ เพื่อยกระดับคุณภาพอย่างต่อเนื่อง', points: [['สรุปและรายงานผล', 'รวบรวมหลักฐาน ผลลัพธ์ และข้อค้นพบจากการดำเนินงานอย่างเป็นระบบ'], ['นำผลไปใช้จัดการเรียนรู้', 'ปรับแผน กิจกรรม สื่อ และการประเมินให้ตอบโจทย์ผู้เรียนมากขึ้น'], ['วิจัยและสร้างนวัตกรรม', 'นำปัญหาและผลการพัฒนาไปต่อยอดเป็นวิจัยในชั้นเรียนหรือนวัตกรรมการเรียนรู้']], tone: '#b76cbb', note: 'ผลลัพธ์ที่มีคุณภาพจะกลายเป็นองค์ความรู้สำหรับยกระดับการจัดการเรียนรู้ในรอบถัดไป' }];
+        const steps = document.getElementById('steps'), detail = document.getElementById('detail'), modal = document.getElementById('modal'), toggle = document.getElementById('toggle'), statusEl = document.getElementById('status'); let active = 0, timer, playing = true; const interval = 6000;
+        content.forEach((item, index) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'step'; b.setAttribute('aria-label', `ขั้นที่ ${index + 1} ${item.title} ดูรายละเอียด`); b.innerHTML = `<span class="num">${index + 1}</span><small>ลำดับที่ ${String(index + 1).padStart(2, '0')}</small><h3>${item.title}</h3><span class="more">คลิกเพื่ออ่านขั้นตอน</span><span class="connector" aria-hidden="true"></span>`; b.addEventListener('click', () => { selectStep(index, true); stopAuto() }); steps.appendChild(b) });
+        function selectStep(index, showModal = false) { active = index; const item = content[index]; document.querySelectorAll('.step').forEach((el, i) => { el.classList.toggle('active', i === index); el.classList.toggle('done', i < index); el.setAttribute('aria-current', i === index ? 'step' : 'false'); if (i === index) scrollStepIntoList(el) }); detail.style.setProperty('--tone', item.tone); detail.innerHTML = `<div class="detail-top"><span class="detail-num">${index + 1}</span><div><small>ขั้นที่ ${index + 1} จาก 8</small><h2>${item.title}</h2></div></div><p class="summary">${item.copy}</p><h4>คลิกเพื่ออ่านข้อมูลย่อย</h4><ul class="subpoints">${item.points.map((p, i) => `<li><button type="button" aria-expanded="false" data-sub="${i}">${p[0]}</button><div class="subanswer">${p[1]}</div></li>`).join('')}</ul>${item.note ? `<div class="plc">${item.note}</div>` : ''}<button class="open-modal" type="button">เปิดอ่านข้อมูลทั้งหมด</button>`; detail.querySelectorAll('[data-sub]').forEach(b => b.addEventListener('click', () => { const li = b.parentElement, open = li.classList.toggle('open'); b.setAttribute('aria-expanded', String(open)) })); detail.querySelector('.open-modal').addEventListener('click', openModal); if (showModal) openModal() }
+        function scrollStepIntoList(el) { const top = el.offsetTop - steps.offsetTop, bottom = top + el.offsetHeight; if (top < steps.scrollTop + 10) steps.scrollTo({ top: Math.max(0, top - 10), behavior: 'smooth' }); else if (bottom > steps.scrollTop + steps.clientHeight - 16) steps.scrollTo({ top: bottom - steps.clientHeight + 16, behavior: 'smooth' }) }
+        function schedule() { clearTimeout(timer); if (!playing || modal.open) return; timer = setTimeout(() => { selectStep((active + 1) % content.length); schedule() }, interval) } function startAuto() { playing = true; document.querySelector('.model').classList.remove('paused'); toggle.textContent = 'หยุด'; statusEl.textContent = 'กำลังเล่นอัตโนมัติ'; schedule() } function stopAuto() { playing = false; clearTimeout(timer); document.querySelector('.model').classList.add('paused'); toggle.textContent = 'เล่นต่อ'; statusEl.textContent = 'หยุดเพื่ออ่านรายละเอียด' }
+        function openModal() { clearTimeout(timer); const item = content[active]; modal.style.setProperty('--tone', item.tone); document.getElementById('modalKicker').textContent = `ขั้นที่ ${active + 1} จาก 8`; document.getElementById('modalTitle').textContent = item.title; document.getElementById('modalCopy').textContent = item.copy; document.getElementById('modalList').innerHTML = item.points.map(p => `<li><strong>${p[0]}</strong><br>${p[1]}</li>`).join(''); document.getElementById('modalNote').textContent = item.note || 'ขั้นตอนนี้เชื่อมโยงกับขั้นก่อนหน้าและเป็นฐานสำหรับขั้นถัดไป'; const anchor = document.querySelector('.detail'); const top = Math.max(12, Math.min((anchor ? anchor.getBoundingClientRect().top + window.scrollY : 12), document.body.scrollHeight - 700)); modal.style.margin = top + 'px auto auto'; modal.showModal(); if (window.parent !== window) window.parent.postMessage({ type: 'd4-design-steps-scroll', top, bottom: top + modal.getBoundingClientRect().height }, window.location.origin) }
+        modal.querySelector('.close').addEventListener('click', () => modal.close()); modal.addEventListener('click', e => { const r = modal.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) modal.close() }); modal.addEventListener('close', () => { if (playing) schedule() }); toggle.addEventListener('click', () => playing ? stopAuto() : startAuto()); document.addEventListener('keydown', e => { if (!modal.open && '12345678'.includes(e.key)) { selectStep(Number(e.key) - 1, true); stopAuto() } }); function reportHeight() { requestAnimationFrame(() => { const page = document.querySelector('.page'); const height = Math.ceil(page ? page.getBoundingClientRect().height + 8 : document.body.scrollHeight); if (window.parent !== window) window.parent.postMessage({ type: 'd4-design-steps-height', height }, window.location.origin) }) }
+        new ResizeObserver(reportHeight).observe(document.body); window.addEventListener('load', reportHeight);
+        selectStep(0); startAuto();
+    </script>
+</body>
+
+</html>
