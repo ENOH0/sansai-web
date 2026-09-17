@@ -30,6 +30,7 @@ export class Dimension4Component {
   readonly pdcarModelHeight = signal(900);
   readonly designModelHeight = signal(760);
   readonly designStepsHeight = signal(900);
+  readonly assessmentModelHeight = signal(760);
 
   /** เลื่อนหน้าหลักให้เห็นหน้าต่างรายละเอียดที่เปิดใน iframe (iframe สูงเท่าเนื้อหา เลื่อนเองไม่ได้) */
   private scrollParentTo(selector: string, data: { top?: number; bottom?: number }): void {
@@ -52,6 +53,16 @@ export class Dimension4Component {
       const key = event.data.group;
       const group = this.groups.find(g => g.key === key);
       if (group) this.selectGroup(group.key);
+      return;
+    }
+    /* โมเดลการวัดและประเมินผลการเรียนรู้ (4.3) */
+    if (event.data?.type === 'd4-assessment-model-height') {
+      const h = Number(event.data.height);
+      if (Number.isFinite(h)) this.assessmentModelHeight.set(Math.max(700, h));
+      return;
+    }
+    if (event.data?.type === 'd4-assessment-model-scroll') {
+      this.scrollParentTo('iframe[src="/models/assessment-model.html"]', event.data as { top?: number; bottom?: number });
       return;
     }
     /* โมเดลขั้นตอนการออกแบบการจัดการเรียนรู้ 8 ขั้น (4.1) */

@@ -138,6 +138,12 @@
     <app-section-header [light]="true" num="4.3" title="การวัดและประเมินผลการเรียนรู้" [lead]="d.assessment.lead" />
     <ng-container [ngTemplateOutlet]="d4Indicators"></ng-container>
 
+    <!-- โมเดลการวัดและประเมินผลการเรียนรู้ 3 หลักการ · แก้เนื้อหาได้ที่ public/models/assessment-model.html ในตัวแปร data -->
+    <div class="d4-pdcar" appReveal style="margin-bottom:34px">
+      <iframe src="/models/assessment-model.html" title="MODEL การวัดและประเมินผลการเรียนรู้"
+        scrolling="no" [style.height.px]="assessmentModelHeight()"></iframe>
+    </div>
+
     <div class="steps" style="margin-bottom:38px">
       <div class="step-item" *ngFor="let p of d.assessment.points; let i = index" appReveal="left"
         [revealDelay]="i * 90">

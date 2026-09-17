@@ -195,10 +195,12 @@
             transition: .2s
         }
 
-        @media (hover:hover) { .toggle:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(117, 102, 217, .28)
-        } }
+        @media (hover:hover) {
+            .toggle:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(117, 102, 217, .28)
+            }
+        }
 
         .steps {
             display: grid;
@@ -273,10 +275,12 @@
             animation-delay: .28s
         }
 
-        @media (hover:hover) { .step:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 14px 28px var(--glow)
-        } }
+        @media (hover:hover) {
+            .step:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 14px 28px var(--glow)
+            }
+        }
 
         .step:focus-visible {
             outline: 4px solid color-mix(in srgb, var(--tone) 30%, white);
@@ -444,12 +448,15 @@
             transform: rotate(45deg)
         }
 
-        @media (hover:hover) { .subpoints button:hover,
-        .subpoints button:focus-visible {
-            border-color: var(--tone);
-            background: color-mix(in srgb, var(--tone) 7%, white);
-            outline: none
-        } }
+        @media (hover:hover) {
+
+            .subpoints button:hover,
+            .subpoints button:focus-visible {
+                border-color: var(--tone);
+                background: color-mix(in srgb, var(--tone) 7%, white);
+                outline: none
+            }
+        }
 
         .subanswer {
             display: none;
@@ -483,9 +490,11 @@
             transition: .2s
         }
 
-        @media (hover:hover) { .open-modal:hover {
-            transform: translateY(-2px)
-        } }
+        @media (hover:hover) {
+            .open-modal:hover {
+                transform: translateY(-2px)
+            }
+        }
 
         dialog {
             width: min(800px, calc(100% - 28px));
@@ -940,10 +949,12 @@
             opacity: 0
         }
 
-        @media (hover:hover) { .step:hover:before {
-            opacity: 1;
-            animation: sheen .9s ease
-        } }
+        @media (hover:hover) {
+            .step:hover:before {
+                opacity: 1;
+                animation: sheen .9s ease
+            }
+        }
 
         .step.done {
             filter: saturate(.86)
@@ -1058,9 +1069,11 @@
             transform: translateX(-120%)
         }
 
-        @media (hover:hover) { .toggle:hover:after {
-            animation: sheen .8s ease
-        } }
+        @media (hover:hover) {
+            .toggle:hover:after {
+                animation: sheen .8s ease
+            }
+        }
 
         .open-modal {
             position: relative;
@@ -1111,8 +1124,16 @@
                 animation: pop .45s cubic-bezier(.2, .9, .25, 1) both
             }
         }
-        .toggle, .close, .open-modal { min-height: 44px }
-        .subpoints button { min-height: 44px }
+
+        .toggle,
+        .close,
+        .open-modal {
+            min-height: 44px
+        }
+
+        .subpoints button {
+            min-height: 44px
+        }
     </style>
 </head>
 
@@ -1121,7 +1142,7 @@
         <section class="workspace" aria-label="อัลกอริทึมขั้นตอนการออกแบบการจัดการเรียนรู้ 8 ขั้น">
             <div class="model">
                 <div class="model-head">
-                    <h2>อัลกอริทึม 8 ขั้น</h2>
+                    <h5>ขั้นตอนการออกแบบการจัดการเรียนรู้</h5>
                     <div class="auto"><span class="status" id="status">กำลังเล่นอัตโนมัติ</span><button class="toggle"
                             id="toggle" type="button">หยุด</button></div>
                 </div>
