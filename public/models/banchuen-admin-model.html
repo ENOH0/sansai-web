@@ -116,10 +116,9 @@ body::before{
 @media(max-width:470px){.hero h1{font-size:38px}.main-node{padding:22px 15px}.resource-grid,.four-party{grid-template-columns:1fr}.resource-grid .resource-card:last-child{grid-column:auto}.pdca-node{width:76px;height:76px}.pdca-node strong{font-size:31px}.pdca-node span{font-size:14px}.pdca-center{width:135px;height:135px}.pdca-center b{font-size:21px}.pdca-center span{font-size:16px}.pdca-center small{display:none}}
 
 /* =========================================================
-   EMBED + ON DARK BACKGROUND
-   ฝังในหน้าด้านที่ 3 ซึ่งมีวิดีโอพื้นหลังสีเข้ม
-   ถอดพื้นหลังของโมเดลออก และเปลี่ยนตัวอักษรที่ไม่มีพื้นของตัวเองให้สว่าง
-   กล่อง modal มีพื้นสว่างของตัวเองอยู่แล้ว คงสีเดิม
+   EMBED  ฝังในหน้าด้านที่ 3
+   ธีมพาสเทลสดใสตามต้นฉบับ การ์ดและกล่องเป็นพื้นสว่าง
+   เปลี่ยนเฉพาะตัวอักษรที่ลอยอยู่บนวิดีโอให้เป็นโทนพาสเทลสว่าง
 ========================================================= */
 
 html,body{ min-height:auto; }
@@ -127,58 +126,106 @@ html,body{ min-height:auto; }
 body{
   background:none;
   background-color:transparent;
-  color:#e8f0ff;
+  color:var(--ink);
   font-family:"Sarabun","TH SarabunPSK",Tahoma,sans-serif;
 }
 
 /* ปิดลายจุดพื้นหลัง */
 body::before{ display:none; }
 
-.wrapper{ padding:10px 14px 16px; }
+.wrapper{ position:relative; padding:10px 14px 16px; }
 
-.hero .eyebrow{ color:#e2d4ff; }
+/* ---- ตัวอักษรที่ลอยบนวิดีโอ ใช้โทนพาสเทลสว่าง ---- */
+.hero .eyebrow{
+  color:#ffd9ee;
+  text-shadow:0 1px 10px rgba(8,21,47,.55);
+}
 
 .hero h1{
   color:#ffffff;
-  text-shadow:0 2px 20px rgba(8,21,47,.75);
+  text-shadow:0 3px 20px rgba(8,21,47,.6);
 }
 
 .hero p{
-  color:#dbe6f7;
-  text-shadow:0 1px 10px rgba(8,21,47,.6);
+  color:#eaf4ff;
+  text-shadow:0 1px 10px rgba(8,21,47,.5);
 }
 
 .stage{ min-height:auto; padding:10px 0 4px; }
+.stage::before{ border-color:rgba(255,255,255,.30); }
 
-/* การ์ด 3 ใบ: กระจกสีเข้ม ให้อ่านออกบนวิดีโอ */
+/* ---- การ์ด 3 ใบ: พาสเทลสว่าง อ่านง่าย ---- */
 .main-node{
   min-height:auto;
   padding:24px 20px 20px;
-  border-radius:26px;
-  background:rgba(10,24,52,.46);
-  border-color:rgba(255,255,255,.22);
-  box-shadow:0 16px 40px rgba(0,0,0,.22);
+  border-radius:30px;
+
+  background:linear-gradient(150deg,rgba(255,255,255,.95),rgba(255,247,252,.90),rgba(240,250,255,.92));
+  border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 18px 46px rgba(75,105,145,.22),0 0 26px rgba(255,190,225,.30),inset 0 0 30px rgba(255,255,255,.8);
 }
 
-.main-node h2{ color:#ffffff; font-size:27px; }
-.main-node p{ color:#dbe6f7; font-size:19px; }
-.node-number{ color:#e2d4ff; opacity:1; }
+.main-node::before{ opacity:.30; }
+
+.main-node h2{ color:#3f5f7f; font-size:28px; }
+.main-node p{ color:#6d8093; font-size:19px; }
+.node-number{ color:#a07fc9; opacity:1; }
 
 .tag{
-  font-size:16px;
-  color:#eaf2ff;
-  background:rgba(255,255,255,.16);
-  border-color:rgba(255,255,255,.24);
+  font-size:17px;
+  color:#5f7489;
+  background:rgba(255,255,255,.88);
+  border-color:rgba(190,205,230,.7);
 }
 
-.click-hint{ color:#e7c7ff; font-size:17px; }
+.click-hint{ color:#a07fc9; font-size:18px; }
 
-.image-btn,.detail-btn{ min-height:44px; }
+.connector{ box-shadow:0 0 22px rgba(255,190,225,.45); }
 
-/* modal เด้งในกรอบโมเดล ไม่ใช่เต็มจอ เพราะโมเดลอยู่ใน iframe */
-.wrapper{ position:relative; }
-.modal{ position:absolute; background:rgba(8,21,47,.55); }
-.modal-card{ max-height:none; }
+.spark{ opacity:.9; }
+
+/* ปุ่มอย่างน้อย 44px ตามเกณฑ์นิ้วสัมผัสบน iPad */
+.image-btn,.detail-btn,.control-btn,.close-btn{ min-height:44px; }
+
+/* ---- กล่องรายละเอียด: พาสเทลสว่างตามต้นฉบับ ----
+   เด้งในกรอบโมเดล ไม่ใช่เต็มจอ เพราะโมเดลอยู่ใน iframe
+   และเริ่มจากขอบบนเสมอ เพื่อไม่ให้หัวกล่องถูกตัด */
+.modal{
+  position:absolute;
+  inset:0 0 auto 0;
+  min-height:100%;
+  align-items:flex-start;
+  padding:10px;
+  background:rgba(120,150,190,.34);
+}
+
+.modal-card{
+  max-height:none;
+  overflow:visible;
+  margin-bottom:6px;
+  background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(253,247,255,.93),rgba(240,251,255,.95));
+  box-shadow:0 30px 90px rgba(48,78,112,.30),inset 0 0 34px rgba(255,255,255,.6);
+}
+
+/* ---- ภาพประกอบจริงในกล่อง "ดูรูปภาพ" ---- */
+.image-gallery{ display:grid; gap:16px; margin-top:6px; }
+.image-gallery figure{ margin:0; }
+.image-gallery img{
+  display:block;
+  width:100%;
+  border-radius:18px;
+  border:1px solid rgba(190,208,232,.75);
+  box-shadow:0 12px 30px rgba(80,110,145,.14);
+  background:#fff;
+  cursor:zoom-in;
+}
+.image-gallery figcaption{
+  margin-top:8px;
+  font-size:19px;
+  line-height:1.4;
+  color:#6d8093;
+  text-align:center;
+}
 
 /* ไม่ล็อกการเลื่อนของหน้าแม่ */
 body[style*="overflow"]{ overflow:visible !important; }
@@ -309,8 +356,8 @@ body[style*="overflow"]{ overflow:visible !important; }
 <div class="modal" id="imageModal" onclick="outsideClose(event,'imageModal')">
   <div class="modal-card" style="--modalA:#ff9fc7;--modalB:#79cfee">
     <button class="close-btn" onclick="closeModal('imageModal')">ปิด</button>
-    <div class="modal-header"><div class="modal-badge">ภาพ</div><div class="modal-title"><h2 id="imageModalTitle">รูปภาพประกอบ</h2><p>พื้นที่สำหรับรูปภาพที่จะนำมาแนบภายหลัง</p></div></div>
-    <div class="image-placeholder"><div><div class="image-placeholder-icon">▧</div><strong>เตรียมพื้นที่สำหรับรูปภาพ</strong><span id="imagePlaceholderText">สามารถนำรูปภาพของหัวข้อนี้มาใส่แทนพื้นที่นี้ได้ภายหลัง</span></div></div>
+    <div class="modal-header"><div class="modal-badge">ภาพ</div><div class="modal-title"><h2 id="imageModalTitle">รูปภาพประกอบ</h2><p>ภาพประกอบของขั้นตอนในวงจรคุณภาพ</p></div></div>
+    <div id="imageModalBody"></div>
   </div>
 </div>
 </div>
@@ -329,17 +376,54 @@ const pdcaDetails={
  C:["วางกรอบการตรวจสอบผลการดำเนินงาน","นิเทศ กำกับ ติดตาม และประเมินผล","ตรวจสอบตามมาตรฐานการศึกษาและค่าเป้าหมายที่ตั้งไว้","นำผลมาใช้เป็นส่วนหนึ่งของการประกันคุณภาพการศึกษา"],
  A:["สรุปและรายงานผลการดำเนินงานตามโครงการหรือกิจกรรม","เสนอแนะแนวทางปรับปรุงแก้ไขและรายงานข้อจำกัด","วิเคราะห์ผลการประเมินการใช้แผนพัฒนาคุณภาพการศึกษา","วางแผนและปรับปรุงส่วนที่ควรพัฒนาอย่างต่อเนื่อง"]
 };
+const IMG='/evidence/dimension3/banchuen/';
+const imageSets={
+ P:[{src:IMG+'p-plan.jpg',caption:'P (PLAN) การวางแผน — เชื่อมโยงยุทธศาสตร์ชาติ แผนการศึกษาแห่งชาติ และบริบทท้องถิ่น สู่แผนพัฒนาการศึกษาและแผนปฏิบัติการประจำปี'}],
+ D:[{src:IMG+'d-do-1-overview.jpg',caption:'D (DO) การดำเนินงาน — ปัจจัยนำเข้าสู่กระบวนการตาม BANCHUEN Model และความสัมพันธ์ขององค์ประกอบตามลำดับ'},
+    {src:IMG+'d-do-2-mechanism.jpg',caption:'D (DO) กลไกของการขับเคลื่อนด้วย BANCHUEN Model ในการบริหารจัดการ 5 ขั้นตอน'}],
+ C:[{src:IMG+'c-check.jpg',caption:'C (CHECK) การตรวจสอบ — วางกรอบการตรวจสอบ ดำเนินการนิเทศ กำกับ ติดตาม และสรุปผลการตรวจสอบ'}],
+ A:[]
+};
 const imageTopics={gear:"ฟันเฟืองแห่งการขับเคลื่อน",result:"ผลลัพธ์ที่ภาคภูมิใจ",P:"PLAN : การวางแผน",D:"DO : การดำเนินงาน",C:"CHECK : การตรวจสอบ",A:"ACT : การปรับปรุง"};
+function afterModalChange(){
+ /* ปรับความสูงกรอบสองจังหวะ เผื่อแอนิเมชันของกล่องยังไม่จบ */
+ reportHeight();
+ setTimeout(reportHeight,420);
+}
+function focusFrame(){
+ if(window.frameElement) window.frameElement.scrollIntoView({behavior:'smooth',block:'start'});
+}
 function openMainModal(type){
  const id=type==='gear'?'gearModal':type==='success'?'successModal':'resultModal';
- document.getElementById(id).classList.add('show');document.body.style.overflow='hidden';
+ document.getElementById(id).classList.add('show');
  if(type==='success'){renderPDCA(order[current]);startPDCA();}
+ afterModalChange();focusFrame();
 }
-function closeModal(id){document.getElementById(id).classList.remove('show');document.body.style.overflow='';if(id==='successModal')pausePDCA(false)}
+function closeModal(id){document.getElementById(id).classList.remove('show');if(id==='successModal')pausePDCA(false);afterModalChange()}
 function outsideClose(e,id){if(e.target.id===id)closeModal(id)}
-function openImageModal(event,type){event.stopPropagation();const title=imageTopics[type];document.getElementById('imageModalTitle').textContent='รูปภาพ : '+title;document.getElementById('imagePlaceholderText').textContent='สามารถนำรูปภาพของขั้นตอน “'+title+'” มาใส่แทนพื้นที่นี้ได้ภายหลัง';document.getElementById('imageModal').classList.add('show');document.body.style.overflow='hidden'}
+function openImageModal(event,type){
+ event.stopPropagation();
+ const title=imageTopics[type];
+ document.getElementById('imageModalTitle').textContent='รูปภาพ : '+title;
+
+ const body=document.getElementById('imageModalBody');
+ const set=imageSets[type]||[];
+
+ if(set.length){
+  body.innerHTML='<div class="image-gallery">'+set.map(p=>
+    '<figure><img src="'+p.src+'" alt="'+p.caption+'" loading="lazy"><figcaption>'+p.caption+'</figcaption></figure>'
+  ).join('')+'</div>';
+ }else{
+  body.innerHTML='<div class="image-placeholder"><div><div class="image-placeholder-icon">▧</div>'+
+   '<strong>ยังไม่มีภาพประกอบของหัวข้อนี้</strong>'+
+   '<span>สามารถนำรูปภาพของ “'+title+'” มาใส่แทนพื้นที่นี้ได้ภายหลัง</span></div></div>';
+ }
+
+ document.getElementById('imageModal').classList.add('show');
+ afterModalChange();focusFrame();
+}
 function openPDCAImage(event){openImageModal(event,order[current])}
-function openPdcaDetail(){const step=order[current],d=pdcaData[step];document.getElementById('detailBadge').textContent=step;document.getElementById('detailTitle').textContent='ข้อมูลย่อย '+d.title;document.getElementById('detailSub').textContent=d.sub;document.getElementById('subdetailList').innerHTML=pdcaDetails[step].map((item,index)=>'<div class="subdetail-item"><span class="subdetail-index">'+(index+1)+'</span><p>'+item+'</p></div>').join('');const modal=document.getElementById('pdcaDetailModal');modal.style.setProperty('--modalA',d.color);modal.classList.add('show');pausePDCA(false)}
+function openPdcaDetail(){const step=order[current],d=pdcaData[step];document.getElementById('detailBadge').textContent=step;document.getElementById('detailTitle').textContent='ข้อมูลย่อย '+d.title;document.getElementById('detailSub').textContent=d.sub;document.getElementById('subdetailList').innerHTML=pdcaDetails[step].map((item,index)=>'<div class="subdetail-item"><span class="subdetail-index">'+(index+1)+'</span><p>'+item+'</p></div>').join('');const modal=document.getElementById('pdcaDetailModal');modal.style.setProperty('--modalA',d.color);modal.classList.add('show');pausePDCA(false);afterModalChange();focusFrame()}
 function renderPDCA(step){
  const d=pdcaData[step];
  document.querySelectorAll('.pdca-node').forEach(n=>n.classList.toggle('active',n.dataset.step===step));
@@ -366,7 +450,13 @@ renderPDCA('P');
 function reportHeight(){
   requestAnimationFrame(()=>{
     const el=document.querySelector('.wrapper');
-    const height=Math.ceil(el?el.getBoundingClientRect().height+6:document.body.scrollHeight);
+    let height=el?el.getBoundingClientRect().height+6:document.body.scrollHeight;
+
+    /* ถ้ามีกล่องรายละเอียดเปิดอยู่ ต้องขยายกรอบให้สูงพอกับกล่องนั้น */
+    const card=document.querySelector('.modal.show .modal-card');
+    if(card) height=Math.max(height, card.getBoundingClientRect().height+34);
+
+    height=Math.ceil(height);
     if(window.frameElement) window.frameElement.style.height=height+'px';
     window.parent.postMessage({type:'d3-banchuen-model-height',height},window.location.origin);
   });
