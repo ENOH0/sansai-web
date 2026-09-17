@@ -208,23 +208,43 @@ body::before{ display:none; }
 }
 
 /* ---- ภาพประกอบจริงในกล่อง "ดูรูปภาพ" ---- */
-.image-gallery{ display:grid; gap:16px; margin-top:6px; }
-.image-gallery figure{ margin:0; }
-.image-gallery img{
+.image-viewer{ margin-top:6px; }
+.image-viewer figure{ margin:0; }
+.image-viewer img{
   display:block;
   width:100%;
+  max-height:460px;
+  object-fit:contain;
   border-radius:18px;
   border:1px solid rgba(190,208,232,.75);
   box-shadow:0 12px 30px rgba(80,110,145,.14);
   background:#fff;
   cursor:zoom-in;
 }
-.image-gallery figcaption{
-  margin-top:8px;
+.image-viewer figcaption{
+  margin-top:10px;
   font-size:19px;
   line-height:1.4;
   color:#6d8093;
   text-align:center;
+}
+.image-nav{
+  display:flex; align-items:center; justify-content:center; gap:14px;
+  margin-top:16px; flex-wrap:wrap;
+}
+.image-nav .nav-btn{
+  min-height:46px; padding:0 20px; border-radius:16px; cursor:pointer;
+  font-family:inherit; font-size:19px; font-weight:700; color:#4e6d8c;
+  background:linear-gradient(145deg,#eaf5ff,#fdf2fb);
+  border:1px solid rgba(175,202,232,.85);
+  box-shadow:0 8px 20px rgba(80,110,145,.12);
+  transition:.25s ease;
+}
+@media(hover:hover){ .image-nav .nav-btn:hover{ transform:translateY(-2px); box-shadow:0 12px 24px rgba(80,110,145,.18); } }
+.image-count{
+  min-width:74px; text-align:center; font-size:19px; font-weight:800; color:#5c7a97;
+  padding:6px 14px; border-radius:999px;
+  background:rgba(226,240,255,.9); border:1px solid rgba(180,205,235,.8);
 }
 
 /* ไม่ล็อกการเลื่อนของหน้าแม่ */
@@ -382,13 +402,16 @@ const imageSets={
  D:[{src:IMG+'d-do-1-overview.jpg',caption:'D (DO) การดำเนินงาน — ปัจจัยนำเข้าสู่กระบวนการตาม BANCHUEN Model และความสัมพันธ์ขององค์ประกอบตามลำดับ'},
     {src:IMG+'d-do-2-mechanism.jpg',caption:'D (DO) กลไกของการขับเคลื่อนด้วย BANCHUEN Model ในการบริหารจัดการ 5 ขั้นตอน'}],
  C:[{src:IMG+'c-check.jpg',caption:'C (CHECK) การตรวจสอบ — วางกรอบการตรวจสอบ ดำเนินการนิเทศ กำกับ ติดตาม และสรุปผลการตรวจสอบ'}],
- A:[]
+ A:[],
+ gear:[{src:IMG+'gear-5m.jpg',caption:'การบริหารจัดการทรัพยากรและปัจจัยพื้นฐาน 5M — Man (คน/บุคลากร), Money (งบประมาณ/การเงิน), Material (วัสดุ อุปกรณ์ สิ่งอำนวยความสะดวก), Machine (เทคโนโลยี) และ Method (วิธีการบริหารและการจัดการเรียนรู้)'}]
 };
 const imageTopics={gear:"ฟันเฟืองแห่งการขับเคลื่อน",result:"ผลลัพธ์ที่ภาคภูมิใจ",P:"PLAN : การวางแผน",D:"DO : การดำเนินงาน",C:"CHECK : การตรวจสอบ",A:"ACT : การปรับปรุง"};
 function afterModalChange(){
  /* ปรับความสูงกรอบสองจังหวะ เผื่อแอนิเมชันของกล่องยังไม่จบ */
  reportHeight();
+ setTimeout(reportHeight,200);
  setTimeout(reportHeight,420);
+ setTimeout(reportHeight,800);
 }
 function focusFrame(){
  if(window.frameElement) window.frameElement.scrollIntoView({behavior:'smooth',block:'start'});
@@ -401,18 +424,44 @@ function openMainModal(type){
 }
 function closeModal(id){document.getElementById(id).classList.remove('show');if(id==='successModal')pausePDCA(false);afterModalChange()}
 function outsideClose(e,id){if(e.target.id===id)closeModal(id)}
+let imgSet=[],imgPos=0;
+function renderImageSlide(){
+ const body=document.getElementById('imageModalBody');
+ const p=imgSet[imgPos];
+ body.innerHTML=
+  '<div class="image-viewer">'+
+   '<figure><img id="galleryImg" src="'+p.src+'" alt="'+p.caption+'" title="แตะที่ภาพเพื่อดูขนาดเต็ม">'+
+   '<figcaption>'+p.caption+'</figcaption></figure>'+
+   (imgSet.length>1
+    ? '<div class="image-nav">'+
+        '<button type="button" class="nav-btn" onclick="stepImage(-1)">&lsaquo; ก่อนหน้า</button>'+
+        '<span class="image-count">'+(imgPos+1)+' / '+imgSet.length+'</span>'+
+        '<button type="button" class="nav-btn" onclick="stepImage(1)">ถัดไป &rsaquo;</button>'+
+      '</div>'
+    : '')+
+  '</div>';
+ const img=document.getElementById('galleryImg');
+ img.addEventListener('load',afterModalChange);
+ img.addEventListener('error',afterModalChange);
+ img.addEventListener('click',()=>window.open(img.src,'_blank','noopener'));
+ afterModalChange();
+}
+function stepImage(step){
+ if(!imgSet.length) return;
+ imgPos=(imgPos+step+imgSet.length)%imgSet.length;
+ renderImageSlide();
+}
 function openImageModal(event,type){
  event.stopPropagation();
  const title=imageTopics[type];
  document.getElementById('imageModalTitle').textContent='รูปภาพ : '+title;
 
  const body=document.getElementById('imageModalBody');
- const set=imageSets[type]||[];
+ imgSet=imageSets[type]||[];
+ imgPos=0;
 
- if(set.length){
-  body.innerHTML='<div class="image-gallery">'+set.map(p=>
-    '<figure><img src="'+p.src+'" alt="'+p.caption+'" loading="lazy"><figcaption>'+p.caption+'</figcaption></figure>'
-  ).join('')+'</div>';
+ if(imgSet.length){
+  renderImageSlide();
  }else{
   body.innerHTML='<div class="image-placeholder"><div><div class="image-placeholder-icon">▧</div>'+
    '<strong>ยังไม่มีภาพประกอบของหัวข้อนี้</strong>'+
@@ -454,14 +503,20 @@ function reportHeight(){
 
     /* ถ้ามีกล่องรายละเอียดเปิดอยู่ ต้องขยายกรอบให้สูงพอกับกล่องนั้น */
     const card=document.querySelector('.modal.show .modal-card');
-    if(card) height=Math.max(height, card.getBoundingClientRect().height+34);
+    if(card){
+      const r=card.getBoundingClientRect();
+      /* บวกระยะขอบบน-ล่างของกล่องเผื่อไว้ ไม่ให้ปุ่มแถวล่างสุดถูกกรอบตัด */
+      height=Math.max(height, r.top+window.scrollY+r.height+90);
+    }
 
     height=Math.ceil(height);
     if(window.frameElement) window.frameElement.style.height=height+'px';
     window.parent.postMessage({type:'d3-banchuen-model-height',height},window.location.origin);
   });
 }
-new ResizeObserver(reportHeight).observe(document.body);
+const _ro=new ResizeObserver(reportHeight);
+_ro.observe(document.body);
+document.querySelectorAll('.modal-card').forEach(c=>_ro.observe(c));
 window.addEventListener('load',reportHeight);
 </script>
 </body>
