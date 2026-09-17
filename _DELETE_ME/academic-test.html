@@ -1,0 +1,1072 @@
+<!doctype html><meta charset="utf-8"><style>@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   โรงเรียนสันทรายวิทยาคม — ระบบดีไซน์ส่วนกลาง (สีน้ำเงิน–ขาว)
+
+   ไฟล์นี้เก็บเฉพาะสิ่งที่ใช้ร่วมกันทั้งเว็บ ได้แก่
+     · ตัวแปรสี ระยะห่าง และเงา
+     · โครงหน้า (.wrap .section .grid)
+     · องค์ประกอบที่หลายหน้าเรียกใช้ (.card .chip .tbl .callout ...)
+     · แอนิเมชันเลื่อนเข้ามุมมอง ซึ่ง directive ไปติดคลาสให้กับ
+       element ในหน้าอื่น จึงต้องอยู่ระดับส่วนกลาง
+
+   สไตล์เฉพาะของแต่ละ component อยู่ในไฟล์ .css ของ component นั้น
+   เช่น แถบนำทางอยู่ที่ shared/navbar/navbar.component.css
+   ============================================================ */
+
+:root {
+  /* ---------- สีประจำโรงเรียน: น้ำเงิน–ขาว ---------- */
+  --navy-950: #08152f;
+  --navy-900: #0d2149;
+  --navy-800: #132f63;
+  --navy-700: #183d80;
+  --navy-600: #1e4d9e;
+  --navy-500: #2c66bd;
+  --navy-400: #4f88d4;
+  --navy-300: #82ade4;
+  --navy-200: #b3cdf0;
+  --navy-100: #d8e6f8;
+  --navy-50:  #eef4fc;
+
+  /* ---------- สีทอง ใช้เน้นรางวัลและตัวเลขสำคัญ ---------- */
+  --gold-400: #e8c46a;
+  --gold-500: #d4a537;
+  --gold-600: #b3862a;
+
+  /* ---------- สีตัวอักษรและพื้นหลัง ---------- */
+  --ink: #16233c;
+  --ink-soft: #43536f;
+  --ink-mute: #6b7a94;
+  --line: #dfe7f2;
+  --paper: #f7fbff;
+  --paper-alt: #edf5ff;
+
+  /* ---------- ระยะและเงา ---------- */
+  --radius: 18px;
+  --radius-sm: 12px;
+  --shadow-sm: 0 1px 2px rgba(13, 33, 73, .06), 0 4px 12px rgba(13, 33, 73, .05);
+  --shadow-md: 0 2px 6px rgba(13, 33, 73, .08), 0 16px 40px rgba(13, 33, 73, .09);
+  --shadow-lg: 0 8px 20px rgba(13, 33, 73, .12), 0 30px 70px rgba(13, 33, 73, .14);
+
+  /* ความสูงแถบนำทาง — component อื่นใช้ค่านี้เว้นที่ด้านบน */
+  --nav-h: 68px;
+  --ease: cubic-bezier(.22, .78, .3, 1);
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 16px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper-alt);
+  color: var(--ink);
+  font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+  font-size: 19px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  /* ให้ momentum scroll ลื่นบน iPad */
+  -webkit-overflow-scrolling: touch;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+  color: var(--navy-900);
+  line-height: 1.45;
+  margin: 0;
+  /* Sarabun เป็นฟอนต์ไร้เชิง หัวข้อจึงใช้น้ำหนัก 800 ให้ยังเด่นชัด */
+  font-weight: 800;
+}
+
+p { margin: 0 0 1em; }
+a { color: var(--navy-600); text-decoration: none; }
+
+/* ============================================================
+   โครงหน้า
+   ============================================================ */
+.wrap      { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+.wrap-wide { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+.section       { padding: 72px 0; }
+.section-tight { padding: 44px 0; }
+.section-alt   { background: var(--paper); }
+
+.stack > * + * { margin-top: 18px; }
+
+.grid   { display: grid; gap: 20px; }
+.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* ============================================================
+   หัวข้อของแต่ละหมวด
+   (component app-section-header ใช้ชุดนี้ และหน้าเนื้อหาบางหน้า
+    ก็เรียกใช้โดยตรงเพื่อทำหัวข้อย่อยภายในหมวด)
+   ============================================================ */
+.sec-head { margin-bottom: 30px; }
+
+.sec-kicker {
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  color: var(--navy-500);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.sec-title { font-size: clamp(24.5px, 2.7vw, 33.5px); line-height: 1.45; }
+
+/* กล่องเลขหัวข้อ เช่น 1.1 หรือ 2.3 */
+.sec-title .num {
+  display: inline-grid;
+  place-items: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 10px;
+  border-radius: 12px;
+  background: var(--navy-600);
+  color: #fff;
+  font-size: 19px;
+  margin-right: 12px;
+  vertical-align: middle;
+  box-shadow: 0 6px 18px rgba(30, 77, 158, .3);
+}
+
+.sec-lead { color: var(--ink-soft); margin-top: 12px; max-width: 82ch; }
+.sec-rule { width: 60px; height: 4px; border-radius: 4px; background: var(--gold-500); margin-top: 14px; }
+
+/* ============================================================
+   การ์ด
+   ============================================================ */
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px;
+  box-shadow: var(--shadow-sm);
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+
+.card-hover { will-change: transform; }
+
+/* ยกการ์ดเฉพาะอุปกรณ์ที่มีเมาส์ ไม่ให้ค้างบนจอสัมผัส */
+@media (hover: hover) {
+  .card-hover:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+}
+.card-hover:active { transform: translateY(-2px); }
+
+.card-title { font-size: 21.5px; margin-bottom: 11px; display: flex; align-items: center; gap: 11px; }
+.card-body  { color: var(--ink-soft); font-size: 18.5px; }
+.card-accent { border-top: 4px solid var(--navy-600); }
+.card-gold   { border-top: 4px solid var(--gold-500); }
+
+/* ============================================================
+   ป้ายกำกับ
+   ============================================================ */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  background: var(--navy-50);
+  color: var(--navy-700);
+  border: 1px solid var(--navy-100);
+}
+
+.chip-gold { background: #fdf6e6; color: var(--gold-600); border-color: #f2e2b8; }
+.chip-row  { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ============================================================
+   ตาราง — เลื่อนแนวนอนได้ในกรอบของตัวเองบน iPad
+   ============================================================ */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+
+table.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 17.5px;
+  min-width: 520px;
+}
+
+table.tbl caption {
+  caption-side: top;
+  text-align: left;
+  padding: 16px 20px 4px;
+  font-weight: 700;
+  color: var(--navy-800);
+  font-size: 18.5px;
+}
+
+table.tbl th {
+  background: var(--navy-800);
+  color: #fff;
+  font-weight: 600;
+  padding: 13px 16px;
+  text-align: left;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+}
+
+/* คอลัมน์ตัวเลขจัดชิดขวาและใช้ตัวเลขความกว้างเท่ากัน อ่านง่ายเวลาเทียบค่า */
+table.tbl th.num,
+table.tbl td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+table.tbl td { padding: 12px 16px; border-top: 1px solid var(--line); color: var(--ink-soft); }
+table.tbl tbody tr:nth-child(even) { background: var(--paper-alt); }
+
+table.tbl tbody tr.total { background: var(--navy-50); font-weight: 700; }
+table.tbl tbody tr.total td { color: var(--navy-800); }
+
+.up   { color: #0f7a4d; font-weight: 700; }
+.down { color: #b4433a; font-weight: 700; }
+
+/* ============================================================
+   กรอบการ์ดกราฟ — ใช้ร่วมกันทั้งกราฟเส้น กราฟแท่ง และแถบเปรียบเทียบ
+   (แอนิเมชันเฉพาะของแต่ละกราฟอยู่ในไฟล์ .css ของกราฟนั้น)
+   ============================================================ */
+.chart-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.chart-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.chart-title { font-size: 19.5px; font-weight: 700; color: var(--navy-800); }
+.chart-sub   { font-size: 15.5px; color: var(--ink-mute); }
+
+.chart-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 14px; }
+.legend-item  { display: inline-flex; align-items: center; gap: 9px; font-size: 15.5px; color: var(--ink-soft); font-weight: 600; }
+.legend-swatch { width: 14px; height: 4px; border-radius: 3px; flex: none; }
+.legend-swatch.dot { width: 11px; height: 11px; border-radius: 50%; }
+
+/* touch-action: pan-y ให้เลื่อนหน้าผ่านกราฟได้ปกติบนจอสัมผัส */
+.chart-svg  { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.chart-note { font-size: 15.5px; color: var(--ink-mute); margin-top: 13.5px; line-height: 1.7; }
+.chart-evidence { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.chart-evidence-label {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 4px;
+  color: var(--navy-800);
+  font-size: 15px;
+  font-weight: 800;
+}
+.chart-evidence a,
+.chart-evidence button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 18px;
+  color: var(--navy-800);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.35;
+  text-decoration: none;
+  border: 2px solid var(--gold-500);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(154, 105, 0, .2);
+  cursor: pointer;
+  transition: transform .18s var(--ease), background .18s var(--ease), color .18s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.chart-evidence a:active,
+.chart-evidence button:active { transform: scale(.97); }
+@media (hover: hover) {
+  .chart-evidence a:hover { color: #fff; background: var(--gold-600); }
+  .chart-evidence button:hover { background: #fffaf0; }
+}
+
+.axis-line   { stroke: var(--line); stroke-width: 1; }
+.axis-text   { font-size: 14px; fill: var(--ink-mute); font-family: inherit; }
+.axis-text.b { font-weight: 700; fill: var(--ink-soft); }
+.grid-line   { stroke: #eef2f8; stroke-width: 1; }
+
+/* ============================================================
+   รายการลำดับและไทม์ไลน์
+   ============================================================ */
+.steps { position: relative; padding-left: 34px; }
+
+.steps::before {
+  content: '';
+  position: absolute;
+  left: 13px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: var(--gold-400);
+}
+
+.step-item { position: relative; margin-bottom: 22px; }
+
+.step-item::before {
+  content: '';
+  position: absolute;
+  left: -27px; top: 9px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--gold-400);
+  box-shadow: 0 0 0 4px var(--navy-50);
+}
+
+.step-item h4 { font-size: 19px; margin-bottom: 5.5px; }
+.step-item p  { margin: 0; color: var(--ink-soft); font-size: 18px; }
+
+/* กล่องตัวเลขลำดับ ใช้ในการ์ดของหลายหน้า */
+.step-no {
+  width: 38px; height: 38px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: var(--navy-50);
+  color: var(--navy-700);
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 12px;
+  border: 1px solid var(--navy-100);
+}
+
+.bullets { margin: 0; padding-left: 22px; color: var(--ink-soft); }
+.bullets li { margin-bottom: 9px; }
+.bullets li::marker { color: var(--navy-500); }
+
+/* ============================================================
+   กล่องข้อความเน้น
+   ============================================================ */
+.callout {
+  border-left: 4px solid var(--navy-600);
+  background: var(--navy-50);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 18px 22px;
+  color: var(--navy-900);
+  font-size: 18.5px;
+}
+
+.callout-gold { border-left-color: var(--gold-500); background: #fdf8ec; color: #6b5216; }
+.callout strong { color: var(--navy-800); }
+
+.quote {
+  font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+  font-size: clamp(21.5px, 2.3vw, 29px);
+  line-height: 1.7;
+  color: var(--navy-800);
+  text-align: center;
+  padding: 6px 0;
+}
+
+/* ============================================================
+   ปุ่ม
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  /* สูง 50px เพื่อให้แตะง่ายบน iPad */
+  min-height: 50px;
+  padding: 0 24px;
+  border-radius: 13px;
+  font-weight: 700;
+  font-size: 18px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform .2s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active { transform: scale(.97); }
+
+.btn-primary { background: var(--gold-500); color: var(--navy-950); box-shadow: 0 8px 24px rgba(212, 165, 55, .34); }
+.btn-ghost   { background: rgba(255, 255, 255, .1); color: #fff; border-color: rgba(255, 255, 255, .35); }
+.btn-outline { background: var(--paper); color: var(--navy-700); border-color: var(--navy-200); }
+
+/* ============================================================
+   แอนิเมชันเลื่อนเข้ามุมมอง
+   RevealDirective เป็นคนติดคลาสเหล่านี้ให้กับ element ในหน้าต่าง ๆ
+   จึงต้องประกาศไว้ระดับส่วนกลาง ไม่สามารถย้ายไปไฟล์ component ได้
+   ใช้เฉพาะ transform และ opacity เพื่อให้ Safari บน iPad ลื่นไหล
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  transition: opacity .75s var(--ease), transform .75s var(--ease);
+  will-change: opacity, transform;
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+.reveal-l { opacity: 0; transform: translate3d(-30px, 0, 0); transition: opacity .75s var(--ease), transform .75s var(--ease); }
+.reveal-l.is-in { opacity: 1; transform: none; }
+
+.reveal-r { opacity: 0; transform: translate3d(30px, 0, 0); transition: opacity .75s var(--ease), transform .75s var(--ease); }
+.reveal-r.is-in { opacity: 1; transform: none; }
+
+.reveal-z { opacity: 0; transform: scale(.955); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal-z.is-in { opacity: 1; transform: none; }
+
+/* เคารพการตั้งค่า "ลดการเคลื่อนไหว" ของ iPadOS */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-l, .reveal-r, .reveal-z {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* กล่องตัวชี้วัดตามแบบประเมิน: ใช้รูปแบบเดียวกันทุกด้าน */
+.assessment-indicators {
+  margin-top: 24px;
+  padding: 20px 22px;
+  border: 1px solid var(--navy-100);
+  border-left: 5px solid var(--gold-500);
+  border-radius: var(--radius-sm);
+  background: var(--navy-50);
+  box-shadow: 0 8px 22px rgba(8, 21, 47, .08);
+}
+.assessment-indicators h3 {
+  margin: 0 0 14px;
+  color: var(--navy-800);
+  font-size: 17px;
+  font-weight: 800;
+}
+.assessment-indicators ol {
+  display: grid !important;
+  gap: 9px !important;
+  margin: 0 !important;
+  padding-left: 22px !important;
+  list-style: disc !important;
+}
+.assessment-indicators li {
+  min-height: auto;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--ink-soft) !important;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0;
+}
+.assessment-indicators li::before {
+  content: none;
+}
+.assessment-indicators li strong { color: var(--navy-800); }
+.assessment-indicators--single { margin-top: 20px; }
+
+/* ============================================================
+   Responsive — เน้น iPad (768–1180px) ทั้งแนวตั้งและแนวนอน
+   ============================================================ */
+
+/* iPad Pro และจอกลาง */
+@media (max-width: 1180px) {
+  .wrap, .wrap-wide { padding: 0 28px; }
+  .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* iPad แนวนอน 1024 */
+@media (max-width: 1024px) {
+  .section { padding: 56px 0; }
+  .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* iPad แนวตั้ง 820–834 และ iPad mini */
+@media (max-width: 834px) {
+  :root { --nav-h: 64px; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .card { padding: 22px; }
+  .section { padding: 48px 0; }
+}
+
+@media (max-width: 560px) {
+  .wrap, .wrap-wide { padding: 0 18px; }
+  body { font-size: 18.5px; }
+  .sec-title .num { min-width: 42.5px; height: 42.5px; font-size: 17px; margin-right: 10px; }
+  .assessment-indicators { margin-top: 20px; padding: 16px; }
+  .assessment-indicators ol { padding-left: 20px !important; }
+  .assessment-indicators li { padding: 0 !important; font-size: 15px !important; }
+}
+
+/* ============================================================
+   สั่งพิมพ์ / บันทึกเป็น PDF
+   ============================================================ */
+@media print {
+  .reveal, .reveal-l, .reveal-r, .reveal-z {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .card, .chart-card, .table-scroll { break-inside: avoid; box-shadow: none; }
+}
+
+/* ============================================================
+   กรอบบทนำของแต่ละด้าน — กระจกฝ้าโปร่งแสงเล็กน้อยบนพื้นหลังวิดีโอ
+   ============================================================ */
+.card.intro-glass {
+  position: relative;
+  overflow: hidden;
+  padding: 30px 32px 28px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, .82) 0%, rgba(238, 244, 252, .70) 100%);
+  border: 1px solid rgba(255, 255, 255, .65);
+  border-top: 0;
+  box-shadow: 0 18px 44px rgba(8, 21, 47, .28), inset 0 1px 0 rgba(255, 255, 255, .85);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+}
+/* แถบบนไล่สีน้ำเงิน → ทอง */
+.card.intro-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--navy-600), var(--navy-400) 55%, var(--gold-500));
+}
+/* เครื่องหมายคำพูดจาง ๆ มุมขวาบน */
+.card.intro-glass::after {
+  content: '\201D';
+  position: absolute;
+  top: -18px;
+  right: 18px;
+  font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+  font-size: 150px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--gold-500);
+  opacity: .16;
+  pointer-events: none;
+}
+.card.intro-glass > * { position: relative; z-index: 1; }
+.card.intro-glass p { color: var(--ink); }
+.card.intro-glass strong { color: var(--navy-800); }
+
+/* เบราว์เซอร์ที่ไม่รองรับ backdrop-filter ให้พื้นทึบขึ้นเพื่อให้อ่านออก */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .card.intro-glass { background: rgba(255, 255, 255, .93); }
+}
+@media (max-width: 640px) {
+  .card.intro-glass { padding: 24px 20px 22px; }
+  .card.intro-glass::after { font-size: 110px; top: -12px; right: 10px; }
+}
+</style><style>/* SMART Student — วงล้อ ACTIVITY (ใช้ ViewEncapsulation.None จึงตั้งชื่อคลาส sw- ทั้งหมด) */
+.sw-layout {
+  display: grid;
+  grid-template-columns: minmax(420px, 1.1fr) minmax(280px, .75fr);
+  gap: clamp(24px, 4vw, 52px);
+  align-items: center;
+}
+
+/* ---------- แผนภาพวงล้อ ---------- */
+.sw-diagram {
+  position: relative;
+  width: min(100%, 560px);
+  margin: auto;
+  aspect-ratio: 1;
+}
+
+/* วงรอบนอก 4 ช่วง = วงจรคุณภาพ */
+.sw-cycle { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.sw-cycle path { fill: none; stroke-width: 64; stroke: var(--navy-100); }
+.sw-cycle path:nth-of-type(even) { stroke: var(--navy-200); }
+.sw-cycle text {
+  fill: var(--navy-700);
+  font-family: inherit;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+/* วงล้อ 8 เสี้ยว สลับเข้ม–อ่อน โดยเริ่มเสี้ยวแรกที่ -112.5 องศา
+   ตำแหน่งปุ่มคำนวณจากมุมเดียวกัน จึงตรงกับสีพื้นเสมอ */
+.sw-wheel {
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: conic-gradient(from -112.5deg,
+    var(--navy-600) 0 12.5%, var(--navy-50) 12.5% 25%,
+    var(--navy-700) 25% 37.5%, var(--navy-100) 37.5% 50%,
+    var(--navy-600) 50% 62.5%, var(--navy-50) 62.5% 75%,
+    var(--navy-700) 75% 87.5%, var(--navy-100) 87.5% 100%);
+  box-shadow: inset 0 0 0 3px #fff, var(--shadow-md);
+}
+
+/* วงในสีขาวพร้อมเส้นประ */
+.sw-wheel::after {
+  content: "";
+  position: absolute;
+  inset: 30%;
+  border: 8px dashed var(--navy-200);
+  border-radius: 50%;
+  background: #fff;
+  z-index: 2;
+}
+
+.sw-hub {
+  position: absolute;
+  inset: 34%;
+  z-index: 3;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  line-height: 1.15;
+  pointer-events: none;
+}
+.sw-hub span {
+  display: block;
+  color: var(--gold-600);
+  font-size: clamp(14.5px, 2vw, 19px);
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+.sw-hub strong {
+  display: block;
+  color: var(--navy-800);
+  font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+  font-size: clamp(21.5px, 3.2vw, 33.5px);
+  font-weight: 700;
+}
+.sw-hub small { display:block; color:var(--navy-700); font-size:clamp(10px, 1.35vw, 13px); font-weight:800; }
+
+/* ACADEMIC MODEL: โครงวงล้อเดียวกับ SMART Student แต่ใช้โทนตามภาพอ้างอิง */
+.sw-theme-academic .sw-cycle path { stroke: #bfe9df; }
+.sw-theme-academic .sw-cycle path:nth-of-type(even) { stroke: #b7c9ef; }
+.sw-theme-academic .sw-cycle text { fill: #fff; text-shadow: 0 1px 4px rgba(17, 56, 105, .45); }
+.sw-theme-academic .sw-wheel { background: conic-gradient(from -112.5deg, #a8ddd0 0 12.5%, #e8f7f2 12.5% 25%, #ffd7aa 25% 37.5%, #fff0df 37.5% 50%, #a6bee9 50% 62.5%, #e3ebff 62.5% 75%, #c7b7e4 75% 87.5%, #eee9fb 87.5% 100%); }
+.sw-theme-academic .sw-wheel::after { border-color: #1b356f; }
+.sw-theme-academic .sw-hub span { color: #d74d42; }
+.sw-theme-academic .sw-hub strong { color: #18356f; }
+.sw-theme-academic .sw-piece, .sw-theme-academic .sw-piece.is-light, .sw-theme-academic .sw-piece .sw-letter { color: #bd3e39; }
+.sw-theme-academic .sw-piece .sw-name { color: #18356f; font-size: clamp(12.5px, 1.65vw, 17.5px); line-height: 1.12; }
+.sw-theme-academic .sw-piece.is-on { box-shadow: 0 0 0 3px #e8a43c; }
+.sw-theme-academic .sw-detail { border-left-color: #d74d42; }
+.sw-theme-academic .sw-detail-title { color: #18356f; }
+.sw-theme-academic .sw-detail-key { background: linear-gradient(135deg, #ffd7aa, #e8a43c); }
+
+/* ---------- ปุ่มแต่ละองค์ประกอบ ---------- */
+.sw-piece {
+  position: absolute;
+  z-index: 4;
+  transform: translate(-50%, -50%);
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  width: 21%;
+  min-height: 21%;
+  padding: 4px;
+  color: #fff;
+  font-family: inherit;
+  text-align: center;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background .2s var(--ease), transform .18s var(--ease);
+}
+.sw-piece:active { transform: translate(-50%, -50%) scale(.94); }
+.sw-piece.is-on { background: rgba(255, 255, 255, .22); box-shadow: 0 0 0 3px var(--gold-500); }
+@media (hover: hover) {
+  .sw-piece:hover { background: rgba(255, 255, 255, .18); }
+}
+
+.sw-letter {
+  display: block;
+  color: var(--gold-400);
+  font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+  font-size: clamp(22.5px, 3.6vw, 38px);
+  font-weight: 700;
+  line-height: 1;
+}
+.sw-name { font-size: clamp(11px, 1.25vw, 14.5px); font-weight: 700; line-height: 1.2; }
+
+/* เสี้ยวสีอ่อนต้องใช้ตัวอักษรสีเข้ม */
+.sw-piece.is-light { color: var(--navy-800); }
+.sw-piece.is-light .sw-letter { color: var(--gold-600); }
+.sw-piece.is-light.is-on { background: rgba(30, 77, 158, .12); }
+
+/* ---------- การ์ดคำอธิบาย ---------- */
+.sw-detail {
+  padding: 26px 28px;
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--gold-500);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+.sw-detail-label { margin: 0 0 8px; color: var(--ink-mute); font-size: 14.5px; font-weight: 800; letter-spacing: .06em; }
+.sw-detail-title { margin: 0 0 12px; color: var(--navy-800); font-size: clamp(22.5px, 2.4vw, 29px); font-weight: 800; }
+.sw-detail-text { margin: 0; color: var(--ink-soft); font-size: 18px; line-height: 1.75; }
+.sw-detail-key {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 6px 12px;
+  color: var(--navy-900);
+  font-size: 15.5px;
+  font-weight: 800;
+  border-radius: 9px;
+  background: linear-gradient(135deg, var(--gold-400), var(--gold-500));
+}
+.sw-evidence { margin-top: 20px; }
+.sw-evidence-label { margin: 0 0 9px; color: var(--navy-700); font-size: 14.5px; font-weight: 800; }
+.sw-evidence-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.sw-evidence-slot {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  min-height: 60px;
+  color: var(--ink-mute);
+  font-size: 12px;
+  font-weight: 700;
+  border: 1.5px dashed var(--navy-300);
+  border-radius: 8px;
+  background: var(--navy-50);
+}
+.sw-evidence-grid--process {
+  /* ปรับระยะลูกศรได้จาก 3 ค่านี้ในที่เดียว */
+  --process-column-gap: 30px;
+  --process-row-gap: 56px;
+  --process-arrow-size: 30px;
+  /* จุดกึ่งกลางของรูป: การ์ดกว้างครึ่งหนึ่งของ grid และรูปเป็น 16:10 */
+  --process-photo-middle: 15.625cqw;
+  container-type: inline-size;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* เว้นช่องให้ลูกศรอยู่กึ่งกลางระหว่างการ์ด ไม่ทับขอบรูป */
+  column-gap: var(--process-column-gap);
+  row-gap: var(--process-row-gap);
+  padding: 4px 2px;
+}
+.sw-evidence-card {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  margin: 0;
+  overflow: visible;
+  border: 1px solid var(--navy-200);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 6px 16px rgba(18, 56, 112, .12);
+}
+.sw-evidence-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 9px 9px 0 0;
+}
+.sw-evidence-card figcaption {
+  padding: 9px 10px 10px;
+  color: var(--navy-800);
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.42;
+}
+.sw-process-arrow {
+  position: absolute;
+  /* ลูกศรอยู่ชั้นเดียวกับภาพหลักฐานและอยู่เหนือการ์ดทุกใบ */
+  z-index: 10;
+  display: grid;
+  width: var(--process-arrow-size);
+  height: var(--process-arrow-size);
+  place-items: center;
+  border-radius: 50%;
+  background: var(--navy-600);
+  box-shadow: 0 3px 8px rgba(9, 37, 86, .25);
+}
+.sw-process-arrow svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.6;
+}
+.sw-process-arrow--1 {
+  top: var(--process-photo-middle);
+  right: calc(-1 * var(--process-arrow-size));
+  transform: translateY(-50%);
+}
+.sw-process-arrow--2 { bottom: -43px; left: 50%; transform: translateX(-50%) rotate(90deg); }
+.sw-evidence-card--3 { grid-column: 2; grid-row: 2; }
+.sw-process-arrow--3 {
+  top: var(--process-photo-middle);
+  left: calc(-1 * var(--process-arrow-size));
+  transform: translateY(-50%) rotate(180deg);
+}
+.sw-evidence-card--4 { grid-column: 1; grid-row: 2; }
+.sw-process-arrow--4 { top: -42px; left: 50%; transform: translateX(-50%) rotate(-90deg); }
+.sw-hint { margin: 20px 0 0; color: var(--ink-mute); font-size: 15px; }
+
+@media (max-width: 900px) {
+  .sw-layout { grid-template-columns: 1fr; }
+  .sw-diagram { width: min(100%, 480px); }
+  .sw-cycle text { font-size: 29px; }
+}
+@media (max-width: 520px) {
+  .sw-diagram { width: 100%; }
+  .sw-name { font-size: 10px; }
+  .sw-evidence-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sw-evidence-slot { min-height: 82px; }
+  .sw-evidence-grid--process { grid-template-columns: 1fr; gap: 28px; }
+  .sw-evidence-card--3, .sw-evidence-card--4 { grid-column: auto; grid-row: auto; }
+  .sw-process-arrow--1, .sw-process-arrow--2, .sw-process-arrow--3 { top: auto; right: auto; bottom: -40px; left: 50%; transform: translateX(-50%) rotate(90deg); }
+  .sw-process-arrow--4 { top: 50%; right: -40px; bottom: auto; left: auto; transform: translateY(-50%) rotate(-90deg); }
+}
+
+
+/* ============================================================
+   เอฟเฟกต์ 3 มิติ (ใช้ร่วมกันทั้ง SMART Student และ ACADEMIC MODEL)
+   ชั้นความลึก: เงาพื้น → วงนอก → วงล้อ → วงขาวกลาง → ตัวอักษร/ปุ่ม → แกนกลาง
+   ============================================================ */
+.sw-diagram { perspective: 1200px; }
+.sw-tilt {
+  --rx: 0deg; --ry: 0deg; --gx: 50%; --gy: 30%;
+  position: absolute; inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform .9s cubic-bezier(.2, .8, .2, 1);
+}
+.sw-tilt.sw-active { transition: transform .18s ease-out; }
+.sw-tilt.sw-idle { animation: swFloat 9s ease-in-out infinite; }
+@keyframes swFloat {
+  0%, 100% { transform: rotateX(7deg) rotateY(-7deg); }
+  25%      { transform: rotateX(-5deg) rotateY(-3deg); }
+  50%      { transform: rotateX(-6deg) rotateY(7deg); }
+  75%      { transform: rotateX(5deg) rotateY(4deg); }
+}
+
+/* เงานุ่มบนพื้นใต้โมเดล */
+.sw-shadow {
+  position: absolute; left: 10%; right: 10%; bottom: -5%; height: 14%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(8, 21, 47, .38), transparent 70%);
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+.sw-cycle { transform: translateZ(0); }
+
+/* แสงวิ่งรอบวงนอก (หมุนด้วย transform) */
+.sw-orbit {
+  position: absolute; inset: 0; border-radius: 50%;
+  transform: translateZ(4px);
+  background: conic-gradient(from 0deg, transparent 0 78%, rgba(255, 255, 255, .0) 80%, rgba(255, 255, 255, .85) 90%, transparent 92%);
+  -webkit-mask: radial-gradient(circle, transparent 0 71%, #000 72% 93.5%, transparent 94%);
+          mask: radial-gradient(circle, transparent 0 71%, #000 72% 93.5%, transparent 94%);
+  animation: swSpin 7s linear infinite;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+}
+@keyframes swSpin { to { transform: translateZ(4px) rotate(360deg); } }
+
+/* วงล้อยกขึ้นจากวงนอก มีขอบหนาให้เห็นเป็นแผ่น */
+.sw-wheel {
+  transform-style: preserve-3d;
+  transform: translateZ(16px);
+  box-shadow:
+    inset 0 0 0 3px #fff,
+    0 2px 0 #c9d6ea, 0 4px 0 #b9c8e2, 0 6px 0 #a9bbd9,
+    0 22px 40px rgba(8, 21, 47, .32);
+}
+.sw-wheel::after { transform: translateZ(18px); box-shadow: 0 10px 22px rgba(8, 21, 47, .22); }
+.sw-hub { transform: translateZ(46px); }
+.sw-hub strong { text-shadow: 0 3px 10px rgba(24, 53, 111, .18); }
+
+.sw-piece { transform: translate(-50%, -50%) translateZ(30px); transition: background .2s var(--ease), transform .35s cubic-bezier(.2, .9, .3, 1.3), box-shadow .25s; }
+.sw-piece .sw-letter { text-shadow: 0 3px 8px rgba(8, 21, 47, .28); }
+.sw-piece:active { transform: translate(-50%, -50%) translateZ(22px) scale(.94); }
+.sw-piece.is-on {
+  transform: translate(-50%, -50%) translateZ(58px) scale(1.1);
+  box-shadow: 0 0 0 3px var(--gold-500), 0 16px 26px rgba(8, 21, 47, .35);
+}
+.sw-theme-academic .sw-piece.is-on { box-shadow: 0 0 0 3px #e8a43c, 0 16px 26px rgba(8, 21, 47, .3); }
+@media (hover: hover) {
+  .sw-piece:hover { transform: translate(-50%, -50%) translateZ(44px) scale(1.05); }
+  .sw-piece.is-on:hover { transform: translate(-50%, -50%) translateZ(58px) scale(1.1); }
+}
+
+/* แสงสะท้อนเคลื่อนตามมุมเอียง */
+.sw-glare {
+  position: absolute; inset: 0; z-index: 5; border-radius: 50%;
+  transform: translateZ(64px);
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(255, 255, 255, .42), rgba(255, 255, 255, 0) 45%);
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sw-tilt, .sw-tilt.sw-idle { animation: none; transition: none; transform: none; }
+  .sw-orbit { animation: none; opacity: 0; }
+  .sw-piece, .sw-piece.is-on { transition: none; }
+}
+
+/* ---------- ปรับสำหรับ iPad / จอสัมผัส ---------- */
+.sw-diagram { touch-action: pan-y; -webkit-user-select: none; user-select: none; }
+.sw-tilt.sw-active { transition: transform .9s cubic-bezier(.2, .8, .2, 1); }
+.sw-tilt.sw-active.sw-fast { transition: transform .16s ease-out; }
+
+/* เข้าสู่หน้าจอ: ตั้งขึ้นจากแนวราบ */
+.sw-diagram.sw-enter:not(.sw-entered) .sw-tilt { opacity: 0; transform: rotateX(62deg) scale(.82); animation: none; transition: none; }
+.sw-diagram.sw-entered .sw-tilt:not(.sw-active) { transition: transform 1.1s cubic-bezier(.16, 1, .3, 1), opacity .6s ease; }
+.sw-diagram.sw-entered .sw-tilt.sw-idle { animation: swFloat 9s ease-in-out 1.2s infinite; }
+.sw-diagram.sw-enter:not(.sw-entered) .sw-shadow { opacity: 0; }
+.sw-shadow { transition: opacity .8s ease; }
+
+/* วงคลื่นแสงเมื่อแตะ */
+.sw-ripple {
+  position: absolute; z-index: 6; width: 26%; aspect-ratio: 1;
+  border: 3px solid rgba(232, 164, 60, .9); border-radius: 50%;
+  transform: translate(-50%, -50%) translateZ(60px) scale(.3);
+  opacity: 1; pointer-events: none;
+  animation: swRipple .85s cubic-bezier(.2, .7, .3, 1) forwards;
+}
+@keyframes swRipple { to { transform: translate(-50%, -50%) translateZ(60px) scale(1.9); opacity: 0; } }
+
+/* แกนกลางหายใจเบา ๆ */
+.sw-hub { animation: swBreath 4.5s ease-in-out infinite; }
+@keyframes swBreath { 0%, 100% { transform: translateZ(46px) scale(1); } 50% { transform: translateZ(46px) scale(1.045); } }
+
+/* การ์ดรายละเอียดเลื่อนเข้า */
+.sw-detail.sw-swap .sw-detail-title,
+.sw-detail.sw-swap .sw-detail-key,
+.sw-detail.sw-swap .sw-evidence { animation: swSwap .45s cubic-bezier(.2, .8, .2, 1) both; }
+.sw-detail.sw-swap .sw-detail-key { animation-delay: .05s; }
+.sw-detail.sw-swap .sw-evidence { animation-delay: .1s; }
+@keyframes swSwap { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* ปุ่มบนวงล้อใหญ่พอสำหรับนิ้ว */
+.sw-piece { min-width: 44px; min-height: max(44px, 21%); }
+
+@media (prefers-reduced-motion: reduce) {
+  .sw-diagram.sw-enter .sw-tilt { opacity: 1; transform: none; }
+  .sw-hub, .sw-ripple, .sw-detail.sw-swap * { animation: none !important; }
+}
+</style><body style="background:#1d3553;padding:20px"><div id="w" style="max-width:1100px;margin:auto">
+<div class="sw-layout sw-theme-academic">
+  <div class="sw-diagram">
+   <div class="sw-shadow" aria-hidden="true"></div>
+   <div class="sw-tilt sw-idle">
+    <div class="sw-orbit" aria-hidden="true"></div>
+    <svg class="sw-cycle" viewBox="0 0 600 600" aria-hidden="true">
+      <!-- 4 ส่วนโค้งต่อกันเป็นวงเดียว รัศมี 248 หนา 64 (ครอบคลุมรัศมี 216–280) ให้ตัวหนังสืออยู่กลางแถบพอดี -->
+      <path d="M52 300A248 248 0 0 1 300 52" />
+      <path d="M300 52A248 248 0 0 1 548 300" />
+      <path d="M548 300A248 248 0 0 1 300 548" />
+      <path d="M300 548A248 248 0 0 1 52 300" />
+      <text x="124.6" y="124.6" transform="rotate(-45 124.6 124.6)">PLAN</text>
+      <text x="475.4" y="124.6" transform="rotate(45 475.4 124.6)">DO</text>
+      <text x="475.4" y="475.4" transform="rotate(-45 475.4 475.4)">CHECK</text>
+      <text x="124.6" y="475.4" transform="rotate(45 124.6 475.4)">ACTION</text>
+    </svg>
+
+    <div class="sw-wheel">
+      <div class="sw-hub">
+        <span>ACADEMIC</span>
+        <strong>MODEL</strong>
+        <small>คุณภาพผู้เรียน</small>
+      </div>
+      
+  <button type="button" class="sw-piece" data-i="0"
+    style="left:16%;top:50%"
+    aria-label="C — Continuous Improvement">
+    <span class="sw-letter">C</span>
+    <span class="sw-name">Continuous Improvement</span>
+  </button>
+  <button type="button" class="sw-piece is-light" data-i="1"
+    style="left:25.96%;top:25.96%"
+    aria-label="A — Alignment with Standards">
+    <span class="sw-letter">A</span>
+    <span class="sw-name">Alignment with Standards</span>
+  </button>
+  <button type="button" class="sw-piece" data-i="2"
+    style="left:50%;top:16%"
+    aria-label="C — Curriculum Development">
+    <span class="sw-letter">C</span>
+    <span class="sw-name">Curriculum Development</span>
+  </button>
+  <button type="button" class="sw-piece is-light" data-i="3"
+    style="left:74.04%;top:25.96%"
+    aria-label="A — Active Learning">
+    <span class="sw-letter">A</span>
+    <span class="sw-name">Active Learning</span>
+  </button>
+  <button type="button" class="sw-piece" data-i="4"
+    style="left:84%;top:50%"
+    aria-label="D — Data-driven Assessment">
+    <span class="sw-letter">D</span>
+    <span class="sw-name">Data-driven Assessment</span>
+  </button>
+  <button type="button" class="sw-piece is-light" data-i="5"
+    style="left:74.04%;top:74.04%"
+    aria-label="E — Educational Innovation">
+    <span class="sw-letter">E</span>
+    <span class="sw-name">Educational Innovation</span>
+  </button>
+  <button type="button" class="sw-piece" data-i="6"
+    style="left:50%;top:84%"
+    aria-label="M — Monitoring & Mentoring">
+    <span class="sw-letter">M</span>
+    <span class="sw-name">Monitoring & Mentoring</span>
+  </button>
+  <button type="button" class="sw-piece is-light" data-i="7"
+    style="left:25.96%;top:74.04%"
+    aria-label="I — Inclusive Learning">
+    <span class="sw-letter">I</span>
+    <span class="sw-name">Inclusive Learning</span>
+  </button>
+      <div class="sw-glare" aria-hidden="true"></div>
+    </div>
+   </div>
+  </div>
+
+  <aside class="sw-detail" aria-live="polite">
+    <p class="sw-detail-label">องค์ประกอบที่เลือก</p>
+    <h4 class="sw-detail-title">Activity Based</h4>
+    <p class="sw-detail-text">เรียนรู้ผ่านการลงมือทำ ทดลอง ตั้งคำถาม และสะท้อนสิ่งที่ค้นพบจากกิจกรรมจริง</p>
+    <span class="sw-detail-key">A — Activity Based</span>
+    <div class="sw-evidence" aria-label="พื้นที่เตรียมใส่ภาพหลักฐาน">
+      <p class="sw-evidence-label">พื้นที่ใส่ภาพหลักฐาน 4 รูป</p>
+      <div class="sw-evidence-grid">
+        <div class="sw-evidence-slot"><span>รูปที่ 1</span></div>
+        <div class="sw-evidence-slot"><span>รูปที่ 2</span></div>
+        <div class="sw-evidence-slot"><span>รูปที่ 3</span></div>
+        <div class="sw-evidence-slot"><span>รูปที่ 4</span></div>
+      </div>
+    </div>
+    <p class="sw-hint">แตะตัวอักษรบนวงล้อเพื่อดูความหมายของแต่ละองค์ประกอบ</p>
+  </aside>
+</div></div></body>

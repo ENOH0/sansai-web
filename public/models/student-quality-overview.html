@@ -1708,18 +1708,20 @@
         /* =========================================================
    จัดตำแหน่งหัวข้อ: 1 ซ้าย · 2 ขวา · 3 กลางด้านล่าง
 ========================================================= */
+        /* 3 คอลัมน์กว้างเท่ากัน กรอบหัวข้อทั้ง 3 จึงมีขนาดเท่ากัน */
         .model-stage {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             grid-template-areas:
                 "left center right"
-                "bottom bottom bottom";
+                ". bottom .";
         }
+        .main-inner { min-height: 165px; }
         .left-column { grid-area: left; }
         .center-wrap { grid-area: center; }
         .right-column { grid-area: right; }
         .bottom-column {
             grid-area: bottom;
-            justify-self: center;
-            width: min(100%, 560px);
+            width: 100%;
             display: flex;
             flex-direction: column;
             gap: 28px;
