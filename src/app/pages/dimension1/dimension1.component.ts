@@ -434,6 +434,18 @@ export class Dimension1Component implements OnInit {
     ]
   }));
 
+  /** ภาพกิจกรรมท้ายหัวข้อ 1.1.4 · ไฟล์อยู่ที่ public/evidence/1.1.4/activities/ */
+  readonly thinkingActivities = [
+    {
+      title: 'การอบรมเชิงปฏิบัติการ "ครูแกนนำการจัดการเรียนรู้ด้วยกระบวนการสืบค้นและการนำเสนอผลงาน"',
+      images: [1, 2, 3].map(n => `/evidence/1.1.4/activities/training-0${n}.jpg`)
+    },
+    {
+      title: 'การนำเสนอผลงาน เรื่อง พลังสำคัญในการต่อยอดความคิดสร้างสรรค์และพัฒนาศักยภาพของผู้เรียน',
+      images: [1, 2].map(n => `/evidence/1.1.4/activities/presentation-0${n}.jpg`)
+    }
+  ];
+
   readonly englishAwards = [
     {
       title: 'สอบได้ลำดับที่ 19 จากผู้เข้าสอบ 1,306 คน ในโครงการทดสอบความรู้วิชา TGAT ระดับชั้นมัธยมศึกษาตอนปลาย ปีการศึกษา 2567',
