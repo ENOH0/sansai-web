@@ -61,22 +61,6 @@
     </div>
     <p class="sec-lead" style="margin:-8px 0 24px">{{ school.model.tagline }}</p>
     <div appReveal style="margin-bottom:38px"><app-banchuen-model /></div>
-    <div class="grid grid-4" style="margin-bottom:34px">
-      <div class="card card-hover" *ngFor="let l of school.model.letters; let i = index" appReveal="zoom"
-        [revealDelay]="i * 70">
-        <div class="model-letter"><span class="model-badge">{{ l.letter }}</span><span class="model-en">{{ l.en
-            }}</span></div>
-        <p class="card-body" style="margin:0;font-size:15.5px">{{ l.th }}</p>
-      </div>
-    </div>
-    <div class="grid grid-2">
-      <div class="card card-gold" *ngFor="let m of d.leadership.modelExplain; let i = index" appReveal
-        [revealDelay]="i * 90">
-        <div class="chip chip-gold" style="margin-bottom:10px">{{ m.letters }}</div>
-        <h3 class="card-title">{{ m.group }}</h3>
-        <p class="card-body" style="margin:0">{{ m.text }}</p>
-      </div>
-    </div>
   </div>
 </section>
 

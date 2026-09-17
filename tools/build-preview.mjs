@@ -698,17 +698,6 @@ ${pageHero(d.no, d.weight, d.name, d.subtitle)}
   <div class="sec-head"${rev()}><h3 class="sec-title" style="font-size:22px">${esc(S.model.name)} — องค์ประกอบทั้ง 8</h3><div class="sec-rule"></div></div>
   <p class="sec-lead" style="margin:-8px 0 24px">${esc(S.model.tagline)}</p>
   <div id="bcRoot"${rev()} style="margin-bottom:38px">${BANCHUEN_HTML}</div>
-  <div class="grid grid-4" style="margin-bottom:34px">${S.model.letters.map((l, i) => `
-    <div class="card card-hover"${rev('zoom', i * 70)}>
-      <div class="model-letter">
-        <span class="model-badge">${esc(l.letter)}</span>
-        <span class="model-en">${esc(l.en)}</span></div>
-      <p class="card-body" style="margin:0;font-size:15.5px">${esc(l.th)}</p></div>`).join('')}</div>
-  <div class="grid grid-2">${d.leadership.modelExplain.map((m, i) => `
-    <div class="card card-gold"${rev('', i * 90)}>
-      <div class="chip chip-gold" style="margin-bottom:10px">${esc(m.letters)}</div>
-      <h3 class="card-title">${esc(m.group)}</h3>
-      <p class="card-body" style="margin:0">${esc(m.text)}</p></div>`).join('')}</div>
   <div class="sec-head" style="margin-top:52px"${rev()}><h3 class="sec-title" style="font-size:22px">แนวปฏิบัติของผู้บริหารตามตัวชี้วัดทั้ง 5 ข้อ</h3><div class="sec-rule"></div></div>
   <div class="steps">${d.leadership.practices.map((p, i) => `<div class="step-item"${rev('left', i * 90)}><h4>${esc(p.title)}</h4><p>${esc(p.text)}</p></div>`).join('')}</div>
   <div class="sec-head" style="margin-top:52px"${rev()}><h3 class="sec-title" style="font-size:22px">การมอบหมายงานผ่าน 4 กลุ่มบริหาร</h3><div class="sec-rule"></div></div>
