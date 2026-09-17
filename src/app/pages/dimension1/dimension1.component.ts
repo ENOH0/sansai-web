@@ -451,6 +451,18 @@ export class Dimension1Component implements OnInit {
     {
       title: 'การนำเสนอรอบคัดเลือก สุดยอดนวัตกรรมทางสังคม ครั้งที่ 2 (SK Social Innovation Award 2026)',
       images: [1, 2, 3, 4].map(n => `/evidence/1.1.4/activities/sk-social-innovation-0${n}.jpg`)
+    },
+    {
+      title: 'การนำเสนอนวัตกรรม “การศึกษาค้นคว้าด้วยตนเอง” และการประกวดโครงงานจากหนังสือสารานุกรมไทยฯ',
+      images: [1, 2, 3, 4].map(n => `/evidence/1.1.4/activities/is-project-0${n}.jpg`)
+    },
+    {
+      title: 'โครงงานด้านสิ่งแวดล้อม เรื่อง Interactive Video YouTube สร้างจิตสำนึกด้านสิ่งแวดล้อม',
+      images: [1, 2, 3, 4].map(n => `/evidence/1.1.4/activities/env-interactive-video-0${n}.jpg`)
+    },
+    {
+      title: 'กลุ่มสาระการเรียนรู้วิทยาศาสตร์และเทคโนโลยี จัดกิจกรรมการนำเสนอผลงานโครงงานและนวัตกรรม',
+      images: [1, 2, 3, 4].map(n => `/evidence/1.1.4/activities/sci-project-0${n}.jpg`)
     }
   ];
 
