@@ -34,13 +34,31 @@ export class Dimension5Component {
 
   /** รับความสูงจริงจากโมเดลใน iframe เพื่อไม่ให้เกิดแถบเลื่อนภายใน */
   @HostListener('window:message', ['$event'])
-  resizeSuccessModel(event: MessageEvent<{ type?: string; height?: number }>): void {
+  resizeSuccessModel(event: MessageEvent<{ type?: string; height?: number; top?: number; bottom?: number }>): void {
     if (typeof window === 'undefined' || event.origin !== window.location.origin) return;
+
+    // โมเดลขอให้หน้าหลักเลื่อนไปยังกิ่งที่เพิ่งกาง (iframe เลื่อนเองไม่ได้เพราะสูงเท่าเนื้อหา)
+    if (event.data?.type === 'd5-success-model-scroll') {
+      const frame = document.querySelector<HTMLIFrameElement>('.d5-success-model-frame iframe');
+      const top = Number(event.data.top), bottom = Number(event.data.bottom);
+      if (!frame || !Number.isFinite(top) || !Number.isFinite(bottom)) return;
+      setTimeout(() => {
+        const base = frame.getBoundingClientRect().top;
+        const navGap = 84;
+        const elTop = base + top, elBottom = base + bottom;
+        let delta = 0;
+        if (elTop < navGap) delta = elTop - navGap;
+        else if (elBottom > window.innerHeight) delta = Math.min(elBottom - window.innerHeight + 16, elTop - navGap);
+        if (delta) window.scrollBy({ top: delta, behavior: 'smooth' });
+      }, 60);
+      return;
+    }
+
     const height = Number(event.data.height);
     if (!Number.isFinite(height)) return;
-    const fitHeight = Math.max(360, Math.min(1400, height));
-    if (event.data?.type === 'd5-success-model-height') this.successModelHeight.set(fitHeight);
-    if (event.data?.type === 'd5-dissemination-wheel-height') this.disseminationWheelHeight.set(fitHeight);
+    const minHeight = Math.max(360, height);
+    if (event.data?.type === 'd5-success-model-height') this.successModelHeight.set(minHeight);   // ไม่จำกัดความสูง ไม่งั้นเนื้อหาส่วนล่างถูกตัด
+    if (event.data?.type === 'd5-dissemination-wheel-height') this.disseminationWheelHeight.set(Math.min(1400, minHeight));
   }
 
   get currentProject() {

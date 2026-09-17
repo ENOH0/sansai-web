@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fbf8ff">
+  <meta name="description" content="MODEL การออกแบบการจัดการเรียนรู้ 4 ขั้น">
+  <title>MODEL การออกแบบการจัดการเรียนรู้</title>
+  <!-- ใช้ในด้านที่ 4 หัวข้อ 4.1 (ฝังเป็น iframe) · แก้เนื้อหาได้ที่ตัวแปร content ด้านล่าง -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23806edc'/%3E%3Cpath d='M16 45V19h7l9 13 9-13h7v26h-8V31l-8 11-8-11v14z' fill='white'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #302d45;
+      --muted: #6e6882;
+      --paper: rgba(255,255,255,.78);
+      --line: rgba(255,255,255,.72);
+      --shadow: 0 22px 65px rgba(95, 76, 145, .16);
+      --p1: #ff8fb7; --p1-soft:#ffe1ec;
+      --p2: #8d7be8; --p2-soft:#e8e3ff;
+      --p3: #28b9b1; --p3-soft:#d8faf5;
+      --p4: #f1aa38; --p4-soft:#fff0c9;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; color: var(--ink); overflow-x: hidden;
+      font-family: "Sarabun", Tahoma, sans-serif;
+      background: transparent;
+      font-size: 18px; line-height: 1.55;
+    }
+    @keyframes rise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
+    @keyframes pulse { 50% { box-shadow: 0 0 0 12px transparent, 0 18px 45px var(--glow); } }
+    @keyframes pointIn { from { opacity:0; transform:translateX(18px) scale(.97); } to { opacity:1; transform:none; } }
+    @keyframes progress { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+
+    .page { width:100%; margin:auto; padding:8px 4px 16px; }
+    header { display:flex; justify-content:space-between; gap:22px; align-items:flex-end; margin-bottom:28px; animation:rise .7s both; }
+    .eyebrow { margin:0 0 5px; color:#7565ca; font-weight:700; letter-spacing:.11em; font-size:.82rem; }
+    h1 { font-size:clamp(2.2rem,5vw,4.25rem); line-height:.9; margin:0; letter-spacing:-.025em; font-weight:800; }
+    h1 span { display:block; color:#7665d4; margin-top:.16em; }
+    .intro { max-width:420px; margin:0 0 7px; color:var(--muted); font-size:1.05rem; line-height:1.35; }
+
+    .workspace { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr); gap:22px; align-items:stretch; }
+    .model, .detail {
+      background:#fff; border:1px solid #ece9f4; box-shadow:var(--shadow); border-radius:32px;
+    }
+    .model { position:relative; padding:26px; overflow:hidden; }
+    .model-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:21px; position:relative; }
+    .model-head h2 { margin:0; font-size:1.35rem; }
+    .play-status { display:flex; align-items:center; gap:9px; }
+    .hint { font-size:.78rem; color:var(--muted); background:#fff; border:1px solid rgba(117,101,202,.13); padding:5px 13px; border-radius:999px; }
+    .play-toggle { border:1px solid rgba(117,101,202,.2); background:#f8f6ff; color:#6758bc; border-radius:999px; padding:6px 15px; font:700 .75rem/1.2 inherit; cursor:pointer; }
+    .steps { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; position:relative; }
+    .step {
+      --tone:var(--p1); --soft:var(--p1-soft); --glow:rgba(255,143,183,.30);
+      position:relative; min-height:208px; border:1px solid rgba(255,255,255,.82); border-radius:26px;
+      padding:22px; text-align:left; color:var(--ink); font:inherit; cursor:pointer;
+      background:linear-gradient(145deg,rgba(255,255,255,.93),var(--soft));
+      box-shadow:0 12px 30px rgba(74,57,117,.09); transition:.28s ease; overflow:hidden;
+      animation:rise .65s both;
+    }
+    .step:nth-child(2){--tone:var(--p2);--soft:var(--p2-soft);--glow:rgba(141,123,232,.3);animation-delay:.08s}
+    .step:nth-child(3){--tone:var(--p3);--soft:var(--p3-soft);--glow:rgba(40,185,177,.27);animation-delay:.16s}
+    .step:nth-child(4){--tone:var(--p4);--soft:var(--p4-soft);--glow:rgba(241,170,56,.3);animation-delay:.24s}
+    .step::after { content:""; position:absolute; width:125px; height:125px; border-radius:50%; background:var(--tone); opacity:.09; right:-40px; bottom:-45px; transition:.3s; }
+    .step:focus-visible { outline:4px solid color-mix(in srgb,var(--tone) 35%,white); outline-offset:3px; }
+    .step.active { border-color:var(--tone); transform:translateY(-8px) scale(1.015); animation:pulse 2.2s ease-in-out infinite; }
+    .step.active::before { content:""; position:absolute; left:0; right:0; bottom:0; height:5px; background:var(--tone); transform-origin:left; animation:progress 6s linear both; }
+    .model.paused .step.active::before { animation-play-state:paused; }
+    .num { display:inline-grid; place-items:center; width:48px; height:48px; border-radius:17px; color:white; background:var(--tone); font-size:1.45rem; font-weight:800; box-shadow:0 9px 20px var(--glow); }
+    .step h3 { margin:16px 0 4px; font-size:1.25rem; line-height:1.18; }
+    .step p { margin:0; font-size:.88rem; color:var(--muted); }
+    .more { display:inline-block; margin-top:14px; color:var(--tone); font-weight:700; font-size:.78rem; letter-spacing:.02em; }
+
+    .detail { --tone:var(--p1); padding:30px; position:relative; min-height:520px; display:flex; flex-direction:column; overflow:hidden; }
+    .detail::after { content:""; position:absolute; width:250px;height:250px;border-radius:50%;right:-120px;top:-110px;background:var(--tone);opacity:.1;filter:blur(3px);transition:.4s; }
+    .detail-top { display:flex; align-items:center; gap:14px; position:relative; z-index:1; }
+    .detail-num { flex:0 0 auto; width:54px;height:54px;border-radius:18px;display:grid;place-items:center;background:var(--tone);color:white;font-weight:800;font-size:1.5rem;box-shadow:0 10px 25px color-mix(in srgb,var(--tone) 30%,transparent); }
+    .detail small { display:block; color:var(--tone); font-weight:700; font-size:.76rem; letter-spacing:.09em; }
+    .detail h2 { margin:0; font-size:1.55rem; line-height:1.15; }
+    .detail-copy { margin:22px 0 17px; color:#514c65; line-height:1.55; }
+    .detail h4 { margin:0 0 9px; font-size:.92rem; color:var(--tone); }
+    .points { display:grid; gap:9px; margin:0; padding:0; list-style:none; }
+    .points li { position:relative; padding:12px 14px 12px 31px; border-radius:15px; background:#fff; border:1px solid rgba(99,87,145,.1); line-height:1.3; animation:pointIn .45s ease both; }
+    .points li:nth-child(2){animation-delay:.14s}.points li:nth-child(3){animation-delay:.28s}
+    .points li::before { content:""; position:absolute; left:13px; top:1.02em; width:8px;height:8px;border-radius:3px;background:var(--tone);transform:rotate(45deg); }
+    .open-modal { margin-top:auto; align-self:flex-start; border:0; border-radius:15px; padding:10px 20px; background:var(--tone); color:white; font:700 .9rem/1.2 inherit; cursor:pointer; box-shadow:0 10px 26px color-mix(in srgb,var(--tone) 28%,transparent); transition:.2s; }
+
+    dialog { width:min(780px,calc(100% - 28px)); max-height:640px; border:0; padding:0; border-radius:30px; color:var(--ink); background:rgba(255,255,255,.97); box-shadow:0 35px 110px rgba(47,35,85,.34); overflow:hidden; }
+    dialog::backdrop { background:rgba(45,38,75,.42); backdrop-filter:blur(8px); }
+    dialog[open] { animation:modalIn .38s cubic-bezier(.2,.9,.2,1) both; }
+    @keyframes modalIn { from{opacity:0;transform:translateY(25px) scale(.94)} to{opacity:1;transform:none} }
+    .modal-bar { height:9px; background:var(--tone); }
+    .modal-body { padding:clamp(24px,5vw,42px); overflow:auto; max-height:631px; }
+    .modal-head { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+    .modal-kicker { color:var(--tone); font-weight:700; margin:0; }
+    .modal-head h2 { font-size:clamp(1.6rem,4vw,2.3rem); line-height:1.05; margin:4px 0 0; }
+    .close { border:1px solid rgba(61,50,96,.15); background:#f7f4fc; color:#534b6c; padding:6px 16px; border-radius:999px; font:700 .78rem/1.2 inherit; cursor:pointer; }
+    .modal-copy { margin:22px 0 17px; color:#514c65; }
+    .modal-list { margin:0; padding:0; display:grid; gap:11px; list-style:none; }
+    .modal-list li { padding:15px 18px; border-left:5px solid var(--tone); border-radius:7px 16px 16px 7px; background:color-mix(in srgb,var(--tone) 9%,white); }
+    @media (hover:hover){
+      .play-toggle:hover { background:#eeeaff; }
+      .step:hover { transform:translateY(-5px); box-shadow:0 22px 42px var(--glow); }
+      .step:hover::after { transform:scale(1.25); opacity:.14; }
+      .open-modal:hover { transform:translateY(-2px); filter:saturate(1.1); }
+    }
+    .play-toggle, .close, .open-modal { min-height:44px; }
+    footer { text-align:center; color:var(--muted); font-size:.77rem; padding-top:23px; }
+    @media (max-width:920px){
+      header{align-items:flex-start;flex-direction:column}.intro{max-width:680px}.workspace{grid-template-columns:1fr}.detail{min-height:auto}.open-modal{margin-top:24px}
+    }
+    @media (max-width:560px){
+      body{font-size:19px}.page{padding:24px 13px 34px}.model,.detail{border-radius:24px}.model{padding:16px}.steps{grid-template-columns:1fr;gap:12px}.step{min-height:174px;padding:18px}.model-head{align-items:flex-start}.hint{display:none}.play-status{align-items:flex-end}.detail{padding:22px}.detail-top{align-items:flex-start}.detail h2{font-size:1.3rem}
+    }
+    @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <main class="page">
+
+    <section class="workspace" aria-label="โมเดลการออกแบบการจัดการเรียนรู้ 4 ขั้น">
+      <div class="model">
+        <div class="model-head"><h2>4 ขั้นของการจัดการเรียนรู้</h2><div class="play-status"><span class="hint" id="autoLabel">กำลังเล่นอัตโนมัติ</span><button class="play-toggle" id="playToggle" type="button">หยุด</button></div></div>
+        <div class="steps" id="steps"></div>
+      </div>
+      <aside class="detail" id="detail" aria-live="polite"></aside>
+    </section>
+  </main>
+
+  <dialog id="modal" aria-labelledby="modalTitle">
+    <div class="modal-bar"></div>
+    <div class="modal-body">
+      <div class="modal-head">
+        <div><p class="modal-kicker" id="modalKicker"></p><h2 id="modalTitle"></h2></div>
+        <button class="close" type="button" aria-label="ปิดหน้าต่าง">ปิด</button>
+      </div>
+      <p class="modal-copy" id="modalCopy"></p>
+      <ul class="modal-list" id="modalList"></ul>
+    </div>
+  </dialog>
+
+  <script>
+    const content = [
+      {
+        title: 'วิเคราะห์ผู้เรียนรายบุคคลก่อนออกแบบ',
+        short: 'เริ่มจากข้อมูลจริง เพื่อกำหนดเป้าหมายที่เหมาะกับผู้เรียน',
+        copy: 'ครูใช้ข้อมูลจากผลการวิเคราะห์นักเรียน ผลการเยี่ยมบ้าน ผลการคัดกรอง และผลสัมฤทธิ์ที่ผ่านมา เพื่อทำความเข้าใจนักเรียนเป็นรายบุคคล แล้วจึงกำหนดเป้าหมาย ทักษะกระบวนการ และคุณลักษณะที่พึงประสงค์ตามมาตรฐาน ตัวชี้วัด จุดเน้นของหลักสูตร และความต้องการจำเป็นของนักเรียน',
+        points: ['จัดกลุ่มผู้เรียนตามระดับความสามารถ 3 กลุ่ม','กำหนดเป้าหมายการเรียนรู้ที่ท้าทายแต่บรรลุได้','ออกแบบการวัดและประเมินผลไปพร้อมกับการออกแบบกิจกรรม'],
+        tone: '#ff6f9f'
+      },
+      {
+        title: 'จัดกิจกรรมตามขั้นตอนที่ออกแบบ',
+        short: 'จัดการเรียนรู้ตามแผน โดยให้นักเรียนมีส่วนร่วมทุกขั้นตอน',
+        copy: 'ครูจัดกิจกรรมการเรียนรู้ตามแผนที่วางไว้ โดยเลือกใช้สื่อและแหล่งเรียนรู้ที่สอดคล้องกับเป้าหมายและธรรมชาติวิชา และเน้นการมีส่วนร่วมของนักเรียนในทุกขั้นตอน',
+        points: ['ใช้รูปแบบการเรียนรู้ที่หลากหลาย เช่น การเรียนรู้จากการลงมือปฏิบัติ การใช้โครงงานเป็นฐาน การอภิปราย และการเรียนรู้แบบร่วมมือ','ใช้แหล่งเรียนรู้ทั้งภายในและภายนอกสถานศึกษา','ประยุกต์ใช้เทคโนโลยีและนวัตกรรมการศึกษาในการจัดการเรียนรู้'],
+        tone: '#7b67db'
+      },
+      {
+        title: 'วัดและประเมินผลอย่างมีคุณภาพ',
+        short: 'ประเมินอย่างมีส่วนร่วม พร้อมให้ข้อมูลย้อนกลับทันที',
+        copy: 'ครูวัดและประเมินผลการเรียนอย่างมีคุณภาพ เน้นการมีส่วนร่วมของนักเรียนและผู้ปกครอง ให้นักเรียนได้ประเมินตนเองและได้รับข้อมูลย้อนกลับทันที',
+        points: ['ตรวจสอบความรู้พื้นฐานก่อนเรียนและประเมินเมื่อจบบทเรียน','ให้ข้อมูลย้อนกลับแก่นักเรียนทันทีและปรับปรุงแก้ไขให้ดีขึ้น','เปิดโอกาสให้ผู้ปกครองมีส่วนร่วมในการประเมิน'],
+        tone: '#20a9a3'
+      },
+      {
+        title: 'ปรับแผนการจัดการเรียนรู้จากผลที่ได้',
+        short: 'นำผลประเมินกลับมาพัฒนาการจัดการเรียนรู้ในรอบถัดไป',
+        copy: 'ครูนำผลการวัดและประเมินมาวิเคราะห์แนวโน้มพัฒนาการของนักเรียนเป็นรายคนและรายกลุ่ม แล้วนำไปปรับแผนการจัดการเรียนรู้อย่างเป็นรูปธรรมในรอบถัดไป',
+        points: ['จัดสอนซ่อมเสริมให้แก่นักเรียนที่มีความบกพร่องทางการเรียน','เพิ่มพูนศักยภาพนักเรียนที่มีความสามารถพิเศษ','ทำวิจัยในชั้นเรียนเพื่อแก้ปัญหาที่พบอย่างเป็นระบบ'],
+        tone: '#e69a24'
+      }
+    ];
+
+    const steps = document.getElementById('steps');
+    const detail = document.getElementById('detail');
+    const modal = document.getElementById('modal');
+    const playToggle = document.getElementById('playToggle');
+    const autoLabel = document.getElementById('autoLabel');
+    let active = 0;
+    let timer;
+    let playing = true;
+    const interval = 6000;
+
+    content.forEach((item, index) => {
+      const button = document.createElement('button');
+      button.type = 'button'; button.className = 'step'; button.dataset.index = index;
+      button.setAttribute('aria-label', `ขั้นที่ ${index + 1} ${item.title} ดูรายละเอียด`);
+      button.innerHTML = `<span class="num">${index + 1}</span><h3>${item.title}</h3><p>${item.short}</p><span class="more">ดูข้อมูลทั้งหมด</span>`;
+      button.addEventListener('click', () => {
+        selectStep(index, true);
+        stopAuto();
+      });
+      steps.appendChild(button);
+    });
+
+    function listMarkup(items, className='points') {
+      return `<ul class="${className}">${items.map(text => `<li>${text}</li>`).join('')}</ul>`;
+    }
+    function selectStep(index, showModal=false) {
+      active = index; const item = content[index];
+      document.querySelectorAll('.step').forEach((el,i) => {
+        el.classList.toggle('active',i===index);
+        el.setAttribute('aria-current',i===index ? 'step' : 'false');
+      });
+      detail.style.setProperty('--tone',item.tone);
+      detail.innerHTML = `<div class="detail-top"><span class="detail-num">${index+1}</span><div><small>ขั้นที่ ${index+1} จาก 4</small><h2>${item.title}</h2></div></div><p class="detail-copy">${item.copy}</p><h4>แนวทางสำคัญ</h4>${listMarkup(item.points)}<button class="open-modal" type="button">เปิดอ่านแบบเต็มจอ</button>`;
+      detail.querySelector('.open-modal').addEventListener('click',openModal);
+      if(showModal) openModal();
+    }
+    function scheduleNext() {
+      clearTimeout(timer);
+      if (!playing || modal.open) return;
+      timer = setTimeout(() => {
+        selectStep((active + 1) % content.length);
+        scheduleNext();
+      }, interval);
+    }
+    function startAuto() {
+      playing = true;
+      document.querySelector('.model').classList.remove('paused');
+      playToggle.textContent = 'หยุด';
+      autoLabel.textContent = 'กำลังเล่นอัตโนมัติ';
+      scheduleNext();
+    }
+    function stopAuto() {
+      playing = false;
+      clearTimeout(timer);
+      document.querySelector('.model').classList.add('paused');
+      playToggle.textContent = 'เล่นต่อ';
+      autoLabel.textContent = 'หยุดเพื่ออ่านรายละเอียด';
+    }
+    function openModal() {
+      clearTimeout(timer);
+      const item=content[active]; modal.style.setProperty('--tone',item.tone);
+      document.getElementById('modalKicker').textContent=`ขั้นที่ ${active+1} จาก 4`;
+      document.getElementById('modalTitle').textContent=item.title;
+      document.getElementById('modalCopy').textContent=item.copy;
+      document.getElementById('modalList').innerHTML=item.points.map(text=>`<li>${text}</li>`).join('');
+      /* อยู่ใน iframe ที่สูงเท่าเนื้อหา: วางหน้าต่างไว้ใกล้การ์ดที่เลือก แล้วให้หน้าหลักเลื่อนมาที่ตำแหน่งนั้น */
+      const anchor = document.querySelectorAll('.step')[active];
+      const top = anchor ? Math.max(12, Math.min(anchor.getBoundingClientRect().top + window.scrollY - 10, document.body.scrollHeight - 660)) : 12;
+      modal.style.margin = top + 'px auto auto';
+      modal.showModal();
+      if (window.parent !== window) window.parent.postMessage({ type:'d4-design-model-scroll', top, bottom: top + modal.getBoundingClientRect().height }, window.location.origin);
+    }
+    modal.querySelector('.close').addEventListener('click',()=>modal.close());
+    modal.addEventListener('click',e=>{ const r=modal.getBoundingClientRect(); if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom) modal.close(); });
+    modal.addEventListener('close',()=>{ if(playing) scheduleNext(); });
+    playToggle.addEventListener('click',()=> playing ? stopAuto() : startAuto());
+    document.addEventListener('keydown',e=>{ if(!modal.open && ['1','2','3','4'].includes(e.key)) { selectStep(Number(e.key)-1,true); stopAuto(); } });
+    /* ส่งความสูงจริงให้หน้าหลัก เพื่อไม่ให้มีแถบเลื่อนซ้อนใน iframe */
+    function reportHeight(){
+      requestAnimationFrame(() => {
+        const page = document.querySelector('.page');
+        const height = Math.ceil(page ? page.getBoundingClientRect().height + 8 : document.body.scrollHeight);
+        if (window.parent !== window) window.parent.postMessage({ type:'d4-design-model-height', height }, window.location.origin);
+      });
+    }
+    new ResizeObserver(reportHeight).observe(document.body);
+    window.addEventListener('load', reportHeight);
+
+    selectStep(0);
+    startAuto();
+  </script>
+</body>
+</html>

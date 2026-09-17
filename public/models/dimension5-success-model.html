@@ -346,6 +346,12 @@ h1{font-size:clamp(24px,4.4vw,38px);line-height:1.32;margin:14px 0 6px;font-weig
 .award-gallery a{display:block;min-height:44px;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 6px 18px rgba(8,21,47,.25)}
 .award-gallery img{display:block;width:100%;max-height:560px;object-fit:contain;background:#fff}
 @media (max-width:600px){ .award-gallery.c2,.award-gallery.c3{grid-template-columns:minmax(0,1fr)} }
+.mm-rail:has(.title-only){align-items:stretch}
+.node.title-only .card{min-height:0;height:100%;justify-content:space-between}
+.node.title-only .cta{margin-top:auto}
+.detail-back{margin-top:20px;min-height:44px;padding:0 20px;border-radius:999px;border:1px solid rgba(255,255,255,.55);
+  background:rgba(255,255,255,.18);color:#fff;font:inherit;font-weight:600;font-size:16px;cursor:pointer}
+@media (hover:hover){ .detail-back:hover{background:rgba(255,255,255,.3)} }
 </style>
 </head>
 <body>
@@ -535,7 +541,9 @@ function makeNode(k, i){
   const isLogo = !!(k.logo || k.logoText);
   const el = document.createElement(isLogo ? 'div' : 'button');
   if(!isLogo) el.type = 'button';
-  el.className = 'node' + (isLogo ? ' logo-node' : '') + (k.photos ? ' award-node' : '') + (k.tone === 'light' ? ' light' : '') + (k.todo ? ' todo' : '');
+  /* ขั้นที่ 3 ของกิจกรรมดีเด่น (ลูกของ b2-x) แสดงแค่หัวข้อ รายละเอียดดูได้เมื่อแตะ */
+  const titleOnly = !!(k._parent && k._parent._parent && k._parent._parent.id === 'b2');
+  el.className = 'node' + (isLogo ? ' logo-node' : '') + (k.photos ? ' award-node' : '') + (titleOnly ? ' title-only' : '') + (k.tone === 'light' ? ' light' : '') + (k.todo ? ' todo' : '');
   el.style.setProperty('--h', k.hue ?? 224);
   el.style.animationDelay = (i * 55) + 'ms';
   el.innerHTML =
@@ -551,7 +559,7 @@ function makeNode(k, i){
             (k.level ? '<em>' + esc(k.level) + '</em>' : '') + '</span>'
         : '') +
       '<span class="ttl">' + esc(k.title) + '</span>' +
-      '<span class="desc">' + esc(k.desc || '') + '</span>' +
+      (titleOnly ? '' : '<span class="desc">' + esc(k.desc || '') + '</span>') +
       (isLogo ? '' : '<span class="cta">' +
         (hasKids ? 'องค์ประกอบย่อย · ' + k.children.length : (k.photos ? 'ดูภาพรางวัล' : 'ดูรายละเอียด')) +
         '<i>&rarr;</i>' +
@@ -575,7 +583,9 @@ function detailEl(node){
           node.photos.map((src, i) => '<a href="' + esc(src) + '" target="_blank" rel="noopener" title="เปิดภาพขนาดเต็ม"><img src="' + esc(src) + '" alt="' + esc(node.title) + ' ภาพที่ ' + (i + 1) + '" loading="lazy"></a>').join('') +
         '</div>'
       : '') +
+    '<button type="button" class="detail-back">&larr; ย้อนกลับ</button>' +
     (node.todo ? '<div class="note">หัวข้อนี้ยังรอกำหนดเนื้อหา — แก้ไขได้ที่ตัวแปร <b>DATA</b> ท้ายไฟล์</div>' : '');
+  d.querySelector('.detail-back').addEventListener('click', collapseOne);
   return d;
 }
 
@@ -647,7 +657,16 @@ function finish(node){
   /* เลื่อนไปที่กิ่งที่เพิ่งกาง ไม่ใช่กระโดดขึ้นบนสุดเหมือนเดิม */
   requestAnimationFrame(() => {
     const last = scene.lastElementChild;
-    if(last && path.length > 1) last.scrollIntoView({ behavior:'smooth', block:'nearest' });
+    if(!last || path.length <= 1) return;
+    /* อยู่ใน iframe ที่ปรับความสูงตามเนื้อหา: ห้ามเลื่อนภายใน iframe (เนื้อหาด้านบนจะหายและเลื่อนกลับไม่ได้)
+       ให้ส่งตำแหน่งไปให้หน้าหลักเลื่อนแทน */
+    if(window.parent !== window){
+      window.scrollTo(0, 0);
+      const r = last.getBoundingClientRect();
+      window.parent.postMessage({ type:'d5-success-model-scroll', top:r.top, bottom:r.bottom }, window.location.origin);
+    }else{
+      last.scrollIntoView({ behavior:'smooth', block:'nearest' });
+    }
   });
 }
 

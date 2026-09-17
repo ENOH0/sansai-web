@@ -5,7 +5,6 @@ import { DIM4 } from '../../data/dimension4.data';
 import { RevealDirective } from '../../shared/directives/reveal.directive';
 import { PageHeroComponent } from '../../shared/page-hero/page-hero.component';
 import { SectionHeaderComponent } from '../../shared/section-header/section-header.component';
-import { CycleFlowComponent } from '../../shared/cycle-flow/cycle-flow.component';
 import { PhotoGalleryComponent } from '../../shared/photo-gallery/photo-gallery.component';
 import { GALLERY } from '../../data/gallery.data';
 import { HomeFabComponent } from '../../shared/home-fab/home-fab.component';
@@ -20,7 +19,7 @@ import { SmartWheelComponent } from '../../shared/smart-wheel/smart-wheel.compon
     HomeFabComponent,
     PhotoGalleryComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
-    CycleFlowComponent, PagerComponent,
+    PagerComponent,
     LineChartComponent, SmartWheelComponent
   ],
   templateUrl: './dimension4.component.html',
@@ -29,6 +28,7 @@ import { SmartWheelComponent } from '../../shared/smart-wheel/smart-wheel.compon
 export class Dimension4Component {
   /* ความสูงจริงของโมเดล PDCAR ที่ส่งมาจาก iframe ทำให้ไม่มีแถบเลื่อนซ้อน */
   readonly pdcarModelHeight = signal(900);
+  readonly designModelHeight = signal(760);
 
   @HostListener('window:message', ['$event'])
   resizePdcarModel(event: MessageEvent<{ type?: string; height?: number; group?: string }>): void {
@@ -38,6 +38,24 @@ export class Dimension4Component {
       const key = event.data.group;
       const group = this.groups.find(g => g.key === key);
       if (group) this.selectGroup(group.key);
+      return;
+    }
+    /* โมเดลการออกแบบการจัดการเรียนรู้ (4.1) */
+    if (event.data?.type === 'd4-design-model-height') {
+      const h = Number(event.data.height);
+      if (Number.isFinite(h)) this.designModelHeight.set(Math.max(700, h));
+      return;
+    }
+    if (event.data?.type === 'd4-design-model-scroll') {
+      const frame = document.querySelector<HTMLIFrameElement>('iframe[src="/models/learning-design-model.html"]');
+      const top = Number((event.data as { top?: number }).top), bottom = Number((event.data as { bottom?: number }).bottom);
+      if (!frame || !Number.isFinite(top) || !Number.isFinite(bottom)) return;
+      const base = frame.getBoundingClientRect().top;
+      const elTop = base + top, elBottom = base + bottom, navGap = 84;
+      let delta = 0;
+      if (elTop < navGap) delta = elTop - navGap;
+      else if (elBottom > window.innerHeight) delta = Math.min(elBottom - window.innerHeight + 16, elTop - navGap);
+      if (delta) window.scrollBy({ top: delta, behavior: 'smooth' });
       return;
     }
     if (event.data?.type !== 'd4-pdcar-model-height') return;
