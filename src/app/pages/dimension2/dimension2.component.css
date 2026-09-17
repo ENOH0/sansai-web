@@ -474,3 +474,35 @@
   background: rgba(255, 255, 255, .16);
   cursor: pointer;
 }
+
+/* "ที่มาและความสำคัญ" เหนือโมเดลแต่ละตัว — ไม่มีพื้นหลัง
+   วางบนวิดีโอโดยตรง จึงใช้ตัวอักษรสว่างพร้อมเงาให้อ่านออกทุกเฟรมของวิดีโอ */
+.d2-model-intro {
+  margin: 38px 0 6px;
+  max-width: 86ch;
+}
+.d2-model-intro h3 {
+  margin: 0;
+  font-size: 23px;
+  line-height: 1.5;
+  color: #fff;
+  text-shadow: 0 2px 18px rgba(8, 21, 47, .8), 0 0 40px rgba(8, 21, 47, .5);
+}
+.d2-model-intro-rule {
+  width: 52px;
+  height: 4px;
+  margin: 11px 0 14px;
+  border-radius: 4px;
+  background: var(--gold-500);
+}
+.d2-model-intro p,
+.d2-model-intro li {
+  color: #eaf2ff;
+  font-size: 18.5px;
+  line-height: 1.8;
+  text-shadow: 0 1px 14px rgba(8, 21, 47, .8), 0 0 30px rgba(8, 21, 47, .5);
+}
+.d2-model-intro p { margin: 0; }
+.d2-model-intro ul { margin: 0; padding-left: 22px; }
+.d2-model-intro li { margin: 7px 0; }
+.d2-model-intro li::marker { color: var(--gold-400); }

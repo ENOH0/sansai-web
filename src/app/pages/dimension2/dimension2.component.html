@@ -57,10 +57,31 @@
         loading="lazy" scrolling="no" [style.height.px]="continuityModelHeight()"></iframe>
     </div>
 
+    <div class="d2-model-intro" appReveal>
+      <h3>ที่มาและความสำคัญ — หลักสูตรที่มีความยืดหยุ่น</h3>
+      <div class="d2-model-intro-rule"></div>
+      <p>
+        โรงเรียนสันทรายวิทยาคมเผชิญข้อจำกัดของผู้เรียนบางคนทั้งด้านเศรษฐกิจ สุขภาพ และกิจกรรมกีฬา
+        ซึ่งเสี่ยงต่อการหลุดออกจากระบบการศึกษา (Drop-out) การจัดการศึกษาแบบยืดหยุ่นจึงเป็นแนวทางสำคัญ
+        ในการปรับระบบการศึกษา เพื่อสร้างระบบนิเวศที่ยืดหยุ่น มอบโอกาสที่เท่าเทียม
+        และสอดคล้องกับเงื่อนไขชีวิตที่แตกต่างกันของผู้เรียน
+      </p>
+    </div>
+
     <!-- แก้เนื้อหาได้ที่ public/models/pdca-flexible-curriculum.html ในตัวแปร data -->
     <div class="d2-flexible-model" appReveal>
       <iframe src="/models/pdca-flexible-curriculum.html" title="หลักสูตรที่มีความยืดหยุ่น กระบวนการ PDCA"
         loading="lazy" scrolling="no" [style.height.px]="flexibleModelHeight()"></iframe>
+    </div>
+
+    <div class="d2-model-intro" appReveal>
+      <h3>ที่มาและความสำคัญ — หลักสูตรที่มีความหลากหลาย</h3>
+      <div class="d2-model-intro-rule"></div>
+      <ul>
+        <li>ผู้เรียนคาดหวังแผนการเรียนที่มีความหลากหลาย ได้เรียนในสาขาวิชาที่ชอบตามความถนัด</li>
+        <li>ผู้ปกครองและชุมชนต้องการส่งเสริมทักษะชีวิต ทักษะอาชีพ และสมรรถนะที่นำไปใช้ได้จริง</li>
+        <li>ตลาดแรงงานและสถานประกอบการต้องการผู้เรียนที่มีสมรรถนะหลากหลาย</li>
+      </ul>
     </div>
 
     <!-- แก้เนื้อหาได้ที่ public/models/diversity-pdca-model.html ในตัวแปร stepData -->
@@ -97,7 +118,7 @@
       </div>
 
 
-      <app-cycle-flow [steps]="d.curriculum.cycle" [showEvidence]="true" />
+      <app-cycle-flow [steps]="d.curriculum.cycle" />
 
       <div class="sec-head" style="margin-top:52px" appReveal>
         <h3 class="sec-title" style="font-size:22px">พัฒนาการของหลักสูตรสถานศึกษา 3 ปีการศึกษา</h3>
@@ -172,7 +193,7 @@
         <p class="card-body" style="margin:0">{{ d.activities.flagship.text }}</p>
       </div>
 
-      <app-cycle-flow [steps]="d.activities.cycle" [showEvidence]="true" />
+      <app-cycle-flow [steps]="d.activities.cycle" />
 
       <div class="competency-section" appReveal>
         <button type="button" class="competency-card card card-gold" [class.is-open]="competencyOpen()"
@@ -245,7 +266,7 @@
       </div>
 
 
-      <app-cycle-flow [steps]="d.media.cycle" [showEvidence]="true" />
+      <app-cycle-flow [steps]="d.media.cycle" />
 
       <div class="grid grid-3" style="margin-top:38px">
         <div class="card card-accent" *ngFor="let r of d.media.resources; let i = index" appReveal="zoom"
@@ -283,7 +304,7 @@
       </div>
 
 
-      <app-cycle-flow [steps]="d.assessment.cycle" [showEvidence]="true" />
+      <app-cycle-flow [steps]="d.assessment.cycle" />
 
       <div style="margin-top:38px">
         <app-data-table [caption]="d.assessment.planCount.caption"

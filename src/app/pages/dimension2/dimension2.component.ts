@@ -70,12 +70,26 @@ export class Dimension2Component {
   ];
 
   /** กดปุ่มนำทาง: เปิดหัวข้อนั้นถ้ายังปิดอยู่ แล้วเลื่อนไปหา */
-  jumpTo(k: string): void {
-    if (!this.isOpen(k)) this.toggle(k);
+  /**
+   * เลื่อนหัวข้อที่กดมาไว้ใต้ navbar เสมอ
+   * ใช้การคำนวณตำแหน่งเอง แทน scrollIntoView เพราะ scrollIntoView
+   * ไม่รู้จักความสูงของ navbar หัวข้อจึงถูกแถบบนบังทุกครั้ง
+   */
+  private scrollToHead(k: string): void {
     setTimeout(() => {
       const el = document.getElementById('acc-' + k);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 60);
+      if (!el) return;
+      const navH = parseInt(
+        getComputedStyle(document.documentElement).getPropertyValue('--nav-h'), 10
+      ) || 68;
+      const top = el.getBoundingClientRect().top + window.scrollY - navH - 14;
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    }, 70);
+  }
+
+  jumpTo(k: string): void {
+    if (!this.isOpen(k)) this.toggle(k);
+    else this.scrollToHead(k);
   }
 
   /* Chrome/Safari บางเครื่องไม่เริ่มเล่นเองแม้ใส่ autoplay จึงสั่งเล่นซ้ำเมื่อพร้อม */
@@ -98,6 +112,9 @@ export class Dimension2Component {
   toggle(k: string): void {
     if (k !== '2.2' || this.isOpen('2.2')) this.competencyOpen.set(false);
     this.opened.update(v => v.includes(k) ? [] : [k]);
+    /* หัวข้อที่เปิดอยู่ก่อนหน้าถูกยุบ ความสูงหน้าจึงเปลี่ยน
+       ถ้าไม่เลื่อนตาม หัวข้อที่เพิ่งกดจะกระเด็นไปอยู่คนละที่ */
+    this.scrollToHead(k);
   }
 
   toggleCompetency(): void {
