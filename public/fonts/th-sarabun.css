@@ -1,0 +1,71 @@
+/* ============================================================
+   ฟอนต์ TH SarabunPSK ของทั้งเว็บ (โหลดจากไฟล์ในเว็บเอง ไม่พึ่ง Google Fonts)
+   - เครื่องที่ติดตั้งฟอนต์ไว้แล้ว (Windows) ใช้ local() ของเครื่อง
+   - iPad และเครื่องที่ไม่มีฟอนต์ ใช้ไฟล์ .ttf ในโฟลเดอร์นี้
+
+   มี 2 ชื่อฟอนต์:
+   'TH SarabunPSK'       ขนาดจริงของฟอนต์ ใช้กับโมเดลที่ออกแบบขนาดตัวอักษรไว้สำหรับ TH SarabunPSK
+   'TH SarabunPSK Web'   ขยาย 130% ให้ขนาดตาเท่ากับ Sarabun เดิม ใช้กับหน้าเว็บหลักและโมเดลที่เคยจัดขนาดไว้สำหรับ Sarabun
+                         (เลย์เอาต์จึงไม่เพี้ยน) · ปรับตัวเลขได้ที่ size-adjust
+   ============================================================ */
+
+@font-face {
+  font-family: 'TH SarabunPSK';
+  src: local('TH SarabunPSK'), local('THSarabunPSK'), url('/fonts/THSarabunPSK.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TH SarabunPSK';
+  src: local('TH SarabunPSK Bold'), local('THSarabunPSK-Bold'), url('/fonts/THSarabunPSK-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TH SarabunPSK';
+  src: local('TH SarabunPSK Italic'), local('THSarabunPSK-Italic'), url('/fonts/THSarabunPSK-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TH SarabunPSK';
+  src: local('TH SarabunPSK Bold Italic'), local('THSarabunPSK-BoldItalic'), url('/fonts/THSarabunPSK-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TH SarabunPSK Web';
+  src: local('TH SarabunPSK'), local('THSarabunPSK'), url('/fonts/THSarabunPSK.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 130%;
+}
+@font-face {
+  font-family: 'TH SarabunPSK Web';
+  src: local('TH SarabunPSK Bold'), local('THSarabunPSK-Bold'), url('/fonts/THSarabunPSK-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 130%;
+}
+@font-face {
+  font-family: 'TH SarabunPSK Web';
+  src: local('TH SarabunPSK Italic'), local('THSarabunPSK-Italic'), url('/fonts/THSarabunPSK-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  size-adjust: 130%;
+}
+@font-face {
+  font-family: 'TH SarabunPSK Web';
+  src: local('TH SarabunPSK Bold Italic'), local('THSarabunPSK-BoldItalic'), url('/fonts/THSarabunPSK-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  size-adjust: 130%;
+}

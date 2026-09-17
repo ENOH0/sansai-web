@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+<link rel="stylesheet" href="/fonts/th-sarabun.css">
+<style>html{-webkit-text-size-adjust:100%;text-size-adjust:100%}</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PDCA กระบวนการพัฒนาหลักสูตรที่มีความต่อเนื่องเชื่อมโยง</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#35445f;
@@ -23,7 +22,7 @@
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;}
 body{
-  font-family:"TH Sarabun PSK","TH Sarabun New","Sarabun",Tahoma,sans-serif;
+  font-family:'TH SarabunPSK', Tahoma, sans-serif;
   color:var(--ink);
   background:
     radial-gradient(circle at 10% 12%,rgba(255,170,208,.30),transparent 25%),
@@ -43,7 +42,7 @@ body::before{
 
 .page{width:min(1510px,100%);margin:auto;padding:25px 25px 24px;position:relative;z-index:1}
 .hero{text-align:center;margin-bottom:18px}
-.eyebrow{font:700 18px Arial,sans-serif;letter-spacing:3px;color:#9a87c8;margin-bottom:6px}
+.eyebrow{font:700 18px 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;letter-spacing:3px;color:#9a87c8;margin-bottom:6px}
 .hero h1{
   margin:0;
   font-size:clamp(28px,3.1vw,46px);
@@ -80,11 +79,11 @@ body::before{
 }
 
 .model-title{text-align:center;font-size:29px;font-weight:700;color:#60728a;position:relative;z-index:5}
-.model-title span{font:900 31px Arial,sans-serif;letter-spacing:2px;color:#917be2}
+.model-title span{font:900 31px 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;letter-spacing:2px;color:#917be2}
 .model-sub{text-align:center;font-size:20px;color:#93a0b2;margin-top:2px;position:relative;z-index:5}
 
 .badge-auto{position:absolute;right:22px;top:22px;padding:7px 14px;border-radius:15px;background:rgba(255,255,255,.78);border:1px solid rgba(190,205,230,.55);box-shadow:0 8px 22px rgba(86,104,143,.08);font-size:18px;color:#8492a6;z-index:8}
-.badge-auto::before{content:"↺";font-family:Arial,sans-serif;font-weight:700;color:#947ee4;margin-right:6px}
+.badge-auto::before{content:"↺";font-family:'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;font-weight:700;color:#947ee4;margin-right:6px}
 
 .orbit-stage{
   position:relative;
@@ -105,7 +104,7 @@ body::before{
 }
 @keyframes directionGlow{50%{filter:brightness(1.12);transform:scale(1.015)}}
 
-.arrow-chip{position:absolute;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.86);border:1px solid rgba(184,197,226,.58);box-shadow:0 6px 17px rgba(79,99,139,.10);font:700 23px Arial,sans-serif;color:#8f81cc;z-index:4;pointer-events:none}
+.arrow-chip{position:absolute;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.86);border:1px solid rgba(184,197,226,.58);box-shadow:0 6px 17px rgba(79,99,139,.10);font:700 23px 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;color:#8f81cc;z-index:4;pointer-events:none}
 .arrow-chip.t{left:25%;top:8%;transform:rotate(-42deg)}
 .arrow-chip.l{left:7%;bottom:26%;transform:rotate(-132deg)}
 .arrow-chip.b{right:25%;bottom:7%;transform:rotate(-222deg)}
@@ -137,7 +136,7 @@ body::before{
   box-shadow:0 12px 32px rgba(76,95,134,.14),inset 0 0 22px rgba(255,255,255,.95);
   transition:.36s ease;
 }
-.node-letter{font:900 60px/.78 Arial,sans-serif;color:var(--c);text-shadow:0 0 9px white,0 0 18px color-mix(in srgb,var(--c) 40%,transparent)}
+.node-letter{font:900 60px/.78 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;color:var(--c);text-shadow:0 0 9px white,0 0 18px color-mix(in srgb,var(--c) 40%,transparent)}
 .node-name{font-size:22px;font-weight:700;color:#566a81;margin-top:10px}
 .pdca-node.active{filter:drop-shadow(0 0 20px color-mix(in srgb,var(--c) 60%,transparent));z-index:22}
 .pdca-node.active .node-inner{transform:scale(1.18);box-shadow:0 18px 45px rgba(74,92,133,.16),0 0 31px color-mix(in srgb,var(--c) 46%,transparent),inset 0 0 24px white;animation:activePop 3s cubic-bezier(.16,.84,.32,1)}
@@ -156,7 +155,7 @@ body::before{
 }
 .center-core::before{content:"";position:absolute;inset:-26px;border-radius:50%;border:1px solid rgba(172,158,225,.25);animation:centerPulse 3s ease-in-out infinite}
 @keyframes centerPulse{50%{transform:scale(1.04);opacity:.7}}
-.center-code{font:900 38px/1 Arial,sans-serif;color:#806cc0;letter-spacing:1px}
+.center-code{font:900 38px/1 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;color:#806cc0;letter-spacing:1px}
 .center-main{font-size:25px;font-weight:700;color:#60758b;margin-top:5px}
 .center-sub{font-size:17px;color:#91a0b2;margin-top:2px}
 
@@ -165,7 +164,7 @@ body::before{
 @keyframes float{50%{transform:translateY(-20px) scale(1.5);opacity:1}}
 
 .controls{display:flex;justify-content:center;gap:10px;margin-top:-2px;position:relative;z-index:30}
-.controls button{border:0;border-radius:14px;padding:7px 18px;font:700 20px "TH Sarabun PSK","TH Sarabun New",sans-serif;cursor:pointer;color:#64758d;background:rgba(240,244,255,.88);box-shadow:0 7px 18px rgba(92,111,151,.09);transition:.25s}
+.controls button{border:0;border-radius:14px;padding:7px 18px;font:700 20px 'TH SarabunPSK', Tahoma, sans-serif;cursor:pointer;color:#64758d;background:rgba(240,244,255,.88);box-shadow:0 7px 18px rgba(92,111,151,.09);transition:.25s}
 .controls button:hover{transform:translateY(-2px)}
 .controls button.active{color:white;background:linear-gradient(135deg,#a68ff0,#69cae8);box-shadow:0 8px 20px rgba(135,154,226,.24)}
 .status-line{text-align:center;margin-top:10px;font-size:18px;color:#8794a7;position:relative;z-index:10}.status-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#7ed69e;box-shadow:0 0 10px #7ed69e;margin-right:6px;animation:blink 1.6s infinite}@keyframes blink{50%{opacity:.35}}
@@ -204,12 +203,12 @@ body::before{
 @keyframes popupGlowSpread{0%{opacity:.85;transform:scale(.96);box-shadow:0 0 24px var(--popup-color),0 0 48px var(--popup-color)}45%{opacity:.38;transform:scale(1.07);box-shadow:0 0 42px var(--popup-color),0 0 90px var(--popup-color)}100%{opacity:0;transform:scale(1.18);box-shadow:0 0 70px transparent,0 0 130px transparent}}
 .popup-close{
   position:absolute;right:18px;top:18px;width:42px;height:42px;border:0;border-radius:50%;
-  background:rgba(238,241,249,.92);color:#75839a;font:400 29px/1 Arial,sans-serif;cursor:pointer;
+  background:rgba(238,241,249,.92);color:#75839a;font:400 29px/1 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;cursor:pointer;
   box-shadow:0 6px 16px rgba(75,91,129,.10);transition:.25s;z-index:4;
 }
 .popup-close:hover{transform:rotate(90deg) scale(1.06);background:#fff}
 .popup-top{display:flex;align-items:center;gap:18px;padding-right:52px}
-.popup-badge{width:86px;height:86px;border-radius:27px;display:flex;align-items:center;justify-content:center;color:white;font:900 52px Arial,sans-serif;background:var(--p);box-shadow:0 12px 30px rgba(160,150,220,.22);transition:.35s;flex:none}
+.popup-badge{width:86px;height:86px;border-radius:27px;display:flex;align-items:center;justify-content:center;color:white;font:900 52px 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;background:var(--p);box-shadow:0 12px 30px rgba(160,150,220,.22);transition:.35s;flex:none}
 .popup-head h2{margin:0;font-size:40px;line-height:1;color:#50647b}.popup-head p{margin:6px 0 0;font-size:24px;color:#8c7cb6;line-height:1.05}
 .description{margin:24px 0 18px;padding:18px 21px;border-radius:22px;background:rgba(255,255,255,.75);border:1px solid rgba(195,211,235,.58);font-size:24px;line-height:1.32;color:#5c7086;box-shadow:0 8px 25px rgba(91,108,148,.06)}
 .section-label{font-size:24px;font-weight:700;color:#687b91;margin:11px 0 10px}
@@ -217,12 +216,12 @@ body::before{
 .detail{border-radius:18px;background:rgba(255,255,255,.72);border:1px solid rgba(191,207,232,.58);overflow:hidden;transition:.28s}
 .detail:hover{transform:translateY(-2px);background:#fff;box-shadow:0 9px 25px rgba(91,108,148,.09)}
 .detail-head{min-height:57px;padding:9px 15px;display:flex;align-items:center;gap:12px;cursor:pointer}
-.num{width:36px;height:36px;border-radius:12px;color:white;display:flex;align-items:center;justify-content:center;font:700 17px Arial,sans-serif;flex:none}
-.detail-title{font-size:23px;font-weight:700;color:#53697f;flex:1;line-height:1.05}.plus{width:31px;height:31px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(171,154,231,.14);color:#9b83d5;font:400 23px Arial;transition:.3s}
+.num{width:36px;height:36px;border-radius:12px;color:white;display:flex;align-items:center;justify-content:center;font:700 17px 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;flex:none}
+.detail-title{font-size:23px;font-weight:700;color:#53697f;flex:1;line-height:1.05}.plus{width:31px;height:31px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(171,154,231,.14);color:#9b83d5;font:400 23px 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;transition:.3s}
 .detail-content{max-height:0;overflow:hidden;padding:0 17px 0 64px;color:#718196;font-size:21px;line-height:1.28;transition:max-height .42s ease,padding .42s ease}
 .detail.open .detail-content{max-height:260px;padding-bottom:16px}.detail.open .plus{transform:rotate(45deg)}
 .flow-note{margin-top:17px;padding:13px 17px;border-radius:18px;background:linear-gradient(135deg,rgba(255,231,244,.72),rgba(229,247,255,.74),rgba(232,252,239,.74));border:1px dashed rgba(151,169,220,.60);font-size:21px;line-height:1.2;color:#748397;text-align:center}
-.flow-note strong{font-family:Arial,sans-serif;color:#7765b8;letter-spacing:1px}
+.flow-note strong{font-family:'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;color:#7765b8;letter-spacing:1px}
 body.popup-open{overflow:hidden}
 
 .footer{text-align:center;margin-top:16px;font-size:19px;color:#8795a7}
@@ -253,7 +252,7 @@ html,body{ min-height:auto; }
 body{
   background:transparent;
   color:#e8f0ff;
-  font-family:"Sarabun","TH Sarabun PSK",Tahoma,sans-serif;
+  font-family:'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
 }
 
 /* ปิดลายจุดพื้นหลัง */

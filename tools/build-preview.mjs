@@ -15,6 +15,8 @@ import path from 'node:path';
 import os from 'node:os';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+/* ฟอนต์ TH SarabunPSK: preview อ้างรูป/ไฟล์เป็น public/... จึงเปลี่ยน path ของไฟล์ฟอนต์ให้ตรง */
+const FONT_CSS = (await readFile(path.join(root, 'public/fonts/th-sarabun.css'), 'utf8')).replaceAll("url('/fonts/", "url('public/fonts/");
 // ใช้โฟลเดอร์ชั่วคราวของระบบ เพื่อไม่ให้เหลือไฟล์ขยะในโปรเจกต์
 const tmp = path.join(os.tmpdir(), 'sansai-preview-' + process.pid);
 
@@ -785,9 +787,9 @@ ${pageHero(d.no, d.weight, d.name, d.subtitle)}
     <div class="card card-gold"${rev('', i * 80)}>
       <h3 class="card-title" style="font-size:17px">${esc(e.label)}</h3>
       <div style="display:flex;align-items:baseline;gap:14px;margin:14px 0 8px">
-        <span style="font-family:'Sarabun',sans-serif;font-size:29px;font-weight:700;color:#6b7a94">${n2(e.from)}</span>
+        <span style="font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;font-size:29px;font-weight:700;color:#6b7a94">${n2(e.from)}</span>
         <span style="font-size:22px;color:#82ade4">→</span>
-        <span style="font-family:'Sarabun',sans-serif;font-size:36px;font-weight:700;color:#132f63">${n2(e.to)}<span style="font-size:16px;color:#6b7a94;margin-left:4px">${esc(e.unit)}</span></span>
+        <span style="font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;font-size:36px;font-weight:700;color:#132f63">${n2(e.to)}<span style="font-size:16px;color:#6b7a94;margin-left:4px">${esc(e.unit)}</span></span>
         <span class="up" style="margin-left:auto">+${n2(e.to - e.from)}</span></div>
       <p class="card-body" style="margin:0;font-size:15px">${esc(e.note)}</p></div>`).join('')}</div>
 </div></section>
@@ -890,9 +892,7 @@ async function main() {
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="สันทรายวิทยาคม"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>${FONT_CSS}</style>
 <style>${cleanCss}</style>
 </head><body>
 

@@ -26,7 +26,7 @@
 }
 
 .stat-value {
-  font-family: 'Sarabun', sans-serif;
+  font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
   font-weight: 700;
   font-size: clamp(31.5px, 3.4vw, 42.5px);
   color: var(--navy-800);

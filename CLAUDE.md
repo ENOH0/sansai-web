@@ -25,7 +25,7 @@
 
 ```
 src/
-  index.html            โหลดฟอนต์ Sarabun จาก Google Fonts
+  index.html            โหลดฟอนต์ TH SarabunPSK จาก public/fonts/th-sarabun.css (ไม่ใช้ Google Fonts แล้ว)
   styles.css            ระบบดีไซน์ทั้งหมด (ตัวแปรสี, .card, .chip, .tbl, .steps, .reveal*)
   app/
     app.routes.ts       lazy route ทุกหน้า
@@ -53,8 +53,12 @@ tools/build-preview.mjs  สร้าง preview.html (ดูข้อ 6 — ส
    (คอมโพเนนต์ `cycle-flow` มีไว้เพื่อการนี้)
 2. **สีประจำโรงเรียนคือน้ำเงิน–ขาว** ใช้ตัวแปร `--navy-*` และ `--gold-*` เท่านั้น
    อย่าใส่สีดิบ ๆ ที่ไม่อยู่ในระบบ
-3. **ฟอนต์ Sarabun ทั้งเว็บ** หัวข้อใช้ `font-weight: 800`
-   (เคยใช้ Noto Serif Thai แล้วเปลี่ยนออกหมดแล้ว อย่าใส่กลับ)
+3. **ฟอนต์ TH SarabunPSK ทั้งเว็บ ทุกหน้า ทุกโมเดล** (ผู้ใช้สั่งเปลี่ยนจาก Sarabun เพราะ iPad แสดงฟอนต์เพี้ยน)
+   - ไฟล์ฟอนต์อยู่ `public/fonts/` นิยามใน `public/fonts/th-sarabun.css` · ห้ามกลับไปใช้ Google Fonts
+   - `'TH SarabunPSK Web'` = ขยาย 130% (size-adjust) ใช้กับหน้าเว็บหลักและส่วนที่ขนาดตัวอักษรจัดไว้สำหรับ Sarabun/Arial
+   - `'TH SarabunPSK'` = ขนาดจริง ใช้กับโมเดลที่ออกแบบขนาดไว้สำหรับ TH SarabunPSK อยู่แล้ว
+   - โมเดลใหม่ใน `public/models/` ต้องใส่ `<link rel="stylesheet" href="/fonts/th-sarabun.css">` และห้ามใช้ฟอนต์อื่น
+   - (เคยใช้ Noto Serif Thai และ Sarabun มาก่อน อย่าใส่กลับ)
 4. **พื้นที่สัมผัสต้องไม่ต่ำกว่า 44px** ทุกปุ่ม
 5. **เอฟเฟกต์ hover ต้องอยู่ใน `@media (hover: hover)` เสมอ** ไม่งั้นค้างบนจอสัมผัส
 6. **แอนิเมชันใช้ `transform` และ `opacity` เท่านั้น** และต้องรองรับ `prefers-reduced-motion`

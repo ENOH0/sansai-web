@@ -258,7 +258,7 @@
   place-items: center;
   width: 36px; height: 36px;
   color: var(--gold-400);
-  font-family: 'Sarabun', sans-serif;
+  font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
   font-size: 23.5px;
   font-weight: 700;
   border: 2px solid var(--gold-500);
@@ -286,7 +286,7 @@
   backface-visibility: hidden;
 }
 .bc-core-label { display: block; color: var(--gold-400); font-size: 15.5px; font-weight: 800; letter-spacing: .12em; }
-.bc-core-title { margin: 3.5px 0 2px; font-family: 'Sarabun', sans-serif; font-size: 28px; font-weight: 700; line-height: 1; }
+.bc-core-title { margin: 3.5px 0 2px; font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif; font-size: 28px; font-weight: 700; line-height: 1; }
 .bc-core-sub { margin: 0; color: #dbe9ff; font-size: 12.5px; font-weight: 600; line-height: 1.45; }
 .bc-core-ring { position: absolute; inset: 8px; border: 1px solid rgba(255,255,255,.5); border-radius: inherit; }
 
@@ -330,7 +330,7 @@
   display: grid; place-items: center;
   width: 42px; height: 42px;
   color: var(--gold-400);
-  font-family: 'Sarabun', sans-serif;
+  font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
   font-size: 26px;
   font-weight: 700;
   border-radius: 50%;

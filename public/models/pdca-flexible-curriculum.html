@@ -1,14 +1,16 @@
 <!doctype html>
 <html lang="th">
 <head>
+<link rel="stylesheet" href="/fonts/th-sarabun.css">
+<style>html{-webkit-text-size-adjust:100%;text-size-adjust:100%}</style>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>หลักสูตรที่มีความยืดหยุ่น | PDCA</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@600;700&family=Sarabun:wght@400;600;700;800&display=swap');
+    
     :root { --ink:#3f405d; --paper:#fff9f4; --p:#ff9cad; --d:#9cceff; --c:#a8dfbd; --a:#cbb1ff; }
     * { box-sizing:border-box; }
-    body { margin:0; min-height:auto; color:var(--ink); background:transparent; font-family:'Sarabun','Kanit',sans-serif; overflow-x:hidden; }
+    body { margin:0; min-height:auto; color:var(--ink); background:transparent; font-family:'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif; overflow-x:hidden; }
     .orb { position:absolute; border-radius:50%; filter:blur(2px); opacity:.55; pointer-events:none; animation: drift 9s ease-in-out infinite alternate; }
     .orb.one { width:190px;height:190px;background:#ffd5df;top:-50px;left:-35px; }
     .orb.two { width:230px;height:230px;background:#c9e6ff;right:-85px;top:20%;animation-delay:-3s; }
@@ -33,7 +35,7 @@
     .node { --x:0; --y:0; --node:#fff; position:absolute; z-index:4; left:50%; top:50%; width:138px; height:138px; margin:-69px; border:0; border-radius:32px; cursor:pointer; color:var(--ink); background:linear-gradient(135deg,#fff,#fff7); box-shadow:0 16px 26px #5f648028, inset 0 0 0 7px var(--node); transform:translate(var(--x),var(--y)) rotateX(10deg) rotateY(-12deg); transition:transform .35s ease,box-shadow .35s ease; font-family:inherit; animation: nodeFloat 4.5s ease-in-out infinite; }
     .node:hover,.node:focus-visible,.node.active { transform:translate(var(--x),var(--y)) translateY(-12px) scale(1.07) rotateX(6deg) rotateY(-8deg); outline:none; box-shadow:0 25px 34px #5f648044,inset 0 0 0 8px var(--node); }
     .node.active::after { content:""; position:absolute; inset:-14px; z-index:-1; border:2px solid var(--node); border-radius:38px; opacity:.45; animation:nodePulse 2.5s ease-out infinite; }
-    .node b { display:block; font:700 3rem/1 'Kanit',sans-serif; color:var(--node); text-shadow:0 2px 0 #fff; }
+    .node b { display:block; font:700 3rem/1 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif; color:var(--node); text-shadow:0 2px 0 #fff; }
     .node span { display:block; margin-top:7px; font-size:.75rem; font-weight:700; line-height:1.35; }
     .p { --x:clamp(-255px,-26vw,-175px); --y:clamp(-160px,-16vw,-110px); --node:var(--p); animation-delay:-1s; }
     .d { --x:clamp(175px,26vw,255px); --y:clamp(-160px,-16vw,-110px); --node:var(--d); animation-delay:-2.1s; }
@@ -43,7 +45,7 @@
     .l1 { transform:rotate(-145deg); }.l2 { transform:rotate(-35deg); }.l3 { transform:rotate(35deg); }.l4 { transform:rotate(145deg); }
     .detail { min-height:175px; margin:0 auto; max-width:900px; padding:23px 28px; border-radius:28px; background:#ffffffb8; box-shadow:0 14px 34px #71658720; backdrop-filter:blur(10px); }
     .detail-top { display:flex; align-items:center; gap:13px; }
-    .tag { min-width:45px; height:45px; display:grid; place-items:center; border-radius:16px; background:var(--current); color:#fff; font:700 1.65rem/1 'Kanit'; }
+    .tag { min-width:45px; height:45px; display:grid; place-items:center; border-radius:16px; background:var(--current); color:#fff; font:700 1.65rem/1 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif; }
     h2 { margin:0; font-size:1.12rem; }
     .detail ul { margin:12px 0 0; padding-left:1.25rem; line-height:1.7; font-size:.93rem; }
     .detail li { margin:7px 0; }

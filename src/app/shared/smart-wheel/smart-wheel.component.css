@@ -73,7 +73,7 @@
 .sw-hub strong {
   display: block;
   color: var(--navy-800);
-  font-family: 'Sarabun', sans-serif;
+  font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
   font-size: clamp(21.5px, 3.2vw, 33.5px);
   font-weight: 700;
 }
@@ -124,7 +124,7 @@
 .sw-letter {
   display: block;
   color: var(--gold-400);
-  font-family: 'Sarabun', sans-serif;
+  font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
   font-size: clamp(22.5px, 3.6vw, 38px);
   font-weight: 700;
   line-height: 1;

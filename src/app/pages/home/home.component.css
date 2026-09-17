@@ -57,7 +57,7 @@
 .cover-title {
   margin: 0;
   color: #fff;
-  font-family: 'Sarabun', sans-serif;
+  font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
   font-size: clamp(45px, 7.4vw, 98.5px);
   font-weight: 700;
   line-height: 1.08;
@@ -174,7 +174,7 @@
   width: 38px;
   height: 38px;
   color: #fff;
-  font-family: 'Sarabun', sans-serif;
+  font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
   font-size: 20px;
   font-weight: 700;
   border-radius: 11px;
