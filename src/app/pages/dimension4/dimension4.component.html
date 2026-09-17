@@ -153,17 +153,75 @@
     <app-section-header [light]="true" num="4.4" title="การนำผลการประเมินไปใช้" [lead]="d.useResults.lead" />
     <ng-container [ngTemplateOutlet]="d4Indicators"></ng-container>
 
-    <div class="grid grid-4" style="margin-bottom:34px">
-      <div class="card card-accent" *ngFor="let s of d.useResults.steps; let i = index" appReveal="zoom"
-        [revealDelay]="i * 90">
-        <div class="chip" style="margin-bottom:10px">ขั้นที่ {{ i + 1 }}</div>
-        <h3 class="card-title" style="font-size:17px">{{ s.title }}</h3>
-        <p class="card-body" style="margin:0;font-size:15.5px">{{ s.text }}</p>
+    <!-- ส่วนที่ 1 ภาพหลัก -->
+    <div class="d44-hero" appReveal>
+      <img class="d44-hero-img" [src]="d.useResults.heroImage" [alt]="d.useResults.heroCaption" loading="lazy">
+      <div class="d44-hero-copy">
+        <p class="d44-hero-kicker">การนำผลการประเมินไปใช้</p>
+        <h3 class="d44-hero-title">{{ d.useResults.tagline }}</h3>
+        <p class="d44-hero-text">{{ d.useResults.intro }}</p>
       </div>
     </div>
 
+    <!-- ส่วนที่ 2 แผนภาพกระบวนการ -->
+    <div class="d44-flow" appReveal>
+      <ng-container *ngFor="let s of d.useResults.steps; let i = index; let last = last">
+        <button type="button" class="d44-flow-step" (click)="scrollToD44(i)">
+          <span class="d44-flow-no">{{ i + 1 }}</span>
+          <span class="d44-flow-name">{{ s.short }}</span>
+        </button>
+        <span class="d44-flow-arrow" *ngIf="!last" aria-hidden="true">→</span>
+      </ng-container>
+    </div>
+
+    <!-- ส่วนที่ 3 การ์ดเนื้อหา 4 ใบ -->
+    <div class="d44-cards">
+      <article class="card d44-card" *ngFor="let s of d.useResults.steps; let i = index" [id]="'d44-step-' + i" appReveal>
+        <header class="d44-card-head">
+          <span class="d44-card-no">{{ i + 1 }}</span>
+          <div>
+            <p class="d44-card-kicker">{{ s.short }}</p>
+            <h3 class="card-title d44-card-title">{{ s.title }}</h3>
+          </div>
+        </header>
+        <p class="card-body d44-lead">{{ s.lead }}</p>
+
+        <div class="d44-blocks" *ngIf="s.blocks.length">
+          <div class="d44-block" *ngFor="let b of s.blocks; let j = index">
+            <span class="d44-block-no">{{ j + 1 }}</span>
+            <h4>{{ b.label }}</h4>
+            <p>{{ b.text }}</p>
+          </div>
+        </div>
+
+        <ol class="d44-steps" *ngIf="s.flow.length">
+          <li *ngFor="let f of s.flow">{{ f }}</li>
+        </ol>
+
+        <ul class="d44-points">
+          <li *ngFor="let pt of s.points">{{ pt }}</li>
+        </ul>
+
+        <p class="d44-highlight" *ngIf="s.highlight">{{ s.highlight }}</p>
+
+        <div class="d44-result">
+          <strong>ผลการดำเนินงาน</strong>
+          <p>{{ s.result }}</p>
+        </div>
+
+        <div class="d44-photos">
+          <figure *ngFor="let ph of s.photos">
+            <button type="button" (click)="d44Lightbox.set(ph)" [attr.aria-label]="'ดูภาพขนาดเต็ม: ' + ph.caption">
+              <img [src]="ph.src" [alt]="ph.caption" loading="lazy">
+            </button>
+            <figcaption>{{ ph.caption }}</figcaption>
+          </figure>
+        </div>
+      </article>
+    </div>
+
     <div class="sec-head" appReveal>
-      <h3 class="sec-title" style="font-size:22px">หลักฐานเชิงประจักษ์ของการนำผลไปใช้</h3>
+      <h3 class="sec-title" style="font-size:22px">ผลลัพธ์เชิงประจักษ์ที่เกิดกับผู้เรียน</h3>
       <div class="sec-rule"></div>
       <p class="sec-lead">เปรียบเทียบผลลัพธ์ที่เกิดกับผู้เรียนระหว่างปีการศึกษา 2566 และ 2568
         หลังจากครูนำผลการประเมินมาปรับแผนการจัดการเรียนรู้</p>
@@ -185,6 +243,29 @@
         </div>
         <p class="card-body" style="margin:0;font-size:15px">{{ e.note }}</p>
       </div>
+    </div>
+
+    <!-- ส่วนที่ 5 คลังหลักฐาน -->
+    <div class="card d44-library" appReveal>
+      <h3 class="card-title">คลังหลักฐานการนำผลการประเมินไปใช้</h3>
+      <div class="d44-filters" role="group" aria-label="กรองหลักฐานตามหมวด">
+        <button type="button" class="d44-filter" [class.is-on]="d44Filter() === ''" (click)="d44Filter.set('')">
+          ทั้งหมด <span>{{ d.useResults.library.length }}</span>
+        </button>
+        <button type="button" class="d44-filter" *ngFor="let c of d.useResults.libraryCategories"
+          [class.is-on]="d44Filter() === c" (click)="d44Filter.set(c)">
+          {{ c }} <span>{{ d44Count(c) }}</span>
+        </button>
+      </div>
+      <ul class="d44-docs">
+        <li *ngFor="let doc of d44Docs()">
+          <span class="d44-doc-cat">{{ doc.category }}</span>
+          <span class="d44-doc-title">{{ doc.title }}</span>
+          <span class="d44-doc-meta">
+            <ng-container *ngIf="doc.year">ปีการศึกษา {{ doc.year }} · </ng-container>เล่มด้านที่ 4 หน้า {{ doc.page }}
+          </span>
+        </li>
+      </ul>
     </div>
   </div>
 </section>
@@ -221,4 +302,11 @@
 </section>
 
 <!-- ปุ่มกลับหน้าแรกแบบลอย -->
+<!-- ภาพขนาดเต็มของหัวข้อ 4.4 -->
+<div class="d44-lightbox" *ngIf="d44Lightbox() as lb" (click)="d44Lightbox.set(null)">
+  <button type="button" class="d44-lb-close" aria-label="ปิด">✕</button>
+  <img [src]="lb.src" [alt]="lb.caption">
+  <p>{{ lb.caption }}</p>
+</div>
+
 <app-home-fab />

@@ -6,7 +6,7 @@ import * as i0 from "@angular/core";
 export class StudentQualityWheelComponent {
     items = [
         {
-            letter: 'C', title: 'Continuous Improvement', x: 16, y: 50, light: false,
+            letter: 'C', title: 'Continuous Improvement', thaiTitle: 'พัฒนาอย่างต่อเนื่อง สู่คุณภาพที่ยั่งยืน', x: 16, y: 50, light: false,
             evidence: [
                 { src: '/evidence/academic-model/continuous-improvement/01-plan.png', caption: 'P - ประชุมคณะกรรมการดำเนินการในการนิเทศ ติดตามผลการดำเนินการตามโครงการ' },
                 { src: '/evidence/academic-model/continuous-improvement/02-do.png', caption: 'D - รายงานการดำเนินงานโครงการต่าง ๆ ของโรงเรียนสันทรายวิทยาคม' },
@@ -15,16 +15,16 @@ export class StudentQualityWheelComponent {
             ]
         },
         {
-            letter: 'A', title: 'Alignment with Standards', x: 25.96, y: 25.96, light: true,
+            letter: 'A', title: 'Alignment with Standards', thaiTitle: 'เชื่อมโยงเป้าหมาย สู่มาตรฐาน', x: 25.96, y: 25.96, light: true,
             evidence: [
                 { src: '/evidence/academic-model/alignment/01-plan.png', caption: 'P - การประชุมเพื่อแนวทางการวิเคราะห์มาตรฐาน หลักสูตร และเป้าหมายคุณภาพผู้เรียน ระหว่างคณะกรรมการสถานศึกษาขั้นพื้นฐาน ผู้บริหาร และคณะครูโรงเรียนสันทรายวิทยาคม' },
                 { src: '/evidence/academic-model/alignment/02-do.png', caption: 'D - จัดทำแผนปฏิบัติการประจำปี' },
-                { src: '/evidence/academic-model/alignment/03-check.png', caption: 'C - มีการดำเนินการตามแผนปฏิบัติการ' },
-                { src: '/evidence/academic-model/alignment/04-act.png', caption: 'A - ตามลำดับ' }
+                { src: '/evidence/academic-model/alignment/03-check-revised.png', caption: 'C - มีการดำเนินการตามแผนปฏิบัติการ' },
+                { src: '/evidence/academic-model/alignment/04-act.png', caption: 'A - สรุปแผนปฏิบัติการประจำปี เพื่อนำไปปรับแก้ในปีการศึกษาต่อไป' }
             ]
         },
         {
-            letter: 'C', title: 'Curriculum Development', x: 50, y: 16, light: false,
+            letter: 'C', title: 'Curriculum Development', thaiTitle: 'พัฒนาหลักสูตรให้ตอบโจทย์ผู้เรียน', x: 50, y: 16, light: false,
             evidence: [
                 { src: '/evidence/academic-model/curriculum/01-plan.png', caption: 'P - ประชุมวางแผนการพัฒนาหลักสูตรสถานศึกษาอิงฐานสมรรถนะของโรงเรียนในโครงการพื้นที่นวัตกรรม' },
                 { src: '/evidence/academic-model/curriculum/02-do.png', caption: 'D - การอบรมพัฒนาหลักสูตรสถานศึกษาอิงฐานสมรรถนะของโรงเรียนในโครงการพื้นที่นวัตกรรม' },
@@ -33,7 +33,7 @@ export class StudentQualityWheelComponent {
             ]
         },
         {
-            letter: 'A', title: 'Active Learning', x: 74.04, y: 25.96, light: true,
+            letter: 'A', title: 'Active Learning', thaiTitle: 'เรียนรู้ผ่านการลงมือทำ', x: 74.04, y: 25.96, light: true,
             evidence: [
                 { src: '/evidence/academic-model/active-learning/01-plan.png', caption: 'P - วางแผนการดำเนินการออกแบบกิจกรรม' },
                 { src: '/evidence/academic-model/active-learning/02-do.png', caption: 'D - จัดกิจกรรมตามโครงการ' },
@@ -42,7 +42,7 @@ export class StudentQualityWheelComponent {
             ]
         },
         {
-            letter: 'D', title: 'Data-driven Assessment', x: 84, y: 50, light: false,
+            letter: 'D', title: 'Data-driven Assessment', thaiTitle: 'ใช้ข้อมูลพัฒนาผู้เรียน', x: 84, y: 50, light: false,
             evidence: [
                 { src: '/evidence/academic-model/data-assessment/01-plan.png', caption: 'P - วางแผนการดำเนินการจัดการคัดกรองผู้เรียนเป็นรายบุคคล' },
                 { src: '/evidence/academic-model/data-assessment/02-do.png', caption: 'D - การคัดกรองนักเรียนเป็นรายบุคคล' },
@@ -51,7 +51,7 @@ export class StudentQualityWheelComponent {
             ]
         },
         {
-            letter: 'E', title: 'Educational Innovation', x: 74.04, y: 74.04, light: true,
+            letter: 'E', title: 'Educational Innovation', thaiTitle: 'สร้างนวัตกรรมการเรียนรู้', x: 74.04, y: 74.04, light: true,
             evidence: [
                 { src: '/evidence/academic-model/educational-innovation/01-plan.png', caption: 'P - คณะกรรมการดำเนินงานสำรวจการใช้สื่อเทคโนโลยีเพื่อการเรียนรู้ และแหล่งเรียนรู้ของโรงเรียน' },
                 { src: '/evidence/academic-model/educational-innovation/02-do.png', caption: 'D - การประชุมคณะครูและให้ความรู้ด้านการใช้สื่อ เทคโนโลยี เพื่อการเรียนรู้และแหล่งเรียนรู้' },
@@ -60,7 +60,7 @@ export class StudentQualityWheelComponent {
             ]
         },
         {
-            letter: 'M', title: 'Monitoring & Mentoring', x: 50, y: 84, light: false,
+            letter: 'M', title: 'Monitoring & Mentoring', thaiTitle: 'ติดตาม ดูแล และให้คำปรึกษา', x: 50, y: 84, light: false,
             evidence: [
                 { src: '/evidence/academic-model/monitoring-mentoring/01-plan.png', caption: 'P - วางแผน วางปฏิทินในการนิเทศกำกับติดตามในกระบวนการจัดการเรียนรู้' },
                 { src: '/evidence/academic-model/monitoring-mentoring/02-do.png', caption: 'D - ดำเนินการนิเทศ กำกับ ติดตามครูผู้สอนในชั้นเรียน โดยการนิเทศโดยครูและครู และผู้บริหารนิเทศครู' },
@@ -69,7 +69,7 @@ export class StudentQualityWheelComponent {
             ]
         },
         {
-            letter: 'I', title: 'Inclusive Learning', x: 25.96, y: 74.04, light: true,
+            letter: 'I', title: 'Inclusive Learning', thaiTitle: 'เปิดโอกาสให้ทุกคนเรียนรู้', x: 25.96, y: 74.04, light: true,
             evidence: [
                 { src: '/evidence/academic-model/inclusive-learning/01-plan.png', caption: 'P - วางแผนการออกแบบกิจกรรมให้กับนักเรียนที่มีความแตกต่างระหว่างบุคคล' },
                 { src: '/evidence/academic-model/inclusive-learning/02-do.png', caption: 'D - จัดกิจกรรมให้เหมาะสมกับผู้เรียน' },

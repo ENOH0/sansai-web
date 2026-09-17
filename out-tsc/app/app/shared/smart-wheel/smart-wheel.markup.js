@@ -77,7 +77,7 @@ export function initSmartWheel(root, items) {
         t.textContent = it.title;
         d.hidden = !!it.evidence?.length;
         d.textContent = it.detail ?? '';
-        k.textContent = `${it.letter} — ${it.title}`;
+        k.textContent = `${it.letter} — ${it.thaiTitle ?? it.title}`;
         evidence.setAttribute('aria-label', `พื้นที่ใส่ภาพหลักฐานของ ${it.title}`);
         evidence.innerHTML = it.evidence?.length
             ? `<p class="sw-evidence-label">ภาพกิจกรรมตามลำดับกระบวนการ</p>

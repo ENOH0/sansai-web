@@ -64,6 +64,20 @@ export class Dimension4Component {
   }
 
   readonly gallery = GALLERY['d4'];
+
+  /* ── หัวข้อ 4.4: คลังหลักฐานและภาพขนาดเต็ม ── */
+  readonly d44Filter = signal('');
+  readonly d44Lightbox = signal<{ src: string; caption: string } | null>(null);
+  d44Docs() {
+    const f = this.d44Filter();
+    return f ? DIM4.useResults.library.filter(x => x.category === f) : DIM4.useResults.library;
+  }
+  d44Count(category: string): number {
+    return DIM4.useResults.library.filter(x => x.category === category).length;
+  }
+  scrollToD44(index: number): void {
+    document.getElementById('d44-step-' + index)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
   readonly d = DIM4;
   readonly indicatorKeys = Object.keys(DIM4.indicators) as (keyof typeof DIM4.indicators)[];
 
