@@ -530,3 +530,52 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
   }
   .card, .chart-card, .table-scroll { break-inside: avoid; box-shadow: none; }
 }
+
+/* ============================================================
+   กรอบบทนำของแต่ละด้าน — กระจกฝ้าโปร่งแสงเล็กน้อยบนพื้นหลังวิดีโอ
+   ============================================================ */
+.card.intro-glass {
+  position: relative;
+  overflow: hidden;
+  padding: 30px 32px 28px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, .82) 0%, rgba(238, 244, 252, .70) 100%);
+  border: 1px solid rgba(255, 255, 255, .65);
+  border-top: 0;
+  box-shadow: 0 18px 44px rgba(8, 21, 47, .28), inset 0 1px 0 rgba(255, 255, 255, .85);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+}
+/* แถบบนไล่สีน้ำเงิน → ทอง */
+.card.intro-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--navy-600), var(--navy-400) 55%, var(--gold-500));
+}
+/* เครื่องหมายคำพูดจาง ๆ มุมขวาบน */
+.card.intro-glass::after {
+  content: '\201D';
+  position: absolute;
+  top: -18px;
+  right: 18px;
+  font-family: 'Sarabun', sans-serif;
+  font-size: 150px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--gold-500);
+  opacity: .16;
+  pointer-events: none;
+}
+.card.intro-glass > * { position: relative; z-index: 1; }
+.card.intro-glass p { color: var(--ink); }
+.card.intro-glass strong { color: var(--navy-800); }
+
+/* เบราว์เซอร์ที่ไม่รองรับ backdrop-filter ให้พื้นทึบขึ้นเพื่อให้อ่านออก */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .card.intro-glass { background: rgba(255, 255, 255, .93); }
+}
+@media (max-width: 640px) {
+  .card.intro-glass { padding: 24px 20px 22px; }
+  .card.intro-glass::after { font-size: 110px; top: -12px; right: 10px; }
+}

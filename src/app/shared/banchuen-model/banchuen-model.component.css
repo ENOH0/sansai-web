@@ -95,13 +95,25 @@
 .bc-stage {
   position: relative;
   padding: 18px;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, .7);
   border-radius: var(--radius);
+  /* แสงฟ้าอ่อนตรงกลาง ไล่ไปขาวอมฟ้า และเงาน้ำเงินจาง ๆ ที่มุม */
   background:
-    radial-gradient(circle at 50% 46%, rgba(219, 235, 255, .9) 0 26%, rgba(240, 246, 255, .6) 50%, #fff 72%),
-    #fff;
-  box-shadow: var(--shadow-md);
+    radial-gradient(circle at 50% 48%, rgba(199, 222, 252, .95) 0 22%, rgba(232, 242, 255, .75) 46%, transparent 70%),
+    radial-gradient(circle at 0% 0%, rgba(79, 136, 212, .16), transparent 42%),
+    radial-gradient(circle at 100% 100%, rgba(212, 165, 55, .14), transparent 40%),
+    linear-gradient(160deg, #fbfdff 0%, var(--navy-50) 100%);
+  box-shadow: 0 22px 50px rgba(8, 21, 47, .30), inset 0 1px 0 rgba(255, 255, 255, .9);
   overflow: hidden;
+}
+/* แถบบนไล่สีน้ำเงิน → ทอง ให้เข้าชุดกับกรอบบทนำ */
+.bc-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--navy-600), var(--navy-400) 55%, var(--gold-500));
+  z-index: 1;
 }
 
 .bc-bar {
@@ -386,4 +398,117 @@
   .bc-scene { transition: none; }
   .bc-wave::before, .bc-wave::after { animation: none !important; }
   .bc-node.is-hit { animation: none !important; }
+}
+
+/* ============================================================
+   โทนสีพาสเทล — ให้เข้าชุดกับโมเดลการบริหาร (public/models/banchuen-admin-model.html)
+   ใช้ตัวแปรเฉพาะคอมโพเนนต์นี้ (--bc-*) ไม่กระทบสีหลักของเว็บ
+   ============================================================ */
+.bc-layout {
+  --bc-ink: #35506b;
+  --bc-muted: #6f8193;
+  --bc-pink: #ff9fc7;
+  --bc-purple: #a89af5;
+  --bc-blue: #79cfee;
+  --bc-mint: #88ddb4;
+  --bc-gold: #ffd58a;
+  --bc-deep: #7f73d6;     /* ม่วงเข้มสำหรับตัวอักษร/ปุ่มที่เลือก */
+  --bc-line: rgba(180, 202, 228, .6);
+  --bc-rainbow: linear-gradient(90deg, var(--bc-pink), var(--bc-purple), var(--bc-blue), var(--bc-mint));
+}
+
+/* ---------- คอลัมน์ซ้าย/ขวา ---------- */
+.bc-side-head {
+  background: linear-gradient(90deg, rgba(168, 154, 245, .92), rgba(121, 207, 238, .92));
+  border-color: rgba(255, 255, 255, .6);
+  box-shadow: 0 6px 18px rgba(75, 105, 145, .3);
+  text-shadow: 0 1px 4px rgba(53, 80, 107, .45);
+}
+.bc-side-head::before { background: var(--bc-gold); box-shadow: 0 0 0 5px rgba(255, 213, 138, .35); }
+.bc-panel { background: rgba(255, 255, 255, .86); border-color: var(--bc-line); box-shadow: 0 14px 34px rgba(75, 105, 145, .18); }
+.bc-src { color: var(--bc-ink); border-bottom-color: rgba(180, 202, 228, .45); }
+.bc-src::before { background: var(--bc-purple); }
+.bc-flow { background: linear-gradient(135deg, var(--bc-purple), var(--bc-blue)); box-shadow: 0 8px 18px rgba(121, 150, 238, .35); }
+.bc-out { background: linear-gradient(115deg, #8f82ea, #5fb4de); box-shadow: 0 7px 14px rgba(121, 150, 238, .25); text-shadow: 0 1px 3px rgba(53, 80, 107, .35); }
+.bc-out span { color: #fff7e0; }
+
+/* ---------- กรอบโมเดล ---------- */
+.bc-stage {
+  border: 1px solid rgba(255, 255, 255, .75);
+  background:
+    radial-gradient(circle at 50% 48%, rgba(232, 226, 255, .95) 0 20%, rgba(240, 248, 255, .7) 45%, transparent 68%),
+    radial-gradient(circle at 8% 8%, rgba(255, 185, 219, .32), transparent 34%),
+    radial-gradient(circle at 92% 14%, rgba(151, 208, 255, .30), transparent 34%),
+    radial-gradient(circle at 50% 100%, rgba(155, 232, 196, .26), transparent 40%),
+    linear-gradient(160deg, #fff8fc 0%, #f5fbff 100%);
+  box-shadow: 0 22px 50px rgba(53, 80, 107, .26), inset 0 0 35px rgba(255, 255, 255, .7);
+}
+.bc-stage::before { background: var(--bc-rainbow); height: 5px; }
+.bc-help { color: var(--bc-muted); }
+.bc-help span { color: var(--bc-deep); }
+
+.bc-tool { color: var(--bc-ink); border-color: var(--bc-line); background: rgba(255, 255, 255, .85); }
+.bc-tool[aria-pressed="true"] { color: #fff; border-color: transparent; background: linear-gradient(90deg, var(--bc-purple), var(--bc-blue)); }
+@media (hover: hover) {
+  .bc-tool:hover:not(:disabled) { border-color: var(--bc-purple); background: #f6f3ff; }
+  .bc-tool[aria-pressed="true"]:hover { color: #fff; background: linear-gradient(90deg, var(--bc-deep), var(--bc-blue)); }
+}
+
+/* ---------- แปดเหลี่ยม วงโคจร และแกนกลาง ---------- */
+.bc-depth span { background: linear-gradient(135deg, #8f84e6, var(--bc-purple) 50%, var(--bc-blue)); }
+.bc-oct-outer { background: linear-gradient(140deg, var(--bc-pink), var(--bc-purple) 50%, var(--bc-blue)); }
+.bc-oct-outer::after { background: #fdf9ff; }
+.bc-oct-mid { background: linear-gradient(140deg, var(--bc-purple), var(--bc-blue) 55%, var(--bc-mint)); }
+.bc-oct-mid::after { background: #f5fbff; }
+.bc-oct-in { background: linear-gradient(135deg, var(--bc-blue), var(--bc-mint)); box-shadow: 0 0 35px rgba(121, 207, 238, .45); }
+.bc-oct-in::after { background: linear-gradient(140deg, #9a8df0, #6fb9e3); }
+.bc-orbit { border-color: rgba(168, 154, 245, .35); }
+.bc-arc { border-top-color: var(--bc-pink); border-right-color: var(--bc-purple); opacity: .55; }
+
+.bc-core {
+  border-color: #fff;
+  background: radial-gradient(circle at 37% 30%, #c6bcff 0%, var(--bc-purple) 42%, #6fb3e0 80%);
+  box-shadow: 0 0 0 9px rgba(255, 255, 255, .6), 0 0 0 18px rgba(168, 154, 245, .22), 0 20px 30px rgba(75, 105, 145, .3);
+  text-shadow: 0 1px 6px rgba(53, 80, 107, .45);
+}
+.bc-core-label { color: #fff; letter-spacing: .14em; }
+.bc-core-sub { color: #f4f8ff; }
+.bc-core-ring { border-color: rgba(255, 255, 255, .7); }
+
+/* ---------- การ์ดองค์ประกอบ 8 ตัว ---------- */
+.bc-node { color: var(--bc-ink); border-color: var(--bc-line); background: linear-gradient(135deg, #fff, #f6f3ff); box-shadow: 0 9px 18px rgba(75, 105, 145, .16); }
+.bc-node.is-active { border-color: var(--bc-purple); box-shadow: 0 13px 24px rgba(75, 105, 145, .22), 0 0 0 4px rgba(168, 154, 245, .35); }
+@media (hover: hover) {
+  .bc-node:hover { border-color: var(--bc-purple); box-shadow: 0 13px 24px rgba(75, 105, 145, .22), 0 0 0 4px rgba(168, 154, 245, .28); }
+}
+.bc-node-letter {
+  color: #fff;
+  border-color: #fff;
+  background: linear-gradient(135deg, var(--bc-pink), var(--bc-purple) 55%, var(--bc-blue));
+  box-shadow: 0 4px 10px rgba(168, 154, 245, .4);
+  text-shadow: 0 1px 3px rgba(53, 80, 107, .4);
+}
+.bc-node-name small { color: var(--bc-muted); }
+
+/* คลื่นแสงเมื่อแตะ */
+@keyframes bcWavePastel {
+  0% { opacity: .95; border-color: rgba(168, 154, 245, .95); transform: translate(-50%,-50%) translateZ(150px) scale(.35); }
+  100% { opacity: 0; border-color: rgba(121, 207, 238, 0); transform: translate(-50%,-50%) translateZ(150px) scale(2.9); }
+}
+
+/* ---------- กล่องรายละเอียดด้านล่าง ---------- */
+.bc-detail { border-color: var(--bc-line); background: rgba(255, 255, 255, .9); box-shadow: 0 10px 24px rgba(75, 105, 145, .14); }
+.bc-detail-key { color: #fff; background: linear-gradient(135deg, var(--bc-pink), var(--bc-purple) 55%, var(--bc-blue)); text-shadow: 0 1px 3px rgba(53, 80, 107, .4); }
+.bc-detail-type { color: var(--bc-deep); }
+.bc-detail-title { color: #415f7d; }
+.bc-detail-copy { color: var(--bc-muted); }
+.bc-detail-next { color: var(--bc-deep); }
+.bc-principle { border-color: var(--bc-line); background: rgba(255, 255, 255, .88); }
+.bc-principle h4 { color: #415f7d; }
+.bc-principle p { color: var(--bc-muted); }
+.bc-scene.is-energized .bc-wave::before { animation-name: bcWavePastel; }
+.bc-scene.is-energized .bc-wave::after { animation-name: bcWavePastel; }
+@media (prefers-reduced-motion: reduce) {
+  .bc-scene.is-energized .bc-wave::before,
+  .bc-scene.is-energized .bc-wave::after { animation: none; }
 }

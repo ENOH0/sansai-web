@@ -472,7 +472,7 @@ function pageDim1(D) {
   return `
 ${pageHero(d.no, d.weight, d.name, d.subtitle)}
 <section class="section"><div class="wrap">
-  <div class="card card-accent"${rev()} style="margin-bottom:32px"><p class="card-body" style="margin:0">${esc(d.intro)}</p></div>
+  <div class="card card-accent intro-glass"${rev()} style="margin-bottom:32px"><p class="card-body" style="margin:0">${esc(d.intro)}</p></div>
   ${kpiGrid(d.kpis)}
 </div></section>
 
@@ -601,7 +601,7 @@ function pageDim2(D) {
   return `
 ${pageHero(d.no, d.weight, d.name, d.subtitle)}
 <section class="section"><div class="wrap">
-  <div class="card card-accent"${rev()} style="margin-bottom:32px"><p class="card-body" style="margin:0">${esc(d.intro)}</p></div>
+  <div class="card card-accent intro-glass"${rev()} style="margin-bottom:32px"><p class="card-body" style="margin:0">${esc(d.intro)}</p></div>
   ${kpiGrid(d.kpis)}
 </div></section>
 
@@ -689,7 +689,7 @@ function pageDim3(D) {
   return `
 ${pageHero(d.no, d.weight, d.name, d.subtitle)}
 <section class="section"><div class="wrap">
-  <div class="card card-accent"${rev()} style="margin-bottom:32px"><p class="card-body" style="margin:0">${esc(d.intro)}</p></div>
+  <div class="card card-accent intro-glass"${rev()} style="margin-bottom:32px"><p class="card-body" style="margin:0">${esc(d.intro)}</p></div>
   ${kpiGrid(d.kpis)}
 </div></section>
 
@@ -750,7 +750,7 @@ function pageDim4(D) {
   return `
 ${pageHero(d.no, d.weight, d.name, d.subtitle)}
 <section class="section"><div class="wrap">
-  <div class="card card-accent"${rev()} style="margin-bottom:32px"><p class="card-body" style="margin:0">${esc(d.intro)}</p></div>
+  <div class="card card-accent intro-glass"${rev()} style="margin-bottom:32px"><p class="card-body" style="margin:0">${esc(d.intro)}</p></div>
   ${kpiGrid(d.kpis)}
 </div></section>
 
@@ -823,7 +823,7 @@ function pageDim5(D) {
   return `
 ${pageHero(d.no, d.weight, d.name, d.subtitle)}
 <section class="section"><div class="wrap">
-  <div class="card card-accent"${rev()} style="margin-bottom:32px"><p class="card-body" style="margin:0">${esc(d.intro)}</p></div>
+  <div class="card card-accent intro-glass"${rev()} style="margin-bottom:32px"><p class="card-body" style="margin:0">${esc(d.intro)}</p></div>
   ${kpiGrid(d.kpis)}
 </div></section>
 ${projects}
