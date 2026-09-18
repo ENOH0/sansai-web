@@ -83,7 +83,7 @@
 
             overflow: hidden;
 
-            cursor: grab;
+            cursor: default;
 
             display: flex;
             justify-content: center;
@@ -95,7 +95,12 @@
             -ms-touch-action: pan-y;
         }
 
-        .model-viewport.dragging {
+        .model-viewport.can-grab {
+            cursor: grab;
+        }
+
+        .model-viewport.dragging,
+        .model-viewport.dragging.can-grab {
             cursor: grabbing;
         }
 
@@ -1956,6 +1961,41 @@
         let pendingTouchDrag = false;
         let startY = 0;
 
+
+        /*
+            จำกัดพื้นที่ลากหมุนไว้เฉพาะ "ในกรอบวงกลมหลัก" ที่หัวข้อวางอยู่
+            นอกวงกลม (มุมจอ บน-ล่าง) แตะแล้วเลื่อนหน้าได้ตามปกติ
+        */
+
+        const orbitRing =
+            document.querySelector(".orbit-main");
+
+        function isInsideRing(event) {
+
+            if (!orbitRing) {
+                return true;
+            }
+
+            const box =
+                orbitRing.getBoundingClientRect();
+
+            if (!box.width || !box.height) {
+                return true;
+            }
+
+            const nx =
+                (getEventX(event) - (box.left + box.width / 2)) /
+                (box.width / 2);
+
+            const ny =
+                (getEventY(event) - (box.top + box.height / 2)) /
+                (box.height / 2);
+
+            /* 1.04 = เผื่อขอบนิดหน่อยให้แตะง่ายขึ้น */
+            return (nx * nx + ny * ny) <= 1.04;
+
+        }
+
         function startDragging(event) {
 
             if (
@@ -1963,6 +2003,13 @@
                 event.target.closest(".core") ||
                 event.target.closest(".modal-box")
             ) {
+                return;
+            }
+
+
+            /* แตะนอกกรอบวงกลม → ไม่จับหมุน ปล่อยให้เลื่อนหน้าปกติ */
+
+            if (!isInsideRing(event)) {
                 return;
             }
 
@@ -2163,6 +2210,24 @@
             viewport.addEventListener(
                 "pointermove",
                 dragMove
+            );
+
+            /* เมาส์: เปลี่ยนเคอร์เซอร์เมื่ออยู่ในกรอบที่ลากหมุนได้ */
+
+            viewport.addEventListener(
+                "pointermove",
+                function (event) {
+
+                    if (event.pointerType === "touch") {
+                        return;
+                    }
+
+                    viewport.classList.toggle(
+                        "can-grab",
+                        isInsideRing(event)
+                    );
+
+                }
             );
 
             viewport.addEventListener(
