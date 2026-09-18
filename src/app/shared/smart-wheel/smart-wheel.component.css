@@ -187,6 +187,16 @@
   row-gap: var(--process-row-gap);
   padding: 4px 2px;
 }
+/* แบบแกลเลอรี: ภาพกิจกรรม 4 รูป เรียง 2×2 ไม่มีลูกศรลำดับ */
+.sw-evidence-grid--gallery {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 2px;
+}
+.sw-evidence-grid--gallery.sw-evidence-grid--n3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.sw-evidence-grid--gallery .sw-evidence-card--3,
+.sw-evidence-grid--gallery .sw-evidence-card--4 { grid-column: auto; grid-row: auto; }
+
 .sw-evidence-card {
   position: relative;
   z-index: 1;

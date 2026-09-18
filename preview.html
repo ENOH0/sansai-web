@@ -5237,6 +5237,16 @@ body {
   row-gap: var(--process-row-gap);
   padding: 4px 2px;
 }
+/* แบบแกลเลอรี: ภาพกิจกรรม 4 รูป เรียง 2×2 ไม่มีลูกศรลำดับ */
+.sw-evidence-grid--gallery {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 2px;
+}
+.sw-evidence-grid--gallery.sw-evidence-grid--n3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.sw-evidence-grid--gallery .sw-evidence-card--3,
+.sw-evidence-grid--gallery .sw-evidence-card--4 { grid-column: auto; grid-row: auto; }
+
 .sw-evidence-card {
   position: relative;
   z-index: 1;
@@ -5768,7 +5778,7 @@ const initBanchuen = function initBanchuen(root             , steps             
 };
 
 // ---------- วงล้อ SMART Student ----------
-const SW_ITEMS = [{"letter":"A","title":"Activity Based","detail":"เรียนรู้ผ่านการลงมือทำ ทดลอง ตั้งคำถาม และสะท้อนสิ่งที่ค้นพบจากกิจกรรมจริง","x":16,"y":50,"light":false},{"letter":"C","title":"Core Competency","detail":"พัฒนาสมรรถนะหลักที่ช่วยให้ผู้เรียนประยุกต์ความรู้และทักษะได้อย่างมีความหมาย","x":25.96,"y":25.96,"light":true},{"letter":"T","title":"Technology","detail":"เลือกใช้เทคโนโลยีอย่างรู้เท่าทัน สร้างสรรค์ และปลอดภัย เพื่อขยายโอกาสในการเรียนรู้","x":50,"y":16,"light":false},{"letter":"I","title":"Innovation","detail":"มองหาแนวคิดใหม่ สร้างทางเลือก และพัฒนาวิธีแก้ปัญหาที่ตอบโจทย์ผู้เรียน","x":74.04,"y":25.96,"light":true},{"letter":"V","title":"Valuable Resources","detail":"ใช้ทรัพยากรและแหล่งเรียนรู้ที่มีคุณค่าอย่างคุ้มค่า เพื่อสร้างผลลัพธ์ที่ยั่งยืน","x":84,"y":50,"light":false},{"letter":"I","title":"Intelligence","detail":"คิดวิเคราะห์ เชื่อมโยงข้อมูล และตัดสินใจอย่างมีเหตุผลในสถานการณ์ที่หลากหลาย","x":74.04,"y":74.04,"light":true},{"letter":"T","title":"Transferable Skills","detail":"ฝึกทักษะที่นำไปใช้ได้ข้ามวิชา ข้ามบริบท และต่อยอดสู่ชีวิตจริง","x":50,"y":84,"light":false},{"letter":"Y","title":"Yield Outcome","detail":"มุ่งสร้างผลลัพธ์ของการเรียนรู้ที่จับต้องได้และนำไปต่อยอดได้","x":25.96,"y":74.04,"light":true}];
+const SW_ITEMS = [{"letter":"A","title":"Activity Based","detail":"เรียนรู้ผ่านการลงมือทำ ทดลอง ตั้งคำถาม และสะท้อนสิ่งที่ค้นพบจากกิจกรรมจริง","x":16,"y":50,"light":false,"evidenceProcess":false,"evidence":[{"src":"/evidence/activity-model/a-activity-based/01.jpg","caption":"กิจกรรมฐานเรียนรู้เรื่องแสงและสี ผู้เรียนลงมือสำรวจด้วยตนเอง"},{"src":"/evidence/activity-model/a-activity-based/02.jpg","caption":"กิจกรรมกีฬาวอลเลย์บอล ฝึกทักษะผ่านการปฏิบัติจริง"},{"src":"/evidence/activity-model/a-activity-based/03.jpg","caption":"กิจกรรมออกแบบและสร้างชิ้นงานร่วมกันเป็นทีม"},{"src":"/evidence/activity-model/a-activity-based/04.jpg","caption":"ฝึกปฏิบัติการช่วยฟื้นคืนชีพ (CPR) กับหุ่นจำลอง"}]},{"letter":"C","title":"Core Competency","detail":"พัฒนาสมรรถนะหลักที่ช่วยให้ผู้เรียนประยุกต์ความรู้และทักษะได้อย่างมีความหมาย","x":25.96,"y":25.96,"light":true,"evidenceProcess":false,"evidence":[{"src":"/evidence/activity-model/c-core-competency/01.jpg","caption":"กิจกรรมพัฒนาสมรรถนะการสื่อสารภาษาอังกฤษ (English Communication Competency)"},{"src":"/evidence/activity-model/c-core-competency/02.jpg","caption":"กิจกรรมฐานเรียนรู้วิทยาศาสตร์ ฝึกการสังเกตและการคิดวิเคราะห์"},{"src":"/evidence/activity-model/c-core-competency/03.jpg","caption":"กิจกรรมสร้างสรรค์ชิ้นงานโมเดล ฝึกการทำงานร่วมกันเป็นทีม"},{"src":"/evidence/activity-model/c-core-competency/04.jpg","caption":"กิจกรรมสาธิตและทดลองทางวิทยาศาสตร์ ฝึกสมรรถนะการแก้ปัญหา"}]},{"letter":"T","title":"Technology","detail":"เลือกใช้เทคโนโลยีอย่างรู้เท่าทัน สร้างสรรค์ และปลอดภัย เพื่อขยายโอกาสในการเรียนรู้","x":50,"y":16,"light":false,"evidenceProcess":false,"evidence":[{"src":"/evidence/activity-model/t-technology/01.jpg","caption":"จัดการเรียนรู้ในห้องปฏิบัติการคอมพิวเตอร์ของโรงเรียน"},{"src":"/evidence/activity-model/t-technology/02.jpg","caption":"กิจกรรมเรียนรู้เทคโนโลยีดิจิทัลนอกสถานที่ (Digital Token Learning Playground)"},{"src":"/evidence/activity-model/t-technology/03.jpg","caption":"ใช้แท็บเล็ตสืบค้นและสร้างสรรค์ผลงานในชั้นเรียน"},{"src":"/evidence/activity-model/t-technology/04.jpg","caption":"ใช้เทคโนโลยีบันทึกและสื่อสารกับชาวต่างชาติในกิจกรรมภาคสนาม"}]},{"letter":"I","title":"Innovation","detail":"มองหาแนวคิดใหม่ สร้างทางเลือก และพัฒนาวิธีแก้ปัญหาที่ตอบโจทย์ผู้เรียน","x":74.04,"y":25.96,"light":true,"evidenceProcess":false,"evidence":[{"src":"/evidence/activity-model/i-innovation/01.jpg","caption":"กิจกรรมเรียนรู้เรื่องแสงและสีด้วยสื่อที่ครูออกแบบขึ้นเอง"},{"src":"/evidence/activity-model/i-innovation/02.jpg","caption":"กิจกรรมทดลองกลางแจ้ง ออกแบบและทดสอบวิธีแก้ปัญหาร่วมกัน"},{"src":"/evidence/activity-model/i-innovation/03.jpg","caption":"ผู้เรียนนำเสนอผลงานสร้างสรรค์ที่คิดและทำขึ้นเอง"}]},{"letter":"V","title":"Valuable Resources","detail":"ใช้ทรัพยากรและแหล่งเรียนรู้ที่มีคุณค่าอย่างคุ้มค่า เพื่อสร้างผลลัพธ์ที่ยั่งยืน","x":84,"y":50,"light":false,"evidenceProcess":false,"evidence":[{"src":"/evidence/activity-model/v-valuable-resources/01.jpg","caption":"ศึกษาเรียนรู้จากแหล่งเรียนรู้ภายนอก พิพิธภัณฑ์และนิทรรศการ"},{"src":"/evidence/activity-model/v-valuable-resources/02.jpg","caption":"เรียนรู้ดนตรีพื้นบ้านล้านนาจากปราชญ์ชุมชน"},{"src":"/evidence/activity-model/v-valuable-resources/03.jpg","caption":"ฝึกปฏิบัติงานอาชีพในห้องปฏิบัติการของโรงเรียน"}]},{"letter":"I","title":"Intelligence","detail":"คิดวิเคราะห์ เชื่อมโยงข้อมูล และตัดสินใจอย่างมีเหตุผลในสถานการณ์ที่หลากหลาย","x":74.04,"y":74.04,"light":true,"evidenceProcess":false,"evidence":[{"src":"/evidence/activity-model/i-intelligence/01.jpg","caption":"กิจกรรมบอร์ดเกมเพื่อการเรียนรู้ ฝึกวิเคราะห์ข้อมูลและวางแผน"},{"src":"/evidence/activity-model/i-intelligence/02.jpg","caption":"ผลงานศิลปะของผู้เรียนที่สะท้อนการคิดสร้างสรรค์"},{"src":"/evidence/activity-model/i-intelligence/03.jpg","caption":"การแสดงบนเวทีของโรงเรียนที่ผู้เรียนร่วมกันออกแบบ"}]},{"letter":"T","title":"Transferable Skills","detail":"ฝึกทักษะที่นำไปใช้ได้ข้ามวิชา ข้ามบริบท และต่อยอดสู่ชีวิตจริง","x":50,"y":84,"light":false,"evidenceProcess":false,"evidence":[{"src":"/evidence/activity-model/t-transferable-skills/01.jpg","caption":"ปฏิบัติการทดลองทางวิทยาศาสตร์ด้วยชุดอุปกรณ์จริง"},{"src":"/evidence/activity-model/t-transferable-skills/02.jpg","caption":"นำเสนอผลงานกลุ่มหน้าชั้นเรียน ฝึกทักษะการสื่อสาร"},{"src":"/evidence/activity-model/t-transferable-skills/03.jpg","caption":"กิจกรรมค่าย Sansai Summer Camp 2025 นำเสนอผลงานบอร์ดเกม"}]},{"letter":"Y","title":"Yield Outcome","detail":"มุ่งสร้างผลลัพธ์ของการเรียนรู้ที่จับต้องได้และนำไปต่อยอดได้","x":25.96,"y":74.04,"light":true,"evidenceProcess":false,"evidence":[{"src":"/evidence/activity-model/y-yield-outcome/01.jpg","caption":"กิจกรรมกลุ่มสัมพันธ์ ฝึกการทำงานร่วมกับผู้อื่น"},{"src":"/evidence/activity-model/y-yield-outcome/02.jpg","caption":"ใช้ภาษาอังกฤษสื่อสารกับชาวต่างชาติในสถานการณ์จริง"},{"src":"/evidence/activity-model/y-yield-outcome/03.jpg","caption":"ผู้เรียนแสดงความสามารถด้านดนตรีในพื้นที่ของโรงเรียน"}]}];
 const initSmartWheel = function initSmartWheel(root             , items             )       {
   const pieces = Array.from(root.querySelectorAll             ('.sw-piece'));
   const t = root.querySelector('.sw-detail-title')               ;
@@ -5780,19 +5790,22 @@ const initSmartWheel = function initSmartWheel(root             , items         
     const it = items[i];
     pieces.forEach(p => p.classList.toggle('is-on', Number(p.dataset['i']) === i));
     t.textContent = it.title;
-    d.hidden = !!it.evidence?.length;
+    /* ธีม academic ซ่อนคำอธิบายเพราะภาพเล่าเป็นลำดับ P-D-C-A อยู่แล้ว
+       ส่วนแบบแกลเลอรียังคงแสดงความหมายขององค์ประกอบไว้ */
+    d.hidden = !!it.evidence?.length && it.evidenceProcess !== false;
     d.textContent = it.detail ?? '';
     k.textContent = `${it.letter} — ${it.thaiTitle ?? it.title}`;
     evidence.setAttribute('aria-label', `พื้นที่ใส่ภาพหลักฐานของ ${it.title}`);
+    const flow = it.evidenceProcess !== false;
     evidence.innerHTML = it.evidence?.length
-      ? `<p class="sw-evidence-label">ภาพกิจกรรมตามลำดับกระบวนการ</p>
-        <div class="sw-evidence-grid sw-evidence-grid--process">
+      ? `<p class="sw-evidence-label">${flow ? 'ภาพกิจกรรมตามลำดับกระบวนการ' : 'ภาพกิจกรรมประกอบ'}</p>
+        <div class="sw-evidence-grid${flow ? ' sw-evidence-grid--process' : ` sw-evidence-grid--gallery sw-evidence-grid--n${it.evidence.length}`}">
           ${it.evidence.map((item, index) => `<figure class="sw-evidence-card sw-evidence-card--${index + 1}">
             <img src="${item.src}" alt="${item.caption}" loading="lazy">
             <figcaption>${item.caption}</figcaption>
-            <span class="sw-process-arrow sw-process-arrow--${index + 1}" aria-hidden="true">
+            ${flow ? `<span class="sw-process-arrow sw-process-arrow--${index + 1}" aria-hidden="true">
               <svg viewBox="0 0 24 24" focusable="false"><path d="M4 12h14M13 6l6 6-6 6" /></svg>
-            </span>
+            </span>` : ''}
           </figure>`).join('')}
         </div>`
       : `<p class="sw-evidence-label">พื้นที่ใส่ภาพหลักฐาน 4 รูป</p>
