@@ -3517,6 +3517,105 @@ body ::ng-deep app-cycle-flow * { text-shadow: none !important; filter: none !im
 }
 
 
+/* ===== src/app/shared/award-slideshow/award-slideshow.component.css ===== */
+.aw-slides {
+  --aw-radius: 20px;
+  position: relative;
+  padding: 26px 26px 18px;
+  border: 1px solid rgba(255, 255, 255, .55);
+  border-radius: var(--aw-radius);
+  background: rgba(255, 255, 255, .94);
+  box-shadow: 0 18px 44px rgba(8, 21, 47, .24);
+}
+
+.aw-head { margin-bottom: 18px; }
+.aw-title { margin: 0; color: var(--navy-900); font-size: 23px; font-weight: 800; line-height: 1.35; }
+.aw-lead { margin: 6px 0 0; color: var(--ink-soft); font-size: 16.5px; line-height: 1.6; }
+
+.aw-stage { min-height: 260px; }
+
+.aw-slide {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 22px;
+  align-items: start;
+  animation: awIn .45s cubic-bezier(.22, .78, .3, 1) both;
+}
+@keyframes awIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+.aw-photos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.aw-photo { margin: 0; border-radius: 13px; overflow: hidden; }
+.aw-photo img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.aw-photo-empty {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  color: var(--ink-mute);
+  font-size: 13px;
+  font-weight: 700;
+  border: 1.5px dashed var(--navy-300);
+  background: var(--navy-50);
+}
+
+.aw-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.aw-tag {
+  padding: 4px 12px;
+  color: var(--navy-700);
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: 999px;
+  background: var(--navy-50);
+}
+.aw-tag-level { color: #7a5b16; background: #fbf3e0; }
+
+.aw-names { margin: 0 0 6px; color: var(--navy-900); font-size: 19px; font-weight: 800; line-height: 1.5; }
+.aw-award { margin: 0 0 8px; color: var(--navy-800); font-size: 20px; font-weight: 800; line-height: 1.5; }
+.aw-detail { margin: 0 0 8px; color: var(--ink); font-size: 17px; line-height: 1.7; }
+.aw-org { margin: 0; color: var(--ink-soft); font-size: 15.5px; line-height: 1.6; }
+
+.aw-controls { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 18px; }
+.aw-arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--navy-700);
+  font-size: 24px;
+  line-height: 1;
+  border: 1px solid var(--navy-200);
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+.aw-dots { display: flex; align-items: center; gap: 9px; }
+.aw-dot {
+  width: 11px;
+  height: 11px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--navy-200);
+  cursor: pointer;
+  transition: background .25s var(--ease), transform .25s var(--ease);
+}
+.aw-dot.is-on { background: var(--gold-500); transform: scale(1.25); }
+
+@media (hover: hover) {
+  .aw-arrow:hover { color: #fff; background: var(--navy-700); border-color: var(--navy-700); }
+  .aw-dot:hover { background: var(--navy-400); }
+}
+
+@media (max-width: 900px) {
+  .aw-slide { grid-template-columns: 1fr; }
+  .aw-slides { padding: 20px 18px 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aw-slide { animation: none; }
+  .aw-dot { transition: none; }
+}
+
+
 /* ===== src/app/shared/awards-preview/awards-preview.component.css ===== */
 body { display: block; margin-top: 38px; }
 
@@ -4226,8 +4325,15 @@ body { display: block; }
 .cycle-chevron { color: var(--navy-500); transition: transform .22s var(--ease); }
 .cycle-step.is-open .cycle-chevron { transform: rotate(180deg); }
 
-.cycle-detail { padding: 0 20px 22px 72px; animation: cycleDetailIn .24s var(--ease) both; }
+.cycle-detail { padding: 0 20px 22px 72px; container-type: inline-size; animation: cycleDetailIn .24s var(--ease) both; }
 .cycle-detail p { font-size: 17.5px; color: var(--ink-soft); margin: 0; }
+.cycle-tabs { display: flex; gap: 8px; margin: 0 0 14px; }
+.cycle-tab {
+  min-height: 36px; padding: 5px 14px; border: 1px solid var(--navy-200); border-radius: 999px;
+  background: var(--navy-50); color: var(--navy-800); font: inherit; font-size: 14px; font-weight: 800; cursor: pointer;
+}
+.cycle-tab.is-active { border-color: var(--navy-700); background: var(--navy-700); color: #fff; }
+@media (hover: hover) { .cycle-tab:not(.is-active):hover { background: var(--navy-100); } }
 
 .cycle-detail ul {
   margin: 8px 0 0;
@@ -4237,6 +4343,29 @@ body { display: block; }
 }
 .cycle-detail li { margin-bottom: 5px; }
 .cycle-photo { display:block; width:100%; max-height:260px; margin-top:16px; object-fit:cover; border:1px solid var(--navy-100); border-radius:12px; box-shadow:0 6px 16px rgba(20,47,91,.12); }
+.cycle-photo-button { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; }
+.cycle-photo-button .cycle-photo { pointer-events: none; }
+.cycle-process-photo { max-height: none; margin-top: 0; object-fit: contain; }
+.cycle-photos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.cycle-photos .cycle-photo { aspect-ratio: 4 / 3; margin-top: 0; }
+.cycle-chart { padding: 18px; border: 1px solid var(--navy-100); border-radius: 14px; background: var(--navy-50); }
+.cycle-chart h4 { margin: 0; color: var(--navy-900); font-size: 18px; line-height: 1.35; }
+.cycle-chart-note { margin: 5px 0 16px !important; color: var(--ink-mute) !important; font-size: 14px !important; }
+.cycle-chart-row { display: grid; grid-template-columns: minmax(170px, 1.2fr) minmax(120px, 1fr) 92px 78px; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--navy-100); }
+.cycle-chart-label { color: var(--ink-soft); font-size: 14px; font-weight: 700; line-height: 1.4; }
+.cycle-chart-track { height: 11px; overflow: hidden; border-radius: 999px; background: #dce8f6; }
+.cycle-chart-track span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--navy-500), var(--gold-500)); }
+.cycle-chart-value { color: var(--navy-900); font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cycle-chart-value small { color: var(--ink-mute); font-size: 12px; font-weight: 700; }
+.cycle-chart-level { color: var(--navy-700); font-size: 13px; font-weight: 800; text-align: right; }
+
+/* การ์ดในหน้าจอเดสก์ท็อปอาจแคบแม้ viewport กว้าง จึงอิงความกว้างของการ์ดโดยตรง */
+@container (max-width: 540px) {
+  .cycle-chart { padding: 14px; }
+  .cycle-chart-row { grid-template-columns: minmax(0, 1fr) 82px; gap: 6px 10px; }
+  .cycle-chart-track { grid-column: 1 / -1; grid-row: 2; }
+  .cycle-chart-level { text-align: right; }
+}
 .cycle-evidence {
   min-height: 40px;
   margin-top: 16px;
@@ -4253,6 +4382,16 @@ body { display: block; }
 }
 .cycle-evidence:active { transform: scale(.97); }
 @media (hover: hover) { .cycle-evidence:hover { background: #fffaf0; } }
+
+.cycle-lightbox {
+  position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 24px;
+  background: rgba(8, 21, 47, .9); cursor: zoom-out;
+}
+.cycle-lightbox img { max-width: 100%; max-height: 88vh; border-radius: 10px; background: #fff; cursor: default; }
+.cycle-lightbox-close {
+  position: absolute; top: 16px; right: 16px; display: grid; place-items: center; width: 48px; height: 48px;
+  border: 0; border-radius: 50%; background: #fff; color: var(--navy-900); font-size: 22px; cursor: pointer;
+}
 
 @keyframes cycleDetailIn {
   from { opacity: 0; transform: translateY(-8px); }
@@ -4287,6 +4426,11 @@ body { display: block; }
   .cycle-head { min-height: 94px; padding: 15px; gap: 10px; }
   .cycle-title { font-size: 17px; }
   .cycle-detail { padding: 0 15px 18px; }
+  .cycle-photos { grid-template-columns: 1fr; }
+  .cycle-chart { padding: 14px; }
+  .cycle-chart-row { grid-template-columns: 1fr 82px; gap: 6px 10px; }
+  .cycle-chart-track { grid-column: 1 / -1; grid-row: 2; }
+  .cycle-chart-level { text-align: right; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -5594,6 +5738,85 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .sw-theme-academic .sw-cycle { animation: none; }
+}
+
+
+/* ===== src/app/shared/stair-showcase/stair-showcase.component.css ===== */
+.stair-head { margin-bottom: 20px; }
+.stair-title { margin: 0; color: #fff; font-size: 23px; font-weight: 800; line-height: 1.35;
+  text-shadow: 0 2px 14px rgba(6, 18, 44, .85); }
+.stair-lead { margin: 6px 0 0; color: #dbe6f7; font-size: 16.5px; line-height: 1.6;
+  text-shadow: 0 2px 12px rgba(6, 18, 44, .85); }
+
+.stair-track {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  align-items: end;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stair-step { position: relative; display: flex; flex-direction: column; justify-content: flex-end; }
+
+/* ขั้นล่างสุดยกตัวน้อย ขั้นหลังยกสูงขึ้นเรื่อย ๆ จนเป็นบันได */
+.stair-step { padding-bottom: calc(var(--rise) * 26px); }
+
+.stair-card {
+  position: relative;
+  padding: 20px 20px 18px;
+  border: 1px solid rgba(255, 255, 255, .6);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .95);
+  box-shadow: 0 16px 36px rgba(8, 21, 47, .25);
+}
+.stair-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  border-radius: 18px 18px 0 0;
+  background: linear-gradient(90deg, var(--navy-600), var(--gold-500));
+}
+.stair-card.is-empty { background: rgba(255, 255, 255, .84); }
+
+.stair-no {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 12px;
+  color: #fff;
+  font-size: 21px;
+  font-weight: 700;
+  border-radius: 14px;
+  background: linear-gradient(140deg, var(--navy-800), var(--navy-500));
+  box-shadow: 0 10px 18px -10px rgba(10, 30, 66, .85);
+}
+
+.stair-name { margin: 0 0 6px; color: var(--navy-900); font-size: 19px; font-weight: 800; line-height: 1.4; }
+.stair-text { margin: 0; color: var(--ink-soft); font-size: 16px; line-height: 1.65; }
+.stair-placeholder { color: var(--ink-mute); font-style: italic; }
+
+.stair-photos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+.stair-photo { margin: 0; border-radius: 10px; overflow: hidden; }
+.stair-photo img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+
+/* เส้นแนวตั้งใต้การ์ด ทำให้เห็นเป็นลูกตั้งของบันได */
+.stair-riser {
+  height: calc(var(--rise) * 26px);
+  margin: 0 auto;
+  border-left: 2px dashed rgba(255, 255, 255, .45);
+}
+
+@media (max-width: 900px) {
+  .stair-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stair-step { padding-bottom: 0; }
+  .stair-riser { display: none; }
+}
+@media (max-width: 560px) {
+  .stair-track { grid-template-columns: 1fr; }
 }
 
 

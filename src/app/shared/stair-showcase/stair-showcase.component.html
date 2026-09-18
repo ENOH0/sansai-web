@@ -1,0 +1,25 @@
+<div class="stair" *ngIf="steps.length">
+  <div class="stair-head" *ngIf="title">
+    <h3 class="stair-title">{{ title }}</h3>
+    <p class="stair-lead" *ngIf="lead">{{ lead }}</p>
+  </div>
+
+  <ol class="stair-track">
+    <li class="stair-step" *ngFor="let s of steps; let i = index"
+      [style.--rise]="i">
+      <div class="stair-card" [class.is-empty]="!s.title">
+        <span class="stair-no">{{ s.no }}</span>
+        <h4 class="stair-name">{{ s.title || 'ขั้นที่ ' + s.no }}</h4>
+        <p class="stair-text" *ngIf="s.text">{{ s.text }}</p>
+        <p class="stair-text stair-placeholder" *ngIf="!s.text">รอเพิ่มข้อมูลผลงานของขั้นนี้</p>
+
+        <div class="stair-photos" *ngIf="s.photos?.length">
+          <figure class="stair-photo" *ngFor="let p of s.photos">
+            <img [src]="p" [alt]="s.title" loading="lazy">
+          </figure>
+        </div>
+      </div>
+      <span class="stair-riser" aria-hidden="true"></span>
+    </li>
+  </ol>
+</div>

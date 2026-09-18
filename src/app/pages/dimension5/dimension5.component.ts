@@ -10,6 +10,8 @@ import { PhotoGalleryComponent } from '../../shared/photo-gallery/photo-gallery.
 import { GALLERY } from '../../data/gallery.data';
 import { HomeFabComponent } from '../../shared/home-fab/home-fab.component';
 import { PagerComponent } from '../../shared/pager/pager.component';
+import { AwardSlideshowComponent } from '../../shared/award-slideshow/award-slideshow.component';
+import { StairShowcaseComponent } from '../../shared/stair-showcase/stair-showcase.component';
 
 @Component({
   selector: 'app-dimension5',
@@ -18,7 +20,8 @@ import { PagerComponent } from '../../shared/pager/pager.component';
     HomeFabComponent,
     PhotoGalleryComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
-    CycleFlowComponent, CalloutComponent, PagerComponent
+    CycleFlowComponent, CalloutComponent, PagerComponent,
+    AwardSlideshowComponent, StairShowcaseComponent
   ],
   templateUrl: './dimension5.component.html',
   styleUrl: './dimension5.component.css'

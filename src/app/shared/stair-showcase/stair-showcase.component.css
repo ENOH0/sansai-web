@@ -1,0 +1,76 @@
+.stair-head { margin-bottom: 20px; }
+.stair-title { margin: 0; color: #fff; font-size: 23px; font-weight: 800; line-height: 1.35;
+  text-shadow: 0 2px 14px rgba(6, 18, 44, .85); }
+.stair-lead { margin: 6px 0 0; color: #dbe6f7; font-size: 16.5px; line-height: 1.6;
+  text-shadow: 0 2px 12px rgba(6, 18, 44, .85); }
+
+.stair-track {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  align-items: end;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stair-step { position: relative; display: flex; flex-direction: column; justify-content: flex-end; }
+
+/* ขั้นล่างสุดยกตัวน้อย ขั้นหลังยกสูงขึ้นเรื่อย ๆ จนเป็นบันได */
+.stair-step { padding-bottom: calc(var(--rise) * 26px); }
+
+.stair-card {
+  position: relative;
+  padding: 20px 20px 18px;
+  border: 1px solid rgba(255, 255, 255, .6);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .95);
+  box-shadow: 0 16px 36px rgba(8, 21, 47, .25);
+}
+.stair-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  border-radius: 18px 18px 0 0;
+  background: linear-gradient(90deg, var(--navy-600), var(--gold-500));
+}
+.stair-card.is-empty { background: rgba(255, 255, 255, .84); }
+
+.stair-no {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 12px;
+  color: #fff;
+  font-size: 21px;
+  font-weight: 700;
+  border-radius: 14px;
+  background: linear-gradient(140deg, var(--navy-800), var(--navy-500));
+  box-shadow: 0 10px 18px -10px rgba(10, 30, 66, .85);
+}
+
+.stair-name { margin: 0 0 6px; color: var(--navy-900); font-size: 19px; font-weight: 800; line-height: 1.4; }
+.stair-text { margin: 0; color: var(--ink-soft); font-size: 16px; line-height: 1.65; }
+.stair-placeholder { color: var(--ink-mute); font-style: italic; }
+
+.stair-photos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+.stair-photo { margin: 0; border-radius: 10px; overflow: hidden; }
+.stair-photo img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+
+/* เส้นแนวตั้งใต้การ์ด ทำให้เห็นเป็นลูกตั้งของบันได */
+.stair-riser {
+  height: calc(var(--rise) * 26px);
+  margin: 0 auto;
+  border-left: 2px dashed rgba(255, 255, 255, .45);
+}
+
+@media (max-width: 900px) {
+  .stair-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stair-step { padding-bottom: 0; }
+  .stair-riser { display: none; }
+}
+@media (max-width: 560px) {
+  .stair-track { grid-template-columns: 1fr; }
+}

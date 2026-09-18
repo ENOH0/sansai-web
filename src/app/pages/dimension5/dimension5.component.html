@@ -9,20 +9,6 @@
 
 <app-page-hero [no]="d.no" [weight]="d.weight" [name]="d.name" [subtitle]="d.subtitle" />
 
-<!-- nav ลอย: เลือกโครงการ และปุ่มกลับอยู่ท้ายสุด -->
-<nav class="d5-nav" aria-label="เลือกโครงการดีเด่นด้านที่ 5">
-  <button type="button" class="d5-nav-btn" *ngFor="let project of d.projects; let i = index"
-    [class.is-open]="open() === i" (click)="selectProject(i)" [attr.aria-label]="project.no + ' ' + project.name">
-    <span class="d5-nav-no">{{ project.no }}</span>
-    <span class="d5-nav-tip">{{ project.name }}</span>
-  </button>
-  <button type="button" class="d5-nav-btn d5-nav-back" *ngIf="open() !== null" (click)="backToIndex()"
-    aria-label="กลับหน้าหลักด้านที่ 5">
-    <span class="d5-nav-no" aria-hidden="true">↶</span>
-    <span class="d5-nav-tip">กลับหน้าหลักด้านที่ 5</span>
-  </button>
-</nav>
-
 <section class="section d5-intro" *ngIf="open() === null">
   <div class="wrap">
     <div class="card card-accent intro-glass" appReveal style="margin-bottom:32px">
@@ -54,8 +40,20 @@
       </ol>
     </div>
 
+    <!-- รางวัลของนักเรียน · แก้ข้อมูลได้ที่ studentAwards ใน src/app/data/dimension5.data.ts -->
+    <div appReveal style="margin-top:34px">
+      <app-award-slideshow [items]="d.studentAwards" title="รางวัลความสำเร็จของนักเรียน"
+        lead="ผลงานของนักเรียนที่สะท้อนความสำเร็จของการส่งเสริมความเป็นเลิศตามศักยภาพ" />
+    </div>
+
+    <!-- บล็อกผลงานแบบขั้นบันได 4 ขั้น · แก้ข้อมูลได้ที่ stairShowcase ใน src/app/data/dimension5.data.ts -->
+    <div appReveal style="margin-top:44px">
+      <app-stair-showcase [steps]="d.stairShowcase.steps" [title]="d.stairShowcase.title"
+        [lead]="d.stairShowcase.lead" />
+    </div>
+
     <div class="sec-head" style="margin-top:40px" appReveal>
-      <h2 class="sec-title">เลือกโครงการเพื่อดูหลักฐาน</h2>
+      <h2 class="sec-title">ปัจจัยและกลไกสู่ความสำเร็จ</h2>
       <div class="sec-rule"></div>
     </div>
 
@@ -68,64 +66,6 @@
     </div>
   </div>
 </section>
-
-<section class="section-tight d5-detail" *ngIf="currentProject as project">
-  <div class="wrap">
-    <div class="d5-detail-head">
-      <button type="button" class="d5-back" (click)="backToIndex()">‹ กลับภาพรวม 3 โครงการ</button>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ โครงการดีเด่นทั้ง 3 ═══════════ -->
-<ng-container *ngIf="currentProject as p">
-  <section class="section d5-project-detail">
-    <div class="wrap">
-      <app-section-header [light]="true" [num]="p.no" [title]="p.name" [lead]="p.summary" />
-
-      <app-callout label="ที่มาของโครงการ:" [gold]="true" style="display:block;margin-bottom:30px">
-        {{ p.royal }}
-      </app-callout>
-
-      <div class="card" appReveal style="margin-bottom:34px">
-        <h3 class="card-title">วัตถุประสงค์</h3>
-        <ol class="bullets">
-          <li *ngFor="let o of p.objectives">{{ o }}</li>
-        </ol>
-      </div>
-
-      <div class="sec-head" appReveal>
-        <h3 class="sec-title" style="font-size:22px">กระบวนการดำเนินงาน</h3>
-        <div class="sec-rule"></div>
-      </div>
-
-      <app-cycle-flow [steps]="p.cycle" />
-
-      <!-- เครือข่ายที่ปรึกษา (เฉพาะ 5.1) -->
-      <div class="card card-gold" *ngIf="p.partners?.length" appReveal style="margin-top:34px">
-        <h3 class="card-title">เครือข่ายทางวิชาการที่ร่วมเป็นที่ปรึกษา</h3>
-        <div class="chip-row" style="margin-top:12px">
-          <span class="chip chip-gold" *ngFor="let n of p.partners">{{ n }}</span>
-        </div>
-      </div>
-
-      <!-- 8 กลุ่มสาระ (เฉพาะ 5.2) -->
-      <ng-container *ngIf="p.subjectGroups?.length">
-        <div class="sec-head" style="margin-top:52px" appReveal>
-          <h3 class="sec-title" style="font-size:22px">การขับเคลื่อนความเป็นเลิศครบทั้ง 8 กลุ่มสาระการเรียนรู้</h3>
-          <div class="sec-rule"></div>
-        </div>
-        <div class="grid grid-2">
-          <div class="card card-hover" *ngFor="let g of p.subjectGroups; let gi = index" appReveal
-            [revealDelay]="gi * 70">
-            <h3 class="card-title" style="font-size:17.5px">{{ g.name }}</h3>
-            <p class="card-body" style="margin:0;font-size:15.5px">{{ g.text }}</p>
-          </div>
-        </div>
-      </ng-container>
-    </div>
-  </section>
-</ng-container>
 
 <!-- ═══════════ การเผยแพร่ ═══════════ -->
 <section class="section section-alt" *ngIf="open() === null">

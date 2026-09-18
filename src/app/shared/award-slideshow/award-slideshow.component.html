@@ -1,0 +1,60 @@
+<div class="aw-slides" *ngIf="items.length"
+  (mouseenter)="hold(true)" (mouseleave)="hold(false)"
+  (focusin)="hold(true)" (focusout)="hold(false)">
+
+  <div class="aw-head" *ngIf="title">
+    <h3 class="aw-title">{{ title }}</h3>
+    <p class="aw-lead" *ngIf="lead">{{ lead }}</p>
+  </div>
+
+  <div class="aw-stage" aria-live="polite">
+    <ng-container *ngFor="let item of items; let i = index">
+      <article class="aw-card" *ngIf="i === index()">
+
+        <span class="aw-index" aria-hidden="true">{{ i + 1 }}</span>
+
+        <div class="aw-photos">
+          <ng-container *ngFor="let src of slots(item); let s = index">
+            <figure class="aw-photo" *ngIf="src as photo">
+              <img [src]="photo" [alt]="item.award" loading="lazy">
+            </figure>
+            <div class="aw-photo aw-photo-empty" *ngIf="!src">
+              <span>รูปที่ {{ s + 1 }}</span>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="aw-body">
+          <div class="aw-tags">
+            <span class="aw-tag aw-tag-level" *ngIf="item.level">{{ item.level }}</span>
+            <span class="aw-tag" *ngIf="item.year">ปีการศึกษา {{ item.year }}</span>
+          </div>
+
+          <p class="aw-names">
+            <span class="aw-name" *ngFor="let n of item.names">{{ n }}</span>
+          </p>
+
+          <div class="aw-rule" aria-hidden="true"></div>
+
+          <h4 class="aw-award">{{ item.award }}</h4>
+          <p class="aw-detail" *ngIf="item.detail">{{ item.detail }}</p>
+
+          <p class="aw-org" *ngIf="item.org">
+            <span class="aw-org-label">หน่วยงานที่มอบรางวัล</span>
+            {{ item.org }}
+          </p>
+        </div>
+      </article>
+    </ng-container>
+  </div>
+
+  <div class="aw-controls">
+    <button type="button" class="aw-arrow" (click)="prev(); select(index())" aria-label="รางวัลก่อนหน้า">‹</button>
+    <div class="aw-dots" role="tablist">
+      <button type="button" class="aw-dot" *ngFor="let item of items; let i = index"
+        [class.is-on]="i === index()" (click)="select(i)"
+        [attr.aria-label]="'รางวัลที่ ' + (i + 1)" [attr.aria-selected]="i === index()"></button>
+    </div>
+    <button type="button" class="aw-arrow" (click)="next(); select(index())" aria-label="รางวัลถัดไป">›</button>
+  </div>
+</div>
