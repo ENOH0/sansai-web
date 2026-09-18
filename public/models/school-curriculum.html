@@ -314,7 +314,8 @@
                 transform .45s ease,
                 box-shadow .45s ease;
 
-            touch-action: manipulation;
+            /* pan-y = เลื่อนหน้าขึ้น-ลงได้ ส่วนปัดซ้าย-ขวาเก็บไว้หมุนโมเดล */
+            touch-action: pan-y;
 
             background:
 
@@ -1958,58 +1959,30 @@
         }
 
         /* รอดูทิศทางนิ้วก่อนตัดสินใจว่าจะหมุนโมเดลหรือปล่อยให้เลื่อนหน้า */
-        let pendingTouchDrag = false;
+        let pendingDrag = false;
+        let dragMoved = false;
+        let suppressClick = false;
         let startY = 0;
 
 
-        /*
-            จำกัดพื้นที่ลากหมุนไว้เฉพาะ "ในกรอบวงกลมหลัก" ที่หัวข้อวางอยู่
-            นอกวงกลม (มุมจอ บน-ล่าง) แตะแล้วเลื่อนหน้าได้ตามปกติ
-        */
+        /* จับหมุนได้เฉพาะเมื่อแตะที่ "วงกลมหัวข้อ" ทั้ง 3 วงเท่านั้น */
 
-        const orbitRing =
-            document.querySelector(".orbit-main");
+        function isDragHandle(event) {
 
-        function isInsideRing(event) {
-
-            if (!orbitRing) {
-                return true;
-            }
-
-            const box =
-                orbitRing.getBoundingClientRect();
-
-            if (!box.width || !box.height) {
-                return true;
-            }
-
-            const nx =
-                (getEventX(event) - (box.left + box.width / 2)) /
-                (box.width / 2);
-
-            const ny =
-                (getEventY(event) - (box.top + box.height / 2)) /
-                (box.height / 2);
-
-            /* 1.04 = เผื่อขอบนิดหน่อยให้แตะง่ายขึ้น */
-            return (nx * nx + ny * ny) <= 1.04;
+            return !!(
+                event.target &&
+                event.target.closest &&
+                event.target.closest(".topic")
+            );
 
         }
 
         function startDragging(event) {
 
             if (
-                event.target.closest(".topic") ||
-                event.target.closest(".core") ||
-                event.target.closest(".modal-box")
+                event.target.closest(".modal-box") ||
+                !isDragHandle(event)
             ) {
-                return;
-            }
-
-
-            /* แตะนอกกรอบวงกลม → ไม่จับหมุน ปล่อยให้เลื่อนหน้าปกติ */
-
-            if (!isInsideRing(event)) {
                 return;
             }
 
@@ -2017,49 +1990,8 @@
             lastX = getEventX(event);
             startY = getEventY(event);
 
-
-            /*
-                นิ้วสัมผัส: ยังไม่หมุนทันที รอดูก่อนว่าเป็นการปัดซ้าย-ขวาจริง
-                ถ้าเป็นการเลื่อนขึ้น-ลง ให้หน้าเว็บเลื่อนได้ตามปกติ
-            */
-
-            if (isTouchEvent(event)) {
-
-                pendingTouchDrag = true;
-                return;
-
-            }
-
-
-            isDragging = true;
-
-            autoRotate = false;
-
-            viewport.classList.add(
-                "dragging"
-            );
-
-
-            /*
-                pointer capture ทำให้ยังลากต่อได้
-                แม้เมาส์/นิ้วจะเลื่อนออกนอกกรอบ viewport
-            */
-
-            if (
-                supportsPointer &&
-                event.pointerId !== undefined &&
-                viewport.setPointerCapture
-            ) {
-
-                try {
-                    viewport.setPointerCapture(
-                        event.pointerId
-                    );
-                } catch (err) {
-                    /* เบราว์เซอร์บางตัวอาจไม่รองรับ ข้ามไปเฉย ๆ */
-                }
-
-            }
+            dragMoved = false;
+            pendingDrag = true;
 
         }
 
@@ -2067,7 +1999,7 @@
 
             if (!isDragging) {
 
-                if (!pendingTouchDrag) {
+                if (!pendingDrag) {
                     return;
                 }
 
@@ -2075,38 +2007,25 @@
                 const moveX = getEventX(event) - lastX;
                 const moveY = getEventY(event) - startY;
 
-
-                /* ตั้งใจเลื่อนหน้าขึ้น-ลง → ไม่หมุนโมเดล */
-
-                if (Math.abs(moveY) > Math.abs(moveX)) {
-                    pendingTouchDrag = false;
+                /* นิ้วสัมผัส: ถ้าตั้งใจเลื่อนหน้าขึ้น-ลง → ไม่หมุนโมเดล */
+                if (isTouchEvent(event) && Math.abs(moveY) > Math.abs(moveX)) {
+                    pendingDrag = false;
                     return;
                 }
 
-
-                /* ยังปัดไม่ไกลพอ → รอดูต่อ */
-
-                if (Math.abs(moveX) < 10) {
+                /* ยังขยับไม่ไกลพอ → รอดูต่อ (แตะเฉย ๆ = เปิดรายละเอียด) */
+                if (Math.abs(moveX) < 8) {
                     return;
                 }
 
-
-                /* ปัดซ้าย-ขวาชัดเจน → เริ่มหมุนโมเดล */
-
-                pendingTouchDrag = false;
+                pendingDrag = false;
                 isDragging = true;
+                dragMoved = true;
                 autoRotate = false;
                 lastX = getEventX(event);
+                viewport.classList.add("dragging");
 
-                viewport.classList.add(
-                    "dragging"
-                );
-
-                if (
-                    supportsPointer &&
-                    event.pointerId !== undefined &&
-                    viewport.setPointerCapture
-                ) {
+                if (supportsPointer && event.pointerId !== undefined && viewport.setPointerCapture) {
                     try {
                         viewport.setPointerCapture(event.pointerId);
                     } catch (err) {
@@ -2119,24 +2038,11 @@
             }
 
 
-            const currentX =
-                getEventX(event);
-
-
-            const dx =
-                currentX - lastX;
-
-
-            /*
-                ปรับความไวของการลาก
-            */
+            const dx = getEventX(event) - lastX;
 
             angle += dx * 0.22;
 
-
-            lastX =
-                currentX;
-
+            lastX = getEventX(event);
 
             updateModel();
 
@@ -2144,7 +2050,7 @@
 
         function stopDragging(event) {
 
-            pendingTouchDrag = false;
+            pendingDrag = false;
 
             if (!isDragging) {
                 return;
@@ -2152,6 +2058,10 @@
 
 
             isDragging = false;
+
+            if (dragMoved) {
+                suppressClick = true;
+            }
 
             viewport.classList.remove(
                 "dragging"
@@ -2224,7 +2134,7 @@
 
                     viewport.classList.toggle(
                         "can-grab",
-                        isInsideRing(event)
+                        isDragHandle(event)
                     );
 
                 }
@@ -2241,7 +2151,7 @@
             );
 
             document
-                .querySelectorAll(".topic, .core")
+                .querySelectorAll(".core")
                 .forEach(element => {
 
                     element.addEventListener(
@@ -2252,6 +2162,14 @@
                     );
 
                 });
+
+            viewport.addEventListener("click", function (event) {
+                if (suppressClick) {
+                    suppressClick = false;
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+            }, true);
 
         } else {
 
@@ -2298,7 +2216,7 @@
             );
 
             document
-                .querySelectorAll(".topic, .core")
+                .querySelectorAll(".core")
                 .forEach(element => {
 
                     element.addEventListener(
@@ -2317,6 +2235,14 @@
                     );
 
                 });
+
+            viewport.addEventListener("click", function (event) {
+                if (suppressClick) {
+                    suppressClick = false;
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+            }, true);
 
         }
 
