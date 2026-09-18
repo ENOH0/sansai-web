@@ -89,9 +89,10 @@
             justify-content: center;
             align-items: center;
 
-            /* กันปัญหาการลากชนกับการ scroll/zoom ของเบราว์เซอร์บนมือถือ */
-            touch-action: none;
-            -ms-touch-action: none;
+            /* pan-y = ให้เลื่อนหน้าขึ้น-ลงได้ตามปกติ (สำคัญมากบน iPad)
+               ส่วนการปัดซ้าย-ขวาจะถูกส่งมาให้สคริปต์ใช้หมุนโมเดล */
+            touch-action: pan-y;
+            -ms-touch-action: pan-y;
         }
 
         .model-viewport.dragging {
@@ -1928,6 +1929,33 @@
 
         }
 
+        function getEventY(event) {
+
+            if (
+                event.touches &&
+                event.touches.length
+            ) {
+                return event.touches[0].clientY;
+            }
+
+            return event.clientY;
+
+        }
+
+        function isTouchEvent(event) {
+
+            return (
+                event.pointerType === "touch" ||
+                event.pointerType === "pen" ||
+                (event.touches && event.touches.length > 0)
+            );
+
+        }
+
+        /* รอดูทิศทางนิ้วก่อนตัดสินใจว่าจะหมุนโมเดลหรือปล่อยให้เลื่อนหน้า */
+        let pendingTouchDrag = false;
+        let startY = 0;
+
         function startDragging(event) {
 
             if (
@@ -1939,12 +1967,26 @@
             }
 
 
+            lastX = getEventX(event);
+            startY = getEventY(event);
+
+
+            /*
+                นิ้วสัมผัส: ยังไม่หมุนทันที รอดูก่อนว่าเป็นการปัดซ้าย-ขวาจริง
+                ถ้าเป็นการเลื่อนขึ้น-ลง ให้หน้าเว็บเลื่อนได้ตามปกติ
+            */
+
+            if (isTouchEvent(event)) {
+
+                pendingTouchDrag = true;
+                return;
+
+            }
+
+
             isDragging = true;
 
             autoRotate = false;
-
-            lastX =
-                getEventX(event);
 
             viewport.classList.add(
                 "dragging"
@@ -1977,7 +2019,56 @@
         function dragMove(event) {
 
             if (!isDragging) {
+
+                if (!pendingTouchDrag) {
+                    return;
+                }
+
+
+                const moveX = getEventX(event) - lastX;
+                const moveY = getEventY(event) - startY;
+
+
+                /* ตั้งใจเลื่อนหน้าขึ้น-ลง → ไม่หมุนโมเดล */
+
+                if (Math.abs(moveY) > Math.abs(moveX)) {
+                    pendingTouchDrag = false;
+                    return;
+                }
+
+
+                /* ยังปัดไม่ไกลพอ → รอดูต่อ */
+
+                if (Math.abs(moveX) < 10) {
+                    return;
+                }
+
+
+                /* ปัดซ้าย-ขวาชัดเจน → เริ่มหมุนโมเดล */
+
+                pendingTouchDrag = false;
+                isDragging = true;
+                autoRotate = false;
+                lastX = getEventX(event);
+
+                viewport.classList.add(
+                    "dragging"
+                );
+
+                if (
+                    supportsPointer &&
+                    event.pointerId !== undefined &&
+                    viewport.setPointerCapture
+                ) {
+                    try {
+                        viewport.setPointerCapture(event.pointerId);
+                    } catch (err) {
+                        /* ข้ามไป */
+                    }
+                }
+
                 return;
+
             }
 
 
@@ -2005,6 +2096,8 @@
         }
 
         function stopDragging(event) {
+
+            pendingTouchDrag = false;
 
             if (!isDragging) {
                 return;
