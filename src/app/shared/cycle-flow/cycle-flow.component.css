@@ -71,8 +71,15 @@
 .cycle-chevron { color: var(--navy-500); transition: transform .22s var(--ease); }
 .cycle-step.is-open .cycle-chevron { transform: rotate(180deg); }
 
-.cycle-detail { padding: 0 20px 22px 72px; animation: cycleDetailIn .24s var(--ease) both; }
+.cycle-detail { padding: 0 20px 22px 72px; container-type: inline-size; animation: cycleDetailIn .24s var(--ease) both; }
 .cycle-detail p { font-size: 17.5px; color: var(--ink-soft); margin: 0; }
+.cycle-tabs { display: flex; gap: 8px; margin: 0 0 14px; }
+.cycle-tab {
+  min-height: 36px; padding: 5px 14px; border: 1px solid var(--navy-200); border-radius: 999px;
+  background: var(--navy-50); color: var(--navy-800); font: inherit; font-size: 14px; font-weight: 800; cursor: pointer;
+}
+.cycle-tab.is-active { border-color: var(--navy-700); background: var(--navy-700); color: #fff; }
+@media (hover: hover) { .cycle-tab:not(.is-active):hover { background: var(--navy-100); } }
 
 .cycle-detail ul {
   margin: 8px 0 0;
@@ -82,6 +89,29 @@
 }
 .cycle-detail li { margin-bottom: 5px; }
 .cycle-photo { display:block; width:100%; max-height:260px; margin-top:16px; object-fit:cover; border:1px solid var(--navy-100); border-radius:12px; box-shadow:0 6px 16px rgba(20,47,91,.12); }
+.cycle-photo-button { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; }
+.cycle-photo-button .cycle-photo { pointer-events: none; }
+.cycle-process-photo { max-height: none; margin-top: 0; object-fit: contain; }
+.cycle-photos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.cycle-photos .cycle-photo { aspect-ratio: 4 / 3; margin-top: 0; }
+.cycle-chart { padding: 18px; border: 1px solid var(--navy-100); border-radius: 14px; background: var(--navy-50); }
+.cycle-chart h4 { margin: 0; color: var(--navy-900); font-size: 18px; line-height: 1.35; }
+.cycle-chart-note { margin: 5px 0 16px !important; color: var(--ink-mute) !important; font-size: 14px !important; }
+.cycle-chart-row { display: grid; grid-template-columns: minmax(170px, 1.2fr) minmax(120px, 1fr) 92px 78px; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--navy-100); }
+.cycle-chart-label { color: var(--ink-soft); font-size: 14px; font-weight: 700; line-height: 1.4; }
+.cycle-chart-track { height: 11px; overflow: hidden; border-radius: 999px; background: #dce8f6; }
+.cycle-chart-track span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--navy-500), var(--gold-500)); }
+.cycle-chart-value { color: var(--navy-900); font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cycle-chart-value small { color: var(--ink-mute); font-size: 12px; font-weight: 700; }
+.cycle-chart-level { color: var(--navy-700); font-size: 13px; font-weight: 800; text-align: right; }
+
+/* การ์ดในหน้าจอเดสก์ท็อปอาจแคบแม้ viewport กว้าง จึงอิงความกว้างของการ์ดโดยตรง */
+@container (max-width: 540px) {
+  .cycle-chart { padding: 14px; }
+  .cycle-chart-row { grid-template-columns: minmax(0, 1fr) 82px; gap: 6px 10px; }
+  .cycle-chart-track { grid-column: 1 / -1; grid-row: 2; }
+  .cycle-chart-level { text-align: right; }
+}
 .cycle-evidence {
   min-height: 40px;
   margin-top: 16px;
@@ -98,6 +128,16 @@
 }
 .cycle-evidence:active { transform: scale(.97); }
 @media (hover: hover) { .cycle-evidence:hover { background: #fffaf0; } }
+
+.cycle-lightbox {
+  position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 24px;
+  background: rgba(8, 21, 47, .9); cursor: zoom-out;
+}
+.cycle-lightbox img { max-width: 100%; max-height: 88vh; border-radius: 10px; background: #fff; cursor: default; }
+.cycle-lightbox-close {
+  position: absolute; top: 16px; right: 16px; display: grid; place-items: center; width: 48px; height: 48px;
+  border: 0; border-radius: 50%; background: #fff; color: var(--navy-900); font-size: 22px; cursor: pointer;
+}
 
 @keyframes cycleDetailIn {
   from { opacity: 0; transform: translateY(-8px); }
@@ -132,6 +172,11 @@
   .cycle-head { min-height: 94px; padding: 15px; gap: 10px; }
   .cycle-title { font-size: 17px; }
   .cycle-detail { padding: 0 15px 18px; }
+  .cycle-photos { grid-template-columns: 1fr; }
+  .cycle-chart { padding: 14px; }
+  .cycle-chart-row { grid-template-columns: 1fr 82px; gap: 6px 10px; }
+  .cycle-chart-track { grid-column: 1 / -1; grid-row: 2; }
+  .cycle-chart-level { text-align: right; }
 }
 
 @media (prefers-reduced-motion: reduce) {

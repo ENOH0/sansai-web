@@ -156,7 +156,12 @@
       [lead]="d.technology.lead" />
     <ng-container [ngTemplateOutlet]="d3Indicators"></ng-container>
 
-    <app-cycle-flow [steps]="d.technology.cycle" />
+    <div class="model-intro" appReveal style="margin-bottom:32px">
+      <p class="model-intro-name">{{ d.technology.modelName }}</p>
+      <p class="model-intro-text">{{ d.technology.modelIntro }}</p>
+    </div>
+
+    <app-cycle-flow [steps]="d.technology.cycle" [showProcessImageTabs]="true" />
 
     <div class="grid grid-3" style="margin-top:38px">
       <div class="card card-accent" *ngFor="let s of d.technology.systems; let i = index" appReveal="zoom"

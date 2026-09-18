@@ -14,10 +14,59 @@
       </svg>
     </button>
     <div class="cycle-detail" *ngIf="isOpen(i)" [id]="'cycle-detail-' + i">
-      <p>{{ s.text }}</p>
-      <ul *ngIf="s.bullets?.length"><li *ngFor="let b of s.bullets">{{ b }}</li></ul>
-      <img *ngIf="s.image" class="cycle-photo" [src]="s.image" [alt]="s.title" loading="lazy">
+      <div class="cycle-tabs" *ngIf="showProcessImageTabs && (s.image || s.photos?.length || s.chart)" role="tablist" [attr.aria-label]="'เลือกเนื้อหาขั้นตอน ' + (i + 1)">
+        <button type="button" class="cycle-tab" role="tab" [class.is-active]="detailView(i) === 'process'"
+          [attr.aria-selected]="detailView(i) === 'process'" (click)="setDetailView(i, 'process')">กระบวนการ</button>
+        <button type="button" class="cycle-tab" role="tab" [class.is-active]="detailView(i) === 'image'"
+          [attr.aria-selected]="detailView(i) === 'image'" (click)="setDetailView(i, 'image')">{{ s.chart ? 'ผลประเมิน' : 'รูปภาพ' }}</button>
+      </div>
+      <ng-container *ngIf="!showProcessImageTabs || detailView(i) === 'details'; else selectedView">
+        <p>{{ s.text }}</p>
+        <ul *ngIf="s.bullets?.length"><li *ngFor="let b of s.bullets">{{ b }}</li></ul>
+        <button type="button" *ngIf="s.image && !showProcessImageTabs" class="cycle-photo-button" (click)="openImage(s.image, s.title)">
+          <img class="cycle-photo" [src]="s.image" [alt]="s.title" loading="lazy">
+        </button>
+      </ng-container>
+      <ng-template #selectedView>
+        <ng-container *ngIf="detailView(i) === 'process'; else imageView">
+          <button type="button" class="cycle-photo-button" (click)="openImage(s.image, s.title)">
+            <img class="cycle-photo cycle-process-photo" [src]="s.image" [alt]="s.title" loading="lazy">
+          </button>
+        </ng-container>
+      </ng-template>
+      <ng-template #imageView>
+        <ng-container *ngIf="s.chart as chart; else photoView">
+          <section class="cycle-chart" [attr.aria-label]="chart.title">
+            <h4>{{ chart.title }}</h4>
+            <p class="cycle-chart-note">ค่าเฉลี่ยเต็ม 5 คะแนน · แสดงส่วนเบี่ยงเบนมาตรฐาน (S.D.) กำกับทุกข้อ</p>
+            <div class="cycle-chart-row" *ngFor="let item of chart.items; let chartIndex = index">
+              <span class="cycle-chart-label">{{ chartIndex + 1 }}. {{ item.label }}</span>
+              <div class="cycle-chart-track" aria-hidden="true"><span [style.width.%]="item.mean * 20"></span></div>
+              <span class="cycle-chart-value">{{ item.mean.toFixed(2) }} <small>±{{ item.sd.toFixed(2) }}</small></span>
+              <span class="cycle-chart-level">{{ item.level }}</span>
+            </div>
+          </section>
+        </ng-container>
+        <ng-template #photoView>
+          <div class="cycle-photos" *ngIf="s.photos?.length; else singleImage">
+            <button type="button" class="cycle-photo-button" *ngFor="let photo of s.photos; let photoIndex = index"
+              (click)="openImage(photo, s.title + ' ภาพที่ ' + (photoIndex + 1))">
+              <img class="cycle-photo" [src]="photo" [alt]="s.title + ' ภาพที่ ' + (photoIndex + 1)" loading="lazy">
+            </button>
+          </div>
+          <ng-template #singleImage>
+            <button type="button" class="cycle-photo-button" (click)="openImage(s.image, s.title)">
+              <img class="cycle-photo" [src]="s.image" [alt]="s.title" loading="lazy">
+            </button>
+          </ng-template>
+        </ng-template>
+      </ng-template>
       <button type="button" class="cycle-evidence" *ngIf="showEvidence" title="รอแนบไฟล์หลักฐาน">หลักฐาน</button>
     </div>
   </article>
+</div>
+
+<div class="cycle-lightbox" *ngIf="photoLightbox() as photo" (click)="closeImage()" role="dialog" aria-modal="true" aria-label="ดูภาพขนาดเต็ม">
+  <button type="button" class="cycle-lightbox-close" (click)="closeImage()" aria-label="ปิดภาพขนาดเต็ม">✕</button>
+  <img [src]="photo.src" [alt]="photo.alt" (click)="$event.stopPropagation()">
 </div>

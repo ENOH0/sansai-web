@@ -31,6 +31,7 @@ export class Dimension4Component {
   readonly designModelHeight = signal(760);
   readonly designStepsHeight = signal(900);
   readonly assessmentModelHeight = signal(760);
+  readonly assessmentCycleHeight = signal(820);
 
   /** เลื่อนหน้าหลักให้เห็นหน้าต่างรายละเอียดที่เปิดใน iframe (iframe สูงเท่าเนื้อหา เลื่อนเองไม่ได้) */
   private scrollParentTo(selector: string, data: { top?: number; bottom?: number }): void {
@@ -61,6 +62,12 @@ export class Dimension4Component {
       if (Number.isFinite(h)) this.assessmentModelHeight.set(Math.max(700, h));
       return;
     }
+    if (event.data?.type === 'd4-assessment-cycle-height') {
+      const h = Number((event.data as { height?: number }).height);
+      if (Number.isFinite(h)) this.assessmentCycleHeight.set(Math.max(700, h));
+      return;
+    }
+
     if (event.data?.type === 'd4-assessment-model-scroll') {
       this.scrollParentTo('iframe[src="/models/assessment-model.html"]', event.data as { top?: number; bottom?: number });
       return;

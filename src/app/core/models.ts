@@ -18,6 +18,13 @@ export interface CycleStep {
   text: string;
   bullets?: string[];
   image?: string;
+  /** ภาพประกอบหลายภาพสำหรับแท็บ “รูปภาพ” ของแต่ละขั้นตอน */
+  photos?: string[];
+  /** ข้อมูลเชิงเปรียบเทียบสำหรับแสดงเป็นกราฟแทนตาราง */
+  chart?: {
+    title: string;
+    items: { label: string; mean: number; sd: number; level: string }[];
+  };
 }
 
 /** แถวหนึ่งแถวในตารางข้อมูล */

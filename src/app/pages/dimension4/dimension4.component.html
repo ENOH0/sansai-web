@@ -144,18 +144,11 @@
         scrolling="no" [style.height.px]="assessmentModelHeight()"></iframe>
     </div>
 
-    <div class="steps" style="margin-bottom:38px">
-      <div class="step-item" *ngFor="let p of d.assessment.points; let i = index" appReveal="left"
-        [revealDelay]="i * 90">
-        <h4>{{ p.title }}</h4>
-        <p>{{ p.text }}</p>
-      </div>
+    <!-- โมเดล 5 ขั้นตอนการวัดและประเมินผล · แก้เนื้อหาได้ที่ public/models/assessment-cycle-model.html ในตัวแปร data -->
+    <div class="d4-pdcar" appReveal style="margin-bottom:10px">
+      <iframe src="/models/assessment-cycle-model.html" title="5 ขั้นตอนการวัดและประเมินผลการเรียนรู้"
+        scrolling="no" [style.height.px]="assessmentCycleHeight()"></iframe>
     </div>
-
-    <app-line-chart [title]="d.assessment.outcome.caption"
-      subtitle="ผลจากการวัดและประเมินผลที่นำกลับมาพัฒนาการเรียนการสอน ปีการศึกษา 2566–2568"
-      [labels]="d.assessment.outcome.years" [series]="outcomeSeries" [min]="50" [max]="100"
-      [note]="d.assessment.outcome.note" />
   </div>
 </section>
 
