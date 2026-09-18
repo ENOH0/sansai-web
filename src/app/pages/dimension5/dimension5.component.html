@@ -64,6 +64,24 @@
           [style.height.px]="successModelHeight()"></iframe>
       </div>
     </div>
+
+    <!-- วงล้อ BANCHUEN Model รายกิจกรรม — ซ่อนไว้ จนกว่าจะกดการ์ดกิจกรรมในโมเดลด้านบน
+         แก้เนื้อหาได้ที่ public/models/banchuen-mechanism-model.html ในตัวแปร DATA -->
+    <p class="d5-banchuen-hint" *ngIf="!banchuenOpen()">
+      แตะการ์ด “กิจกรรมดีเด่นที่ 1 / 2 / 3” ในโมเดลด้านบน เพื่อดูองค์ประกอบ BANCHUEN Model ของกิจกรรมนั้น
+    </p>
+
+    <div class="d5-banchuen-wrap" *ngIf="banchuenOpen()">
+      <div class="sec-head" style="margin-top:34px">
+        <h2 class="sec-title">BANCHUEN Model ของแต่ละกิจกรรม</h2>
+        <div class="sec-rule"></div>
+      </div>
+      <button type="button" class="d5-banchuen-close" (click)="closeBanchuen()">ปิดวงล้อ BANCHUEN</button>
+      <div class="d5-banchuen">
+        <iframe src="/models/banchuen-mechanism-model.html" title="BANCHUEN Model ของแต่ละกิจกรรมดีเด่น"
+          scrolling="no" [style.height.px]="banchuenHeight()"></iframe>
+      </div>
+    </div>
   </div>
 </section>
 

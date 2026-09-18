@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>กลไกสู่ความสำเร็จ — BANCHUEN Model รายกิจกรรม</title>
+<link rel="stylesheet" href="/fonts/th-sarabun.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:transparent;color:#eaf1fb;
+  font-family:'TH SarabunPSK Web','TH SarabunPSK',Tahoma,sans-serif;font-size:19px}
+.page{max-width:1240px;margin:0 auto;padding:4px 0 10px}
+
+/* ── แท็บเลือกกิจกรรม ── */
+.tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.tab{display:flex;flex-direction:column;gap:2px;min-height:44px;padding:9px 18px;
+  color:#dbe6f7;font:inherit;text-align:left;cursor:pointer;
+  border:1px solid rgba(255,255,255,.24);border-radius:14px;background:rgba(255,255,255,.08);
+  transition:background .25s ease,border-color .25s ease,transform .25s ease}
+.tab b{font-size:18px;font-weight:800}
+.tab small{color:rgba(255,255,255,.66);font-size:15px;line-height:1.3}
+.tab.on{color:#16233f;border-color:transparent;
+  background:linear-gradient(120deg,#e8c46a,#d4a537);box-shadow:0 10px 22px -12px rgba(0,0,0,.6)}
+.tab.on small{color:rgba(22,35,63,.72)}
+
+/* ── เวที ── */
+.stage{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:26px;align-items:center}
+.wheel{position:relative;width:100%;aspect-ratio:1/1;max-width:600px;margin:46px auto 6px}
+.ring{position:absolute;inset:11%;border-radius:50%;
+  border:2px dashed rgba(255,255,255,.3);animation:spin 70s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hub{position:absolute;left:50%;top:50%;translate:-50% -50%;width:31%;height:31%;border-radius:50%;
+  display:grid;place-content:center;text-align:center;padding:8px;
+  background:radial-gradient(circle at 34% 26%,#ffffff,#e9f0ff 62%,#dfe9ff);
+  box-shadow:0 22px 44px rgba(6,18,44,.45),inset -10px -14px 22px rgba(120,103,223,.12)}
+.hub b{display:block;color:#0e2a5c;font-size:25px;font-weight:800;line-height:1.05;letter-spacing:.5px}
+.hub span{display:block;color:#4a5d80;font-size:15.5px;line-height:1.25;margin-top:2px}
+
+.node{position:absolute;left:50%;top:50%;width:25%;aspect-ratio:1/1;min-width:66px;min-height:66px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  translate:-50% -50%;border:0;border-radius:50%;cursor:pointer;padding:0;
+  display:grid;place-content:center;text-align:center;font:inherit;color:#1d2c4c;
+  background:radial-gradient(circle at 32% 24%,#fff,hsl(var(--h) 90% 93%));
+  box-shadow:0 14px 26px rgba(6,18,44,.35);
+  transition:box-shadow .28s ease,background .28s ease,filter .28s ease}
+.node b{display:block;font-size:30px;font-weight:800;line-height:1;color:hsl(var(--h) 62% 40%)}
+.node span{display:block;font-size:14px;line-height:1.15;margin-top:2px;padding:0 6px}
+.node.on{background:radial-gradient(circle at 32% 24%,#fff,hsl(var(--h) 92% 88%));
+  box-shadow:0 0 0 5px hsl(var(--h) 76% 62% / .85),0 0 22px hsl(var(--h) 85% 70% / .55),0 14px 26px rgba(6,18,44,.35)}
+.node.on b{color:hsl(var(--h) 66% 34%)}
+
+/* ── กล่องรายละเอียด ── */
+.letters{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin:2px auto 4px;max-width:600px}
+.letter{display:flex;align-items:center;gap:7px;min-height:48px;padding:8px 15px;cursor:pointer;
+  color:#eaf1fb;font:inherit;font-size:16.5px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  border:1px solid rgba(255,255,255,.26);border-radius:999px;background:rgba(255,255,255,.1)}
+.letter b{font-size:21px;font-weight:800;line-height:1}
+.letter.on{color:#16233f;border-color:transparent;background:linear-gradient(120deg,#e8c46a,#d4a537)}
+.detail{background:rgba(255,255,255,.96);border:1px solid #e6ecf7;border-radius:22px;
+  padding:24px;box-shadow:0 20px 44px rgba(6,18,44,.28);color:#26324a}
+.d-top{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.d-badge{display:grid;place-items:center;width:58px;height:58px;flex:0 0 58px;border-radius:18px;
+  color:#fff;font-size:28px;font-weight:800;background:linear-gradient(140deg,hsl(var(--h) 58% 42%),hsl(var(--h) 72% 58%))}
+.d-kicker{color:#7b8496;font-size:15px;font-weight:800;letter-spacing:.3px}
+.d-en{margin:0;color:#0e2a5c;font-size:23px;font-weight:800;line-height:1.25}
+.d-th{margin:2px 0 0;color:#5a6a86;font-size:17px;line-height:1.35}
+.d-text{margin:0;color:#3d4a63;font-size:18.5px;line-height:1.8}
+.groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:4px}
+.group{padding:13px 15px;border:1px solid #e6ecf7;border-radius:14px;background:#f7faff}
+.group h4{margin:0 0 5px;color:#0e2a5c;font-size:17px;font-weight:800;line-height:1.3}
+.group p{margin:0;color:#44526d;font-size:16.5px;line-height:1.62}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px}
+.dots{display:flex;flex-wrap:wrap;gap:7px}
+.dot{width:10px;height:10px;padding:0;border:0;border-radius:50%;background:#cdd8ea;cursor:pointer}
+.dot.on{background:hsl(var(--h) 62% 48%);box-shadow:0 0 0 3px hsl(var(--h) 62% 48% / .28)}
+.play{min-height:44px;padding:8px 18px;color:#0e2a5c;font:inherit;font-weight:800;cursor:pointer;
+  border:1px solid #d6e0f0;border-radius:999px;background:#fff}
+
+@media (hover:hover){
+  .tab:hover{background:rgba(255,255,255,.16)}
+  .tab.on:hover{background:linear-gradient(120deg,#e8c46a,#d4a537)}
+  .node:hover{filter:brightness(1.04);box-shadow:0 0 0 3px hsl(var(--h) 70% 70% / .5),0 16px 28px rgba(6,18,44,.4)}
+  .play:hover{background:#eef4ff}
+  .letter:hover{background:rgba(255,255,255,.2)}
+  .letter.on:hover{background:linear-gradient(120deg,#e8c46a,#d4a537)}
+}
+@media (max-width:900px){
+  .stage{grid-template-columns:1fr}
+  .groups{grid-template-columns:1fr}
+  .node span{font-size:12px}
+}
+@media (prefers-reduced-motion:reduce){.ring{animation:none}.node{transition:none}}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="tabs" id="tabs" role="tablist" aria-label="เลือกกิจกรรมดีเด่น"></div>
+  <section class="stage">
+    <div>
+      <div class="wheel" id="wheel"></div>
+      <div class="letters" id="letters" role="tablist" aria-label="เลือกองค์ประกอบ BANCHUEN"></div>
+    </div>
+    <aside class="detail" id="detail" aria-live="polite"></aside>
+  </section>
+</main>
+<script>
+const DATA = [{"id": 1, "name": "กิจกรรมดีเด่นที่ 1", "full": "งานสวนพฤกษศาสตร์โรงเรียน", "hue": 330, "items": [{"letter": "B", "en": "Brainstorming", "th": "การระดมสมอง", "text": "ประชุมระดมความคิดเห็นระหว่างผู้บริหาร ครู นักเรียน และผู้แทนชุมชน เพื่อวางแผนการจัดตั้งและพัฒนาพื้นที่สวนพฤกษศาสตร์โรงเรียนให้เอื้อต่อการเรียนรู้"}, {"letter": "A", "en": "Academic Administration", "th": "การบริหารงานวิชาการ", "text": "บูรณาการงานสวนพฤกษศาสตร์เข้ากับหลักสูตรสถานศึกษาและการจัดการเรียนรู้แบบ Active Learning ในกลุ่มสาระการเรียนรู้ต่าง ๆ เช่น วิทยาศาสตร์ ศิลปะ และภาษาไทย"}, {"letter": "N", "en": "Needs Assessment", "th": "การประเมินความต้องการจำเป็น", "text": "สำรวจความต้องการเรียนรู้เรื่องพรรณไม้ท้องถิ่นของนักเรียน และวิเคราะห์ความพร้อมของพื้นที่เพื่อวางแผนจัดสรรทรัพยากรอย่างคุ้มค่า"}, {"letter": "C", "en": "Collaboration", "th": "การทำงานร่วมกัน", "text": "ครูและนักเรียนร่วมกันสำรวจ จัดทำทะเบียนพรรณไม้ ติดป้ายชื่อต้นไม้ และดูแลรักษาพื้นที่สวนพฤกษศาสตร์ร่วมกัน"}, {"letter": "H", "en": "Holistic Management", "th": "การบริหารจัดการแบบองค์รวม", "text": "เชื่อมโยงงานสวนพฤกษศาสตร์เข้ากับโครงการอนุรักษ์สิ่งแวดล้อม การสร้างนวัตกรรม และการส่งเสริมคุณธรรมจริยธรรมของผู้เรียน"}, {"letter": "U", "en": "Unity", "th": "เอกภาพความเป็นหนึ่งเดียว", "text": "บุคลากรทุกฝ่ายร่วมมือร่วมใจปฏิบัติงานด้วยความสามัคคี ยึดมั่นในค่านิยมองค์กร “วิถีสันทราย” เพื่อมุ่งสู่เป้าหมายเดียวกัน"}, {"letter": "E", "en": "Education Innovation", "th": "การใช้นวัตกรรมการศึกษา", "text": "ประยุกต์ใช้เทคโนโลยีดิจิทัล โดยจัดทำระบบ QR Code เพื่อให้นักเรียนสืบค้นข้อมูลพรรณไม้และเรียนรู้ได้ด้วยตนเอง"}, {"letter": "N", "en": "Networking", "th": "การสร้างเครือข่าย", "text": "สร้างความร่วมมือกับภูมิปัญญาท้องถิ่น ชุมชน และหน่วยงานภายนอก เพื่อสนับสนุนองค์ความรู้และทรัพยากรพรรณไม้"}]}, {"id": 2, "name": "กิจกรรมดีเด่นที่ 2", "full": "โครงการส่งเสริมความเป็นเลิศตามศักยภาพ", "hue": 24, "items": [{"letter": "B", "en": "Brainstorming", "th": "การระดมสมอง / วางแผน", "groups": [{"name": "กลุ่มแผนการเรียนกีฬา", "text": "ประชุมครูสุขศึกษาและพลศึกษา วางแผนตารางการซ้อม การเก็บตัว และเตรียมความพร้อมการส่งเข้าแข่งขันระดับต่าง ๆ"}, {"name": "กลุ่มแผนการเรียนดนตรี", "text": "ประชุมครูกลุ่มสาระการเรียนรู้ศิลปะและวิทยากรภายนอก วางแผนการประกวดวงโยธวาทิต และกิจกรรมส่งเสริมดนตรีพื้นบ้านล้านนา"}, {"name": "กลุ่มแผนการเรียนอาชีพ", "text": "ประชุมครูกลุ่มการงานอาชีพ เพื่อปรับปรุงเนื้อหารายวิชาเพิ่มเติมให้ตอบโจทย์ตลาดแรงงานและการทำงานจริง"}, {"name": "กลุ่มแผนการเรียนวิชาการ", "text": "ครูผู้สอนหลักสูตรพิเศษประชุมร่วมกันวิเคราะห์ผลสัมฤทธิ์ วางแผนจัดค่ายวิชาการ และกิจกรรมเปิดโลกทัศน์นอกห้องเรียน"}]}, {"letter": "A", "en": "Academic Administration", "th": "การบริหารวิชาการ / หลักสูตร", "groups": [{"name": "กลุ่มแผนการเรียนกีฬา", "text": "พัฒนาสมรรถนะผู้เรียนผ่าน “โครงการพัฒนากีฬาเพื่อความเป็นเลิศ”"}, {"name": "กลุ่มแผนการเรียนดนตรี", "text": "จัดกิจกรรมรายวิชาดนตรีสากล และส่งเสริมศิลปะการแสดง ดนตรีไทย และดนตรีพื้นบ้านล้านนา"}, {"name": "กลุ่มแผนการเรียนอาชีพ", "text": "ขับเคลื่อนหลักสูตรทวิศึกษาช่างเชื่อมโลหะ แผนปัญญาภิวัฒน์ และห้องเรียนอาชีพ ม.ต้น – ม.ปลาย"}, {"name": "กลุ่มแผนการเรียนวิชาการ", "text": "บริหารหลักสูตรเข้มข้นในห้องเรียนพิเศษ CEP, CSP, MEP และแผนการเรียนวิทยาศาสตร์สุขภาพ"}]}, {"letter": "N", "en": "Networking", "th": "การประสานเครือข่าย", "groups": [{"name": "กลุ่มแผนการเรียนกีฬา", "text": "ประสานสมาคมกีฬาจังหวัดและสโมสรภายนอก เพื่อยกระดับทักษะและการทดสอบสมรรถภาพของนักกีฬา"}, {"name": "กลุ่มแผนการเรียนดนตรี", "text": "สร้างเครือข่ายร่วมกับการจัดแข่งขันภายนอกระดับประเทศ เช่น การประกวดวงโยธวาทิตที่จังหวัดศรีสะเกษ"}, {"name": "กลุ่มแผนการเรียนอาชีพ", "text": "ประสานงานร่วมกับสถาบันการจัดการปัญญาภิวัฒน์ และวิทยาลัยเทคนิคในพื้นที่ เพื่อร่วมจัดการศึกษาทวิภาคี"}, {"name": "กลุ่มแผนการเรียนวิชาการ", "text": "ประสานความร่วมมือกับสถาบันภาษา มหาวิทยาลัยเชียงใหม่ คณะวิทยาศาสตร์ มหาวิทยาลัยแม่โจ้ และสถาบันขงจื๊อ"}]}, {"letter": "C", "en": "Collaboration", "th": "ความร่วมมือภาคี / ผู้ปกครอง", "groups": [{"name": "กลุ่มแผนการเรียนกีฬา", "text": "ร่วมมือกับผู้ปกครองในการสนับสนุนการกินดีอยู่ดี โภชนาการ และการจัดตารางเก็บตัวฝึกซ้อม"}, {"name": "กลุ่มแผนการเรียนดนตรี", "text": "ผู้ปกครอง ชุมชน และศิษย์เก่ามีส่วนร่วมสนับสนุนงบประมาณพัฒนาเครื่องดนตรี และร่วมเป็นผู้ชมในวันคล้ายวันสถาปนา"}, {"name": "กลุ่มแผนการเรียนอาชีพ", "text": "ร่วมมือกับสถานประกอบการในชุมชนและศิษย์เก่า ในการนิเทศการฝึกงานและเรียนรู้จากการลงมือทำงานจริง"}, {"name": "กลุ่มแผนการเรียนวิชาการ", "text": "ได้รับเงินสนับสนุนจากผู้ปกครองห้องเรียนพิเศษ เพื่อสนับสนุนการจัดค่ายวิชาการและการทดสอบวัดระดับมาตรฐานสากล"}]}, {"letter": "H", "en": "Holistic Management", "th": "การบริหารแบบองค์รวม", "groups": [{"name": "กลุ่มแผนการเรียนกีฬา", "text": "จัดงบ “ปรับปรุงซ่อมแซมสนามกีฬา” และ “บ้านพักนักกีฬา” เพื่อความปลอดภัยและพร้อมใช้"}, {"name": "กลุ่มแผนการเรียนดนตรี", "text": "จัดสรรงบประมาณ “ซ่อมบำรุงเครื่องแต่งกายและอุปกรณ์นาฏศิลป์” อย่างครอบคลุมเป็นระบบ"}, {"name": "กลุ่มแผนการเรียนอาชีพ", "text": "จัดสรรงบดำเนินงานตามแผนงานอาชีพอย่างสมดุล ทั้งเกษตร ช่างเชื่อม ธุรกิจ และคหกรรม"}, {"name": "กลุ่มแผนการเรียนวิชาการ", "text": "บูรณาการระบบประกันคุณภาพ (SAR / PQA Report) และงานวัดผลผ่านระบบดิจิทัล SGS Online เพื่อประเมินผลรอบด้าน"}]}, {"letter": "U", "en": "Unity", "th": "ความเป็นน้ำหนึ่งใจเดียวกัน", "groups": [{"name": "กลุ่มแผนการเรียนกีฬา", "text": "ร่วมแรงร่วมใจซ้อมของโค้ช ครู และนักกีฬา ผ่านกิจกรรม “เก็บตัวฝึกซ้อมนักกีฬาสู่การแข่งขัน”"}, {"name": "กลุ่มแผนการเรียนดนตรี", "text": "ความสามัคคีในการซ้อมร่วมกันของทีมวงโยธวาทิต ทั้งการฝึกซ้อมและเดินทางแข่งขันต่างจังหวัด"}, {"name": "กลุ่มแผนการเรียนอาชีพ", "text": "ครูและนักเรียนร่วมกันขับเคลื่อน “โครงการบริษัทสร้างการดี” เพื่อส่งเสริมการออมและฝึกทักษะการค้าขายร่วมกัน"}, {"name": "กลุ่มแผนการเรียนวิชาการ", "text": "ครูทุกกลุ่มสาระการเรียนรู้ร่วมมือกันจัดกิจกรรมติวเข้ม และส่งเสริม “กิจกรรมพัฒนาศักยภาพมุ่งสู่มหาวิทยาลัย”"}]}, {"letter": "E", "en": "Education Innovation", "th": "นวัตกรรมและการเรียนเชิงรุก", "groups": [{"name": "กลุ่มแผนการเรียนกีฬา", "text": "ใช้คลิปวิดีโอวิเคราะห์จุดอ่อน – จุดแข็งทางเทคนิค เพื่อปรับปรุงทักษะการเล่นกีฬาผ่านการปฏิบัติจริง"}, {"name": "กลุ่มแผนการเรียนดนตรี", "text": "นำเข้าอุปกรณ์โสตทัศนูปกรณ์ที่ทันสมัยสนับสนุนการสอน และจัด “กิจกรรมทัศนศึกษาพัฒนาศักยภาพด้านดนตรีไทย”"}, {"name": "กลุ่มแผนการเรียนอาชีพ", "text": "ส่งเสริมให้นักเรียนสร้างสรรค์นวัตกรรมผลิตภัณฑ์อาชีพ และประยุกต์ใช้เทคโนโลยีมาเพิ่มพูนทักษะชีวิต"}, {"name": "กลุ่มแผนการเรียนวิชาการ", "text": "ขับเคลื่อนนวัตกรรมสังคมผ่าน “โครงการโรงเรียนในพื้นที่นวัตกรรมการศึกษา” และนวัตกรรมสื่อ AI"}]}, {"letter": "N", "en": "Needs Assessment", "th": "การประเมินความต้องการจำเป็น", "groups": [{"name": "กลุ่มแผนการเรียนกีฬา", "text": "ประเมินความพร้อมและจุดอ่อนทางสมรรถภาพทางกายรายบุคคล ผ่าน “กิจกรรมพัฒนาศักยภาพแผนเรียนกีฬา”"}, {"name": "กลุ่มแผนการเรียนดนตรี", "text": "ประเมินระดับแววสุนทรียภาพทางศิลปะและดนตรีของนักเรียนผ่านแบบวัดพหุปัญญา เพื่อส่งเสริมผู้มีความสามารถพิเศษ"}, {"name": "กลุ่มแผนการเรียนอาชีพ", "text": "แนะแนวเชิงลึกเพื่อการประกอบอาชีพในอนาคต (Future Skill) และประเมินศักยภาพการมีรายได้ระหว่างเรียน"}, {"name": "กลุ่มแผนการเรียนวิชาการ", "text": "ประเมินความฉลาดรู้ตามแนวทาง PISA วัดระดับภาษาอังกฤษสากล (CEFR) และภาษาจีน (YCT / HSK)"}]}]}, {"id": 3, "name": "กิจกรรมดีเด่นที่ 3", "full": "โครงการพัฒนาระบบประกันคุณภาพการศึกษาสู่ IQA Award", "hue": 284, "items": [{"letter": "B", "en": "Brainstorming", "th": "ร่วมคิด ร่วมวิเคราะห์ และร่วมกำหนดทิศทาง", "text": "เปิดโอกาสให้ผู้เกี่ยวข้องร่วมกันวิเคราะห์บริบท สภาพปัจจุบัน ปัญหา ความต้องการ จุดแข็ง จุดที่ควรพัฒนา และโอกาสในการพัฒนาคุณภาพสถานศึกษา เปลี่ยนจาก “ผู้บริหารคิดและกำหนด” ไปสู่ “ทุกฝ่ายร่วมคิดและร่วมกำหนด” เกิดความเข้าใจร่วมและความรู้สึกเป็นเจ้าของเป้าหมายการพัฒนา ผ่านการมีส่วนร่วม 4 ด้าน คือ ร่วมคิด ร่วมวางแผน ร่วมปฏิบัติ และร่วมสนับสนุน"}, {"letter": "A", "en": "Academic Administration", "th": "ร่วมบริหารงานวิชาการเพื่อพัฒนาคุณภาพผู้เรียน", "text": "เชื่อมโยงการประกันคุณภาพกับภารกิจหลักของโรงเรียน ฝ่ายบริหาร ครู และบุคลากรร่วมกันวิเคราะห์ผลสัมฤทธิ์และข้อมูลพัฒนาการของผู้เรียน ครูแต่ละกลุ่มสาระร่วมกันพัฒนาหลักสูตร การจัดการเรียนรู้ สื่อ นวัตกรรม และวิธีการวัดและประเมินผล นักเรียนมีส่วนร่วมผ่านการสะท้อนความคิดเห็นและการประเมินตนเอง โดยมีเป้าหมายคือ “นักเรียนมีคุณภาพและได้รับการพัฒนาเต็มตามศักยภาพ”"}, {"letter": "N", "en": "Networking", "th": "ร่วมสร้างเครือข่ายและระดมทรัพยากร", "text": "สร้างความร่วมมือกับผู้ปกครอง คณะกรรมการสถานศึกษา ชุมชน หน่วยงานภาครัฐ องค์กรปกครองส่วนท้องถิ่น และสถาบันการศึกษา เครือข่ายมีส่วนร่วมทั้งด้านข้อมูล ความรู้ บุคลากร แหล่งเรียนรู้ เทคโนโลยี และงบประมาณ มุ่งพัฒนาเป็น “เครือข่ายหุ้นส่วนทางการศึกษา” ที่ร่วมคิด ร่วมวางแผน และร่วมรับผิดชอบต่อการพัฒนาผู้เรียน เช่น คณะวิทยาศาสตร์ มหาวิทยาลัยแม่โจ้ วิทยาลัยเทคนิคสารภี และวิทยาลัยอาชีวศึกษา"}, {"letter": "C", "en": "Collaboration", "th": "ร่วมมือ ร่วมปฏิบัติ และร่วมรับผิดชอบ", "text": "เปลี่ยนจากการ “มีส่วนร่วมในความคิด” ไปสู่การ “ร่วมลงมือทำ” โดยกำหนดบทบาทหน้าที่ของผู้เกี่ยวข้องอย่างชัดเจน ผู้บริหารกำหนดทิศทางและสนับสนุนทรัพยากร ครูและบุคลากรร่วมรับผิดชอบโครงการ นักเรียนร่วมดำเนินกิจกรรมและสร้างผลงาน ผู้ปกครองและชุมชนร่วมสนับสนุน เมื่อเกิดปัญหาผู้เกี่ยวข้องร่วมกันวิเคราะห์และแก้ไข เกิดวัฒนธรรมการทำงานแบบช่วยเหลือเกื้อกูล"}, {"letter": "H", "en": "Holistic Management", "th": "ร่วมบริหารและพัฒนาอย่างรอบด้าน", "text": "มองคุณภาพสถานศึกษาและผู้เรียนอย่างเป็นองค์รวม ไม่มุ่งพัฒนาเฉพาะผลสัมฤทธิ์ทางวิชาการ แต่ครอบคลุมทุกมิติ เชื่อมโยงการดำเนินงานทั้ง 4 กลุ่มบริหาร ฝ่ายงบประมาณสนับสนุนทรัพยากรเพื่อการจัดการเรียนรู้ ฝ่ายบุคลากรพัฒนาศักยภาพครู ฝ่ายบริหารทั่วไปสร้างสภาพแวดล้อมที่ปลอดภัย และฝ่ายวิชาการพัฒนาคุณภาพการเรียนรู้ ทุกหน่วยงานจึงมีส่วนร่วมในการสร้างคุณภาพ"}, {"letter": "E", "en": "Education Innovation", "th": "ร่วมสร้างและใช้นวัตกรรมทางการศึกษา", "text": "ส่งเสริมให้ครูและบุคลากรนำปัญหาหรือความต้องการจากการปฏิบัติงานจริงมาพัฒนาเป็นแนวทาง วิธีการ หรือเครื่องมือใหม่ โดยใช้ข้อมูลจากระบบประกันคุณภาพเป็นฐาน แลกเปลี่ยนเรียนรู้ผ่านกระบวนการ PLC นวัตกรรมเกิดจากกระบวนการร่วมคิด ร่วมออกแบบ ร่วมทดลอง ร่วมประเมิน และร่วมปรับปรุง เมื่อพบว่ามีประสิทธิผลจึงนำมาเผยแพร่และขยายผล"}, {"letter": "N", "en": "Needs Assessment", "th": "ร่วมวิเคราะห์ความต้องการและใช้ข้อมูลเป็นฐาน", "text": "ทำให้การดำเนินงานเริ่มต้นจาก “ความต้องการที่แท้จริง” ของผู้เรียน ครู ผู้ปกครอง และสถานศึกษา โดยรวบรวมข้อมูลจากหลายแหล่ง เช่น ผลสัมฤทธิ์ทางการเรียน ผลการประเมินคุณภาพภายใน ข้อมูลนักเรียนรายบุคคล และความคิดเห็นของผู้เกี่ยวข้อง เพื่อวิเคราะห์จุดแข็ง จุดที่ควรพัฒนา ปัญหา และความต้องการ ทำให้กำหนดโครงการได้ตรงประเด็นโดยใช้ข้อมูลเชิงประจักษ์เป็นฐาน"}]}];
+let act = 0, cur = 0, playing = true, timer = null;
+
+const tabsEl = document.getElementById('tabs');
+const wheelEl = document.getElementById('wheel');
+const detailEl = document.getElementById('detail');
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function buildTabs() {
+  tabsEl.innerHTML = DATA.map((d, i) =>
+    '<button type="button" class="tab' + (i === act ? ' on' : '') + '" data-a="' + i + '" role="tab"'
+    + ' aria-selected="' + (i === act) + '"><b>' + esc(d.name) + '</b><small>' + esc(d.full) + '</small></button>'
+  ).join('');
+  tabsEl.querySelectorAll('[data-a]').forEach(b => b.onclick = () => { setActivity(+b.dataset.a); });
+}
+
+function buildWheel() {
+  const d = DATA[act], n = d.items.length;
+  const nodes = d.items.map((it, i) => {
+    const ang = (-90 + i * 360 / n) * Math.PI / 180;
+    const x = 50 + Math.cos(ang) * 34, y = 50 + Math.sin(ang) * 34;
+    return '<button type="button" class="node' + (i === cur ? ' on' : '') + '" data-i="' + i + '"'
+      + ' style="left:' + x.toFixed(2) + '%;top:' + y.toFixed(2) + '%;--h:' + (d.hue + i * 18) + '"'
+      + ' aria-label="' + esc(it.letter + ' — ' + it.en) + '"><b>' + esc(it.letter) + '</b>'
+      + '<span>' + esc(it.en.split(' ')[0]) + '</span></button>';
+  }).join('');
+  wheelEl.innerHTML = '<div class="ring" aria-hidden="true"></div>'
+    + '<div class="hub"><b>BANCHUEN</b><span>' + esc(d.name) + '</span></div>' + nodes;
+  wheelEl.querySelectorAll('[data-i]').forEach(b => b.onclick = () => { select(+b.dataset.i); stop(); });
+}
+
+function buildLetters() {
+  const d = DATA[act];
+  const el = document.getElementById('letters');
+  el.innerHTML = d.items.map((it, i) =>
+    '<button type="button" class="letter' + (i === cur ? ' on' : '') + '" data-l="' + i + '" role="tab"'
+    + ' aria-selected="' + (i === cur) + '"><b>' + esc(it.letter) + '</b>'
+    + esc(it.en.split(' ')[0]) + '</button>').join('');
+  el.querySelectorAll('[data-l]').forEach(b => b.onclick = () => { select(+b.dataset.l); stop(); });
+}
+
+function buildDetail() {
+  const d = DATA[act], it = d.items[cur];
+  const hue = d.hue + cur * 18;
+  const body = it.groups
+    ? '<div class="groups">' + it.groups.map(g =>
+        '<div class="group"><h4>' + esc(g.name) + '</h4><p>' + esc(g.text) + '</p></div>').join('') + '</div>'
+    : '<p class="d-text">' + esc(it.text) + '</p>';
+  detailEl.style.setProperty('--h', hue);
+  detailEl.innerHTML =
+    '<div class="d-top"><span class="d-badge">' + esc(it.letter) + '</span><div>'
+    + '<div class="d-kicker">องค์ประกอบที่ ' + (cur + 1) + ' จาก ' + d.items.length + '</div>'
+    + '<p class="d-en">' + esc(it.en) + '</p><p class="d-th">' + esc(it.th) + '</p></div></div>'
+    + body
+    + '<div class="foot"><div class="dots">' + d.items.map((x, i) =>
+        '<button type="button" class="dot' + (i === cur ? ' on' : '') + '" data-d="' + i + '"'
+        + ' aria-label="องค์ประกอบที่ ' + (i + 1) + '"></button>').join('') + '</div>'
+    + '<button type="button" class="play" id="play">' + (playing ? 'หยุด' : 'เล่นต่อ') + '</button></div>';
+  detailEl.querySelectorAll('[data-d]').forEach(b => b.onclick = () => { select(+b.dataset.d); stop(); });
+  document.getElementById('play').onclick = () => playing ? stop() : start();
+  report();
+}
+
+function select(i) {
+  const n = DATA[act].items.length;
+  cur = (i + n) % n;
+  wheelEl.querySelectorAll('[data-i]').forEach(b => b.classList.toggle('on', +b.dataset.i === cur));
+  buildLetters();
+  buildDetail();
+}
+
+function setActivity(i) {
+  act = i; cur = 0;
+  buildTabs(); buildWheel(); buildLetters(); buildDetail();
+  if (playing) start();
+}
+
+function start() { stop(true); playing = true; timer = setInterval(() => select(cur + 1), 9000); buildDetail(); }
+function stop(keep) { if (timer) { clearInterval(timer); timer = null; } if (!keep) { playing = false; buildDetail(); } }
+
+function report() {
+  requestAnimationFrame(() => {
+    const page = document.querySelector('.page');
+    const height = Math.ceil(page ? page.getBoundingClientRect().height + 10 : document.body.scrollHeight);
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: 'd5-banchuen-height', height }, window.location.origin);
+    }
+  });
+}
+
+/* เปิดกิจกรรมจากโมเดลปัจจัยและกลไก */
+window.addEventListener('message', e => {
+  if (e.data && e.data.type === 'd5-banchuen-open') {
+    const i = Number(e.data.index);
+    if (Number.isFinite(i) && i >= 0 && i < DATA.length) setActivity(i);
+  }
+});
+
+const reduce = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+buildTabs(); buildWheel(); buildLetters();
+if (reduce) { playing = false; buildDetail(); } else { start(); }
+new ResizeObserver(report).observe(document.body);
+window.addEventListener('load', report);
+</script>
+</body>
+</html>

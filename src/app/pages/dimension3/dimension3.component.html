@@ -161,6 +161,17 @@
       <p class="model-intro-text">{{ d.technology.modelIntro }}</p>
     </div>
 
+    <!-- โมเดล LEARN โรงเรียนต้นแบบองค์กรดิจิทัลแห่งการเรียนรู้ 4 ขั้นตอน
+         แก้เนื้อหาได้ที่ public/models/school-development-model.html ในตัวแปร data -->
+    <div class="sec-head" appReveal>
+      <h2 class="sec-title" style="font-size:26px">โรงเรียนต้นแบบองค์กรดิจิทัลแห่งการเรียนรู้</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="d3-learn-model" appReveal style="margin-bottom:38px">
+      <iframe src="/models/school-development-model.html" title="โมเดลการพัฒนาโรงเรียน 4 ขั้นตอน"
+        loading="lazy" scrolling="no" [style.height.px]="learnModelHeight()"></iframe>
+    </div>
+
     <app-cycle-flow [steps]="d.technology.cycle" [showProcessImageTabs]="true" />
 
     <div class="grid grid-3" style="margin-top:38px">

@@ -30,12 +30,33 @@ export class Dimension3Component {
   /* ความสูงจริงของโมเดลการบริหาร ที่ส่งมาจาก iframe */
   readonly adminModelHeight = signal(900);
 
+  readonly learnModelHeight = signal(900);
+
   @HostListener('window:message', ['$event'])
-  resizeAdminModel(event: MessageEvent<{ type?: string; height?: number }>): void {
+  resizeAdminModel(event: MessageEvent<{ type?: string; height?: number; top?: number; bottom?: number }>): void {
     if (typeof window === 'undefined' || event.origin !== window.location.origin) return;
-    if (event.data?.type !== 'd3-banchuen-model-height') return;
+
+    // โมเดล LEARN ขอให้หน้าหลักเลื่อนไปยังกล่องรายละเอียดที่เพิ่งเปิด
+    if (event.data?.type === 'd3-learn-model-scroll') {
+      const frame = document.querySelector<HTMLIFrameElement>('.d3-learn-model iframe');
+      const top = Number(event.data.top), bottom = Number(event.data.bottom);
+      if (!frame || !Number.isFinite(top) || !Number.isFinite(bottom)) return;
+      setTimeout(() => {
+        const base = frame.getBoundingClientRect().top;
+        const navGap = 84;
+        const elTop = base + top, elBottom = base + bottom;
+        let delta = 0;
+        if (elTop < navGap) delta = elTop - navGap;
+        else if (elBottom > window.innerHeight) delta = Math.min(elBottom - window.innerHeight + 16, elTop - navGap);
+        if (delta) window.scrollBy({ top: delta, behavior: 'smooth' });
+      }, 60);
+      return;
+    }
+
     const height = Number(event.data.height);
-    if (Number.isFinite(height)) this.adminModelHeight.set(Math.max(420, Math.min(2400, height)));
+    if (!Number.isFinite(height)) return;
+    if (event.data?.type === 'd3-banchuen-model-height') this.adminModelHeight.set(Math.max(420, Math.min(2400, height)));
+    if (event.data?.type === 'd3-learn-model-height') this.learnModelHeight.set(Math.max(620, height));
   }
 
   readonly gallery = GALLERY['d3'];

@@ -1,0 +1,1039 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>LEARN • โมเดลโรงเรียนดิจิทัลแห่งการเรียนรู้</title>
+    <meta name="description"
+        content="สำรวจโมเดลพัฒนาโรงเรียนต้นแบบองค์กรดิจิทัลแห่งการเรียนรู้ 4 ขั้นตอน พร้อมแนวทางปฏิบัติและตัวชี้วัด">
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%235365cf'/%3E%3Cpath d='M10 12v17h21M17 12v10h14' stroke='white' stroke-width='4' fill='none'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="/fonts/th-sarabun.css">
+    <style>
+        
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: transparent;
+            color: #24314c;
+            font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+            font-size: 23px;
+            line-height: 1.25
+        }
+
+        button {
+            font: inherit;
+            color: inherit;
+            cursor: pointer
+        }
+
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid #5d50bd;
+            outline-offset: 5px
+        }
+
+        button {
+            border: 0
+        }
+
+        header {
+            height: 85px;
+            padding: 0 4%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #dde3f2;
+            background: #ffffffdb
+        }
+
+        .brand {
+            display: flex;
+            gap: 12px;
+            align-items: center
+        }
+
+        .logo {
+            width: 43px;
+            height: 43px;
+            background: #5365cf;
+            border-radius: 14px;
+            color: white;
+            display: grid;
+            place-items: center;
+            font-family: Arial;
+            font-size: 25px;
+            font-weight: bold;
+            box-shadow: 0 5px 0 #d8dcf6
+        }
+
+        .brand strong {
+            font-size: 27px;
+            letter-spacing: 2px
+        }
+
+        .brand small {
+            font-size: 18px;
+            display: block;
+            letter-spacing: 0;
+            color: #66718b
+        }
+
+        .topnote {
+            font-size: 19px;
+            color: #65718a
+        }
+
+        .intro {
+            padding: 25px 4% 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 20px
+        }
+
+        .eyebrow {
+            font: 700 11px Arial, sans-serif;
+            letter-spacing: 2.5px;
+            color: #6674ad
+        }
+
+        .intro h1 {
+            font-size: 42px;
+            line-height: 1.1;
+            margin: 9px 0 5px
+        }
+
+        .intro p {
+            margin: 0;
+            color: #6a7590
+        }
+
+        .pill {
+            font-size: 20px;
+            background: #e7edf9;
+            padding: 7px 15px;
+            border-radius: 30px;
+            white-space: nowrap
+        }
+
+        .workspace {
+            margin-top: 4px;
+            display: grid;
+            grid-template-columns: minmax(420px, 1.1fr) minmax(380px, .9fr);
+            gap: 26px;
+            padding: 0 4% 28px;
+            max-width: 1700px;
+            margin: auto
+        }
+
+        .model-shell {
+            border-radius: 28px;
+            background: radial-gradient(ellipse at 20% 20%, #d9eefe 0, transparent 55%), radial-gradient(ellipse at 90% 80%, #ede0ff 0, transparent 55%), #edf1fc;
+            border: 1px solid #fff;
+            box-shadow: inset 0 0 50px #ffffff8a;
+            position: relative;
+            overflow: hidden
+        }
+
+        .model-top {
+            padding: 18px 23px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .model-top strong {
+            font-size: 22px
+        }
+
+        .controls {
+            display: flex;
+            gap: 7px
+        }
+
+        .controls button {
+            min-height: 44px;
+            background: #ffffffbd;
+            border: 1px solid white;
+            border-radius: 12px;
+            padding: 5px 12px;
+            font-size: 19px
+        }
+
+        .viewport {
+            height: 565px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: #a9b8db transparent;
+            position: relative;
+            overscroll-behavior: contain
+        }
+
+        .track {
+            padding: 35px 55px 60px;
+            position: relative;
+            perspective: 1100px
+        }
+
+        .track:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 90px;
+            bottom: 120px;
+            width: 5px;
+            background: linear-gradient(#66b7eb, #f4c190, #8bcdb5, #b99cec);
+            box-shadow: 0 0 0 8px #ffffff70;
+            border-radius: 8px
+        }
+
+        .stage {
+            touch-action: manipulation;
+            --c: #7fc5f3;
+            --bg: #e0f3ff;
+            --edge: #529dce;
+            width: 100%;
+            position: relative;
+            display: block;
+            text-align: left;
+            margin: 0 0 45px;
+            min-height: 143px;
+            padding: 23px 23px 20px 88px;
+            background: linear-gradient(120deg, #fffffff5, var(--bg));
+            border: 2px solid white;
+            border-radius: 23px;
+            transform: rotateX(12deg) rotateY(-9deg);
+            transform-style: preserve-3d;
+            box-shadow: 6px 11px 0 var(--edge), 12px 23px 26px #394b7623;
+            transition: transform .4s, box-shadow .4s
+        }
+
+        .stage.active {
+            transform: rotateX(0) rotateY(0) translateY(-3px);
+            box-shadow: 0 10px 0 var(--edge), 0 24px 35px #394b762d
+        }
+
+        .stage.active {
+            outline: 2px solid var(--c);
+            outline-offset: 6px
+        }
+
+        .stage .num {
+            position: absolute;
+            left: 20px;
+            top: 26px;
+            width: 50px;
+            height: 57px;
+            display: grid;
+            place-items: center;
+            border-radius: 16px;
+            background: linear-gradient(140deg, white, var(--c));
+            box-shadow: 3px 5px 0 var(--edge);
+            font: 700 27px Arial;
+            color: #294666
+        }
+
+        .stage h2 {
+            font-size: 28px;
+            line-height: 1.05;
+            margin: 1px 0 6px
+        }
+
+        .stage .en {
+            font: 11px Arial;
+            letter-spacing: .2px;
+            color: #5b6d89;
+            display: block;
+            margin-bottom: 12px
+        }
+
+        .stage .tags {
+            font-size: 19px;
+            color: #50607b
+        }
+
+        .stage .arrow {
+            position: absolute;
+            right: 20px;
+            bottom: 16px;
+            font-size: 24px
+        }
+
+        .stage:after {
+            content: '↓';
+            position: absolute;
+            bottom: -46px;
+            left: 49%;
+            font-size: 28px;
+            color: var(--edge)
+        }
+
+        .stage:last-of-type:after {
+            content: ''
+        }
+
+        .outcome {
+            position: relative;
+            text-align: center;
+            background: #fff7d9;
+            border: 2px solid white;
+            border-radius: 24px;
+            padding: 25px 10px;
+            box-shadow: 0 9px 0 #e3cd88, 0 17px 25px #485b7420
+        }
+
+        .outcome small {
+            font: 10px Arial;
+            letter-spacing: 2px;
+            color: #927533
+        }
+
+        .outcome h3 {
+            font-size: 27px;
+            margin: 9px 0 3px
+        }
+
+        .outcome p {
+            margin: 0;
+            font-size: 21px
+        }
+
+        .model-bottom {
+            padding: 13px 23px;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 18px;
+            color: #626e8a;
+            background: #ffffff75
+        }
+
+        .dots {
+            display: flex;
+            gap: 7px;
+            align-items: center
+        }
+
+        .dots button {
+            min-width: 24px;
+            min-height: 24px;
+            padding: 8px 7px !important;
+            background-clip: content-box;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            padding: 0;
+            background: #bdc7e1
+        }
+
+        .dots button.on {
+            background: #5365cf;
+            width: 23px
+        }
+
+        .detail {
+            background: white;
+            border: 1px solid #e3e8f6;
+            border-radius: 28px;
+            padding: 27px 30px;
+            box-shadow: 0 9px 30px #586b9410;
+            min-width: 0
+        }
+
+        .detail-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 18px;
+            color: #66718b
+        }
+
+        .step-label {
+            padding: 5px 12px;
+            background: var(--bg);
+            border-radius: 8px;
+            color: #345776;
+            font-weight: bold
+        }
+
+        .detail h2 {
+            font-size: 36px;
+            line-height: 1.1;
+            margin: 20px 0 4px
+        }
+
+        .english {
+            font: 12px Arial;
+            letter-spacing: .2px;
+            color: #8190a8
+        }
+
+        .lead {
+            font-size: 24px;
+            line-height: 1.25;
+            margin: 17px 0;
+            color: #52607a
+        }
+
+        .subheading {
+            font-size: 23px;
+            margin: 20px 0 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .subheading span {
+            font-size: 18px;
+            color: #8390a5;
+            font-weight: 400
+        }
+
+        .nodes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            position: relative
+        }
+
+        .node {
+            min-height: 64px;
+            touch-action: manipulation;
+            padding: 13px 15px;
+            background: linear-gradient(140deg, #fff, var(--bg));
+            border: 1px solid #e1e7f0;
+            border-radius: 14px;
+            text-align: left;
+            box-shadow: 0 4px 0 #e8edf5;
+            transition: transform .2s
+        }
+
+        @media (hover: hover) {
+            .stage:hover { transform: rotateX(0) rotateY(0) translateY(-3px); box-shadow: 0 10px 0 var(--edge), 0 24px 35px #394b762d }
+            .node:hover { transform: translateY(-4px) }
+        }
+
+        .node small {
+            display: block;
+            color: #657492;
+            font-size: 17px
+        }
+
+        .node strong {
+            font-size: 23px
+        }
+
+        .node b {
+            float: right;
+            font-weight: 400
+        }
+
+        .impact {
+            border-left: 3px solid var(--c);
+            padding: 9px 14px;
+            background: #f7f9fe;
+            border-radius: 0 12px 12px 0;
+            margin-top: 23px;
+            font-size: 21px
+        }
+
+        .impact strong {
+            display: block;
+            margin-bottom: 3px
+        }
+
+        .detail-footer {
+            display: flex;
+            gap: 10px;
+            margin-top: 21px
+        }
+
+        .primary {
+            min-height: 44px;
+            background: #5264c7;
+            color: white;
+            border-radius: 12px;
+            padding: 10px 19px;
+            box-shadow: 0 4px 0 #dbe0f8
+        }
+
+        .secondary {
+            min-height: 44px;
+            background: #f0f3fa;
+            border-radius: 12px;
+            padding: 10px 16px
+        }
+
+        .footnote {
+            font-size: 18px;
+            color: #7a869c;
+            margin: 0 4% 20px
+        }
+
+        .footnote a {
+            color: inherit
+        }
+
+        dialog {
+            width: min(650px, 92vw);
+            max-height: 85vh;
+            overflow: auto;
+            border: 1px solid #fff;
+            border-radius: 25px;
+            padding: 30px;
+            color: #24314c;
+            box-shadow: 0 25px 90px #24314c40;
+            font: 23px/1.35 'TH SarabunPSK', sans-serif
+        }
+
+        dialog::backdrop {
+            background: #1d284b60;
+            backdrop-filter: blur(8px)
+        }
+
+        dialog h2 {
+            font-size: 34px;
+            margin: 14px 0
+        }
+
+        dialog h3 {
+            font-size: 25px;
+            margin: 20px 0 7px
+        }
+
+        dialog p {
+            margin: 7px 0
+        }
+
+        dialog li {
+            margin-bottom: 9px
+        }
+
+        .dialog-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .close {
+            border-radius: 50%;
+            background: #eef1f9;
+            width: 44px;
+            height: 44px;
+            font: 25px Arial
+        }
+
+        .dialog-tag {
+            font-size: 20px;
+            color: #5365cf
+        }
+
+        .kpi {
+            padding: 17px;
+            border-radius: 15px;
+            background: #eef5ff
+        }
+
+        .reveal {
+            animation: reveal .4s ease
+        }
+
+        @keyframes reveal {
+            from {
+                opacity: .3;
+                transform: translateY(9px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @media(min-width:1500px) {
+            .viewport {
+                height: 650px
+            }
+
+            .stage {
+                min-height: 155px;
+                margin-bottom: 53px
+            }
+        }
+
+        @media(max-width:900px) {
+            .workspace {
+                grid-template-columns: 1fr
+            }
+
+            .intro h1 {
+                font-size: 35px
+            }
+
+            .intro {
+                align-items: start
+            }
+
+            .intro .pill {
+                display: none
+            }
+
+            .viewport {
+                height: 460px
+            }
+
+            .detail {
+                padding: 24px
+            }
+
+            .topnote {
+                display: none
+            }
+
+            .track {
+                max-width: 600px;
+                margin: auto
+            }
+
+            .detail h2 {
+                font-size: 33px
+            }
+        }
+
+        @media(max-width:450px) {
+            .track {
+                padding: 30px 25px 50px
+            }
+
+            .stage {
+                padding-left: 79px
+            }
+
+            .stage h2 {
+                font-size: 25px
+            }
+
+            .model-top {
+                padding: 15px 14px 0
+            }
+
+            .model-top strong {
+                font-size: 20px
+            }
+
+            .intro h1 {
+                font-size: 32px
+            }
+
+            .model-bottom {
+                font-size: 17px
+            }
+
+            .nodes {
+                gap: 9px
+            }
+
+            .node {
+                padding: 12px
+            }
+
+            .node strong {
+                font-size: 21px
+            }
+
+            .brand small {
+                font-size: 17px
+            }
+
+            .detail-footer {
+                flex-wrap: wrap
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            *,
+            *:before,
+            *:after {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important
+            }
+        }
+
+        /* Pastel presentation lighting and layered motion */
+        .model-shell {
+            --spot: #81c8f2;
+            isolation: isolate;
+            transition: box-shadow 1.2s ease;
+            box-shadow: inset 0 0 70px #ffffffa0, 0 15px 45px #829acc20
+        }
+
+        .model-shell:before,
+        .model-shell:after {
+            content: '';
+            position: absolute;
+            pointer-events: none;
+            z-index: -1;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            filter: blur(45px);
+            opacity: .28;
+            background: var(--spot);
+            transition: background 1.2s ease;
+            animation: ambientDrift 12s ease-in-out infinite alternate
+        }
+
+        .model-shell:before {
+            top: 12%;
+            left: -100px
+        }
+
+        .model-shell:after {
+            right: -90px;
+            bottom: 8%;
+            animation-delay: -6s
+        }
+
+        .stage {
+            isolation: isolate;
+            transition: transform 1s ease, box-shadow 1s ease, filter 1s ease;
+            filter: saturate(.85)
+        }
+
+        .stage.active {
+            filter: saturate(1.08);
+            outline: 2px solid white;
+            transform: rotateX(0) rotateY(0) translateY(-5px);
+            box-shadow: 0 10px 0 var(--edge), 0 22px 30px #394b7626, 0 0 26px var(--c), 0 0 58px color-mix(in srgb, var(--c) 55%, transparent);
+            animation: pastelBreathe 3.8s ease-in-out infinite
+        }
+
+        .stage:before {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border: 1px solid var(--c);
+            border-radius: 32px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s;
+            z-index: -1
+        }
+
+        .stage.active:before {
+            opacity: .6;
+            animation: haloBreathe 3.8s ease-in-out infinite
+        }
+
+        .stage.active .num {
+            animation: numberFloat 4s ease-in-out infinite
+        }
+
+        .stage .arrow {
+            transition: transform .6s
+        }
+
+        .stage.active .arrow {
+            transform: translate(3px, -3px)
+        }
+
+        .track:before {
+            background-size: 100% 200%;
+            animation: pathFlow 9s linear infinite
+        }
+
+        .detail {
+            transition: box-shadow 1s, border-color 1s;
+            border-color: color-mix(in srgb, var(--c) 55%, white);
+            box-shadow: 0 10px 35px #586b9410, 0 0 25px color-mix(in srgb, var(--c) 18%, transparent)
+        }
+
+        .reveal {
+            animation: detailArrival .8s ease both
+        }
+
+        .reveal .node {
+            animation: detailArrival .7s ease both
+        }
+
+        .reveal .node:nth-child(2) {
+            animation-delay: .08s
+        }
+
+        .reveal .node:nth-child(3) {
+            animation-delay: .16s
+        }
+
+        .reveal .node:nth-child(4) {
+            animation-delay: .24s
+        }
+
+        dialog[open] {
+            animation: detailArrival .3s ease
+        }
+
+        .presentation-meter {
+            height: 3px;
+            background: #ffffffb0;
+            overflow: hidden
+        }
+
+        .presentation-meter span {
+            height: 100%;
+            display: block;
+            width: 100%;
+            transform: scaleX(0);
+            transform-origin: left;
+            background: var(--spot);
+            box-shadow: 0 0 10px var(--spot);
+            transition: background 1s
+        }
+
+        @keyframes pastelBreathe {
+
+            0%,
+            100% {
+                box-shadow: 0 10px 0 var(--edge), 0 22px 30px #394b7626, 0 0 26px var(--c), 0 0 58px color-mix(in srgb, var(--c) 45%, transparent)
+            }
+
+            50% {
+                box-shadow: 0 10px 0 var(--edge), 0 25px 35px #394b7626, 0 0 38px var(--c), 0 0 72px color-mix(in srgb, var(--c) 65%, transparent)
+            }
+        }
+
+        @keyframes haloBreathe {
+            50% {
+                opacity: .25;
+                transform: scale(1.025)
+            }
+        }
+
+        @keyframes numberFloat {
+            50% {
+                transform: translateY(-5px) rotate(-3deg)
+            }
+        }
+
+        @keyframes ambientDrift {
+            to {
+                transform: translate(45px, -40px) scale(1.2)
+            }
+        }
+
+        @keyframes pathFlow {
+            to {
+                background-position: 0 200%
+            }
+        }
+
+        @keyframes detailArrival {
+            from {
+                opacity: 0;
+                transform: translateY(12px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        body.motion-paused .stage,
+        body.motion-paused .stage:before,
+        body.motion-paused .stage .num,
+        body.motion-paused .track:before,
+        body.motion-paused .model-shell:before,
+        body.motion-paused .model-shell:after {
+            animation-play-state: paused !important
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            *,
+            *:before,
+            *:after {
+                animation: none !important;
+                transition: none !important
+            }
+        }
+
+        /* ── เอาพื้นหลังของกรอบเส้นทางการพัฒนาออก ให้การ์ดลอยบนพื้นของหน้าเว็บ ── */
+        .model-shell {
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            overflow: visible
+        }
+        .model-shell:before,
+        .model-shell:after { display: none !important }
+
+        .model-top { padding-left: 4px; padding-right: 4px }
+        .model-top strong { color: #ffffff; text-shadow: 0 2px 12px rgba(6, 18, 44, .8) }
+        .controls button {
+            color: #eaf1fb;
+            border: 1px solid rgba(255, 255, 255, .28);
+            background: rgba(255, 255, 255, .12)
+        }
+
+        .model-bottom {
+            padding-left: 4px;
+            padding-right: 4px;
+            color: #cfdcf2;
+            background: transparent
+        }
+        .presentation-meter { background: rgba(255, 255, 255, .18) }
+        .dots button { background: rgba(255, 255, 255, .34) }
+        .dots button.on { background: #e8c46a }
+
+        .viewport { scrollbar-color: rgba(255, 255, 255, .45) transparent }
+        .track:before { box-shadow: 0 0 0 8px rgba(255, 255, 255, .14) }
+        .outcome { box-shadow: 0 9px 0 #e3cd88, 0 17px 30px rgba(6, 18, 44, .35) }
+
+        @media (hover: hover) {
+            .controls button:hover { background: rgba(255, 255, 255, .22) }
+        }
+
+        /* ── ให้กรอบซ้าย (เส้นทาง) สูงเท่ากรอบขวา (รายละเอียด) เสมอ ── */
+        .workspace { align-items: start }
+        .model-shell { display: flex; flex-direction: column }
+    </style>
+</head>
+
+<body>
+    <main class="workspace">
+        <section class="model-shell" aria-label="โมเดลพัฒนาโรงเรียน">
+            <div class="model-top"><strong>เส้นทางการพัฒนา</strong>
+                <div class="controls"><button id="auto" aria-pressed="true">Ⅱ หยุดเลื่อน</button><button id="reset"
+                        aria-label="กลับจุดเริ่มต้น">↺</button></div>
+            </div>
+            <div class="viewport" id="viewport" tabindex="0" aria-label="เลื่อนสำรวจโมเดลแนวตั้ง">
+                <div class="track" id="track"></div>
+            </div>
+            <div class="presentation-meter" aria-hidden="true"><span id="presentationProgress"></span></div>
+            <div class="model-bottom"><span id="motionstatus">เลื่อนอัตโนมัติ • วางเมาส์เพื่อพัก</span>
+                <div class="dots" id="dots"></div>
+            </div>
+        </section>
+        <aside class="detail" id="detail" aria-label="รายละเอียดขั้นตอน"></aside>
+    </main>
+    <dialog id="modal">
+        <div class="dialog-top"><span class="dialog-tag" id="modalTag"></span><button class="close"
+                aria-label="ปิดหน้าต่าง">×</button></div>
+        <div id="modalBody"></div>
+    </dialog>
+    <script>
+        const data = [
+            {
+                title: 'การเพิ่มประสิทธิภาพโครงสร้างพื้นฐาน', en: 'Infrastructure Optimization', short: 'วางรากฐานดิจิทัล', tags: 'เครือข่าย · อุปกรณ์ · พื้นที่เรียนรู้', c: '#81c8f2', bg: '#e3f4ff', edge: '#75afd5', desc: 'สร้างระบบพื้นฐานที่พร้อมใช้งาน เข้าถึงได้อย่างทั่วถึง และรองรับการเรียนรู้ดิจิทัลของครูและผู้เรียน', impact: 'ครูและผู้เรียนเข้าถึงเทคโนโลยีที่จำเป็นได้อย่างต่อเนื่อง พร้อมใช้ในการเรียนรู้จริง', items: [
+                    ['เครือข่ายอินเทอร์เน็ต', 'เชื่อมต่อได้ทั่วถึง', 'สำรวจพื้นที่ใช้งานจริงและจุดอับสัญญาณ เพื่อวางระบบอินเทอร์เน็ตที่รองรับทั้งห้องเรียนและพื้นที่เรียนรู้', ['สำรวจความต้องการและทดสอบความเร็วในช่วงใช้งานหนาแน่น', 'ปรับปรุง Wi-Fi และแยกเครือข่ายสำหรับผู้ใช้กับอุปกรณ์สำคัญ', 'กำหนดผู้รับผิดชอบและช่องทางแจ้งปัญหา'], 'สัดส่วนพื้นที่ที่มีสัญญาณพร้อมใช้ และระยะเวลาเฉลี่ยในการแก้ปัญหา'],
+                    ['อุปกรณ์และสื่อดิจิทัล', 'พร้อมใช้ พร้อมเรียน', 'จัดสรรอุปกรณ์และสื่อให้เหมาะกับกิจกรรมการเรียนรู้ โดยคำนึงถึงผู้เรียนที่ยังขาดแคลน', ['จัดทำทะเบียนอุปกรณ์และตรวจสภาพเป็นรอบ', 'จัดระบบยืมใช้และแผนซ่อมบำรุง', 'เลือกสื่อที่เข้าถึงง่ายและรองรับความต้องการที่แตกต่าง'], 'สัดส่วนอุปกรณ์พร้อมใช้งาน และจำนวนผู้เรียนที่เข้าถึงอุปกรณ์ได้'],
+                    ['พื้นที่เรียนรู้อัจฉริยะ', 'เรียนรู้ได้ทุกพื้นที่', 'พัฒนาห้องเรียนและพื้นที่ร่วมให้ใช้สื่อดิจิทัล การทำงานกลุ่ม และการสร้างชิ้นงานได้อย่างยืดหยุ่น', ['ออกแบบพื้นที่ทดลองนำร่องร่วมกับครูและผู้เรียน', 'จัดจอหรือระบบนำเสนอที่ใช้งานง่าย', 'ประเมินการใช้พื้นที่และปรับตามกิจกรรมจริง'], 'ความถี่การใช้พื้นที่และความพึงพอใจของผู้ใช้'],
+                    ['ความปลอดภัยดิจิทัล', 'มั่นใจในการใช้งาน', 'ดูแลบัญชี อุปกรณ์ และข้อมูลให้ปลอดภัย พร้อมสร้างพฤติกรรมดิจิทัลที่รับผิดชอบ', ['กำหนดสิทธิ์เข้าถึงตามบทบาทและใช้การยืนยันตัวตนที่เหมาะสม', 'สำรองข้อมูลสำคัญและทดลองกู้คืน', 'ฝึกสังเกตข้อความหลอกลวงและแจ้งเหตุผิดปกติ'], 'ผลการทดสอบกู้คืนข้อมูลและสัดส่วนบัญชีที่ตั้งค่าความปลอดภัยครบ']
+                ]
+            },
+            {
+                title: 'การเสริมสร้างพลังครู', en: 'Teacher Empowerment', short: 'พัฒนาคนให้พร้อม', tags: 'ทักษะดิจิทัล · PLC · นวัตกรรม', c: '#ffc18c', bg: '#fff0df', edge: '#dfaa7e', desc: 'พัฒนาครูให้มั่นใจในการเลือกใช้เทคโนโลยี ออกแบบการเรียนรู้ และแลกเปลี่ยนประสบการณ์กับเพื่อนครูอย่างต่อเนื่อง', impact: 'ครูสร้างประสบการณ์เรียนรู้ที่ผู้เรียนมีส่วนร่วม และปรับการสอนจากหลักฐานการเรียนรู้', items: [
+                    ['ทักษะดิจิทัลของครู', 'พัฒนาตามความต้องการ', 'เริ่มจากสมรรถนะและโจทย์การสอนจริงของครูแต่ละคน เพื่อจัดแผนพัฒนาที่นำไปใช้ได้', ['ประเมินตนเองและเลือกทักษะที่ต้องการพัฒนา', 'จัดอบรมแบบลงมือทำกับบทเรียนจริง', 'มีพี่เลี้ยงติดตามหลังอบรม'], 'สัดส่วนครูที่นำทักษะใหม่ไปใช้ในชั้นเรียนและมีหลักฐานผลงาน'],
+                    ['ออกแบบการเรียนรู้', 'ผู้เรียนเป็นศูนย์กลาง', 'เลือกเทคโนโลยีให้สอดคล้องกับเป้าหมายการเรียนรู้ ไม่เพิ่มเครื่องมือโดยไม่จำเป็น', ['กำหนดผลลัพธ์การเรียนรู้และวิธีประเมิน', 'ออกแบบกิจกรรมร่วมมือและสร้างชิ้นงาน', 'ทดลองสอน รับข้อเสนอแนะ และปรับแผน'], 'คุณภาพชิ้นงานและระดับการมีส่วนร่วมของผู้เรียน'],
+                    ['ชุมชนการเรียนรู้ PLC', 'แบ่งปันและเติบโตร่วมกัน', 'ใช้ชุมชนการเรียนรู้ทางวิชาชีพเป็นพื้นที่แก้ปัญหาและพัฒนาการสอนร่วมกัน', ['เลือกปัญหาการเรียนรู้ร่วมกันหนึ่งเรื่อง', 'แลกเปลี่ยนแผนการสอนและสังเกตชั้นเรียน', 'สะท้อนผลจากข้อมูลผู้เรียนและบันทึกบทเรียน'], 'จำนวนวงรอบ PLC ที่นำไปสู่การปรับการสอนจริง'],
+                    ['คลังสื่อและนวัตกรรม', 'ต่อยอดผลงานครู', 'รวบรวมสื่อและตัวอย่างการสอนที่ค้นหา ใช้ซ้ำ และปรับให้เหมาะกับห้องเรียนได้', ['กำหนดหมวดหมู่และคำอธิบายสื่อ', 'ตรวจความถูกต้องและสิทธิ์การใช้ก่อนเผยแพร่', 'เปิดให้ครูสะท้อนผลและร่วมปรับปรุงสื่อ'], 'จำนวนสื่อที่ถูกนำไปใช้และคุณภาพจากการทบทวนร่วมกัน']
+                ]
+            },
+            {
+                title: 'การบูรณาการภารกิจดำเนินงาน', en: 'Operational Integration', short: 'เชื่อมระบบ เชื่อมการเรียนรู้', tags: 'LMS · ข้อมูลกลาง · งานบริหาร', c: '#93dbb6', bg: '#e4f8ee', edge: '#79b997', desc: 'เชื่อมงานบริหาร การจัดการเรียนรู้ และข้อมูลสำคัญให้ทำงานร่วมกัน ลดงานซ้ำ และใช้ข้อมูลประกอบการตัดสินใจ', impact: 'บุคลากรทำงานร่วมกันได้คล่องขึ้น และมองเห็นข้อมูลที่จำเป็นต่อการดูแลผู้เรียน', items: [
+                    ['ระบบการเรียนรู้ LMS', 'ห้องเรียนที่เชื่อมต่อกัน', 'รวมบทเรียน งานที่มอบหมาย และข้อเสนอแนะไว้ในพื้นที่ที่ครูและผู้เรียนเข้าถึงง่าย', ['กำหนดโครงสร้างรายวิชาให้เป็นแนวเดียวกัน', 'จัดบทเรียนและกิจกรรมที่ใช้ได้ทั้งในและนอกห้องเรียน', 'ติดตามการส่งงานและให้ข้อเสนอแนะเป็นรายบุคคล'], 'สัดส่วนรายวิชาที่ใช้งานจริงและอัตราการส่งงาน'],
+                    ['ฐานข้อมูลกลาง', 'ข้อมูลชุดเดียวที่เชื่อถือได้', 'กำหนดแหล่งข้อมูลหลักและผู้ดูแล เพื่อลดการกรอกซ้ำและข้อมูลไม่ตรงกัน', ['ทำแผนผังข้อมูลที่แต่ละฝ่ายต้องใช้', 'กำหนดรูปแบบข้อมูลและสิทธิ์เข้าถึง', 'ตรวจความครบถ้วนและปรับปรุงข้อมูลตามรอบ'], 'อัตราข้อมูลซ้ำและสัดส่วนข้อมูลที่ปรับปรุงตามกำหนด'],
+                    ['กระบวนงานดิจิทัล', 'ลดขั้นตอน เพิ่มเวลาคุณภาพ', 'ปรับกระบวนงานก่อนนำระบบดิจิทัลมาใช้ เพื่อให้งานเอกสารและการประสานงานง่ายขึ้น', ['เลือกงานที่ซ้ำหรือใช้เวลามากมาทดลอง', 'ลดขั้นตอนที่ไม่จำเป็นและกำหนดผู้รับผิดชอบ', 'ใช้แบบฟอร์มและการติดตามสถานะร่วมกัน'], 'เวลาที่ใช้ต่อกระบวนงานและจำนวนขั้นตอนที่ลดลง'],
+                    ['ความร่วมมือกับชุมชน', 'สื่อสารและร่วมพัฒนา', 'สร้างช่องทางสื่อสารระหว่างโรงเรียน ผู้ปกครอง และเครือข่าย โดยคำนึงถึงความพร้อมในการเข้าถึง', ['กำหนดช่องทางหลักและผู้รับผิดชอบการตอบกลับ', 'สื่อสารข้อมูลที่จำเป็นอย่างชัดเจน', 'รับข้อเสนอแนะและมีทางเลือกสำหรับผู้ที่ไม่พร้อมออนไลน์'], 'การเข้าถึงข่าวสารและสัดส่วนข้อเสนอแนะที่ได้รับการตอบสนอง']
+                ]
+            },
+            {
+                title: 'ระบบ AI และการติดตาม', en: 'AI & Monitoring System', short: 'ใช้ข้อมูลเพื่อพัฒนาต่อเนื่อง', tags: 'AI · Dashboard · วงจรพัฒนา', c: '#c3a0ef', bg: '#f0e7fc', edge: '#ac8bd6', desc: 'ใช้ AI เป็นผู้ช่วย และใช้ข้อมูลติดตามผลเพื่อปรับการเรียนรู้ โดยมีครูและผู้บริหารตรวจสอบและตัดสินใจเสมอ', impact: 'โรงเรียนเห็นความก้าวหน้า ดูแลผู้เรียนได้ตรงจุด และปรับแผนจากหลักฐานอย่างต่อเนื่อง', items: [
+                    ['AI ผู้ช่วยการเรียนรู้', 'เสริมศักยภาพครูและผู้เรียน', 'ประยุกต์ AI เพื่อช่วยคิด สร้างสื่อ และปรับกิจกรรม โดยตรวจสอบความถูกต้องก่อนใช้งาน', ['เลือกงานที่ AI ช่วยลดภาระได้อย่างเหมาะสม', 'หลีกเลี่ยงการใส่ข้อมูลส่วนบุคคลลงในเครื่องมือที่ยังไม่ผ่านการพิจารณา', 'ให้ครูตรวจเนื้อหา อคติ และความเหมาะสมก่อนใช้'], 'เวลาที่ประหยัดได้ควบคู่กับคุณภาพงานที่ผ่านการตรวจสอบ'],
+                    ['Dashboard การพัฒนา', 'มองเห็นภาพรวม', 'สรุปข้อมูลที่สัมพันธ์กับเป้าหมายโรงเรียนให้ทีมเข้าใจร่วมกัน โดยไม่ใช้ตัวเลขเพียงด้านเดียวตัดสินคุณภาพ', ['เลือกตัวชี้วัดสำคัญและกำหนดเจ้าของข้อมูล', 'แสดงแนวโน้มและเปรียบเทียบกับฐานเดิม', 'ทบทวนข้อมูลร่วมกับหลักฐานเชิงคุณภาพ'], 'ความครบถ้วน ความเป็นปัจจุบัน และการนำข้อมูลไปใช้ตัดสินใจ'],
+                    ['ระบบดูแลผู้เรียน', 'ช่วยเหลืออย่างเข้าใจ', 'ใช้สัญญาณจากการเข้าเรียนและการเรียนรู้เป็นจุดเริ่มต้นของการช่วยเหลือ ไม่ใช้เพื่อวินิจฉัยหรือตีตรา', ['กำหนดสัญญาณที่ต้องติดตามร่วมกับครูที่ปรึกษา', 'ตรวจสอบบริบทด้วยการพูดคุยกับผู้เรียน', 'วางแผนช่วยเหลือและติดตามผลอย่างเป็นส่วนตัว'], 'สัดส่วนผู้เรียนที่ได้รับการติดตามและผลหลังได้รับความช่วยเหลือ'],
+                    ['วงจรพัฒนา PDCA', 'เรียนรู้และปรับปรุงเสมอ', 'ทบทวนผลทั้งระบบและนำสิ่งที่เรียนรู้กลับไปพัฒนาโครงสร้างพื้นฐาน คน และกระบวนงาน', ['Plan: ตั้งเป้าหมายจากปัญหาและข้อมูลฐาน', 'Do–Check: ทดลอง เก็บหลักฐาน และทบทวนผล', 'Act: ปรับปรุง ขยายผล หรือเปลี่ยนวิธีตามหลักฐาน'], 'จำนวนการปรับปรุงที่มีหลักฐานรองรับและผลลัพธ์เทียบกับฐานเดิม']
+                ]
+            }
+        ];
+        const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)'); let selected = 0, auto = !reducedMotion.matches, last = 0, pauseUntil = 0, elapsed = 0, travel = null; const dwell = 6500; const vp = document.querySelector('#viewport'), panel = document.querySelector('#detail'), modal = document.querySelector('#modal');
+        function theme(d) { return `--c:${d.c};--bg:${d.bg};--edge:${d.edge}` }
+        document.querySelector('#track').innerHTML = data.map((d, i) => `<button class="stage" style="${theme(d)}" data-stage="${i}" aria-label="ขั้นตอน ${i + 1} ${d.title}" aria-pressed="${i === 0}"><span class="num">0${i + 1}</span><h2>${d.title}</h2><span class="en">${d.en}</span><span class="tags">${d.tags}</span><span class="arrow">↗</span></button>`).join('') + `<div class="outcome"><small>OUR SHARED DESTINATION</small><h3>โรงเรียนดิจิทัลแห่งการเรียนรู้</h3><p>เรียนรู้ได้ทุกที่ ทุกเวลา • พร้อมรับอนาคต</p><p>องค์กรแห่งความสุขและการเรียนรู้ตลอดชีวิต</p></div>`;
+        document.querySelector('#dots').innerHTML = data.map((_, i) => `<button data-goto="${i}" aria-label="ไปขั้นตอน ${i + 1}"></button>`).join('');
+        function select(i, scroll = false) { selected = i; const d = data[i]; document.querySelector('.model-shell').style.setProperty('--spot', d.c); panel.style.cssText = theme(d); panel.innerHTML = `<div class="detail-top"><span class="step-label">ขั้นตอนที่ 0${i + 1}</span><span>รายละเอียดการพัฒนา</span></div><div class="reveal"><h2>${d.title}</h2><div class="english">${d.en}</div><p class="lead">${d.desc}</p><h3 class="subheading">องค์ประกอบการพัฒนา <span>เลือกหัวข้อเพื่ออ่านเพิ่มเติม ↗</span></h3><div class="nodes">${d.items.map((n, j) => `<button class="node" data-item="${j}" aria-haspopup="dialog"><small>0${i + 1}.${j + 1} <b>↗</b></small><strong>${n[0]}</strong><small>${n[1]}</small></button>`).join('')}</div><div class="impact"><strong>ผลลัพธ์ที่มุ่งหวัง</strong>${d.impact}</div><div class="detail-footer"><button class="primary" id="overview" aria-haspopup="dialog">อ่านภาพรวมขั้นตอน ↗</button><button class="secondary" id="next">${i === 3 ? 'กลับขั้นตอนแรก ↺' : 'ขั้นตอนถัดไป ↓'}</button></div></div>`; document.querySelectorAll('.stage').forEach((e, j) => { e.classList.toggle('active', i === j); e.setAttribute('aria-pressed', i === j) }); document.querySelectorAll('[data-goto]').forEach((e, j) => e.classList.toggle('on', i === j)); if (scroll) { moveTo(i) } }
+        function openItem(j) { const d = data[selected], n = d.items[j]; document.querySelector('#modalTag').textContent = `ขั้นตอน ${selected + 1} / องค์ประกอบ ${j + 1}`; document.querySelector('#modalBody').innerHTML = `<h2>${n[0]}</h2><p>${n[2]}</p><h3>แนวทางดำเนินงาน</h3><ol>${n[3].map(t => `<li>${t}</li>`).join('')}</ol><div class="kpi"><strong>ตัวชี้วัดที่เสนอ</strong><p>${n[4]}</p></div><p style="font-size:19px;color:#758198;margin-top:15px">กำหนดค่าเป้าหมายจากข้อมูลฐานและความพร้อมของโรงเรียน</p>`; modal.showModal() }
+        function overview() { const d = data[selected]; document.querySelector('#modalTag').textContent = `ภาพรวมขั้นตอนที่ ${selected + 1}`; document.querySelector('#modalBody').innerHTML = `<h2>${d.title}</h2><p>${d.desc}</p><h3>โมเดลย่อยภายในขั้นตอน</h3><div class="nodes" style="${theme(d)}">${d.items.map((n, j) => `<button class="node" data-modal-item="${j}"><small>0${selected + 1}.${j + 1} ↗</small><strong>${n[0]}</strong></button>`).join('')}</div><h3>ผลลัพธ์ที่มุ่งหวัง</h3><p>${d.impact}</p><div class="kpi">วงจรการนำไปใช้: สำรวจบริบท → ทดลองปฏิบัติ → ติดตามผล → ปรับปรุง</div>`; modal.showModal() }
+        document.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; if (b.dataset.stage !== undefined) { select(+b.dataset.stage); setAuto(false); overview() } if (b.dataset.goto !== undefined) { setAuto(false); select(+b.dataset.goto, true) } if (b.dataset.item !== undefined) openItem(+b.dataset.item); if (b.dataset.modalItem !== undefined) { modal.close(); openItem(+b.dataset.modalItem) } if (b.id === 'overview') overview(); if (b.id === 'next') { setAuto(false); select((selected + 1) % 4, true) } if (b.id === 'auto') setAuto(!auto); if (b.id === 'reset') { setAuto(false); select(0, true) } if (b.classList.contains('close')) modal.close() });
+        modal.addEventListener('click', e => { if (e.target === modal) { const r = modal.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) modal.close() } }); modal.addEventListener('close', () => pauseUntil = performance.now() + 4000);
+        function setAuto(v) { auto = v; elapsed = 0; last = performance.now(); document.body.classList.toggle('motion-paused', !v); document.querySelector('#auto').textContent = v ? 'Ⅱ พักนำเสนอ' : '▶ นำเสนออัตโนมัติ'; document.querySelector('#auto').setAttribute('aria-pressed', v); updateStatus(); if (v) moveTo(selected) }
+        function updateStatus() { document.querySelector('#motionstatus').textContent = auto ? `กำลังนำเสนอ ${selected + 1} / 4 • หยุดอ่านข้อละ 6.5 วินาที` : 'พักนำเสนอ • เลื่อนหรือเลือกหัวข้อได้' }
+        function targetTop(i) { return Math.max(0, Math.min(document.querySelector(`[data-stage="${i}"]`).offsetTop - 55, vp.scrollHeight - vp.clientHeight)) }
+        function moveTo(i) { const end = targetTop(i); if (reducedMotion.matches) { vp.scrollTop = end; travel = null; return } travel = { start: vp.scrollTop, end, elapsed: 0, duration: 1400 } }
+        function sizeTrack() { document.querySelector('#track').style.paddingBottom = Math.max(60, vp.clientHeight - 200) + 'px' }
+        sizeTrack(); window.addEventListener('resize', sizeTrack); document.fonts.ready.then(sizeTrack);
+        vp.addEventListener('wheel', () => { setAuto(false); travel = null }, { passive: true }); vp.addEventListener('touchstart', () => { setAuto(false); travel = null }, { passive: true }); vp.addEventListener('keydown', e => { if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(e.key)) { setAuto(false); travel = null } });
+        vp.addEventListener('scroll', () => { if (auto || travel || modal.open) return; let best = 0, min = Infinity; document.querySelectorAll('.stage').forEach((el, i) => { const diff = Math.abs(el.offsetTop - vp.scrollTop - 55); if (diff < min) { min = diff; best = i } }); if (best !== selected) select(best) }, { passive: true });
+        function frame(t) { const delta = Math.max(0, Math.min(t - last, 50)); last = t; const reading = modal.open || document.hidden || panel.contains(document.activeElement); if (!reading) { if (travel) { travel.elapsed += delta; const x = Math.min(1, travel.elapsed / travel.duration); const eased = x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; vp.scrollTop = travel.start + (travel.end - travel.start) * eased; if (x === 1) travel = null } else if (auto && t > pauseUntil) { elapsed += delta; if (elapsed >= dwell) { elapsed = 0; const next = (selected + 1) % data.length; select(next); moveTo(next); updateStatus() } } } document.querySelector('#presentationProgress').style.transform = `scaleX(${auto ? Math.min(elapsed / dwell, 1) : 0})`; requestAnimationFrame(frame) }
+        reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) setAuto(false) });
+        select(0); setAuto(auto); requestAnimationFrame(frame);
+
+        /* ── ทำให้กรอบซ้ายสูงเท่ากรอบขวาเสมอ ── */
+        function syncHeights() {
+            const detail = document.querySelector('.detail');
+            if (!detail) return;
+            if (window.innerWidth <= 900) { vp.style.height = ''; return; }
+            const px = sel => { const el = document.querySelector(sel); return el ? el.offsetHeight : 0; };
+            const spare = px('.model-top') + px('.presentation-meter') + px('.model-bottom');
+            const h = Math.max(360, detail.offsetHeight - spare);
+            if (Math.abs(parseFloat(vp.style.height || '0') - h) > 1) {
+                vp.style.height = h + 'px';
+                sizeTrack();
+            }
+        }
+        new ResizeObserver(syncHeights).observe(document.querySelector('.detail'));
+        window.addEventListener('resize', syncHeights);
+        document.fonts.ready.then(syncHeights);
+        setTimeout(syncHeights, 300);
+
+        /* ── เชื่อมกับหน้าเว็บที่ฝัง iframe ── */
+        function reportHeight() {
+            requestAnimationFrame(() => {
+                const height = Math.ceil(document.body.scrollHeight + 8);
+                if (window.parent !== window) {
+                    window.parent.postMessage({ type: 'd3-learn-model-height', height }, window.location.origin);
+                }
+            });
+        }
+        new ResizeObserver(reportHeight).observe(document.body);
+        window.addEventListener('load', reportHeight);
+        setTimeout(reportHeight, 700);
+
+        /* กล่องรายละเอียดอยู่กึ่งกลาง iframe ที่สูงมาก จึงย้ายมาไว้ใกล้ ๆ แล้วบอกหน้าเว็บให้เลื่อนตาม */
+        const showDialog = modal.showModal.bind(modal);
+        modal.showModal = function () {
+            const anchor = document.querySelector('.workspace');
+            const top = Math.max(12, Math.min(
+                anchor ? anchor.getBoundingClientRect().top + window.scrollY + 40 : 12,
+                document.body.scrollHeight - 420));
+            modal.style.margin = top + 'px auto auto';
+            showDialog();
+            if (window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'd3-learn-model-scroll', top,
+                    bottom: top + modal.getBoundingClientRect().height
+                }, window.location.origin);
+            }
+        };
+    </script>
+</body>
+
+</html>

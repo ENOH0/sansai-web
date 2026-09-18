@@ -34,11 +34,40 @@ export class Dimension5Component {
   readonly open = signal<number | null>(null);
   readonly successModelHeight = signal(620);
   readonly disseminationWheelHeight = signal(700);
+  readonly banchuenHeight = signal(820);
+  readonly banchuenOpen = signal(false);
+  private banchuenIndex: number | null = null;
 
   /** รับความสูงจริงจากโมเดลใน iframe เพื่อไม่ให้เกิดแถบเลื่อนภายใน */
   @HostListener('window:message', ['$event'])
   resizeSuccessModel(event: MessageEvent<{ type?: string; height?: number; top?: number; bottom?: number }>): void {
     if (typeof window === 'undefined' || event.origin !== window.location.origin) return;
+
+    // กดการ์ดกิจกรรมในโมเดลปัจจัยและกลไก → เปิดวงล้อ BANCHUEN ของกิจกรรมนั้น แล้วเลื่อนไปหา
+    if (event.data?.type === 'd5-banchuen-open') {
+      const index = Number((event.data as { index?: number }).index);
+      if (!Number.isFinite(index)) return;
+
+      // กดการ์ดกิจกรรมเดิมซ้ำ = ปิดวงล้อกลับไปซ่อนเหมือนเดิม
+      if (this.banchuenOpen() && this.banchuenIndex === index) {
+        this.closeBanchuen();
+        return;
+      }
+
+      this.banchuenIndex = index;
+      this.banchuenOpen.set(true);
+      // iframe เพิ่งถูกสร้าง จึงส่งซ้ำหลายจังหวะจนกว่าจะพร้อมรับข้อความ
+      const send = () => {
+        const frame = document.querySelector<HTMLIFrameElement>('.d5-banchuen iframe');
+        frame?.contentWindow?.postMessage({ type: 'd5-banchuen-open', index }, window.location.origin);
+        return frame;
+      };
+      [0, 250, 600, 1200].forEach(ms => setTimeout(send, ms));
+      setTimeout(() => {
+        document.querySelector('.d5-banchuen-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 120);
+      return;
+    }
 
     // โมเดลขอให้หน้าหลักเลื่อนไปยังกิ่งที่เพิ่งกาง (iframe เลื่อนเองไม่ได้เพราะสูงเท่าเนื้อหา)
     if (event.data?.type === 'd5-success-model-scroll') {
@@ -62,6 +91,13 @@ export class Dimension5Component {
     const minHeight = Math.max(360, height);
     if (event.data?.type === 'd5-success-model-height') this.successModelHeight.set(minHeight);   // ไม่จำกัดความสูง ไม่งั้นเนื้อหาส่วนล่างถูกตัด
     if (event.data?.type === 'd5-dissemination-wheel-height') this.disseminationWheelHeight.set(Math.min(1400, minHeight));
+    if (event.data?.type === 'd5-banchuen-height') this.banchuenHeight.set(minHeight);
+  }
+
+  closeBanchuen(): void {
+    this.banchuenOpen.set(false);
+    this.banchuenIndex = null;
+    setTimeout(() => document.querySelector('.d5-success-model')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   }
 
   get currentProject() {

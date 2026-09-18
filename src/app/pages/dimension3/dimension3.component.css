@@ -258,3 +258,7 @@
   border: 0;
   background: transparent;
 }
+
+/* โมเดล LEARN การพัฒนาโรงเรียน 4 ขั้นตอน */
+.d3-learn-model { width: 100%; }
+.d3-learn-model iframe { display: block; width: 100%; border: 0; background: transparent; }
