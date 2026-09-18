@@ -1,1 +1,7 @@
 node_modules
+
+_originals
+_DELETE_ME
+
+.angular
+dist

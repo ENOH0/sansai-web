@@ -16,73 +16,73 @@ export class StudentQualityWheelComponent {
     {
       letter: 'C', title: 'Continuous Improvement', thaiTitle: 'พัฒนาอย่างต่อเนื่อง สู่คุณภาพที่ยั่งยืน', x: 16, y: 50, light: false,
       evidence: [
-        { src: '/evidence/academic-model/continuous-improvement/01-plan.png', caption: 'P - ประชุมคณะกรรมการดำเนินการในการนิเทศ ติดตามผลการดำเนินการตามโครงการ' },
-        { src: '/evidence/academic-model/continuous-improvement/02-do.png', caption: 'D - รายงานการดำเนินงานโครงการต่าง ๆ ของโรงเรียนสันทรายวิทยาคม' },
-        { src: '/evidence/academic-model/continuous-improvement/03-check.png', caption: 'C - วิเคราะห์ผลการดำเนินกิจกรรมโครงการ' },
-        { src: '/evidence/academic-model/continuous-improvement/04-act.png', caption: 'A - นำผลการวิเคราะห์มาหาแนวทางในการพัฒนาในปีการศึกษาต่อไป' }
+        { src: '/evidence/academic-model/continuous-improvement/01-plan.jpg', caption: 'P - ประชุมคณะกรรมการดำเนินการในการนิเทศ ติดตามผลการดำเนินการตามโครงการ' },
+        { src: '/evidence/academic-model/continuous-improvement/02-do.jpg', caption: 'D - รายงานการดำเนินงานโครงการต่าง ๆ ของโรงเรียนสันทรายวิทยาคม' },
+        { src: '/evidence/academic-model/continuous-improvement/03-check.jpg', caption: 'C - วิเคราะห์ผลการดำเนินกิจกรรมโครงการ' },
+        { src: '/evidence/academic-model/continuous-improvement/04-act.jpg', caption: 'A - นำผลการวิเคราะห์มาหาแนวทางในการพัฒนาในปีการศึกษาต่อไป' }
       ]
     },
     {
       letter: 'A', title: 'Alignment with Standards', thaiTitle: 'เชื่อมโยงเป้าหมาย สู่มาตรฐาน', x: 25.96, y: 25.96, light: true,
       evidence: [
-        { src: '/evidence/academic-model/alignment/01-plan.png', caption: 'P - การประชุมเพื่อแนวทางการวิเคราะห์มาตรฐาน หลักสูตร และเป้าหมายคุณภาพผู้เรียน ' },
-        { src: '/evidence/academic-model/alignment/02-do.png', caption: 'D - จัดทำแผนปฏิบัติการประจำปี' },
-        { src: '/evidence/academic-model/alignment/03-check-revised.png', caption: 'C - มีการดำเนินการตามแผนปฏิบัติการ' },
-        { src: '/evidence/academic-model/alignment/04-act.png', caption: 'A - สรุปแผนปฏิบัติการประจำปี เพื่อนำไปปรับแก้ในปีการศึกษาต่อไป' }
+        { src: '/evidence/academic-model/alignment/01-plan.jpg', caption: 'P - การประชุมเพื่อแนวทางการวิเคราะห์มาตรฐาน หลักสูตร และเป้าหมายคุณภาพผู้เรียน ' },
+        { src: '/evidence/academic-model/alignment/02-do.jpg', caption: 'D - จัดทำแผนปฏิบัติการประจำปี' },
+        { src: '/evidence/academic-model/alignment/03-check-revised.jpg', caption: 'C - มีการดำเนินการตามแผนปฏิบัติการ' },
+        { src: '/evidence/academic-model/alignment/04-act.jpg', caption: 'A - สรุปแผนปฏิบัติการประจำปี เพื่อนำไปปรับแก้ในปีการศึกษาต่อไป' }
       ]
     },
     {
       letter: 'C', title: 'Curriculum Development', thaiTitle: 'พัฒนาหลักสูตรให้ตอบโจทย์ผู้เรียน', x: 50, y: 16, light: false,
       evidence: [
-        { src: '/evidence/academic-model/curriculum/01-plan.png', caption: 'P - ประชุมวางแผนการพัฒนาหลักสูตรสถานศึกษาอิงฐานสมรรถนะของโรงเรียนในโครงการพื้นที่นวัตกรรม' },
-        { src: '/evidence/academic-model/curriculum/02-do.png', caption: 'D - การอบรมพัฒนาหลักสูตรสถานศึกษาอิงฐานสมรรถนะของโรงเรียนในโครงการพื้นที่นวัตกรรม' },
-        { src: '/evidence/academic-model/curriculum/03-check.png', caption: 'C - หลักสูตรสถานศึกษา' },
-        { src: '/evidence/academic-model/curriculum/04-act.png', caption: 'A - การสรุปผลการใช้หลักสูตรสถานศึกษา' }
+        { src: '/evidence/academic-model/curriculum/01-plan.jpg', caption: 'P - ประชุมวางแผนการพัฒนาหลักสูตรสถานศึกษาอิงฐานสมรรถนะของโรงเรียนในโครงการพื้นที่นวัตกรรม' },
+        { src: '/evidence/academic-model/curriculum/02-do.jpg', caption: 'D - การอบรมพัฒนาหลักสูตรสถานศึกษาอิงฐานสมรรถนะของโรงเรียนในโครงการพื้นที่นวัตกรรม' },
+        { src: '/evidence/academic-model/curriculum/03-check.jpg', caption: 'C - หลักสูตรสถานศึกษา' },
+        { src: '/evidence/academic-model/curriculum/04-act.jpg', caption: 'A - การสรุปผลการใช้หลักสูตรสถานศึกษา' }
       ]
     },
     {
       letter: 'A', title: 'Active Learning', thaiTitle: 'เรียนรู้ผ่านการลงมือทำ', x: 74.04, y: 25.96, light: true,
       evidence: [
-        { src: '/evidence/academic-model/active-learning/01-plan.png', caption: 'P - วางแผนการดำเนินการออกแบบกิจกรรม' },
-        { src: '/evidence/academic-model/active-learning/02-do.png', caption: 'D - จัดกิจกรรมตามโครงการ' },
-        { src: '/evidence/academic-model/active-learning/03-check.png', caption: 'C - การสรุปผลการดำเนินการโครงการ' },
-        { src: '/evidence/academic-model/active-learning/04-act.png', caption: 'A - ผลการประเมินความพึงพอใจของนักเรียนเข้าร่วมกิจกรรมรักการอ่าน' }
+        { src: '/evidence/academic-model/active-learning/01-plan.jpg', caption: 'P - วางแผนการดำเนินการออกแบบกิจกรรม' },
+        { src: '/evidence/academic-model/active-learning/02-do.jpg', caption: 'D - จัดกิจกรรมตามโครงการ' },
+        { src: '/evidence/academic-model/active-learning/03-check.jpg', caption: 'C - การสรุปผลการดำเนินการโครงการ' },
+        { src: '/evidence/academic-model/active-learning/04-act.jpg', caption: 'A - ผลการประเมินความพึงพอใจของนักเรียนเข้าร่วมกิจกรรมรักการอ่าน' }
       ]
     },
     {
       letter: 'D', title: 'Data-driven Assessment', thaiTitle: 'ใช้ข้อมูลพัฒนาผู้เรียน', x: 84, y: 50, light: false,
       evidence: [
-        { src: '/evidence/academic-model/data-assessment/01-plan.png', caption: 'P - วางแผนการดำเนินการจัดการคัดกรองผู้เรียนเป็นรายบุคคล' },
-        { src: '/evidence/academic-model/data-assessment/02-do.png', caption: 'D - การคัดกรองนักเรียนเป็นรายบุคคล' },
-        { src: '/evidence/academic-model/data-assessment/03-check.png', caption: 'C - การสรุปผลการวิเคราะห์ผู้เรียน' },
-        { src: '/evidence/academic-model/data-assessment/04-act.png', caption: 'A - นำผลการวิเคราะห์ไปจัดกิจกรรมที่ส่งเสริมความสามารถในการอ่าน เขียน สื่อสาร และการคิดคำนวณ' }
+        { src: '/evidence/academic-model/data-assessment/01-plan.jpg', caption: 'P - วางแผนการดำเนินการจัดการคัดกรองผู้เรียนเป็นรายบุคคล' },
+        { src: '/evidence/academic-model/data-assessment/02-do.jpg', caption: 'D - การคัดกรองนักเรียนเป็นรายบุคคล' },
+        { src: '/evidence/academic-model/data-assessment/03-check.jpg', caption: 'C - การสรุปผลการวิเคราะห์ผู้เรียน' },
+        { src: '/evidence/academic-model/data-assessment/04-act.jpg', caption: 'A - นำผลการวิเคราะห์ไปจัดกิจกรรมที่ส่งเสริมความสามารถในการอ่าน เขียน สื่อสาร และการคิดคำนวณ' }
       ]
     },
     {
       letter: 'E', title: 'Educational Innovation', thaiTitle: 'สร้างนวัตกรรมการเรียนรู้', x: 74.04, y: 74.04, light: true,
       evidence: [
-        { src: '/evidence/academic-model/educational-innovation/01-plan.png', caption: 'P - คณะกรรมการดำเนินงานสำรวจการใช้สื่อเทคโนโลยีเพื่อการเรียนรู้ และแหล่งเรียนรู้ของโรงเรียน' },
-        { src: '/evidence/academic-model/educational-innovation/02-do.png', caption: 'D - การประชุมคณะครูและให้ความรู้ด้านการใช้สื่อ เทคโนโลยี เพื่อการเรียนรู้และแหล่งเรียนรู้' },
-        { src: '/evidence/academic-model/educational-innovation/03-check.png', caption: 'C - การจัดการเรียนรู้รายวิชาระบบอัตโนมัติ' },
-        { src: '/evidence/academic-model/educational-innovation/04-act.png', caption: 'A - แบบสรุปการใช้สื่อ เทคโนโลยี และแหล่งเรียนรู้' }
+        { src: '/evidence/academic-model/educational-innovation/01-plan.jpg', caption: 'P - คณะกรรมการดำเนินงานสำรวจการใช้สื่อเทคโนโลยีเพื่อการเรียนรู้ และแหล่งเรียนรู้ของโรงเรียน' },
+        { src: '/evidence/academic-model/educational-innovation/02-do.jpg', caption: 'D - การประชุมคณะครูและให้ความรู้ด้านการใช้สื่อ เทคโนโลยี เพื่อการเรียนรู้และแหล่งเรียนรู้' },
+        { src: '/evidence/academic-model/educational-innovation/03-check.jpg', caption: 'C - การจัดการเรียนรู้รายวิชาระบบอัตโนมัติ' },
+        { src: '/evidence/academic-model/educational-innovation/04-act.jpg', caption: 'A - แบบสรุปการใช้สื่อ เทคโนโลยี และแหล่งเรียนรู้' }
       ]
     },
     {
       letter: 'M', title: 'Monitoring & Mentoring', thaiTitle: 'ติดตาม ดูแล และให้คำปรึกษา', x: 50, y: 84, light: false,
       evidence: [
-        { src: '/evidence/academic-model/monitoring-mentoring/01-plan.png', caption: 'P - วางแผน วางปฏิทินในการนิเทศกำกับติดตามในกระบวนการจัดการเรียนรู้' },
-        { src: '/evidence/academic-model/monitoring-mentoring/02-do.png', caption: 'D - ดำเนินการนิเทศ กำกับ ติดตามครูผู้สอนในชั้นเรียน โดยการนิเทศโดยครูและครู และผู้บริหารนิเทศครู' },
-        { src: '/evidence/academic-model/monitoring-mentoring/03-check.png', caption: 'C - ติดตามกระบวนการจัดการเรียนรู้โดยใช้โครงการสอน แผนการจัดการเรียนรู้ และนิเทศในชั้นเรียน รวมทั้งมีการแลกเปลี่ยนเรียนรู้ระหว่างกลุ่มสาระ' },
-        { src: '/evidence/academic-model/monitoring-mentoring/04-act.png', caption: 'A - ให้ผลสะท้อนเกี่ยวกับกระบวนการจัดการเรียนการสอน สะท้อนผลสิ่งที่นักเรียนได้รับ และสิ่งที่ควรปรับปรุงในกระบวนการจัดการเรียนรู้' }
+        { src: '/evidence/academic-model/monitoring-mentoring/01-plan.jpg', caption: 'P - วางแผน วางปฏิทินในการนิเทศกำกับติดตามในกระบวนการจัดการเรียนรู้' },
+        { src: '/evidence/academic-model/monitoring-mentoring/02-do.jpg', caption: 'D - ดำเนินการนิเทศ กำกับ ติดตามครูผู้สอนในชั้นเรียน โดยการนิเทศโดยครูและครู และผู้บริหารนิเทศครู' },
+        { src: '/evidence/academic-model/monitoring-mentoring/03-check.jpg', caption: 'C - ติดตามกระบวนการจัดการเรียนรู้โดยใช้โครงการสอน แผนการจัดการเรียนรู้ และนิเทศในชั้นเรียน รวมทั้งมีการแลกเปลี่ยนเรียนรู้ระหว่างกลุ่มสาระ' },
+        { src: '/evidence/academic-model/monitoring-mentoring/04-act.jpg', caption: 'A - ให้ผลสะท้อนเกี่ยวกับกระบวนการจัดการเรียนการสอน สะท้อนผลสิ่งที่นักเรียนได้รับ และสิ่งที่ควรปรับปรุงในกระบวนการจัดการเรียนรู้' }
       ]
     },
     {
       letter: 'I', title: 'Inclusive Learning', thaiTitle: 'เปิดโอกาสให้ทุกคนเรียนรู้', x: 25.96, y: 74.04, light: true,
       evidence: [
-        { src: '/evidence/academic-model/inclusive-learning/01-plan.png', caption: 'P - วางแผนการออกแบบกิจกรรมให้กับนักเรียนที่มีความแตกต่างระหว่างบุคคล' },
-        { src: '/evidence/academic-model/inclusive-learning/02-do.png', caption: 'D - จัดกิจกรรมให้เหมาะสมกับผู้เรียน' },
-        { src: '/evidence/academic-model/inclusive-learning/03-check.png', caption: 'C - มีการถอดบทเรียนในการจัดกิจกรรมเพื่อให้นักเรียนมีทางเลือกในการศึกษา' },
-        { src: '/evidence/academic-model/inclusive-learning/04-act.png', caption: 'A - นำผลที่ได้จากการถอดบทเรียนมาพัฒนาการจัดกิจกรรมให้เหมาะสมกับผู้เรียน' }
+        { src: '/evidence/academic-model/inclusive-learning/01-plan.jpg', caption: 'P - วางแผนการออกแบบกิจกรรมให้กับนักเรียนที่มีความแตกต่างระหว่างบุคคล' },
+        { src: '/evidence/academic-model/inclusive-learning/02-do.jpg', caption: 'D - จัดกิจกรรมให้เหมาะสมกับผู้เรียน' },
+        { src: '/evidence/academic-model/inclusive-learning/03-check.jpg', caption: 'C - มีการถอดบทเรียนในการจัดกิจกรรมเพื่อให้นักเรียนมีทางเลือกในการศึกษา' },
+        { src: '/evidence/academic-model/inclusive-learning/04-act.jpg', caption: 'A - นำผลที่ได้จากการถอดบทเรียนมาพัฒนาการจัดกิจกรรมให้เหมาะสมกับผู้เรียน' }
       ]
     }
   ];

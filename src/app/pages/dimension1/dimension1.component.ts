@@ -295,7 +295,7 @@ export class Dimension1Component implements OnInit {
   readonly thaiAwards = [
     {
       title: 'โรงเรียนสันทรายวิทยาคมขอแสดงความยินดีกับนักเรียนที่ผ่านการคัดเลือกเป็นตัวแทนประเทศไทยเข้าแข่งขันคณิตคิดเร็วในระดับนานาชาติ ประจำปี 2569 ระหว่างวันที่ 21–24 เมษายน 2569 ณ โรงเรียน Pancabudi เมืองเมดาน ประเทศอินโดนีเซีย',
-      image: '/evidence/1.1.2/thai-awards/04-international-mental-math.png'
+      image: '/evidence/1.1.2/thai-awards/04-international-mental-math.jpg'
     },
     {
       title: 'รางวัลจากการประกวดจัดทำสื่ออิเล็กทรอนิกส์จากหนังสือสารานุกรมไทยสำหรับเยาวชนฯ',
@@ -322,8 +322,8 @@ export class Dimension1Component implements OnInit {
   ].map((title, index) => ({
     title,
     images: [
-      `/evidence/1.2.2/environment-activities/${String(index * 2 + 1).padStart(2, '0')}.png`,
-      `/evidence/1.2.2/environment-activities/${String(index * 2 + 2).padStart(2, '0')}.png`
+      `/evidence/1.2.2/environment-activities/${String(index * 2 + 1).padStart(2, '0')}.jpg`,
+      `/evidence/1.2.2/environment-activities/${String(index * 2 + 2).padStart(2, '0')}.jpg`
     ]
   }));
 
@@ -338,7 +338,7 @@ export class Dimension1Component implements OnInit {
     'แผนการเรียนภาษาจีน-ภาษาอังกฤษ'
   ].map((title, index) => ({
     title,
-    image: `/evidence/1.2.4/curriculum-activities/${String(index + 1).padStart(2, '0')}.png`
+    image: `/evidence/1.2.4/curriculum-activities/${String(index + 1).padStart(2, '0')}.jpg`
   }));
 
   readonly studentDevelopmentActivities = [
@@ -353,8 +353,8 @@ export class Dimension1Component implements OnInit {
   ].map((title, index) => ({
     title,
     images: [
-      `/evidence/1.2.4/student-development-activities/${String(index * 2 + 1).padStart(2, '0')}.png`,
-      `/evidence/1.2.4/student-development-activities/${String(index * 2 + 2).padStart(2, '0')}.png`
+      `/evidence/1.2.4/student-development-activities/${String(index * 2 + 1).padStart(2, '0')}.jpg`,
+      `/evidence/1.2.4/student-development-activities/${String(index * 2 + 2).padStart(2, '0')}.jpg`
     ]
   }));
 
@@ -368,7 +368,7 @@ export class Dimension1Component implements OnInit {
   ].map((title, index) => ({
     title,
     images: Array.from({ length: 3 }, (_, imageIndex) =>
-      `/evidence/1.2.6/confidence-activities/${String(index * 3 + imageIndex + 1).padStart(2, '0')}.png`)
+      `/evidence/1.2.6/confidence-activities/${String(index * 3 + imageIndex + 1).padStart(2, '0')}.jpg`)
   }));
 
   readonly healthActivities = [
@@ -380,8 +380,8 @@ export class Dimension1Component implements OnInit {
   ].map((title, index) => ({
     title,
     images: [
-      `/evidence/1.2.7/health-activities/${String(index * 2 + 1).padStart(2, '0')}.png`,
-      `/evidence/1.2.7/health-activities/${String(index * 2 + 2).padStart(2, '0')}.png`
+      `/evidence/1.2.7/health-activities/${String(index * 2 + 1).padStart(2, '0')}.jpg`,
+      `/evidence/1.2.7/health-activities/${String(index * 2 + 2).padStart(2, '0')}.jpg`
     ]
   }));
 
@@ -397,24 +397,24 @@ export class Dimension1Component implements OnInit {
   ].map((title, index) => ({
     title,
     images: [
-      `/evidence/1.2.8/safety-activities/${String(index * 2 + 1).padStart(2, '0')}.png`,
-      `/evidence/1.2.8/safety-activities/${String(index * 2 + 2).padStart(2, '0')}.png`
+      `/evidence/1.2.8/safety-activities/${String(index * 2 + 1).padStart(2, '0')}.jpg`,
+      `/evidence/1.2.8/safety-activities/${String(index * 2 + 2).padStart(2, '0')}.jpg`
     ]
   }));
 
   readonly muenSanWorkshopImages = [
-    '/evidence/1.2.5/muen-san-workshop/01.png',
-    '/evidence/1.2.5/muen-san-workshop/02.png'
+    '/evidence/1.2.5/muen-san-workshop/01.jpg',
+    '/evidence/1.2.5/muen-san-workshop/02.jpg'
   ];
 
   readonly khokNongNaImages = [
-    '/evidence/1.2.5/khok-nong-na/01.png',
-    '/evidence/1.2.5/khok-nong-na/02.png'
+    '/evidence/1.2.5/khok-nong-na/01.jpg',
+    '/evidence/1.2.5/khok-nong-na/02.jpg'
   ];
 
   readonly thaiMusicActivitySets = [
     {
-      images: ['/evidence/1.2.5/thai-music/01.png', '/evidence/1.2.5/thai-music/02.png'],
+      images: ['/evidence/1.2.5/thai-music/01.jpg', '/evidence/1.2.5/thai-music/02.jpg'],
       caption: 'ภาพประกอบการทำการจัดการเรียนการสอนกิจกรรมพัฒนาผู้เรียนชุมนุมดนตรีพื้นเมืองดนตรีไทย ณ ห้องปฏิบัติการดนตรี โรงเรียนสันทรายวิทยาคม อำเภอเมือง จังหวัดเชียงใหม่'
     }
   ];
@@ -429,8 +429,8 @@ export class Dimension1Component implements OnInit {
   readonly englishActivities = DIM1.section11.english.activities.map((title, index) => ({
     title,
     images: [
-      `/evidence/1.1.3/english-activities/${String(index * 2 + 1).padStart(2, '0')}.png`,
-      `/evidence/1.1.3/english-activities/${String(index * 2 + 2).padStart(2, '0')}.png`
+      `/evidence/1.1.3/english-activities/${String(index * 2 + 1).padStart(2, '0')}.jpg`,
+      `/evidence/1.1.3/english-activities/${String(index * 2 + 2).padStart(2, '0')}.jpg`
     ]
   }));
 
@@ -469,15 +469,15 @@ export class Dimension1Component implements OnInit {
   readonly englishAwards = [
     {
       title: 'สอบได้ลำดับที่ 19 จากผู้เข้าสอบ 1,306 คน ในโครงการทดสอบความรู้วิชา TGAT ระดับชั้นมัธยมศึกษาตอนปลาย ปีการศึกษา 2567',
-      image: '/evidence/1.1.3/english-awards/01-tgat.png'
+      image: '/evidence/1.1.3/english-awards/01-tgat.jpg'
     },
     {
       title: 'ผลการสอบวัดระดับความสามารถทางภาษาอังกฤษ 4 ทักษะ ตามกรอบมาตรฐานสากล CEFR ระดับ A1–A2 เต็ม 50 คะแนน',
-      image: '/evidence/1.1.3/english-awards/02-cefr.png'
+      image: '/evidence/1.1.3/english-awards/02-cefr.jpg'
     },
     {
       title: 'ได้คะแนนเต็ม 100 คะแนน ในการทดสอบ O-NET รายวิชาภาษาอังกฤษ (สทศ.)',
-      image: '/evidence/1.1.3/english-awards/03-onet.png'
+      image: '/evidence/1.1.3/english-awards/03-onet.jpg'
     }
   ];
 
