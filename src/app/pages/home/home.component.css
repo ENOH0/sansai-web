@@ -128,84 +128,137 @@
 .toc {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 20px;
 }
 
 .toc-card {
+  --photo-h: 158px;
+  /* สีประจำการ์ด (ค่าตั้งต้น = โทนน้ำเงินของเว็บ) กำหนดรายใบด้านล่าง */
+  --acc-1: var(--navy-700);
+  --acc-2: var(--navy-500);
+  --acc-soft: var(--navy-50);
+  position: relative;
   display: grid;
   grid-template-rows: auto 1fr;
   text-decoration: none;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, .6);
+  border-radius: 20px;
   background: var(--paper);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 1px 2px rgba(10, 30, 66, .07), 0 16px 32px -20px rgba(10, 30, 66, .5);
   overflow: hidden;
-  transition: transform .26s var(--ease), box-shadow .26s var(--ease), border-color .26s var(--ease);
+  isolation: isolate;
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
   -webkit-tap-highlight-color: transparent;
 }
+
+/* แถบทองด้านบน ค่อย ๆ ยืดออกเมื่อชี้หรือแตะ */
+.toc-card::before {
+  content: '';
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--acc-1), var(--acc-2));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .5s var(--ease);
+}
+
 .toc-card:active { transform: scale(.985); }
+
 @media (hover: hover) {
-  .toc-card:hover { transform: translateY(-6px); border-color: var(--navy-200); box-shadow: var(--shadow-lg); }
-  .toc-card:hover .toc-photo { transform: scale(1.06); }
-  .toc-card:hover .toc-go { color: var(--gold-600); }
+  .toc-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 2px 4px rgba(10, 30, 66, .09), 0 30px 50px -24px rgba(10, 30, 66, .6);
+  }
+  .toc-card:hover::before { transform: scaleX(1); }
+  .toc-card:hover .toc-photo { transform: scale(1.08); }
+  .toc-card:hover .toc-no {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 26px -14px rgba(10, 30, 66, .95), inset 0 1px 0 rgba(255, 255, 255, .3);
+  }
+  .toc-card:hover .toc-go { color: #fff; background: var(--acc-1); }
+  .toc-card:hover .toc-go svg { transform: translateX(3px); }
 }
 
 .toc-photo {
   display: block;
-  height: 132px;
+  height: var(--photo-h);
   background-size: cover;
   background-position: center;
   background-color: var(--navy-100);
-  transition: transform .5s var(--ease);
+  transition: transform .6s var(--ease);
 }
 
 .toc-body {
   display: grid;
   align-content: start;
-  gap: 6px;
-  padding: 15px 18px 17px;
+  gap: 7px;
+  padding: 34px 20px 20px;
+  background: linear-gradient(180deg, var(--acc-soft) 0%, rgba(255, 255, 255, 0) 70%);
 }
 
-.toc-top { display: flex; align-items: flex-start; gap: 10px; }
+.toc-top { display: block; }
 
+/* เลขประจำด้าน ลอยคร่อมรอยต่อระหว่างภาพกับเนื้อการ์ด */
 .toc-no {
+  position: absolute;
+  z-index: 5;
+  top: calc(var(--photo-h) - 26px);
+  left: 20px;
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  width: 52px;
+  height: 52px;
   color: #fff;
   font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 700;
-  border-radius: 11px;
-  background: linear-gradient(135deg, var(--navy-700), var(--navy-500));
+  border-radius: 16px;
+  background: linear-gradient(140deg, var(--acc-1), var(--acc-2));
+  box-shadow: 0 12px 20px -12px rgba(10, 30, 66, .55), inset 0 1px 0 rgba(255, 255, 255, .28);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
 }
 
 .toc-name {
-  flex: 1;
-  padding-top: 3px;
   color: var(--navy-900);
-  font-size: 21.5px;
+  font-size: 22.5px;
   font-weight: 800;
-  line-height: 1.35;
+  line-height: 1.32;
 }
 
 .toc-sub {
   color: var(--ink-soft);
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 1.55;
 }
 
 .toc-go {
+  justify-self: start;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 4px;
-  color: var(--navy-600);
-  font-size: 16px;
+  gap: 7px;
+  margin-top: 8px;
+  padding: 8px 15px;
+  color: var(--acc-1);
+  font-size: 15.5px;
   font-weight: 800;
-  transition: color .2s var(--ease);
+  border-radius: 999px;
+  background: var(--acc-soft);
+  transition: color .25s var(--ease), background .25s var(--ease);
 }
+.toc-go svg { transition: transform .25s var(--ease); }
+
+/* ─── สีอ่อนประจำแต่ละด้าน ─── */
+.toc > .toc-card:nth-of-type(1) { --acc-1: #1d5fa8; --acc-2: #4a92d4; --acc-soft: #eaf3fd; }
+.toc > .toc-card:nth-of-type(2) { --acc-1: #1f7a63; --acc-2: #4fae90; --acc-soft: #e7f5f0; }
+.toc > .toc-card:nth-of-type(3) { --acc-1: #5a4ea8; --acc-2: #8b7fd0; --acc-soft: #efedfb; }
+.toc > .toc-card:nth-of-type(4) { --acc-1: #b3711f; --acc-2: #e0a94e; --acc-soft: #fcf2e2; }
+.toc > .toc-card:nth-of-type(5) { --acc-1: #a84560; --acc-2: #d3798f; --acc-soft: #fbedf1; }
+.toc > .toc-card:nth-of-type(6) { --acc-1: #b3862a; --acc-2: #e8c46a; --acc-soft: #fbf4e3; }
+.toc > .toc-card:nth-of-type(7) { --acc-1: #35618f; --acc-2: #6e9cc4; --acc-soft: #edf2f8; }
 
 /* iPad แนวนอน (1180px) ยังได้ 3 คอลัมน์ เห็นสารบัญเกือบครบในหน้าเดียว */
 @media (max-width: 900px) { .toc { grid-template-columns: repeat(2, 1fr); } }
@@ -213,14 +266,24 @@
 /* iPad แนวตั้ง — 2 คอลัมน์ ย่อการ์ดลงเล็กน้อย */
 @media (max-width: 834px) {
   .toc { gap: 16px; }
-  .toc-photo { height: 116px; }
-  .toc-body { padding: 16px 18px 18px; }
-  .toc-name { font-size: 19px; }
+  .toc-card { --photo-h: 134px; }
+  .toc-body { padding: 32px 17px 18px; }
+  .toc-no { left: 17px; width: 48px; height: 48px; font-size: 22px; border-radius: 14px; }
+  .toc-name { font-size: 20px; }
 }
 
 @media (max-width: 560px) {
   .toc { grid-template-columns: 1fr; }
-  .toc-photo { height: 160px; }
+  .toc-card { --photo-h: 172px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toc-card,
+  .toc-card::before,
+  .toc-photo,
+  .toc-no,
+  .toc-go,
+  .toc-go svg { transition: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

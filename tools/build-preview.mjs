@@ -450,7 +450,7 @@ function pageHome(D) {
     <a class="toc-card" href="${l.ext ? l.href : l.href}"${l.ext ? ' target="_blank" rel="noopener"' : ''}${rev('zoom', i * 70)}>
       <span class="toc-photo" style="background-image:url(public/${l.image})"></span>
       <span class="toc-body">
-        <span class="toc-top"><span class="toc-no">${esc(l.no)}</span>${l.weight ? `<span class="toc-weight">น้ำหนัก ${l.weight} คะแนน</span>` : ''}</span>
+        <span class="toc-top"><span class="toc-no">${esc(l.no)}</span></span>
         <span class="toc-name">${esc(l.name)}</span>
         <span class="toc-sub">${esc(l.sub)}</span>
         <span class="toc-go">เปิดดู <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
