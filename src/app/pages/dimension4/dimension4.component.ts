@@ -82,7 +82,7 @@ export class Dimension4Component {
       return;
     }
     if (event.data?.type === 'd4-design-model-scroll') {
-      const frame = document.querySelector<HTMLIFrameElement>('iframe[src="/models/learning-design-model.html"]');
+      const frame = document.querySelector<HTMLIFrameElement>('iframe[src^="/models/learning-design-model.html"]');
       const top = Number((event.data as { top?: number }).top), bottom = Number((event.data as { bottom?: number }).bottom);
       if (!frame || !Number.isFinite(top) || !Number.isFinite(bottom)) return;
       const base = frame.getBoundingClientRect().top;

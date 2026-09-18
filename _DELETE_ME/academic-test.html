@@ -669,7 +669,7 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
 .sw-theme-academic .sw-hub span { color: #d74d42; }
 .sw-theme-academic .sw-hub strong { color: #18356f; }
 .sw-theme-academic .sw-piece, .sw-theme-academic .sw-piece.is-light, .sw-theme-academic .sw-piece .sw-letter { color: #bd3e39; }
-.sw-theme-academic .sw-piece .sw-name { color: #18356f; font-size: clamp(12.5px, 1.65vw, 17.5px); line-height: 1.12; }
+.sw-theme-academic .sw-piece .sw-name { color: #18356f; font-size: clamp(12px, 1.55vw, 16.5px); line-height: 1.12; }
 .sw-theme-academic .sw-piece.is-on { box-shadow: 0 0 0 3px #e8a43c; }
 .sw-theme-academic .sw-detail { border-left-color: #d74d42; }
 .sw-theme-academic .sw-detail-title { color: #18356f; }
@@ -975,6 +975,41 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
   .sw-diagram.sw-enter .sw-tilt { opacity: 1; transform: none; }
   .sw-hub, .sw-ripple, .sw-detail.sw-swap * { animation: none !important; }
 }
+
+/* ---------- ลูกศรทิศทางวงจรบนวงนอก (ACADEMIC MODEL) ---------- */
+.sw-arrows { display: none; }
+.sw-theme-academic .sw-arrows { display: inline; }
+.sw-theme-academic .sw-cycle .sw-arrows circle {
+  fill: #fff;
+  stroke: #e8a43c;
+  stroke-width: 4;
+  filter: drop-shadow(0 3px 5px rgba(17, 56, 105, .28));
+}
+.sw-theme-academic .sw-cycle .sw-arrows path {
+  fill: none;
+  stroke: #18356f;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- ACADEMIC MODEL: แถบ PLAN · DO · CHECK · ACTION หมุนช้า ๆ ตามเข็มนาฬิกา ---------- */
+.sw-theme-academic .sw-cycle {
+  transform-origin: 50% 50%;
+  animation: swCycleSpin 60s linear infinite;
+}
+@keyframes swCycleSpin {
+  from { transform: translateZ(0) rotate(0deg); }
+  to   { transform: translateZ(0) rotate(360deg); }
+}
+/* แตะค้าง/ชี้เมาส์บนวงล้อ = หยุดหมุนชั่วคราว ให้อ่านตัวหนังสือได้ */
+.sw-theme-academic .sw-diagram:active .sw-cycle { animation-play-state: paused; }
+@media (hover: hover) {
+  .sw-theme-academic .sw-diagram:hover .sw-cycle { animation-play-state: paused; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sw-theme-academic .sw-cycle { animation: none; }
+}
 </style><body style="background:#1d3553;padding:20px"><div id="w" style="max-width:1100px;margin:auto">
 <div class="sw-layout sw-theme-academic">
   <div class="sw-diagram">
@@ -987,6 +1022,13 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
       <path d="M300 52A248 248 0 0 1 548 300" />
       <path d="M548 300A248 248 0 0 1 300 548" />
       <path d="M300 548A248 248 0 0 1 52 300" />
+      <!-- ลูกศรทิศทางวงจร PLAN → DO → CHECK → ACTION → PLAN (แสดงเฉพาะธีม academic) -->
+      <g class="sw-arrows">
+        <g transform="translate(300 52) rotate(0)"><circle r="21" /><path d="M-7 -9L6 0L-7 9" /></g>
+        <g transform="translate(548 300) rotate(90)"><circle r="21" /><path d="M-7 -9L6 0L-7 9" /></g>
+        <g transform="translate(300 548) rotate(180)"><circle r="21" /><path d="M-7 -9L6 0L-7 9" /></g>
+        <g transform="translate(52 300) rotate(270)"><circle r="21" /><path d="M-7 -9L6 0L-7 9" /></g>
+      </g>
       <text x="124.6" y="124.6" transform="rotate(-45 124.6 124.6)">PLAN</text>
       <text x="475.4" y="124.6" transform="rotate(45 475.4 124.6)">DO</text>
       <text x="475.4" y="475.4" transform="rotate(-45 475.4 475.4)">CHECK</text>
