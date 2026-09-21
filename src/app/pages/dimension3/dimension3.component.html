@@ -97,35 +97,13 @@
 <!-- ═══════════ 3.1 ภาวะผู้นำ ═══════════ -->
 <section class="section section-alt" *ngIf="open() === '3.1'">
   <div class="wrap">
-    <app-section-header [light]="true" num="3.1" title="ภาวะผู้นำของผู้บริหาร" [lead]="d.leadership.lead" />
-    <ng-container [ngTemplateOutlet]="d3Indicators"></ng-container>
+    <app-section-header class="d3-lead-indent" [light]="true" num="3.1" title="ภาวะผู้นำของผู้บริหาร" [lead]="d.leadership.lead" />
+    <!-- แนวปฏิบัติ 5 ข้อ และ 4 กลุ่มบริหาร ถูกนำออกตามที่สั่ง (ข้อมูลยังอยู่ใน d.leadership ใน dimension3.data.ts) -->
 
-    <!-- แนวปฏิบัติของผู้บริหาร -->
-    <div class="sec-head" style="margin-top:52px" appReveal>
-      <h3 class="sec-title" style="font-size:22px">แนวปฏิบัติของผู้บริหารตามตัวชี้วัดทั้ง 5 ข้อ</h3>
-      <div class="sec-rule"></div>
-    </div>
-
-    <div class="steps">
-      <div class="step-item" *ngFor="let p of d.leadership.practices; let i = index" appReveal="left"
-        [revealDelay]="i * 90">
-        <h4>{{ p.title }}</h4>
-        <p>{{ p.text }}</p>
-      </div>
-    </div>
-
-    <!-- 4 กลุ่มบริหาร -->
-    <div class="sec-head" style="margin-top:52px" appReveal>
-      <h3 class="sec-title" style="font-size:22px">การมอบหมายงานผ่าน 4 กลุ่มบริหาร</h3>
-      <div class="sec-rule"></div>
-    </div>
-
-    <div class="grid grid-4">
-      <div class="card card-accent" *ngFor="let g of d.leadership.groups; let i = index" appReveal="zoom"
-        [revealDelay]="i * 90">
-        <h3 class="card-title" style="font-size:17px">{{ g.name }}</h3>
-        <p class="card-body" style="margin:0;font-size:15.5px">{{ g.text }}</p>
-      </div>
+    <!-- ผลงานเชิงประจักษ์ · แก้ข้อมูลได้ที่ leadership.awards ใน src/app/data/dimension3.data.ts -->
+    <div appReveal style="margin-top:34px">
+      <app-award-slideshow [items]="d.leadership.awards" theme="pastel" [fillEmpty]="false"
+        title="ผลงานเชิงประจักษ์จากภาวะผู้นำของผู้บริหาร" />
     </div>
   </div>
 </section>
@@ -249,19 +227,25 @@
         <div class="sec-rule"></div>
       </div>
 
-      <ol class="d3-system-list">
-        <li class="d3-system" *ngFor="let sys of d.information.systems; let i = index">
-          <span class="d3-system-no">{{ i + 1 }}</span>
-          <span class="d3-system-name">{{ sys.name }}</span>
+      <!-- แบ่ง 2 ฝั่ง ตามลำดับรายการใน information.systems (เลขตามลำดับเดิม) -->
+      <div class="d3-system-cols">
+        <div class="d3-system-col" *ngFor="let col of systemGroups">
+          <h4 class="d3-system-col-title">{{ col.title }}</h4>
+          <ol class="d3-system-list">
+            <li class="d3-system" *ngFor="let sys of col.items; let i = index">
+              <span class="d3-system-no">{{ i + 1 }}</span>
+              <span class="d3-system-name">{{ sys.name }}</span>
 
-          <a class="d3-system-btn" *ngIf="sys.url" [href]="sys.url" target="_blank" rel="noopener">
-            ไปที่เว็บไซต์
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
-          </a>
-          <span class="d3-system-btn is-empty" *ngIf="!sys.url" aria-disabled="true">รอใส่ลิงก์</span>
-        </li>
-      </ol>
+              <a class="d3-system-btn" *ngIf="sys.url" [href]="sys.url" target="_blank" rel="noopener">
+                ไปที่เว็บไซต์
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
+              </a>
+              <span class="d3-system-btn is-empty" *ngIf="!sys.url" aria-disabled="true">รอใส่ลิงก์</span>
+            </li>
+          </ol>
+        </div>
+      </div>
     </div>
 
     <!-- BANCHUEN MODEL (PDCA) ของ 3.5 · แก้ได้ที่ public/models/banchuen-35-model.html -->

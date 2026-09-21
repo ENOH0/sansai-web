@@ -28,7 +28,41 @@ export const DIM3 = {
   leadership: {
     title: '3.1 ภาวะผู้นำของผู้บริหาร',
     lead:
-      'ผู้บริหารมีวิสัยทัศน์เชิงกลยุทธ์ ยึดหลักการบริหารแบบมีส่วนร่วม มีคุณธรรม จริยธรรม และเป็นแบบอย่างได้ จัดการศึกษาโดยยึดแผนพัฒนาสถานศึกษาเป็นสำคัญ มีความเป็นประชาธิปไตย และสร้างขวัญกำลังใจให้แก่ครูและบุคลากรทางการศึกษาอย่างต่อเนื่อง',
+      'ด้านกระบวนการบริหารและการจัดการเพื่อให้บรรลุตามกระบวนการบริหารและการจัดการคุณภาพของสถานศึกษา โดยผ่านกระบวนการการบริหาร จากผู้บริหาร ทั้ง 5 ตัวชี้วัด ได้แก่ ผู้บริหารบริหารมีวิสัยทัศน์เชิงกลยุทธ์ ยึดหลักการบริหารแบบมีส่วนร่วม มีคุณธรรมจริยธรรมเป็นแบบอย่างได้ จัดการศึกษาโดยยึดแผนพัฒนาสถานศึกษาเป็นสำคัญ มีความเป็นประชาธิปไตย และสร้างขวัญและกำลังใจให้แก่ครูและบุคลากรทางการศึกษาที่เกี่ยวข้อง การบริหารตามตัวชี้วัดดังกล่าว ส่งผลต่อ ผลงานเชิงประจักษ์จากภาวะผู้นำของผู้บริหาร ดังนี้',
+
+    // ผลงานเชิงประจักษ์จากภาวะผู้นำของผู้บริหาร (สไลด์รางวัล) · รูปอยู่ที่ public/evidence/dimension3/leadership-awards/
+    awards: [
+      {
+        names: ['โรงเรียนสันทรายวิทยาคม'],
+        award: 'รางวัล IQA AWARD ระดับยอดเยี่ยม ขนาดใหญ่ ระดับสำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน',
+        org: 'สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน',
+        level: 'ระดับ สพฐ.',
+        year: '2567',
+        photos: ['/evidence/dimension3/leadership-awards/iqa-01.jpg', '/evidence/dimension3/leadership-awards/iqa-02.jpg']
+      },
+      {
+        names: ['โรงเรียนสันทรายวิทยาคม'],
+        award: 'เป็นสถานศึกษาที่มีความพร้อม 5 ด้าน เป็นโรงเรียนมาตรฐานสากลระดับ SCQA และผ่านเกณฑ์ประเมินระดับ OBECQA',
+        org: 'สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาเชียงใหม่',
+        level: 'ระดับเขตพื้นที่การศึกษา',
+        year: '2567',
+        photos: ['/evidence/dimension3/leadership-awards/scqa-01.jpg']
+      },
+      {
+        names: ['โรงเรียนสันทรายวิทยาคม'],
+        award: 'รางวัลยอดเยี่ยมโรงเรียนขนาดใหญ่ สถานศึกษาที่มีผลการปฏิบัติที่เป็นเลิศ (BEST PRACTICES) ระดับเขตพื้นที่การศึกษา',
+        level: 'ระดับเขตพื้นที่การศึกษา',
+        year: '2566',
+        photos: ['/evidence/dimension3/leadership-awards/bp2566-01.jpg']
+      },
+      {
+        names: ['โรงเรียนสันทรายวิทยาคม'],
+        award: 'ผลงานยอดเยี่ยม แนวการปฏิบัติที่ดี Best Practice',
+        detail: 'ตามโครงการส่งเสริมเวทีและประชาคมเพื่อการจัดทำรูปแบบและการพัฒนาหลักสูตรต่อเนื่องเชื่อมโยงการศึกษาขั้นพื้นฐานกับอาชีวศึกษา และอุดมศึกษา',
+        year: '2566',
+        photos: ['/evidence/dimension3/leadership-awards/bp-link-01.jpg', '/evidence/dimension3/leadership-awards/bp-link-02.jpg']
+      }
+    ],
 
     practices: [
       { title: 'มีวิสัยทัศน์เชิงกลยุทธ์ ยึดหลักการบริหารแบบมีส่วนร่วม', text: 'กำหนดวิสัยทัศน์ พันธกิจ เป้าประสงค์ และกลยุทธ์ 3 ข้อ ผ่านการมีส่วนร่วมของคณะกรรมการสถานศึกษาขั้นพื้นฐาน ครู ผู้ปกครอง นักเรียน และเครือข่าย แล้วมอบหมายงานผ่าน 4 กลุ่มบริหาร' },
@@ -190,11 +224,19 @@ export const DIM3 = {
     ],
     /* รายการระบบสารสนเทศ — ใส่ชื่อระบบและ url ได้เลย (url ว่าง = ปุ่มยังกดไม่ได้) */
     systems: [
-      { name: 'รอใส่ชื่อระบบสารสนเทศ', url: '' },
-      { name: 'รอใส่ชื่อระบบสารสนเทศ', url: '' },
-      { name: 'รอใส่ชื่อระบบสารสนเทศ', url: '' },
-      { name: 'รอใส่ชื่อระบบสารสนเทศ', url: '' },
-      { name: 'รอใส่ชื่อระบบสารสนเทศ', url: '' }
+      { name: 'ระบบสำหรับส่งแผนการจัดการเรียนรู้ (Big data)', url: 'https://www.sansai.ac.th/bdds/lin.php' },
+      { name: 'เว็บไซต์โรงเรียนสันทรายวิทยาคม', url: 'https://sansai.ac.th/websk/#' },
+      { name: 'คลังข้อสอบออนไลน์', url: 'https://drive.google.com/drive/folders/1q6HxZaiEc8Fzm18E6kF0rMvJFnvct-7j' },
+      { name: 'แบบนิเทศการจัดการเรียนการสอน', url: 'https://form.jotform.com/sansai_academic/InstructionalSupervitionFormForSK' },
+      { name: 'ระบบ SGS', url: 'https://sgs.bopp-obec.info/sgss/Security/SignIn.aspx' },
+      { name: 'ระบบขอเอกสารทางทะเบียน', url: 'https://script.google.com/macros/s/AKfycbzLi7_OpkX8QfqNsl8KGyt51VCxbd3HHhrPDywVzWA62emhV_AxI7TOL8HzyeXZGy10/exec' },
+      { name: 'E-School', url: 'https://pnb.mreschool.net/mainEschool/' },
+      { name: 'ระบบบันทึกการสอนแทนและแลกเปลี่ยนคาบเรียน', url: 'https://script.google.com/a/macros/sansai.ac.th/s/AKfycbwjANgT7jF40ADwjYYxG5GZDphH4h-nZArb2xcMPszlVbJVtrmCInjbTEO7eDcznKTIzQ/exec' },
+      { name: 'ระบบรับสมัครนักเรียน', url: 'https://script.google.com/macros/s/AKfycbxqtgu3CFelO3wBxrR40YGhkJOfw3oIbw2Bq-gsjHaCy39KfZcDmOFIQfe-RRogi_RO/exec' },
+      { name: 'ระบบสารสนเทศเพื่อการจัดการเรียนรู้', url: 'https://sansai.ac.th/sansai-system/login.php' },
+      { name: 'ระบบตรวจสอบค่าบำรุงการศึกษา', url: 'https://moneysk.cmru.ac.th/' },
+      { name: 'ระบบแจ้งของ พบของหาย', url: 'https://yurjurj6jytjr.my.canva.site/c9jmp9z72n66vn32/_password' },
+      { name: 'ระบบบริหารบุคคล', url: 'https://sansai.ac.th/hr-system/login.php' }
     ],
     lead:
       'โรงเรียนจัดระบบข้อมูลและสารสนเทศพื้นฐานที่ครอบคลุมการใช้งาน จัดเก็บอย่างเป็นระบบ ทันสมัย ทันต่อการใช้งาน และนำข้อมูลไปใช้ในการบริหารจัดการและพัฒนาการจัดการเรียนการสอน พร้อมเผยแพร่ประชาสัมพันธ์ด้วยวิธีการที่หลากหลาย',

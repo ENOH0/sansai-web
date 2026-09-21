@@ -124,7 +124,7 @@ body:not(.has-legend) .legend{display:none}
 </head>
 <body>
 <div id="view"><div id="scene"></div></div>
-<div class="ui title"><h1>ผังโรงเรียนสันทรายวิทยาคม</h1><p>Free cam · ลาก 1 นิ้ว = หมุน/เอียง · 2 นิ้ว = บินไปรอบผัง/ซูม</p></div>
+<div class="ui title"><h1>ผังโรงเรียนสันทรายวิทยาคม</h1><p>ลาก 1 นิ้วซ้าย-ขวา = หมุน · 2 นิ้ว = ซูม/เลื่อน</p></div>
 <a class="ui back" href="/" target="_top">‹ กลับหน้าหลัก</a>
 <div class="ui legend" id="legend"><div class="legend-close">รายชื่ออาคาร<button type="button" id="lclose">ซ่อน ✕</button></div></div>
 <button class="ui legend-toggle" id="lopen" type="button">☰ รายชื่ออาคาร</button>
@@ -333,7 +333,7 @@ view.addEventListener('pointermove',e=>{if(!pts.has(e.pointerId))return;pts.set(
     zoomAt(zoom0*Math.hypot(a.x-b.x,a.y-b.y)/pinch0,m.x,m.y);return}
   if(e.shiftKey||e.buttons===2||e.buttons===4){camMove(-(e.clientX-last.x),-(e.clientY-last.y));last={x:e.clientX,y:e.clientY};return}
   if(!moved)return;
-  rot-= (e.clientX-last.x)*.3;tilt=Math.max(10,Math.min(85,tilt-(e.clientY-last.y)*.2));last={x:e.clientX,y:e.clientY};render()});
+  rot-=(e.clientX-last.x)*.45;last={x:e.clientX,y:e.clientY};render()});   // ลาก 1 นิ้ว = หมุนแนวนอนอย่างเดียว (ไม่เอียง)
 const up=e=>{pts.delete(e.pointerId);if(pts.size===1){last=[...pts.values()][0]}setTimeout(()=>{if(!pts.size)moved=false},0)};
 view.addEventListener('pointerup',up);view.addEventListener('pointercancel',up);
 view.addEventListener('wheel',e=>{e.preventDefault();auto=false;zoomAt(zoom*(e.deltaY<0?1.12:.89),e.clientX,e.clientY)},{passive:false});

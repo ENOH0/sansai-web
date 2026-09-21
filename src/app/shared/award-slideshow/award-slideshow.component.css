@@ -131,3 +131,33 @@
   .aw-card { animation: none; }
   .aw-dot { transition: none; }
 }
+
+/* ═════════ ธีมพาสเทลสดใส (theme="pastel") ═════════ */
+.aw-pastel .aw-card {
+  border: 1px solid rgba(255, 255, 255, .9);
+  background:
+    radial-gradient(90% 120% at 100% 0%, rgba(255, 190, 222, .55) 0%, rgba(255, 190, 222, 0) 55%),
+    radial-gradient(90% 120% at 0% 100%, rgba(170, 222, 255, .55) 0%, rgba(170, 222, 255, 0) 55%),
+    linear-gradient(145deg, #fff8fc 0%, #f5f1ff 50%, #eefaff 100%);
+  box-shadow: 0 26px 60px rgba(40, 60, 110, .28), inset 0 0 30px rgba(255, 255, 255, .7);
+}
+.aw-pastel .aw-index { color: rgba(150, 125, 220, .12); }
+.aw-pastel .aw-photo { border-color: #e6ddf7; background: #fff; box-shadow: 0 10px 24px rgba(120, 110, 170, .14); }
+.aw-pastel .aw-photo img { object-fit: contain; background: #fff; }
+.aw-pastel .aw-photos.is-single { grid-template-rows: 1fr; align-content: center; }
+.aw-pastel .aw-photos.is-single .aw-photo img { aspect-ratio: 1 / 1; }
+.aw-pastel .aw-tag { color: #6b5fa3; border-color: #ddd3f5; background: #fff; }
+.aw-pastel .aw-tag-level { color: #fff; border-color: transparent; background: linear-gradient(120deg, #f59ac4, #a58df2); }
+.aw-pastel .aw-name { color: #4a3f7a; font-size: 26px; }
+.aw-pastel .aw-rule { background: linear-gradient(90deg, #f59ac4, #a58df2, #6fcbe9); }
+.aw-pastel .aw-award { color: #3d4f78; }
+.aw-pastel .aw-detail { color: #5d6b88; }
+.aw-pastel .aw-org { color: #5d6b88; }
+.aw-pastel .aw-org-label { color: #a08cc9; }
+.aw-pastel .aw-arrow { color: #7a64c4; border-color: rgba(255, 255, 255, .9); background: rgba(255, 255, 255, .9); }
+.aw-pastel .aw-dot { background: rgba(255, 255, 255, .55); }
+.aw-pastel .aw-dot.is-on { background: linear-gradient(120deg, #f59ac4, #a58df2); }
+@media (hover: hover) {
+  .aw-pastel .aw-arrow:hover { color: #fff; border-color: transparent; background: linear-gradient(120deg, #f59ac4, #a58df2); }
+  .aw-pastel .aw-dot:hover { background: #fff; }
+}

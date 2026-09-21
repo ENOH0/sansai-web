@@ -383,3 +383,31 @@ a.d3-system-btn:active { transform: scale(.97); }
   .d3-system-btn { grid-column: 1 / -1; justify-self: stretch; justify-content: center; }
 }
 @media (prefers-reduced-motion: reduce) { .d3-system-btn { transition: none; } }
+
+/* ระบบสารสนเทศ 3.5 แบ่ง 2 ฝั่ง */
+.d3-system-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; align-items: start; }
+.d3-system-col-title { margin: 0 0 10px; padding: 8px 16px; border-radius: 12px; background: rgba(8, 24, 58, .72); color: #f3d27a; font-size: 21px; font-weight: 800; }
+@media (max-width: 900px) { .d3-system-cols { grid-template-columns: 1fr; } }
+
+/* ── ระบบสารสนเทศ: ธีมพาสเทลเดียวกับปุ่ม 4 กลุ่มบริหารและโมเดลด้านบน ── */
+.d3-system-col { --tone: #e6ddfa; --ink: #7661aa; }
+.d3-system-col:nth-child(2) { --tone: #d5efe5; --ink: #337d69; }
+.d3-system-col-title {
+  display: flex; align-items: center; gap: 10px;
+  color: #30334c; background: linear-gradient(135deg, #ffffff 45%, var(--tone));
+  border-left: 6px solid var(--ink); border-radius: 16px;
+  box-shadow: 0 12px 26px rgba(6, 18, 44, .28);
+}
+.d3-system-col-title::before { content: ''; width: 12px; height: 12px; border-radius: 50%; background: var(--ink); }
+.d3-system {
+  border: 1px solid #e4e4ef;
+  border-left: 5px solid var(--ink);
+  background: linear-gradient(135deg, #ffffff 60%, var(--tone));
+  box-shadow: 0 10px 22px rgba(6, 18, 44, .22);
+}
+.d3-system-no { color: var(--ink); background: var(--tone); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .8); }
+.d3-system-name { color: #30334c; }
+.d3-system-btn { color: #fff; background: var(--ink); box-shadow: 0 6px 14px rgba(6, 18, 44, .22); }
+
+/* ย่อหน้าบรรทัดแรกของคำนำ 3.1 */
+:host ::ng-deep .d3-lead-indent .sec-lead { text-indent: 2.5em; text-align: left; max-width: none; }

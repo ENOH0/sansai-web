@@ -12,6 +12,7 @@ import { PhotoGalleryComponent } from '../../shared/photo-gallery/photo-gallery.
 import { GALLERY } from '../../data/gallery.data';
 import { HomeFabComponent } from '../../shared/home-fab/home-fab.component';
 import { PagerComponent } from '../../shared/pager/pager.component';
+import { AwardSlideshowComponent } from '../../shared/award-slideshow/award-slideshow.component';
 
 @Component({
   selector: 'app-dimension3',
@@ -21,7 +22,7 @@ import { PagerComponent } from '../../shared/pager/pager.component';
     PhotoGalleryComponent,
     BanchuenModelComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
-    CycleFlowComponent, CalloutComponent, PagerComponent
+    CycleFlowComponent, CalloutComponent, PagerComponent, AwardSlideshowComponent
   ],
   templateUrl: './dimension3.component.html',
   styleUrl: './dimension3.component.css'
@@ -33,6 +34,13 @@ export class Dimension3Component {
   readonly learnModelHeight = signal(900);
   readonly digitalModelHeight = signal(1000);
   readonly banchuen35Height = signal(900);
+
+  /** ระบบสารสนเทศ 3.5 แบ่ง 2 ฝั่ง — เลขคือลำดับใน information.systems (เริ่มที่ 1) */
+  private readonly adminSystemNos = [1, 2, 4, 6, 7, 9, 10, 11, 13];
+  readonly systemGroups = [
+    { title: 'การบริหารจัดการ', items: DIM3.information.systems.filter((_, i) => this.adminSystemNos.includes(i + 1)) },
+    { title: 'การบริหารจัดการเรียนการสอน', items: DIM3.information.systems.filter((_, i) => !this.adminSystemNos.includes(i + 1)) }
+  ];
   readonly inputModelHeight = signal(1100);
   readonly dlrModelHeight = signal(1200);
 

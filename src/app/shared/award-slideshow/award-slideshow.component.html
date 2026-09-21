@@ -1,4 +1,4 @@
-<div class="aw-slides" *ngIf="items.length"
+<div class="aw-slides" *ngIf="items.length" [class.aw-pastel]="theme === 'pastel'"
   (mouseenter)="hold(true)" (mouseleave)="hold(false)"
   (focusin)="hold(true)" (focusout)="hold(false)">
 
@@ -13,7 +13,7 @@
 
         <span class="aw-index" aria-hidden="true">{{ i + 1 }}</span>
 
-        <div class="aw-photos">
+        <div class="aw-photos" [class.is-single]="slots(item).length === 1">
           <ng-container *ngFor="let src of slots(item); let s = index">
             <figure class="aw-photo" *ngIf="src as photo">
               <img [src]="photo" [alt]="item.award" loading="lazy">

@@ -25,6 +25,10 @@ export class AwardSlideshowComponent implements OnInit, OnDestroy {
   @Input() lead = '';
   /** ระยะเวลาต่อสไลด์ (มิลลิวินาที) */
   @Input() interval = 7000;
+  /** ธีมสี: '' = กรมท่า-ทอง (ค่าเดิม) · 'pastel' = พาสเทลสดใส */
+  @Input() theme: '' | 'pastel' = '';
+  /** true = แสดงกรอบว่างเมื่อมีรูปไม่ครบ 2 รูป · false = แสดงเฉพาะรูปที่มี */
+  @Input() fillEmpty = true;
 
   readonly index = signal(0);
   readonly paused = signal(false);
@@ -41,6 +45,7 @@ export class AwardSlideshowComponent implements OnInit, OnDestroy {
   /** ช่องใส่ภาพ 2 ช่องเสมอ ถ้ายังไม่มีรูปจะเป็นกรอบว่าง */
   slots(item: AwardSlide): (string | null)[] {
     const photos = item.photos ?? [];
+    if (!this.fillEmpty && photos.length) return photos.slice(0, 2);
     return [photos[0] ?? null, photos[1] ?? null];
   }
 
