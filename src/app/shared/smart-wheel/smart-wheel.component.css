@@ -405,23 +405,6 @@
   .sw-hub, .sw-ripple, .sw-detail.sw-swap * { animation: none !important; }
 }
 
-/* ---------- ลูกศรทิศทางวงจรบนวงนอก (ACADEMIC MODEL) ---------- */
-.sw-arrows { display: none; }
-.sw-theme-academic .sw-arrows { display: inline; }
-.sw-theme-academic .sw-cycle .sw-arrows circle {
-  fill: #fff;
-  stroke: #e8a43c;
-  stroke-width: 4;
-  filter: drop-shadow(0 3px 5px rgba(17, 56, 105, .28));
-}
-.sw-theme-academic .sw-cycle .sw-arrows path {
-  fill: none;
-  stroke: #18356f;
-  stroke-width: 5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
 /* ---------- ACADEMIC MODEL: แถบ PLAN · DO · CHECK · ACTION หมุนช้า ๆ ตามเข็มนาฬิกา ---------- */
 .sw-theme-academic .sw-cycle {
   transform-origin: 50% 50%;

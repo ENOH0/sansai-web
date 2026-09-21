@@ -210,12 +210,59 @@
     <app-section-header [light]="true" num="3.5" title="ระบบข้อมูลและสารสนเทศ" [lead]="d.information.lead" />
     <ng-container [ngTemplateOutlet]="d3Indicators"></ng-container>
 
-    <div class="steps">
-      <div class="step-item" *ngFor="let it of d.information.items; let i = index" appReveal="left"
-        [revealDelay]="i * 90">
-        <h4>{{ it.title }}</h4>
-        <p>{{ it.text }}</p>
+    <!-- เนื้อหาเดิม (d.information.items) ซ่อนไว้ก่อนตามที่สั่ง ข้อมูลยังอยู่ในไฟล์ data -->
+    <div class="model-intro" appReveal style="margin-bottom:32px">
+      <p class="model-intro-name">{{ d.information.modelName }}</p>
+      <p class="model-intro-text">{{ d.information.modelIntro }}</p>
+
+      <ul class="model-intro-list">
+        <li *ngFor="let pt of d.information.modelPoints">
+          <span class="model-intro-point">{{ pt.title }} <em>({{ pt.en }})</em></span>
+          {{ pt.text }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- ปุ่มไปเว็บไซต์ 4 กลุ่มบริหาร · ใส่ลิงก์ที่ information.adminLinks ใน dimension3.data.ts -->
+    <div class="d3-admin-links" appReveal>
+      <ng-container *ngFor="let g of d.information.adminLinks">
+        <a class="d3-admin-link" *ngIf="g.url" [href]="g.url" target="_blank" rel="noopener">
+          <span class="d3-admin-text"><span>กลุ่มบริหาร</span><b>{{ g.name }}</b></span>
+          <span class="d3-admin-go" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
+          </span>
+        </a>
+        <span class="d3-admin-link is-empty" *ngIf="!g.url" aria-disabled="true">
+          <span class="d3-admin-text"><span>กลุ่มบริหาร</span><b>{{ g.name }}</b></span>
+          <span class="d3-admin-go" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
+          </span>
+        </span>
+      </ng-container>
+    </div>
+
+    <!-- ระบบสารสนเทศ · แก้ที่ information.systems ใน dimension3.data.ts -->
+    <div class="d3-systems" appReveal>
+      <div class="sec-head" style="margin-bottom:14px">
+        <h3 class="sec-title" style="font-size:24px">ระบบสารสนเทศ</h3>
+        <div class="sec-rule"></div>
       </div>
+
+      <ol class="d3-system-list">
+        <li class="d3-system" *ngFor="let sys of d.information.systems; let i = index">
+          <span class="d3-system-no">{{ i + 1 }}</span>
+          <span class="d3-system-name">{{ sys.name }}</span>
+
+          <a class="d3-system-btn" *ngIf="sys.url" [href]="sys.url" target="_blank" rel="noopener">
+            ไปที่เว็บไซต์
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
+          </a>
+          <span class="d3-system-btn is-empty" *ngIf="!sys.url" aria-disabled="true">รอใส่ลิงก์</span>
+        </li>
+      </ol>
     </div>
   </div>
 </section>

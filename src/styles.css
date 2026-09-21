@@ -564,8 +564,8 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
 .card.intro-glass p {
   margin: 0 0 14px;
   color: var(--ink);
-  font-size: 19.5px;
-  line-height: 1.92;
+  font-size: 21.5px;
+  line-height: 1.9;
   letter-spacing: .1px;
 }
 .card.intro-glass p:last-child { margin-bottom: 0; }
@@ -574,8 +574,8 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
 .card.intro-glass p:first-of-type {
   margin-bottom: 18px;
   color: var(--navy-800);
-  font-size: 21px;
-  line-height: 1.82;
+  font-size: 23.5px;
+  line-height: 1.8;
 }
 .card.intro-glass strong { color: var(--navy-800); font-weight: 800; }
 
@@ -603,10 +603,41 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
   text-indent: 2em;
   text-shadow: 0 2px 12px rgba(6, 18, 44, .9), 0 1px 3px rgba(6, 18, 44, .85);
 }
+/* รายการหัวข้อย่อยใต้ข้อความแนะนำโมเดล */
+.model-intro-list {
+  display: grid;
+  gap: 14px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.model-intro-list li {
+  position: relative;
+  padding-left: 22px;
+  color: #eef4fd;
+  font-size: 19.5px;
+  line-height: 1.85;
+  text-shadow: 0 2px 12px rgba(6, 18, 44, .9), 0 1px 3px rgba(6, 18, 44, .85);
+}
+.model-intro-list li::before {
+  content: '';
+  position: absolute;
+  top: .72em;
+  left: 2px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--gold-500);
+  box-shadow: 0 0 10px rgba(232, 196, 106, .6);
+}
+.model-intro-point { display: block; color: #ffe9b8; font-weight: 800; }
+.model-intro-point em { color: #dbe6f7; font-style: normal; font-weight: 700; }
+
 @media (max-width: 640px) {
   .model-intro { padding-left: 14px; }
   .model-intro-name { font-size: 21px; }
   .model-intro-text { font-size: 19px; line-height: 1.88; }
+  .model-intro-list li { font-size: 18.5px; }
 }
 
 /* เบราว์เซอร์ที่ไม่รองรับ backdrop-filter ให้พื้นทึบขึ้นเพื่อให้อ่านออก */
@@ -615,10 +646,36 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
 }
 
 @media (max-width: 834px) {
-  .card.intro-glass p { font-size: 19px; line-height: 1.88; }
-  .card.intro-glass p:first-of-type { font-size: 20px; }
+  .card.intro-glass p { font-size: 20.5px; line-height: 1.86; }
+  .card.intro-glass p:first-of-type { font-size: 22px; }
 }
 
 @media (max-width: 640px) {
   .card.intro-glass { padding: 24px 20px 22px; }
+}
+
+/* ── ข้อความแนะนำโมเดล (3.3 / 3.5): เน้นให้เด่นชัดบนภาพพื้นหลัง ── */
+.model-intro { border-left-width: 5px; padding-left: 22px; }
+.model-intro-name,
+.model-intro-text,
+.model-intro-list li {
+  text-shadow:
+    0 0 2px rgba(6, 18, 44, .95),
+    0 2px 6px rgba(6, 18, 44, .9),
+    0 4px 20px rgba(6, 18, 44, .85);
+}
+.model-intro-name { font-size: 29px; letter-spacing: .3px; }
+.model-intro-text { color: #ffffff; font-size: 22px; font-weight: 600; line-height: 1.85; }
+.model-intro-list { gap: 16px; }
+.model-intro-list li { color: #ffffff; font-size: 21px; font-weight: 500; line-height: 1.82; padding-left: 24px; }
+.model-intro-list li::before { width: 11px; height: 11px; top: .68em; }
+.model-intro-point { color: #ffe29a; font-size: 22.5px; }
+.model-intro-point em { color: #e6eefb; }
+
+@media (max-width: 640px) {
+  .model-intro { padding-left: 15px; }
+  .model-intro-name { font-size: 24px; }
+  .model-intro-text { font-size: 20px; }
+  .model-intro-list li { font-size: 19.5px; }
+  .model-intro-point { font-size: 20.5px; }
 }

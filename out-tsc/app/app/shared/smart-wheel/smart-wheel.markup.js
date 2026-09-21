@@ -101,13 +101,6 @@ export function smartWheelHtml(items, hubLabel, hubTitle, hubSubtitle = '', them
       <path d="M300 52A248 248 0 0 1 548 300" />
       <path d="M548 300A248 248 0 0 1 300 548" />
       <path d="M300 548A248 248 0 0 1 52 300" />
-      <!-- ลูกศรทิศทางวงจร PLAN → DO → CHECK → ACTION → PLAN (แสดงเฉพาะธีม academic) -->
-      <g class="sw-arrows">
-        <g transform="translate(300 52) rotate(0)"><circle r="21" /><path d="M-7 -9L6 0L-7 9" /></g>
-        <g transform="translate(548 300) rotate(90)"><circle r="21" /><path d="M-7 -9L6 0L-7 9" /></g>
-        <g transform="translate(300 548) rotate(180)"><circle r="21" /><path d="M-7 -9L6 0L-7 9" /></g>
-        <g transform="translate(52 300) rotate(270)"><circle r="21" /><path d="M-7 -9L6 0L-7 9" /></g>
-      </g>
       <text x="124.6" y="124.6" transform="rotate(-45 124.6 124.6)">PLAN</text>
       <text x="475.4" y="124.6" transform="rotate(45 475.4 124.6)">DO</text>
       <text x="475.4" y="475.4" transform="rotate(-45 475.4 475.4)">CHECK</text>

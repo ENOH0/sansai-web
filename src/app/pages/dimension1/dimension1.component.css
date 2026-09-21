@@ -577,119 +577,62 @@
 @keyframes d1ZoomIn { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .d1-zoom { animation: none; } }
 
-/* ── ลิงก์เว็บไซต์ที่เกี่ยวข้อง ── */
-.d1-links { display: grid; gap: 14px; }
-.d1-link-card {
+/* ── เอกสารหลักฐาน PDF พร้อมภาพหน้าปก (1.1.6) ── */
+.d1-reports { margin-top: 36px; }
+.d1-reports-title { margin: 0 0 14px; color: #fff; font-size: 22px; font-weight: 800;
+  text-shadow: 0 2px 12px rgba(6, 18, 44, .85); }
+.d1-reports-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.d1-report {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 18px;
-  min-height: 56px;
-  padding: 20px 22px;
+  gap: 12px;
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, .6);
-  border-left: 4px solid var(--gold-500);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, .95);
-  box-shadow: 0 16px 38px rgba(8, 21, 47, .24);
-  transition: transform .26s var(--ease), box-shadow .26s var(--ease);
   -webkit-tap-highlight-color: transparent;
 }
-.d1-link-card.is-empty { border-left-color: var(--navy-200); background: rgba(255, 255, 255, .84); }
-
-.d1-link-icon {
-  display: grid;
-  place-items: center;
-  width: 52px;
-  height: 52px;
-  color: #fff;
-  border-radius: 16px;
-  background: linear-gradient(140deg, var(--navy-800), var(--navy-500));
-}
-.d1-link-body { display: grid; gap: 3px; }
-.d1-link-label { color: var(--gold-600); font-size: 14.5px; font-weight: 800; letter-spacing: .3px; }
-.d1-link-title { color: var(--navy-900); font-size: 21px; font-weight: 800; line-height: 1.35; }
-.d1-link-desc { color: var(--ink-soft); font-size: 16px; line-height: 1.6; }
-
-.d1-link-go {
-  display: inline-flex;
+.d1-report-btn {
+  display: flex;
   align-items: center;
-  gap: 7px;
-  min-height: 44px;
-  padding: 10px 17px;
-  color: var(--navy-700);
-  font-size: 16px;
-  font-weight: 800;
-  white-space: nowrap;
-  border-radius: 999px;
-  background: var(--navy-50);
-}
-.d1-link-card.is-empty .d1-link-go { color: var(--ink-mute); font-style: italic; }
-
-@media (hover: hover) {
-  a.d1-link-card:hover { transform: translateY(-4px); box-shadow: 0 24px 46px rgba(8, 21, 47, .3); }
-  a.d1-link-card:hover .d1-link-go { color: #fff; background: var(--navy-700); }
-}
-a.d1-link-card:active { transform: scale(.99); }
-
-@media (max-width: 640px) {
-  .d1-link-card { grid-template-columns: auto minmax(0, 1fr); gap: 14px; padding: 17px 18px; }
-  .d1-link-go { grid-column: 1 / -1; justify-self: start; }
-  .d1-link-title { font-size: 19px; }
-}
-
-@media (prefers-reduced-motion: reduce) { .d1-link-card { transition: none; } }
-
-/* ── วิดีโอแนะนำ (YouTube แบบโหลดเมื่อกดเล่น) ── */
-.d1-video {
-  margin: 0;
-  padding: 22px;
-  border: 1px solid rgba(255, 255, 255, .6);
-  border-radius: 20px;
-  background: rgba(255, 255, 255, .95);
-  box-shadow: 0 18px 42px rgba(8, 21, 47, .26);
-}
-.d1-video-head { display: grid; gap: 3px; margin-bottom: 16px; }
-
-.d1-video-frame {
-  position: relative;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  border-radius: 14px;
-  background: #0b1f45;
-}
-.d1-video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-
-.d1-video-cover {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-.d1-video-cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.d1-video-play {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 76px;
-  height: 76px;
-  padding-left: 4px;
+  gap: 12px;
+  min-height: 60px;
+  padding: 12px 16px;
   color: #fff;
-  border-radius: 50%;
-  background: rgba(19, 47, 99, .82);
-  box-shadow: 0 10px 26px rgba(6, 18, 44, .5);
-  transition: background .25s var(--ease), transform .25s var(--ease);
+  border: 1px solid rgba(232, 196, 106, .55);
+  border-radius: 16px;
+  background: linear-gradient(160deg, rgba(20, 58, 119, .92), rgba(10, 29, 64, .94));
+  box-shadow: 0 12px 26px rgba(6, 18, 44, .38);
+  transition: border-color .25s var(--ease), box-shadow .25s var(--ease);
 }
+.d1-report-btn svg { flex: 0 0 auto; color: var(--gold-400); }
+.d1-report-label { display: flex; flex-direction: column; font-size: 20px; font-weight: 800; line-height: 1.25; }
+.d1-report-label small { color: #cfdcf2; font-size: 14.5px; font-weight: 600; }
+.d1-report-cover {
+  display: block;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .5);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 16px 34px rgba(6, 18, 44, .35);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.d1-report-cover { cursor: pointer; }
+/* ให้การแตะที่รูปส่งต่อไปยังลิงก์เสมอ (Safari บน iPad บางรุ่นจับการแตะไว้ที่ตัวรูปเอง) */
+.d1-report-cover img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 210 / 297;
+  object-fit: cover;
+  object-position: top;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
 @media (hover: hover) {
-  .d1-video-cover:hover .d1-video-play { background: var(--gold-500); color: #16233f; transform: scale(1.06); }
+  .d1-report:hover .d1-report-btn { border-color: var(--gold-400); box-shadow: 0 16px 32px rgba(6, 18, 44, .45), 0 0 20px rgba(232, 196, 106, .2); }
+  .d1-report:hover .d1-report-cover { transform: translateY(-4px); box-shadow: 0 22px 44px rgba(6, 18, 44, .45); }
 }
-@media (max-width: 640px) {
-  .d1-video { padding: 16px; }
-  .d1-video-play { width: 62px; height: 62px; }
-}
-@media (prefers-reduced-motion: reduce) { .d1-video-play { transition: none; } }
+.d1-report:active .d1-report-cover { transform: scale(.99); }
+
+@media (max-width: 760px) { .d1-reports-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 460px) { .d1-reports-grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .d1-report-btn, .d1-report-cover { transition: none; } }

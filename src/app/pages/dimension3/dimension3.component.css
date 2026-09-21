@@ -262,3 +262,119 @@
 /* โมเดล LEARN การพัฒนาโรงเรียน 4 ขั้นตอน */
 .d3-learn-model { width: 100%; }
 .d3-learn-model iframe { display: block; width: 100%; border: 0; background: transparent; }
+
+/* ── ปุ่มลิงก์ 4 กลุ่มบริหาร (3.5) ── */
+.d3-admin-links {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 4px 0 30px;
+}
+.d3-admin-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 88px;
+  padding: 16px 18px 16px 20px;
+  text-decoration: none;
+  border: 1px solid rgba(232, 196, 106, .5);
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(20, 58, 119, .88), rgba(10, 29, 64, .92));
+  box-shadow: 0 16px 34px rgba(6, 18, 44, .4), inset 0 1px 0 rgba(255, 255, 255, .1);
+  transition: transform .26s var(--ease), box-shadow .26s var(--ease), border-color .26s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.d3-admin-text { display: flex; flex-direction: column; gap: 2px; }
+.d3-admin-text span { color: #dbe6f7; font-size: 17px; font-weight: 400; line-height: 1.3; }
+.d3-admin-text b { color: #ffffff; font-size: 24px; font-weight: 800; line-height: 1.25; }
+
+.d3-admin-go {
+  display: grid;
+  place-items: center;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  color: #1c2b4d;
+  border-radius: 50%;
+  background: linear-gradient(140deg, var(--gold-400), var(--gold-500));
+  box-shadow: 0 6px 14px rgba(0, 0, 0, .3);
+}
+
+/* ยังไม่มีลิงก์ — ดูเหมือนปุ่มจริงแต่กดไม่ได้ */
+.d3-admin-link.is-empty { cursor: default; opacity: .78; }
+.d3-admin-link.is-empty .d3-admin-go { background: rgba(255, 255, 255, .2); color: rgba(255, 255, 255, .7); }
+
+@media (hover: hover) {
+  a.d3-admin-link:hover {
+    transform: translateY(-4px);
+    border-color: rgba(232, 196, 106, .9);
+    box-shadow: 0 22px 44px rgba(6, 18, 44, .5), 0 0 24px rgba(232, 196, 106, .22);
+  }
+}
+a.d3-admin-link:active { transform: scale(.98); }
+
+@media (max-width: 900px) { .d3-admin-links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .d3-admin-links { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .d3-admin-link { transition: none; } }
+
+/* ── รายการระบบสารสนเทศ (3.5) ── */
+.d3-systems { margin-top: 8px; }
+.d3-system-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.d3-system {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  min-height: 64px;
+  padding: 10px 12px 10px 14px;
+  border: 1px solid rgba(255, 255, 255, .5);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .94);
+  box-shadow: 0 10px 24px rgba(6, 18, 44, .22);
+}
+.d3-system-no {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  border-radius: 12px;
+  background: linear-gradient(140deg, var(--navy-800), var(--navy-500));
+}
+.d3-system-name { color: var(--navy-900); font-size: 19.5px; font-weight: 800; line-height: 1.4; }
+
+.d3-system-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 9px 18px;
+  color: #1c2b4d;
+  font-size: 16.5px;
+  font-weight: 800;
+  white-space: nowrap;
+  text-decoration: none;
+  border-radius: 999px;
+  background: linear-gradient(120deg, var(--gold-400), var(--gold-500));
+  box-shadow: 0 6px 14px rgba(179, 134, 42, .35);
+  transition: filter .2s var(--ease), transform .2s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.d3-system-btn.is-empty {
+  color: var(--ink-mute);
+  font-style: italic;
+  font-weight: 700;
+  background: var(--navy-50);
+  box-shadow: none;
+}
+@media (hover: hover) { a.d3-system-btn:hover { filter: brightness(1.06); transform: translateY(-2px); } }
+a.d3-system-btn:active { transform: scale(.97); }
+
+@media (max-width: 560px) {
+  .d3-system { grid-template-columns: auto minmax(0, 1fr); }
+  .d3-system-btn { grid-column: 1 / -1; justify-self: stretch; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) { .d3-system-btn { transition: none; } }
