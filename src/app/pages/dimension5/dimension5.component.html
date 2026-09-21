@@ -72,11 +72,14 @@
     </p>
 
     <div class="d5-banchuen-wrap" *ngIf="banchuenOpen()">
-      <div class="sec-head" style="margin-top:34px">
-        <h2 class="sec-title">BANCHUEN Model ของแต่ละกิจกรรม</h2>
-        <div class="sec-rule"></div>
+      <div class="d5-banchuen-head">
+        <h3 class="d5-banchuen-title">BANCHUEN Model ของกิจกรรมนี้</h3>
+        <button type="button" class="d5-banchuen-close" (click)="closeBanchuen()" aria-label="ปิดวงล้อ BANCHUEN">
+          ปิด
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+            stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+        </button>
       </div>
-      <button type="button" class="d5-banchuen-close" (click)="closeBanchuen()">ปิดวงล้อ BANCHUEN</button>
       <div class="d5-banchuen">
         <iframe src="/models/banchuen-mechanism-model.html" title="BANCHUEN Model ของแต่ละกิจกรรมดีเด่น"
           scrolling="no" [style.height.px]="banchuenHeight()"></iframe>

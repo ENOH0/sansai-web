@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { BarSeries, Kpi, LineSeries, MeterRow, TableRow } from '../../core/models';
 import { DIM1 } from '../../data/dimension1.data';
 import { RevealDirective } from '../../shared/directives/reveal.directive';
@@ -35,6 +36,23 @@ import { StudentQualityWheelComponent } from '../../shared/student-quality-wheel
   styleUrl: './dimension1.component.css'
 })
 export class Dimension1Component implements OnInit {
+  /* ---------- วิดีโอแนะนำ: โหลด YouTube เมื่อกดเล่นเท่านั้น ให้หน้าเว็บเบาบน iPad ---------- */
+  private readonly sanitizer = inject(DomSanitizer);
+  readonly playingVideo = signal<string | null>(null);
+
+  thumbOf(id: string): string {
+    return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+  }
+
+  embedOf(id: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(
+      `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&playsinline=1&autoplay=1`);
+  }
+
+  playVideo(id: string): void {
+    this.playingVideo.set(id);
+  }
+
   private readonly route = inject(ActivatedRoute);
   readonly studentQualityModelHeight = signal(620);
 

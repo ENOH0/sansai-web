@@ -5,21 +5,54 @@
   </div>
 
   <ol class="stair-track">
-    <li class="stair-step" *ngFor="let s of steps; let i = index"
-      [style.--rise]="i">
-      <div class="stair-card" [class.is-empty]="!s.title">
-        <span class="stair-no">{{ s.no }}</span>
-        <h4 class="stair-name">{{ s.title || 'ขั้นที่ ' + s.no }}</h4>
-        <p class="stair-text" *ngIf="s.text">{{ s.text }}</p>
-        <p class="stair-text stair-placeholder" *ngIf="!s.text">รอเพิ่มข้อมูลผลงานของขั้นนี้</p>
+    <li class="stair-step" *ngFor="let s of steps; let i = index" [style.--rise]="i">
+      <button type="button" class="stair-card" (click)="open(i)"
+        [attr.aria-label]="'ดูรายละเอียดขั้นที่ ' + s.no + ' ' + s.title">
+        <span class="stair-beam" aria-hidden="true"></span>
 
-        <div class="stair-photos" *ngIf="s.photos?.length">
-          <figure class="stair-photo" *ngFor="let p of s.photos">
-            <img [src]="p" [alt]="s.title" loading="lazy">
-          </figure>
-        </div>
-      </div>
-      <span class="stair-riser" aria-hidden="true"></span>
+        <span class="stair-medal">
+          <span class="stair-medal-no">{{ s.no }}</span>
+        </span>
+
+        <span class="stair-frame" *ngIf="s.photos?.length">
+          <img [src]="s.photos![0]" [alt]="s.title" loading="lazy">
+          <span class="stair-shine" aria-hidden="true"></span>
+        </span>
+
+        <span class="stair-name">{{ s.title || 'ขั้นที่ ' + s.no }}</span>
+
+        <span class="stair-more">ดูรูปเต็ม
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+        </span>
+      </button>
+      <span class="stair-pedestal" aria-hidden="true"><i>{{ s.no }}</i></span>
     </li>
   </ol>
+</div>
+
+<!-- กล่องดูรูปเต็มพร้อมรายละเอียด -->
+<div class="stair-modal" *ngIf="current as s" (click)="close()">
+  <div class="stair-modal-box" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <button type="button" class="stair-modal-close" (click)="close()" aria-label="ปิด">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+        stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
+
+    <div class="stair-modal-head">
+      <span class="stair-no">{{ s.no }}</span>
+      <div>
+        <p class="stair-modal-kicker">ขั้นที่ {{ s.no }} จาก {{ steps.length }}</p>
+        <h4 class="stair-modal-title">{{ s.title }}</h4>
+      </div>
+    </div>
+
+    <p class="stair-modal-text" *ngIf="s.text">{{ s.text }}</p>
+
+    <div class="stair-modal-photos" *ngIf="s.photos?.length">
+      <figure class="stair-modal-photo" *ngFor="let p of s.photos">
+        <img [src]="p" [alt]="s.title">
+      </figure>
+    </div>
+  </div>
 </div>

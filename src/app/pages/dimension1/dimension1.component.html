@@ -134,6 +134,67 @@
         </div>
       </div>
     </div>
+
+    <!-- วิดีโอแนะนำ / ลิงก์ที่เกี่ยวข้อง · แก้ข้อมูลได้ที่ externalLinks ใน src/app/data/dimension1.data.ts -->
+    <div class="d1-links" *ngIf="d.externalLinks?.length" appReveal style="margin-top:38px">
+      <ng-container *ngFor="let link of d.externalLinks">
+
+        <!-- วิดีโอ: แสดงภาพปกก่อน กดแล้วค่อยโหลด YouTube (หน้าเว็บจึงโหลดเร็วบน iPad) -->
+        <figure class="d1-video" *ngIf="link.youtubeId">
+          <figcaption class="d1-video-head">
+            <span class="d1-link-label">{{ link.label }}</span>
+            <span class="d1-link-title">{{ link.title }}</span>
+            <span class="d1-link-desc" *ngIf="link.desc">{{ link.desc }}</span>
+          </figcaption>
+
+          <div class="d1-video-frame">
+            <button type="button" class="d1-video-cover" *ngIf="playingVideo() !== link.youtubeId"
+              (click)="playVideo(link.youtubeId)" [attr.aria-label]="'เล่นวิดีโอ ' + link.title">
+              <img [src]="thumbOf(link.youtubeId)" [alt]="link.title" loading="lazy">
+              <span class="d1-video-play" aria-hidden="true">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z" /></svg>
+              </span>
+            </button>
+
+            <iframe *ngIf="playingVideo() === link.youtubeId" [src]="embedOf(link.youtubeId)"
+              [title]="link.title" allow="accelerometer; autoplay; encrypted-media; picture-in-picture"
+              allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+        </figure>
+
+        <!-- ลิงก์เว็บไซต์ -->
+        <a class="d1-link-card" *ngIf="!link.youtubeId && link.url" [href]="link.url" target="_blank" rel="noopener">
+          <span class="d1-link-icon" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18" />
+            </svg>
+          </span>
+          <span class="d1-link-body">
+            <span class="d1-link-label">{{ link.label }}</span>
+            <span class="d1-link-title">{{ link.title }}</span>
+            <span class="d1-link-desc">{{ link.desc }}</span>
+          </span>
+          <span class="d1-link-go">เปิดเว็บไซต์
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 17 17 7M9 7h8v8" />
+            </svg>
+          </span>
+        </a>
+
+        <!-- ยังไม่มีข้อมูล -->
+        <div class="d1-link-card is-empty" *ngIf="!link.youtubeId && !link.url">
+          <span class="d1-link-body">
+            <span class="d1-link-label">{{ link.label }}</span>
+            <span class="d1-link-title">{{ link.title }}</span>
+            <span class="d1-link-desc">{{ link.desc }}</span>
+          </span>
+          <span class="d1-link-go">รอใส่ลิงก์วิดีโอ</span>
+        </div>
+      </ng-container>
+    </div>
   </div>
 </section>
 

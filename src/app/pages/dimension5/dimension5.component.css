@@ -107,25 +107,81 @@
 .d5-banchuen { width: 100%; }
 .d5-banchuen iframe { display: block; width: 100%; border: 0; background: transparent; }
 
+/* ── วงล้อ BANCHUEN: ทำให้ดูเป็นลิ้นชักที่เปิดออกมาจากโมเดลด้านบน ไม่ใช่หัวข้อใหม่ ── */
 .d5-banchuen-hint {
-  margin: 18px 0 0;
-  color: #dbe6f7;
-  font-size: 17px;
+  margin: 14px 0 0;
+  color: #cfdcf2;
+  font-size: 16.5px;
   line-height: 1.6;
   text-align: center;
   text-shadow: 0 2px 12px rgba(6, 18, 44, .85);
 }
-.d5-banchuen-wrap { scroll-margin-top: 84px; }
+
+.d5-banchuen-wrap {
+  position: relative;
+  margin-top: 16px;
+  padding: 16px 18px 10px;
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 22px;
+  background: rgba(8, 24, 54, .46);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  backdrop-filter: blur(10px) saturate(120%);
+  box-shadow: 0 20px 44px rgba(6, 18, 44, .3);
+  scroll-margin-top: 84px;
+  animation: d5Drawer .35s cubic-bezier(.22, .78, .3, 1) both;
+}
+
+/* สามเหลี่ยมชี้ขึ้นหาการ์ดกิจกรรมที่กดมา */
+.d5-banchuen-wrap::before {
+  content: '';
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 17px;
+  height: 17px;
+  transform: translateX(-50%) rotate(45deg);
+  border-top: 1px solid rgba(255, 255, 255, .2);
+  border-left: 1px solid rgba(255, 255, 255, .2);
+  background: rgba(8, 24, 54, .46);
+}
+
+@keyframes d5Drawer {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: none; }
+}
+
+.d5-banchuen-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 10px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, .14);
+}
+.d5-banchuen-title {
+  margin: 0;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.35;
+}
 .d5-banchuen-close {
-  min-height: 44px;
-  margin: 0 0 14px;
-  padding: 9px 18px;
-  color: #eaf1fb;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 7px 14px;
+  color: #dbe6f7;
   font: inherit;
+  font-size: 16px;
   font-weight: 800;
   cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, .28);
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, .26);
   border-radius: 999px;
   background: rgba(255, 255, 255, .1);
 }
-@media (hover: hover) { .d5-banchuen-close:hover { background: rgba(255, 255, 255, .2); } }
+@media (hover: hover) { .d5-banchuen-close:hover { background: rgba(255, 255, 255, .22); } }
+
+@media (prefers-reduced-motion: reduce) { .d5-banchuen-wrap { animation: none; } }

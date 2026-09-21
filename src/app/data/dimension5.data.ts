@@ -33,7 +33,7 @@ export const DIM5 = {
       org: 'ITTF (International Table Tennis Federation) สหพันธ์เทเบิลเทนนิสนานาชาติ',
       level: 'ระดับนานาชาติ',
       year: '2569',
-      photos: [] as string[]
+      photos: ['/evidence/dimension5/student-awards/chotihiran/01.jpg', '/evidence/dimension5/student-awards/chotihiran/02.jpg']
     },
     {
       names: ['นางสาวอาตารี ฉลองไชยมงคล', 'นางสาวภรต ฉัตรเมือง'],
@@ -42,7 +42,7 @@ export const DIM5 = {
       org: 'มหาวิทยาลัยครูกว่างสี (Guangxi Normal University) สาธารณรัฐประชาชนจีน',
       level: 'ระดับนานาชาติ',
       year: '2569',
-      photos: [] as string[]
+      photos: ['/evidence/dimension5/student-awards/gxnu-scholarship/01.jpg', '/evidence/dimension5/student-awards/gxnu-scholarship/02.jpg']
     },
     {
       names: ['เด็กชายเจือง หาญ', 'เด็กชายกิตติกวิน รังษีธรรม', 'เด็กชายกิติภพ ลุงต๊ะ'],
@@ -51,7 +51,7 @@ export const DIM5 = {
       org: 'สถาบันพัฒนาอัจฉริยภาพเด็ก (The Genius Center International หรือ The Genius Club) จังหวัดพะเยา',
       level: 'ระดับนานาชาติ',
       year: '2568',
-      photos: [] as string[]
+      photos: ['/evidence/dimension5/student-awards/math-genius/01.jpg', '/evidence/dimension5/student-awards/math-genius/02.jpg']
     },
     {
       names: ['นายเอกพล ลักษณาการ'],
@@ -60,7 +60,7 @@ export const DIM5 = {
       org: 'Global IT Challenge for Youth with Disabilities (GITC)',
       level: 'ระดับนานาชาติ',
       year: '2566',
-      photos: [] as string[]
+      photos: ['/evidence/dimension5/student-awards/gitc/01.jpg', '/evidence/dimension5/student-awards/gitc/02.jpg']
     }
   ],
 
@@ -69,10 +69,30 @@ export const DIM5 = {
     title: 'การพัฒนาผลงานอย่างเป็นขั้นบันได',
     lead: 'ลำดับการยกระดับผลงานของสถานศึกษา 4 ขั้น',
     steps: [
-      { no: 1, title: '', text: '', photos: [] as string[] },
-      { no: 2, title: '', text: '', photos: [] as string[] },
-      { no: 3, title: '', text: '', photos: [] as string[] },
-      { no: 4, title: '', text: '', photos: [] as string[] }
+      {
+        no: 1,
+        title: 'Best Practices ระดับเขตพื้นที่การศึกษา ปีการศึกษา 2566',
+        text: 'รางวัลสถานศึกษาที่มีผลการปฏิบัติที่เป็นเลิศ เรื่อง “สถานศึกษาที่มีผลการพัฒนาระบบการประกันคุณภาพการศึกษาภายในสถานศึกษา ที่ส่งผลต่อการพัฒนาผู้เรียนอย่างยั่งยืนตามบริบทของสถานศึกษา” จากสำนักงานเขตพื้นที่การศึกษามัธยมศึกษาเชียงใหม่',
+        photos: ['/evidence/dimension5/stair/01.jpg']
+      },
+      {
+        no: 2,
+        title: 'Best Practices ระดับยอดเยี่ยม ปีการศึกษา 2567',
+        text: 'รางวัลเรื่องเดียวกันในปีการศึกษา 2567 ยกระดับขึ้นเป็นระดับยอดเยี่ยม ประเภทโรงเรียนขนาดใหญ่ จากสำนักงานเขตพื้นที่การศึกษามัธยมศึกษาเชียงใหม่',
+        photos: ['/evidence/dimension5/stair/02.jpg']
+      },
+      {
+        no: 3,
+        title: 'สถานศึกษาที่มีความพร้อม 5 ด้าน · SCQA และ OBECQA',
+        text: 'โล่เกียรติคุณจากสำนักงานเขตพื้นที่การศึกษามัธยมศึกษาเชียงใหม่ แสดงว่าเป็นโรงเรียนมาตรฐานสากลระดับ SCQA และผ่านเกณฑ์ประเมินเป็นระดับ OBECQA เมื่อวันที่ 21 สิงหาคม 2567',
+        photos: ['/evidence/dimension5/stair/03.jpg']
+      },
+      {
+        no: 4,
+        title: 'IQA Award ระดับยอดเยี่ยม ขนาดใหญ่ ระดับ สพฐ.',
+        text: 'รางวัลสถานศึกษาที่มีระบบและกลไกการบริหารจัดการคุณภาพและมาตรฐานการศึกษาเพื่อการประกันคุณภาพการศึกษา ประจำปีการศึกษา 2567 จากสำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน',
+        photos: ['/evidence/dimension5/stair/04.jpg']
+      }
     ]
   },
 

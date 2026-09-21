@@ -2052,6 +2052,123 @@ body ::ng-deep img { cursor: zoom-in; }
 @keyframes d1ZoomIn { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .d1-zoom { animation: none; } }
 
+/* ── ลิงก์เว็บไซต์ที่เกี่ยวข้อง ── */
+.d1-links { display: grid; gap: 14px; }
+.d1-link-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  min-height: 56px;
+  padding: 20px 22px;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, .6);
+  border-left: 4px solid var(--gold-500);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .95);
+  box-shadow: 0 16px 38px rgba(8, 21, 47, .24);
+  transition: transform .26s var(--ease), box-shadow .26s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.d1-link-card.is-empty { border-left-color: var(--navy-200); background: rgba(255, 255, 255, .84); }
+
+.d1-link-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  color: #fff;
+  border-radius: 16px;
+  background: linear-gradient(140deg, var(--navy-800), var(--navy-500));
+}
+.d1-link-body { display: grid; gap: 3px; }
+.d1-link-label { color: var(--gold-600); font-size: 14.5px; font-weight: 800; letter-spacing: .3px; }
+.d1-link-title { color: var(--navy-900); font-size: 21px; font-weight: 800; line-height: 1.35; }
+.d1-link-desc { color: var(--ink-soft); font-size: 16px; line-height: 1.6; }
+
+.d1-link-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 10px 17px;
+  color: var(--navy-700);
+  font-size: 16px;
+  font-weight: 800;
+  white-space: nowrap;
+  border-radius: 999px;
+  background: var(--navy-50);
+}
+.d1-link-card.is-empty .d1-link-go { color: var(--ink-mute); font-style: italic; }
+
+@media (hover: hover) {
+  a.d1-link-card:hover { transform: translateY(-4px); box-shadow: 0 24px 46px rgba(8, 21, 47, .3); }
+  a.d1-link-card:hover .d1-link-go { color: #fff; background: var(--navy-700); }
+}
+a.d1-link-card:active { transform: scale(.99); }
+
+@media (max-width: 640px) {
+  .d1-link-card { grid-template-columns: auto minmax(0, 1fr); gap: 14px; padding: 17px 18px; }
+  .d1-link-go { grid-column: 1 / -1; justify-self: start; }
+  .d1-link-title { font-size: 19px; }
+}
+
+@media (prefers-reduced-motion: reduce) { .d1-link-card { transition: none; } }
+
+/* ── วิดีโอแนะนำ (YouTube แบบโหลดเมื่อกดเล่น) ── */
+.d1-video {
+  margin: 0;
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, .6);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .95);
+  box-shadow: 0 18px 42px rgba(8, 21, 47, .26);
+}
+.d1-video-head { display: grid; gap: 3px; margin-bottom: 16px; }
+
+.d1-video-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #0b1f45;
+}
+.d1-video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+.d1-video-cover {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.d1-video-cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.d1-video-play {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  padding-left: 4px;
+  color: #fff;
+  border-radius: 50%;
+  background: rgba(19, 47, 99, .82);
+  box-shadow: 0 10px 26px rgba(6, 18, 44, .5);
+  transition: background .25s var(--ease), transform .25s var(--ease);
+}
+@media (hover: hover) {
+  .d1-video-cover:hover .d1-video-play { background: var(--gold-500); color: #16233f; transform: scale(1.06); }
+}
+@media (max-width: 640px) {
+  .d1-video { padding: 16px; }
+  .d1-video-play { width: 62px; height: 62px; }
+}
+@media (prefers-reduced-motion: reduce) { .d1-video-play { transition: none; } }
+
 
 /* ===== src/app/pages/dimension2/dimension2.component.css ===== */
 /* หน้าด้านที่ 2
@@ -3226,28 +3343,84 @@ body ::ng-deep app-cycle-flow * { text-shadow: none !important; filter: none !im
 .d5-banchuen { width: 100%; }
 .d5-banchuen iframe { display: block; width: 100%; border: 0; background: transparent; }
 
+/* ── วงล้อ BANCHUEN: ทำให้ดูเป็นลิ้นชักที่เปิดออกมาจากโมเดลด้านบน ไม่ใช่หัวข้อใหม่ ── */
 .d5-banchuen-hint {
-  margin: 18px 0 0;
-  color: #dbe6f7;
-  font-size: 17px;
+  margin: 14px 0 0;
+  color: #cfdcf2;
+  font-size: 16.5px;
   line-height: 1.6;
   text-align: center;
   text-shadow: 0 2px 12px rgba(6, 18, 44, .85);
 }
-.d5-banchuen-wrap { scroll-margin-top: 84px; }
+
+.d5-banchuen-wrap {
+  position: relative;
+  margin-top: 16px;
+  padding: 16px 18px 10px;
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 22px;
+  background: rgba(8, 24, 54, .46);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  backdrop-filter: blur(10px) saturate(120%);
+  box-shadow: 0 20px 44px rgba(6, 18, 44, .3);
+  scroll-margin-top: 84px;
+  animation: d5Drawer .35s cubic-bezier(.22, .78, .3, 1) both;
+}
+
+/* สามเหลี่ยมชี้ขึ้นหาการ์ดกิจกรรมที่กดมา */
+.d5-banchuen-wrap::before {
+  content: '';
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 17px;
+  height: 17px;
+  transform: translateX(-50%) rotate(45deg);
+  border-top: 1px solid rgba(255, 255, 255, .2);
+  border-left: 1px solid rgba(255, 255, 255, .2);
+  background: rgba(8, 24, 54, .46);
+}
+
+@keyframes d5Drawer {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: none; }
+}
+
+.d5-banchuen-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 10px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, .14);
+}
+.d5-banchuen-title {
+  margin: 0;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.35;
+}
 .d5-banchuen-close {
-  min-height: 44px;
-  margin: 0 0 14px;
-  padding: 9px 18px;
-  color: #eaf1fb;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 7px 14px;
+  color: #dbe6f7;
   font: inherit;
+  font-size: 16px;
   font-weight: 800;
   cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, .28);
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, .26);
   border-radius: 999px;
   background: rgba(255, 255, 255, .1);
 }
-@media (hover: hover) { .d5-banchuen-close:hover { background: rgba(255, 255, 255, .2); } }
+@media (hover: hover) { .d5-banchuen-close:hover { background: rgba(255, 255, 255, .22); } }
+
+@media (prefers-reduced-motion: reduce) { .d5-banchuen-wrap { animation: none; } }
 
 
 /* ===== src/app/pages/home/home.component.css ===== */
@@ -5810,8 +5983,8 @@ body {
 
 
 /* ===== src/app/shared/stair-showcase/stair-showcase.component.css ===== */
-.stair-head { margin-bottom: 20px; }
-.stair-title { margin: 0; color: #fff; font-size: 23px; font-weight: 800; line-height: 1.35;
+.stair-head { margin-bottom: 22px; }
+.stair-title { margin: 0; color: #fff; font-size: 24px; font-weight: 800; line-height: 1.35;
   text-shadow: 0 2px 14px rgba(6, 18, 44, .85); }
 .stair-lead { margin: 6px 0 0; color: #dbe6f7; font-size: 16.5px; line-height: 1.6;
   text-shadow: 0 2px 12px rgba(6, 18, 44, .85); }
@@ -5819,72 +5992,232 @@ body {
 .stair-track {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+  gap: 18px;
   align-items: end;
   margin: 0;
-  padding: 0;
+  padding: 24px 0 0;
   list-style: none;
 }
+.stair-step {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: calc(var(--rise) * 52px);
+}
 
-.stair-step { position: relative; display: flex; flex-direction: column; justify-content: flex-end; }
-
-/* ขั้นล่างสุดยกตัวน้อย ขั้นหลังยกสูงขึ้นเรื่อย ๆ จนเป็นบันได */
-.stair-step { padding-bottom: calc(var(--rise) * 26px); }
-
+/* ─────────── การ์ดรางวัล ─────────── */
 .stair-card {
   position: relative;
-  padding: 20px 20px 18px;
-  border: 1px solid rgba(255, 255, 255, .6);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, .95);
-  box-shadow: 0 16px 36px rgba(8, 21, 47, .25);
+  z-index: 1;
+  display: grid;
+  align-content: start;
+  gap: 13px;
+  width: 100%;
+  min-height: 336px;
+  padding: 30px 20px 20px;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  border: 1px solid rgba(232, 196, 106, .45);
+  border-radius: 20px;
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(232, 196, 106, .22) 0%, rgba(232, 196, 106, 0) 55%),
+    linear-gradient(170deg, #143a77 0%, #0e2a5c 55%, #0a1d40 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, .06) inset,
+    0 18px 40px rgba(6, 18, 44, .5),
+    0 0 26px rgba(232, 196, 106, .12);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);
+  -webkit-tap-highlight-color: transparent;
 }
-.stair-card::before {
+
+/* ลำแสงสปอตไลท์จากด้านบน */
+.stair-beam {
+  position: absolute;
+  top: -60%;
+  left: 50%;
+  width: 150%;
+  height: 130%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: radial-gradient(45% 45% at 50% 40%, rgba(255, 233, 184, .3) 0%, rgba(255, 233, 184, 0) 70%);
+}
+
+/* เหรียญเลขขั้น */
+.stair-medal {
+  position: relative;
+  justify-self: center;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: conic-gradient(from 210deg, #f6dd9c, #d4a537 25%, #b3862a 50%, #f0d089 75%, #d4a537);
+  box-shadow: 0 8px 18px -8px rgba(0, 0, 0, .8), 0 0 18px rgba(232, 196, 106, .45);
+}
+.stair-medal::after {
   content: '';
   position: absolute;
-  inset: 0 0 auto 0;
-  height: 4px;
-  border-radius: 18px 18px 0 0;
-  background: linear-gradient(90deg, var(--navy-600), var(--gold-500));
+  inset: 5px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .55);
 }
-.stair-card.is-empty { background: rgba(255, 255, 255, .84); }
+.stair-medal-no { position: relative; color: #3b2a06; font-size: 22px; font-weight: 800; line-height: 1; }
 
-.stair-no {
+/* กรอบรูปรางวัล */
+.stair-frame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding: 7px;
+  border-radius: 12px;
+  background: linear-gradient(150deg, #f6dd9c, #d4a537 45%, #b3862a);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, .42);
+}
+.stair-frame img {
+  display: block;
+  width: 100%;
+  height: 124px;
+  object-fit: contain;
+  border-radius: 7px;
+  background: #fff;
+}
+.stair-shine {
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 45%;
+  height: 100%;
+  transform: skewX(-18deg);
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .45), rgba(255, 255, 255, 0));
+  animation: stairShine 5.5s ease-in-out infinite;
+}
+@keyframes stairShine {
+  0%, 62% { left: -60%; }
+  86%, 100% { left: 115%; }
+}
+
+.stair-name { color: #fff; font-size: 18px; font-weight: 800; line-height: 1.45; text-wrap: balance; }
+
+.stair-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 4px;
+  color: var(--gold-400);
+  font-size: 15.5px;
+  font-weight: 800;
+}
+
+/* ─────────── แท่นรองรับ (ขาบันได) ─────────── */
+.stair-pedestal {
+  position: relative;
+  width: 74%;
+  height: calc(var(--rise) * 52px);
+  margin: 0 auto;
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(180deg, rgba(232, 196, 106, .3) 0, rgba(14, 42, 92, .55) 22%, rgba(8, 24, 54, .35) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35);
+}
+.stair-pedestal i {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, .22);
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 800;
+}
+.stair-step:first-child .stair-pedestal { display: none; }
+
+@media (hover: hover) {
+  .stair-card:hover {
+    transform: translateY(-7px);
+    border-color: rgba(232, 196, 106, .85);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, .08) inset,
+      0 28px 56px rgba(6, 18, 44, .58),
+      0 0 40px rgba(232, 196, 106, .3);
+  }
+  .stair-card:hover .stair-more { color: #ffe9b8; }
+}
+.stair-card:active { transform: scale(.99); }
+
+/* ─────────── กล่องดูรูปเต็ม ─────────── */
+.stair-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  background: rgba(6, 18, 44, .74);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+  animation: stairFade .2s ease both;
+}
+.stair-modal-box {
+  position: relative;
+  width: min(780px, 100%);
+  max-height: 88vh;
+  overflow: auto;
+  padding: 28px 28px 26px;
+  border: 1px solid rgba(232, 196, 106, .5);
+  border-radius: 22px;
+  background: linear-gradient(170deg, #ffffff 0%, #f6f9ff 100%);
+  box-shadow: 0 30px 70px rgba(6, 18, 44, .55), 0 0 40px rgba(232, 196, 106, .18);
+  animation: stairPop .28s cubic-bezier(.22, .78, .3, 1) both;
+}
+.stair-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
   display: grid;
   place-items: center;
   width: 44px;
   height: 44px;
-  margin-bottom: 12px;
-  color: #fff;
-  font-size: 21px;
-  font-weight: 700;
+  color: var(--navy-800);
+  cursor: pointer;
+  border: 1px solid var(--navy-200);
+  border-radius: 50%;
+  background: #fff;
+}
+.stair-modal-head { display: flex; align-items: center; gap: 14px; margin: 0 44px 14px 0; }
+.stair-modal-head .stair-medal { justify-self: start; }
+.stair-modal-kicker { margin: 0; color: var(--gold-600); font-size: 14.5px; font-weight: 800; letter-spacing: .3px; }
+.stair-modal-title { margin: 2px 0 0; color: var(--navy-900); font-size: 23px; font-weight: 800; line-height: 1.4; }
+.stair-modal-text { margin: 0 0 18px; color: var(--ink); font-size: 18px; line-height: 1.8; }
+.stair-modal-photos { display: grid; gap: 12px; }
+.stair-modal-photo {
+  margin: 0;
+  padding: 8px;
   border-radius: 14px;
-  background: linear-gradient(140deg, var(--navy-800), var(--navy-500));
-  box-shadow: 0 10px 18px -10px rgba(10, 30, 66, .85);
+  overflow: hidden;
+  background: linear-gradient(150deg, #f6dd9c, #d4a537 45%, #b3862a);
+  box-shadow: 0 14px 30px rgba(6, 18, 44, .25);
 }
+.stair-modal-photo img { display: block; width: 100%; height: auto; border-radius: 8px; background: #fff; }
 
-.stair-name { margin: 0 0 6px; color: var(--navy-900); font-size: 19px; font-weight: 800; line-height: 1.4; }
-.stair-text { margin: 0; color: var(--ink-soft); font-size: 16px; line-height: 1.65; }
-.stair-placeholder { color: var(--ink-mute); font-style: italic; }
-
-.stair-photos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
-.stair-photo { margin: 0; border-radius: 10px; overflow: hidden; }
-.stair-photo img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
-
-/* เส้นแนวตั้งใต้การ์ด ทำให้เห็นเป็นลูกตั้งของบันได */
-.stair-riser {
-  height: calc(var(--rise) * 26px);
-  margin: 0 auto;
-  border-left: 2px dashed rgba(255, 255, 255, .45);
-}
+@keyframes stairFade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes stairPop { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: none } }
 
 @media (max-width: 900px) {
   .stair-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .stair-step { padding-bottom: 0; }
-  .stair-riser { display: none; }
+  .stair-pedestal { display: none; }
+  .stair-card { min-height: 0; }
+  .stair-frame img { height: 150px; }
 }
-@media (max-width: 560px) {
-  .stair-track { grid-template-columns: 1fr; }
+@media (max-width: 560px) { .stair-track { grid-template-columns: 1fr; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .stair-card { transition: none; }
+  .stair-shine { animation: none; display: none; }
+  .stair-modal, .stair-modal-box { animation: none; }
 }
 
 
