@@ -13,7 +13,7 @@ html,body{margin:0;height:100%;overflow:hidden;background:radial-gradient(ellips
   font-family:'TH SarabunPSK Web','TH SarabunPSK',Tahoma,sans-serif;color:#1d2f52;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
 #view{position:absolute;inset:0;perspective:2200px;perspective-origin:50% 42%;touch-action:none;cursor:grab;overflow:hidden}
 #view:active{cursor:grabbing}
-#scene{position:absolute;left:50%;top:50%;width:1100px;height:193px;margin:-96px 0 0 -550px;transform-style:preserve-3d}
+#scene{position:absolute;left:50%;top:50%;width:1980px;height:347px;margin:-174px 0 0 -990px;transform-style:preserve-3d}
 #scene *{transform-style:preserve-3d}
 .ground{position:absolute;inset:-14px;border-radius:26px;background:#bfe3a9;box-shadow:0 0 0 12px #a9d493}
 .flat{position:absolute}
@@ -34,7 +34,7 @@ html,body{margin:0;height:100%;overflow:hidden;background:radial-gradient(ellips
 .wall{background-color:var(--w)}
 .wall.win{background-image:repeating-linear-gradient(90deg,transparent 0 10px,rgba(60,90,140,.45) 10px 18px,transparent 18px 26px),
   repeating-linear-gradient(0deg,transparent 0 12px,rgba(255,255,255,0) 12px 30px)}
-.wall.win::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,var(--w) 0 3px,rgba(255,255,255,0) 3px 9px,var(--w) 9px 13.2px)}
+.wall.win::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,var(--w) 0 calc(var(--fl) * .3),rgba(255,255,255,0) calc(var(--fl) * .3) calc(var(--fl) * .72),var(--w) calc(var(--fl) * .72) var(--fl))}
 .shade1{filter:brightness(.92)}.shade2{filter:brightness(.8)}
 .roof{background-color:var(--r);background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.08) 0 2px,transparent 2px 12px)}
 .b.on .f{outline:3px solid #ffcf3f}
@@ -58,6 +58,9 @@ html,body{margin:0;height:100%;overflow:hidden;background:radial-gradient(ellips
 .ui{position:absolute;z-index:5}
 .title{top:max(14px,env(safe-area-inset-top));left:16px;padding:8px 18px;border-radius:16px;background:rgba(255,255,255,.85);box-shadow:0 8px 20px rgba(30,60,110,.15)}
 .title h1{margin:0;font-size:26px;line-height:1.1}.title p{margin:0;font-size:16px;color:#50648a}
+.pad{right:16px;bottom:calc(max(16px,env(safe-area-inset-bottom)) + 62px);display:grid;grid-template-columns:repeat(3,48px);gap:6px}
+.pad button{min-height:48px;border:0;border-radius:14px;background:rgba(255,255,255,.92);color:#1d2f52;font:inherit;font-size:20px;font-weight:800;box-shadow:0 6px 16px rgba(30,60,110,.18);touch-action:none;cursor:pointer}
+.pad button:active{background:#ffe39a}
 .ctrl{right:16px;bottom:max(16px,env(safe-area-inset-bottom));display:flex;gap:10px}
 .ctrl button,.back{min-width:48px;min-height:48px;padding:0 14px;border:0;border-radius:14px;background:rgba(255,255,255,.92);color:#1d2f52;font:inherit;font-size:22px;font-weight:800;box-shadow:0 6px 16px rgba(30,60,110,.18);cursor:pointer;touch-action:manipulation}
 .back{top:max(14px,env(safe-area-inset-top));right:16px;font-size:18px;text-decoration:none;display:flex;align-items:center}
@@ -98,44 +101,48 @@ body:not(.has-legend) .legend{display:none}
 .pond{overflow:hidden}.pond::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.55) 45%,transparent 60%);background-size:250% 100%;animation:shine 5s linear infinite}
 @keyframes shine{from{background-position:150% 0}to{background-position:-100% 0}}
 @media (prefers-reduced-motion:reduce){.flagp::after,.tree b,.shadow,.pond::after{animation:none}}
+/* ซ่อนปุ่มควบคุมกล้อง (ใช้นิ้ว/เมาส์/คีย์บอร์ดแทน) */
+.pad,.ctrl{display:none!important}
 </style>
 </head>
 <body>
 <div id="view"><div id="scene"></div></div>
-<div class="ui title"><h1>ผังโรงเรียนสันทรายวิทยาคม</h1><p>แผนผัง 3 มิติ · ลากเพื่อหมุน · ถ่างนิ้วเพื่อซูม</p></div>
+<div class="ui title"><h1>ผังโรงเรียนสันทรายวิทยาคม</h1><p>Free cam · ลาก 1 นิ้ว = หมุน/เอียง · 2 นิ้ว = บินไปรอบผัง/ซูม</p></div>
 <a class="ui back" href="/" target="_top">‹ กลับหน้าหลัก</a>
 <div class="ui legend" id="legend"><div class="legend-close">รายชื่ออาคาร<button type="button" id="lclose">ซ่อน ✕</button></div></div>
 <button class="ui legend-toggle" id="lopen" type="button">☰ รายชื่ออาคาร</button>
 <div class="ui info" id="info"><b id="infoNo"></b><span><span id="infoName"></span><small id="infoSub" style="display:block;font-size:17px;font-weight:600;color:#50648a"></small></span></div>
+<div class="ui pad" aria-label="ควบคุมกล้อง"><button data-mv="r:-1" aria-label="หมุนซ้าย">↺</button><button data-mv="y:-1" aria-label="เดินหน้า">▲</button><button data-mv="r:1" aria-label="หมุนขวา">↻</button><button data-mv="x:-1" aria-label="ไปซ้าย">◀</button><button data-mv="y:1" aria-label="ถอยหลัง">▼</button><button data-mv="x:1" aria-label="ไปขวา">▶</button><button data-mv="t:-1" aria-label="มองต่ำลง">⤓</button><span></span><button data-mv="t:1" aria-label="มองสูงขึ้น">⤒</button></div>
 <div class="ui ctrl"><button id="zin" aria-label="ซูมเข้า">+</button><button id="zout" aria-label="ซูมออก">−</button><button id="reset" aria-label="มุมมองเริ่มต้น">⟲</button></div>
 <div class="ui hint">แตะหมุดหรืออาคารเพื่อดูชื่อ</div>
 <script>
-const U=0.55; // พิกัดอ้างอิงตามพิกเซลของภาพดาวเทียม (กว้าง 2000 × สูง 351) × 0.55
+const U=0.99,SY=1,UY=U*SY,RW=1.7; // SY = ขยายแนวลึกให้ผังดูอ้วนขึ้น (1 = ตามภาพจริง)
+ // พิกัดอ้างอิงตามพิกเซลของภาพดาวเทียม (กว้าง 2000 × สูง 351) × 0.55
 /* อาคาร: n เลข (0 = อาคารไม่มีเลข), t ชื่อ, x y w d = ตำแหน่ง/ขนาดจากภาพดาวเทียม, h ความสูง (ประมาณ), s รูปทรง, wc/rc สีผนัง/หลังคา */
 const B=[
  {n:1,t:'อาคาร 1 อาคารศรีสันทราย',x:510,y:2,w:335,d:62,h:48,s:'gable',wc:'#fbeede',rc:'#6f7480',win:1,fl:2},
- {n:2,t:'อาคารอุตสาหกรรม',x:920,y:2,w:125,d:72,h:24,s:'gable',wc:'#f3dfc8',rc:'#7d8391',fl:1},
- {n:3,t:'อาคารคหกรรม',x:1060,y:10,w:118,d:64,h:24,s:'gable',wc:'#ffd9a0',rc:'#8a8f99',fl:1},
- {n:4,t:'ห้องดนตรี',x:1184,y:4,w:46,d:38,h:24,s:'gable',wc:'#b9c8f0',rc:'#555b6c',fl:1},
- {n:5,t:'ห้องภาษาจีน/ภาษาญี่ปุ่น',x:1236,y:4,w:54,d:38,h:24,s:'gable',wc:'#ffe08a',rc:'#c4453f',fl:1},
+ {n:2,t:'อาคารอุตสาหกรรม',x:920,y:2,w:125,d:72,h:24,s:'gable',wc:'#f3dfc8',rc:'#7d8391',fl:1,win:1},
+ {n:3,t:'อาคารคหกรรม',x:1060,y:10,w:118,d:64,h:24,s:'gable',wc:'#ffd9a0',rc:'#8a8f99',fl:1,win:1},
+ {n:4,t:'ห้องดนตรี',x:1184,y:4,w:46,d:38,h:24,s:'gable',wc:'#b9c8f0',rc:'#555b6c',fl:1,win:1},
+ {n:5,t:'ห้องภาษาจีน/ภาษาญี่ปุ่น',x:1236,y:4,w:54,d:38,h:24,s:'gable',wc:'#ffe08a',rc:'#c4453f',fl:1,win:1},
  {n:6,t:'โรงพลศึกษา',x:500,y:115,w:100,d:130,h:48,s:'flat',wc:'#e3e6ec',rc:'#eef0f4',doors:1,desc:'อาคารโล่ง มีประตูม้วนเลื่อนขึ้นลงด้านหน้าและด้านหลัง'},
  {n:7,t:'โดมสันทราย',x:750,y:122,w:155,d:118,h:44,s:'vault',wc:'#ffffff',rc:'#e6e9ef',desc:'โดมสูงสำหรับให้นักเรียนเข้าแถว'},
  {n:8,t:'หอประชุมเฉลิมพระเกียรติ',x:1025,y:115,w:150,d:100,h:48,s:'gable',wc:'#efe3cf',rc:'#c5584c',win:1,fl:2,desc:'ชั้นล่าง: โรงอาหาร · ชั้นบน: หอประชุม'},
- {n:9,t:'อาคาร To be Number One',x:1195,y:120,w:60,d:40,h:24,s:'gable',wc:'#fff4e2',rc:'#9aa0ab',fl:1},
+ {n:9,t:'อาคาร To be Number One',x:1195,y:120,w:60,d:40,h:24,s:'gable',wc:'#fff4e2',rc:'#9aa0ab',fl:1,win:1},
  {n:10,t:'อาคาร 4 อาคาร 45 ปีสันทราย',x:1330,y:148,w:245,d:64,h:96,s:'gable',wc:'#f6ecd6',rc:'#c8574a',win:1,fl:4},
  {n:11,t:'เรือนเกษตร',x:1622,y:150,w:78,d:48,h:26,s:'gable',wc:'#a8744a',rc:'#6b3f22',lift:24,fl:2,desc:'บ้านไม้ทรงไทย มีใต้ถุน'},
  {n:12,t:'อาคาร 5',x:1330,y:262,w:245,d:73,h:72,s:'gable',wc:'#dfe6f8',rc:'#7d7fbf',win:1,fl:3},
  {n:13,t:'อาคาร 3 อาคารสร้อยดอกหมาก',x:905,y:260,w:300,d:75,h:72,s:'gable',wc:'#e9f3ef',rc:'#5f636e',win:1,fl:3},
- {n:14,t:'อาคารเรียนรวม',x:843,y:318,w:38,d:33,h:24,s:'gable',wc:'#d7c3ad',rc:'#555b6c',fl:1},
+ {n:14,t:'อาคารเรียนรวม',x:843,y:318,w:38,d:33,h:24,s:'gable',wc:'#d7c3ad',rc:'#555b6c',fl:1,win:1},
  {n:15,t:'อาคาร 2 อาคารสายธาร',x:575,y:262,w:263,d:73,h:72,s:'gable',wc:'#f3d3e2',rc:'#6f7480',win:1,fl:3},
- {n:16,t:'อาคาร 40 ปี สันทราย',x:535,y:295,w:40,d:56,h:24,s:'gable',wc:'#e6e9f2',rc:'#6b7385',fl:1},
+ {n:16,t:'อาคาร 40 ปี สันทราย',x:535,y:295,w:40,d:56,h:24,s:'gable',wc:'#e6e9f2',rc:'#6b7385',fl:1,win:1},
  {n:17,t:'ลานเพรงบุญ',x:612,y:108,w:130,d:100,h:0,s:'plaza'},
  {n:0,x:485,y:300,w:46,d:40,h:24,s:'gable',wc:'#e6e9f2',rc:'#6b7385',nowc:1},
- {n:18,t:'สหกรณ์ + ป้อมยาม',x:30,y:298,w:48,d:36,h:24,s:'flat',wc:'#fff1d6',rc:'#c9b79c',fl:1},
- {n:19,t:'ศาลารอรถนักเรียน',x:85,y:300,w:52,d:30,h:3,s:'gable',wc:'#b07a4a',rc:'#a0522d',lift:22,desc:'ศาลาสำหรับให้นักเรียนนั่งรอรถ'},
- {n:20,t:'ร้านกาแฟ + ป้อมยาม',x:40,y:22,w:44,d:32,h:24,s:'flat',wc:'#f3e0c8',rc:'#8a5a3c',fl:1},
  {n:21,t:'ลานเสาธง',x:958,y:148,w:54,d:36,h:4,s:'flat',wc:'#d9d2c4',rc:'#efe9dd',desc:'แท่นสำหรับให้นักเรียนเชิญธงชาติ'},
  {n:0,x:976,y:159,w:18,d:12,h:9,s:'flat',wc:'#e9e4da',rc:'#f8f4ec',nowc:1},
+ {n:0,t:'สหกรณ์ + ป้อมยาม',x:30,y:298,w:48,d:36,h:24,s:'flat',wc:'#fff1d6',rc:'#c9b79c',win:1,nowc:1},
+ {n:0,t:'ศาลารอรถนักเรียน',x:85,y:300,w:52,d:30,h:3,s:'gable',wc:'#b07a4a',rc:'#a0522d',lift:22,nowc:1},
+ {n:0,t:'ร้านกาแฟ + ป้อมยาม',x:40,y:22,w:44,d:32,h:24,s:'flat',wc:'#f3e0c8',rc:'#8a5a3c',win:1,nowc:1},
  {n:0,x:455,y:2,w:52,d:38,h:26,s:'gable',wc:'#eef0f4',rc:'#8a8f99'},
  {n:0,x:848,y:6,w:70,d:52,h:30,s:'gable',wc:'#eef0f4',rc:'#6c79a8'},
  {n:0,x:1195,y:122,w:0,d:0,h:0,s:'none'},
@@ -149,18 +156,21 @@ const FLAT=[
  ['court',1345,226,225,28],['farm',1620,212,82,110],['pond',1785,140,205,110],['pond',1785,258,160,93]];
 const TREES=[[1210,200],[1260,190],[1280,240],[450,150],[455,240],[250,262],[150,262],[350,262],[1720,120],[1750,200],[1760,300],[860,250],[1200,95],[620,100],[1500,110],[1450,112],[1650,60],[1800,60],[1900,60],[330,20],[180,20],[40,300],[120,300]];
 const scene=document.getElementById('scene');
+scene.style.setProperty('--fl',(24*U)+'px');   // ความสูง 1 ชั้น = 24 หน่วย → แถวหน้าต่าง 1 แถวต่อชั้น
 const el=(c,st,p=scene)=>{const d=document.createElement('div');d.className=c;if(st)d.style.cssText=st;p.appendChild(d);return d};
 el('ground');
 // ถนนโค้งตามเส้นสีแดง (มุมซ้ายบน → ถนนหลัก)
 [[80,10],[200,8],[330,12],[390,22],[430,45],[460,72],[520,90]].reduce((a,b)=>{
-  const L=Math.hypot(b[0]-a[0],b[1]-a[1])+8,ang=Math.atan2(b[1]-a[1],b[0]-a[0])*180/Math.PI;
-  el('flat road',`left:${a[0]*U}px;top:${(a[1]-7)*U}px;width:${L*U}px;height:${14*U}px;transform-origin:0 50%;transform:rotate(${ang}deg)`);return b});
-FLAT.forEach(([c,x,y,w,d])=>el('flat '+c,`left:${x*U}px;top:${y*U}px;width:${w*U}px;height:${d*U}px`));
+  const L=Math.hypot(b[0]-a[0],(b[1]-a[1])*SY)+8,ang=Math.atan2((b[1]-a[1])*SY,b[0]-a[0])*180/Math.PI;
+  el('flat road',`left:${a[0]*U}px;top:${a[1]*UY-7*RW*U}px;width:${L*U}px;height:${14*RW*U}px;transform-origin:0 50%;transform:rotate(${ang}deg)`);return b});
+FLAT.forEach(([c,x,y,w,d])=>{const road=/road/.test(c),v=/ v/.test(c);   // ถนนกว้างขึ้น RW เท่า (ขยายจากแนวกึ่งกลาง)
+  if(road&&v){const nw=w*RW;x-=(nw-w)/2;w=nw}else if(road){const nd=d*RW;y-=(nd-d)/2;d=nd}
+  el('flat '+c,`left:${x*U}px;top:${y*UY}px;width:${w*U}px;height:${d*UY}px`)});
 
 function face(p,cls,st){return el('f '+cls,st,p)}
 function building(b){
-  const w=b.w*U,d=b.d*U,h=b.h*U;
-  const g=el('b',`left:${b.x*U}px;top:${b.y*U}px;width:${w}px;height:${d}px;--w:${b.wc};--r:${b.rc}`,b._into||scene);
+  const w=b.w*U,d=b.d*UY,h=b.h*U;
+  const g=el('b',`left:${b.x*U}px;top:${b.y*UY}px;width:${w}px;height:${d}px;--w:${b.wc};--r:${b.rc}`,b._into||scene);
   if(b._into)g.style.cssText+=';position:absolute';
   g.dataset.n=b.n;
   if(b.s==='plaza'){el('flat pave',`left:0;top:0;width:${w}px;height:${d}px;border-radius:10px`,g);return g}
@@ -204,18 +214,18 @@ const G={};B.forEach(b=>{const g=building(b);if(b.n)G[b.n]=g});
 
 // ป้ายหมุด ต้นไม้ และเสาธง (หันหน้าเข้าหากล้องเสมอ)
 const bills=[];
-function billboard(x,y,z,html,cls){const bb=el('bb',`left:${x*U}px;top:${y*U}px`);bb.dataset.z=z;bb.innerHTML=html;if(cls)bb.firstChild.className+=' '+cls;bills.push(bb);return bb}
+function billboard(x,y,z,html,cls){const bb=el('bb',`left:${x*U}px;top:${y*UY}px`);bb.dataset.z=z;bb.innerHTML=html;if(cls)bb.firstChild.className+=' '+cls;bills.push(bb);return bb}
 const TV=['','t2','t3'],TS=['','big','small'];
 TREES.push([470,60],[470,120],[470,200],[1320,140],[1320,220],[1600,250],[1600,300],[1760,20],[1880,110],[950,300],[1230,300],[560,240],[40,150],[40,220]);
 TREES.forEach(([x,y],i)=>billboard(x,y,0,`<div class="tree ${TV[i%3]} ${TS[(i*7)%3]}"><i></i><b style="animation-delay:${-(i%7)*.45}s"></b></div>`));
 // แนวรั้วต้นไม้รอบสนาม, พุ่มไม้ริมถนน, ประตูโกล, ม้านั่ง
-[['hedge',60,254,380,6],['hedge',60,40,380,5]].forEach(([c,x,y,w,d])=>el('flat '+c,`left:${x*U}px;top:${y*U}px;width:${w*U}px;height:${d*U}px`));
+[['hedge',60,254,380,6],['hedge',60,40,380,5]].forEach(([c,x,y,w,d])=>el('flat '+c,`left:${x*U}px;top:${y*UY}px;width:${w*U}px;height:${d*U}px`));
 for(let x=520;x<1300;x+=60)billboard(x,103,0,'<div class="bush"></div>');
 for(let x=1340;x<1580;x+=50)billboard(x,218,0,'<div class="bush"></div>');
 billboard(66,148,0,'<div class="goal"></div>');billboard(434,148,0,'<div class="goal"></div>');
 [[700,238],[760,110],[1010,240],[1260,110],[1400,258],[1500,258]].forEach(([x,y])=>billboard(x,y,0,'<div class="bench"></div>'));
 // เงาเมฆบนพื้น
-[0,-20,-40].forEach((d,i)=>el('shadow',`top:${[40,160,260][i]*U}px;animation-delay:${d}s`));
+[0,-20,-40].forEach((d,i)=>el('shadow',`top:${[40,160,260][i]*UY}px;animation-delay:${d}s`));
 billboard(985,165,9*U,'<div class="flagp"></div>');   // เสาธงกลางหน้าอาคาร 8 (บนแท่น)
 const MOV=[];
 const mover=(html,cls,x,y,z,vx,x0,x1)=>{const bb=billboard(x,y,z,`<div class="${cls}">${html}</div>`);MOV.push({bb,x,y,vx,x0,x1,z});return bb};
@@ -226,7 +236,7 @@ const stepMov=()=>MOV.forEach(m=>{m.x+=m.vx;if(m.x>m.x1)m.x=m.x0;if(m.x<m.x0)m.x
 const pins={};
 // อาคารเลข 0 = ห้องน้ำ: ใส่สัญลักษณ์ห้องน้ำเล็ก ๆ
 B.filter(b=>!b.n&&!b.nowc).forEach(b=>billboard(b.x+b.w/2,b.y+b.d/2,b.h*U+14,'<div class="wc" title="ห้องน้ำ">🚻</div>'));
-B.filter(b=>b.n).forEach(b=>{const bb=billboard(b.x+b.w/2,b.y+b.d/2,b.h*U+(b.s==='gable'?16:b.s==='vault'?22:b.s==='plaza'?46:6),`<div class="pin"><span><em>${b.n}</em></span></div>`);
+B.filter(b=>b.n).forEach(b=>{const bb=billboard(b.x+b.w/2,b.y+b.d/2,(b.lift||0)*U+b.h*U+(b.s==='gable'?Math.min(b.d*UY*.45,40):b.s==='vault'?b.d*UY*.35:0)+(b.s==='plaza'?46:22),`<div class="pin"><span><em>${b.n}</em></span></div>`);
   bb.firstChild.addEventListener('click',()=>{if(!moved)select(b.n)});pins[b.n]=bb.firstChild});
 
 // รายการอาคาร
@@ -247,29 +257,53 @@ function select(n,focus){
 }
 
 // กล้อง: หมุน (rot) เอียง (tilt) ซูม (zoom)
-let t0=0,rot=0,tilt=55,zoom=1,auto=true,moved=false;
-const fit=()=>Math.min((innerWidth-(document.body.classList.contains('has-legend')&&innerWidth>900?330:40))/1150,innerHeight/420)*1.08;
+let camX=0,camY=0,panX=0,panY=0,t0=0,rot=0,tilt=55,zoom=1,auto=true,moved=false;
+const fit=()=>Math.min(innerWidth/1500,innerHeight/430);   // ขยายให้เต็มจอ (ด้านข้างล้นได้ ใช้ 2 นิ้วเลื่อนดู)
 function render(){
-  scene.style.transform=`scale(${zoom*fit()}) rotateX(${tilt}deg) rotateZ(${rot}deg)`;
+  scene.style.transform=`translate(${panX}px,${panY}px) scale(${zoom*fit()}) rotateX(${tilt}deg) rotateZ(${rot}deg) translate(${-camX}px,${-camY}px)`;
   bills.forEach(bb=>bb.style.transform=`translateZ(${bb.dataset.z}px) rotateZ(${-rot}deg) rotateX(${-tilt}deg)`);
 }
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-(function loop(){if(!reduce)stepMov();if(auto&&!reduce){t0+=.004;rot=Math.sin(t0)*18;render()}requestAnimationFrame(loop)})();
+requestAnimationFrame(function loop(){stepCam();if(!reduce)stepMov();if(auto&&!reduce){t0+=.004;rot=Math.sin(t0)*18;render()}requestAnimationFrame(loop)});
 
-const view=document.getElementById('view'),pts=new Map();let last=null,pinch0=0,zoom0=1,downAt=null;
+const view=document.getElementById('view'),pts=new Map();let last=null,pinch0=0,zoom0=1,downAt=null,mid0=null,pan0=null;
+const ZMIN=.4,ZMAX=10;
+/* ===== Free cam: ย้ายจุดที่กล้องมอง (camX, camY) ไปได้ทั่วผัง หมุน/เอียงรอบจุดนั้น ===== */
+function toWorld(dx,dy){const s=zoom*fit(),r=rot*Math.PI/180,t=Math.cos(tilt*Math.PI/180)||.2;
+  const wx=dx/s,wy=dy/(s*t);return [wx*Math.cos(r)+wy*Math.sin(r),-wx*Math.sin(r)+wy*Math.cos(r)]}
+function camMove(dx,dy){const [x,y]=toWorld(dx,dy);camX=Math.max(-1100,Math.min(1100,camX+x));camY=Math.max(-300,Math.min(300,camY+y));auto=false;render()}
+const hold={x:0,y:0,r:0,t:0},keys=new Set();
+function stepCam(){let x=hold.x,y=hold.y,r=hold.r,t=hold.t;
+  if(keys.has('w')||keys.has('arrowup'))y-=1;if(keys.has('s')||keys.has('arrowdown'))y+=1;
+  if(keys.has('a')||keys.has('arrowleft'))x-=1;if(keys.has('d')||keys.has('arrowright'))x+=1;
+  if(keys.has('q'))r-=1;if(keys.has('e'))r+=1;if(keys.has('r'))t-=1;if(keys.has('f'))t+=1;
+  if(keys.has('+')||keys.has('='))zoom=Math.min(ZMAX,zoom*1.02);if(keys.has('-'))zoom=Math.max(ZMIN,zoom/1.02);
+  if(x||y)camMove(x*8,y*8);if(r||t){rot+=r*1.2;tilt=Math.max(10,Math.min(85,tilt+t*.8));auto=false;render()}
+  else if(keys.size)render()}
+addEventListener('keydown',e=>{const k=e.key.toLowerCase();if('wasdqerf+-='.includes(k)||k.startsWith('arrow')){keys.add(k);e.preventDefault()}});
+addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));addEventListener('blur',()=>keys.clear());
+document.querySelectorAll('[data-mv]').forEach(b=>{const [k,v]=b.dataset.mv.split(':');
+  const on=e=>{e.preventDefault();hold[k]=+v},off=()=>{hold[k]=0};
+  b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointerleave',off);b.addEventListener('pointercancel',off)});
+// ซูมโดยให้จุดใต้นิ้ว/เมาส์อยู่ที่เดิม
+function zoomAt(z,cx,cy){z=Math.max(ZMIN,Math.min(ZMAX,z));const r=view.getBoundingClientRect(),ox=r.left+r.width/2+panX,oy=r.top+r.height/2+panY,k=z/zoom;panX+=(cx-ox)*(1-k);panY+=(cy-oy)*(1-k);zoom=z;render()}
 view.addEventListener('pointerdown',e=>{pts.set(e.pointerId,{x:e.clientX,y:e.clientY});moved=false;downAt={x:e.clientX,y:e.clientY};
-  if(pts.size===2){const [a,b]=[...pts.values()];pinch0=Math.hypot(a.x-b.x,a.y-b.y);zoom0=zoom}last={x:e.clientX,y:e.clientY}});
+  if(pts.size===2){const [a,b]=[...pts.values()];pinch0=Math.hypot(a.x-b.x,a.y-b.y);zoom0=zoom;mid0={x:(a.x+b.x)/2,y:(a.y+b.y)/2};pan0={x:panX,y:panY};auto=false}last={x:e.clientX,y:e.clientY}});
 view.addEventListener('pointermove',e=>{if(!pts.has(e.pointerId))return;pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
   if(downAt&&Math.hypot(e.clientX-downAt.x,e.clientY-downAt.y)>6){moved=true;auto=false}
-  if(pts.size===2){const [a,b]=[...pts.values()];zoom=Math.max(.6,Math.min(2.6,zoom0*Math.hypot(a.x-b.x,a.y-b.y)/pinch0));render();return}
+  if(pts.size===2){const [a,b]=[...pts.values()],m={x:(a.x+b.x)/2,y:(a.y+b.y)/2};
+    camMove(-(m.x-mid0.x),-(m.y-mid0.y));mid0=m;   // สองนิ้วลาก = เลื่อนกล้องไปทั่วผัง
+    zoomAt(zoom0*Math.hypot(a.x-b.x,a.y-b.y)/pinch0,m.x,m.y);return}
+  if(e.shiftKey||e.buttons===2||e.buttons===4){camMove(-(e.clientX-last.x),-(e.clientY-last.y));last={x:e.clientX,y:e.clientY};return}
   if(!moved)return;
-  rot-= (e.clientX-last.x)*.3;tilt=Math.max(25,Math.min(75,tilt-(e.clientY-last.y)*.2));last={x:e.clientX,y:e.clientY};render()});
+  rot-= (e.clientX-last.x)*.3;tilt=Math.max(10,Math.min(85,tilt-(e.clientY-last.y)*.2));last={x:e.clientX,y:e.clientY};render()});
 const up=e=>{pts.delete(e.pointerId);if(pts.size===1){last=[...pts.values()][0]}setTimeout(()=>{if(!pts.size)moved=false},0)};
 view.addEventListener('pointerup',up);view.addEventListener('pointercancel',up);
-view.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.6,Math.min(2.6,zoom*(e.deltaY<0?1.1:.9)));render()},{passive:false});
-document.getElementById('zin').onclick=()=>{zoom=Math.min(2.6,zoom*1.2);render()};
-document.getElementById('zout').onclick=()=>{zoom=Math.max(.6,zoom/1.2);render()};
-document.getElementById('reset').onclick=()=>{rot=0;tilt=55;zoom=1;auto=true;select(null);cur=null;render()};
+view.addEventListener('wheel',e=>{e.preventDefault();auto=false;zoomAt(zoom*(e.deltaY<0?1.12:.89),e.clientX,e.clientY)},{passive:false});
+view.addEventListener('contextmenu',e=>e.preventDefault());
+document.getElementById('zin').onclick=()=>{zoom=Math.min(ZMAX,zoom*1.3);render()};
+document.getElementById('zout').onclick=()=>{zoom=Math.max(ZMIN,zoom/1.3);render()};
+document.getElementById('reset').onclick=()=>{rot=0;tilt=55;zoom=1;panX=0;panY=0;camX=0;camY=0;auto=true;select(null);cur=null;render()};
 const setLegend=on=>{document.body.classList.toggle('has-legend',on);render()};
 document.getElementById('lclose').onclick=()=>setLegend(false);document.getElementById('lopen').onclick=()=>setLegend(true);
 setLegend(false);
