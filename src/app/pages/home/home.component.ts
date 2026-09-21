@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, NgZone, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { SCHOOL, DIMENSIONS, EVAL_LINK } from '../../data/school.data';
+import { SCHOOL, DIMENSIONS } from '../../data/school.data';
 import { RevealDirective } from '../../shared/directives/reveal.directive';
 
 /** รายการในสารบัญหน้าแรก — แก้ภาพหรือข้อความได้ที่นี่ที่เดียว */
@@ -41,11 +41,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       no: '★', name: 'รางวัลเชิงประจักษ์',
       sub: 'รางวัลของนักเรียนและครู พร้อมภาพหลักฐานเชิงประจักษ์ ระดับนานาชาติ ระดับชาติ และระดับภูมิภาค',
       path: '/awards', image: 'gallery/d1/g02.jpg'
-    },
-    {
-      no: '↗', name: EVAL_LINK.label,
-      sub: 'แบบฟอร์มสำหรับคณะกรรมการเลือกรายการอาหารและชุดการแสดงในวันประเมิน (เปิดในแท็บใหม่)',
-      url: EVAL_LINK.url, image: 'gallery/d1/g16.jpg'
     }
   ];
 

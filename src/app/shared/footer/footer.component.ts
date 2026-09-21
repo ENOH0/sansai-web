@@ -13,7 +13,7 @@ import { SCHOOL, NAV_ITEMS } from '../../data/school.data';
 })
 export class FooterComponent {
   readonly school = SCHOOL;
-  readonly items = NAV_ITEMS.filter(i => i.path !== '/');
+  readonly items = NAV_ITEMS.filter(i => i.path !== '/' && i.path !== '/dashboard');
   /** แปลงเป็นปีพุทธศักราช */
   readonly year = new Date().getFullYear() + 543;
 }

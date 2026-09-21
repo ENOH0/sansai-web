@@ -50,7 +50,8 @@ export class AwardsComponent implements OnInit, OnDestroy {
     '/dimension-3': 'ด้านที่ 3 การบริหารและการจัดการศึกษา',
     '/dimension-4': 'ด้านที่ 4 การจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ',
     '/dimension-5': 'ด้านที่ 5 ความดีเด่นของสถานศึกษา',
-    '/': 'หน้าแรก'
+    '/dashboard': 'หน้าแรก',
+    '/': 'หน้าหลัก'
   };
 
   get backLabel(): string {

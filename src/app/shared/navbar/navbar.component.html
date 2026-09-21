@@ -1,6 +1,6 @@
 <header class="nav" [class.is-scrolled]="scrolled()">
   <div class="wrap-wide nav-inner">
-    <a class="brand" routerLink="/" (click)="close()">
+    <a class="brand" routerLink="/dashboard" (click)="close()">
       <img class="brand-mark" src="school-logo.png" alt="ตราโรงเรียนสันทรายวิทยาคม" />
       <span class="brand-text">
         <span class="brand-name">{{ school.name }}</span>
@@ -13,10 +13,7 @@
          class="nav-link"
          [routerLink]="item.path"
          routerLinkActive="is-active"
-         [routerLinkActiveOptions]="{ exact: item.path === '/' }">{{ item.short }}</a>
-
-      <a class="nav-link" [href]="evalLink.url" target="_blank" rel="noopener"
-         [attr.aria-label]="evalLink.label">{{ evalLink.short }}</a>
+         [routerLinkActiveOptions]="{ exact: item.path === '/' || item.path === '/dashboard' }">{{ item.short }}</a>
     </nav>
 
     <button class="nav-toggle" type="button"
@@ -46,9 +43,6 @@
      class="nav-link"
      [routerLink]="item.path"
      routerLinkActive="is-active"
-     [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+     [routerLinkActiveOptions]="{ exact: item.path === '/' || item.path === '/dashboard' }"
      (click)="close()">{{ item.label }}</a>
-
-  <a class="nav-link" [href]="evalLink.url" target="_blank" rel="noopener"
-     (click)="close()">{{ evalLink.label }}</a>
 </nav>

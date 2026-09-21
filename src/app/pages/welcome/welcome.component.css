@@ -1,0 +1,83 @@
+:host { display: block; }
+.wl { position: fixed; inset: 0; z-index: 50; overflow: hidden; background: #06122b; color: #fff; cursor: pointer;
+  -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; touch-action: manipulation; }
+.wl.is-menu { cursor: default; }
+.wl-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: filter .6s var(--ease), transform .8s var(--ease); }
+.wl.is-menu .wl-video { filter: blur(6px) brightness(.88) saturate(1.15); transform: scale(1.04); }
+.wl-shade { position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 50%, rgba(6,18,43,.34) 0%, rgba(6,18,43,.12) 60%, rgba(6,18,43,.3) 100%);
+  opacity: 0; transition: opacity .6s var(--ease); }
+.wl.is-menu .wl-shade { opacity: 1; }
+
+/* ภาพพักหน้าจอ */
+.wl-idle { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between;
+  padding: max(clamp(20px, 4vw, 44px), env(safe-area-inset-top)) max(clamp(20px, 4vw, 44px), env(safe-area-inset-right)) max(clamp(28px, 5vh, 56px), env(safe-area-inset-bottom)) max(clamp(20px, 4vw, 44px), env(safe-area-inset-left)); animation: wl-fade .6s var(--ease); }
+.wl-brand { display: flex; align-items: center; gap: 14px; text-shadow: 0 2px 10px rgba(0,0,0,.55); }
+.wl-brand img { width: clamp(52px, 6vw, 72px); height: auto; filter: drop-shadow(0 4px 10px rgba(0,0,0,.4)); }
+.wl-name { margin: 0; font-size: clamp(24px, 3vw, 34px); font-weight: 800; line-height: 1.15; }
+.wl-sub { margin: 2px 0 0; font-size: clamp(16px, 1.8vw, 20px); color: var(--gold-400); }
+.wl-tap { align-self: center; position: relative; display: inline-flex; align-items: center; gap: 14px; min-height: 56px; padding: 12px 28px 12px 22px;
+  border: 1px solid rgba(255,255,255,.4); border-radius: 999px; background: rgba(8,24,58,.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  color: #fff; font: inherit; font-size: clamp(20px, 2.2vw, 26px); font-weight: 700; letter-spacing: .3px; cursor: pointer; animation: wl-breathe 2.8s ease-in-out infinite; }
+.wl-tap-ring { width: 16px; height: 16px; border-radius: 50%; background: var(--gold-400); box-shadow: 0 0 0 0 rgba(232,196,106,.7); animation: wl-ping 1.8s ease-out infinite; }
+
+/* เมนู */
+.wl-menu { position: absolute; inset: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+  padding-top: max(32px, env(safe-area-inset-top)); padding-bottom: max(32px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; justify-content: center; padding-left: 20px; padding-right: 20px; text-align: center; animation: wl-fade .45s var(--ease); }
+.wl-menu-logo { width: 78px; height: auto; margin-bottom: 8px; filter: drop-shadow(0 6px 14px rgba(0,0,0,.45)); }
+.wl-title { margin: 0; font-size: clamp(34px, 4.4vw, 52px); font-weight: 800; line-height: 1.15; text-shadow: 0 2px 4px rgba(6,18,43,.55), 0 4px 18px rgba(6,18,43,.6); }
+.wl-lead { display: inline-block; padding: 6px 20px; border-radius: 999px; background: rgba(8,24,58,.78); color: #ffe39a !important; font-weight: 700; text-shadow: none; margin: 10px 0 clamp(24px, 4vh, 40px); font-size: clamp(18px, 2vw, 22px); color: var(--gold-400); }
+.wl-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(14px, 1.8vw, 22px); width: 100%; max-width: 1100px; }
+.wl-grid > * { flex: 0 0 clamp(160px, 16.5vw, 196px); }
+.wl-btn { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; min-height: 170px; padding: 24px 12px 20px; border-radius: 24px; text-decoration: none; color: #fff;
+  background: linear-gradient(160deg, rgba(22,52,110,.9), rgba(10,30,72,.88)); border: 2px solid rgba(255,255,255,.7);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 18px 40px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.3);
+  animation: wl-rise .55s var(--ease) both; animation-delay: calc(var(--i) * 70ms); transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s; }
+.wl-btn.is-main { background: linear-gradient(160deg, #f3d27a, #d4a537); color: #1c2b4d; border-color: rgba(255,240,200,.9); box-shadow: 0 20px 44px rgba(212,165,55,.45), inset 0 1px 0 rgba(255,255,255,.6); }
+.wl-ico { display: grid; place-items: center; width: 68px; height: 68px; margin-bottom: 6px; border-radius: 20px; background: rgba(255,255,255,.16); }
+.wl-btn.is-main .wl-ico { background: rgba(255,255,255,.45); }
+.wl-ico svg { width: 36px; height: 36px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.wl-label { font-size: 25px; font-weight: 800; line-height: 1.1; }
+.wl-sub2 { font-size: 15.5px; opacity: .8; }
+.wl-btn.is-empty { opacity: .72; cursor: default; }
+.wl-soon { position: absolute; top: 10px; right: 10px; padding: 1px 9px; border-radius: 999px; background: rgba(0,0,0,.35); font-size: 13px; font-style: normal; }
+a.wl-btn:active { transform: scale(.97); }
+@media (hover: hover) {
+  a.wl-btn:hover { transform: translateY(-6px); border-color: rgba(255,255,255,.7); box-shadow: 0 26px 50px rgba(0,0,0,.38); }
+}
+.wl-back { margin-top: clamp(22px, 4vh, 36px); min-height: 46px; padding: 8px 22px; border-radius: 999px; border: 1px solid rgba(255,255,255,.35); background: rgba(0,0,0,.25); color: #fff; font: inherit; font-size: 18px; cursor: pointer; }
+
+/* iPad แนวตั้ง (768–1024px): 3 + 2 ปุ่ม ขนาดใหญ่ กดง่าย */
+@media (max-width: 1024px) and (orientation: portrait) {
+  .wl-grid { max-width: 680px; }
+  .wl-grid > * { flex-basis: 200px; }
+  .wl-btn { min-height: 190px; }
+  .wl-ico { width: 76px; height: 76px; }
+  .wl-ico svg { width: 40px; height: 40px; }
+  .wl-label { font-size: 28px; }
+}
+/* iPad แนวนอนความสูงน้อย: ย่อหัวให้ปุ่มอยู่ในจอเดียว */
+@media (orientation: landscape) and (max-height: 800px) {
+  .wl-menu-logo { width: 60px; margin-bottom: 4px; }
+  .wl-lead { margin-bottom: 22px; }
+  .wl-btn { min-height: 160px; padding-top: 20px; }
+}
+@media (max-width: 520px) { .wl-grid > * { flex-basis: calc(50% - 8px); } .wl-btn { min-height: 150px; } }
+
+@keyframes wl-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes wl-rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes wl-breathe { 50% { background: rgba(8,24,58,.62); border-color: rgba(232,196,106,.7); } }
+@keyframes wl-ping { 70% { box-shadow: 0 0 0 14px rgba(232,196,106,0); } 100% { box-shadow: 0 0 0 0 rgba(232,196,106,0); } }
+@media (prefers-reduced-motion: reduce) { .wl-tap, .wl-tap-ring, .wl-btn, .wl-idle, .wl-menu { animation: none; } .wl-video { transition: none; } }
+
+/* ข้อความสำหรับโปรแกรมอ่านหน้าจอเท่านั้น (ไม่แสดงบนจอ) */
+.wl-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* เพิ่มความชัดของปุ่มและตัวหนังสือบนวิดีโอที่สว่าง */
+.wl-label { text-shadow: 0 2px 6px rgba(0,0,0,.45); }
+.wl-sub2 { opacity: 1; color: #e6eeff; font-weight: 600; }
+.wl-btn.is-main .wl-label, .wl-btn.is-main .wl-sub2 { color: #14203d; text-shadow: none; }
+.wl-btn.is-main { border-color: #fff4d0; }
+.wl-btn.is-empty { opacity: .9; }
+.wl-soon { background: rgba(255,255,255,.9); color: #14203d; font-weight: 700; }
+.wl-back { background: rgba(8,24,58,.8); border-color: rgba(255,255,255,.7); font-weight: 700; }

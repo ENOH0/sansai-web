@@ -6,7 +6,15 @@ import { Routes } from '@angular/router';
  */
 export const routes: Routes = [
   {
+    // หน้าต้อนรับกรรมการ (วิดีโอปก + เมนู 5 ปุ่ม)
     path: '',
+    pathMatch: 'full',
+    loadComponent: () => import('./pages/welcome/welcome.component').then(m => m.WelcomeComponent),
+    title: 'ยินดีต้อนรับ — โรงเรียนสันทรายวิทยาคม'
+  },
+  {
+    // หน้าสารบัญ 5 ด้าน (Dashboard)
+    path: 'dashboard',
     loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
     title: 'โรงเรียนสันทรายวิทยาคม — รางวัลพระราชทาน'
   },

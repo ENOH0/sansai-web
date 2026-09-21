@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterLink],
   template: `
-    <a class="home-fab" routerLink="/" aria-label="กลับหน้าแรก">
+    <a class="home-fab" routerLink="/dashboard" aria-label="กลับหน้าแรก">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
            stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M3 10.5 12 3l9 7.5" />

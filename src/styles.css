@@ -679,3 +679,7 @@ table.tbl tbody tr.total td { color: var(--navy-800); }
   .model-intro-list li { font-size: 19.5px; }
   .model-intro-point { font-size: 20.5px; }
 }
+
+/* หน้าต้อนรับเต็มจอ: ซ่อนแถบเมนู ส่วนท้าย และปุ่มขึ้นบน */
+html.is-welcome app-navbar, html.is-welcome app-footer, html.is-welcome .to-top { display: none !important; }
+html.is-welcome, html.is-welcome body { overflow: hidden; }
