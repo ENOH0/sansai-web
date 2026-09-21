@@ -27,6 +27,8 @@
               [attr.width]="barW()"
               [attr.height]="Math.max(0, H - PB - yPos(s.values[gi]))"
               [attr.fill]="fillOf(s, si, gi)"
+              [attr.stroke]="s.stroke ?? null"
+              [attr.stroke-width]="s.stroke ? 1 : null"
               rx="4"
               [style.animation-delay]="(gi * 110 + si * 70) + 'ms'" />
         <text class="axis-text" *ngIf="showValues"

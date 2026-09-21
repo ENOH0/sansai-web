@@ -47,6 +47,8 @@ export interface BarSeries {
   name: string;
   values: number[];
   color?: string;
+  /** สีเส้นขอบแท่ง (ถ้าไม่ระบุ = ไม่มีเส้นขอบ) */
+  stroke?: string;
 }
 
 /** แถวหนึ่งแถวในแถบเปรียบเทียบแนวนอน */

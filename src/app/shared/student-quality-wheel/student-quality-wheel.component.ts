@@ -34,7 +34,7 @@ export class StudentQualityWheelComponent {
     {
       letter: 'C', title: 'Curriculum Development', thaiTitle: 'พัฒนาหลักสูตรให้ตอบโจทย์ผู้เรียน', x: 50, y: 16, light: false,
       evidence: [
-        { src: '/evidence/academic-model/curriculum/01-plan.jpg', caption: 'P - ประชุมวางแผนการพัฒนาหลักสูตรสถานศึกษาอิงฐานสมรรถนะของโรงเรียนในโครงการพื้นที่นวัตกรรม' },
+        { src: '/evidence/academic-model/curriculum/01-plan-v2.jpg', caption: 'P - ประชุมวางแผนการพัฒนาหลักสูตรสถานศึกษาอิงฐานสมรรถนะของโรงเรียนในโครงการพื้นที่นวัตกรรม' },
         { src: '/evidence/academic-model/curriculum/02-do.jpg', caption: 'D - การอบรมพัฒนาหลักสูตรสถานศึกษาอิงฐานสมรรถนะของโรงเรียนในโครงการพื้นที่นวัตกรรม' },
         { src: '/evidence/academic-model/curriculum/03-check.jpg', caption: 'C - หลักสูตรสถานศึกษา' },
         { src: '/evidence/academic-model/curriculum/04-act.jpg', caption: 'A - การสรุปผลการใช้หลักสูตรสถานศึกษา' }

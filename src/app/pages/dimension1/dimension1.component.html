@@ -241,7 +241,7 @@
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
       <div class="stack">
-        <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" title="ร้อยละของผู้เรียนที่มีผลการคัดกรองการอ่าน–เขียนภาษาไทยในระดับดี"
+        <app-bar-chart class="d1-pastel-chart" [barColors]="thaiPalette" valueColor="#3b4a66" title="ร้อยละของผู้เรียนที่มีผลการคัดกรองการอ่าน–เขียนภาษาไทยในระดับดี"
           subtitle="จำแนกรายระดับชั้น ปีการศึกษา 2566–2568" [labels]="d.section11.thai.years" [series]="thaiBars"
           [max]="100" [valueFontSize]="10" [note]="d.section11.thai.conclusion" />
 
@@ -423,7 +423,7 @@
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
       <div class="stack">
-        <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" title="ร้อยละของนักเรียนที่มีผลการเรียนระดับดีขึ้นไป (เกรด 3–4)"
+        <app-bar-chart class="d1-pastel-chart" [barColors]="vivid" valueColor="#3b4a66" title="ร้อยละของนักเรียนที่มีผลการเรียนระดับดีขึ้นไป (เกรด 3–4)"
           subtitle="จำแนกตามกลุ่มสาระการเรียนรู้ ปีการศึกษา 2566–2568" [labels]="d.section11.curriculumProgress.years"
           [series]="curriculumProgressBars" [max]="100" [valueFontSize]="9"
           [note]="d.section11.curriculumProgress.conclusion" />

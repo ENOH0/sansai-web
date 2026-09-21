@@ -650,3 +650,7 @@
   paint-order: stroke fill;
   text-shadow: 0 1px 4px rgba(6, 18, 44, .6);
 }
+
+/* กราฟพาสเทล 1.1.2 และ 1.1.6: เส้นแกนและเส้นตารางเข้มขึ้น */
+:host ::ng-deep .d1-pastel-chart .axis-line { stroke: #5b6b86; stroke-width: 1.5; }
+:host ::ng-deep .d1-pastel-chart .grid-line { stroke: #c9d3e3; }

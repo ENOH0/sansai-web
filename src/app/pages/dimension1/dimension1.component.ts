@@ -180,6 +180,10 @@ export class Dimension1Component implements OnInit {
   /** สีพาสเทลสำหรับกราฟด้านที่ 1 — ในกราฟเดียวกันไม่มีสีซ้ำ (แดงพาสเทล #f26b6b เก็บไว้ใช้กับเส้นเกณฑ์/ค่าเฉลี่ย) */
   readonly vivid = ['#5b9cf5', '#ffb347', '#4fd1a0', '#a17ff5', '#4cc9e6', '#f57fb3', '#a4dc5c', '#ff8f66', '#4fcfc0', '#8290f5', '#f5d04c', '#d77ff0'];
   private readonly palette = this.vivid;
+  /** สีกราฟ 1.1.2 แยกจากกราฟอื่น (เช่น 1.1.6) ไม่ให้ดูคล้ายกัน */
+  readonly thaiPalette = ['#a8d8ea', '#ffd3a5', '#c3b1e1', '#b5e7c4', '#ffb7c5', '#fdf1a6', '#b8e0f6', '#f7c8e0', '#cde8b5', '#d9c8f5', '#ffe0b5', '#b2ebe0'];
+  /** เส้นขอบแท่งกราฟ 1.1.2 = สีเดียวกับแท่งแต่เข้มขึ้น (เรียงตามลำดับเดียวกับ thaiPalette) */
+  readonly thaiStroke = ['#5ba7c4', '#e8a060', '#8c73bf', '#6fbf88', '#e57f96', '#d6c44e', '#6fb3dc', '#d68fb3', '#93bf6e', '#9f86d9', '#e8ad62', '#5fc2b0'];
 
   // ---------- O-NET ม.6 ----------
   readonly onetHeaders = [
@@ -264,9 +268,10 @@ export class Dimension1Component implements OnInit {
 
   readonly thaiBars: BarSeries[] = [
     ...DIM1.section11.thai.rows.map((r, i) => ({
-      name: r.name, values: r.values, color: this.gradePalette[i % this.gradePalette.length]
+      name: r.name, values: r.values, color: this.thaiPalette[i % this.thaiPalette.length],
+      stroke: this.thaiStroke[i % this.thaiStroke.length]
     })),
-    { name: 'ค่าเฉลี่ยรวม', values: DIM1.section11.thai.average, color: '#f26b6b' }
+    { name: 'ค่าเฉลี่ยรวม', values: DIM1.section11.thai.average, color: '#f4a7a7', stroke: '#d86a6a' }
   ];
 
   readonly thaiRows: TableRow[] = [
@@ -559,8 +564,13 @@ export class Dimension1Component implements OnInit {
   }];
 
   // ---------- ความก้าวหน้าตามหลักสูตร ----------
+  /** สีกราฟ 1.1.6 โทนพาสเทล (8 กลุ่มสาระ) และเส้นขอบสีเดียวกันที่เข้มขึ้น */
+  readonly progressPalette = ['#b4e4d0', '#ffc4b2', '#b9c6f2', '#fbe7a1', '#e2c2ee', '#a9e1ef', '#f8bfd4', '#cfe3b0'];
+  readonly progressStroke = ['#6fbf9f', '#e88f73', '#7c8fd6', '#d9bf55', '#b789cc', '#62b9cf', '#dc84a6', '#98bd6a'];
   readonly curriculumProgressBars: BarSeries[] = DIM1.section11.curriculumProgress.rows.map((r, i) => ({
-    name: r.name, values: r.values, color: this.palette[i % this.palette.length]
+    name: r.name, values: r.values,
+    color: this.progressPalette[i % this.progressPalette.length],
+    stroke: this.progressStroke[i % this.progressStroke.length]
   }));
   readonly curriculumProgressHeaders = ['กลุ่มสาระการเรียนรู้', 'ปี 2566', 'ปี 2567', 'ปี 2568'];
   readonly curriculumProgressRows: TableRow[] = [

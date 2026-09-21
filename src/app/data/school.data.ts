@@ -173,7 +173,7 @@ export const SCHOOL = {
 export const EVAL_LINK = {
   label: 'เลือกอาหารและการแสดง',
   short: 'เลือกอาหารและการแสดง',
-  url: 'https://script.google.com/a/macros/sansai.ac.th/s/AKfycbxSUUEOc_4398_Cxoh3isL4S2AcImyGIN01fW9JcBm2fXTAR5kh8IbWK2Jc8FxN7mThng/exec'
+  url: 'https://script.google.com/macros/s/AKfycbyZqam9Y7wPRrzUrFr98vsh58elXtzBWrms6yIkXIqbsGKjR6qAgTrxj53LW93GxBJa/exec'
 };
 
 export const NAV_ITEMS = [
