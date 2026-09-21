@@ -26,14 +26,14 @@
               [attr.y]="yPos(s.values[gi])"
               [attr.width]="barW()"
               [attr.height]="Math.max(0, H - PB - yPos(s.values[gi]))"
-              [attr.fill]="colorOf(s, si)"
+              [attr.fill]="fillOf(s, si, gi)"
               rx="4"
               [style.animation-delay]="(gi * 110 + si * 70) + 'ms'" />
         <text class="axis-text" *ngIf="showValues"
               [attr.x]="barX(gi, si) + barW() / 2"
               [attr.y]="yPos(s.values[gi]) - 8"
               text-anchor="middle" [style.font-size.px]="valueFontSize" style="font-weight:700"
-              [attr.fill]="colorOf(s, si)">{{ s.values[gi] | number: valueFormat }}</text>
+              [attr.fill]="valueColor ?? fillOf(s, si, gi)">{{ s.values[gi] | number: valueFormat }}</text>
       </g>
       <text class="axis-text b" [attr.x]="groupCenter(gi)" [attr.y]="H - PB + 26"
             text-anchor="middle">{{ lb }}</text>
@@ -41,7 +41,12 @@
   </svg>
 
   <div class="chart-legend">
-    <span class="legend-item" *ngFor="let s of series; let si = index">
+    <ng-container *ngIf="perBar">
+      <span class="legend-item" *ngFor="let lb of labels; let gi = index">
+        <span class="legend-swatch dot" [style.background]="fillOf(series[0], 0, gi)"></span>{{ lb }}
+      </span>
+    </ng-container>
+    <span class="legend-item" *ngFor="let s of perBar ? [] : series; let si = index">
       <span class="legend-swatch dot" [style.background]="colorOf(s, si)"></span>{{ s.name }}
     </span>
   </div>

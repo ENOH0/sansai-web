@@ -56,7 +56,7 @@
                 [style.animation-delay]="(600 + si * 180 + i * 90) + 'ms'" />
         <text class="axis-text val" *ngIf="showValueFor(si)"
               [attr.x]="xPos(i)" [attr.y]="yPos(v) - 16" text-anchor="middle"
-              [attr.fill]="colorOf(s, si)">{{ v | number: valueFormat }}</text>
+              [attr.fill]="valueColor ?? colorOf(s, si)">{{ v | number: valueFormat }}</text>
       </g>
     </g>
   </svg>

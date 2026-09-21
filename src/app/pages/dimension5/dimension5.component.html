@@ -53,22 +53,35 @@
     </div>
 
     <div class="sec-head" style="margin-top:40px" appReveal>
-      <h2 class="sec-title">ปัจจัยและกลไกสู่ความสำเร็จ</h2>
+      <h2 class="sec-title">ปัจจัยสู่ความสำเร็จ</h2>
       <div class="sec-rule"></div>
     </div>
 
-    <!-- โมเดลนี้แก้ข้อมูลได้โดยตรงที่ public/models/dimension5-success-model.html ในตัวแปร DATA -->
+    <!-- แก้ข้อมูลได้ที่ public/models/d5-factors-model.html -->
     <div class="d5-success-model" appReveal>
       <div class="d5-success-model-frame">
-        <iframe src="/models/dimension5-success-model.html" title="โมเดลปัจจัยและกลไกสู่ความสำเร็จ" loading="lazy" scrolling="no"
-          [style.height.px]="successModelHeight()"></iframe>
+        <iframe src="/models/d5-factors-model.html" title="โมเดลปัจจัยสู่ความสำเร็จ" loading="lazy" scrolling="no"
+          [style.height.px]="factorsHeight()"></iframe>
+      </div>
+    </div>
+
+    <div class="sec-head" style="margin-top:40px" appReveal>
+      <h2 class="sec-title">กลไกสู่ความสำเร็จ</h2>
+      <div class="sec-rule"></div>
+    </div>
+
+    <!-- แก้ข้อมูลได้ที่ public/models/d5-mechanism-gears.html -->
+    <div class="d5-success-model" appReveal>
+      <div class="d5-success-model-frame">
+        <iframe src="/models/d5-mechanism-gears.html" title="โมเดลกลไกสู่ความสำเร็จ" loading="lazy" scrolling="no"
+          [style.height.px]="gearsHeight()"></iframe>
       </div>
     </div>
 
     <!-- วงล้อ BANCHUEN Model รายกิจกรรม — ซ่อนไว้ จนกว่าจะกดการ์ดกิจกรรมในโมเดลด้านบน
          แก้เนื้อหาได้ที่ public/models/banchuen-mechanism-model.html ในตัวแปร DATA -->
     <p class="d5-banchuen-hint" *ngIf="!banchuenOpen()">
-      แตะการ์ด “กิจกรรมดีเด่นที่ 1 / 2 / 3” ในโมเดลด้านบน เพื่อดูองค์ประกอบ BANCHUEN Model ของกิจกรรมนั้น
+      แตะเฟืองกิจกรรมในโมเดลด้านบน เพื่อดูองค์ประกอบ BANCHUEN Model ของกิจกรรมนั้น
     </p>
 
     <div class="d5-banchuen-wrap" *ngIf="banchuenOpen()">

@@ -17,6 +17,8 @@ import { LineSeries, CHART_PALETTE } from '../../core/models';
 })
 export class LineChartComponent {
   @Input() title = '';
+  /** สีตัวเลขบนกราฟ (ไม่ใส่ = ใช้สีเดียวกับแท่ง/เส้น) — ใช้กับกราฟสีพาสเทลให้ตัวเลขอ่านชัด */
+  @Input() valueColor?: string;
   @Input() subtitle = '';
   @Input() note = '';
   @Input() labels: string[] = [];

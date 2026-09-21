@@ -1,0 +1,48 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>กลไกสู่ความสำเร็จ</title><link rel="stylesheet" href="/fonts/th-sarabun.css"><style>
+*{box-sizing:border-box}body{margin:0;background:transparent;font-family:'TH SarabunPSK Web','TH SarabunPSK',Tahoma,sans-serif;color:#fff}
+.page{max-width:1100px;margin:0 auto;padding:4px 0 8px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.gear{cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;outline:none}
+.gear:focus{outline:none}
+svg,body{-webkit-tap-highlight-color:transparent}
+.gear .spin{transform-box:fill-box;transform-origin:center;animation:cw 26s linear infinite}
+.gear.ccw .spin{animation-name:ccw}
+.gear path{stroke:rgba(255,255,255,.55);stroke-width:2;filter:drop-shadow(0 12px 18px rgba(6,18,44,.45))}
+.gear .core{fill:rgba(255,255,255,.95)}
+.gear .no{font-size:17px;font-weight:800;text-anchor:middle}
+.gear .nm{font-size:19px;font-weight:800;fill:#0e2a5c;text-anchor:middle}
+.gear:focus-visible{outline:none}.gear:focus-visible .core{stroke:#e8c46a;stroke-width:5}
+.gear .ring{fill:none;stroke:#e8c46a;stroke-width:5;opacity:0;transition:opacity .25s}
+.gear.on .ring{opacity:0}
+.gear path{transition:filter .35s,stroke .35s}
+.gear.on path{stroke:#fff;stroke-width:4;filter:drop-shadow(0 0 10px var(--gc)) drop-shadow(0 0 26px var(--gc));animation:glow 2.2s ease-in-out infinite}
+@keyframes glow{50%{filter:drop-shadow(0 0 16px var(--gc)) drop-shadow(0 0 42px var(--gc))}}
+.bc{font-size:15px;font-weight:800;text-anchor:middle;fill:#ffe29a;letter-spacing:4px}
+.hint{margin:6px 0 0;text-align:center;color:#dbe6f7;font-size:17px;text-shadow:0 2px 10px rgba(6,18,44,.8)}
+@keyframes cw{to{transform:rotate(360deg)}}@keyframes ccw{to{transform:rotate(-360deg)}}
+@media (hover:hover){.gear:hover .ring{opacity:.6}}
+@media (prefers-reduced-motion:reduce){.gear .spin,.gear.on path{stroke:#fff;stroke-width:4;filter:drop-shadow(0 0 10px var(--gc)) drop-shadow(0 0 26px var(--gc));animation:glow 2.2s ease-in-out infinite}}
+</style></head><body><main class="page">
+<svg id="svg" viewBox="0 0 900 400" role="group" aria-label="เฟืองกลไกสู่ความสำเร็จ 3 กิจกรรม"></svg>
+<p class="hint">แตะเฟืองกิจกรรมเพื่อเปิด BANCHUEN Model ของกิจกรรมนั้น</p>
+</main><script>
+const G=[{x:190,y:190,c:['#f06596','#c2306a'],n:'กิจกรรมดีเด่นที่ 1',t:['สวนพฤกษศาสตร์','โรงเรียน']},
+{x:450,y:210,c:['#f7a24b','#d06a1c'],n:'กิจกรรมดีเด่นที่ 2',t:['ส่งเสริมความเป็นเลิศ','ตามศักยภาพ'],ccw:1},
+{x:710,y:190,c:['#b07ae6','#7a3cc4'],n:'กิจกรรมดีเด่นที่ 3',t:['ประกันคุณภาพ','สู่ IQA Award']}];
+function gear(R,r,n){let d='';for(let i=0;i<n;i++){const a=i*2*Math.PI/n,s=Math.PI/n;const p=[[r,a-s*.55],[R,a-s*.32],[R,a+s*.32],[r,a+s*.55]];p.forEach(([rr,aa],k)=>{d+=(i===0&&k===0?'M':'L')+(rr*Math.cos(aa)).toFixed(1)+' '+(rr*Math.sin(aa)).toFixed(1)})}return d+'Z'}
+const path=gear(138,116,14);let on=-1;
+document.getElementById('svg').innerHTML=`<defs>${G.map((g,i)=>`<linearGradient id="g${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${g.c[0]}"/><stop offset="1" stop-color="${g.c[1]}"/></linearGradient>`).join('')}</defs>`+
+G.map((g,i)=>`<g class="gear${g.ccw?' ccw':''}" style="--gc:${g.c[0]}" data-i="${i}" tabindex="0" role="button" aria-label="${g.n} ${g.t.join(' ')} เปิด BANCHUEN Model" transform="translate(${g.x} ${g.y})">
+<g class="spin"><path d="${path}" fill="url(#g${i})" transform="rotate(${g.ccw?12.9:0})"/></g>
+<circle class="ring" r="100"/><circle class="core" r="92"/>
+<text class="no" y="-30" fill="${g.c[1]}">${g.n}</text><text class="nm" y="2">${g.t[0]}</text><text class="nm" y="26">${g.t[1]}</text>
+<text class="bc" y="178">B A N C H U E N</text></g>`).join('');
+function mark(){document.querySelectorAll('.gear').forEach(g=>g.classList.toggle('on',+g.dataset.i===on))}
+addEventListener('message',e=>{if(e.origin===location.origin&&e.data&&e.data.type==='d5-gears-select'){const i=Number(e.data.index);if(Number.isFinite(i)){on=i;mark()}}});
+function open(i){on=on===i?-1:i;document.querySelectorAll('.gear').forEach(g=>g.classList.toggle('on',+g.dataset.i===on));
+if(parent!==window)parent.postMessage({type:'d5-banchuen-open',index:i},location.origin)}
+document.querySelectorAll('.gear').forEach(g=>{g.onclick=()=>open(+g.dataset.i);g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open(+g.dataset.i)}}});
+function rep(){requestAnimationFrame(()=>{const h=Math.ceil(document.querySelector('.page').getBoundingClientRect().height+10);if(parent!==window)parent.postMessage({type:'d5-gears-height',height:h},location.origin)})}
+new ResizeObserver(rep).observe(document.body);addEventListener('load',rep);
+</script></body></html>

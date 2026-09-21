@@ -16,10 +16,11 @@ export class SmartWheelComponent implements AfterViewInit {
   @Input() hubTitle = 'Student';
   @Input() hubSubtitle = '';
   @Input() theme = '';
+  @Input() startIndex = 0;   // ตัวที่เปิดขึ้นมาก่อน (ลำดับใน items)
 
   ngAfterViewInit(): void {
     const el = this.host.nativeElement;
     el.innerHTML = smartWheelHtml(this.items, this.hubLabel, this.hubTitle, this.hubSubtitle, this.theme);
-    initSmartWheel(el, this.items);
+    initSmartWheel(el, this.items, this.startIndex);
   }
 }

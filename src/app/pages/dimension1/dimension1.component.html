@@ -178,7 +178,7 @@
       <div class="d1-onet-narrative" appReveal>
         <p *ngFor="let paragraph of d.section11.onet.narrative">
           <strong *ngIf="paragraph.strong; else normalParagraph">{{ paragraph.text }}</strong>
-          <ng-template #normalParagraph>{{ paragraph.text }}</ng-template>
+          <ng-template #normalParagraph><ng-container *ngFor="let part of boldParts(paragraph.text, paragraph.bold)"><strong class="d1-hl" *ngIf="part.b; else plainPart">{{ part.t }}</strong><ng-template #plainPart>{{ part.t }}</ng-template></ng-container></ng-template>
         </p>
       </div>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
@@ -194,7 +194,7 @@
           <div class="d1-onet-option d1-onet-option--row">
             <div class="d1-onet-option-label">ตัวเลือก A · กราฟ 3 ใบเรียงแนวตั้ง</div>
             <div class="grid grid-3">
-              <app-bar-chart *ngFor="let chart of onetHighlights" [title]="chart.title" [subtitle]="chart.subtitle"
+              <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" *ngFor="let chart of onetHighlights" [title]="chart.title" [subtitle]="chart.subtitle"
                 [labels]="d.section11.onet.m6.years" [series]="chart.series" [max]="60" valueFormat="1.2-2"
                 [valueFontSize]="12" [note]="chart.note" />
             </div>
@@ -210,7 +210,7 @@
         <app-data-table [caption]="d.section11.onet.m6.caption" [headers]="onetHeaders" [rows]="m6Rows" />
 
         <!-- ม.3 พัฒนาการ -->
-        <app-bar-chart title="พัฒนาการผลสัมฤทธิ์ O-NET ชั้น ม.3" subtitle="ค่าเฉลี่ยระดับโรงเรียน ปีการศึกษา 2566–2568"
+        <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" title="พัฒนาการผลสัมฤทธิ์ O-NET ชั้น ม.3" subtitle="ค่าเฉลี่ยระดับโรงเรียน ปีการศึกษา 2566–2568"
           [labels]="d.section11.onet.m3Trend.years" [series]="m3TrendBars" [showEvidence]="true"
           [note]="d.section11.onet.m3Trend.conclusion + '  ' + d.section11.onet.m3Trend.footnote" />
 
@@ -241,7 +241,7 @@
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
       <div class="stack">
-        <app-bar-chart title="ร้อยละของผู้เรียนที่มีผลการคัดกรองการอ่าน–เขียนภาษาไทยในระดับดี"
+        <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" title="ร้อยละของผู้เรียนที่มีผลการคัดกรองการอ่าน–เขียนภาษาไทยในระดับดี"
           subtitle="จำแนกรายระดับชั้น ปีการศึกษา 2566–2568" [labels]="d.section11.thai.years" [series]="thaiBars"
           [max]="100" [valueFontSize]="10" [note]="d.section11.thai.conclusion" />
 
@@ -285,7 +285,7 @@
         [ngTemplateOutletContext]="{ text: d.section11.english.narrative }"></ng-container>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
-      <app-bar-chart title="ร้อยละของผู้เรียนที่มีผลสัมฤทธิ์ภาษาอังกฤษระดับดีขึ้นไป (ระดับคะแนน 3–4)"
+      <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" title="ร้อยละของผู้เรียนที่มีผลสัมฤทธิ์ภาษาอังกฤษระดับดีขึ้นไป (ระดับคะแนน 3–4)"
         subtitle="ปีการศึกษา 2566–2568" [labels]="d.section11.english.years" [series]="engSeries"
         [note]="d.section11.english.conclusion" />
 
@@ -332,11 +332,11 @@
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
       <div class="stack">
-        <app-bar-chart title="ร้อยละของผู้เรียนที่มีผลการเรียนรายวิชา IS ในระดับ 3–4"
+        <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" title="ร้อยละของผู้เรียนที่มีผลการเรียนรายวิชา IS ในระดับ 3–4"
           subtitle="จำแนกตามระดับชั้น ม.2 และ ม.5 ปีการศึกษา 2566–2568" [labels]="isYears" [series]="isSeries"
           [note]="'ค่าเฉลี่ยรวม 3 ปี ร้อยละ ' + d.section11.thinking.isAverage + ' แสดงถึงความสามารถในการแก้ปัญหา คิดวิเคราะห์ คิดริเริ่มสร้างสรรค์ และสามารถอภิปรายแลกเปลี่ยนความคิดเห็นอย่างเป็นขั้นเป็นตอน'" />
 
-        <app-line-chart title="ร้อยละของนักเรียนที่มีผลการประเมินการอ่าน คิดวิเคราะห์ เขียนสื่อความ ในระดับดีขึ้นไป"
+        <app-line-chart valueColor="#3b4a66" title="ร้อยละของนักเรียนที่มีผลการประเมินการอ่าน คิดวิเคราะห์ เขียนสื่อความ ในระดับดีขึ้นไป"
           subtitle="ภาพรวมทุกระดับชั้น ปีการศึกษา 2566–2568" [labels]="d.section11.thinking.years" [series]="readSeries"
           [min]="80" [max]="100" [note]="d.section11.thinking.conclusion" />
 
@@ -371,9 +371,22 @@
 
       <div class="grid grid-2">
         <div>
-          <app-bar-chart title="ร้อยละของผู้เรียนที่มีผลสัมฤทธิ์รายวิชาเทคโนโลยีระดับ 3–4"
+          <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" title="ร้อยละของผู้เรียนที่มีผลสัมฤทธิ์รายวิชาเทคโนโลยีระดับ 3–4"
             subtitle="ปีการศึกษา 2566–2568" [labels]="d.section11.ict.years" [series]="ictSeries"
  [note]="d.section11.ict.conclusion" />
+
+          <!-- กิจกรรมด้านเทคโนโลยี · แก้ชื่อ/รูปได้ที่ ictActivities ใน dimension1.component.ts -->
+          <div class="d1-environment-activities d1-ict-activities">
+            <article class="d1-environment-activity" *ngFor="let activity of ictActivities; let i = index" appReveal="left"
+              [revealDelay]="i * 70">
+              <h4>{{ activity.title }}</h4>
+              <div class="d1-environment-photos">
+                <figure *ngFor="let image of activity.images">
+                  <img [src]="image" [alt]="activity.title" loading="lazy">
+                </figure>
+              </div>
+            </article>
+          </div>
         </div>
 
         <div class="card card-gold" appReveal="right">
@@ -410,7 +423,7 @@
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
       <div class="stack">
-        <app-bar-chart title="ร้อยละของนักเรียนที่มีผลการเรียนระดับดีขึ้นไป (เกรด 3–4)"
+        <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" title="ร้อยละของนักเรียนที่มีผลการเรียนระดับดีขึ้นไป (เกรด 3–4)"
           subtitle="จำแนกตามกลุ่มสาระการเรียนรู้ ปีการศึกษา 2566–2568" [labels]="d.section11.curriculumProgress.years"
           [series]="curriculumProgressBars" [max]="100" [valueFontSize]="9"
           [note]="d.section11.curriculumProgress.conclusion" />
@@ -493,12 +506,12 @@
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
       <div class="stack">
-        <app-bar-chart title="การเข้าร่วมกิจกรรมเลือกตั้งสภาผู้แทนนักเรียน"
+        <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" title="การเข้าร่วมกิจกรรมเลือกตั้งสภาผู้แทนนักเรียน"
           subtitle="จำนวนผู้มีสิทธิ์และผู้มาใช้สิทธิ์ ปีการศึกษา 2566–2568 (หน่วย: คน)"
           [labels]="d.section12.election.years" [series]="electionSeries" valueFormat="1.0-0"
           [note]="d.section12.election.conclusion" />
 
-        <app-line-chart title="ร้อยละของผู้มาใช้สิทธิ์เลือกตั้ง" subtitle="เทียบกับเกณฑ์ที่กำหนดไว้ไม่ต่ำกว่าร้อยละ 80"
+        <app-line-chart valueColor="#3b4a66" title="ร้อยละของผู้มาใช้สิทธิ์เลือกตั้ง" subtitle="เทียบกับเกณฑ์ที่กำหนดไว้ไม่ต่ำกว่าร้อยละ 80"
           [labels]="d.section12.election.years" [series]="electionPctSeries" [min]="70" [max]="100" />
       </div>
     </div>
@@ -516,20 +529,20 @@
 
       <div class="grid grid-2">
         <div>
-          <app-bar-chart title="สมรรถภาพทางกายของนักเรียน" subtitle="ร้อยละจำแนกตามระดับสมรรถภาพ ปีการศึกษา 2566–2568"
+          <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" title="สมรรถภาพทางกายของนักเรียน" subtitle="ร้อยละจำแนกตามระดับสมรรถภาพ ปีการศึกษา 2566–2568"
             [labels]="d.section12.health.years" [series]="fitSeries" [showValues]="false"
             note="กลุ่มสมรรถภาพดีมากและดีเพิ่มขึ้นทุกปี ขณะที่กลุ่มที่ต้องปรับปรุงลดลงอย่างต่อเนื่องจากร้อยละ 20.28 เหลือร้อยละ 12.32" />
         </div>
 
         <div>
-          <app-bar-chart title="สัดส่วนร่างกายของนักเรียน" subtitle="ร้อยละจำแนกตามเกณฑ์ ปีการศึกษา 2566–2568"
+          <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" title="สัดส่วนร่างกายของนักเรียน" subtitle="ร้อยละจำแนกตามเกณฑ์ ปีการศึกษา 2566–2568"
             [labels]="d.section12.health.years" [series]="bodySeries" [showValues]="false"
             note="นักเรียนที่มีสัดส่วนร่างกายปกติเพิ่มขึ้นเป็นร้อยละ 90.81 ในปีการศึกษา 2568 ขณะที่กลุ่มอ้วนลดลงจากร้อยละ 16.63 เหลือร้อยละ 5.09" />
         </div>
       </div>
 
       <div style="margin-top:24px">
-        <app-bar-chart title="ผลสุขภาพจิตของนักเรียน" subtitle="ร้อยละของนักเรียนทั้งหมด ปีการศึกษา 2566–2568"
+        <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" title="ผลสุขภาพจิตของนักเรียน" subtitle="ร้อยละของนักเรียนทั้งหมด ปีการศึกษา 2566–2568"
           [labels]="d.section12.health.years" [series]="mindBars" [max]="100" valueFormat="1.2-2"
           [note]="d.section12.health.conclusion" />
       </div>
@@ -619,7 +632,7 @@
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
       <app-cycle-flow [steps]="d.section12.teamwork.cycle" [expandAll]="true" />
       <div class="stack" style="margin-top:44px">
-        <app-line-chart title="ร้อยละของผลการประเมิน “ผ่าน” ในกิจกรรมพัฒนาผู้เรียน" subtitle="ปีการศึกษา 2566–2568"
+        <app-line-chart valueColor="#3b4a66" title="ร้อยละของผลการประเมิน “ผ่าน” ในกิจกรรมพัฒนาผู้เรียน" subtitle="ปีการศึกษา 2566–2568"
           [labels]="d.section12.teamwork.years" [series]="teamSeries" [min]="96" [max]="100"
           [note]="d.section12.teamwork.note" />
         <app-data-table [caption]="d.section12.teamwork.caption" [headers]="yearHeaders3" [rows]="teamRows" />
@@ -737,7 +750,7 @@
         [ngTemplateOutletContext]="{ text: d.section12.safety.narrative }"></ng-container>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
       <div class="stack d1-safety-chart">
-        <app-bar-chart title="ร้อยละของนักเรียนที่มีพฤติกรรมไม่พึงประสงค์"
+        <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" title="ร้อยละของนักเรียนที่มีพฤติกรรมไม่พึงประสงค์"
           subtitle="ภาพรวมทั้งโรงเรียน ปีการศึกษา 2566–2568 (ยิ่งต่ำยิ่งดี)" [labels]="d.section12.safety.years"
           [series]="safetyBars" [max]="100" [valueFontSize]="10" [note]="d.section12.safety.conclusion" />
         <app-data-table [caption]="d.section12.safety.caption" [headers]="yearHeaders3" [rows]="safetyRows" />

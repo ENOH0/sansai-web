@@ -25,10 +25,10 @@ export class StudentQualityWheelComponent {
     {
       letter: 'A', title: 'Alignment with Standards', thaiTitle: 'เชื่อมโยงเป้าหมาย สู่มาตรฐาน', x: 25.96, y: 25.96, light: true,
       evidence: [
-        { src: '/evidence/academic-model/alignment/01-plan.jpg', caption: 'P - การประชุมเพื่อแนวทางการวิเคราะห์มาตรฐาน หลักสูตร และเป้าหมายคุณภาพผู้เรียน ' },
+        { src: '/evidence/academic-model/alignment/01-plan-v2.jpg', caption: 'P - การประชุมเพื่อแนวทางการวิเคราะห์มาตรฐาน หลักสูตร และเป้าหมายคุณภาพผู้เรียน ' },
         { src: '/evidence/academic-model/alignment/02-do.jpg', caption: 'D - จัดทำแผนปฏิบัติการประจำปี' },
         { src: '/evidence/academic-model/alignment/03-check-revised.jpg', caption: 'C - มีการดำเนินการตามแผนปฏิบัติการ' },
-        { src: '/evidence/academic-model/alignment/04-act.jpg', caption: 'A - สรุปแผนปฏิบัติการประจำปี เพื่อนำไปปรับแก้ในปีการศึกษาต่อไป' }
+        { src: '/evidence/academic-model/alignment/04-act-v2.jpg', caption: 'A - สรุปแผนปฏิบัติการประจำปี เพื่อนำไปปรับแก้ในปีการศึกษาต่อไป' }
       ]
     },
     {

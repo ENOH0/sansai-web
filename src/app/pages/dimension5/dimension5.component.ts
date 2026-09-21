@@ -35,6 +35,8 @@ export class Dimension5Component {
   readonly successModelHeight = signal(620);
   readonly disseminationWheelHeight = signal(700);
   readonly banchuenHeight = signal(820);
+  readonly factorsHeight = signal(640);
+  readonly gearsHeight = signal(440);
   readonly banchuenOpen = signal(false);
   private banchuenIndex: number | null = null;
 
@@ -69,6 +71,15 @@ export class Dimension5Component {
       return;
     }
 
+    // เปลี่ยนแท็บกิจกรรมในวงล้อ BANCHUEN → ให้เฟืองด้านบนเรืองแสงตามกิจกรรมที่เลือก
+    if (event.data?.type === 'd5-banchuen-tab') {
+      const index = Number((event.data as { index?: number }).index);
+      if (!Number.isFinite(index)) return;
+      this.banchuenIndex = index;
+      this.syncGears(index);
+      return;
+    }
+
     // โมเดลขอให้หน้าหลักเลื่อนไปยังกิ่งที่เพิ่งกาง (iframe เลื่อนเองไม่ได้เพราะสูงเท่าเนื้อหา)
     if (event.data?.type === 'd5-success-model-scroll') {
       const frame = document.querySelector<HTMLIFrameElement>('.d5-success-model-frame iframe');
@@ -91,13 +102,24 @@ export class Dimension5Component {
     const minHeight = Math.max(360, height);
     if (event.data?.type === 'd5-success-model-height') this.successModelHeight.set(minHeight);   // ไม่จำกัดความสูง ไม่งั้นเนื้อหาส่วนล่างถูกตัด
     if (event.data?.type === 'd5-dissemination-wheel-height') this.disseminationWheelHeight.set(Math.min(1400, minHeight));
+    if (event.data?.type === 'd5-factors-height') this.factorsHeight.set(minHeight);
+    if (event.data?.type === 'd5-gears-height') this.gearsHeight.set(minHeight);
     if (event.data?.type === 'd5-banchuen-height') this.banchuenHeight.set(minHeight);
   }
 
   closeBanchuen(): void {
     this.banchuenOpen.set(false);
     this.banchuenIndex = null;
-    setTimeout(() => document.querySelector('.d5-success-model')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    this.syncGears(-1);
+    setTimeout(() => this.gearsFrame()?.closest('.d5-success-model')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  }
+
+  private gearsFrame(): HTMLIFrameElement | null {
+    return document.querySelector<HTMLIFrameElement>('iframe[src*="d5-mechanism-gears"]');
+  }
+
+  private syncGears(index: number): void {
+    this.gearsFrame()?.contentWindow?.postMessage({ type: 'd5-gears-select', index }, window.location.origin);
   }
 
   get currentProject() {

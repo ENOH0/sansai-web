@@ -156,7 +156,7 @@ return `
 
 export const SMART_WHEEL_HTML = smartWheelHtml(WHEEL_ITEMS, 'SMART', 'Student');
 
-export function initSmartWheel(root: HTMLElement, items: WheelItem[]): void {
+export function initSmartWheel(root: HTMLElement, items: WheelItem[], startIndex = 0): void {
   const pieces = Array.from(root.querySelectorAll<HTMLElement>('.sw-piece'));
   const t = root.querySelector('.sw-detail-title') as HTMLElement;
   const d = root.querySelector('.sw-detail-text') as HTMLElement;
@@ -310,5 +310,5 @@ export function initSmartWheel(root: HTMLElement, items: WheelItem[]): void {
     const detail = root.querySelector<HTMLElement>('.sw-detail');
     if (detail) { detail.classList.remove('sw-swap'); void detail.offsetWidth; detail.classList.add('sw-swap'); }
   }));
-  select(0);
+  select(startIndex >= 0 && startIndex < items.length ? startIndex : 0);
 }

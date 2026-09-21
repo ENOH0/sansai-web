@@ -177,7 +177,9 @@ export class Dimension1Component implements OnInit {
   readonly electionTitle = 'การยอมรับเหตุผลและความคิดเห็นของผู้อื่น';
   readonly healthTitle = 'การรักษาสุขภาพกายและสุขภาพจิต';
 
-  private readonly palette = ['#1e4d9e', '#d4a537', '#4f88d4', '#0f7a4d', '#8a4fbd'];
+  /** สีพาสเทลสำหรับกราฟด้านที่ 1 — ในกราฟเดียวกันไม่มีสีซ้ำ (แดงพาสเทล #f26b6b เก็บไว้ใช้กับเส้นเกณฑ์/ค่าเฉลี่ย) */
+  readonly vivid = ['#5b9cf5', '#ffb347', '#4fd1a0', '#a17ff5', '#4cc9e6', '#f57fb3', '#a4dc5c', '#ff8f66', '#4fcfc0', '#8290f5', '#f5d04c', '#d77ff0'];
+  private readonly palette = this.vivid;
 
   // ---------- O-NET ม.6 ----------
   readonly onetHeaders = [
@@ -199,8 +201,8 @@ export class Dimension1Component implements OnInit {
       title: 'ม.3 ภาษาไทย',
       subtitle: 'สูงกว่าระดับประเทศต่อเนื่อง 3 ปี',
       series: [
-        { name: 'ระดับโรงเรียน', values: [54.87, 56.52, 49.22], color: '#57c878' },
-        { name: 'ระดับประเทศ', values: [37.35, 34.40, 33.92], color: '#f0b48f' }
+        { name: 'ระดับโรงเรียน', values: [54.87, 56.52, 49.22], color: '#4fd1a0' },
+        { name: 'ระดับประเทศ', values: [37.35, 34.40, 33.92], color: '#ff8f66' }
       ],
       note: 'สูงกว่าระดับประเทศ +17.52, +22.12 และ +15.30 คะแนนตามลำดับ'
     },
@@ -208,8 +210,8 @@ export class Dimension1Component implements OnInit {
       title: 'ม.6 ภาษาไทย',
       subtitle: 'สูงกว่าระดับประเทศต่อเนื่อง 3 ปี',
       series: [
-        { name: 'ระดับโรงเรียน', values: [45.23, 47.41, 46.73], color: '#123b82' },
-        { name: 'ระดับประเทศ', values: [40.78, 42.21, 40.32], color: '#93bce3' }
+        { name: 'ระดับโรงเรียน', values: [45.23, 47.41, 46.73], color: '#5b9cf5' },
+        { name: 'ระดับประเทศ', values: [40.78, 42.21, 40.32], color: '#4cc9e6' }
       ],
       note: 'สูงกว่าระดับประเทศ +4.45, +5.20 และ +6.41 คะแนนตามลำดับ'
     },
@@ -217,8 +219,8 @@ export class Dimension1Component implements OnInit {
       title: 'ม.6 สังคมศึกษา',
       subtitle: 'สูงกว่าระดับประเทศต่อเนื่อง 3 ปี',
       series: [
-        { name: 'ระดับโรงเรียน', values: [34.65, 39.11, 39.12], color: '#ee5c91' },
-        { name: 'ระดับประเทศ', values: [33.09, 35.77, 36.96], color: '#e9df4e' }
+        { name: 'ระดับโรงเรียน', values: [34.65, 39.11, 39.12], color: '#f57fb3' },
+        { name: 'ระดับประเทศ', values: [33.09, 35.77, 36.96], color: '#f5d04c' }
       ],
       note: 'สูงกว่าระดับประเทศ +1.56, +3.34 และ +2.16 คะแนนตามลำดับ'
     }
@@ -239,7 +241,7 @@ export class Dimension1Component implements OnInit {
   readonly m3TrendBars: BarSeries[] = DIM1.section11.onet.m3Trend.subjects.map((s, i) => ({
     name: s.name,
     values: s.values,
-    color: this.palette[i % 5]
+    color: this.palette[i % this.palette.length]
   }));
 
   readonly m3Rows: TableRow[] = DIM1.section11.onet.m3.subjects.map(s => ({
@@ -258,13 +260,13 @@ export class Dimension1Component implements OnInit {
 
   /* ใช้ชุดสี 6 สีเฉพาะกราฟนี้ เพราะมี 6 ระดับชั้น
      ถ้าใช้ชุด 5 สีเดิม ม.6 จะได้สีซ้ำกับ ม.1 จนแยกเส้นไม่ออก */
-  private readonly gradePalette = ['#1e4d9e', '#d4a537', '#4f88d4', '#0f7a4d', '#8a4fbd', '#b4433a'];
+  private readonly gradePalette = this.vivid;
 
   readonly thaiBars: BarSeries[] = [
     ...DIM1.section11.thai.rows.map((r, i) => ({
-      name: r.name, values: r.values, color: this.gradePalette[i % 6]
+      name: r.name, values: r.values, color: this.gradePalette[i % this.gradePalette.length]
     })),
-    { name: 'ค่าเฉลี่ยรวม', values: DIM1.section11.thai.average, color: '#08152f' }
+    { name: 'ค่าเฉลี่ยรวม', values: DIM1.section11.thai.average, color: '#f26b6b' }
   ];
 
   readonly thaiRows: TableRow[] = [
@@ -372,6 +374,25 @@ export class Dimension1Component implements OnInit {
       `/evidence/1.2.6/confidence-activities/${String(index * 3 + imageIndex + 1).padStart(2, '0')}.jpg`)
   }));
 
+  /** แบ่งข้อความเป็นช่วง ๆ เพื่อทำตัวหนาเฉพาะวลีที่ระบุใน bold */
+  boldParts(text: string, bold?: string[]): { t: string; b: boolean }[] {
+    if (!bold?.length) return [{ t: text, b: false }];
+    const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return text.split(new RegExp(`(${bold.map(esc).join('|')})`)).filter(Boolean)
+      .map(t => ({ t, b: bold.includes(t) }));
+  }
+
+  readonly ictActivities = [
+    'งาน Bridging Innovation with Market Opportunities',
+    'โครงงานคอมพิวเตอร์'
+  ].map((title, index) => ({
+    title,
+    images: [
+      `/evidence/1.1.5/activities/${String(index * 2 + 1).padStart(2, '0')}.jpg`,
+      `/evidence/1.1.5/activities/${String(index * 2 + 2).padStart(2, '0')}.jpg`
+    ]
+  }));
+
   readonly healthActivities = [
     'ให้บริการชั่งน้ำหนักและวัดส่วนสูงนักเรียน',
     'ให้บริการร่วมกับศูนย์สุขภาพชุมชน ต.หนองหาร ในการฉีดวัคซีนป้องกันโรคมะเร็งปากมดลูก (HPV) นักเรียนชั้น ม.1- ม.6',
@@ -381,7 +402,8 @@ export class Dimension1Component implements OnInit {
   ].map((title, index) => ({
     title,
     images: [
-      `/evidence/1.2.7/health-activities/${String(index * 2 + 1).padStart(2, '0')}.jpg`,
+      // รูปแรกของ "ชั่งน้ำหนักและวัดส่วนสูง" เปลี่ยนเป็นรูปใหม่ (01-v2.jpg)
+      index === 0 ? '/evidence/1.2.7/health-activities/01-v2.jpg' : `/evidence/1.2.7/health-activities/${String(index * 2 + 1).padStart(2, '0')}.jpg`,
       `/evidence/1.2.7/health-activities/${String(index * 2 + 2).padStart(2, '0')}.jpg`
     ]
   }));
@@ -424,7 +446,7 @@ export class Dimension1Component implements OnInit {
   readonly engSeries = [{
     name: 'ระดับดีขึ้นไป (3–4)',
     values: DIM1.section11.english.grades.map(g => g.pct),
-    color: '#1e4d9e'
+    color: '#5b9cf5'
   }];
 
   readonly englishActivities = DIM1.section11.english.activities.map((title, index) => ({
@@ -494,14 +516,14 @@ export class Dimension1Component implements OnInit {
   // ---------- คิดวิเคราะห์ ----------
   readonly isYears = ['2566', '2567', '2568'];
   readonly isSeries = [
-    { name: 'ชั้น ม.2', values: [61, 88, 76], color: '#1e4d9e' },
-    { name: 'ชั้น ม.5', values: [73, 89, 96], color: '#d4a537' }
+    { name: 'ชั้น ม.2', values: [61, 88, 76], color: '#5b9cf5' },
+    { name: 'ชั้น ม.5', values: [73, 89, 96], color: '#ffb347' }
   ];
 
   readonly readSeries: LineSeries[] = [{
     name: 'ระดับดีขึ้นไป (ดีเยี่ยม + ดี)',
     values: DIM1.section11.thinking.readTotals,
-    color: '#1e4d9e'
+    color: '#5b9cf5'
   }];
 
   readonly readHeaders = [
@@ -533,7 +555,7 @@ export class Dimension1Component implements OnInit {
   readonly ictSeries: BarSeries[] = [{
     name: 'รายวิชาเทคโนโลยี (ระดับ 3–4)',
     values: DIM1.section11.ict.values,
-    color: '#1e4d9e'
+    color: '#5b9cf5'
   }];
 
   // ---------- ความก้าวหน้าตามหลักสูตร ----------
@@ -549,11 +571,11 @@ export class Dimension1Component implements OnInit {
   // ---------- การศึกษาต่อ ----------
   /* ชุดข้อมูลเดียวกันในรูปกราฟแท่ง (ตัวเลือกที่ 2 ของหัวข้อ 1.1.7) */
   readonly pathBars: BarSeries[] = DIM1.section11.pathway.rows.map((r, i) => ({
-    name: r.name, values: r.values, color: this.palette[i % 5]
+    name: r.name, values: r.values, color: this.palette[i % this.palette.length]
   }));
 
   // ---------- คุณลักษณะอันพึงประสงค์ ----------
-  readonly desiredMeterColors = ['#ff5b7f', '#ff9f43', '#f9c74f', '#35c77a', '#16b9d4', '#4e7cff', '#9b6bff', '#ed6aa5'];
+  readonly desiredMeterColors = ['#f5849c', '#ffa96b', '#f5cf55', '#66d493', '#5ccbe0', '#7a9ef8', '#ab8bf8', '#ef8fc0'];
   readonly desiredMeters: MeterRow[] = DIM1.section12.desired.rows
     .map((r, index) => ({ name: r.name, value: r.avg, color: this.desiredMeterColors[index % this.desiredMeterColors.length] }))
     .sort((a, b) => b.value - a.value);
@@ -576,28 +598,28 @@ export class Dimension1Component implements OnInit {
 
   // ---------- การเลือกตั้ง ----------
   readonly electionSeries = [
-    { name: 'ผู้มีสิทธิ์เลือกตั้ง', values: DIM1.section12.election.eligible, color: '#b3cdf0' },
-    { name: 'ผู้มาใช้สิทธิ์', values: DIM1.section12.election.voted, color: '#1e4d9e' }
+    { name: 'ผู้มีสิทธิ์เลือกตั้ง', values: DIM1.section12.election.eligible, color: '#9dd3fa' },
+    { name: 'ผู้มาใช้สิทธิ์', values: DIM1.section12.election.voted, color: '#5b9cf5' }
   ];
 
   readonly electionPctSeries: LineSeries[] = [
-    { name: 'ร้อยละผู้มาใช้สิทธิ์', values: DIM1.section12.election.votedPct, color: '#1e4d9e' },
-    { name: 'เกณฑ์ร้อยละ 80', values: [80, 80, 80], color: '#b4433a', dashed: true }
+    { name: 'ร้อยละผู้มาใช้สิทธิ์', values: DIM1.section12.election.votedPct, color: '#5b9cf5' },
+    { name: 'เกณฑ์ร้อยละ 80', values: [80, 80, 80], color: '#f26b6b', dashed: true }
   ];
 
   // ---------- สุขภาพ ----------
   readonly fitSeries: LineSeries[] = DIM1.section12.health.fitRows.map((r, i) => ({
-    name: r.name, values: r.values, color: this.palette[i % 5]
+    name: r.name, values: r.values, color: this.palette[i % this.palette.length]
   }));
 
   readonly bodySeries: LineSeries[] = DIM1.section12.health.bodyRows.map((r, i) => ({
-    name: r.name, values: r.values, color: this.palette[i % 5]
+    name: r.name, values: r.values, color: this.palette[i % this.palette.length]
   }));
 
   /* สุขภาพจิต — แสดงเป็นกราฟแท่ง เรียงลำดับ มีปัญหา → เสี่ยง → ปกติ */
   private readonly mindOrder = ['มีปัญหา', 'เสี่ยง', 'ปกติ'];
   private readonly mindColor: Record<string, string> = {
-    'มีปัญหา': '#b4433a', 'เสี่ยง': '#d4a537', 'ปกติ': '#0f7a4d'
+    'มีปัญหา': '#f26b6b', 'เสี่ยง': '#ffb347', 'ปกติ': '#4fd1a0'
   };
 
   readonly mindBars: BarSeries[] = this.mindOrder
@@ -613,7 +635,7 @@ export class Dimension1Component implements OnInit {
   readonly teamSeries: LineSeries[] = DIM1.section12.teamwork.rows.map((r, i) => ({
     name: r.name,
     values: r.values.map(v => (v === null ? NaN : v)),
-    color: this.gradePalette[i % 6]
+    color: this.gradePalette[i % this.gradePalette.length]
   }));
 
   readonly teamRows: TableRow[] = DIM1.section12.teamwork.rows.map(r => ({
@@ -621,9 +643,9 @@ export class Dimension1Component implements OnInit {
   }));
 
   readonly safetyBars: BarSeries[] = [
-    { name: 'ภาพรวมทั้งโรงเรียน', values: DIM1.section12.safety.riskPct, color: '#b4433a' },
+    { name: 'ภาพรวมทั้งโรงเรียน', values: DIM1.section12.safety.riskPct, color: '#f26b6b' },
     ...DIM1.section12.safety.byLevel.map((r, i) => ({
-      name: r.name, values: r.values, color: this.gradePalette[i % 6]
+      name: r.name, values: r.values, color: this.gradePalette[i % this.gradePalette.length]
     }))
   ];
 

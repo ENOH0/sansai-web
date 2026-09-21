@@ -13,6 +13,8 @@ import { BarSeries, CHART_PALETTE } from '../../core/models';
 })
 export class BarChartComponent {
   @Input() title = '';
+  /** สีตัวเลขบนกราฟ (ไม่ใส่ = ใช้สีเดียวกับแท่ง/เส้น) — ใช้กับกราฟสีพาสเทลให้ตัวเลขอ่านชัด */
+  @Input() valueColor?: string;
   @Input() subtitle = '';
   @Input() note = '';
   @Input() labels: string[] = [];
@@ -22,6 +24,8 @@ export class BarChartComponent {
   @Input() valueFontSize = 14;
   @Input() showEvidence = false;
   @Input() max?: number;
+  /** กราฟที่มีชุดข้อมูลเดียว: ให้แต่ละแท่งมีสีไม่ซ้ำกัน (ตามลำดับป้ายแกน X) */
+  @Input() barColors?: string[];
 
   readonly W = 900;
   readonly H = 380;
@@ -69,5 +73,13 @@ export class BarChartComponent {
 
   colorOf(s: BarSeries, i: number): string {
     return s.color ?? this.palette[i % this.palette.length];
+  }
+
+  get perBar(): boolean {
+    return !!this.barColors?.length && this.series.length === 1;
+  }
+
+  fillOf(s: BarSeries, si: number, gi: number): string {
+    return this.perBar ? this.barColors![gi % this.barColors!.length] : this.colorOf(s, si);
   }
 }

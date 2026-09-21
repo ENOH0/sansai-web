@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Digitalized School — สถานศึกษาดิจิทัลเต็มรูปแบบ</title>
+    <meta name="description"
+        content="สำรวจโมเดลสถานศึกษาดิจิทัล 3 มิติ: การบริหารบนฐานข้อมูล การเรียนรู้และดูแลผู้เรียน และการสื่อสารรอบด้าน">
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%236856ba'/%3E%3Cpath d='M7 11l9-5 9 5-9 5zM7 16l9 5 9-5M7 21l9 5 9-5' fill='none' stroke='white' stroke-width='2'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="/fonts/th-sarabun.css">
+    <style>
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            font-size: 20px
+        }
+
+        body {
+            margin: 0;
+            color: #30334c;
+            background: transparent;
+            font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+            font-size: 1.15rem;
+            line-height: 1.35
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+            color: inherit
+        }
+
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid #7051d4;
+            outline-offset: 5px
+        }
+
+        button {
+            border: 0
+        }
+
+        header {
+            max-width: 1500px;
+            margin: auto;
+            padding: 24px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #e4e5ef
+        }
+
+        .brand {
+            display: flex;
+            gap: 13px;
+            align-items: center;
+            font-weight: bold
+        }
+
+        .logo {
+            width: 43px;
+            height: 43px;
+            background: #6b5eb0;
+            color: white;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            font-size: 30px
+        }
+
+        .brand small {
+            display: block;
+            font-size: .8rem;
+            font-weight: normal;
+            color: #777a90;
+            letter-spacing: 1.5px
+        }
+
+        .tag {
+            padding: 5px 15px;
+            background: #eeebfa;
+            color: #6854a0;
+            border-radius: 30px;
+            font-size: .95rem
+        }
+
+        main {
+            max-width: 1500px;
+            margin: auto;
+            padding: 28px 40px 20px;
+            background: transparent
+        }
+
+        .intro {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 24px;
+            margin-bottom: 23px
+        }
+
+        .eyebrow {
+            font-family: Arial, sans-serif;
+            font-size: .65rem;
+            letter-spacing: 2px;
+            color: #8074ac;
+            font-weight: 700
+        }
+
+        h1 {
+            font-size: 2.7rem;
+            line-height: 1.05;
+            margin: 8px 0 5px
+        }
+
+        h1 span {
+            color: #8171b8
+        }
+
+        p {
+            margin: 5px 0 12px
+        }
+
+        .subtitle {
+            color: #77798a
+        }
+
+        .overview {
+            display: flex;
+            gap: 22px;
+            font-size: .9rem;
+            white-space: nowrap
+        }
+
+        .overview strong {
+            font-family: Arial, sans-serif;
+            font-size: 1.5rem;
+            display: block;
+            color: #605587
+        }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: minmax(0, 1.85fr) minmax(300px, 1fr);
+            gap: 23px
+        }
+
+        .stage {
+            border: 1px solid #e0e1ee;
+            border-radius: 25px;
+            overflow: hidden;
+            background: linear-gradient(140deg, #f0eefb 0%, #edf5ff 55%, #edfaf5 100%);
+            position: relative;
+            min-width: 0
+        }
+
+        .stage-top {
+            padding: 21px 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px
+        }
+
+        .stage-top span {
+            font-size: .9rem;
+            color: #686880
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px
+        }
+
+        .control {
+            background: #ffffffb8;
+            border: 1px solid #fff;
+            border-radius: 50px;
+            padding: 4px 13px;
+            min-height: 36px
+        }
+
+        .viewport {
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            outline-offset: -4px
+        }
+
+        .viewport::-webkit-scrollbar {
+            display: none
+        }
+
+        .track {
+            display: flex
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            min-width: 0;
+            padding: 0 20px 15px;
+            scroll-snap-align: center;
+            text-align: center
+        }
+
+        .scene {
+            height: 320px;
+            position: relative;
+            max-width: 660px;
+            margin: auto;
+            perspective: 950px
+        }
+
+        .orbit {
+            position: absolute;
+            width: 370px;
+            height: 270px;
+            left: 50%;
+            top: 60px;
+            transform: translateX(-50%) rotateX(59deg) rotateZ(-23deg);
+            border: 1px dashed #ac9ecc;
+            border-radius: 50%
+        }
+
+        .orbit:after {
+            content: '';
+            position: absolute;
+            inset: 23px;
+            border: 1px solid #c8bfe0;
+            border-radius: 50%
+        }
+
+        .base {
+            position: absolute;
+            left: 50%;
+            top: 100px;
+            width: 255px;
+            height: 220px;
+            transform: translateX(-50%) rotateX(55deg) rotateZ(-25deg);
+            transform-style: preserve-3d
+        }
+
+        .layer {
+            position: absolute;
+            inset: 0;
+            border-radius: 42px;
+            background: var(--tone);
+            border: 2px solid #ffffffc9;
+            box-shadow: 0 12px 0 var(--shadow), 0 28px 25px #60568a24;
+            transform: translateZ(var(--z));
+            display: grid;
+            place-items: center
+        }
+
+        .layer:nth-child(1) {
+            --z: -35px;
+            opacity: .6
+        }
+
+        .layer:nth-child(2) {
+            --z: -5px;
+            opacity: .8
+        }
+
+        .layer:nth-child(3) {
+            --z: 26px
+        }
+
+        .layer svg {
+            width: 80px;
+            height: 80px;
+            stroke: var(--ink);
+            fill: none;
+            stroke-width: 1.6;
+            transform: rotateZ(25deg)
+        }
+
+        .core-label {
+            position: absolute;
+            left: 50%;
+            top: 240px;
+            transform: translateX(-50%);
+            background: white;
+            padding: 4px 22px;
+            border-radius: 20px;
+            box-shadow: 0 9px 25px #756c9320;
+            white-space: nowrap;
+            color: var(--ink);
+            font-weight: bold
+        }
+
+        .node {
+            position: absolute;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 14px;
+            background: #ffffffeb;
+            border: 1px solid white;
+            box-shadow: 0 8px 0 #dce0ef9a, 0 15px 25px #77709518;
+            transition: transform .2s, box-shadow .2s;
+            font-size: 1.05rem;
+            min-height: 49px
+        }
+
+        .node:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 0 var(--tone), 0 20px 28px #77709530
+        }
+
+        .node b {
+            background: var(--tone);
+            color: var(--ink);
+            min-width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            font-size: .85rem
+        }
+
+        .node:nth-of-type(1) {
+            left: 8%;
+            top: 51px
+        }
+
+        .node:nth-of-type(2) {
+            right: 6%;
+            top: 75px
+        }
+
+        .node:nth-of-type(3) {
+            left: 4%;
+            top: 181px
+        }
+
+        .node:nth-of-type(4) {
+            right: 3%;
+            top: 211px
+        }
+
+        .slide h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            line-height: 1.1
+        }
+
+        .en {
+            font-family: Arial, sans-serif;
+            font-size: .7rem;
+            letter-spacing: .3px;
+            color: #77798e;
+            margin: 8px 0 12px
+        }
+
+        .slide-summary {
+            max-width: 480px;
+            margin: 0 auto 10px;
+            color: #60657b
+        }
+
+        .explore {
+            border-radius: 30px;
+            background: var(--ink);
+            color: white;
+            padding: 7px 24px;
+            box-shadow: 0 6px 15px #6f629828
+        }
+
+        .bottom-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 23px 18px;
+            gap: 12px
+        }
+
+        .dots {
+            display: flex;
+            gap: 7px
+        }
+
+        .dot {
+            height: 8px;
+            width: 8px;
+            padding: 0;
+            border-radius: 5px;
+            background: #c5c4da
+        }
+
+        .dot[aria-current=true] {
+            width: 28px;
+            background: #7b6cac
+        }
+
+        .counter {
+            font-family: Arial, sans-serif;
+            font-size: .65rem;
+            color: #797c94
+        }
+
+        .hint {
+            font-size: .85rem;
+            color: #7b7e93
+        }
+
+        .panel {
+            border: 1px solid #e5e5ef;
+            background: white;
+            border-radius: 25px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            min-width: 0
+        }
+
+        .panel-kicker {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #8a809f;
+            font-size: .9rem
+        }
+
+        .panel-num {
+            background: var(--tone);
+            color: var(--ink);
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            font-family: Arial, sans-serif;
+            font-size: .75rem
+        }
+
+        .panel h2 {
+            font-size: 1.75rem;
+            margin: 13px 0 8px;
+            line-height: 1.05
+        }
+
+        .panel p {
+            color: #77798a;
+            font-size: 1.05rem
+        }
+
+        .sublist {
+            display: grid;
+            gap: 9px;
+            margin: 7px 0 18px
+        }
+
+        .subitem {
+            text-align: left;
+            background: #f8f8fc;
+            border: 1px solid #efedf5;
+            padding: 10px 13px;
+            border-radius: 13px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            transition: .2s
+        }
+
+        .subitem:hover {
+            background: var(--tone);
+            transform: translateX(3px)
+        }
+
+        .subitem .subicon {
+            background: var(--tone);
+            color: var(--ink);
+            padding: 4px 10px;
+            border-radius: 9px;
+            font-weight: bold
+        }
+
+        .subitem strong {
+            display: block;
+            font-size: 1.08rem;
+            line-height: 1.1
+        }
+
+        .subitem small {
+            font-size: .85rem;
+            color: #737587
+        }
+
+        .subitem .arrow {
+            margin-left: auto;
+            color: #9184b4
+        }
+
+        .outcome {
+            margin-top: auto;
+            border-radius: 14px;
+            padding: 13px 15px;
+            background: var(--tone);
+            color: var(--ink)
+        }
+
+        .outcome small {
+            display: block;
+            opacity: .8;
+            font-size: .85rem
+        }
+
+        .outcome strong {
+            font-size: 1.15rem
+        }
+
+        .path {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 13px
+        }
+
+        .path button {
+            text-align: left;
+            border: 1px solid #e4e4ef;
+            background: #fff;
+            border-radius: 16px;
+            padding: 13px 16px;
+            display: flex;
+            gap: 13px;
+            align-items: center
+        }
+
+        .path button[aria-current=true] {
+            border-color: #9886c4;
+            background: #f0ecfc
+        }
+
+        .path b {
+            font-family: Arial, sans-serif;
+            font-size: .85rem;
+            color: #8c7eae
+        }
+
+        .path strong {
+            display: block;
+            line-height: 1.1
+        }
+
+        .path small {
+            color: #838395;
+            font-size: .8rem
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            font-size: .8rem;
+            color: #87899c;
+            padding: 18px 0
+        }
+
+        .footer button {
+            background: none;
+            color: #756493;
+            text-decoration: underline;
+            font-size: .85rem
+        }
+
+        dialog {
+            border: none;
+            border-radius: 24px;
+            padding: 0;
+            max-width: 710px;
+            width: calc(100% - 32px);
+            max-height: 88vh;
+            margin-top: 24px;
+            color: #30334c;
+            box-shadow: 0 30px 90px #34305e40;
+            background: #fff
+        }
+
+        dialog::backdrop {
+            background: #39345270;
+            backdrop-filter: blur(7px)
+        }
+
+        .modal-head {
+            padding: 27px 30px 16px;
+            background: linear-gradient(120deg, var(--tone), #fafbff);
+            position: relative
+        }
+
+        .modal-head h2 {
+            font-size: 2rem;
+            line-height: 1.1;
+            margin: 8px 40px 5px 0
+        }
+
+        .modal-head p {
+            color: #696b83
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 18px;
+            background: white;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            font-family: Arial;
+            font-size: 23px
+        }
+
+        .modal-body {
+            padding: 23px 30px 28px
+        }
+
+        .modal-body p {
+            color: #62667b
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 15px 0
+        }
+
+        .mini {
+            padding: 15px;
+            border: 1px solid #e5e3ee;
+            border-radius: 15px;
+            background: #fafaff;
+            text-align: left
+        }
+
+        .mini strong {
+            display: block;
+            color: var(--ink);
+            font-size: 1.2rem
+        }
+
+        .mini p {
+            font-size: 1rem;
+            margin: 6px 0
+        }
+
+        .flow {
+            display: flex;
+            gap: 8px;
+            margin: 15px 0;
+            flex-wrap: wrap
+        }
+
+        .flow span {
+            background: var(--tone);
+            color: var(--ink);
+            border-radius: 12px;
+            padding: 6px 15px;
+            flex: 1;
+            min-width: 100px;
+            text-align: center
+        }
+
+        .note {
+            font-size: .9rem;
+            border-left: 3px solid var(--ink);
+            padding: 8px 14px;
+            background: #f7f7fb
+        }
+
+        .bar {
+            height: 7px;
+            border-radius: 4px;
+            background: #e9e8f1;
+            margin: 10px 0
+        }
+
+        .bar i {
+            display: block;
+            height: 100%;
+            background: var(--ink);
+            border-radius: 4px
+        }
+
+        .back {
+            border-radius: 15px;
+            background: var(--tone);
+            color: var(--ink);
+            padding: 5px 16px;
+            margin-bottom: 16px
+        }
+
+        @media(min-width:1500px) {
+            main {
+                padding-top: 35px
+            }
+
+            .scene {
+                height: 355px
+            }
+
+            .base {
+                top: 115px
+            }
+
+            .core-label {
+                top: 265px
+            }
+        }
+
+        @media(max-width:1000px) {
+            main {
+                padding: 24px
+            }
+
+            .workspace {
+                grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr)
+            }
+
+            header {
+                padding: 20px 24px
+            }
+
+            .overview {
+                display: none
+            }
+
+            .node {
+                font-size: .95rem;
+                padding: 7px 9px
+            }
+
+            .node:nth-of-type(1) {
+                left: 0
+            }
+
+            .node:nth-of-type(2) {
+                right: 0
+            }
+
+            .node:nth-of-type(3) {
+                left: 0
+            }
+
+            .node:nth-of-type(4) {
+                right: 0
+            }
+
+            .base {
+                width: 210px;
+                height: 210px
+            }
+
+            .orbit {
+                width: 300px
+            }
+
+            .panel {
+                padding: 20px
+            }
+
+            .scene {
+                height: 320px
+            }
+        }
+
+        @media(max-width:760px) {
+            html {
+                font-size: 19px
+            }
+
+            header {
+                padding: 15px 20px
+            }
+
+            .tag {
+                font-size: .8rem
+            }
+
+            main {
+                padding: 23px 16px
+            }
+
+            .intro {
+                margin-bottom: 20px
+            }
+
+            h1 {
+                font-size: 2.25rem
+            }
+
+            .workspace {
+                grid-template-columns: 1fr
+            }
+
+            .panel {
+                min-height: 440px
+            }
+
+            .path {
+                gap: 7px
+            }
+
+            .path button {
+                padding: 12px 8px;
+                gap: 7px
+            }
+
+            .path small {
+                display: none
+            }
+
+            .path strong {
+                font-size: .95rem
+            }
+
+            .hint {
+                display: none
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 4px
+            }
+
+            .modal-grid {
+                grid-template-columns: 1fr
+            }
+
+            .modal-body,
+            .modal-head {
+                padding: 22px
+            }
+
+            .stage-top {
+                padding: 17px 16px 0
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                scroll-behavior: auto !important;
+                transition: none !important;
+                animation: none !important
+            }
+        }
+
+        /* Light, depth and clearer interaction */
+        body {
+            background: transparent
+        }
+
+        header {
+            background: #ffffff70;
+            border-bottom-color: #ffffff;
+            backdrop-filter: blur(18px)
+        }
+
+        .logo {
+            background: linear-gradient(145deg, #b3a2ed, #7560b6);
+            box-shadow: 0 7px 18px #9381c744, inset 0 1px 2px #fff9
+        }
+
+        .tag {
+            border: 1px solid #ffffff;
+            box-shadow: 0 4px 12px #8b72bd12
+        }
+
+        .stage {
+            isolation: isolate;
+            background: radial-gradient(ellipse at 50% 40%, #ffffffed 0%, #f3edff90 35%, transparent 67%), linear-gradient(130deg, #e9e5fc, #edf6ff 55%, #e2f7ed);
+            box-shadow: 0 16px 45px #6b659512, inset 0 1px 0 white;
+            border: 1px solid #ffffff
+        }
+
+        .stage:before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background-image: radial-gradient(#9a8bb630 .8px, transparent .8px);
+            background-size: 23px 23px;
+            mask-image: linear-gradient(transparent, #0008, transparent);
+            pointer-events: none
+        }
+
+        .stage-top {
+            position: relative;
+            z-index: 3
+        }
+
+        .stage-top>span {
+            font-weight: bold;
+            color: #71658e
+        }
+
+        .control {
+            min-height: 41px;
+            min-width: 41px;
+            box-shadow: 0 3px 9px #8979ac12;
+            transition: background .2s, transform .2s
+        }
+
+        .control:hover {
+            background: #fff;
+            transform: translateY(-2px)
+        }
+
+        #play {
+            color: #655090;
+            border-color: #d8cfeb;
+            background: #fff9
+        }
+
+        .scene {
+            --rx: 0deg;
+            --ry: 0deg;
+            --lx: 50%;
+            --ly: 40%;
+            height: 335px
+        }
+
+        .scene:before {
+            content: '';
+            position: absolute;
+            width: 310px;
+            height: 260px;
+            left: 50%;
+            top: 20px;
+            transform: translateX(-50%);
+            background: radial-gradient(ellipse, var(--tone), transparent 65%);
+            filter: blur(20px);
+            opacity: .95;
+            pointer-events: none;
+            animation: breathe 5s ease-in-out infinite
+        }
+
+        .scene:after {
+            content: '';
+            position: absolute;
+            inset: 15px;
+            pointer-events: none;
+            background: radial-gradient(ellipse at var(--lx) var(--ly), #ffffffa8, transparent 55%);
+            mix-blend-mode: soft-light;
+            border-radius: 50%;
+            z-index: 3
+        }
+
+        .base {
+            width: 260px;
+            height: 220px;
+            top: 106px;
+            transform: translateX(-50%) rotateX(calc(55deg + var(--rx))) rotateZ(calc(-25deg + var(--ry)));
+            transition: transform .2s ease-out
+        }
+
+        .layer {
+            background: linear-gradient(135deg, #ffffffdb -5%, var(--tone) 50%, var(--shadow));
+            box-shadow: 0 2px 1px #fff, 0 13px 0 var(--shadow), 0 15px 2px #ffffff88, 0 28px 25px #60568a2c;
+            overflow: hidden
+        }
+
+        .layer:last-child:after {
+            content: '';
+            position: absolute;
+            inset: -100%;
+            background: linear-gradient(110deg, transparent 40%, #ffffff80 50%, transparent 60%);
+            transform: translateX(-70%);
+            animation: shine 7s ease-in-out infinite;
+            pointer-events: none
+        }
+
+        .layer svg {
+            filter: drop-shadow(0 3px 1px #ffffffb0);
+            width: 90px;
+            height: 90px
+        }
+
+        .orbit {
+            border-color: #a79ac755;
+            box-shadow: 0 0 24px #ffffffb0, inset 0 0 28px #ffffffc0
+        }
+
+        .orbit:after {
+            border-color: #ffffff
+        }
+
+        .node {
+            border: 1px solid #fff;
+            background: linear-gradient(135deg, #fffffffa, #ffffffba);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 5px 0 #ddddef90, 0 13px 24px #79709820;
+            font-weight: bold;
+            border-radius: 16px;
+            padding: 10px 15px;
+            min-height: 52px
+        }
+
+        .node b {
+            box-shadow: inset 0 1px 1px white;
+            border: 1px solid #fff8;
+            font-weight: normal
+        }
+
+        .node:hover {
+            background: #fff;
+            box-shadow: 0 5px 0 var(--shadow), 0 16px 32px #77709535;
+            color: var(--ink)
+        }
+
+        .node:active {
+            transform: translateY(0)
+        }
+
+        .core-label {
+            top: 252px;
+            border: 1px solid #fff;
+            background: #ffffffdb;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 6px 25px #71618f1a;
+            letter-spacing: .6px;
+            font-size: .9rem
+        }
+
+        .slide h2 {
+            font-size: 1.9rem
+        }
+
+        .slide-summary {
+            font-size: 1.08rem
+        }
+
+        .explore {
+            padding: 9px 28px;
+            min-height: 46px;
+            box-shadow: 0 7px 0 #ffffff90, 0 12px 24px #6f62982a;
+            transition: transform .2s, filter .2s;
+            background: linear-gradient(130deg, var(--ink), color-mix(in srgb, var(--ink), #b29cdb 35%))
+        }
+
+        .explore:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.1)
+        }
+
+        .panel {
+            box-shadow: 0 12px 35px #7770950b;
+            border-color: #fff;
+            padding: 25px
+        }
+
+        .panel h2 {
+            margin-top: 14px;
+            font-size: 1.85rem
+        }
+
+        .panel-kicker {
+            font-weight: bold
+        }
+
+        .panel-num {
+            box-shadow: inset 0 1px 1px #fff, 0 4px 10px #77709510
+        }
+
+        .subitem {
+            padding: 12px 13px;
+            background: linear-gradient(120deg, #faf9fe, #f7f8fc);
+            border-color: #eeebf5
+        }
+
+        .subitem small {
+            font-size: .95rem;
+            line-height: 1.2;
+            display: block;
+            margin-top: 4px
+        }
+
+        .subitem .arrow {
+            background: #fff;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            flex: 0 0 30px;
+            box-shadow: 0 3px 8px #70638d0a
+        }
+
+        .subitem:hover {
+            border-color: var(--shadow)
+        }
+
+        .outcome {
+            border: 1px solid #fff;
+            box-shadow: inset 0 1px 0 #fff9;
+            background: linear-gradient(135deg, var(--tone), color-mix(in srgb, var(--tone), white 42%))
+        }
+
+        .path button {
+            transition: transform .2s, box-shadow .2s;
+            box-shadow: 0 4px 12px #82729806
+        }
+
+        .path button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px #82729816
+        }
+
+        .path button[aria-current=true] {
+            box-shadow: 0 5px 16px #8870b91c;
+            border-color: #b4a2d8;
+            background: linear-gradient(120deg, #ede5fb, #faf7ff)
+        }
+
+        .path b {
+            display: grid;
+            place-items: center;
+            background: #f2eef9;
+            width: 36px;
+            height: 36px;
+            border-radius: 11px;
+            flex: 0 0 36px
+        }
+
+        .path button[aria-current=true] b {
+            background: #8c78b7;
+            color: #fff
+        }
+
+        .dot {
+            min-height: 10px;
+            min-width: 10px
+        }
+
+        .dots {
+            padding: 8px;
+            gap: 10px
+        }
+
+        .counter {
+            background: #ffffff85;
+            padding: 5px 11px;
+            border-radius: 20px
+        }
+
+        .modal-head {
+            border-bottom: 1px solid #fff;
+            box-shadow: 0 6px 20px #77658c09
+        }
+
+        .close {
+            box-shadow: 0 4px 14px #77658c15
+        }
+
+        .mini {
+            background: linear-gradient(135deg, #fff, #f8f7fd);
+            box-shadow: 0 4px 12px #77658c05
+        }
+
+        .mini:is(button):hover {
+            border-color: var(--ink);
+            background: var(--tone)
+        }
+
+        .modal-body {
+            line-height: 1.45
+        }
+
+        .modal-body .mini strong {
+            line-height: 1.2
+        }
+
+        @keyframes shine {
+
+            0%,
+            50% {
+                transform: translateX(-70%)
+            }
+
+            80%,
+            100% {
+                transform: translateX(70%)
+            }
+        }
+
+        @keyframes breathe {
+            50% {
+                transform: translateX(-50%) scale(1.13);
+                opacity: .65
+            }
+        }
+
+        @media(min-width:1500px) {
+            .scene {
+                height: 360px
+            }
+
+            .base {
+                top: 119px
+            }
+
+            .core-label {
+                top: 273px
+            }
+        }
+
+        @media(max-width:1000px) {
+            .base {
+                width: 210px;
+                height: 210px
+            }
+
+            .node {
+                padding: 9px 11px
+            }
+
+            .scene {
+                height: 330px
+            }
+
+            .panel {
+                padding: 20px
+            }
+        }
+
+        @media(max-width:760px) {
+            .scene {
+                height: 320px
+            }
+
+            .core-label {
+                top: 250px
+            }
+
+            .stage-top>span {
+                font-size: .9rem
+            }
+
+            .node {
+                font-size: 1rem
+            }
+
+            .panel h2 {
+                font-size: 1.7rem
+            }
+
+            .path b {
+                width: 27px;
+                height: 30px;
+                flex-basis: 27px
+            }
+
+            .path button {
+                gap: 6px
+            }
+
+            .intro .subtitle {
+                max-width: 90%
+            }
+
+            .stage-top {
+                gap: 5px
+            }
+
+            .controls {
+                gap: 5px
+            }
+
+            .control {
+                padding: 4px 10px
+            }
+
+            .tag {
+                max-width: 133px;
+                text-align: center
+            }
+
+            .modal-body {
+                padding: 20px
+            }
+        }
+
+        @media(max-width:390px) {
+            .node {
+                font-size: .9rem;
+                padding: 8px
+            }
+
+            .node b {
+                min-width: 23px;
+                width: 23px
+            }
+
+            .scene {
+                height: 315px
+            }
+
+            .path button {
+                display: block
+            }
+
+            .path b {
+                margin-bottom: 7px
+            }
+
+            .control {
+                padding: 4px 8px
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation: none !important;
+                transition: none !important
+            }
+        }
+
+        /* วางบนพื้นหลังเข้มของหน้าเว็บ: ส่วนหัวและหมายเหตุใช้ตัวหนังสือสว่าง */
+        .intro, .footer { color: #fff; text-shadow: 0 2px 6px rgba(6, 18, 44, .75), 0 0 18px rgba(6, 18, 44, .5) }
+        .intro .eyebrow { color: #f3d27a }
+        .intro h1 span { color: #cfc4ff }
+        .intro .subtitle { color: rgba(255, 255, 255, .92) }
+        .intro .overview strong { color: #f3d27a }
+        .footer button { color: #f3d27a }
+
+        /* ให้กล่องซ้ายสูงเท่ากล่องขวา แล้วจัดเนื้อหาสไลด์ไว้กลางแนวตั้ง ไม่เหลือที่ว่างด้านล่าง */
+        .stage { display: flex; flex-direction: column }
+        .viewport { flex: 1 1 auto; display: flex }
+        .track { flex: 0 0 100%; width: 100%; align-items: stretch }
+        .slide { display: flex; flex-direction: column; justify-content: center; align-items: center }
+        .slide .scene { width: 100% }
+
+        /* ไม่มีพื้นหลังฝั่งโมเดล: ให้โปร่งบนพื้นเข้มของหน้าเว็บ และเปลี่ยนตัวหนังสือเป็นสีสว่าง */
+        .stage { background: transparent; border-color: rgba(255, 255, 255, .22); box-shadow: none }
+        .stage::before, .stage::after { display: none }
+        .stage-top>span, .stage .hint { color: rgba(255, 255, 255, .88) }
+        .stage .slide h2 { color: #fff; text-shadow: 0 2px 8px rgba(6, 18, 44, .7) }
+        .stage .en { color: #f3d27a }
+        .stage .slide-summary { color: rgba(255, 255, 255, .92); text-shadow: 0 1px 6px rgba(6, 18, 44, .7) }
+        .stage .dot { background: rgba(255, 255, 255, .4) }
+        .stage .control { background: #fff; color: #4b4470; opacity: 1 }
+        .stage .counter { background: #fff; color: #4b4470 }
+        .stage #play, .stage #play[aria-pressed] { background: #fff; color: #4b4470; opacity: 1 }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="intro">
+            <div>
+                <div class="eyebrow">DIGITALIZED SCHOOL</div>
+                <h1>สถานศึกษา<span>ดิจิทัลเต็มรูปแบบ</span></h1>
+                <p class="subtitle">การบริหารจัดการ การเรียนรู้และดูแลผู้เรียน และการสื่อสารประชาสัมพันธ์</p>
+            </div>
+            <div class="overview">
+                <div><strong>03</strong>ด้านการพัฒนา</div>
+                <div><strong>04</strong>กลุ่มบริหาร</div>
+                <div><strong>01</strong>ระบบข้อมูลร่วมกัน</div>
+            </div>
+        </div>
+        <div class="workspace">
+            <section class="stage" aria-label="โมเดลสามมิติ">
+                <div class="stage-top"><span>✧ รูปแบบการดำเนินงาน</span>
+                    <div class="controls"><button class="control" id="prev"
+                            aria-label="หัวข้อก่อนหน้า">←</button><button class="control" id="play"
+                            aria-pressed="true">Ⅱ หยุดเลื่อน</button><button class="control" id="next"
+                            aria-label="หัวข้อถัดไป">→</button></div>
+                </div>
+                <div class="viewport" id="viewport" tabindex="0" aria-label="เลื่อนแนวนอนเพื่อเลือกด้านการดำเนินงาน">
+                    <div class="track" id="track"></div>
+                </div>
+                <div class="bottom-controls"><span class="counter" id="counter">01 / 03</span>
+                    <div class="dots" id="dots"></div><span class="hint">เลือกหัวข้อเพื่ออ่านรายละเอียด ↗</span>
+                </div>
+            </section>
+            <aside class="panel" id="panel" aria-label="เนื้อหาขยายความด้านขวา"></aside>
+        </div>
+        <nav class="path" id="path" aria-label="เลือกด้านการดำเนินงาน"></nav>
+        <footer class="footer"><span>หมายเหตุ: ตัวเลขที่แสดงเป็นเป้าหมายการดำเนินงาน</span><button id="about">วิธีใช้งาน
+                ↗</button></footer>
+    </main>
+    <dialog id="modal" aria-labelledby="modalTitle">
+        <div id="modalContent"></div>
+    </dialog>
+    <script>
+        const themes = [['#d6c9f5', '#ab9ad6', '#6a55a0'], ['#bfe6d7', '#8ccab4', '#2d705e'], ['#fcd0bb', '#dfa48a', '#9c5a45']]; /* สีเดิมปรับเข้มขึ้นเล็กน้อย */
+        const data = [{ title: 'การบริหารบนฐานข้อมูล', english: 'Data-Driven Management', short: 'บริหารด้วยข้อมูล', desc: 'รวบรวมข้อมูลจาก 4 กลุ่มบริหารมาใช้วางแผน ติดตามงาน และประกอบการตัดสินใจ โดยดำเนินงานตามวงจร PDCA', core: 'DATA → DECISION', summary: 'ใช้ข้อมูลร่วมกันในการวางแผนและติดตามงาน', outcome: 'ลดงานเอกสารและตรวจสอบการดำเนินงานได้', items: [['data', '4 กลุ่มบริหาร', 'เชื่อมโยงข้อมูลแบบ Real-time', '04'], ['pdca', 'วงจรคุณภาพ PDCA', 'วางแผน ลงมือ ตรวจสอบ ปรับปรุง', '↻'], ['paper', 'Paperless Workflow', 'จัดเก็บ ค้นหา และอนุมัติในระบบ', '▤'], ['ita', 'ความโปร่งใส / ITA', 'ตรวจสอบย้อนกลับและเปิดเผยข้อมูล', '◎']] },
+        { title: 'การเรียนรู้และดูแลผู้เรียน', english: 'Digital Pedagogy & Student Support', short: 'เรียนรู้และดูแล', desc: 'เลือกใช้สื่อดิจิทัลให้เหมาะกับแต่ละวิชา และใช้ข้อมูลผลการเรียนประกอบการดูแลช่วยเหลือนักเรียนเป็นรายบุคคล', core: 'LEARN → CARE', summary: 'ใช้สื่อให้เหมาะกับวิชา ดูแลให้เหมาะกับผู้เรียน', outcome: 'นักเรียนได้รับการดูแลและเรียนจนจบการศึกษา', items: [['learning', 'ดิจิทัลตามกลุ่มวิชา', '3 รูปแบบ · 90% / 70% / 50%', '%'], ['care', 'Student Care System', 'รู้จัก คัดกรอง ช่วยเหลือ ติดตาม', '♡'], ['sgs', 'SGS / eSchool', 'เชื่อมข้อมูลผลการเรียนและการดูแล', '▤'], ['zero', 'การออกกลางคัน 0%', 'ติดตามและช่วยเหลือนักเรียนกลุ่มเสี่ยง', '0']] },
+        { title: 'การสื่อสารประชาสัมพันธ์', english: 'Omnichannel Communication', short: 'การประชาสัมพันธ์', desc: 'เผยแพร่ข่าวสารผ่านช่องทางออนไลน์ การประชุม และเวทีวิชาการ พร้อมรับฟังข้อเสนอแนะจากผู้ปกครองและชุมชน', core: 'CONNECT → TRUST', summary: 'ให้ผู้ปกครองและชุมชนรับทราบข่าวสารของสถานศึกษา', outcome: 'ผู้ปกครองและชุมชนเชื่อมั่นในการดำเนินงาน', items: [['online', 'ช่องทางออนไลน์', 'เว็บไซต์ สื่อสังคม และช่องทางผู้ปกครอง', '↗'], ['offline', 'ช่องทางออฟไลน์', 'ประชุมผู้ปกครอง ชุมชน และสื่อในโรงเรียน', '◉'], ['academic', 'เวทีวิชาการ', 'แลกเปลี่ยนเรียนรู้และเผยแพร่ผลงาน', '✧'], ['trust', 'สู่สถานศึกษาต้นแบบ', 'เผยแพร่ผลการดำเนินงานและแลกเปลี่ยนแนวปฏิบัติ', '◇']] }];
+        const details = {
+            data: { title: 'การจัดการข้อมูล 4 กลุ่มบริหาร', intro: 'จัดทำข้อมูลกลาง กำหนดผู้รับผิดชอบและสิทธิ์เข้าถึง เพื่อให้ทั้ง 4 กลุ่มบริหารใช้ข้อมูลที่ถูกต้องและตรงกัน', children: [['วิชาการ', 'หลักสูตร ตารางเรียน ผลสัมฤทธิ์ และการเข้าเรียน ใช้ติดตามคุณภาพการเรียนรู้และวางแผนช่วยเหลือผู้เรียน'], ['บุคคล', 'ข้อมูลบุคลากร ภาระงาน สมรรถนะ และการพัฒนา ใช้จัดสรรครูและวางแผนพัฒนาวิชาชีพ'], ['งบประมาณ', 'แผนงาน การจัดสรร การเบิกจ่าย และหลักฐาน ใช้ติดตามความคุ้มค่าและความก้าวหน้าของโครงการ'], ['ทั่วไป', 'อาคารสถานที่ ครุภัณฑ์ ความปลอดภัย และงานบริการ ใช้บริหารทรัพยากรและสภาพแวดล้อม']], flow: ['จัดเก็บ', 'ตรวจคุณภาพ', 'เชื่อมโยง', 'ใช้ตัดสินใจ'], note: 'การแสดงข้อมูลแบบ Real-time ต้องเชื่อมต่อกับระบบของสถานศึกษาและระบุเวลาปรับปรุงล่าสุด หน้านี้ยังไม่ได้เชื่อมต่อข้อมูลจริง' },
+            pdca: { title: 'การดำเนินงานตามวงจร PDCA', intro: 'นำข้อมูลมาใช้วางแผน ดำเนินงาน ตรวจสอบผล และปรับปรุงงาน โดยกำหนดผู้รับผิดชอบและเก็บหลักฐานในแต่ละขั้นตอน', children: [['P · Plan', 'วิเคราะห์ข้อมูลตั้งต้น ระบุปัญหา ตั้งเป้าหมาย ตัวชี้วัด ระยะเวลา และผู้รับผิดชอบ'], ['D · Do', 'ดำเนินงานตามแผน บันทึกความก้าวหน้า และเก็บหลักฐานในระบบดิจิทัล'], ['C · Check', 'เปรียบเทียบผลกับเป้าหมาย ตรวจสอบข้อมูลและหาสาเหตุที่ผลยังไม่เป็นไปตามเป้าหมาย'], ['A · Act', 'ปรับวิธีดำเนินงาน จัดสรรทรัพยากรใหม่ และนำบทเรียนเข้าสู่แผนรอบถัดไป']], flow: ['P →', 'D →', 'C →', 'A ↻'], note: 'ตัวอย่าง: พบการขาดเรียนเพิ่มขึ้น → วางแผนเยี่ยมบ้าน → ดำเนินการ → ตรวจการกลับเข้าเรียน → ปรับแผนดูแล' },
+            paper: { title: 'การลดงานเอกสารด้วยระบบดิจิทัล', intro: 'ใช้ระบบเอกสารดิจิทัลตั้งแต่รับเรื่อง พิจารณา อนุมัติ ไปจนถึงจัดเก็บและค้นหาเอกสาร', children: [['รับและจัดเก็บ', 'ใช้แบบฟอร์มดิจิทัล กำหนดเลขอ้างอิง หมวดเอกสาร และผู้รับผิดชอบ'], ['พิจารณาและอนุมัติ', 'กำหนดลำดับงาน ผู้มีสิทธิ์พิจารณา สถานะงาน และการแจ้งเตือน'], ['ค้นคืนและติดตาม', 'ค้นหาด้วยชื่อเรื่อง วันที่ หรือรหัส พร้อมติดตามประวัติการแก้ไข'], ['ประเมินการลดกระดาษ', 'เปรียบเทียบจำนวนเอกสารกระดาษและเวลาทำงานก่อน–หลังใช้ระบบ']], flow: ['รับเรื่อง', 'ตรวจสอบ', 'อนุมัติ', 'จัดเก็บ'], note: 'แนวทางกำกับข้อมูล: จำกัดสิทธิ์ตามบทบาท สำรองข้อมูล และกำหนดระยะเวลาเก็บรักษาให้เหมาะสม' },
+            ita: { title: 'การเปิดเผยข้อมูลและความโปร่งใส', intro: 'จัดเก็บหลักฐานให้ตรวจสอบย้อนหลังได้ และเผยแพร่ข้อมูลการดำเนินงานเพื่อสนับสนุนการประเมิน ITA', children: [['หลักฐานตรวจสอบย้อนกลับ', 'บันทึกผู้ดำเนินการ วันเวลา การเปลี่ยนแปลง และเอกสารประกอบ'], ['ข้อมูลที่เปิดเผยได้', 'นำเสนอแผนงาน ผลดำเนินงาน และการใช้งบประมาณในรูปแบบที่เข้าใจง่าย'], ['รับฟังและตอบกลับ', 'มีช่องทางสอบถามหรือเสนอแนะ ระบุผู้รับผิดชอบและติดตามการดำเนินการ'], ['ทบทวนคุณภาพข้อมูล', 'ตรวจความครบถ้วน ความถูกต้อง และความเป็นปัจจุบันก่อนเผยแพร่']], note: 'ผลการประเมิน ITA ต้องอ้างอิงผลประเมินจริงของสถานศึกษา' },
+            learning: { title: '3 รูปแบบการเรียนรู้ดิจิทัล', intro: 'กำหนดสัดส่วนการใช้สื่อดิจิทัลตามลักษณะวิชา จุดประสงค์การเรียนรู้ และความพร้อมของผู้เรียน', children: [['High Digitalization · 90%', 'เหมาะกับวิชาที่ใช้ข้อมูลและสื่อเป็นหลัก เช่น บทเรียนออนไลน์ แบบฝึกโต้ตอบ และการประเมินผ่านระบบ', 90], ['Hybrid Learning · 70%', 'ผสานสื่อออนไลน์กับการอภิปราย การทำงานกลุ่ม และกิจกรรมในห้องเรียน', 70], ['Practical Heavy · 50%', 'ใช้สื่อเตรียมความพร้อมและบันทึกผลงาน ควบคู่การลงมือปฏิบัติจริง เช่น กีฬา ศิลปะ และงานช่าง', 50]], note: 'สัดส่วน 90% / 70% / 50% เป็นเป้าหมายการใช้ดิจิทัล ควรกำหนดวิธีนับให้ชัดเจน เช่น นับจากกิจกรรมที่ใช้สื่อดิจิทัล ไม่ใช่ระยะเวลาที่ผู้เรียนใช้หน้าจอ' },
+            care: { title: 'ระบบดูแลช่วยเหลือนักเรียนรายบุคคล', intro: 'ใช้ข้อมูลการเข้าเรียน ผลการเรียน พฤติกรรม และสภาพความเป็นอยู่ ประกอบการวางแผนดูแลของครูที่ปรึกษา', children: [['รู้จักและคัดกรอง', 'รวบรวมข้อมูลจำเป็นและสัญญาณเสี่ยง เช่น ขาดเรียนต่อเนื่องหรือผลการเรียนลดลง'], ['วางแผนช่วยเหลือ', 'ให้ครูที่ปรึกษาพิจารณาร่วมกับผู้เรียนและผู้ปกครอง กำหนดวิธีช่วยเหลือเฉพาะราย'], ['ส่งเสริมและส่งต่อ', 'จัดทุน การสอนเสริม การให้คำปรึกษา หรือส่งต่อผู้เชี่ยวชาญตามความจำเป็น'], ['ติดตามผล', 'บันทึกผลการช่วยเหลือ นัดทบทวน และปรับแผนจนผู้เรียนได้รับการดูแลอย่างต่อเนื่อง']], flow: ['รู้จัก', 'คัดกรอง', 'ช่วยเหลือ', 'ติดตาม'], note: 'ข้อมูลรายบุคคลควรเข้าถึงได้เฉพาะผู้เกี่ยวข้อง และการประเมินความเสี่ยงต้องมีครูพิจารณาประกอบ' },
+            sgs: { title: 'การใช้ข้อมูลจาก SGS / eSchool', intro: 'ใช้ข้อมูลจากระบบที่สถานศึกษาใช้งานจริงประกอบการติดตามผลการเรียนและการดูแลช่วยเหลือ', children: [['ข้อมูลผลการเรียน', 'ผลประเมินรายวิชาและสถานะการเรียน ใช้ตรวจพบผู้เรียนที่ต้องได้รับการสนับสนุน'], ['ข้อมูลเพื่อการดูแล', 'เชื่อมโยงกับการเข้าเรียนและบันทึกช่วยเหลือเท่าที่ระบบและสิทธิ์อนุญาต'], ['การเชื่อมโยงที่เหมาะสม', 'ใช้ช่องทางเชื่อมต่อหรือการนำเข้าที่ระบบรองรับ พร้อมตรวจรูปแบบและความถูกต้อง'], ['ผู้รับผิดชอบข้อมูล', 'กำหนดผู้บันทึก ผู้ตรวจสอบ และเวลาปรับปรุงข้อมูลให้ชัดเจน']], note: 'SGS และ eSchool อาจมีขอบเขตและวิธีเชื่อมต่อแตกต่างกัน ต้องตรวจสอบกับระบบที่ใช้งานจริงก่อนดำเนินการ' },
+            zero: { title: 'เป้าหมายการออกกลางคัน 0%', intro: 'ติดตามนักเรียนที่เสี่ยงออกกลางคัน ประสานผู้ปกครอง และให้ความช่วยเหลือตามสาเหตุของปัญหา', children: [['คัดกรองนักเรียนกลุ่มเสี่ยง', 'ติดตามการขาดเรียนและสัญญาณเสี่ยงอย่างสม่ำเสมอ'], ['ช่วยเหลือตามสาเหตุ', 'แก้ปัญหาด้านการเรียน เศรษฐกิจ ครอบครัว และการเดินทางตามบริบท'], ['ติดตามการช่วยเหลือ', 'กำหนดผู้รับผิดชอบรายกรณี ประสานผู้ปกครอง และประเมินผลการช่วยเหลือ'], ['ตรวจสอบสถานภาพนักเรียน', 'ตรวจสถานภาพผู้เรียนทั้งปีการศึกษาและแยกการย้ายสถานศึกษาจากการออกกลางคัน']], note: 'ตั้งเป้าอัตราการออกกลางคันไว้ที่ 0% การรายงานผลต้องระบุปีการศึกษา วิธีคำนวณ และข้อมูลที่ตรวจสอบแล้ว' },
+            online: { title: 'การประชาสัมพันธ์ผ่านช่องทางออนไลน์', intro: 'เลือกช่องทางให้เหมาะกับผู้รับสาร และเชื่อมกลับมาที่แหล่งข้อมูลกลางที่เป็นปัจจุบัน', children: [['เว็บไซต์สถานศึกษา', 'ข้อมูลทางการ ข่าวประกาศ แผนงาน และผลการดำเนินงาน'], ['สื่อสังคมออนไลน์', 'เล่าเรื่องกิจกรรมและผลงานด้วยข้อความ ภาพ หรือวิดีโอที่กระชับ'], ['ช่องทางผู้ปกครอง', 'ส่งข่าวที่เกี่ยวข้องและเปิดช่องทางติดต่อครู ผ่านระบบที่โรงเรียนเลือกใช้'], ['รับฟังและวัดผล', 'ติดตามการเข้าถึง คำถามที่เกิดซ้ำ และข้อเสนอแนะเพื่อปรับการสื่อสาร']], note: 'ใช้ข้อความสำคัญเดียวกันทุกช่องทาง ตรวจสอบก่อนเผยแพร่ และคำนึงถึงสิทธิ์ในภาพและข้อมูลของผู้เรียน' },
+            offline: { title: 'การสื่อสารกับผู้ปกครองและชุมชน', intro: 'ใช้การประชุมและกิจกรรมในชุมชนเพื่อพูดคุยโดยตรง รวมถึงแจ้งข่าวแก่ผู้ที่ไม่สะดวกใช้ช่องทางออนไลน์', children: [['ประชุมผู้ปกครอง', 'สรุปแนวทางการเรียนและดูแลผู้เรียน พร้อมรับฟังความต้องการ'], ['กิจกรรมร่วมกับชุมชน', 'นำเสนอผลงานและเปิดโอกาสให้ชุมชนมีส่วนร่วมพัฒนาสถานศึกษา'], ['สื่อภายในสถานศึกษา', 'ใช้บอร์ด ข่าวประกาศ หรือเอกสารเฉพาะจุดที่จำเป็น'], ['ช่องทางติดต่อเพิ่มเติม', 'ให้ผู้รับสารเข้าถึงข้อมูลเพิ่มเติมได้ทั้งช่องทางดิจิทัลและผู้ประสานงาน']], note: 'Paperless คือการลดการใช้กระดาษอย่างเหมาะสม โดยยังรักษาการเข้าถึงข้อมูลของทุกกลุ่ม' },
+            academic: { title: 'การเผยแพร่ผลงานในเวทีวิชาการ', intro: 'นำเสนอผลการดำเนินงานและประสบการณ์ของครู เพื่อแลกเปลี่ยนวิธีทำงานกับสถานศึกษาและหน่วยงานอื่น', children: [['PLC และเวทีภายใน', 'ครูร่วมสะท้อนผลการสอน แลกเปลี่ยนวิธีแก้ปัญหา และพัฒนางาน'], ['นิทรรศการและ Open House', 'นำเสนอผลงานผู้เรียนและกระบวนการจัดการเรียนรู้'], ['เวทีเครือข่าย', 'แบ่งปันแนวปฏิบัติ บทเรียน และเงื่อนไขของความสำเร็จ'], ['เผยแพร่องค์ความรู้', 'จัดทำสื่อหรือคู่มือที่ผู้อื่นนำไปปรับใช้และส่งข้อเสนอแนะกลับได้']], note: 'นำเสนอทั้งผลที่เกิดขึ้นจริง ข้อจำกัด และแนวทางพัฒนาต่อ โดยมีหลักฐานประกอบ' },
+            trust: { title: 'การพัฒนาสู่สถานศึกษาต้นแบบ', intro: 'รายงานผลการดำเนินงานอย่างสม่ำเสมอ รับฟังข้อเสนอแนะ และนำมาปรับปรุงการทำงานของสถานศึกษา', children: [['วางแผนการประชาสัมพันธ์', 'กำหนดประเด็นสำคัญ ผู้รับสาร ผู้รับผิดชอบ และปฏิทินสื่อสาร'], ['ผลลัพธ์ที่ตรวจสอบได้', 'รายงานความก้าวหน้าเทียบเป้าหมายด้วยข้อมูลที่ตรวจสอบแล้ว'], ['รับฟังและปรับปรุง', 'รวบรวมข้อเสนอแนะ วิเคราะห์ และสื่อสารสิ่งที่พัฒนาแล้ว'], ['เผยแพร่แนวปฏิบัติ', 'จัดทำแนวปฏิบัติ สร้างเครือข่าย และให้ผู้อื่นปรับใช้ตามบริบท']], flow: ['สื่อสาร', 'รับฟัง', 'พัฒนา', 'ขยายผล'], note: 'การเป็นสถานศึกษาต้นแบบควรมีผลการดำเนินงานต่อเนื่อง และมีแนวปฏิบัติที่สถานศึกษาอื่นนำไปปรับใช้ได้' }
+        };
+        let current = 0, playing = true, timer, modalOrigin = null; const $ = s => document.querySelector(s), style = i => `--tone:${themes[i][0]};--shadow:${themes[i][1]};--ink:${themes[i][2]}`;
+        const icon = `<svg viewBox="0 0 80 80" aria-hidden="true"><path d="M15 24 40 11 65 24 40 38zM15 35l25 14 25-14M15 47l25 14 25-14M15 59l25 14 25-14"/></svg>`;
+        $('#track').innerHTML = data.map((d, i) => `<article class="slide" style="${style(i)}" aria-label="${i + 1} ${d.title}"><div class="scene"><div class="orbit"></div><div class="base"><div class="layer"></div><div class="layer"></div><div class="layer">${icon}</div></div>${d.items.map(([key, title, , symbol]) => `<button class="node" data-detail="${key}" data-pillar="${i}" aria-haspopup="dialog"><b>${symbol}</b>${title}</button>`).join('')}<div class="core-label">${d.core}</div></div><h2>${d.title}</h2><div class="en">${d.english}</div><p class="slide-summary">${d.summary}</p><button class="explore" data-overview="${i}" aria-haspopup="dialog">ดูหัวข้อย่อย ↗</button></article>`).join('');
+        $('#dots').innerHTML = data.map((d, i) => `<button class="dot" data-go="${i}" aria-label="${d.title}" aria-current="${i === 0}"></button>`).join(''); $('#path').innerHTML = data.map((d, i) => `<button data-go="${i}" aria-current="${i === 0}"><b>0${i + 1}</b><div><strong>${d.short}</strong><small>${d.english.split(' & ')[0]}</small></div></button>`).join('');
+        function render() { const d = data[current]; $('#panel').setAttribute('style', style(current)); $('#panel').innerHTML = `<div class="panel-kicker"><span>รายละเอียดแต่ละด้าน</span><span class="panel-num">0${current + 1}</span></div><h2>${d.title}</h2><p>${d.desc}</p><div class="sublist">${d.items.map(([key, title, desc, symbol]) => `<button class="subitem" data-detail="${key}" data-pillar="${current}" aria-haspopup="dialog"><span class="subicon">${symbol}</span><span><strong>${title}</strong><small>${desc}</small></span><span class="arrow">↗</span></button>`).join('')}</div><div class="outcome"><small>ผลที่คาดว่าจะได้รับ</small><strong>${d.outcome}</strong></div>`; $('#counter').textContent = `0${current + 1} / 03`; document.querySelectorAll('[data-go]').forEach(b => b.setAttribute('aria-current', Number(b.dataset.go) === current)); }
+        function go(i, user = false) { if (user && playing) setPlaying(true); current = (i + 3) % 3; $('#viewport').scrollTo({ left: $('#viewport').clientWidth * current, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); render() }
+        function setPlaying(value) { playing = value; $('#play').textContent = playing ? 'Ⅱ หยุดเลื่อน' : '▶ เลื่อนอัตโนมัติ'; $('#play').setAttribute('aria-pressed', playing); clearInterval(timer); if (playing) timer = setInterval(() => { if (!$('#modal').open && !document.hidden) go(current + 1) }, 6500) }
+        function openModal(content, i) { if (!$('#modal').open) modalOrigin = document.activeElement; $('#modal').setAttribute('style', style(i)); $('#modalContent').innerHTML = content; if (!$('#modal').open) $('#modal').showModal(); $('.close').focus() }
+        const head = (title, sub) => `<div class="modal-head"><button class="close" aria-label="ปิดหน้าต่าง">×</button><div class="eyebrow">DIGITALIZED SCHOOL</div><h2 id="modalTitle">${title}</h2><p>${sub}</p></div>`;
+        function overview(i) { const d = data[i]; openModal(head(d.title, d.english) + `<div class="modal-body"><p>${d.desc}</p><div class="modal-grid">${d.items.map(([key, title, desc]) => `<button class="mini" data-detail="${key}" data-pillar="${i}"><strong>${title} ↗</strong><p>${desc}</p></button>`).join('')}</div><div class="note">${d.outcome}</div></div>`, i) }
+        function detail(key, i) { const d = details[key]; openModal(head(d.title, data[i].english) + `<div class="modal-body"><button class="back" data-overview="${i}">← กลับไปหัวข้อย่อย</button><p>${d.intro}</p>${d.flow ? `<div class="flow">${d.flow.map(x => `<span>${x}</span>`).join('')}</div>` : ''}<div class="modal-grid">${d.children.map(([title, body, percent]) => `<div class="mini"><strong>${title}</strong>${percent ? `<div class="bar"><i style="width:${percent}%"></i></div>` : ''}<p>${body}</p></div>`).join('')}</div><p class="note">${d.note}</p></div>`, i) }
+        document.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; if (b.dataset.detail) detail(b.dataset.detail, Number(b.dataset.pillar)); if (b.dataset.overview !== undefined) overview(Number(b.dataset.overview)); if (b.dataset.go !== undefined) go(Number(b.dataset.go), true); if (b.classList.contains('close')) $('#modal').close() });
+        $('#prev').onclick = () => go(current - 1, true); $('#next').onclick = () => go(current + 1, true); $('#play').onclick = () => setPlaying(!playing); $('#viewport').addEventListener('keydown', e => { if (e.target !== $('#viewport')) return; if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); go(current + (e.key === 'ArrowRight' ? 1 : -1), true) } }); $('#viewport').addEventListener('pointerdown', () => { if (playing) setPlaying(true) }); let scrollTimer; $('#viewport').addEventListener('scroll', () => { clearTimeout(scrollTimer); scrollTimer = setTimeout(() => { const n = Math.round($('#viewport').scrollLeft / $('#viewport').clientWidth); if (n !== current && n >= 0 && n < 3) { current = n; render() } }, 160) }); window.addEventListener('resize', () => $('#viewport').scrollTo({ left: current * $('#viewport').clientWidth, behavior: 'instant' })); $('#modal').addEventListener('click', e => { if (e.target === $('#modal')) { const r = $('#modal').getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) $('#modal').close() } }); $('#modal').addEventListener('close', () => { modalOrigin?.focus(); if (playing) setPlaying(true) }); $('#about').onclick = () => openModal(head('วิธีใช้งาน', 'เลือกหัวข้อที่ต้องการอ่าน') + `<div class="modal-body"><p>โมเดลเลื่อนแนวนอนทุก 6.5 วินาที วนทั้ง 3 หัวข้ออย่างต่อเนื่อง พักชั่วคราวเมื่อเปิดหน้าต่างรายละเอียด และเลื่อนต่อเมื่อปิด สามารถกดหยุดเลื่อนหรือเลือกหัวข้อด้วยตนเองได้</p><p>คลิกปุ่มรอบโมเดลหรือรายการด้านขวาเพื่อเปิดรายละเอียด เลือก “ดูหัวข้อย่อย” เพื่อดูองค์ประกอบภายใน กด Esc หรือ × เพื่อปิดหน้าต่าง</p><p class="note">หน้านี้แสดงแนวทางการดำเนินงานของสถานศึกษา ตัวเลขเป็นเป้าหมายที่กำหนดไว้ และยังไม่ได้เชื่อมต่อข้อมูลนักเรียนจริง</p><p>ฟอนต์ TH SarabunPSK: <a href="https://github.com/SarabunConsortium/TH-Sarabun-PSK" target="_blank" rel="noopener">แหล่งเผยแพร่ฟอนต์</a></p></div>`, 0); render(); setPlaying(playing);
+
+        const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+        document.querySelectorAll('.scene').forEach(scene => { scene.addEventListener('pointermove', e => { if (reducedMotion.matches || e.pointerType === 'touch') return; const r = scene.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height; scene.style.setProperty('--rx', `${(y - .5) * 9}deg`); scene.style.setProperty('--ry', `${(x - .5) * 10}deg`); scene.style.setProperty('--lx', `${x * 100}%`); scene.style.setProperty('--ly', `${y * 100}%`) }); scene.addEventListener('pointerleave', () => { scene.style.setProperty('--rx', '0deg'); scene.style.setProperty('--ry', '0deg') }) });
+    </script>
+
+<script>
+/* ส่งความสูงให้หน้าเว็บหลัก (iframe ไม่มีแถบเลื่อนของตัวเอง) และขอให้เลื่อนมาที่โมเดลเมื่อเปิดหน้าต่างรายละเอียด */
+(function(){const post=m=>{if(parent!==window)parent.postMessage(m,location.origin)};
+const rep=()=>requestAnimationFrame(()=>post({type:'d3-digital-model-height',height:Math.ceil(document.querySelector('main').getBoundingClientRect().height+16)}));
+new ResizeObserver(rep).observe(document.body);addEventListener('load',rep);rep();
+const m=document.getElementById('modal');new MutationObserver(()=>{if(m.open)post({type:'d3-digital-model-scroll'})}).observe(m,{attributes:true,attributeFilter:['open']});})();
+</script>
+</body>
+
+</html>

@@ -19,6 +19,9 @@ export interface OnetSubject {
  * ค่าเฉลี่ยของโรงเรียนกับระดับประเทศได้ชัดเจน ไม่ต้องอ่านเส้น 10 เส้นพร้อมกัน
  * และยังเลือก "ทุกวิชา" เพื่อดูภาพรวมได้เหมือนเดิม
  */
+/** สีพาสเทล ไม่ซ้ำกันในกราฟเดียว (วิชาละ 2 สี: โรงเรียน / ประเทศ) */
+const ONET_VIVID = ['#4a90f2', '#8fbef7', '#3fc996', '#8ee3c3', '#ff8a5c', '#ffbb9e', '#f06ea8', '#f7aacb', '#9272f2', '#bfaef8', '#ee6464', '#f5a3a3', '#40c4b5', '#95e1d8'];
+
 @Component({
   selector: 'app-onet-chart',
   standalone: true,
@@ -62,15 +65,15 @@ export class OnetChartComponent {
     // เลือกรายวิชาเดียว: ใช้สีน้ำเงินคู่กับสีแดงเพื่อให้เห็นช่องว่างชัด
     if (c) {
       return [
-        { name: 'ค่าเฉลี่ยของโรงเรียน', values: c.school, color: '#1e4d9e' },
-        { name: 'ค่าเฉลี่ยระดับประเทศ', values: c.nation, color: '#b4433a', dashed: true }
+        { name: 'ค่าเฉลี่ยของโรงเรียน', values: c.school, color: '#5b9cf5' },
+        { name: 'ค่าเฉลี่ยระดับประเทศ', values: c.nation, color: '#f26b6b', dashed: true }
       ];
     }
 
     // ทุกวิชา: วิชาละหนึ่งสี เส้นทึบคือโรงเรียน เส้นประคือระดับประเทศ
     return this.subjects.flatMap((s, i) => ([
-      { name: `${s.name} (โรงเรียน)`, values: s.school, color: CHART_PALETTE[i % CHART_PALETTE.length] },
-      { name: `${s.name} (ประเทศ)`, values: s.nation, color: CHART_PALETTE[i % CHART_PALETTE.length], dashed: true }
+      { name: `${s.name} (โรงเรียน)`, values: s.school, color: ONET_VIVID[(i * 2) % ONET_VIVID.length] },
+      { name: `${s.name} (ประเทศ)`, values: s.nation, color: ONET_VIVID[(i * 2 + 1) % ONET_VIVID.length], dashed: true }
     ]));
   }
 

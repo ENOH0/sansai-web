@@ -1,0 +1,54 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ปัจจัยสู่ความสำเร็จ</title><link rel="stylesheet" href="/fonts/th-sarabun.css"><style>
+*{box-sizing:border-box}body{margin:0;background:transparent;color:#26324a;font-family:'TH SarabunPSK Web','TH SarabunPSK',Tahoma,sans-serif;font-size:19px}
+.page{max-width:1200px;margin:0 auto;padding:6px 0 10px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:26px;align-items:center}
+svg{width:100%;max-width:560px;display:block;margin:0 auto;overflow:visible}
+.col{cursor:pointer;touch-action:manipulation;outline:none}
+.col .shaft{transition:fill .3s,filter .3s}.col.on .shaft{filter:drop-shadow(0 0 14px rgba(255,255,255,.6))}
+.col:focus-visible .shaft{stroke:#ffd76a;stroke-width:4}
+.roof{fill:url(#roof)}.roof-t{font-size:30px;font-weight:800;fill:#5a3b00;text-anchor:middle}
+.base{fill:url(#base)}.base-t{font-size:22px;font-weight:800;fill:#0e2a5c;text-anchor:middle}
+.lbl{font-size:30px;font-weight:800;text-anchor:middle;pointer-events:none;fill:#fff;paint-order:stroke;stroke:rgba(6,18,44,.35);stroke-width:3px}
+.lbl-s{font-size:17px;font-weight:600;text-anchor:middle;pointer-events:none;fill:rgba(255,255,255,.88)}
+.detail{background:rgba(255,255,255,.96);border-radius:22px;padding:22px;box-shadow:0 20px 44px rgba(6,18,44,.3);border-top:5px solid hsl(var(--h) 55% 55%)}
+.k{color:hsl(var(--h) 45% 42%);font-size:15px;font-weight:800;letter-spacing:.3px}
+h3{margin:2px 0 4px;color:#0e2a5c;font-size:26px;line-height:1.25}.d{margin:0 0 14px;color:#4a5872;font-size:17.5px;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.it{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:14px;background:hsl(var(--h) 60% 97%);border:1px solid hsl(var(--h) 45% 88%)}
+.it img{width:44px;height:44px;flex:0 0 44px;border-radius:50%;object-fit:contain;background:#fff;border:1px solid #e3e9f3}
+.it span{font-size:15.5px;line-height:1.3;color:#26324a;font-weight:700}
+.it.m5 b{display:grid;place-items:center;width:44px;height:44px;flex:0 0 44px;border-radius:12px;color:#fff;font-size:20px;background:hsl(var(--h) 55% 50%)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.tab{min-height:44px;padding:8px 16px;border-radius:999px;border:1px solid #d6e0f0;background:#fff;font:inherit;font-size:16px;font-weight:800;color:#0e2a5c;cursor:pointer;touch-action:manipulation}
+.tab.on{color:#fff;border-color:transparent;background:hsl(var(--h) 50% 48%)}
+@media (max-width:900px){.page{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.col .shaft{transition:none}}
+</style></head><body><main class="page">
+<svg viewBox="0 0 600 560" role="img" aria-label="เสาหลัก 3 ต้น ปัจจัยสู่ความสำเร็จ">
+<defs><linearGradient id="roof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7a3"/><stop offset="1" stop-color="#e2b64a"/></linearGradient>
+<linearGradient id="base" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dbe6fb"/></linearGradient></defs>
+<path class="roof" d="M300 14 L578 128 L22 128 Z"/><rect class="roof" x="22" y="128" width="556" height="20" rx="4"/>
+<text class="roof-t" x="300" y="112">ความสำเร็จ</text>
+<g id="cols"></g>
+<rect class="base" x="40" y="470" width="520" height="30" rx="6"/><rect class="base" x="14" y="500" width="572" height="46" rx="8"/>
+<text class="base-t" x="300" y="531">ปัจจัยสู่ความสำเร็จ</text>
+</svg>
+<aside class="detail" id="detail" aria-live="polite"></aside>
+</main><script>
+const L=[{"key": "m5", "name": "5M", "sub": "ทรัพยากรภายใน", "desc": "ทรัพยากรบริหารจัดการ 5 ด้าน ที่โรงเรียนจัดสรรเพื่อขับเคลื่อนการดำเนินงาน", "hue": 212, "items": [{"t": "Man · คน", "d": "บุคลากร ครู นักเรียน และเครือข่ายผู้มีส่วนร่วม", "logo": ""}, {"t": "Money · งบประมาณ", "d": "งบประมาณและทรัพยากรสนับสนุนการดำเนินงาน", "logo": ""}, {"t": "Machine · เครื่องมือ", "d": "อุปกรณ์ เทคโนโลยี และระบบสารสนเทศ", "logo": ""}, {"t": "Material · วัสดุ", "d": "สื่อ วัสดุ และแหล่งเรียนรู้", "logo": ""}, {"t": "Method · วิธีการ", "d": "กระบวนการและรูปแบบการดำเนินงาน", "logo": ""}]}, {"key": "net", "name": "เครือข่ายความร่วมมือ", "sub": "ชุมชนและพื้นที่", "desc": "หน่วยงาน องค์กร และบุคคลในพื้นที่ที่ร่วมสนับสนุนการจัดการศึกษาของโรงเรียน", "hue": 158, "items": [{"t": "เทศบาลเมืองแม่โจ้", "d": "เครือข่ายความร่วมมือ", "logo": "/evidence/dimension5/network/01-maejo-municipality.png"}, {"t": "โรงพยาบาลประจำตำบล", "d": "เครือข่ายความร่วมมือ", "logo": "/evidence/dimension5/network/02-tambon-hospital.png"}, {"t": "โรงพยาบาลสันทราย", "d": "เครือข่ายความร่วมมือ", "logo": "/evidence/dimension5/network/03-sansai-hospital.png"}, {"t": "การไฟฟ้าส่วนภูมิภาค", "d": "เครือข่ายความร่วมมือ", "logo": "/evidence/dimension5/network/04-pea.png"}, {"t": "ครูเก่า ศิษย์เก่า", "d": "เครือข่ายความร่วมมือ", "logo": "/evidence/dimension5/network/05-alumni.jpg"}, {"t": "สถานีตำรวจภูธรแม่โจ้", "d": "เครือข่ายความร่วมมือ", "logo": "/evidence/dimension5/network/06-maejo-police.png"}, {"t": "ปราชญ์ชาวบ้าน", "d": "เครือข่ายความร่วมมือ", "logo": "/evidence/dimension5/network/07-local-sage.jpg"}, {"t": "โรงเรียนเอกชนในพื้นที่", "d": "เครือข่ายความร่วมมือ", "logo": "/evidence/dimension5/network/08-private-school.jpg"}, {"t": "โรงพยาบาลสัตว์เอกชนในพื้นที่", "d": "เครือข่ายความร่วมมือ", "logo": "/evidence/dimension5/network/09-animal-hospital.jpg"}]}, {"key": "mou", "name": "MOU", "sub": "ภาคีภายนอก", "desc": "บันทึกข้อตกลงความร่วมมือกับสถาบันการศึกษาและหน่วยงานภาคี ทั้งในและต่างประเทศ", "hue": 262, "items": [{"t": "มหาวิทยาลัยแม่โจ้", "d": "ความร่วมมือกับ 7 คณะ", "logo": "/evidence/dimension5/mou/01-image1.jpg"}, {"t": "วิทยาลัยพยาบาลบรมราชชนนี", "d": "ภาคีความร่วมมือ", "logo": "/evidence/dimension5/mou/02-image2.jpg"}, {"t": "คณะวนศาสตร์ มหาวิทยาลัยเกษตรศาสตร์", "d": "ภาคีความร่วมมือ", "logo": "/evidence/dimension5/mou/03-image3.jfif"}, {"t": "คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าคุณทหารลาดกระบัง", "d": "ภาคีความร่วมมือ", "logo": "/evidence/dimension5/mou/04-image4.webp"}, {"t": "วิทยาลัยอาชีวศึกษาเชียงใหม่", "d": "ภาคีความร่วมมือ", "logo": "/evidence/dimension5/mou/05-image5.jpg"}, {"t": "วิทยาลัยเทคนิคสารภี", "d": "ภาคีความร่วมมือ", "logo": "/evidence/dimension5/mou/06-image6.jpg"}, {"t": "สถาบันการจัดการปัญญาภิวัฒน์", "d": "ภาคีความร่วมมือ", "logo": "/evidence/dimension5/mou/07-image7.jpg"}, {"t": "มหาวิทยาลัยซีหนาน 西南大学", "d": "ณ มณฑลฉงชิ่ง ประเทศจีน", "logo": "/evidence/dimension5/mou/08-image8.jfif"}, {"t": "Guangxi Normal University", "d": "ณ เมืองกุ้ยหลิน ประเทศจีน", "logo": "/evidence/dimension5/mou/09-gxnu.jpg"}]}];const R=[97,176,255];let cur=0,timer=null;
+const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nm=s=>{const k=s.indexOf('ความ');return s.length>8&&k>0?[s.slice(0,k),s.slice(k)]:[s]};
+function rings(){const X=[70,230,390];document.getElementById('cols').innerHTML=L.map((l,i)=>{const x=X[i],on=i===cur,c=`hsl(${l.hue} ${on?62:42}% ${on?50:62}%)`,cl=`hsl(${l.hue} ${on?62:42}% ${on?64:74}%)`;
+return `<g class="col${on?' on':''}" data-i="${i}" tabindex="0" role="button" aria-label="${esc(l.name)}"><rect x="${x-6}" y="148" width="152" height="22" rx="4" fill="${cl}"/><rect class="shaft" x="${x+8}" y="170" width="124" height="280" fill="${c}"/>
+${[0,1,2].map(k=>`<rect x="${x+24+k*34}" y="178" width="8" height="264" rx="4" fill="rgba(255,255,255,.22)"/>`).join('')}<rect x="${x-6}" y="450" width="152" height="20" rx="4" fill="${cl}"/>
+${nm(l.name).map((t,k,a)=>`<text class="lbl" x="${x+70}" y="${300-(a.length-1)*16+k*32}">${esc(t)}</text>`).join('')}<text class="lbl-s" x="${x+70}" y="${nm(l.name).length>1?352:328}">${esc(l.sub)}</text></g>`}).join('');
+document.querySelectorAll('.col').forEach(b=>{b.onclick=()=>{sel(+b.dataset.i);stop()};b.onkeydown=ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();sel(+b.dataset.i);stop()}}})}
+function detail(){const l=L[cur];const d=document.getElementById('detail');d.style.setProperty('--h',l.hue);
+d.innerHTML=`<div class="k">เสาที่ ${cur+1} จาก 3 · ${esc(l.sub)}</div><h3>${esc(l.name)}</h3><p class="d">${esc(l.desc)}</p><div class="grid">${l.items.map(x=>l.key==='m5'?`<div class="it m5"><b>M</b><span>${esc(x.t)}</span></div>`:`<div class="it">${x.logo?`<img src="${esc(x.logo)}" alt="" loading="lazy">`:''}<span>${esc(x.t)}</span></div>`).join('')}</div><div class="tabs">${L.map((x,i)=>`<button type="button" class="tab${i===cur?' on':''}" data-t="${i}">${esc(x.name)}</button>`).join('')}</div>`;
+d.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{sel(+b.dataset.t);stop()});rep()}
+function sel(i){cur=i;rings();detail()}
+function stop(){clearInterval(timer);timer=null}
+function rep(){requestAnimationFrame(()=>{const h=Math.ceil(document.querySelector('.page').getBoundingClientRect().height+12);if(parent!==window)parent.postMessage({type:'d5-factors-height',height:h},location.origin)})}
+sel(cur);new ResizeObserver(rep).observe(document.body);addEventListener('load',rep);
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches)timer=setInterval(()=>sel((cur+1)%3),8000);
+</script></body></html>

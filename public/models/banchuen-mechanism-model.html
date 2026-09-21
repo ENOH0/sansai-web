@@ -118,7 +118,8 @@ function buildTabs() {
     '<button type="button" class="tab' + (i === act ? ' on' : '') + '" data-a="' + i + '" role="tab"'
     + ' aria-selected="' + (i === act) + '"><b>' + esc(d.name) + '</b><small>' + esc(d.full) + '</small></button>'
   ).join('');
-  tabsEl.querySelectorAll('[data-a]').forEach(b => b.onclick = () => { setActivity(+b.dataset.a); });
+  tabsEl.querySelectorAll('[data-a]').forEach(b => b.onclick = () => { setActivity(+b.dataset.a);
+    if (window.parent !== window) window.parent.postMessage({ type: 'd5-banchuen-tab', index: +b.dataset.a }, window.location.origin); });
 }
 
 function buildWheel() {

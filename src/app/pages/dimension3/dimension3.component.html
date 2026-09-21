@@ -214,13 +214,12 @@
     <div class="model-intro" appReveal style="margin-bottom:32px">
       <p class="model-intro-name">{{ d.information.modelName }}</p>
       <p class="model-intro-text">{{ d.information.modelIntro }}</p>
+    </div>
 
-      <ul class="model-intro-list">
-        <li *ngFor="let pt of d.information.modelPoints">
-          <span class="model-intro-point">{{ pt.title }} <em>({{ pt.en }})</em></span>
-          {{ pt.text }}
-        </li>
-      </ul>
+    <!-- โมเดลสถานศึกษาดิจิทัลเต็มรูปแบบ (แทนรายการ 3 หัวข้อเดิม) · แก้ได้ที่ public/models/digital-school-model.html -->
+    <div class="d3-learn-model d3-digital-model" appReveal style="margin-bottom:38px">
+      <iframe src="/models/digital-school-model.html" title="โมเดลสถานศึกษาดิจิทัลเต็มรูปแบบ"
+        loading="lazy" scrolling="no" [style.height.px]="digitalModelHeight()"></iframe>
     </div>
 
     <!-- ปุ่มไปเว็บไซต์ 4 กลุ่มบริหาร · ใส่ลิงก์ที่ information.adminLinks ใน dimension3.data.ts -->
