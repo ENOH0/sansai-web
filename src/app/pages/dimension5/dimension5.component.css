@@ -185,3 +185,7 @@
 @media (hover: hover) { .d5-banchuen-close:hover { background: rgba(255, 255, 255, .22); } }
 
 @media (prefers-reduced-motion: reduce) { .d5-banchuen-wrap { animation: none; } }
+
+/* ปัจจัยสู่ความสำเร็จ: วงโคจร 3 ลูก (ขนาดเดียวกับ SCHOOL CURRICULUM ด้าน 2) */
+.d5-factors-orbit { overflow: hidden; background: transparent; }
+.d5-factors-orbit iframe { display: block; width: 100%; height: clamp(440px, 70.3125vw, 900px); border: 0; background: transparent; }
