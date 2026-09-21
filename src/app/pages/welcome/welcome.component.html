@@ -1,4 +1,4 @@
-<section class="wl" [class.is-menu]="menuOpen()" (click)="!menuOpen() && openMenu()">
+<section class="wl" [class.is-menu]="menuOpen()" (click)="onCoverTap()">
   <!-- วิดีโอปก วนลูป · ไฟล์อยู่ที่ public/video/welcome-cover-v3.mp4 -->
   <video #cover class="wl-video" autoplay muted loop playsinline webkit-playsinline disablepictureinpicture preload="auto"
          poster="/video/welcome-cover-v3.jpg" aria-hidden="true">

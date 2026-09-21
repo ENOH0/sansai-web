@@ -74,6 +74,11 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
     return /^https?:\/\//.test(link) ? '_blank' : '_self';
   }
 
+  /** แตะหน้าปก: เปิดเมนู — ต้องไม่ return false (Angular จะ preventDefault ทำให้ลิงก์ในเมนูกดไม่ได้) */
+  onCoverTap(): void {
+    if (!this.menuOpen()) this.openMenu();
+  }
+
   openMenu(): void {
     this.menuOpen.set(true);
     this.resetIdle();

@@ -13,12 +13,13 @@ html,body{margin:0;height:100%;overflow:hidden;background:radial-gradient(ellips
   font-family:'TH SarabunPSK Web','TH SarabunPSK',Tahoma,sans-serif;color:#1d2f52;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
 #view{position:absolute;inset:0;perspective:2200px;perspective-origin:50% 42%;touch-action:none;cursor:grab;overflow:hidden}
 #view:active{cursor:grabbing}
-#scene{position:absolute;left:50%;top:52%;width:1050px;height:500px;margin:-250px 0 0 -525px;transform-style:preserve-3d}
+#scene{position:absolute;left:50%;top:50%;width:1100px;height:193px;margin:-96px 0 0 -550px;transform-style:preserve-3d}
 #scene *{transform-style:preserve-3d}
-.ground{position:absolute;inset:-30px;border-radius:26px;background:#bfe3a9;box-shadow:0 0 0 12px #a9d493}
+.ground{position:absolute;inset:-14px;border-radius:26px;background:#bfe3a9;box-shadow:0 0 0 12px #a9d493}
 .flat{position:absolute}
 .road{background:#8f98a8}
-.road::after{content:'';position:absolute;left:0;right:0;top:50%;height:3px;margin-top:-1.5px;background:repeating-linear-gradient(90deg,#fff 0 22px,transparent 22px 44px);opacity:.85}
+.road::after{height:1.5px!important;margin-top:-.75px!important}
+.road::after{content:'';position:absolute;left:0;right:0;top:50%;height:3px;margin-top:-1.5px;background:repeating-linear-gradient(90deg,#fff 0 12px,transparent 12px 24px);opacity:.85}
 .road.v::after{left:50%;right:auto;top:0;bottom:0;width:3px;height:auto;margin:0 0 0 -1.5px;background:repeating-linear-gradient(180deg,#fff 0 22px,transparent 22px 44px)}
 .pave{background:repeating-linear-gradient(45deg,#e7d7c3 0 10px,#dcc8b0 10px 20px)}
 .field{background:repeating-linear-gradient(90deg,#63c46e 0 34px,#58b863 34px 68px);border:4px solid #fff}
@@ -26,27 +27,32 @@ html,body{margin:0;height:100%;overflow:hidden;background:radial-gradient(ellips
 .field::after{content:'';position:absolute;left:50%;top:50%;width:50px;height:50px;margin:-25px;border:3px solid #fff;border-radius:50%}
 .farm{background:repeating-linear-gradient(0deg,#9bc45a 0 9px,#7a5a36 9px 13px)}
 .garden{background:#8fd17a;border-radius:14px}
+.court{background:linear-gradient(90deg,#5b7fd6 0 50%,#e89a52 50%);border:2px solid #fff}
+.pond{background:radial-gradient(ellipse at 40% 40%,#b9e8d9,#7fcbb6);border-radius:30px}
 .b{position:absolute;cursor:pointer}
 .f{position:absolute;backface-visibility:visible}
 .wall{background-color:var(--w)}
 .wall.win{background-image:repeating-linear-gradient(90deg,transparent 0 10px,rgba(60,90,140,.45) 10px 18px,transparent 18px 26px),
   repeating-linear-gradient(0deg,transparent 0 12px,rgba(255,255,255,0) 12px 30px)}
-.wall.win::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.0) 0 14px,var(--w) 14px 24px)}
+.wall.win::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,var(--w) 0 3px,rgba(255,255,255,0) 3px 9px,var(--w) 9px 13.2px)}
 .shade1{filter:brightness(.92)}.shade2{filter:brightness(.8)}
 .roof{background-color:var(--r);background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.08) 0 2px,transparent 2px 12px)}
 .b.on .f{outline:3px solid #ffcf3f}
 .glass{background:linear-gradient(135deg,#7fe0d6,#2aa39a);background-image:linear-gradient(135deg,rgba(255,255,255,.35),transparent 60%),repeating-linear-gradient(90deg,#2fb3a8 0 14px,#1f8f86 14px 16px)}
 .bb{position:absolute;width:0;height:0}
 .bb>*{position:absolute;left:0;bottom:0;transform:translateX(-50%)}
-.tree{width:26px;height:40px}
-.tree i{position:absolute;left:11px;bottom:0;width:4px;height:12px;background:#7a5230}
-.tree b{position:absolute;left:0;bottom:9px;width:26px;height:28px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#8fe07c,#3f9e45)}
+.tree{width:16px;height:24px}
+.tree i{position:absolute;left:6.5px;bottom:0;width:3px;height:8px;background:#7a5230}
+.tree b{position:absolute;left:0;bottom:6px;width:16px;height:17px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#8fe07c,#3f9e45)}
 .pin{display:flex;flex-direction:column;align-items:center;cursor:pointer;pointer-events:auto}
-.pin span{display:grid;place-items:center;min-width:34px;height:34px;padding:0 6px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#ef3b4d;box-shadow:0 4px 10px rgba(0,0,0,.3);border:2px solid #fff}
-.pin span em{transform:rotate(45deg);font-style:normal;color:#fff;font-weight:800;font-size:19px;line-height:1}
+.pin span{display:grid;place-items:center;min-width:28px;height:28px;padding:0 6px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#ef3b4d;box-shadow:0 4px 10px rgba(0,0,0,.3);border:2px solid #fff}
+.pin span em{transform:rotate(45deg);font-style:normal;color:#fff;font-weight:800;font-size:16px;line-height:1}
 .pin.on span{background:#ffb400}
-.flagp{width:4px;height:70px;background:#ccc}
-.flagp::after{content:'';position:absolute;left:4px;top:0;width:34px;height:22px;background:linear-gradient(#e33 0 20%,#fff 20% 36%,#2b3f8f 36% 64%,#fff 64% 80%,#e33 80%)}
+.shutter.side{left:0;right:auto;top:20%;bottom:20%;width:72%;height:auto;background:repeating-linear-gradient(90deg,#9aa3b2 0 2px,#c7ccd6 2px 4px)}
+.shutter{position:absolute;left:18%;right:18%;top:0;height:72%;background:repeating-linear-gradient(0deg,#9aa3b2 0 2px,#c7ccd6 2px 4px);border:1.5px solid #6b7385}
+.wc{display:grid;place-items:center;width:24px;height:24px;border-radius:7px;background:#2f6fd6;border:2px solid #fff;font-size:14px;line-height:1;box-shadow:0 3px 8px rgba(0,0,0,.3)}
+.flagp{width:3px;height:50px;background:#ccc}
+.flagp::after{content:'';position:absolute;left:3px;top:0;width:22px;height:14px;background:linear-gradient(#e33 0 20%,#fff 20% 36%,#2b3f8f 36% 64%,#fff 64% 80%,#e33 80%)}
 
 /* UI */
 .ui{position:absolute;z-index:5}
@@ -63,7 +69,7 @@ html,body{margin:0;height:100%;overflow:hidden;background:radial-gradient(ellips
 .info{left:50%;top:max(84px,calc(env(safe-area-inset-top) + 70px));transform:translateX(-50%);display:none;align-items:center;gap:12px;padding:10px 18px;border-radius:16px;background:#fff;box-shadow:0 12px 28px rgba(30,60,110,.25);font-size:22px;font-weight:800}
 .info.show{display:flex}.info b{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#ffb400;color:#fff}
 .hint{left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);padding:6px 16px;border-radius:999px;background:rgba(29,47,82,.75);color:#fff;font-size:16px;pointer-events:none}
-body.has-legend #scene{left:calc(50% + 150px)}
+body.has-legend #scene{left:calc(50% + 160px)}
 .legend-toggle{left:16px;bottom:max(16px,env(safe-area-inset-bottom));min-height:48px;padding:0 18px;border:0;border-radius:14px;background:#fff;color:#1d2f52;font:inherit;font-size:19px;font-weight:800;box-shadow:0 6px 16px rgba(30,60,110,.18);cursor:pointer}
 body.has-legend .legend-toggle{display:none}
 body:not(.has-legend) .legend{display:none}
@@ -78,53 +84,80 @@ body:not(.has-legend) .legend{display:none}
 <a class="ui back" href="/" target="_top">‹ กลับหน้าหลัก</a>
 <div class="ui legend" id="legend"><div class="legend-close">รายชื่ออาคาร<button type="button" id="lclose">ซ่อน ✕</button></div></div>
 <button class="ui legend-toggle" id="lopen" type="button">☰ รายชื่ออาคาร</button>
-<div class="ui info" id="info"><b id="infoNo"></b><span id="infoName"></span></div>
+<div class="ui info" id="info"><b id="infoNo"></b><span><span id="infoName"></span><small id="infoSub" style="display:block;font-size:17px;font-weight:600;color:#50648a"></small></span></div>
 <div class="ui ctrl"><button id="zin" aria-label="ซูมเข้า">+</button><button id="zout" aria-label="ซูมออก">−</button><button id="reset" aria-label="มุมมองเริ่มต้น">⟲</button></div>
 <div class="ui hint">แตะหมุดหรืออาคารเพื่อดูชื่อ</div>
 <script>
-const U=5; // 1 หน่วย = 5px
-/* อาคาร: n เลข, t ชื่อ, x y ตำแหน่ง, w d ขนาด, h ความสูง, s รูปทรง (gable=หลังคาจั่ว, flat=หลังคาแบน, vault=โดม, glass=กระจก), w/r สีผนัง/หลังคา */
+const U=0.55; // พิกัดอ้างอิงตามพิกเซลของภาพดาวเทียม (กว้าง 2000 × สูง 351) × 0.55
+/* อาคาร: n เลข (0 = อาคารไม่มีเลข), t ชื่อ, x y w d = ตำแหน่ง/ขนาดจากภาพดาวเทียม, h ความสูง (ประมาณ), s รูปทรง, wc/rc สีผนัง/หลังคา */
 const B=[
- {n:1,t:'อาคาร 1 อาคารศรีสันทราย',x:6,y:44,w:34,d:12,h:10,s:'gable',wc:'#fbeede',rc:'#8a4a2c',win:1},
- {n:2,t:'อาคารอุตสาหกรรม',x:18,y:12,w:26,d:10,h:7,s:'gable',wc:'#f3dfc8',rc:'#7b4a2e'},
- {n:3,t:'อาคารคหกรรม',x:50,y:13,w:16,d:10,h:6,s:'flat',wc:'#ffc36b',rc:'#9aa3b2'},
- {n:4,t:'ห้องดนตรี',x:70,y:13,w:12,d:10,h:6,s:'gable',wc:'#6e86c9',rc:'#33374a'},
- {n:5,t:'ห้องภาษาจีน/ภาษาญี่ปุ่น',x:86,y:12,w:20,d:11,h:7,s:'gable',wc:'#ffd35c',rc:'#d8363a'},
- {n:6,t:'โรงพลศึกษา',x:44,y:72,w:22,d:11,h:6,s:'flat',wc:'#b8674a',rc:'#f4f4f4'},
- {n:7,t:'โดมสันทราย',x:58,y:44,w:24,d:16,h:6,s:'vault',wc:'#ffffff',rc:'#f4f7fb'},
- {n:8,t:'หอประชุมเฉลิมพระเกียรติ',x:96,y:44,w:28,d:18,h:12,s:'flat',wc:'#efe3cf',rc:'#b9a98f',win:1},
- {n:9,t:'อาคาร To be Number One',x:128,y:45,w:9,d:9,h:9,s:'gable',wc:'#fff4e2',rc:'#6b4630'},
- {n:10,t:'อาคาร 4 อาคาร 45 ปีสันทราย',x:140,y:12,w:20,d:16,h:26,s:'flat',wc:'#f6ecd6',rc:'#d9ccb4',win:1},
- {n:11,t:'เรือนเกษตรกร',x:186,y:15,w:8,d:6,h:5,s:'gable',wc:'#f6e7cf',rc:'#7a4a2e'},
- {n:12,t:'อาคาร 5',x:164,y:12,w:12,d:24,h:7,s:'gable',wc:'#9cc3ea',rc:'#8a4a2c'},
- {n:13,t:'อาคาร 3 อาคารสร้อยดอกหมาก',x:156,y:70,w:22,d:13,h:8,s:'glass',wc:'#2aa39a',rc:'#1e7f78'},
- {n:14,t:'อาคารเรียนรวม',x:142,y:72,w:9,d:9,h:7,s:'gable',wc:'#8f6d4f',rc:'#2f2f3a'},
- {n:15,t:'อาคาร 2 อาคารสายธาร',x:92,y:80,w:46,d:9,h:8,s:'gable',wc:'#f3b8d6',rc:'#7b3f2a',win:1},
- {n:16,t:'อาคาร 40 ปี สันทราย',x:76,y:86,w:10,d:8,h:6,s:'gable',wc:'#e6e9f2',rc:'#2f2f3a'},
- {n:17,t:'ลานเพรงบุญ',x:68,y:70,w:14,d:14,h:0,s:'plaza'}
-];
-const FLAT=[['road',0,3,210,6],['road',20,36,190,5],['road',0,64,210,5],['road v',52,41,4,23],
- ['field',4,71,34,24],['farm',180,12,28,24],['garden',140,43,34,19],['pave',86,62.5,10,2]];
-const TREES=[[146,48],[152,56],[160,47],[168,55],[172,46],[45,50],[46,58],[90,66],[126,60],[136,86],[40,30],[180,40],[4,58],[88,28],[112,28],[150,90],[178,90],[62,92],[190,60],[200,72]];
-
+ {n:1,t:'อาคาร 1 อาคารศรีสันทราย',x:510,y:2,w:335,d:62,h:48,s:'gable',wc:'#fbeede',rc:'#6f7480',win:1,fl:2},
+ {n:2,t:'อาคารอุตสาหกรรม',x:920,y:2,w:125,d:72,h:24,s:'gable',wc:'#f3dfc8',rc:'#7d8391',fl:1},
+ {n:3,t:'อาคารคหกรรม',x:1060,y:10,w:118,d:64,h:24,s:'gable',wc:'#ffd9a0',rc:'#8a8f99',fl:1},
+ {n:4,t:'ห้องดนตรี',x:1184,y:4,w:46,d:38,h:24,s:'gable',wc:'#b9c8f0',rc:'#555b6c',fl:1},
+ {n:5,t:'ห้องภาษาจีน/ภาษาญี่ปุ่น',x:1236,y:4,w:54,d:38,h:24,s:'gable',wc:'#ffe08a',rc:'#c4453f',fl:1},
+ {n:6,t:'โรงพลศึกษา',x:500,y:115,w:100,d:130,h:48,s:'flat',wc:'#e3e6ec',rc:'#eef0f4',doors:1,desc:'อาคารโล่ง มีประตูม้วนเลื่อนขึ้นลงด้านหน้าและด้านหลัง'},
+ {n:7,t:'โดมสันทราย',x:750,y:122,w:155,d:118,h:44,s:'vault',wc:'#ffffff',rc:'#e6e9ef',desc:'โดมสูงสำหรับให้นักเรียนเข้าแถว'},
+ {n:8,t:'หอประชุมเฉลิมพระเกียรติ',x:1025,y:115,w:150,d:100,h:48,s:'gable',wc:'#efe3cf',rc:'#c5584c',win:1,fl:2,desc:'ชั้นล่าง: โรงอาหาร · ชั้นบน: หอประชุม'},
+ {n:9,t:'อาคาร To be Number One',x:1195,y:120,w:60,d:40,h:24,s:'gable',wc:'#fff4e2',rc:'#9aa0ab',fl:1},
+ {n:10,t:'อาคาร 4 อาคาร 45 ปีสันทราย',x:1330,y:148,w:245,d:64,h:96,s:'gable',wc:'#f6ecd6',rc:'#c8574a',win:1,fl:4},
+ {n:11,t:'เรือนเกษตร',x:1622,y:150,w:78,d:48,h:26,s:'gable',wc:'#a8744a',rc:'#6b3f22',lift:24,fl:2,desc:'บ้านไม้ทรงไทย มีใต้ถุน'},
+ {n:12,t:'อาคาร 5',x:1330,y:262,w:245,d:73,h:72,s:'gable',wc:'#dfe6f8',rc:'#7d7fbf',win:1,fl:3},
+ {n:13,t:'อาคาร 3 อาคารสร้อยดอกหมาก',x:905,y:260,w:300,d:75,h:72,s:'gable',wc:'#e9f3ef',rc:'#5f636e',win:1,fl:3},
+ {n:14,t:'อาคารเรียนรวม',x:843,y:318,w:38,d:33,h:24,s:'gable',wc:'#d7c3ad',rc:'#555b6c',fl:1},
+ {n:15,t:'อาคาร 2 อาคารสายธาร',x:575,y:262,w:263,d:73,h:72,s:'gable',wc:'#f3d3e2',rc:'#6f7480',win:1,fl:3},
+ {n:16,t:'อาคาร 40 ปี สันทราย',x:535,y:295,w:40,d:56,h:24,s:'gable',wc:'#e6e9f2',rc:'#6b7385',fl:1},
+ {n:17,t:'ลานเพรงบุญ',x:612,y:108,w:130,d:100,h:0,s:'plaza'},
+ {n:0,x:485,y:300,w:46,d:40,h:24,s:'gable',wc:'#e6e9f2',rc:'#6b7385',nowc:1},
+ {n:18,t:'สหกรณ์ + ป้อมยาม',x:30,y:298,w:48,d:36,h:24,s:'flat',wc:'#fff1d6',rc:'#c9b79c',fl:1},
+ {n:19,t:'ศาลารอรถนักเรียน',x:85,y:300,w:52,d:30,h:3,s:'gable',wc:'#b07a4a',rc:'#a0522d',lift:22,desc:'ศาลาสำหรับให้นักเรียนนั่งรอรถ'},
+ {n:20,t:'ร้านกาแฟ + ป้อมยาม',x:40,y:22,w:44,d:32,h:24,s:'flat',wc:'#f3e0c8',rc:'#8a5a3c',fl:1},
+ {n:21,t:'ลานเสาธง',x:958,y:148,w:54,d:36,h:4,s:'flat',wc:'#d9d2c4',rc:'#efe9dd',desc:'แท่นสำหรับให้นักเรียนเชิญธงชาติ'},
+ {n:0,x:976,y:159,w:18,d:12,h:9,s:'flat',wc:'#e9e4da',rc:'#f8f4ec',nowc:1},
+ {n:0,x:455,y:2,w:52,d:38,h:26,s:'gable',wc:'#eef0f4',rc:'#8a8f99'},
+ {n:0,x:848,y:6,w:70,d:52,h:30,s:'gable',wc:'#eef0f4',rc:'#6c79a8'},
+ {n:0,x:1195,y:122,w:0,d:0,h:0,s:'none'},
+ {n:0,x:882,y:300,w:22,d:51,h:26,s:'flat',wc:'#eef0f4',rc:'#8a8f99'},
+ {n:0,x:1215,y:318,w:46,d:33,h:24,s:'flat',wc:'#eef0f4',rc:'#8a8f99'}
+].filter(b=>b.s!=='none');
+const FLAT=[
+ ['field',60,45,380,205],
+ ['road',440,82,1560,18],['road',480,247,832,12],['road v',1286,258,12,86],['road',1286,336,306,11],['road',20,265,470,14],['road v',480,90,16,190],
+ ['road v',1305,100,14,250],['road v',1592,100,14,251],['road',0,0,18,351],
+ ['court',1345,226,225,28],['farm',1620,212,82,110],['pond',1785,140,205,110],['pond',1785,258,160,93]];
+const TREES=[[1210,200],[1260,190],[1280,240],[450,150],[455,240],[250,262],[150,262],[350,262],[1720,120],[1750,200],[1760,300],[860,250],[1200,95],[620,100],[1500,110],[1450,112],[1650,60],[1800,60],[1900,60],[330,20],[180,20],[40,300],[120,300]];
 const scene=document.getElementById('scene');
 const el=(c,st,p=scene)=>{const d=document.createElement('div');d.className=c;if(st)d.style.cssText=st;p.appendChild(d);return d};
 el('ground');
+// ถนนโค้งตามเส้นสีแดง (มุมซ้ายบน → ถนนหลัก)
+[[80,10],[200,8],[330,12],[390,22],[430,45],[460,72],[520,90]].reduce((a,b)=>{
+  const L=Math.hypot(b[0]-a[0],b[1]-a[1])+8,ang=Math.atan2(b[1]-a[1],b[0]-a[0])*180/Math.PI;
+  el('flat road',`left:${a[0]*U}px;top:${(a[1]-7)*U}px;width:${L*U}px;height:${14*U}px;transform-origin:0 50%;transform:rotate(${ang}deg)`);return b});
 FLAT.forEach(([c,x,y,w,d])=>el('flat '+c,`left:${x*U}px;top:${y*U}px;width:${w*U}px;height:${d*U}px`));
 
 function face(p,cls,st){return el('f '+cls,st,p)}
 function building(b){
   const w=b.w*U,d=b.d*U,h=b.h*U;
-  const g=el('b',`left:${b.x*U}px;top:${b.y*U}px;width:${w}px;height:${d}px;--w:${b.wc};--r:${b.rc}`);
+  const g=el('b',`left:${b.x*U}px;top:${b.y*U}px;width:${w}px;height:${d}px;--w:${b.wc};--r:${b.rc}`,b._into||scene);
+  if(b._into)g.style.cssText+=';position:absolute';
   g.dataset.n=b.n;
   if(b.s==='plaza'){el('flat pave',`left:0;top:0;width:${w}px;height:${d}px;border-radius:10px`,g);return g}
+  if(b.lift){const L=b.lift*U;
+    [[0,0],[w-3,0],[0,d-3],[w-3,d-3],[w/2-1.5,0],[w/2-1.5,d-3]].forEach(([px,py])=>{
+      const p=el('b',`left:${px}px;top:${py}px;width:3px;height:3px`,g);
+      face(p,'wall shade2',`left:0;top:0;width:3px;height:${L}px;transform-origin:0 0;transform:rotateX(90deg)`);
+      face(p,'wall shade2',`left:0;top:0;width:${L}px;height:3px;transform-origin:0 0;transform:rotateY(-90deg)`);});
+    const up=el('b',`left:0;top:0;width:${w}px;height:${d}px;transform:translateZ(${L}px);pointer-events:auto`,g);
+    return building({...b,lift:0,x:0,y:0,_into:up});}
   const wc=b.s==='glass'?'glass':'wall'+(b.win?' win':'');
-  const r=b.s==='gable'?Math.min(d*.45,40):b.s==='vault'?d*.5:0;
+  const r=b.lift===0&&b._into?d*.75:b.s==='gable'?Math.min(d*.45,40):b.s==='vault'?d*.5:0;
   // ผนัง 4 ด้าน (ด้านข้าง x ต่อยอดเป็นหน้าจั่ว)
-  face(g,wc+' shade1',`left:0;top:0;width:${w}px;height:${h}px;transform-origin:0 0;transform:rotateX(90deg)`);
-  face(g,wc+' shade1',`left:0;top:${d}px;width:${w}px;height:${h}px;transform-origin:0 0;transform:rotateX(90deg)`);
+  const nW=face(g,wc+' shade1',`left:0;top:0;width:${w}px;height:${h}px;transform-origin:0 0;transform:rotateX(90deg)`);
+  const sW=face(g,wc+' shade1',`left:0;top:${d}px;width:${w}px;height:${h}px;transform-origin:0 0;transform:rotateX(90deg)`);
+
   const side=(left)=>{
     const s=face(g,wc+' shade2',`left:${left}px;top:0;width:${h+r}px;height:${d}px;transform-origin:0 0;transform:rotateY(-90deg)`);
+    if(b.doors)el('shutter side','',s);   // ประตูม้วน ผนังด้านยาว (หน้า-หลัง)
     if(b.s==='gable')s.style.clipPath=`polygon(0 0,${h}px 0,${h+r}px 50%,${h}px 100%,0 100%)`;
     if(b.s==='vault')s.style.clipPath=`polygon(0 0,${h}px 0,${h+r*.7}px 15%,${h+r}px 50%,${h+r*.7}px 85%,${h}px 100%,0 100%)`;
   };
@@ -142,23 +175,25 @@ function building(b){
   }else{
     face(g,b.s==='glass'?'glass':'roof',`left:0;top:0;width:${w}px;height:${d}px;transform:translateZ(${h}px)`);
   }
-  g.addEventListener('click',e=>{if(!moved)select(b.n)});
+  if(b.n)g.addEventListener('click',e=>{if(!moved)select(b.n)});
   return g;
 }
-const G={};B.forEach(b=>G[b.n]=building(b));
+const G={};B.forEach(b=>{const g=building(b);if(b.n)G[b.n]=g});
 
 // ป้ายหมุด ต้นไม้ และเสาธง (หันหน้าเข้าหากล้องเสมอ)
 const bills=[];
 function billboard(x,y,z,html,cls){const bb=el('bb',`left:${x*U}px;top:${y*U}px`);bb.dataset.z=z;bb.innerHTML=html;if(cls)bb.firstChild.className+=' '+cls;bills.push(bb);return bb}
 TREES.forEach(([x,y])=>billboard(x,y,0,'<div class="tree"><i></i><b></b></div>'));
-billboard(92,63,0,'<div class="flagp"></div>');
+billboard(985,165,9*U,'<div class="flagp"></div>');   // เสาธงกลางหน้าอาคาร 8 (บนแท่น)
 const pins={};
-B.forEach(b=>{const bb=billboard(b.x+b.w/2,b.y+b.d/2,(b.h+(b.s==='gable'?6:b.s==='vault'?9:2))*U,`<div class="pin"><span><em>${b.n}</em></span></div>`);
+// อาคารเลข 0 = ห้องน้ำ: ใส่สัญลักษณ์ห้องน้ำเล็ก ๆ
+B.filter(b=>!b.n&&!b.nowc).forEach(b=>billboard(b.x+b.w/2,b.y+b.d/2,b.h*U+14,'<div class="wc" title="ห้องน้ำ">🚻</div>'));
+B.filter(b=>b.n).forEach(b=>{const bb=billboard(b.x+b.w/2,b.y+b.d/2,b.h*U+(b.s==='gable'?16:b.s==='vault'?22:b.s==='plaza'?46:6),`<div class="pin"><span><em>${b.n}</em></span></div>`);
   bb.firstChild.addEventListener('click',()=>{if(!moved)select(b.n)});pins[b.n]=bb.firstChild});
 
 // รายการอาคาร
 const legend=document.getElementById('legend');
-[...B].sort((a,b)=>a.n-b.n).forEach(b=>{const bt=document.createElement('button');bt.type='button';bt.dataset.n=b.n;bt.innerHTML=`<b>${b.n}</b>${b.t}`;bt.onclick=()=>select(b.n,true);legend.appendChild(bt)});
+[...B].filter(b=>b.n).sort((a,b)=>a.n-b.n).forEach(b=>{const bt=document.createElement('button');bt.type='button';bt.dataset.n=b.n;bt.innerHTML=`<b>${b.n}</b>${b.t}`;bt.onclick=()=>select(b.n,true);legend.appendChild(bt)});
 
 let cur=null;
 function select(n,focus){
@@ -168,20 +203,20 @@ function select(n,focus){
   legend.querySelectorAll('button[data-n]').forEach(b=>b.classList.toggle('on',+b.dataset.n===cur));
   const info=document.getElementById('info');
   if(cur==null){info.classList.remove('show');return}
-  const b=B.find(x=>x.n===cur);document.getElementById('infoNo').textContent=b.n;document.getElementById('infoName').textContent=b.t;info.classList.add('show');
+  const b=B.find(x=>x.n===cur);document.getElementById('infoNo').textContent=b.n;document.getElementById('infoName').textContent=b.t;document.getElementById('infoSub').textContent=[b.fl?b.fl+' ชั้น':'',b.desc||''].filter(Boolean).join(' · ');info.classList.add('show');
   if(focus){const c=legend.querySelector(`[data-n="${cur}"]`);c&&c.scrollIntoView({block:'nearest'})}
   auto=false;
 }
 
 // กล้อง: หมุน (rot) เอียง (tilt) ซูม (zoom)
-let rot=-28,tilt=58,zoom=1,auto=true,moved=false;
-const fit=()=>Math.min(innerWidth/1250,innerHeight/760)*1.05;
+let t0=0,rot=0,tilt=55,zoom=1,auto=true,moved=false;
+const fit=()=>Math.min((innerWidth-(document.body.classList.contains('has-legend')&&innerWidth>900?330:40))/1150,innerHeight/420)*1.08;
 function render(){
   scene.style.transform=`scale(${zoom*fit()}) rotateX(${tilt}deg) rotateZ(${rot}deg)`;
   bills.forEach(bb=>bb.style.transform=`translateZ(${bb.dataset.z}px) rotateZ(${-rot}deg) rotateX(${-tilt}deg)`);
 }
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-(function loop(){if(auto&&!reduce){rot+=.04;render()}requestAnimationFrame(loop)})();
+(function loop(){if(auto&&!reduce){t0+=.004;rot=Math.sin(t0)*18;render()}requestAnimationFrame(loop)})();
 
 const view=document.getElementById('view'),pts=new Map();let last=null,pinch0=0,zoom0=1,downAt=null;
 view.addEventListener('pointerdown',e=>{pts.set(e.pointerId,{x:e.clientX,y:e.clientY});moved=false;downAt={x:e.clientX,y:e.clientY};
@@ -196,10 +231,10 @@ view.addEventListener('pointerup',up);view.addEventListener('pointercancel',up);
 view.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.6,Math.min(2.6,zoom*(e.deltaY<0?1.1:.9)));render()},{passive:false});
 document.getElementById('zin').onclick=()=>{zoom=Math.min(2.6,zoom*1.2);render()};
 document.getElementById('zout').onclick=()=>{zoom=Math.max(.6,zoom/1.2);render()};
-document.getElementById('reset').onclick=()=>{rot=-28;tilt=58;zoom=1;auto=true;select(null);cur=null;render()};
-const setLegend=on=>{document.body.classList.toggle('has-legend',on)};
+document.getElementById('reset').onclick=()=>{rot=0;tilt=55;zoom=1;auto=true;select(null);cur=null;render()};
+const setLegend=on=>{document.body.classList.toggle('has-legend',on);render()};
 document.getElementById('lclose').onclick=()=>setLegend(false);document.getElementById('lopen').onclick=()=>setLegend(true);
-setLegend(innerWidth>700);
+setLegend(false);
 addEventListener('resize',render);render();
 </script>
 </body>
