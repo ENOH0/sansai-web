@@ -30,7 +30,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /** แก้ชื่อ/ลิงก์ปุ่มได้ที่นี่ */
   readonly buttons: WelcomeButton[] = [
-    { label: 'กำหนดการ', sub: 'Schedule', icon: 'calendar', link: '' },
+    { label: 'กำหนดการ', sub: 'Schedule', icon: 'calendar', link: '/models/evaluation-schedule.html' },
     { label: 'VDO', sub: 'วิดีโอนำเสนอ', icon: 'video', link: '' },
     { label: 'Dashboard', sub: 'ข้อมูล 5 ด้าน', icon: 'dashboard', link: '/dashboard', main: true },
     { label: 'อาหาร', sub: 'เลือกอาหารและการแสดง', icon: 'food', link: EVAL_LINK.url },
