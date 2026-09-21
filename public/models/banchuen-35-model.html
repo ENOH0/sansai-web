@@ -1,0 +1,1808 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>BANCHUEN MODEL (PDCA)</title>
+    <meta name="description" content="รูปแบบการบริหารจัดการศึกษาด้วย BANCHUEN MODEL และวงจร PDCA">
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%236e61af'/%3E%3Ccircle cx='16' cy='16' r='9' stroke='%23ddcffb' fill='none' stroke-width='3'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='white' font-family='Arial' font-size='14'%3EB%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="/fonts/th-sarabun.css">
+    <style>
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            font-size: 20px
+        }
+
+        body {
+            margin: 0;
+            background: #f7f8fc;
+            color: #303349;
+            font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+            font-size: 1.15rem;
+            line-height: 1.3;
+            background-image: radial-gradient(ellipse at 20% 0, #ece6fc8a, transparent 45%), radial-gradient(ellipse at 100% 80%, #def5ed80, transparent 40%)
+        }
+
+        button {
+            font: inherit;
+            color: inherit;
+            cursor: pointer;
+            border: 0
+        }
+
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid #785abd;
+            outline-offset: 4px
+        }
+
+        button:disabled {
+            cursor: default
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent
+        }
+
+        main {
+            max-width: 1500px;
+            margin: auto;
+            padding: 28px 36px 18px
+        }
+
+        .intro {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 21px
+        }
+
+        .eyebrow {
+            font: 700 .6rem Arial, sans-serif;
+            letter-spacing: 2.6px;
+            color: #8b7bad
+        }
+
+        .intro h1 {
+            font-size: 2.15rem;
+            line-height: 1.08;
+            margin: 7px 0 5px;
+            letter-spacing: 0
+        }
+
+        .intro h1 span {
+            color: #7965a4
+        }
+
+        .intro p {
+            margin: 0;
+            color: #777b90;
+            font-size: 1.02rem
+        }
+
+        .intro-badge {
+            flex-shrink: 0;
+            padding: 8px 17px;
+            border: 1px solid #fff;
+            background: #ffffffa0;
+            border-radius: 30px;
+            color: #726287;
+            font-size: .95rem;
+            box-shadow: 0 5px 20px #8c7aac0c
+        }
+
+        .intro-badge b {
+            color: #8d77b6;
+            margin-right: 5px
+        }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: 355px minmax(0, 1fr);
+            gap: 22px;
+            align-items: stretch
+        }
+
+        .panel {
+            --tone: #def2fc;
+            --ink: #367ba2;
+            --edge: #aed6ee;
+            background: #ffffffdb;
+            border: 1px solid #fff;
+            border-radius: 25px;
+            padding: 23px;
+            box-shadow: 0 12px 40px #6a58830a;
+            display: flex;
+            flex-direction: column;
+            min-width: 0
+        }
+
+        .panel-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #858299;
+            font-size: .95rem
+        }
+
+        .badge {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            background: var(--tone);
+            color: var(--ink);
+            border-radius: 13px;
+            font: 600 .8rem Arial;
+            box-shadow: inset 0 1px white
+        }
+
+        .panel h2 {
+            font-size: 2rem;
+            line-height: 1.05;
+            margin: 13px 0 3px;
+            color: var(--ink)
+        }
+
+        .english {
+            font: .66rem Arial, sans-serif;
+            color: #9090a1;
+            letter-spacing: .35px
+        }
+
+        .panel p {
+            color: #727587;
+            font-size: 1.07rem;
+            margin: 12px 0 16px
+        }
+
+        .items {
+            display: grid;
+            gap: 9px
+        }
+
+        .item {
+            text-align: left;
+            padding: 12px;
+            background: linear-gradient(130deg, #fafaff, #f6f8fb);
+            border: 1px solid #edeff5;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform .2s, background .2s
+        }
+
+        .item:hover {
+            transform: translateX(4px);
+            background: var(--tone);
+            border-color: var(--edge)
+        }
+
+        .item-icon {
+            width: 34px;
+            height: 34px;
+            flex-shrink: 0;
+            background: var(--tone);
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            color: var(--ink);
+            font: bold .8rem Arial
+        }
+
+        .item strong {
+            display: block;
+            font-size: 1.08rem;
+            line-height: 1.1
+        }
+
+        .item small {
+            display: block;
+            color: #777d8d;
+            font-size: .92rem;
+            margin-top: 3px
+        }
+
+        .item .arrow {
+            margin-left: auto;
+            font-family: Arial;
+            font-size: .8rem;
+            color: var(--ink)
+        }
+
+        .result {
+            margin-top: auto;
+            padding-top: 18px
+        }
+
+        .result>div {
+            background: linear-gradient(130deg, var(--tone), #ffffff);
+            border: 1px solid var(--edge);
+            padding: 12px 14px;
+            border-radius: 15px
+        }
+
+        .result small {
+            display: block;
+            font-size: .87rem;
+            color: var(--ink)
+        }
+
+        .result strong {
+            font-size: 1.04rem;
+            line-height: 1.15;
+            display: block;
+            margin-top: 3px
+        }
+
+        .panel-bottom {
+            font-size: .86rem;
+            color: #8b8e9e;
+            margin-top: 12px
+        }
+
+        .stage {
+            position: relative;
+            isolation: isolate;
+            min-width: 0;
+            border: 1px solid white;
+            border-radius: 27px;
+            background: radial-gradient(ellipse at 50% 45%, #ffffff 0, #f6f2fcad 33%, transparent 67%), linear-gradient(135deg, #eae7fa, #eef6fc 55%, #e7f6f0);
+            box-shadow: inset 0 1px 0 white, 0 16px 40px #8175980d;
+            overflow: hidden
+        }
+
+        .stage:before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background-image: radial-gradient(#afa5c940 .8px, transparent .9px);
+            background-size: 23px 23px;
+            mask-image: radial-gradient(ellipse, #0009, transparent 80%)
+        }
+
+        .stage-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 22px 0;
+            gap: 10px
+        }
+
+        .stage-label {
+            font-size: .95rem;
+            color: #716787
+        }
+
+        .controls {
+            display: flex;
+            gap: 7px
+        }
+
+        .control {
+            border-radius: 30px;
+            min-width: 37px;
+            min-height: 37px;
+            padding: 4px 12px;
+            background: #ffffffb8;
+            border: 1px solid #fff;
+            box-shadow: 0 3px 10px #887c9910;
+            transition: transform .2s
+        }
+
+        .control:hover {
+            transform: translateY(-2px);
+            background: #fff
+        }
+
+        .control[aria-pressed=true] {
+            color: #6e5999
+        }
+
+        .scene {
+            height: 500px;
+            position: relative;
+            touch-action: pan-y;
+            user-select: none;
+            cursor: grab
+        }
+
+        .scene.dragging {
+            cursor: grabbing
+        }
+
+        .scene:before {
+            content: '';
+            position: absolute;
+            width: 65%;
+            height: 65%;
+            left: 17.5%;
+            top: 19%;
+            border-radius: 50%;
+            background: radial-gradient(ellipse, #c5b7ef44, transparent 65%);
+            filter: blur(15px);
+            animation: breathe 6s ease-in-out infinite
+        }
+
+        .orbit {
+            position: absolute;
+            left: 17%;
+            top: 15%;
+            width: 66%;
+            height: 70%;
+            border: 1px dashed #b9acd079;
+            border-radius: 50%;
+            box-shadow: 0 0 50px #ffffffd0, inset 0 0 50px #fff8;
+            pointer-events: none
+        }
+
+        .orbit:after {
+            content: '';
+            position: absolute;
+            inset: 24px;
+            border: 1px solid #ffffffd9;
+            border-radius: 50%
+        }
+
+        .hub {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: linear-gradient(145deg, #fff, #e5e2f1);
+            box-shadow: 0 10px 0 #d7d2e9, 0 12px 1px #fff, 0 20px 0 #e4dff1, 0 28px 30px #79709c28, inset 0 2px white;
+            display: grid;
+            place-items: center;
+            z-index: 2
+        }
+
+        .hub:before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border: 1px solid #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 28px #cbb8ee80
+        }
+
+        .pdca {
+            position: absolute;
+            inset: 9px;
+            width: calc(100% - 18px);
+            height: calc(100% - 18px);
+            overflow: visible
+        }
+
+        .pdca path {
+            stroke: #ffffff;
+            stroke-width: 3;
+            filter: drop-shadow(0 2px 1px #77739915)
+        }
+
+        .pdca text {
+            font: bold 18px Arial;
+            fill: #606b82
+        }
+
+        .hub-button {
+            position: relative;
+            width: 158px;
+            height: 158px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fff, #f6f4fb);
+            border: 2px solid #fff;
+            box-shadow: 0 4px 10px #6d658921, inset 0 1px white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 1;
+            transition: transform .25s
+        }
+
+        .hub-button:hover {
+            transform: scale(1.045)
+        }
+
+        .hub-button .core {
+            font: 800 1.05rem/1.2 Arial, sans-serif;
+            letter-spacing: 1px;
+            color: #625282
+        }
+
+        .hub-button .pdca-label {
+            font-size: 1.22rem;
+            font-weight: bold;
+            margin-top: 3px;
+            color: #796ba0
+        }
+
+        .hub-button small {
+            font-size: .78rem;
+            color: #8f839f;
+            margin-top: 4px
+        }
+
+        .node {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 155px;
+            min-height: 88px;
+            padding: 10px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(145deg, #ffffffed, var(--tone));
+            border: 2px solid #fff;
+            box-shadow: 0 6px 0 var(--edge), 0 12px 22px #7d71941a;
+            transition: box-shadow .5s, background .4s, border-color .4s;
+            will-change: left, top, transform;
+            z-index: 3;
+            color: var(--ink)
+        }
+
+        .node-icon {
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            background: #ffffffc7;
+            flex-shrink: 0
+        }
+
+        .node-icon svg {
+            width: 25px;
+            height: 25px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.7;
+            stroke-linecap: round;
+            stroke-linejoin: round
+        }
+
+        .node strong {
+            display: block;
+            font-size: 1.3rem;
+            line-height: 1.1
+        }
+
+        .node small {
+            font-size: .74rem;
+            display: block;
+            opacity: .8;
+            margin-top: 3px
+        }
+
+        .node.active {
+            background: linear-gradient(135deg, #fff, var(--tone));
+            border-color: #fff;
+            box-shadow: 0 7px 0 var(--edge), 0 0 0 5px #ffffff80, 0 0 32px var(--edge), 0 17px 38px #80749b28
+        }
+
+        .node.active:after {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border: 1px solid var(--edge);
+            border-radius: 26px;
+            opacity: .75;
+            pointer-events: none
+        }
+
+        .stage-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 1px 23px 18px;
+            color: #9288a3;
+            font-size: .87rem
+        }
+
+        .pagination {
+            display: flex;
+            gap: 8px
+        }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+            padding: 0;
+            border-radius: 10px;
+            background: #c6bfd9
+        }
+
+        .dot[aria-current=true] {
+            width: 26px;
+            background: #9982bd
+        }
+
+        .round-label {
+            color: #827098;
+            font-size: .85rem
+        }
+
+        .pipeline {
+            margin-top: 22px;
+            border-radius: 22px;
+            background: #ffffffb5;
+            border: 1px solid #fff;
+            padding: 15px 18px 17px
+        }
+
+        .pipeline-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #7f7890;
+            font-size: .9rem
+        }
+
+        .pipeline-title span:last-child {
+            font-size: .85rem;
+            color: #92909f
+        }
+
+        .steps {
+            display: flex;
+            align-items: stretch;
+            gap: 8px
+        }
+
+        .step {
+            position: relative;
+            flex: 1;
+            min-width: 0;
+            text-align: left;
+            padding: 10px 13px;
+            border-radius: 13px;
+            border: 1px solid #eee9f6;
+            background: #f9f8fc;
+            transition: transform .2s, box-shadow .2s
+        }
+
+        .step:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px #9981ba20
+        }
+
+        .step .number {
+            font: .6rem Arial;
+            letter-spacing: 1px;
+            color: #a498b4
+        }
+
+        .step strong {
+            font-size: 1.07rem;
+            line-height: 1.08;
+            display: block;
+            margin-top: 5px
+        }
+
+        .step small {
+            font-size: .84rem;
+            color: #878697;
+            display: block;
+            margin-top: 4px
+        }
+
+        .step.data {
+            background: #eae5fa;
+            color: #68568d;
+            border-color: #e4daf4
+        }
+
+        .step.out {
+            background: #e3f4ec;
+            color: #417f66;
+            border-color: #d0eadd
+        }
+
+        .step-arrow {
+            align-self: center;
+            color: #b3a7c5;
+            font: 1rem Arial
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            font-size: .82rem;
+            color: #9894a5;
+            padding: 14px 3px 0
+        }
+
+        footer button {
+            font-size: .88rem;
+            color: #81708e;
+            background: none;
+            text-decoration: underline;
+            padding: 0
+        }
+
+        dialog {
+            max-width: 780px;
+            width: calc(100% - 28px);
+            max-height: 89vh;
+            padding: 0;
+            border: none;
+            border-radius: 25px;
+            color: #34374b;
+            background: #fcfcff;
+            box-shadow: 0 30px 100px #34305c45
+        }
+
+        dialog::backdrop {
+            background: #34304e70;
+            backdrop-filter: blur(8px)
+        }
+
+        .modal-head {
+            padding: 25px 28px 19px;
+            background: linear-gradient(130deg, var(--tone, #e9e2fb), #fff);
+            position: relative;
+            border-bottom: 1px solid white
+        }
+
+        .modal-head h2 {
+            font-size: 1.9rem;
+            line-height: 1.08;
+            margin: 8px 35px 6px 0
+        }
+
+        .modal-head p {
+            font-size: 1.08rem;
+            color: #6d6e85;
+            margin: 0;
+            max-width: 94%
+        }
+
+        .close {
+            position: absolute;
+            top: 17px;
+            right: 18px;
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            font: 1.3rem Arial;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 4px 15px #94829e13
+        }
+
+        .modal-body {
+            padding: 22px 28px 27px
+        }
+
+        .modal-body p {
+            font-size: 1.12rem;
+            color: #686c80;
+            margin: 4px 0 17px
+        }
+
+        .mini-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        .mini {
+            display: block;
+            text-align: left;
+            padding: 17px;
+            border-radius: 17px;
+            background: linear-gradient(130deg, #fff, var(--tone, #f1edf9));
+            border: 1px solid #fff;
+            box-shadow: 0 5px 0 #e2ddeb55, 0 8px 22px #80768c0c;
+            transition: transform .2s
+        }
+
+        .mini:is(button):hover {
+            transform: translateY(-4px)
+        }
+
+        .mini strong {
+            display: block;
+            font-size: 1.3rem;
+            color: var(--ink, #75618c);
+            line-height: 1.12
+        }
+
+        .mini span {
+            display: block;
+            font-size: 1.06rem;
+            color: #757589;
+            margin-top: 7px
+        }
+
+        .mini .mini-tag {
+            display: inline-block;
+            font: .65rem Arial;
+            letter-spacing: 1px;
+            background: #ffffffaf;
+            color: #8b759c;
+            padding: 5px 8px;
+            border-radius: 7px;
+            margin-bottom: 10px
+        }
+
+        .flow {
+            display: flex;
+            gap: 9px;
+            align-items: stretch;
+            margin: 17px 0
+        }
+
+        .flow span {
+            flex: 1;
+            background: #eeebf8;
+            border: 1px solid #fff;
+            border-radius: 11px;
+            text-align: center;
+            padding: 9px;
+            color: #79678f;
+            font-size: 1.08rem
+        }
+
+        .note {
+            margin-top: 19px !important;
+            padding: 12px 15px;
+            border-left: 3px solid var(--ink, #a28abb);
+            background: #f1eef780;
+            border-radius: 0 9px 9px 0;
+            font-size: .98rem !important
+        }
+
+        .back {
+            background: #ede6f6;
+            color: #7e6896;
+            border-radius: 20px;
+            padding: 5px 15px;
+            margin-bottom: 17px
+        }
+
+        .list {
+            padding-left: 24px;
+            margin: 12px 0
+        }
+
+        .list li {
+            padding: 6px 0;
+            color: #666c7f
+        }
+
+        .legend {
+            display: flex;
+            gap: 9px;
+            flex-wrap: wrap;
+            margin-top: 16px
+        }
+
+        .legend span {
+            padding: 6px 12px;
+            border-radius: 11px;
+            background: var(--tone, #eee8f8);
+            color: var(--ink, #77628f)
+        }
+
+        @keyframes breathe {
+            50% {
+                opacity: .5;
+                transform: scale(1.12)
+            }
+        }
+
+        @media(min-width:1500px) {
+            .workspace {
+                grid-template-columns: 380px minmax(0, 1fr)
+            }
+
+            .scene {
+                height: 525px
+            }
+        }
+
+        @media(max-width:1100px) {
+            main {
+                padding: 24px
+            }
+
+            .workspace {
+                grid-template-columns: 310px minmax(0, 1fr);
+                gap: 17px
+            }
+
+            .panel {
+                padding: 20px
+            }
+
+            .hub {
+                width: 220px;
+                height: 220px
+            }
+
+            .hub-button {
+                width: 132px;
+                height: 132px
+            }
+
+            .hub-button .core {
+                font-size: .88rem
+            }
+
+            .hub-button .pdca-label {
+                font-size: 1.05rem
+            }
+
+            .node {
+                width: 127px;
+                gap: 7px;
+                padding: 9px 8px;
+                min-height: 82px
+            }
+
+            .node-icon {
+                width: 28px;
+                height: 30px
+            }
+
+            .node strong {
+                font-size: 1.2rem
+            }
+
+            .node small {
+                font-size: .7rem
+            }
+
+            .scene {
+                height: 515px
+            }
+
+            .stage-head {
+                padding: 16px 16px 0
+            }
+
+            .stage-label {
+                font-size: .86rem
+            }
+
+            .control {
+                padding: 3px 10px
+            }
+
+            .steps {
+                gap: 5px
+            }
+
+            .step {
+                padding: 10px
+            }
+
+            .intro-badge {
+                display: none
+            }
+
+            .step small {
+                font-size: .8rem
+            }
+
+            .stage-footer {
+                padding: 0 16px 16px
+            }
+        }
+
+        @media(max-width:820px) {
+            main {
+                padding: 20px 16px
+            }
+
+            .intro h1 {
+                font-size: 1.95rem
+            }
+
+            .workspace {
+                grid-template-columns: 1fr
+            }
+
+            .stage {
+                grid-row: 1
+            }
+
+            .panel {
+                grid-row: 2
+            }
+
+            .scene {
+                height: 490px
+            }
+
+            .hub {
+                width: 255px;
+                height: 255px
+            }
+
+            .hub-button {
+                width: 146px;
+                height: 146px
+            }
+
+            .node {
+                width: 146px
+            }
+
+            .items {
+                grid-template-columns: repeat(3, 1fr)
+            }
+
+            .item {
+                padding: 12px;
+                display: block;
+                position: relative
+            }
+
+            .item-icon {
+                margin-bottom: 9px
+            }
+
+            .item .arrow {
+                position: absolute;
+                top: 17px;
+                right: 15px
+            }
+
+            .panel h2 {
+                font-size: 1.8rem
+            }
+
+            .panel p {
+                margin: 10px 0 15px
+            }
+
+            .result {
+                padding-top: 16px
+            }
+
+            .pipeline {
+                overflow: hidden
+            }
+
+            .steps {
+                overflow-x: auto;
+                padding-bottom: 7px;
+                scroll-snap-type: x mandatory
+            }
+
+            .step {
+                min-width: 150px;
+                scroll-snap-align: start
+            }
+
+            .step-arrow {
+                flex-shrink: 0
+            }
+
+            .pipeline-title span:last-child {
+                display: none
+            }
+
+            .intro p {
+                max-width: 90%
+            }
+
+            footer {
+                flex-wrap: wrap
+            }
+
+            .stage-footer {
+                padding: 0 20px 17px
+            }
+        }
+
+        @media(max-width:480px) {
+            .intro h1 {
+                font-size: 1.65rem
+            }
+
+            .intro p {
+                font-size: 1rem
+            }
+
+            .eyebrow {
+                font-size: .55rem;
+                letter-spacing: 1.8px
+            }
+
+            .scene {
+                height: 440px
+            }
+
+            .hub {
+                width: 200px;
+                height: 200px
+            }
+
+            .hub-button {
+                width: 116px;
+                height: 116px
+            }
+
+            .hub-button .core {
+                font-size: .76rem
+            }
+
+            .hub-button .pdca-label {
+                font-size: .98rem
+            }
+
+            .hub-button small {
+                font-size: .7rem
+            }
+
+            .node {
+                width: 112px;
+                min-height: 75px;
+                padding: 9px 6px;
+                gap: 4px;
+                border-radius: 17px
+            }
+
+            .node-icon {
+                width: 24px;
+                height: 26px;
+                background: transparent
+            }
+
+            .node-icon svg {
+                width: 22px;
+                height: 22px
+            }
+
+            .node strong {
+                font-size: 1.13rem
+            }
+
+            .node small {
+                font-size: .65rem
+            }
+
+            .stage-label {
+                font-size: .82rem
+            }
+
+            .controls {
+                gap: 4px
+            }
+
+            .control {
+                min-width: 32px;
+                min-height: 34px;
+                padding: 3px 8px;
+                font-size: .95rem
+            }
+
+            .stage-head {
+                padding: 15px 12px 0
+            }
+
+            .items {
+                grid-template-columns: 1fr
+            }
+
+            .item {
+                display: flex;
+                padding: 12px
+            }
+
+            .item-icon {
+                margin: 0
+            }
+
+            .item .arrow {
+                position: static;
+                margin-left: auto
+            }
+
+            .mini-grid {
+                grid-template-columns: 1fr
+            }
+
+            .modal-body,
+            .modal-head {
+                padding: 22px
+            }
+
+            .modal-head h2 {
+                font-size: 1.7rem
+            }
+
+            .flow {
+                flex-wrap: wrap
+            }
+
+            .flow span {
+                flex-basis: 40%
+            }
+
+            .stage-footer {
+                font-size: .8rem;
+                gap: 8px;
+                padding: 0 14px 17px
+            }
+
+            .round-label {
+                font-size: .8rem
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation: none !important;
+                transition: none !important
+            }
+        }
+
+        /* Full PDCA labels */
+        .scene {
+            height: 570px
+        }
+
+        .hub {
+            width: 360px;
+            height: 360px
+        }
+
+        .pdca {
+            inset: 3px;
+            width: calc(100% - 6px);
+            height: calc(100% - 6px)
+        }
+
+        .pdca .ring-title {
+            font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+            font-size: 25px;
+            font-weight: 700;
+            fill: #3c475b
+        }
+
+        .pdca .ring-copy {
+            font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            fill: #505b70
+        }
+
+        .hub-button {
+            width: 151px;
+            height: 151px
+        }
+
+        .hub-button .core {
+            font-size: .97rem
+        }
+
+        .hub-button .pdca-label {
+            font-size: 1.13rem
+        }
+
+        @media(max-width:1100px) {
+            .hub {
+                width: 320px;
+                height: 320px
+            }
+
+            .hub-button {
+                width: 133px;
+                height: 133px
+            }
+
+            .hub-button .core {
+                font-size: .84rem
+            }
+
+            .hub-button .pdca-label {
+                font-size: 1rem
+            }
+
+            .scene {
+                height: 570px
+            }
+        }
+
+        @media(max-width:820px) {
+            .hub {
+                width: 350px;
+                height: 350px
+            }
+
+            .hub-button {
+                width: 147px;
+                height: 147px
+            }
+
+            .hub-button .core {
+                font-size: .95rem
+            }
+
+            .scene {
+                height: 590px
+            }
+        }
+
+        @media(max-width:480px) {
+            .hub {
+                width: 300px;
+                height: 300px
+            }
+
+            .hub-button {
+                width: 126px;
+                height: 126px
+            }
+
+            .hub-button .core {
+                font-size: .8rem
+            }
+
+            .hub-button .pdca-label {
+                font-size: 1rem
+            }
+
+            .scene {
+                height: 610px
+            }
+
+            .hub-button small {
+                font-size: .7rem
+            }
+        }
+
+        /* Balanced ring and ambient motion */
+        .hub {
+            isolation: isolate;
+            background: linear-gradient(140deg, #ffffff, #e7e0f7);
+            box-shadow: 0 9px 0 #d7cce9, 0 11px 1px #fff, 0 18px 0 #e6dff0, 0 29px 35px #77618c30, 0 0 55px #cfb7f06b, inset 0 2px white
+        }
+
+        .hub:before {
+            inset: -11px;
+            border: 2px solid #ffffffd9;
+            box-shadow: 0 0 22px #c3a4e9b0, inset 0 0 17px #d8c4f580;
+            animation: halo-breathe 4s ease-in-out infinite;
+            pointer-events: none
+        }
+
+        .hub:after {
+            content: '';
+            position: absolute;
+            inset: -22px;
+            border: 1px dashed #b9a1da70;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: orbit-light 55s linear infinite;
+            z-index: -1
+        }
+
+        .pdca {
+            inset: 4px;
+            width: calc(100% - 8px);
+            height: calc(100% - 8px)
+        }
+
+        .pdca .ring-title {
+            font-size: 27px;
+            fill: #3e415b;
+            font-weight: 700
+        }
+
+        .pdca .ring-copy {
+            font-size: 24px;
+            fill: #485269;
+            font-weight: 700
+        }
+
+        .pdca .pdca-segment {
+            stroke: #ffffff;
+            stroke-width: 3;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 3px 2px #86729826);
+            animation: segment-light 8s ease-in-out infinite
+        }
+
+        .pdca .segment-1 {
+            animation-delay: 2s
+        }
+
+        .pdca .segment-2 {
+            animation-delay: 4s
+        }
+
+        .pdca .segment-3 {
+            animation-delay: 6s
+        }
+
+        .hub-button {
+            width: 162px;
+            height: 162px;
+            background: radial-gradient(ellipse at 35% 20%, #fff 30%, #f3eefe);
+            box-shadow: 0 5px 0 #ded3ed, 0 9px 18px #82709128, inset 0 2px 3px #fff;
+            border: 2px solid #fff
+        }
+
+        .hub-button .core {
+            font-size: 1rem;
+            line-height: 1.18;
+            letter-spacing: .65px
+        }
+
+        .hub-button .pdca-label {
+            margin-top: 5px
+        }
+
+        .hub-button small {
+            margin-top: 4px
+        }
+
+        .light-track {
+            position: absolute;
+            inset: -7px;
+            border-radius: 50%;
+            pointer-events: none;
+            background: conic-gradient(from 0deg, transparent 0deg, #ccb0f4b3 48deg, #ffffff 68deg, transparent 84deg, transparent 180deg, #beece080 234deg, #fff 253deg, transparent 268deg);
+            mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
+            animation: orbit-light 12s linear infinite;
+            filter: drop-shadow(0 0 7px #ccb1ff)
+        }
+
+        .light-orbit {
+            position: absolute;
+            inset: -13px;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: orbit-light 12s linear infinite
+        }
+
+        .light-orbit i {
+            position: absolute;
+            top: 50%;
+            left: -3px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 8px 3px #e1d4ff, 0 0 20px 8px #cab2f78c
+        }
+
+        .scene:before {
+            background: radial-gradient(ellipse, #c8a7f14d, transparent 67%);
+            animation: breathe 5s ease-in-out infinite
+        }
+
+        .orbit {
+            border-color: #b3a1d18c;
+            box-shadow: 0 0 32px #dfc7ff50, inset 0 0 35px #fff9
+        }
+
+        .orbit:after {
+            box-shadow: 0 0 20px #e5d7ff70
+        }
+
+        .node.active {
+            animation: node-glow 3.2s ease-in-out infinite
+        }
+
+        .node.active .node-icon {
+            animation: icon-hover 3s ease-in-out infinite
+        }
+
+        .node:before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            background: linear-gradient(115deg, transparent 15%, #ffffff9c 48%, transparent 75%);
+            background-size: 250% 100%;
+            opacity: 0
+        }
+
+        .node.active:before {
+            opacity: .65;
+            animation: node-shine 4.5s ease-in-out infinite
+        }
+
+        .node.active:after {
+            animation: node-outline 3.2s ease-in-out infinite
+        }
+
+        .node:hover {
+            filter: brightness(1.04)
+        }
+
+        .panel h2,
+        .panel .items,
+        .panel .result {
+            animation: detail-enter .55s ease-out both
+        }
+
+        .panel .items {
+            animation-delay: .06s
+        }
+
+        .panel .result {
+            animation-delay: .12s
+        }
+
+        .modal-head {
+            animation: detail-enter .3s ease-out
+        }
+
+        .mini {
+            transition: transform .25s, box-shadow .25s
+        }
+
+        .mini:is(button):hover {
+            box-shadow: 0 6px 0 #e2ddeb55, 0 0 25px #d3b6ec66
+        }
+
+        @keyframes orbit-light {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        @keyframes halo-breathe {
+            50% {
+                box-shadow: 0 0 35px #c3a4e9c0, inset 0 0 22px #d8c4f5a0;
+                border-color: #fff
+            }
+        }
+
+        @keyframes segment-light {
+
+            0%,
+            60%,
+            100% {
+                filter: drop-shadow(0 3px 2px #86729826)
+            }
+
+            15%,
+            35% {
+                filter: drop-shadow(0 0 7px #cab2ef80) brightness(1.055)
+            }
+        }
+
+        @keyframes node-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 7px 0 var(--edge), 0 0 0 5px #ffffff90, 0 0 27px var(--edge), 0 17px 35px #80749b28
+            }
+
+            50% {
+                box-shadow: 0 7px 0 var(--edge), 0 0 0 7px #ffffffa0, 0 0 44px var(--edge), 0 20px 40px #80749b35
+            }
+        }
+
+        @keyframes node-outline {
+            50% {
+                inset: -12px;
+                opacity: .35
+            }
+        }
+
+        @keyframes icon-hover {
+            50% {
+                transform: translateY(-4px) rotate(-4deg)
+            }
+        }
+
+        @keyframes node-shine {
+
+            0%,
+            25% {
+                background-position: 180% 0
+            }
+
+            75%,
+            100% {
+                background-position: -80% 0
+            }
+        }
+
+        @keyframes detail-enter {
+            from {
+                opacity: 0;
+                transform: translateY(7px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @media(max-width:1100px) {
+            .hub-button {
+                width: 144px;
+                height: 144px
+            }
+
+            .hub-button .core {
+                font-size: .9rem
+            }
+        }
+
+        @media(max-width:820px) {
+            .hub-button {
+                width: 157px;
+                height: 157px
+            }
+
+            .hub-button .core {
+                font-size: .97rem
+            }
+        }
+
+        @media(max-width:480px) {
+            .hub-button {
+                width: 135px;
+                height: 135px
+            }
+
+            .hub-button .core {
+                font-size: .82rem
+            }
+
+            .hub-button .pdca-label {
+                font-size: 1rem
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation: none !important;
+                transition: none !important
+            }
+        }
+
+        /* Brighter pastel palette */
+        body {
+            background-color: #f8f8ff;
+            background-image: radial-gradient(ellipse at 7% 0, #e4d5ff88, transparent 43%), radial-gradient(ellipse at 100% 80%, #c5f4e680, transparent 44%)
+        }
+
+        .stage {
+            background: radial-gradient(ellipse at 50% 45%, #ffffff 0, #f8f0ff80 34%, transparent 68%), linear-gradient(130deg, #e0d6ff, #ddf1ff 53%, #d3f6e7);
+            border-color: #fff;
+            box-shadow: inset 0 1px 0 white, 0 16px 40px #ad8bc91c
+        }
+
+        .panel {
+            background: #ffffffef;
+            box-shadow: 0 12px 35px #9873ba14
+        }
+
+        .node {
+            background: linear-gradient(145deg, #fffffff5, var(--tone) 77%)
+        }
+
+        .node.active {
+            background: linear-gradient(140deg, #fff 5%, var(--tone) 68%)
+        }
+
+        .item {
+            background: linear-gradient(125deg, #fff, color-mix(in srgb, var(--tone), white 67%));
+            border-color: color-mix(in srgb, var(--edge), white 62%)
+        }
+
+        .item-icon {
+            background: var(--tone)
+        }
+
+        .result>div {
+            background: linear-gradient(130deg, var(--tone), color-mix(in srgb, var(--tone), white 62%))
+        }
+
+        .hub {
+            background: linear-gradient(145deg, #fff, #e1d4f7);
+            box-shadow: 0 9px 0 #cbb8e7, 0 11px 1px #fff, 0 18px 0 #e4d6f4, 0 29px 35px #8c64ae30, 0 0 55px #c59af36b, inset 0 2px white
+        }
+
+        .hub-button {
+            background: radial-gradient(ellipse at 35% 20%, #fff 30%, #ece0ff)
+        }
+
+        .step.data {
+            background: #e2d4fc;
+            border-color: #d5bcf1;
+            color: #664691
+        }
+
+        .step.out {
+            background: #cdf2df;
+            border-color: #afe0c9;
+            color: #2f7455
+        }
+
+        .step:not(.data):not(.out) {
+            background: #f1edff;
+            border-color: #e6daf7
+        }
+
+        .intro h1 span {
+            color: #8660b6
+        }
+
+        .intro-badge {
+            background: #f3eaffd9;
+            border-color: white;
+            color: #75568f
+        }
+    
+        /* ===== ฝังในเว็บด้าน 3.5: พื้นโปร่ง ตัวหนังสือสว่างบนพื้นเข้ม ===== */
+        html, body { background: transparent !important; background-image: none !important; }
+        .stage { background: transparent !important; border-color: rgba(255,255,255,.22) !important; box-shadow: none !important; }
+        .stage::before, .stage::after { display: none !important; }
+        .intro, footer { color: #fff; text-shadow: 0 2px 6px rgba(6,18,44,.75), 0 0 18px rgba(6,18,44,.5); }
+        .intro .eyebrow { color: #f3d27a; }
+        .intro h1 span { color: #cfc4ff; }
+        .intro-badge { background: rgba(8,24,58,.7) !important; color: #fff !important; border-color: rgba(255,255,255,.3) !important; text-shadow: none; }
+        footer button { color: #f3d27a; }
+        .stage-label, .stage-footer > span { color: rgba(255,255,255,.9) !important; text-shadow: 0 1px 4px rgba(6,18,44,.7); }
+        .stage .control, .stage #play { background: #fff !important; color: #4b4470 !important; opacity: 1 !important; }
+        .round-label { background: #fff !important; color: #4b4470 !important; }
+        dialog { margin-top: 24px; }
+</style>
+</head>
+
+<body>
+    <main>
+        <div class="intro">
+            <div>
+                <div class="eyebrow">SCHOOL MANAGEMENT · PDCA</div>
+                <h1>การบริหารจัดการศึกษาด้วย <span>BANCHUEN MODEL</span></h1>
+            </div>
+            <div class="intro-badge"><b>◎</b> วางแผน · ดำเนินงาน · ตรวจสอบ · ปรับปรุง</div>
+        </div>
+        <div class="workspace">
+            <aside class="panel" id="panel" aria-label="รายละเอียดด้านที่เลือก"></aside>
+            <section class="stage" aria-label="โมเดล BANCHUEN แบบหมุน">
+                <div class="stage-head"><span class="stage-label">วงจรบริหารคุณภาพ · 4 กลุ่มบริหาร</span>
+                    <div class="controls"><button class="control" id="prev" aria-label="ด้านก่อนหน้า">←</button><button
+                            class="control" id="play" aria-pressed="true">Ⅱ หยุดหมุน</button><button class="control"
+                            id="next" aria-label="ด้านถัดไป">→</button></div>
+                </div>
+                <div class="scene" id="scene" tabindex="0" aria-label="ลากซ้ายขวาหรือใช้ปุ่มลูกศรเพื่อหมุนโมเดล">
+                    <div class="orbit"></div>
+                    <div class="hub">
+                        <div class="light-track" aria-hidden="true"></div>
+                        <div class="light-orbit" aria-hidden="true"><i></i></div><svg class="pdca" viewBox="0 0 400 400"
+                            role="img"
+                            aria-label="P Plan วางแผน; D Do ดำเนินงาน; C Check ตรวจสอบและประเมินผล; A Act ปรับปรุงและพัฒนา">
+                            <defs>
+                                <linearGradient id="pdca-color-0" x1="0" y1="0" x2="1" y2="1">
+                                    <stop stop-color="#d9f3ff" />
+                                    <stop offset="1" stop-color="#8fcff5" />
+                                </linearGradient>
+                                <linearGradient id="pdca-color-1" x1="0" y1="0" x2="1" y2="1">
+                                    <stop stop-color="#d3f8e7" />
+                                    <stop offset="1" stop-color="#8ee1bc" />
+                                </linearGradient>
+                                <linearGradient id="pdca-color-2" x1="0" y1="0" x2="1" y2="1">
+                                    <stop stop-color="#fff0c7" />
+                                    <stop offset="1" stop-color="#ffd282" />
+                                </linearGradient>
+                                <linearGradient id="pdca-color-3" x1="0" y1="0" x2="1" y2="1">
+                                    <stop stop-color="#efdfff" />
+                                    <stop offset="1" stop-color="#c5a0f3" />
+                                </linearGradient>
+                            </defs>
+                            <path class="pdca-segment segment-0"
+                                d="M 8.26 189.95 A 192 192 0 0 1 163.36 11.53 L 197.47 55.02 L 181.30 103.80 A 98 98 0 0 0 102.13 194.87 Z"
+                                fill="url(#pdca-color-0)" />
+                            <path class="pdca-segment segment-1"
+                                d="M 210.05 8.26 A 192 192 0 0 1 388.47 163.36 L 344.98 197.47 L 296.20 181.30 A 98 98 0 0 0 205.13 102.13 Z"
+                                fill="url(#pdca-color-1)" />
+                            <path class="pdca-segment segment-2"
+                                d="M 391.74 210.05 A 192 192 0 0 1 236.64 388.47 L 202.53 344.98 L 218.70 296.20 A 98 98 0 0 0 297.87 205.13 Z"
+                                fill="url(#pdca-color-2)" />
+                            <path class="pdca-segment segment-3"
+                                d="M 189.95 391.74 A 192 192 0 0 1 11.53 236.64 L 55.02 202.53 L 103.80 218.70 A 98 98 0 0 0 194.87 297.87 Z"
+                                fill="url(#pdca-color-3)" />
+                            <g transform="rotate(-45 98 98)"><text class="ring-title" text-anchor="middle" x="98"
+                                    y="81">P · Plan</text><text class="ring-copy" text-anchor="middle" x="98"
+                                    y="106">วางแผนการทำงาน</text><text class="ring-copy" text-anchor="middle" x="98"
+                                    y="130">โดยใช้ฐานข้อมูล</text></g>
+                            <g transform="rotate(45 302 98)"><text class="ring-title" text-anchor="middle" x="302"
+                                    y="81">D · Do</text><text class="ring-copy" text-anchor="middle" x="302"
+                                    y="106">ดำเนินงาน</text><text class="ring-copy" text-anchor="middle" x="302"
+                                    y="130">ตามแผนที่วางไว้</text></g>
+                            <g transform="rotate(-45 302 302)"><text class="ring-title" text-anchor="middle" x="302"
+                                    y="285">C · Check</text><text class="ring-copy" text-anchor="middle" x="302"
+                                    y="310">ตรวจสอบ</text><text class="ring-copy" text-anchor="middle" x="302"
+                                    y="334">และประเมินผล</text></g>
+                            <g transform="rotate(45 98 302)"><text class="ring-title" text-anchor="middle" x="98"
+                                    y="285">A · Act</text><text class="ring-copy" text-anchor="middle" x="98"
+                                    y="310">ปรับปรุงและพัฒนา</text><text class="ring-copy" text-anchor="middle" x="98"
+                                    y="334">อย่างต่อเนื่อง</text></g>
+                        </svg><button class="hub-button" id="pdca" aria-haspopup="dialog"
+                            aria-label="ดูวงจร PDCA ของ BANCHUEN MODEL"><span class="core">BANCHUEN<br>MODEL</span><span
+                                class="pdca-label">(PDCA)</span><small>ดูวงจรการทำงาน ↗</small></button>
+                    </div>
+                    <div id="nodes"></div>
+                </div>
+                <div class="stage-footer"><span>ลากเพื่อหมุน · คลิกเพื่ออ่าน</span>
+                    <div class="pagination" id="dots"></div><span class="round-label" id="counter">01 / 04</span>
+                </div>
+            </section>
+        </div>
+        <footer><span>BANCHUEN MODEL · วงจรบริหารคุณภาพ PDCA</span><button id="help">วิธีใช้งาน</button></footer>
+    </main>
+    <dialog id="modal" aria-labelledby="modalTitle">
+        <div id="modalContent"></div>
+    </dialog>
+    <script>
+        const $ = s => document.querySelector(s); const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+        const icons = [`<path d="M3 5h7c2 0 3 1 3 2v15c0-2-2-3-4-3H3zM23 5h-7c-2 0-3 1-3 2v15c0-2 2-3 4-3h6z"/>`, `<circle cx="13" cy="8" r="4"/><path d="M5 23v-3a8 8 0 0 1 16 0v3M4 6a3 3 0 0 0 0 6M22 6a3 3 0 0 1 0 6"/>`, `<rect x="4" y="3" width="18" height="22" rx="3"/><path d="M8 8h10M8 13h3m4 0h3M8 18h3m4 0h3"/>`, `<path d="M3 24h22M6 24V10l8-6 8 6v14M10 12h2m4 0h2M10 16h2m4 0h2M12 24v-5h4v5"/>`];
+        const groups = [{ "name": "วิชาการ", "en": "Academic Affairs", "tone": "#c8eaff", "edge": "#85c4ed", "ink": "#256b9f", "intro": "การบริหารงานด้านวิชาการตามวงจร PDCA" }, { "name": "บุคคล", "en": "Personnel Affairs", "tone": "#c3f2df", "edge": "#80cfb1", "ink": "#28745c", "intro": "การบริหารงานด้านบุคคลตามวงจร PDCA" }, { "name": "งบประมาณ", "en": "Budget Affairs", "tone": "#ffe7ae", "edge": "#edbd69", "ink": "#926221", "intro": "การบริหารงานด้านงบประมาณตามวงจร PDCA" }, { "name": "ทั่วไป", "en": "General Affairs", "tone": "#e3ccff", "edge": "#bd98e8", "ink": "#7a4ba4", "intro": "การบริหารงานด้านทั่วไปตามวงจร PDCA" }];
+        const pdca = [['P', 'Plan · วางแผน', 'วางแผนการทำงานโดยใช้ข้อมูล กำหนดเป้าหมายและผู้รับผิดชอบให้ชัดเจน'], ['D', 'Do · ดำเนินงาน', 'ดำเนินงานตามแผนของแต่ละกลุ่มบริหาร บันทึกความก้าวหน้าและหลักฐานในระบบที่เกี่ยวข้อง'], ['C', 'Check · ตรวจสอบ', 'ตรวจสอบผลการดำเนินงานเทียบกับแผน วิเคราะห์สาเหตุของปัญหา และสรุปสิ่งที่ต้องปรับปรุง'], ['A', 'Act · ปรับปรุง', 'นำผลตรวจสอบมาปรับวิธีทำงาน และใช้ข้อมูลประกอบการวางแผนในรอบถัดไป']];
+        let selected = 0, rotation = 0, targetRotation = 0, playing = true, timer, animation = 0, opener = null, drag = null;
+        function theme(g) { return `--tone:${g.tone};--edge:${g.edge};--ink:${g.ink}` }
+        $('#nodes').innerHTML = groups.map((g, i) => `<button class="node" data-group="${i}" style="${theme(g)}" aria-haspopup="dialog" aria-label="${g.name} เลือกและอ่านรายละเอียด"><span class="node-icon"><svg viewBox="0 0 28 28" aria-hidden="true">${icons[i]}</svg></span><span><strong>${g.name}</strong><small>ดูรายละเอียด ↗</small></span></button>`).join('');
+        $('#dots').innerHTML = groups.map((g, i) => `<button class="dot" data-select="${i}" aria-label="เลือกด้าน${g.name}" aria-current="${i === 0}"></button>`).join('');
+        const nodes = Array.from(document.querySelectorAll('.node'));
+        function position() { const width = $('#scene').clientWidth, narrow = width < 650, rx = narrow ? 32 : 35, ry = narrow ? 43 : 39; nodes.forEach((node, i) => { const a = ((narrow ? 45 : 90) + i * 90 + rotation) * Math.PI / 180; const active = i === selected; node.style.left = `${50 + Math.cos(a) * rx}%`; node.style.top = `${50 + Math.sin(a) * ry}%`; node.style.transform = `translate(-50%,-50%) scale(${active ? 1.13 : .96})`; node.style.zIndex = active ? '5' : (Math.sin(a) > 0 ? '4' : '3'); node.classList.toggle('active', active); node.setAttribute('aria-current', String(active)) }) }
+        function renderPanel() { const g = groups[selected]; $('#panel').setAttribute('style', theme(g)); $('#panel').innerHTML = `<div class="panel-meta"><span>กลุ่มบริหาร</span><span class="badge">0${selected + 1}</span></div><h2>ด้าน${g.name}</h2><div class="english">${g.en}</div><p>${g.intro}</p><div class="items">${pdca.map((it, j) => `<button class="item" data-item="${selected}:${j}" aria-haspopup="dialog"><span class="item-icon">${it[0]}</span><span><strong>${it[1]}</strong></span><span class="arrow">↗</span></button>`).join('')}</div>`; $('#counter').textContent = `0${selected + 1} / 04`; document.querySelectorAll('[data-select]').forEach(n => n.setAttribute('aria-current', String(Number(n.dataset.select) === selected))) }
+        function animateTo(end) { cancelAnimationFrame(animation); const start = rotation, t0 = performance.now(), duration = reduced.matches ? 0 : 1200; targetRotation = end; function frame(now) { const p = duration ? Math.min((now - t0) / duration, 1) : 1; const eased = p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; rotation = start + (end - start) * eased; position(); if (p < 1) animation = requestAnimationFrame(frame) } animation = requestAnimationFrame(frame) }
+        function selectGroup(i, direction = 0) { const next = (i + 4) % 4; let delta; if (direction) delta = -90 * direction; else { delta = -90 * next - targetRotation; delta = ((delta + 180) % 360 + 360) % 360 - 180 } selected = next; animateTo(targetRotation + delta); renderPanel(); restartTimer() }
+        function restartTimer() { clearInterval(timer); if (playing) timer = setInterval(() => { if (!$('#modal').open && !document.hidden && !drag) selectGroup(selected + 1, 1) }, 6000) }
+        function togglePlay() { playing = !playing; $('#play').textContent = playing ? 'Ⅱ หยุดหมุน' : '▶ หมุนอัตโนมัติ'; $('#play').setAttribute('aria-pressed', String(playing)); restartTimer() }
+        function modalHead(title, desc) { return `<div class="modal-head"><button class="close" aria-label="ปิดหน้าต่าง">×</button><div class="eyebrow">BANCHUEN MODEL · PDCA</div><h2 id="modalTitle">${title}</h2><p>${desc}</p></div>` }
+        function show(title, desc, body, g = groups[3]) { const m = $('#modal'); if (!m.open) opener = document.activeElement; m.setAttribute('style', theme(g)); $('#modalContent').innerHTML = modalHead(title, desc) + `<div class="modal-body">${body}</div>`; if (!m.open) m.showModal(); m.scrollTop = 0; $('.close').focus() }
+        function groupDetail(i) { const g = groups[i]; show(`ด้าน${g.name}`, g.en, `<p>${g.intro}</p><div class="mini-grid">${pdca.map((it, j) => `<button class="mini" data-item="${i}:${j}"><span class="mini-tag">${it[0]}</span><strong>${it[1]} ↗</strong></button>`).join('')}</div>`, g) }
+        function itemDetail(i, j) { const g = groups[i], it = pdca[j]; show(it[1], `ด้าน${g.name}`, `<button class="back" data-overview="${i}">← กลับไปด้าน${g.name}</button><p>${it[2]}</p>`, g) }
+        function showPdca() { show('วงจรบริหารคุณภาพ PDCA', 'BANCHUEN MODEL', `<p>ใช้วงจร PDCA ในงานบริหารทั้ง 4 ด้าน โดยนำข้อมูลประกอบการวางแผน ติดตามผล และปรับปรุงงาน</p><div class="mini-grid">${pdca.map((p, i) => `<button class="mini" data-pdca="${i}" style="${theme(groups[i])}"><span class="mini-tag">${p[0]}</span><strong>${p[1]} ↗</strong><span>${p[2]}</span></button>`).join('')}</div><div class="legend"><span>วิชาการ</span><span>บุคคล</span><span>งบประมาณ</span><span>ทั่วไป</span></div><p class="note">ทุกกลุ่มบริหารดำเนินงานครบทั้ง P → D → C → A และนำผลกลับมาวางแผนรอบถัดไป</p>`) }
+        function pdcaDetail(i) { const p = pdca[i]; show(p[1], 'วงจรบริหารคุณภาพ PDCA', `<button class="back" data-system="pdca">← กลับสู่วงจร PDCA</button><p>${p[2]}</p>`, groups[i]) }
+        function system(key) { if (key === 'pdca') showPdca() }
+        document.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; if (b.dataset.group !== undefined) { const i = Number(b.dataset.group); selectGroup(i); groupDetail(i) } if (b.dataset.select !== undefined) selectGroup(Number(b.dataset.select)); if (b.dataset.item) { const [i, j] = b.dataset.item.split(':').map(Number); itemDetail(i, j) } if (b.dataset.overview !== undefined) groupDetail(Number(b.dataset.overview)); if (b.dataset.system) system(b.dataset.system); if (b.dataset.pdca !== undefined) pdcaDetail(Number(b.dataset.pdca)); if (b.classList.contains('close')) $('#modal').close() });
+        $('#prev').onclick = () => selectGroup(selected - 1, -1); $('#next').onclick = () => selectGroup(selected + 1, 1); $('#play').onclick = togglePlay; $('#pdca').onclick = showPdca;
+        $('#scene').addEventListener('keydown', e => { if (e.target !== $('#scene')) return; if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); const d = e.key === 'ArrowRight' ? 1 : -1; selectGroup(selected + d, d) } });
+        $('#scene').addEventListener('pointerdown', e => { if (e.target.closest('button') || e.button !== 0) return; cancelAnimationFrame(animation); drag = { x: e.clientX, start: rotation, id: e.pointerId }; $('#scene').setPointerCapture(e.pointerId); $('#scene').classList.add('dragging') });
+        $('#scene').addEventListener('pointermove', e => { if (!drag) return; rotation = drag.start + (e.clientX - drag.x) * .45; position() });
+        function finishDrag() { if (!drag) return; drag = null; $('#scene').classList.remove('dragging'); const snapped = Math.round(rotation / 90) * 90; selected = ((-(snapped / 90)) % 4 + 4) % 4; animateTo(snapped); renderPanel(); restartTimer() }
+        $('#scene').addEventListener('pointerup', finishDrag); $('#scene').addEventListener('pointercancel', finishDrag); window.addEventListener('resize', position);
+        $('#modal').addEventListener('close', () => { if (opener?.isConnected) opener.focus(); else $('#scene').focus(); restartTimer() }); $('#modal').addEventListener('click', e => { if (e.target === $('#modal')) { const r = $('#modal').getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) $('#modal').close() } });
+        $('#help').onclick = () => show('วิธีใช้งาน', 'BANCHUEN MODEL (PDCA)', `<ul class="list"><li>โมเดลหมุนเปลี่ยนหัวข้อทุก 6 วินาที หัวข้อปัจจุบันจะขยายและเรืองแสง พร้อมแสดงข้อมูลด้านซ้าย</li><li>ลากพื้นที่ว่างของโมเดลไปทางซ้ายหรือขวา หรือใช้ปุ่มลูกศรเพื่อเลือกด้านที่ต้องการ</li><li>คลิกกลุ่มบริหารเพื่ออ่านขั้นตอน PDCA ของด้านนั้น</li><li>คลิกตรงกลางเพื่อดูรายละเอียดของวงจร PDCA</li><li>โมเดลพักเมื่อเปิดหน้าต่างรายละเอียด และหมุนต่อหลังปิดด้วยปุ่ม × หรือ Esc หากต้องการพักนานขึ้นให้กด “หยุดหมุน”</li></ul><p>ฟอนต์: <a href="https://github.com/SarabunConsortium/TH-Sarabun-PSK" target="_blank" rel="noopener">TH SarabunPSK</a></p>`);
+        renderPanel(); position(); restartTimer();
+    </script>
+
+<script>
+(function(){const post=m=>{if(parent!==window)parent.postMessage(m,location.origin)};
+const rep=()=>requestAnimationFrame(()=>post({type:'d3-banchuen35-height',height:Math.ceil(document.querySelector('main').getBoundingClientRect().height+16)}));
+new ResizeObserver(rep).observe(document.body);addEventListener('load',rep);rep();
+const m=document.getElementById('modal');new MutationObserver(()=>{if(m.open)post({type:'d3-banchuen35-scroll'})}).observe(m,{attributes:true,attributeFilter:['open']});})();
+</script>
+</body>
+
+</html>

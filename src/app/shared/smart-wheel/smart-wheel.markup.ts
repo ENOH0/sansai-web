@@ -119,8 +119,8 @@ return `
       <path d="M300 548A248 248 0 0 1 52 300" />
       <text x="124.6" y="124.6" transform="rotate(-45 124.6 124.6)">PLAN</text>
       <text x="475.4" y="124.6" transform="rotate(45 475.4 124.6)">DO</text>
-      <text x="475.4" y="475.4" transform="rotate(-45 475.4 475.4)">CHECK</text>
-      <text x="124.6" y="475.4" transform="rotate(45 124.6 475.4)">ACTION</text>
+      <text x="475.4" y="475.4" transform="rotate(135 475.4 475.4)">CHECK</text>
+      <text x="124.6" y="475.4" transform="rotate(-135 124.6 475.4)">ACTION</text>
     </svg>
 
     <div class="sw-wheel">

@@ -34,7 +34,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
     { label: 'VDO', sub: 'วิดีโอนำเสนอ', icon: 'video', link: '' },
     { label: 'Dashboard', sub: 'ข้อมูล 5 ด้าน', icon: 'dashboard', link: '/dashboard', main: true },
     { label: 'อาหาร', sub: 'เลือกอาหารและการแสดง', icon: 'food', link: EVAL_LINK.url },
-    { label: 'ผังโรงเรียน', sub: 'School Map', icon: 'map', link: '' }
+    { label: 'ผังโรงเรียน', sub: 'แผนผัง 3 มิติ', icon: 'map', link: '/models/school-map-3d.html' }
   ];
 
   private idle?: ReturnType<typeof setTimeout>;
@@ -65,8 +65,13 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
     clearTimeout(this.idle);
   }
 
+  /** ลิงก์ภายนอก หรือไฟล์ .html ในเว็บ (เช่น ผังโรงเรียน 3 มิติ) ใช้ href แทน routerLink */
   isExternal(link: string): boolean {
-    return /^https?:\/\//.test(link);
+    return /^https?:\/\//.test(link) || link.endsWith('.html');
+  }
+
+  targetOf(link: string): string {
+    return /^https?:\/\//.test(link) ? '_blank' : '_self';
   }
 
   openMenu(): void {

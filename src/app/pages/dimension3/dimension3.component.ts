@@ -32,6 +32,7 @@ export class Dimension3Component {
 
   readonly learnModelHeight = signal(900);
   readonly digitalModelHeight = signal(1000);
+  readonly banchuen35Height = signal(900);
 
   @HostListener('window:message', ['$event'])
   resizeAdminModel(event: MessageEvent<{ type?: string; height?: number; top?: number; bottom?: number }>): void {
@@ -55,6 +56,10 @@ export class Dimension3Component {
     }
 
     // โมเดลสถานศึกษาดิจิทัลเปิดหน้าต่างรายละเอียด → เลื่อนให้เห็นหัวโมเดล
+    if (event.data?.type === 'd3-banchuen35-scroll') {
+      document.querySelector('.d3-banchuen35-model')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
     if (event.data?.type === 'd3-digital-model-scroll') {
       document.querySelector('.d3-digital-model')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
@@ -62,6 +67,7 @@ export class Dimension3Component {
 
     const height = Number(event.data.height);
     if (!Number.isFinite(height)) return;
+    if (event.data?.type === 'd3-banchuen35-height') this.banchuen35Height.set(Math.max(600, height));
     if (event.data?.type === 'd3-digital-model-height') this.digitalModelHeight.set(Math.max(600, height));
     if (event.data?.type === 'd3-banchuen-model-height') this.adminModelHeight.set(Math.max(420, Math.min(2400, height)));
     if (event.data?.type === 'd3-learn-model-height') this.learnModelHeight.set(Math.max(620, height));

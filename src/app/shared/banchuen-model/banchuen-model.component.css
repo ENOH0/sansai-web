@@ -512,3 +512,7 @@
   .bc-scene.is-energized .bc-wave::before,
   .bc-scene.is-energized .bc-wave::after { animation: none; }
 }
+
+/* เว้นระยะระหว่างโหนดล่างสุด (H) กับกล่องรายละเอียด ไม่ให้ติดกัน */
+.bc-detail { margin-top: 36px; }
+@media (max-width: 640px) { .bc-detail { margin-top: 26px; } }

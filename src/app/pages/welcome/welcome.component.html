@@ -22,7 +22,7 @@
           <ng-container *ngTemplateOutlet="btnBody; context: { $implicit: b }"></ng-container>
         </a>
         <a *ngIf="b.link && isExternal(b.link)" class="wl-btn" [class.is-main]="b.main" [href]="b.link"
-           target="_blank" rel="noopener" [style.--i]="i">
+           [target]="targetOf(b.link)" rel="noopener" [style.--i]="i">
           <ng-container *ngTemplateOutlet="btnBody; context: { $implicit: b }"></ng-container>
         </a>
         <span *ngIf="!b.link" class="wl-btn is-empty" aria-disabled="true" [style.--i]="i">

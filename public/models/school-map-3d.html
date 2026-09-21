@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ผังโรงเรียนสันทรายวิทยาคม 3 มิติ</title>
+<link rel="stylesheet" href="/fonts/th-sarabun.css">
+<style>
+/* ผังโรงเรียน 3 มิติ — ใช้ CSS 3D ล้วน ไม่ต้องโหลดไลบรารี (ทำงานออฟไลน์ได้ ลื่นบน iPad)
+   แก้ชื่อ/ตำแหน่ง/ขนาดอาคารได้ที่ตัวแปร B ในสคริปต์ด้านล่าง (หน่วย: 1 = 5px) */
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:radial-gradient(ellipse at 50% 30%,#eaf4ff 0%,#cfe3f7 55%,#b7d2ee 100%);
+  font-family:'TH SarabunPSK Web','TH SarabunPSK',Tahoma,sans-serif;color:#1d2f52;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+#view{position:absolute;inset:0;perspective:2200px;perspective-origin:50% 42%;touch-action:none;cursor:grab;overflow:hidden}
+#view:active{cursor:grabbing}
+#scene{position:absolute;left:50%;top:52%;width:1050px;height:500px;margin:-250px 0 0 -525px;transform-style:preserve-3d}
+#scene *{transform-style:preserve-3d}
+.ground{position:absolute;inset:-30px;border-radius:26px;background:#bfe3a9;box-shadow:0 0 0 12px #a9d493}
+.flat{position:absolute}
+.road{background:#8f98a8}
+.road::after{content:'';position:absolute;left:0;right:0;top:50%;height:3px;margin-top:-1.5px;background:repeating-linear-gradient(90deg,#fff 0 22px,transparent 22px 44px);opacity:.85}
+.road.v::after{left:50%;right:auto;top:0;bottom:0;width:3px;height:auto;margin:0 0 0 -1.5px;background:repeating-linear-gradient(180deg,#fff 0 22px,transparent 22px 44px)}
+.pave{background:repeating-linear-gradient(45deg,#e7d7c3 0 10px,#dcc8b0 10px 20px)}
+.field{background:repeating-linear-gradient(90deg,#63c46e 0 34px,#58b863 34px 68px);border:4px solid #fff}
+.field::before{content:'';position:absolute;left:50%;top:0;bottom:0;border-left:3px solid #fff}
+.field::after{content:'';position:absolute;left:50%;top:50%;width:50px;height:50px;margin:-25px;border:3px solid #fff;border-radius:50%}
+.farm{background:repeating-linear-gradient(0deg,#9bc45a 0 9px,#7a5a36 9px 13px)}
+.garden{background:#8fd17a;border-radius:14px}
+.b{position:absolute;cursor:pointer}
+.f{position:absolute;backface-visibility:visible}
+.wall{background-color:var(--w)}
+.wall.win{background-image:repeating-linear-gradient(90deg,transparent 0 10px,rgba(60,90,140,.45) 10px 18px,transparent 18px 26px),
+  repeating-linear-gradient(0deg,transparent 0 12px,rgba(255,255,255,0) 12px 30px)}
+.wall.win::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.0) 0 14px,var(--w) 14px 24px)}
+.shade1{filter:brightness(.92)}.shade2{filter:brightness(.8)}
+.roof{background-color:var(--r);background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.08) 0 2px,transparent 2px 12px)}
+.b.on .f{outline:3px solid #ffcf3f}
+.glass{background:linear-gradient(135deg,#7fe0d6,#2aa39a);background-image:linear-gradient(135deg,rgba(255,255,255,.35),transparent 60%),repeating-linear-gradient(90deg,#2fb3a8 0 14px,#1f8f86 14px 16px)}
+.bb{position:absolute;width:0;height:0}
+.bb>*{position:absolute;left:0;bottom:0;transform:translateX(-50%)}
+.tree{width:26px;height:40px}
+.tree i{position:absolute;left:11px;bottom:0;width:4px;height:12px;background:#7a5230}
+.tree b{position:absolute;left:0;bottom:9px;width:26px;height:28px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#8fe07c,#3f9e45)}
+.pin{display:flex;flex-direction:column;align-items:center;cursor:pointer;pointer-events:auto}
+.pin span{display:grid;place-items:center;min-width:34px;height:34px;padding:0 6px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#ef3b4d;box-shadow:0 4px 10px rgba(0,0,0,.3);border:2px solid #fff}
+.pin span em{transform:rotate(45deg);font-style:normal;color:#fff;font-weight:800;font-size:19px;line-height:1}
+.pin.on span{background:#ffb400}
+.flagp{width:4px;height:70px;background:#ccc}
+.flagp::after{content:'';position:absolute;left:4px;top:0;width:34px;height:22px;background:linear-gradient(#e33 0 20%,#fff 20% 36%,#2b3f8f 36% 64%,#fff 64% 80%,#e33 80%)}
+
+/* UI */
+.ui{position:absolute;z-index:5}
+.title{top:max(14px,env(safe-area-inset-top));left:16px;padding:8px 18px;border-radius:16px;background:rgba(255,255,255,.85);box-shadow:0 8px 20px rgba(30,60,110,.15)}
+.title h1{margin:0;font-size:26px;line-height:1.1}.title p{margin:0;font-size:16px;color:#50648a}
+.ctrl{right:16px;bottom:max(16px,env(safe-area-inset-bottom));display:flex;gap:10px}
+.ctrl button,.back{min-width:48px;min-height:48px;padding:0 14px;border:0;border-radius:14px;background:rgba(255,255,255,.92);color:#1d2f52;font:inherit;font-size:22px;font-weight:800;box-shadow:0 6px 16px rgba(30,60,110,.18);cursor:pointer;touch-action:manipulation}
+.back{top:max(14px,env(safe-area-inset-top));right:16px;font-size:18px;text-decoration:none;display:flex;align-items:center}
+.legend{left:16px;bottom:max(16px,env(safe-area-inset-bottom));width:300px;max-height:min(58vh,560px);overflow:auto;-webkit-overflow-scrolling:touch;padding:10px;border-radius:18px;background:rgba(255,255,255,.9);box-shadow:0 10px 26px rgba(30,60,110,.2)}
+.legend button{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:4px 8px;border:0;border-radius:10px;background:none;font:inherit;font-size:18px;color:#1d2f52;text-align:left;cursor:pointer;touch-action:manipulation}
+.legend button b{display:grid;place-items:center;flex:0 0 30px;height:30px;border-radius:50%;background:#ef3b4d;color:#fff;font-size:16px}
+.legend button.on{background:#fff3cc}
+.legend button.on b{background:#ffb400}
+.info{left:50%;top:max(84px,calc(env(safe-area-inset-top) + 70px));transform:translateX(-50%);display:none;align-items:center;gap:12px;padding:10px 18px;border-radius:16px;background:#fff;box-shadow:0 12px 28px rgba(30,60,110,.25);font-size:22px;font-weight:800}
+.info.show{display:flex}.info b{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#ffb400;color:#fff}
+.hint{left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);padding:6px 16px;border-radius:999px;background:rgba(29,47,82,.75);color:#fff;font-size:16px;pointer-events:none}
+body.has-legend #scene{left:calc(50% + 150px)}
+.legend-toggle{left:16px;bottom:max(16px,env(safe-area-inset-bottom));min-height:48px;padding:0 18px;border:0;border-radius:14px;background:#fff;color:#1d2f52;font:inherit;font-size:19px;font-weight:800;box-shadow:0 6px 16px rgba(30,60,110,.18);cursor:pointer}
+body.has-legend .legend-toggle{display:none}
+body:not(.has-legend) .legend{display:none}
+.legend-close{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:2px 6px 6px;background:rgba(255,255,255,.95);font-weight:800;font-size:19px}
+.legend-close button{width:auto;min-height:40px;padding:0 12px;background:#eef3fb;font-size:16px;justify-content:center}
+@media (max-width:900px){body.has-legend #scene{left:50%}.legend{width:240px;max-height:40vh}.legend button{font-size:16px}.hint{display:none}}
+</style>
+</head>
+<body>
+<div id="view"><div id="scene"></div></div>
+<div class="ui title"><h1>ผังโรงเรียนสันทรายวิทยาคม</h1><p>แผนผัง 3 มิติ · ลากเพื่อหมุน · ถ่างนิ้วเพื่อซูม</p></div>
+<a class="ui back" href="/" target="_top">‹ กลับหน้าหลัก</a>
+<div class="ui legend" id="legend"><div class="legend-close">รายชื่ออาคาร<button type="button" id="lclose">ซ่อน ✕</button></div></div>
+<button class="ui legend-toggle" id="lopen" type="button">☰ รายชื่ออาคาร</button>
+<div class="ui info" id="info"><b id="infoNo"></b><span id="infoName"></span></div>
+<div class="ui ctrl"><button id="zin" aria-label="ซูมเข้า">+</button><button id="zout" aria-label="ซูมออก">−</button><button id="reset" aria-label="มุมมองเริ่มต้น">⟲</button></div>
+<div class="ui hint">แตะหมุดหรืออาคารเพื่อดูชื่อ</div>
+<script>
+const U=5; // 1 หน่วย = 5px
+/* อาคาร: n เลข, t ชื่อ, x y ตำแหน่ง, w d ขนาด, h ความสูง, s รูปทรง (gable=หลังคาจั่ว, flat=หลังคาแบน, vault=โดม, glass=กระจก), w/r สีผนัง/หลังคา */
+const B=[
+ {n:1,t:'อาคาร 1 อาคารศรีสันทราย',x:6,y:44,w:34,d:12,h:10,s:'gable',wc:'#fbeede',rc:'#8a4a2c',win:1},
+ {n:2,t:'อาคารอุตสาหกรรม',x:18,y:12,w:26,d:10,h:7,s:'gable',wc:'#f3dfc8',rc:'#7b4a2e'},
+ {n:3,t:'อาคารคหกรรม',x:50,y:13,w:16,d:10,h:6,s:'flat',wc:'#ffc36b',rc:'#9aa3b2'},
+ {n:4,t:'ห้องดนตรี',x:70,y:13,w:12,d:10,h:6,s:'gable',wc:'#6e86c9',rc:'#33374a'},
+ {n:5,t:'ห้องภาษาจีน/ภาษาญี่ปุ่น',x:86,y:12,w:20,d:11,h:7,s:'gable',wc:'#ffd35c',rc:'#d8363a'},
+ {n:6,t:'โรงพลศึกษา',x:44,y:72,w:22,d:11,h:6,s:'flat',wc:'#b8674a',rc:'#f4f4f4'},
+ {n:7,t:'โดมสันทราย',x:58,y:44,w:24,d:16,h:6,s:'vault',wc:'#ffffff',rc:'#f4f7fb'},
+ {n:8,t:'หอประชุมเฉลิมพระเกียรติ',x:96,y:44,w:28,d:18,h:12,s:'flat',wc:'#efe3cf',rc:'#b9a98f',win:1},
+ {n:9,t:'อาคาร To be Number One',x:128,y:45,w:9,d:9,h:9,s:'gable',wc:'#fff4e2',rc:'#6b4630'},
+ {n:10,t:'อาคาร 4 อาคาร 45 ปีสันทราย',x:140,y:12,w:20,d:16,h:26,s:'flat',wc:'#f6ecd6',rc:'#d9ccb4',win:1},
+ {n:11,t:'เรือนเกษตรกร',x:186,y:15,w:8,d:6,h:5,s:'gable',wc:'#f6e7cf',rc:'#7a4a2e'},
+ {n:12,t:'อาคาร 5',x:164,y:12,w:12,d:24,h:7,s:'gable',wc:'#9cc3ea',rc:'#8a4a2c'},
+ {n:13,t:'อาคาร 3 อาคารสร้อยดอกหมาก',x:156,y:70,w:22,d:13,h:8,s:'glass',wc:'#2aa39a',rc:'#1e7f78'},
+ {n:14,t:'อาคารเรียนรวม',x:142,y:72,w:9,d:9,h:7,s:'gable',wc:'#8f6d4f',rc:'#2f2f3a'},
+ {n:15,t:'อาคาร 2 อาคารสายธาร',x:92,y:80,w:46,d:9,h:8,s:'gable',wc:'#f3b8d6',rc:'#7b3f2a',win:1},
+ {n:16,t:'อาคาร 40 ปี สันทราย',x:76,y:86,w:10,d:8,h:6,s:'gable',wc:'#e6e9f2',rc:'#2f2f3a'},
+ {n:17,t:'ลานเพรงบุญ',x:68,y:70,w:14,d:14,h:0,s:'plaza'}
+];
+const FLAT=[['road',0,3,210,6],['road',20,36,190,5],['road',0,64,210,5],['road v',52,41,4,23],
+ ['field',4,71,34,24],['farm',180,12,28,24],['garden',140,43,34,19],['pave',86,62.5,10,2]];
+const TREES=[[146,48],[152,56],[160,47],[168,55],[172,46],[45,50],[46,58],[90,66],[126,60],[136,86],[40,30],[180,40],[4,58],[88,28],[112,28],[150,90],[178,90],[62,92],[190,60],[200,72]];
+
+const scene=document.getElementById('scene');
+const el=(c,st,p=scene)=>{const d=document.createElement('div');d.className=c;if(st)d.style.cssText=st;p.appendChild(d);return d};
+el('ground');
+FLAT.forEach(([c,x,y,w,d])=>el('flat '+c,`left:${x*U}px;top:${y*U}px;width:${w*U}px;height:${d*U}px`));
+
+function face(p,cls,st){return el('f '+cls,st,p)}
+function building(b){
+  const w=b.w*U,d=b.d*U,h=b.h*U;
+  const g=el('b',`left:${b.x*U}px;top:${b.y*U}px;width:${w}px;height:${d}px;--w:${b.wc};--r:${b.rc}`);
+  g.dataset.n=b.n;
+  if(b.s==='plaza'){el('flat pave',`left:0;top:0;width:${w}px;height:${d}px;border-radius:10px`,g);return g}
+  const wc=b.s==='glass'?'glass':'wall'+(b.win?' win':'');
+  const r=b.s==='gable'?Math.min(d*.45,40):b.s==='vault'?d*.5:0;
+  // ผนัง 4 ด้าน (ด้านข้าง x ต่อยอดเป็นหน้าจั่ว)
+  face(g,wc+' shade1',`left:0;top:0;width:${w}px;height:${h}px;transform-origin:0 0;transform:rotateX(90deg)`);
+  face(g,wc+' shade1',`left:0;top:${d}px;width:${w}px;height:${h}px;transform-origin:0 0;transform:rotateX(90deg)`);
+  const side=(left)=>{
+    const s=face(g,wc+' shade2',`left:${left}px;top:0;width:${h+r}px;height:${d}px;transform-origin:0 0;transform:rotateY(-90deg)`);
+    if(b.s==='gable')s.style.clipPath=`polygon(0 0,${h}px 0,${h+r}px 50%,${h}px 100%,0 100%)`;
+    if(b.s==='vault')s.style.clipPath=`polygon(0 0,${h}px 0,${h+r*.7}px 15%,${h+r}px 50%,${h+r*.7}px 85%,${h}px 100%,0 100%)`;
+  };
+  side(0);side(w);
+  if(b.s==='gable'){
+    const L=Math.hypot(d/2,r),a=Math.atan2(r,d/2)*180/Math.PI;
+    face(g,'roof',`left:0;top:0;width:${w}px;height:${L}px;transform-origin:0 0;transform:translateZ(${h}px) rotateX(${a}deg)`);
+    face(g,'roof shade1',`left:0;top:${d}px;width:${w}px;height:${L}px;transform-origin:0 0;transform:translateZ(${h}px) rotateX(${180-a}deg)`);
+  }else if(b.s==='vault'){
+    const n=6,R=d/2;
+    for(let i=0;i<n;i++){const a0=Math.PI*i/n,a1=Math.PI*(i+1)/n;
+      const y0=R-R*Math.cos(a0),z0=R*Math.sin(a0)*.7,y1=R-R*Math.cos(a1),z1=R*Math.sin(a1)*.7;
+      const L=Math.hypot(y1-y0,z1-z0)+1,ang=Math.atan2(z1-z0,y1-y0)*180/Math.PI;
+      face(g,'roof'+(i%2?' shade1':''),`left:0;top:${y0}px;width:${w}px;height:${L}px;transform-origin:0 0;transform:translateZ(${h+z0}px) rotateX(${ang}deg)`);}
+  }else{
+    face(g,b.s==='glass'?'glass':'roof',`left:0;top:0;width:${w}px;height:${d}px;transform:translateZ(${h}px)`);
+  }
+  g.addEventListener('click',e=>{if(!moved)select(b.n)});
+  return g;
+}
+const G={};B.forEach(b=>G[b.n]=building(b));
+
+// ป้ายหมุด ต้นไม้ และเสาธง (หันหน้าเข้าหากล้องเสมอ)
+const bills=[];
+function billboard(x,y,z,html,cls){const bb=el('bb',`left:${x*U}px;top:${y*U}px`);bb.dataset.z=z;bb.innerHTML=html;if(cls)bb.firstChild.className+=' '+cls;bills.push(bb);return bb}
+TREES.forEach(([x,y])=>billboard(x,y,0,'<div class="tree"><i></i><b></b></div>'));
+billboard(92,63,0,'<div class="flagp"></div>');
+const pins={};
+B.forEach(b=>{const bb=billboard(b.x+b.w/2,b.y+b.d/2,(b.h+(b.s==='gable'?6:b.s==='vault'?9:2))*U,`<div class="pin"><span><em>${b.n}</em></span></div>`);
+  bb.firstChild.addEventListener('click',()=>{if(!moved)select(b.n)});pins[b.n]=bb.firstChild});
+
+// รายการอาคาร
+const legend=document.getElementById('legend');
+[...B].sort((a,b)=>a.n-b.n).forEach(b=>{const bt=document.createElement('button');bt.type='button';bt.dataset.n=b.n;bt.innerHTML=`<b>${b.n}</b>${b.t}`;bt.onclick=()=>select(b.n,true);legend.appendChild(bt)});
+
+let cur=null;
+function select(n,focus){
+  cur=cur===n&&!focus?null:n;
+  Object.entries(G).forEach(([k,g])=>g.classList.toggle('on',+k===cur));
+  Object.entries(pins).forEach(([k,p])=>p.classList.toggle('on',+k===cur));
+  legend.querySelectorAll('button[data-n]').forEach(b=>b.classList.toggle('on',+b.dataset.n===cur));
+  const info=document.getElementById('info');
+  if(cur==null){info.classList.remove('show');return}
+  const b=B.find(x=>x.n===cur);document.getElementById('infoNo').textContent=b.n;document.getElementById('infoName').textContent=b.t;info.classList.add('show');
+  if(focus){const c=legend.querySelector(`[data-n="${cur}"]`);c&&c.scrollIntoView({block:'nearest'})}
+  auto=false;
+}
+
+// กล้อง: หมุน (rot) เอียง (tilt) ซูม (zoom)
+let rot=-28,tilt=58,zoom=1,auto=true,moved=false;
+const fit=()=>Math.min(innerWidth/1250,innerHeight/760)*1.05;
+function render(){
+  scene.style.transform=`scale(${zoom*fit()}) rotateX(${tilt}deg) rotateZ(${rot}deg)`;
+  bills.forEach(bb=>bb.style.transform=`translateZ(${bb.dataset.z}px) rotateZ(${-rot}deg) rotateX(${-tilt}deg)`);
+}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+(function loop(){if(auto&&!reduce){rot+=.04;render()}requestAnimationFrame(loop)})();
+
+const view=document.getElementById('view'),pts=new Map();let last=null,pinch0=0,zoom0=1,downAt=null;
+view.addEventListener('pointerdown',e=>{pts.set(e.pointerId,{x:e.clientX,y:e.clientY});moved=false;downAt={x:e.clientX,y:e.clientY};
+  if(pts.size===2){const [a,b]=[...pts.values()];pinch0=Math.hypot(a.x-b.x,a.y-b.y);zoom0=zoom}last={x:e.clientX,y:e.clientY}});
+view.addEventListener('pointermove',e=>{if(!pts.has(e.pointerId))return;pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(downAt&&Math.hypot(e.clientX-downAt.x,e.clientY-downAt.y)>6){moved=true;auto=false}
+  if(pts.size===2){const [a,b]=[...pts.values()];zoom=Math.max(.6,Math.min(2.6,zoom0*Math.hypot(a.x-b.x,a.y-b.y)/pinch0));render();return}
+  if(!moved)return;
+  rot-= (e.clientX-last.x)*.3;tilt=Math.max(25,Math.min(75,tilt-(e.clientY-last.y)*.2));last={x:e.clientX,y:e.clientY};render()});
+const up=e=>{pts.delete(e.pointerId);if(pts.size===1){last=[...pts.values()][0]}setTimeout(()=>{if(!pts.size)moved=false},0)};
+view.addEventListener('pointerup',up);view.addEventListener('pointercancel',up);
+view.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.6,Math.min(2.6,zoom*(e.deltaY<0?1.1:.9)));render()},{passive:false});
+document.getElementById('zin').onclick=()=>{zoom=Math.min(2.6,zoom*1.2);render()};
+document.getElementById('zout').onclick=()=>{zoom=Math.max(.6,zoom/1.2);render()};
+document.getElementById('reset').onclick=()=>{rot=-28;tilt=58;zoom=1;auto=true;select(null);cur=null;render()};
+const setLegend=on=>{document.body.classList.toggle('has-legend',on)};
+document.getElementById('lclose').onclick=()=>setLegend(false);document.getElementById('lopen').onclick=()=>setLegend(true);
+setLegend(innerWidth>700);
+addEventListener('resize',render);render();
+</script>
+</body>
+</html>
