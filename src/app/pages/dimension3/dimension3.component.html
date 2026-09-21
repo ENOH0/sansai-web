@@ -105,13 +105,20 @@
       <app-award-slideshow [items]="d.leadership.awards" theme="pastel" [fillEmpty]="false"
         title="ผลงานเชิงประจักษ์จากภาวะผู้นำของผู้บริหาร" />
     </div>
+
+    <!-- วงล้อภาวะผู้นำ 5 ตัวชี้วัด · แก้ได้ที่ public/models/leadership-wheel-model.html
+         เพิ่มรูป: เปิด /models/leadership-wheel-model.html?edit แล้วกดบันทึก HTML พร้อมรูป -->
+    <div class="d3-learn-model d3-leader-model" appReveal style="margin-top:40px">
+      <iframe src="/models/leadership-wheel-model.html" title="ภาวะผู้นำของผู้บริหาร 5 ตัวชี้วัด"
+        loading="lazy" scrolling="no" [style.height.px]="leaderModelHeight()"></iframe>
+    </div>
   </div>
 </section>
 
 <!-- ═══════════ 3.2 การพัฒนาองค์กร ═══════════ -->
 <section class="section" *ngIf="open() === '3.2'">
   <div class="wrap">
-    <app-section-header [light]="true" num="3.2" title="การพัฒนาองค์กร" [lead]="d.organization.lead" />
+    <app-section-header class="d3-lead-indent" [light]="true" num="3.2" title="การพัฒนาองค์กร" [lead]="d.organization.lead" />
     <ng-container [ngTemplateOutlet]="d3Indicators"></ng-container>
 
     <div class="grid grid-2">
