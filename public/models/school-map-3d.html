@@ -76,6 +76,28 @@ body:not(.has-legend) .legend{display:none}
 .legend-close{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:2px 6px 6px;background:rgba(255,255,255,.95);font-weight:800;font-size:19px}
 .legend-close button{width:auto;min-height:40px;padding:0 12px;background:#eef3fb;font-size:16px;justify-content:center}
 @media (max-width:900px){body.has-legend #scene{left:50%}.legend{width:240px;max-height:40vh}.legend button{font-size:16px}.hint{display:none}}
+
+/* ===== ความมีชีวิตชีวา: เมฆ นก ธงปลิว คน/รถวิ่ง ต้นไม้ไหว ของประกอบฉาก ===== */
+.flagp::after{transform-origin:0 50%;animation:flag 1.6s ease-in-out infinite}
+@keyframes flag{0%,100%{transform:skewY(0) scaleX(1)}50%{transform:skewY(-6deg) scaleX(.9)}}
+.tree b{transform-origin:50% 100%;animation:sway 3.4s ease-in-out infinite}
+.tree.t2 b{background:radial-gradient(circle at 35% 30%,#a8e88a,#5bb04a)}.tree.t3 b{background:radial-gradient(circle at 35% 30%,#7fd18f,#2f8a52);border-radius:50% 50% 45% 45%/60% 60% 40% 40%}
+.tree.big{transform:scale(1.35);transform-origin:50% 100%}.tree.small{transform:scale(.75);transform-origin:50% 100%}
+@keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2.5deg)}}
+.bush{width:12px;height:8px;border-radius:50% 50% 40% 40%;background:radial-gradient(circle at 40% 35%,#9be38a,#4aa24f)}
+.hedge{background:repeating-linear-gradient(90deg,#4aa24f 0 6px,#5fb85c 6px 12px);border-radius:4px}
+.shadow{position:absolute;width:120px;height:60px;border-radius:50%;background:radial-gradient(ellipse,rgba(30,50,80,.18),transparent 70%);animation:drift 60s linear infinite}
+@keyframes drift{from{transform:translateX(-200px)}to{transform:translateX(1300px)}}
+.cloud{width:70px;height:26px;border-radius:20px;background:#fff;opacity:.9;box-shadow:18px -10px 0 4px #fff,-16px -4px 0 0 #fff}
+.bird{font-size:12px;color:#445;letter-spacing:6px;white-space:nowrap}.mover,.walker{white-space:nowrap}
+.mover{font-size:20px;line-height:1;filter:drop-shadow(0 2px 2px rgba(0,0,0,.3))}
+.mover.flip{transform:scaleX(-1)}
+.walker{font-size:13px;line-height:1}
+.goal{width:22px;height:10px;border:2px solid #fff;border-bottom:0}
+.bench{width:12px;height:5px;background:#8a5a36;border-radius:2px}
+.pond{overflow:hidden}.pond::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.55) 45%,transparent 60%);background-size:250% 100%;animation:shine 5s linear infinite}
+@keyframes shine{from{background-position:150% 0}to{background-position:-100% 0}}
+@media (prefers-reduced-motion:reduce){.flagp::after,.tree b,.shadow,.pond::after{animation:none}}
 </style>
 </head>
 <body>
@@ -183,8 +205,24 @@ const G={};B.forEach(b=>{const g=building(b);if(b.n)G[b.n]=g});
 // ป้ายหมุด ต้นไม้ และเสาธง (หันหน้าเข้าหากล้องเสมอ)
 const bills=[];
 function billboard(x,y,z,html,cls){const bb=el('bb',`left:${x*U}px;top:${y*U}px`);bb.dataset.z=z;bb.innerHTML=html;if(cls)bb.firstChild.className+=' '+cls;bills.push(bb);return bb}
-TREES.forEach(([x,y])=>billboard(x,y,0,'<div class="tree"><i></i><b></b></div>'));
+const TV=['','t2','t3'],TS=['','big','small'];
+TREES.push([470,60],[470,120],[470,200],[1320,140],[1320,220],[1600,250],[1600,300],[1760,20],[1880,110],[950,300],[1230,300],[560,240],[40,150],[40,220]);
+TREES.forEach(([x,y],i)=>billboard(x,y,0,`<div class="tree ${TV[i%3]} ${TS[(i*7)%3]}"><i></i><b style="animation-delay:${-(i%7)*.45}s"></b></div>`));
+// แนวรั้วต้นไม้รอบสนาม, พุ่มไม้ริมถนน, ประตูโกล, ม้านั่ง
+[['hedge',60,254,380,6],['hedge',60,40,380,5]].forEach(([c,x,y,w,d])=>el('flat '+c,`left:${x*U}px;top:${y*U}px;width:${w*U}px;height:${d*U}px`));
+for(let x=520;x<1300;x+=60)billboard(x,103,0,'<div class="bush"></div>');
+for(let x=1340;x<1580;x+=50)billboard(x,218,0,'<div class="bush"></div>');
+billboard(66,148,0,'<div class="goal"></div>');billboard(434,148,0,'<div class="goal"></div>');
+[[700,238],[760,110],[1010,240],[1260,110],[1400,258],[1500,258]].forEach(([x,y])=>billboard(x,y,0,'<div class="bench"></div>'));
+// เงาเมฆบนพื้น
+[0,-20,-40].forEach((d,i)=>el('shadow',`top:${[40,160,260][i]*U}px;animation-delay:${d}s`));
 billboard(985,165,9*U,'<div class="flagp"></div>');   // เสาธงกลางหน้าอาคาร 8 (บนแท่น)
+const MOV=[];
+const mover=(html,cls,x,y,z,vx,x0,x1)=>{const bb=billboard(x,y,z,`<div class="${cls}">${html}</div>`);MOV.push({bb,x,y,vx,x0,x1,z});return bb};
+mover('','cloud',200,30,190,.12,-100,2100);mover('','cloud',1200,200,210,.09,-100,2100);mover('','cloud',1700,90,200,.1,-100,2100);
+mover('︶ ︶ ︶','bird',300,120,150,.35,-100,2100);
+[[600,86,.12],[900,97,-.1],[1150,86,.09],[1400,97,-.13],[700,251,.1],[1000,257,-.08],[250,265,.11]].forEach(([x,y,v],i)=>mover(i%2?'🧍':'🚶','walker'+(v<0?' mover flip':''),x,y,0,v,440,1990));
+const stepMov=()=>MOV.forEach(m=>{m.x+=m.vx;if(m.x>m.x1)m.x=m.x0;if(m.x<m.x0)m.x=m.x1;m.bb.style.left=(m.x*U)+'px'});
 const pins={};
 // อาคารเลข 0 = ห้องน้ำ: ใส่สัญลักษณ์ห้องน้ำเล็ก ๆ
 B.filter(b=>!b.n&&!b.nowc).forEach(b=>billboard(b.x+b.w/2,b.y+b.d/2,b.h*U+14,'<div class="wc" title="ห้องน้ำ">🚻</div>'));
@@ -216,7 +254,7 @@ function render(){
   bills.forEach(bb=>bb.style.transform=`translateZ(${bb.dataset.z}px) rotateZ(${-rot}deg) rotateX(${-tilt}deg)`);
 }
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-(function loop(){if(auto&&!reduce){t0+=.004;rot=Math.sin(t0)*18;render()}requestAnimationFrame(loop)})();
+(function loop(){if(!reduce)stepMov();if(auto&&!reduce){t0+=.004;rot=Math.sin(t0)*18;render()}requestAnimationFrame(loop)})();
 
 const view=document.getElementById('view'),pts=new Map();let last=null,pinch0=0,zoom0=1,downAt=null;
 view.addEventListener('pointerdown',e=>{pts.set(e.pointerId,{x:e.clientX,y:e.clientY});moved=false;downAt={x:e.clientX,y:e.clientY};
