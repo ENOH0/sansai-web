@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <link rel="stylesheet" href="/fonts/th-sarabun.css">
+  <style>
+    html {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%
+    }
+  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDCA กระบวนการพัฒนาหลักสูตรที่มีความต่อเนื่องเชื่อมโยง</title>
+  <style>
+    :root {
+      --ink: #35445f;
+      --muted: #75849a;
+      --p: #ff9fc9;
+      --d: #a8a0f7;
+      --c: #78d5ef;
+      --a: #8edfb2;
+      --glass: rgba(255, 255, 255, .68);
+      --line: rgba(183, 197, 226, .48);
+      --shadow: 0 20px 55px rgba(78, 95, 135, .13);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      font-family: 'TH SarabunPSK', Tahoma, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 12%, rgba(255, 170, 208, .30), transparent 25%),
+        radial-gradient(circle at 88% 13%, rgba(134, 220, 250, .25), transparent 24%),
+        radial-gradient(circle at 85% 88%, rgba(145, 229, 180, .23), transparent 27%),
+        radial-gradient(circle at 14% 86%, rgba(171, 160, 247, .20), transparent 25%),
+        linear-gradient(135deg, #fff9fc 0%, #f7fbff 48%, #f9fff9 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(105, 123, 160, .08) 1px, transparent 1px);
+      background-size: 23px 23px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .72), transparent 90%);
+    }
+
+    .page {
+      width: min(1510px, 100%);
+      margin: auto;
+      padding: 25px 25px 24px;
+      position: relative;
+      z-index: 1
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 18px
+    }
+
+    .eyebrow {
+      font: 700 18px 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+      letter-spacing: 3px;
+      color: #9a87c8;
+      margin-bottom: 6px
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(28px, 3.1vw, 46px);
+      line-height: 1.3;
+      padding: 4px 0 8px;
+      overflow-wrap: break-word;
+      font-weight: 700;
+      background: linear-gradient(90deg, #ee72b1, #9b8df4, #4ebce6, #62cb91, #ee72b1);
+      background-size: 280% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: titleFlow 8s linear infinite;
+    }
+
+    @keyframes titleFlow {
+      to {
+        background-position: 280% center
+      }
+    }
+
+    .hero p {
+      margin: 9px auto 0;
+      max-width: 1050px;
+      font-size: 25px;
+      line-height: 1.18;
+      color: #6e7f96
+    }
+
+    .hero-line {
+      width: 260px;
+      height: 5px;
+      margin: 12px auto 0;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--p), var(--d), var(--c), var(--a));
+      box-shadow: 0 0 18px rgba(158, 158, 234, .35)
+    }
+
+    .layout {
+      display: block;
+      margin-top: 20px
+    }
+
+    .model-card {
+      width: min(980px, 100%);
+      min-height: 760px;
+      margin: 0 auto;
+      border-radius: 36px;
+      background: var(--glass);
+      border: 1px solid rgba(255, 255, 255, .92);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      padding: 26px 24px 23px;
+    }
+
+    .model-card::before {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      filter: blur(10px);
+      opacity: .18;
+      pointer-events: none;
+      left: -135px;
+      top: -130px;
+      background: radial-gradient(circle, var(--p), transparent 70%);
+    }
+
+    .model-title {
+      text-align: center;
+      font-size: 29px;
+      font-weight: 700;
+      color: #60728a;
+      position: relative;
+      z-index: 5
+    }
+
+    .model-title span {
+      font: 900 31px 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+      letter-spacing: 2px;
+      color: #917be2
+    }
+
+    .model-sub {
+      text-align: center;
+      font-size: 20px;
+      color: #93a0b2;
+      margin-top: 2px;
+      position: relative;
+      z-index: 5
+    }
+
+    .badge-auto {
+      position: absolute;
+      right: 22px;
+      top: 22px;
+      padding: 7px 14px;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, .78);
+      border: 1px solid rgba(190, 205, 230, .55);
+      box-shadow: 0 8px 22px rgba(86, 104, 143, .08);
+      font-size: 18px;
+      color: #8492a6;
+      z-index: 8
+    }
+
+    .badge-auto::before {
+      content: "↺";
+      font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+      font-weight: 700;
+      color: #947ee4;
+      margin-right: 6px
+    }
+
+    .orbit-stage {
+      position: relative;
+      width: min(610px, 95%);
+      aspect-ratio: 1;
+      margin: 14px auto 0;
+    }
+
+    .orbit {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none
+    }
+
+    .orbit.outer {
+      inset: 4%;
+      border: 2px solid rgba(166, 183, 219, .20);
+      box-shadow: inset 0 0 60px rgba(156, 165, 222, .05)
+    }
+
+    .orbit.mid {
+      inset: 13%;
+      border: 2px dashed rgba(166, 181, 220, .30);
+      animation: slowCCW 24s linear infinite
+    }
+
+    .orbit.inner {
+      inset: 25%;
+      border: 1px solid rgba(141, 207, 231, .24)
+    }
+
+    @keyframes slowCCW {
+      to {
+        transform: rotate(-360deg)
+      }
+    }
+
+    .direction-ring {
+      position: absolute;
+      inset: 8%;
+      border-radius: 50%;
+      pointer-events: none;
+      background: conic-gradient(from -12deg, transparent 0 18%, rgba(255, 159, 201, .12) 20%, transparent 24% 43%, rgba(168, 160, 247, .12) 45%, transparent 49% 68%, rgba(120, 213, 239, .12) 70%, transparent 74% 93%, rgba(142, 223, 178, .13) 95%, transparent 100%);
+      animation: directionGlow 5s ease-in-out infinite;
+    }
+
+    @keyframes directionGlow {
+      50% {
+        filter: brightness(1.12);
+        transform: scale(1.015)
+      }
+    }
+
+    .arrow-chip {
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(184, 197, 226, .58);
+      box-shadow: 0 6px 17px rgba(79, 99, 139, .10);
+      font: 700 23px 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+      color: #8f81cc;
+      z-index: 4;
+      pointer-events: none
+    }
+
+    .arrow-chip.t {
+      left: 25%;
+      top: 8%;
+      transform: rotate(-42deg)
+    }
+
+    .arrow-chip.l {
+      left: 7%;
+      bottom: 26%;
+      transform: rotate(-132deg)
+    }
+
+    .arrow-chip.b {
+      right: 25%;
+      bottom: 7%;
+      transform: rotate(-222deg)
+    }
+
+    .arrow-chip.r {
+      right: 7%;
+      top: 26%;
+      transform: rotate(-312deg)
+    }
+
+    .rotating-ring {
+      position: absolute;
+      inset: 0;
+      transition: transform 1.05s cubic-bezier(.22, .75, .2, 1)
+    }
+
+    .pdca-node {
+      --c: #aaa;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 132px;
+      height: 132px;
+      margin-left: -66px;
+      margin-top: -66px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 15;
+      transform: rotate(var(--angle)) translateY(-205px) rotate(calc(var(--angle) * -1));
+      transition: transform 1.05s cubic-bezier(.22, .75, .2, 1), filter .35s ease, opacity .35s ease;
+    }
+
+    .pdca-node::before {
+      content: "";
+      position: absolute;
+      inset: -13px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--c), transparent 68%);
+      opacity: .11;
+      filter: blur(12px);
+      transition: .35s
+    }
+
+    .pdca-node::after {
+      content: "";
+      position: absolute;
+      inset: -18px;
+      border-radius: 50%;
+      border: 3px solid var(--c);
+      opacity: 0;
+      pointer-events: none
+    }
+
+    .pdca-node:hover::before,
+    .pdca-node.active::before {
+      opacity: .48
+    }
+
+    .pdca-node.peak-glow::before {
+      animation: peakAura 3s ease-out
+    }
+
+    .pdca-node.peak-glow::after {
+      animation: peakRing 3s cubic-bezier(.16, .84, .32, 1)
+    }
+
+    .node-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, rgba(255, 255, 255, .98), rgba(255, 255, 255, .75));
+      border: 4px solid var(--c);
+      box-shadow: 0 12px 32px rgba(76, 95, 134, .14), inset 0 0 22px rgba(255, 255, 255, .95);
+      transition: .36s ease;
+    }
+
+    .node-letter {
+      font: 900 60px/.78 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+      color: var(--c);
+      text-shadow: 0 0 9px white, 0 0 18px color-mix(in srgb, var(--c) 40%, transparent)
+    }
+
+    .node-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: #566a81;
+      margin-top: 10px
+    }
+
+    .pdca-node.active {
+      filter: drop-shadow(0 0 20px color-mix(in srgb, var(--c) 60%, transparent));
+      z-index: 22
+    }
+
+    .pdca-node.active .node-inner {
+      transform: scale(1.18);
+      box-shadow: 0 18px 45px rgba(74, 92, 133, .16), 0 0 31px color-mix(in srgb, var(--c) 46%, transparent), inset 0 0 24px white;
+      animation: activePop 3s cubic-bezier(.16, .84, .32, 1)
+    }
+
+    @keyframes activePop {
+      0% {
+        transform: scale(1)
+      }
+
+      12% {
+        transform: scale(1.30)
+      }
+
+      28% {
+        transform: scale(1.20)
+      }
+
+      45% {
+        transform: scale(1.25)
+      }
+
+      68% {
+        transform: scale(1.19)
+      }
+
+      100% {
+        transform: scale(1.18)
+      }
+    }
+
+    @keyframes peakAura {
+      0% {
+        opacity: .12;
+        transform: scale(.88);
+        filter: blur(8px)
+      }
+
+      18% {
+        opacity: .82;
+        transform: scale(1.05);
+        filter: blur(14px)
+      }
+
+      55% {
+        opacity: .52;
+        transform: scale(1.38);
+        filter: blur(20px)
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1.85);
+        filter: blur(28px)
+      }
+    }
+
+    @keyframes peakRing {
+      0% {
+        opacity: .9;
+        transform: scale(.9);
+        box-shadow: 0 0 18px var(--c), 0 0 38px var(--c)
+      }
+
+      45% {
+        opacity: .45;
+        transform: scale(1.48);
+        box-shadow: 0 0 30px var(--c), 0 0 70px var(--c)
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(2.15);
+        box-shadow: 0 0 44px transparent, 0 0 95px transparent
+      }
+    }
+
+    .pdca-node:hover .node-inner {
+      transform: scale(1.08)
+    }
+
+    .pdca-node.active:hover .node-inner {
+      transform: scale(1.18)
+    }
+
+    .center-core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: radial-gradient(circle at 35% 25%, rgba(255, 255, 255, .99), rgba(248, 239, 255, .94) 39%, rgba(227, 247, 255, .89) 72%, rgba(255, 255, 255, .86));
+      border: 6px solid rgba(255, 255, 255, .94);
+      box-shadow: 0 0 0 9px rgba(183, 164, 239, .09), 0 0 0 18px rgba(123, 210, 238, .07), 0 18px 48px rgba(88, 107, 147, .16), 0 0 50px rgba(184, 160, 244, .22);
+    }
+
+    .center-core::before {
+      content: "";
+      position: absolute;
+      inset: -26px;
+      border-radius: 50%;
+      border: 1px solid rgba(172, 158, 225, .25);
+      animation: centerPulse 3s ease-in-out infinite
+    }
+
+    @keyframes centerPulse {
+      50% {
+        transform: scale(1.04);
+        opacity: .7
+      }
+    }
+
+    .center-code {
+      font: 900 38px/1 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+      color: #806cc0;
+      letter-spacing: 1px
+    }
+
+    .center-main {
+      font-size: 25px;
+      font-weight: 700;
+      color: #60758b;
+      margin-top: 5px
+    }
+
+    .center-sub {
+      font-size: 17px;
+      color: #91a0b2;
+      margin-top: 2px
+    }
+
+    .particle {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 9px currentColor, 0 0 22px currentColor;
+      opacity: .75;
+      animation: float 4.6s ease-in-out infinite;
+      pointer-events: none
+    }
+
+    .p1 {
+      color: var(--p);
+      left: 8%;
+      top: 18%
+    }
+
+    .p2 {
+      color: var(--c);
+      right: 9%;
+      top: 31%;
+      animation-delay: 1s
+    }
+
+    .p3 {
+      color: var(--a);
+      left: 15%;
+      bottom: 14%;
+      animation-delay: 2s
+    }
+
+    .p4 {
+      color: var(--d);
+      right: 17%;
+      bottom: 12%;
+      animation-delay: 3s
+    }
+
+    .p5 {
+      color: var(--d);
+      left: 47%;
+      top: 7%;
+      animation-delay: 1.5s
+    }
+
+    @keyframes float {
+      50% {
+        transform: translateY(-20px) scale(1.5);
+        opacity: 1
+      }
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: -2px;
+      position: relative;
+      z-index: 30
+    }
+
+    .controls button {
+      border: 0;
+      border-radius: 14px;
+      padding: 7px 18px;
+      font: 700 20px 'TH SarabunPSK', Tahoma, sans-serif;
+      cursor: pointer;
+      color: #64758d;
+      background: rgba(240, 244, 255, .88);
+      box-shadow: 0 7px 18px rgba(92, 111, 151, .09);
+      transition: .25s
+    }
+
+    .controls button:hover {
+      transform: translateY(-2px)
+    }
+
+    .controls button.active {
+      color: white;
+      background: linear-gradient(135deg, #a68ff0, #69cae8);
+      box-shadow: 0 8px 20px rgba(135, 154, 226, .24)
+    }
+
+    .status-line {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 18px;
+      color: #8794a7;
+      position: relative;
+      z-index: 10
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #7ed69e;
+      box-shadow: 0 0 10px #7ed69e;
+      margin-right: 6px;
+      animation: blink 1.6s infinite
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: .35
+      }
+    }
+
+
+    /* POPUP DETAIL */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 26px;
+      background: rgba(72, 82, 110, .22);
+      backdrop-filter: blur(7px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .28s ease, visibility .28s ease;
+    }
+
+    .popup-overlay.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto
+    }
+
+    .popup-card {
+      --popup-color: var(--p);
+      width: min(820px, 96vw);
+      max-height: min(86vh, 850px);
+      overflow: auto;
+      position: relative;
+      border-radius: 34px;
+      padding: 30px 32px 28px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, .97), rgba(250, 252, 255, .93));
+      border: 1px solid rgba(255, 255, 255, .96);
+      box-shadow: 0 28px 80px rgba(63, 75, 110, .28), 0 0 55px color-mix(in srgb, var(--popup-color) 25%, transparent);
+      transform: translateY(70px) scale(.86);
+      opacity: 0;
+      transition: transform .48s cubic-bezier(.18, .89, .32, 1.22), opacity .28s ease;
+    }
+
+    .popup-overlay.show .popup-card {
+      transform: translateY(0) scale(1);
+      opacity: 1
+    }
+
+    .popup-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 7px;
+      border-radius: 34px 34px 0 0;
+      background: linear-gradient(90deg, var(--popup-color), rgba(255, 255, 255, .65), var(--popup-color));
+    }
+
+    .popup-card::after {
+      content: "";
+      position: absolute;
+      inset: -22px;
+      border-radius: 44px;
+      pointer-events: none;
+      opacity: 0;
+      border: 2px solid var(--popup-color);
+      filter: blur(.2px)
+    }
+
+    .popup-card.glow-burst {
+      animation: popupHoldGlow 3s ease-in-out
+    }
+
+    .popup-card.glow-burst::after {
+      animation: popupGlowSpread 3s ease-out
+    }
+
+    @keyframes popupHoldGlow {
+      0% {
+        box-shadow: 0 28px 80px rgba(63, 75, 110, .28), 0 0 25px color-mix(in srgb, var(--popup-color) 30%, transparent)
+      }
+
+      18% {
+        box-shadow: 0 30px 90px rgba(63, 75, 110, .30), 0 0 60px color-mix(in srgb, var(--popup-color) 65%, transparent), 0 0 105px color-mix(in srgb, var(--popup-color) 30%, transparent)
+      }
+
+      70% {
+        box-shadow: 0 28px 82px rgba(63, 75, 110, .28), 0 0 48px color-mix(in srgb, var(--popup-color) 50%, transparent), 0 0 92px color-mix(in srgb, var(--popup-color) 22%, transparent)
+      }
+
+      100% {
+        box-shadow: 0 28px 80px rgba(63, 75, 110, .28), 0 0 55px color-mix(in srgb, var(--popup-color) 25%, transparent)
+      }
+    }
+
+    @keyframes popupGlowSpread {
+      0% {
+        opacity: .85;
+        transform: scale(.96);
+        box-shadow: 0 0 24px var(--popup-color), 0 0 48px var(--popup-color)
+      }
+
+      45% {
+        opacity: .38;
+        transform: scale(1.07);
+        box-shadow: 0 0 42px var(--popup-color), 0 0 90px var(--popup-color)
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1.18);
+        box-shadow: 0 0 70px transparent, 0 0 130px transparent
+      }
+    }
+
+    .popup-close {
+      position: absolute;
+      right: 18px;
+      top: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(238, 241, 249, .92);
+      color: #75839a;
+      font: 400 29px/1 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(75, 91, 129, .10);
+      transition: .25s;
+      z-index: 4;
+    }
+
+    .popup-close:hover {
+      transform: rotate(90deg) scale(1.06);
+      background: #fff
+    }
+
+    .popup-top {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding-right: 52px
+    }
+
+    .popup-badge {
+      width: 86px;
+      height: 86px;
+      border-radius: 27px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font: 900 52px 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+      background: var(--p);
+      box-shadow: 0 12px 30px rgba(160, 150, 220, .22);
+      transition: .35s;
+      flex: none
+    }
+
+    .popup-head h2 {
+      margin: 0;
+      font-size: 40px;
+      line-height: 1;
+      color: #50647b
+    }
+
+    .popup-head p {
+      margin: 6px 0 0;
+      font-size: 24px;
+      color: #8c7cb6;
+      line-height: 1.05
+    }
+
+    .description {
+      margin: 24px 0 18px;
+      padding: 18px 21px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, .75);
+      border: 1px solid rgba(195, 211, 235, .58);
+      font-size: 24px;
+      line-height: 1.32;
+      color: #5c7086;
+      box-shadow: 0 8px 25px rgba(91, 108, 148, .06)
+    }
+
+    .section-label {
+      font-size: 24px;
+      font-weight: 700;
+      color: #687b91;
+      margin: 11px 0 10px
+    }
+
+    .details {
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .detail {
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .72);
+      border: 1px solid rgba(191, 207, 232, .58);
+      overflow: hidden;
+      transition: .28s
+    }
+
+    .detail:hover {
+      transform: translateY(-2px);
+      background: #fff;
+      box-shadow: 0 9px 25px rgba(91, 108, 148, .09)
+    }
+
+    .detail-head {
+      min-height: 57px;
+      padding: 9px 15px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer
+    }
+
+    .num {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 700 17px 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+      flex: none
+    }
+
+    .detail-title {
+      font-size: 23px;
+      font-weight: 700;
+      color: #53697f;
+      flex: 1;
+      line-height: 1.05
+    }
+
+    .plus {
+      width: 31px;
+      height: 31px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(171, 154, 231, .14);
+      color: #9b83d5;
+      font: 400 23px 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+      transition: .3s
+    }
+
+    .detail-content {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 17px 0 64px;
+      color: #718196;
+      font-size: 21px;
+      line-height: 1.28;
+      transition: max-height .42s ease, padding .42s ease
+    }
+
+    .detail.open .detail-content {
+      max-height: 260px;
+      padding-bottom: 16px
+    }
+
+    .detail.open .plus {
+      transform: rotate(45deg)
+    }
+
+    .flow-note {
+      margin-top: 17px;
+      padding: 13px 17px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255, 231, 244, .72), rgba(229, 247, 255, .74), rgba(232, 252, 239, .74));
+      border: 1px dashed rgba(151, 169, 220, .60);
+      font-size: 21px;
+      line-height: 1.2;
+      color: #748397;
+      text-align: center
+    }
+
+    .flow-note strong {
+      font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+      color: #7765b8;
+      letter-spacing: 1px
+    }
+
+    body.popup-open {
+      overflow: hidden
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 19px;
+      color: #8795a7
+    }
+
+    @media(max-width:1100px) {
+      .model-card {
+        min-height: auto
+      }
+
+      .orbit-stage {
+        width: min(610px, 92%)
+      }
+    }
+
+    @media(max-width:680px) {
+      .page {
+        padding: 14px 9px
+      }
+
+      .hero p {
+        font-size: 21px
+      }
+
+      .eyebrow {
+        font-size: 14px;
+        letter-spacing: 2px
+      }
+
+      .model-card {
+        border-radius: 24px;
+        padding: 20px 8px
+      }
+
+      .badge-auto {
+        position: relative;
+        right: auto;
+        top: auto;
+        width: max-content;
+        margin: 10px auto 0;
+        font-size: 16px
+      }
+
+      .orbit-stage {
+        width: 455px;
+        max-width: 100%;
+        margin-top: 2px
+      }
+
+      .pdca-node {
+        width: 94px;
+        height: 94px;
+        margin-left: -47px;
+        margin-top: -47px;
+        transform: rotate(var(--angle)) translateY(-148px) rotate(calc(var(--angle) * -1))
+      }
+
+      .node-letter {
+        font-size: 43px
+      }
+
+      .node-name {
+        font-size: 17px;
+        margin-top: 6px
+      }
+
+      .center-core {
+        width: 150px;
+        height: 150px
+      }
+
+      .center-code {
+        font-size: 29px
+      }
+
+      .center-main {
+        font-size: 20px
+      }
+
+      .center-sub {
+        font-size: 14px
+      }
+
+      .arrow-chip {
+        width: 27px;
+        height: 27px;
+        font-size: 18px
+      }
+
+      .popup-overlay {
+        padding: 12px
+      }
+
+      .popup-card {
+        border-radius: 24px;
+        padding: 24px 16px 20px
+      }
+
+      .popup-badge {
+        width: 66px;
+        height: 66px;
+        border-radius: 21px;
+        font-size: 40px
+      }
+
+      .popup-head h2 {
+        font-size: 30px
+      }
+
+      .popup-head p {
+        font-size: 20px
+      }
+
+      .popup-close {
+        right: 12px;
+        top: 12px;
+        width: 38px;
+        height: 38px
+      }
+
+      .description {
+        font-size: 21px
+      }
+
+      .detail-title {
+        font-size: 21px
+      }
+
+      .detail-content {
+        font-size: 19px;
+        padding-left: 58px
+      }
+
+      .flow-note {
+        font-size: 19px
+      }
+    }
+
+    /* =========================================================
+   EMBED + ON DARK BACKGROUND
+   ฝังในหน้าด้านที่ 2 ซึ่งมีวิดีโอพื้นหลังสีเข้ม
+   ถอดพื้นหลังของโมเดลออก และเปลี่ยนตัวอักษรที่ไม่มีพื้นของตัวเองให้สว่าง
+   วงกลม P D C A วงกลมกลาง และกล่อง popup มีพื้นสว่างอยู่แล้ว คงสีเดิม
+========================================================= */
+
+    html,
+    body {
+      min-height: auto;
+    }
+
+    body {
+      background: transparent;
+      color: #e8f0ff;
+      font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+    }
+
+    /* ปิดลายจุดพื้นหลัง */
+    body::before {
+      display: none;
+    }
+
+    .page {
+      padding: 12px 16px 16px;
+    }
+
+    .eyebrow {
+      color: #e2d4ff;
+    }
+
+    .hero p {
+      color: #dbe6f7;
+      text-shadow: 0 1px 10px rgba(8, 21, 47, .6);
+    }
+
+    /* การ์ดโมเดล เปลี่ยนจากกระจกขาวเป็นกระจกน้ำเงินเข้ม */
+    .model-card {
+      min-height: auto;
+      background: rgba(10, 24, 52, .44);
+      border-color: rgba(255, 255, 255, .22);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, .22);
+    }
+
+    .model-title {
+      color: #ffffff;
+    }
+
+    .model-title span {
+      color: #d6c4ff;
+    }
+
+    .model-sub {
+      color: #dbe6f7;
+    }
+
+    .badge-auto {
+      color: #eaf2ff;
+      background: rgba(10, 24, 52, .52);
+      border-color: rgba(255, 255, 255, .22);
+      box-shadow: none;
+    }
+
+    .badge-auto::before {
+      color: #d6c4ff;
+    }
+
+    .status-line {
+      color: #dbe6f7;
+    }
+
+    .footer {
+      color: #dbe6f7;
+      text-shadow: 0 1px 10px rgba(8, 21, 47, .6);
+    }
+
+    /* ปุ่มอย่างน้อย 44px ตามเกณฑ์นิ้วสัมผัสบน iPad */
+    .controls button {
+      min-height: 44px;
+    }
+
+    /* popup เด้งในกรอบโมเดล ไม่ใช่เต็มจอ เพราะโมเดลอยู่ใน iframe */
+    .popup-overlay {
+      position: absolute;
+    }
+
+    body.popup-open {
+      overflow: visible;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="eyebrow">CURRICULUM DEVELOPMENT </div>
+      <h1>กระบวนการพัฒนาหลักสูตรที่มีความต่อเนื่องเชื่อมโยง</h1>
+      <p>ขับเคลื่อนการพัฒนาหลักสูตรอย่างเป็นระบบ ตั้งแต่การวางแผน การปฏิบัติ การตรวจสอบ
+        ไปจนถึงการปรับปรุงและพัฒนาอย่างต่อเนื่อง</p>
+      <div class="hero-line"></div>
+    </header>
+
+    <main class="layout">
+      <section class="model-card">
+        <div class="particle p1"></div>
+        <div class="particle p2"></div>
+        <div class="particle p3"></div>
+        <div class="particle p4"></div>
+        <div class="particle p5"></div>
+        <div class="badge-auto">หมุนอัตโนมัติทวนเข็มนาฬิกา</div>
+        <div class="model-title">วงจร <span>PDCA</span> พัฒนาหลักสูตร</div>
+        <div class="model-sub">คลิก P / D / C / A แล้วรายละเอียดจะเด้งขึ้นมากลางหน้าจอ</div>
+
+        <div class="orbit-stage">
+          <div class="orbit outer"></div>
+          <div class="orbit mid"></div>
+          <div class="orbit inner"></div>
+          <div class="direction-ring"></div>
+          <div class="arrow-chip t">↺</div>
+          <div class="arrow-chip l">↺</div>
+          <div class="arrow-chip b">↺</div>
+          <div class="arrow-chip r">↺</div>
+
+          <div class="rotating-ring" id="rotatingRing"></div>
+
+          <div class="pdca-node active" data-key="P" style="--c:var(--p);--angle:0deg" onclick="selectStep('P')">
+            <div class="node-inner">
+              <div class="node-letter">P</div>
+              <div class="node-name">Plan</div>
+            </div>
+          </div>
+          <div class="pdca-node" data-key="D" style="--c:var(--d);--angle:90deg" onclick="selectStep('D')">
+            <div class="node-inner">
+              <div class="node-letter">D</div>
+              <div class="node-name">Do</div>
+            </div>
+          </div>
+          <div class="pdca-node" data-key="C" style="--c:var(--c);--angle:180deg" onclick="selectStep('C')">
+            <div class="node-inner">
+              <div class="node-letter">C</div>
+              <div class="node-name">Check</div>
+            </div>
+          </div>
+          <div class="pdca-node" data-key="A" style="--c:var(--a);--angle:270deg" onclick="selectStep('A')">
+            <div class="node-inner">
+              <div class="node-letter">A</div>
+              <div class="node-name">Act</div>
+            </div>
+          </div>
+
+          <div class="center-core">
+            <div class="center-code">PDCA</div>
+            <div class="center-main">พัฒนาหลักสูตร</div>
+            <div class="center-sub">ต่อเนื่อง • เชื่อมโยง • ยั่งยืน</div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button id="playBtn" class="active" onclick="playAuto()">▶ เล่นวงจร</button>
+          <button id="pauseBtn" onclick="pauseAuto()">⏸ หยุดอ่าน</button>
+        </div>
+        <div class="status-line"><span class="status-dot"></span><span id="statusText">กำลังเล่น : PLAN</span></div>
+
+        <div class="popup-overlay" id="detailPopup" aria-hidden="true">
+          <div class="popup-card" id="popupCard" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
+            <button class="popup-close" id="popupClose" aria-label="ปิด">×</button>
+            <div class="popup-top">
+              <div class="popup-badge" id="infoBadge">P</div>
+              <div class="popup-head">
+                <h2 id="infoTitle"></h2>
+                <p id="infoSubtitle"></p>
+              </div>
+            </div>
+            <div class="description" id="infoDescription"></div>
+            <div class="section-label">องค์ประกอบและรายละเอียดสำคัญ</div>
+            <div class="details" id="details"></div>
+            <div class="flow-note"><strong>PDCA</strong> เชื่อมโยงเป็นวงจรต่อเนื่อง
+              โดยผลจากการประเมินและการปรับปรุงในแต่ละรอบจะย้อนกลับไปเป็นข้อมูลสำหรับการวางแผนและพัฒนาหลักสูตรในรอบถัดไป
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <div class="footer">P : Plan → D : Do → C : Check → A : Act | กระบวนการพัฒนาหลักสูตรอย่างเป็นระบบ ต่อเนื่อง
+      และเชื่อมโยงทุกระดับการศึกษา</div>
+  </div>
+
+  <script>
+    const data = {
+      P: {
+        title: "Plan : การวางแผนและออกแบบหลักสูตร",
+        subtitle: "วิเคราะห์ข้อมูล กำหนดเป้าหมาย และออกแบบทิศทางหลักสูตร",
+        color: "#ff9fc9",
+        description: "วางรากฐานการพัฒนาหลักสูตรจากข้อมูลจริง โดยสำรวจบริบท ความต้องการ และศักยภาพของสถานศึกษา ก่อนกำหนดเป้าหมายและสร้างความร่วมมือ เพื่อให้หลักสูตรมีความหลากหลายและเชื่อมโยงทุกระดับการศึกษาอย่างเป็นระบบ",
+        items: [
+          { title: "วิเคราะห์ข้อมูลพื้นฐาน", text: "สำรวจความต้องการและข้อมูลพื้นฐานที่เกี่ยวข้อง พร้อมวิเคราะห์ SWOT เพื่อค้นหาจุดแข็ง จุดอ่อน โอกาส และอุปสรรค ใช้เป็นฐานข้อมูลสำคัญสำหรับการพัฒนาหลักสูตร" },
+          { title: "แต่งตั้งและกำหนดเป้าหมาย", text: "แต่งตั้งคณะกรรมการพัฒนาหลักสูตร กำหนดบทบาท หน้าที่ และเป้าหมายการดำเนินงานร่วมกันอย่างชัดเจน" },
+          { title: "สร้างความร่วมมือกับคู่พัฒนาและเครือข่าย", text: "ร่วมมือกับสถาบันคู่พัฒนาและภาคีเครือข่ายกว่า 10 แห่ง เพื่อสนับสนุนองค์ความรู้ ทรัพยากร ประสบการณ์ และโอกาสทางการเรียนรู้" },
+          { title: "กำหนดเป้าหมายหลักสูตร", text: "กำหนดหลักสูตรให้มีความหลากหลาย ยืดหยุ่น และเชื่อมโยงทุกระดับการศึกษา เพื่อรองรับเส้นทางการเรียนรู้ที่แตกต่างกันของผู้เรียน" }
+        ]
+      },
+      D: {
+        title: "Do : การปฏิบัติและพัฒนาหลักสูตร",
+        subtitle: "นำแผนสู่การพัฒนาหลักสูตรและการจัดการเรียนรู้จริง",
+        color: "#a8a0f7",
+        description: "ขับเคลื่อนแผนพัฒนาหลักสูตรสู่การปฏิบัติ ผ่านความร่วมมือกับภาคีเครือข่าย การออกแบบรายวิชาที่ตอบโจทย์สมรรถนะ และการจัดการเรียนรู้ที่ทันสมัย ยืดหยุ่น และหลากหลาย",
+        items: [
+          { title: "พัฒนาหลักสูตรและลงนามความร่วมมือ", text: "พัฒนาหลักสูตรร่วมกับภาคีเครือข่าย พร้อมลงนามบันทึกความร่วมมือ เพื่อสนับสนุนการดำเนินงานให้เกิดผลอย่างเป็นรูปธรรม" },
+          { title: "ออกแบบรายวิชาเพิ่มเติมที่เน้นสมรรถนะ", text: "พัฒนารายวิชาเพิ่มเติมที่มุ่งเน้นสมรรถนะของผู้เรียน รองรับระบบสะสมหน่วยกิต (Credit Bank) และแนวทางทวิศึกษา" },
+          { title: "จัดการเรียนรู้แบบ Active Learning", text: "จัดการเรียนรู้ที่เปิดโอกาสให้ผู้เรียนคิด ลงมือปฏิบัติ แลกเปลี่ยนเรียนรู้ และสร้างองค์ความรู้ด้วยตนเอง โดยใช้เทคโนโลยีที่ทันสมัยสนับสนุนการเรียนรู้" },
+          { title: "จัดหลักสูตรระยะสั้นตามความสนใจ", text: "เปิดโอกาสให้ผู้เรียนเลือกเรียนหลักสูตรระยะสั้นตามความสนใจ ความถนัด และเป้าหมายในอนาคต เพื่อเพิ่มทางเลือกและประสบการณ์การเรียนรู้" }
+        ]
+      },
+      C: {
+        title: "Check : การตรวจสอบและประเมินผล",
+        subtitle: "นิเทศ ติดตาม และประเมินคุณภาพก่อนและระหว่างการใช้หลักสูตร",
+        color: "#78d5ef",
+        description: "ตรวจสอบคุณภาพหลักสูตรและกระบวนการจัดการเรียนรู้อย่างเป็นระบบ ทั้งก่อนใช้จริงและระหว่างดำเนินการ เพื่อให้การจัดการเรียนรู้ การวัดผล และการบริหารหลักสูตรมีประสิทธิภาพ",
+        items: [
+          { title: "วิพากษ์หลักสูตรโดยผู้ทรงคุณวุฒิ", text: "นำหลักสูตรผ่านการพิจารณาและวิพากษ์โดยผู้ทรงคุณวุฒิก่อนนำไปใช้จริง เพื่อรับข้อเสนอแนะด้านโครงสร้าง เนื้อหา สมรรถนะ และความเหมาะสมกับบริบท" },
+          { title: "นิเทศ ติดตาม และกำกับดูแล", text: "นิเทศ ติดตาม และกำกับดูแลการนำหลักสูตรไปใช้ เพื่อให้การจัดการเรียนรู้ดำเนินไปตามเป้าหมายและมาตรฐานที่กำหนด" },
+          { title: "ประเมินกระบวนการเรียนรู้", text: "ตรวจสอบประสิทธิภาพของการจัดกิจกรรมการเรียนรู้ การใช้สื่อและเทคโนโลยี รวมถึงความเหมาะสมกับผู้เรียน" },
+          { title: "ตรวจสอบการวัดและประเมินผล", text: "กำกับการวัดและประเมินผลให้สอดคล้องกับผลลัพธ์การเรียนรู้ สมรรถนะ และเป้าหมายของหลักสูตรอย่างมีประสิทธิภาพ" }
+        ]
+      },
+      A: {
+        title: "Act : การปรับปรุงและพัฒนาต่อเนื่อง",
+        subtitle: "ใช้ผลประเมินและเสียงสะท้อนเพื่อยกระดับหลักสูตร",
+        color: "#8edfb2",
+        description: "นำผลการประเมินรอบ 1 ปีและเสียงสะท้อนจากช่องทางออนไลน์มาวิเคราะห์และปรับปรุงหลักสูตรอย่างต่อเนื่อง เพื่อให้หลักสูตรทันต่อการเปลี่ยนแปลง และนำไปสู่การพัฒนาและสร้างนวัตกรรมต่อไป",
+        items: [
+          { title: "ทบทวนผลการดำเนินงานรอบ 1 ปี", text: "รวบรวมและวิเคราะห์ผลการใช้หลักสูตรในรอบ 1 ปี เพื่อพิจารณาความสำเร็จ ปัญหา อุปสรรค และประเด็นที่ควรพัฒนา" },
+          { title: "รับฟังเสียงสะท้อนจากช่องทางออนไลน์", text: "นำข้อเสนอแนะและความคิดเห็นจากผู้เรียน ผู้ปกครอง ครู และผู้มีส่วนเกี่ยวข้องผ่านช่องทางออนไลน์ มาใช้เป็นข้อมูลประกอบการปรับปรุง" },
+          { title: "ปรับปรุงหลักสูตรอย่างต่อเนื่อง", text: "นำผลการประเมินและเสียงสะท้อนมาปรับเนื้อหา รายวิชา กิจกรรม และกระบวนการบริหารหลักสูตรให้เหมาะสมยิ่งขึ้น" },
+          { title: "ต่อยอดสู่การพัฒนาและนวัตกรรม", text: "ใช้ข้อค้นพบจากการปรับปรุงเป็นฐานสำหรับการพัฒนาหลักสูตรรูปแบบใหม่ การสร้างนวัตกรรม และการวางแผนวงจรพัฒนาหลักสูตรในรอบถัดไป" }
+        ]
+      }
+    };
+
+    const order = ["P", "D", "C", "A"];
+    const baseAngles = { P: 0, D: 90, C: 180, A: 270 };
+    let currentIndex = 0;
+    let playing = true;
+    let animating = false;
+    let ringRotation = 0;
+    let autoPopupCloseTimer = null;
+    let autoPopupOpenTimer = null;
+    let peakGlowTimer = null;
+    const nodes = [...document.querySelectorAll('.pdca-node')];
+
+    function updateNodes() {
+      nodes.forEach(node => {
+        const key = node.dataset.key;
+        const angle = baseAngles[key] - (currentIndex * 90);
+        node.style.setProperty('--angle', `${angle}deg`);
+        node.classList.toggle('active', key === order[currentIndex]);
+      });
+    }
+
+    function updateStatus(key) {
+      const d = data[key];
+      document.getElementById('statusText').textContent = (playing ? 'กำลังเล่น : ' : 'หยุดอ่าน : ') + d.title.split(' : ')[0].toUpperCase();
+    }
+
+    function fillPopup(key) {
+      const d = data[key];
+      const badge = document.getElementById('infoBadge');
+      const card = document.getElementById('popupCard');
+      card.style.setProperty('--popup-color', d.color);
+      badge.textContent = key;
+      badge.style.background = d.color;
+      badge.style.boxShadow = `0 12px 30px ${d.color}66,0 0 28px ${d.color}55`;
+      document.getElementById('infoTitle').textContent = d.title;
+      document.getElementById('infoSubtitle').textContent = d.subtitle;
+      document.getElementById('infoDescription').textContent = d.description;
+
+      const root = document.getElementById('details');
+      root.innerHTML = '';
+      d.items.forEach((item, i) => {
+        const box = document.createElement('div');
+        box.className = 'detail';
+        box.innerHTML = `
+      <div class="detail-head">
+        <div class="num" style="background:${d.color}">${i + 1}</div>
+        <div class="detail-title">${item.title}</div>
+        <div class="plus">+</div>
+      </div>
+      <div class="detail-content">${item.text}</div>`;
+        box.querySelector('.detail-head').addEventListener('click', () => box.classList.toggle('open'));
+        root.appendChild(box);
+      });
+    }
+
+    function openPopup(key, glow = false) {
+      fillPopup(key);
+      const popup = document.getElementById('detailPopup');
+      const card = document.getElementById('popupCard');
+      card.classList.remove('glow-burst');
+      void card.offsetWidth;
+      if (glow) card.classList.add('glow-burst');
+      popup.classList.add('show');
+      popup.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('popup-open');
+    }
+
+    function closePopup() {
+      const popup = document.getElementById('detailPopup');
+      popup.classList.remove('show');
+      popup.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('popup-open');
+    }
+
+    function triggerPeakGlow(key) {
+      const node = nodes.find(n => n.dataset.key === key);
+      if (!node) return;
+      nodes.forEach(n => n.classList.remove('peak-glow'));
+      void node.offsetWidth;
+      node.classList.add('peak-glow');
+      clearTimeout(peakGlowTimer);
+      peakGlowTimer = setTimeout(() => node.classList.remove('peak-glow'), 3000);
+    }
+
+    function showAutoPeak(key) {
+      triggerPeakGlow(key);
+      openPopup(key, true);
+      clearTimeout(autoPopupCloseTimer);
+      autoPopupCloseTimer = setTimeout(() => {
+        if (playing) closePopup();
+      }, 3000);
+    }
+
+    function rotateCounterClockwise(steps = 1) {
+      ringRotation -= 90 * steps;
+      const ring = document.getElementById('rotatingRing');
+      ring.style.transform = `rotate(${ringRotation}deg)`;
+    }
+
+    function selectStep(key) {
+      const target = order.indexOf(key);
+      if (target < 0) return;
+      pauseAuto(false);
+
+      let diff = target - currentIndex;
+      if (diff < 0) diff += order.length;
+      if (diff === 0) { updateStatus(key); triggerPeakGlow(key); openPopup(key, true); return; }
+
+      animating = true;
+      rotateCounterClockwise(diff);
+      currentIndex = target;
+      updateNodes();
+      updateStatus(key);
+      setTimeout(() => { animating = false; triggerPeakGlow(key); openPopup(key, true); }, 1050);
+    }
+
+    function nextStep() {
+      if (!playing || animating) return;
+      closePopup();
+      clearTimeout(autoPopupOpenTimer);
+      clearTimeout(autoPopupCloseTimer);
+      animating = true;
+      currentIndex = (currentIndex + 1) % order.length;
+      rotateCounterClockwise(1);
+      updateNodes();
+      const key = order[currentIndex];
+      updateStatus(key);
+      autoPopupOpenTimer = setTimeout(() => {
+        animating = false;
+        if (playing) showAutoPeak(key);
+      }, 1050);
+    }
+
+    function syncButtons() {
+      document.getElementById('playBtn').classList.toggle('active', playing);
+      document.getElementById('pauseBtn').classList.toggle('active', !playing);
+    }
+
+    function playAuto() {
+      playing = true;
+      closePopup();
+      clearTimeout(autoPopupCloseTimer);
+      syncButtons();
+      updateStatus(order[currentIndex]);
+    }
+    function pauseAuto(update = true) {
+      playing = false;
+      clearTimeout(autoPopupOpenTimer);
+      clearTimeout(autoPopupCloseTimer);
+      syncButtons();
+      if (update) updateStatus(order[currentIndex]);
+    }
+
+    /* แจ้งความสูงจริงให้หน้าแม่ปรับ iframe ตามเนื้อหา */
+    function reportHeight() {
+      requestAnimationFrame(() => {
+        const el = document.querySelector('.page');
+        const height = Math.ceil(el ? el.getBoundingClientRect().height + 8 : document.body.scrollHeight);
+        window.parent.postMessage({ type: 'd2-continuity-model-height', height }, window.location.origin);
+      });
+    }
+    new ResizeObserver(reportHeight).observe(document.body);
+    window.addEventListener('load', reportHeight);
+
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // 1.05 วินาทีสำหรับการหมุนขึ้นสู่จุดบนสุด + 3 วินาทีสำหรับช่วงเรืองแสง
+    if (reduceMotion) { pauseAuto(); } else { setInterval(nextStep, 5200); }
+    updateNodes();
+    updateStatus('P');
+    syncButtons();
+
+    document.getElementById('popupClose').addEventListener('click', closePopup);
+    document.getElementById('detailPopup').addEventListener('click', e => {
+      if (e.target.id === 'detailPopup') closePopup();
+    });
+
+    // คีย์ลัด P D C A และ Spacebar สำหรับเล่น/หยุด
+    window.addEventListener('keydown', e => {
+      /* ทำงานเฉพาะตอนโฟกัสอยู่ในโมเดล ไม่ไปแย่งการเลื่อนของหน้าแม่ */
+      if (!document.hasFocus()) return;
+      const k = e.key.toUpperCase();
+      if (order.includes(k)) selectStep(k);
+      if (e.key === 'Escape') { closePopup(); }
+      if (e.code === 'Space') {
+        e.preventDefault();
+        playing ? pauseAuto() : playAuto();
+      }
+    });
+  </script>
+</body>
+
+</html>

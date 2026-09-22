@@ -100,17 +100,17 @@
     <app-section-header class="d3-lead-indent" [light]="true" num="3.1" title="ภาวะผู้นำของผู้บริหาร" [lead]="d.leadership.lead" />
     <!-- แนวปฏิบัติ 5 ข้อ และ 4 กลุ่มบริหาร ถูกนำออกตามที่สั่ง (ข้อมูลยังอยู่ใน d.leadership ใน dimension3.data.ts) -->
 
-    <!-- ผลงานเชิงประจักษ์ · แก้ข้อมูลได้ที่ leadership.awards ใน src/app/data/dimension3.data.ts -->
-    <div appReveal style="margin-top:34px">
-      <app-award-slideshow [items]="d.leadership.awards" theme="pastel" [fillEmpty]="false"
-        title="ผลงานเชิงประจักษ์จากภาวะผู้นำของผู้บริหาร" />
-    </div>
-
     <!-- วงล้อภาวะผู้นำ 5 ตัวชี้วัด · แก้ได้ที่ public/models/leadership-wheel-model.html
          เพิ่มรูป: เปิด /models/leadership-wheel-model.html?edit แล้วกดบันทึก HTML พร้อมรูป -->
     <div class="d3-learn-model d3-leader-model" appReveal style="margin-top:40px">
       <iframe src="/models/leadership-wheel-model.html" title="ภาวะผู้นำของผู้บริหาร 5 ตัวชี้วัด"
         loading="lazy" scrolling="no" [style.height.px]="leaderModelHeight()"></iframe>
+    </div>
+
+    <!-- ผลงานเชิงประจักษ์ · แก้ข้อมูลได้ที่ leadership.awards ใน src/app/data/dimension3.data.ts -->
+    <div appReveal style="margin-top:40px">
+      <app-award-slideshow [items]="d.leadership.awards" theme="pastel" [fillEmpty]="false"
+        title="ผลงานเชิงประจักษ์จากภาวะผู้นำของผู้บริหาร" />
     </div>
   </div>
 </section>
@@ -125,6 +125,12 @@
     <div class="d3-learn-model d3-org-model" appReveal style="margin-top:28px">
       <iframe src="/models/organization-development-model.html" title="การพัฒนาองค์กร 6 ตัวชี้วัด"
         loading="lazy" scrolling="no" [style.height.px]="orgModelHeight()"></iframe>
+    </div>
+
+    <!-- ผลงานเชิงประจักษ์ · แก้ข้อมูลได้ที่ organization.awards ใน src/app/data/dimension3.data.ts -->
+    <div appReveal style="margin-top:40px">
+      <app-award-slideshow [items]="d.organization.awards" theme="pastel" [fillEmpty]="false"
+        title="ผลงานเชิงประจักษ์จากภาวะผู้นำของผู้บริหาร" />
     </div>
   </div>
 </section>

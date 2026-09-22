@@ -432,3 +432,10 @@
 .sw-dots { display: flex; justify-content: center; gap: 8px; margin-top: 10px; }
 .sw-dot { min-width: 44px; height: 44px; border: 0; border-radius: 12px; background: #eef1f8; color: #5b6b84; font: inherit; font-size: 18px; font-weight: 800; cursor: pointer; touch-action: manipulation; }
 .sw-dot.is-on { background: linear-gradient(135deg, #ffd08a, #ff9f5a); color: #fff; }
+
+/* หัวข้อกลุ่มภาพในแกลเลอรี (เช่น A Activity Based) */
+.sw-evidence-grid--gallery .sw-evidence-group {
+  grid-column: 1 / -1; margin: 4px 0 -4px; padding-left: 10px;
+  border-left: 4px solid var(--gold-500, #c9a24c);
+  color: var(--navy-700); font-size: 17px; font-weight: 800; line-height: 1.4;
+}

@@ -50,18 +50,23 @@
     <div class="school-curriculum-frame" appReveal>
       <iframe src="/models/school-curriculum.html" title="SCHOOL CURRICULUM model" loading="lazy"></iframe>
     </div>
-    <!-- แก้เนื้อหาได้ที่ public/models/curriculum-continuity-model.html ในตัวแปร data -->
-    <!-- ช่อง Input / Output ข้าง model · ใส่ข้อมูลที่ modelIO.continuity ใน dimension2.component.ts -->
-    <div class="d2-io-layout" appReveal>
-      <ng-container [ngTemplateOutlet]="ioInput"
-        [ngTemplateOutletContext]="{ $implicit: modelIO.continuity.input }"></ng-container>
-      <div class="d2-continuity-model">
-        <iframe src="/models/curriculum-continuity-model.html"
-          title="กระบวนการพัฒนาหลักสูตรที่มีความต่อเนื่องเชื่อมโยง PDCA" loading="lazy" scrolling="no"
-          [style.height.px]="continuityModelHeight()"></iframe>
+
+    <div class="d2-model-intro" appReveal>
+      <h3>ที่มาและความสำคัญ — หลักสูตรที่มีความหลากหลาย</h3>
+      <div class="d2-model-intro-rule"></div>
+      <ul>
+        <li>ผู้เรียนคาดหวังแผนการเรียนที่มีความหลากหลาย ได้เรียนในสาขาวิชาที่ชอบตามความถนัด</li>
+        <li>ผู้ปกครองและชุมชนต้องการส่งเสริมทักษะชีวิต ทักษะอาชีพ และสมรรถนะที่นำไปใช้ได้จริง</li>
+        <li>ตลาดแรงงานและสถานประกอบการต้องการผู้เรียนที่มีสมรรถนะหลากหลาย</li>
+      </ul>
+    </div>
+
+    <!-- แก้เนื้อหาได้ที่ public/models/diversity-pdca-model.html ในตัวแปร stepData -->
+    <div appReveal>
+      <div class="d2-diversity-pdca">
+        <iframe src="/models/diversity-pdca-model.html" title="กระบวนการพัฒนาหลักสูตรด้านความหลากหลาย PDCA"
+          loading="lazy" scrolling="no" [style.height.px]="diversityPdcaHeight()"></iframe>
       </div>
-      <ng-container [ngTemplateOutlet]="ioOutput"
-        [ngTemplateOutletContext]="{ $implicit: modelIO.continuity.output, outcome: modelIO.continuity.outcome }"></ng-container>
     </div>
 
     <div class="d2-model-intro" appReveal>
@@ -76,40 +81,21 @@
     </div>
 
     <!-- แก้เนื้อหาได้ที่ public/models/pdca-flexible-curriculum.html ในตัวแปร data -->
-    <!-- ช่อง Input / Output ข้าง model · ใส่ข้อมูลที่ modelIO.flexible ใน dimension2.component.ts -->
-    <div class="d2-io-layout" appReveal>
-      <ng-container [ngTemplateOutlet]="ioInput"
-        [ngTemplateOutletContext]="{ $implicit: modelIO.flexible.input }"></ng-container>
+    <div appReveal>
       <div class="d2-flexible-model">
         <iframe src="/models/pdca-flexible-curriculum.html"
           title="กระบวนการพัฒนาหลักสูตรที่มีความยืดหยุ่น กระบวนการ PDCA" loading="lazy" scrolling="no"
           [style.height.px]="flexibleModelHeight()"></iframe>
       </div>
-      <ng-container [ngTemplateOutlet]="ioOutput"
-        [ngTemplateOutletContext]="{ $implicit: modelIO.flexible.output, outcome: modelIO.flexible.outcome }"></ng-container>
     </div>
 
-    <div class="d2-model-intro" appReveal>
-      <h3>ที่มาและความสำคัญ — หลักสูตรที่มีความหลากหลาย</h3>
-      <div class="d2-model-intro-rule"></div>
-      <ul>
-        <li>ผู้เรียนคาดหวังแผนการเรียนที่มีความหลากหลาย ได้เรียนในสาขาวิชาที่ชอบตามความถนัด</li>
-        <li>ผู้ปกครองและชุมชนต้องการส่งเสริมทักษะชีวิต ทักษะอาชีพ และสมรรถนะที่นำไปใช้ได้จริง</li>
-        <li>ตลาดแรงงานและสถานประกอบการต้องการผู้เรียนที่มีสมรรถนะหลากหลาย</li>
-      </ul>
-    </div>
-
-    <!-- แก้เนื้อหาได้ที่ public/models/diversity-pdca-model.html ในตัวแปร stepData -->
-    <!-- ช่อง Input / Output ข้าง model · ใส่ข้อมูลที่ modelIO.diversity ใน dimension2.component.ts -->
-    <div class="d2-io-layout" appReveal>
-      <ng-container [ngTemplateOutlet]="ioInput"
-        [ngTemplateOutletContext]="{ $implicit: modelIO.diversity.input }"></ng-container>
-      <div class="d2-diversity-pdca">
-        <iframe src="/models/diversity-pdca-model.html" title="กระบวนการพัฒนาหลักสูตรด้านความหลากหลาย PDCA"
-          loading="lazy" scrolling="no" [style.height.px]="diversityPdcaHeight()"></iframe>
+    <!-- แก้เนื้อหาได้ที่ public/models/curriculum-continuity-model.html ในตัวแปร data -->
+    <div appReveal style="margin-top:40px">
+      <div class="d2-continuity-model">
+        <iframe src="/models/curriculum-continuity-model.html?v=20260922-2"
+          title="กระบวนการพัฒนาหลักสูตรที่มีความต่อเนื่องเชื่อมโยง PDCA" loading="lazy" scrolling="no"
+          [style.height.px]="continuityModelHeight()"></iframe>
       </div>
-      <ng-container [ngTemplateOutlet]="ioOutput"
-        [ngTemplateOutletContext]="{ $implicit: modelIO.diversity.output, outcome: modelIO.diversity.outcome }"></ng-container>
     </div>
   </div>
 </section>

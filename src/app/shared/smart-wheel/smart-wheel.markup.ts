@@ -6,6 +6,8 @@
 export interface WheelEvidence {
   src: string;
   caption: string;
+  /** หัวข้อกลุ่มภาพ (แสดงหัวข้อก่อนภาพแรกของแต่ละกลุ่ม) */
+  group?: string;
 }
 
 export interface WheelItem {
@@ -20,13 +22,13 @@ export interface WheelItem {
    จึงตรงกับสีพื้นวงล้อเสมอ ไม่ต้องกะตำแหน่งเอง */
 export const WHEEL_ITEMS: WheelItem[] = [
   {
-    letter: 'A', title: 'Activity Based', detail: 'เรียนรู้ผ่านการลงมือทำ ทดลอง ตั้งคำถาม และสะท้อนสิ่งที่ค้นพบจากกิจกรรมจริง',
+    letter: 'A', title: 'Activity Based', detail: 'เรียนรู้ในห้องเรียนและนอกห้องเรียนผ่านการลงมือทำด้วย Activity Based Learning พร้อมมีกิจกรรมเสริมหลักสูตร เช่น กิจกรรม 1 คน 1 ความสามารถ กิจกรรมพัฒนาสมรรถนะผู้เรียน กิจกรรม English/Chinese after school กิจกรรม Tour & Learn = Plearn เป็นต้น และมีการสะท้อนสิ่งที่ค้นพบจากกิจกรรมจริง',
     x: 16.00, y: 50.00, light: false, evidenceProcess: false,
     evidence: [
-      { src: '/evidence/activity-model/a-activity-based/01.jpg', caption: 'กิจกรรมฐานเรียนรู้เรื่องแสงและสี ผู้เรียนลงมือสำรวจด้วยตนเอง' },
-      { src: '/evidence/activity-model/a-activity-based/02.jpg', caption: 'กิจกรรมกีฬาวอลเลย์บอล ฝึกทักษะผ่านการปฏิบัติจริง' },
-      { src: '/evidence/activity-model/a-activity-based/03.jpg', caption: 'กิจกรรมออกแบบและสร้างชิ้นงานร่วมกันเป็นทีม' },
-      { src: '/evidence/activity-model/a-activity-based/04.jpg', caption: 'ฝึกปฏิบัติการช่วยฟื้นคืนชีพ (CPR) กับหุ่นจำลอง' }
+      { group: 'เรียนรู้ภายในห้องเรียน', src: '/evidence/activity-model/a-activity-based/01.jpg', caption: 'กิจกรรมฐานเรียนรู้เรื่องแสงและสี ผู้เรียนลงมือสำรวจด้วยตนเอง' },
+      { group: 'เรียนรู้ภายในห้องเรียน', src: '/evidence/activity-model/a-activity-based/02.jpg', caption: 'กิจกรรมกีฬาวอลเลย์บอล ฝึกทักษะผ่านการปฏิบัติจริง' },
+      { group: 'กิจกรรมสมรรถนะผู้เรียน', src: '/evidence/activity-model/a-activity-based/03.jpg', caption: 'กิจกรรมออกแบบและสร้างชิ้นงานร่วมกันเป็นทีม' },
+      { group: 'กิจกรรมสมรรถนะผู้เรียน', src: '/evidence/activity-model/a-activity-based/05-tour-learn.jpg', caption: 'Tour&learn=Plearn' }
     ]
   },
   {
@@ -177,7 +179,7 @@ export function initSmartWheel(root: HTMLElement, items: WheelItem[], startIndex
     evidence.innerHTML = it.evidence?.length
       ? `<p class="sw-evidence-label">${flow ? 'ภาพกิจกรรมตามลำดับกระบวนการ' : 'ภาพกิจกรรมประกอบ'}</p>
         <div class="sw-evidence-grid${flow ? ' sw-evidence-grid--process' : ` sw-evidence-grid--gallery sw-evidence-grid--n${it.evidence.length}`}">
-          ${it.evidence.map((item, index) => `<figure class="sw-evidence-card sw-evidence-card--${index + 1}">
+          ${it.evidence.map((item, index) => `${!flow && item.group && item.group !== it.evidence![index - 1]?.group ? `<p class="sw-evidence-group">${item.group}</p>` : ''}<figure class="sw-evidence-card sw-evidence-card--${index + 1}">
             <img src="${item.src}" alt="${item.caption}" loading="lazy">
             <figcaption>${item.caption}</figcaption>
             ${flow ? `<span class="sw-process-arrow sw-process-arrow--${index + 1}" aria-hidden="true">
