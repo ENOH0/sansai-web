@@ -217,7 +217,7 @@
 
         <!-- ม.3 พัฒนาการ -->
         <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" title="พัฒนาการผลสัมฤทธิ์ O-NET ชั้น ม.3" subtitle="ค่าเฉลี่ยระดับโรงเรียน ปีการศึกษา 2566–2568"
-          [labels]="d.section11.onet.m3Trend.years" [series]="m3TrendBars" [showEvidence]="true"
+          [labels]="d.section11.onet.m3Trend.years" [series]="m3TrendBars"
           [note]="d.section11.onet.m3Trend.conclusion + '  ' + d.section11.onet.m3Trend.footnote" />
 
         <app-callout label="จุดเด่น:" [gold]="true">
@@ -496,6 +496,24 @@
  [note]="d.section12.desired.conclusion" />
 
         <app-data-table [caption]="d.section12.desired.caption" [headers]="desiredHeaders" [rows]="desiredRows" />
+
+        <!-- เอกสารหลักฐาน 3 ปี · แก้ที่ section12.desired.reports ใน dimension1.data.ts -->
+      <div class="d1-reports" appReveal>
+        <h3 class="d1-reports-title">เอกสารหลักฐานประกอบ</h3>
+        <div class="d1-reports-grid">
+          <a class="d1-report" *ngFor="let r of d.section12.desired.reports"
+            [href]="r.pdf" target="_blank" rel="noopener" [attr.aria-label]="'เปิดเอกสาร ' + r.title + ' ปีการศึกษา ' + r.year">
+            <span class="d1-report-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" /><path d="M14 3v5h5M9 13h6M9 17h6" />
+              </svg>
+              <span class="d1-report-label"><small>เปิดเอกสาร PDF</small>ปีการศึกษา {{ r.year }}</span>
+            </span>
+            <span class="d1-report-cover"><img [src]="r.cover" [alt]="'หน้าปก ' + r.title + ' ปีการศึกษา ' + r.year" loading="lazy"></span>
+          </a>
+        </div>
+      </div>
 
       </div>
     </div>

@@ -296,6 +296,12 @@ export const DIM1 = {
 
     // ตารางที่ 1.18
     desired: {
+      /* เอกสารหลักฐานใต้ตาราง 1.18 (หน้าปก + หน้าหลักฐาน) */
+      reports: [
+        { year: '2566', title: 'รายงานการประเมินตนเองของสถานศึกษา (SAR)', pdf: '/evidence/1.2.1/reports/report-2566-crop.pdf', cover: '/evidence/1.2.1/reports/cover-2566.jpg' },
+        { year: '2567', title: 'รายงานการประกันคุณภาพการศึกษา (PQA)', pdf: '/evidence/1.2.1/reports/report-2567.pdf', cover: '/evidence/1.2.1/reports/cover-2567.jpg' },
+        { year: '2568', title: 'รายงานการประกันคุณภาพการศึกษา (PQA)', pdf: '/evidence/1.2.1/reports/report-2568.pdf', cover: '/evidence/1.2.1/reports/cover-2568.jpg' }
+      ],
       title: '1.2.1 คุณธรรม จริยธรรม ค่านิยม และจิตสำนึกเพื่อส่วนรวม',
       caption: 'ตารางที่ 1.18 สรุปผลการประเมินคุณลักษณะอันพึงประสงค์ตามหลักสูตรแกนกลาง (ร้อยละระดับดีขึ้นไป)',
       years: ['2566', '2567', '2568'],
