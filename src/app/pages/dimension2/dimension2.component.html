@@ -51,10 +51,15 @@
       <iframe src="/models/school-curriculum.html" title="SCHOOL CURRICULUM model" loading="lazy"></iframe>
     </div>
     <!-- แก้เนื้อหาได้ที่ public/models/curriculum-continuity-model.html ในตัวแปร data -->
-    <div class="d2-continuity-model" appReveal>
-      <iframe src="/models/curriculum-continuity-model.html"
-        title="กระบวนการพัฒนาหลักสูตรที่มีความต่อเนื่องเชื่อมโยง PDCA"
-        loading="lazy" scrolling="no" [style.height.px]="continuityModelHeight()"></iframe>
+    <!-- ช่อง Input / Output ข้าง model · ใส่ข้อมูลที่ modelIO.continuity ใน dimension2.component.ts -->
+    <div class="d2-io-layout" appReveal>
+      <ng-container [ngTemplateOutlet]="ioInput" [ngTemplateOutletContext]="{ $implicit: modelIO.continuity.input }"></ng-container>
+      <div class="d2-continuity-model">
+        <iframe src="/models/curriculum-continuity-model.html"
+          title="กระบวนการพัฒนาหลักสูตรที่มีความต่อเนื่องเชื่อมโยง PDCA"
+          loading="lazy" scrolling="no" [style.height.px]="continuityModelHeight()"></iframe>
+      </div>
+      <ng-container [ngTemplateOutlet]="ioOutput" [ngTemplateOutletContext]="{ $implicit: modelIO.continuity.output, outcome: modelIO.continuity.outcome }"></ng-container>
     </div>
 
     <div class="d2-model-intro" appReveal>
@@ -69,9 +74,14 @@
     </div>
 
     <!-- แก้เนื้อหาได้ที่ public/models/pdca-flexible-curriculum.html ในตัวแปร data -->
-    <div class="d2-flexible-model" appReveal>
-      <iframe src="/models/pdca-flexible-curriculum.html" title="หลักสูตรที่มีความยืดหยุ่น กระบวนการ PDCA"
-        loading="lazy" scrolling="no" [style.height.px]="flexibleModelHeight()"></iframe>
+    <!-- ช่อง Input / Output ข้าง model · ใส่ข้อมูลที่ modelIO.flexible ใน dimension2.component.ts -->
+    <div class="d2-io-layout" appReveal>
+      <ng-container [ngTemplateOutlet]="ioInput" [ngTemplateOutletContext]="{ $implicit: modelIO.flexible.input }"></ng-container>
+      <div class="d2-flexible-model">
+        <iframe src="/models/pdca-flexible-curriculum.html" title="หลักสูตรที่มีความยืดหยุ่น กระบวนการ PDCA"
+          loading="lazy" scrolling="no" [style.height.px]="flexibleModelHeight()"></iframe>
+      </div>
+      <ng-container [ngTemplateOutlet]="ioOutput" [ngTemplateOutletContext]="{ $implicit: modelIO.flexible.output, outcome: modelIO.flexible.outcome }"></ng-container>
     </div>
 
     <div class="d2-model-intro" appReveal>
@@ -85,10 +95,15 @@
     </div>
 
     <!-- แก้เนื้อหาได้ที่ public/models/diversity-pdca-model.html ในตัวแปร stepData -->
-    <div class="d2-diversity-pdca" appReveal>
-      <iframe src="/models/diversity-pdca-model.html"
-        title="กระบวนการพัฒนาหลักสูตรด้านความหลากหลาย PDCA"
-        loading="lazy" scrolling="no" [style.height.px]="diversityPdcaHeight()"></iframe>
+    <!-- ช่อง Input / Output ข้าง model · ใส่ข้อมูลที่ modelIO.diversity ใน dimension2.component.ts -->
+    <div class="d2-io-layout" appReveal>
+      <ng-container [ngTemplateOutlet]="ioInput" [ngTemplateOutletContext]="{ $implicit: modelIO.diversity.input }"></ng-container>
+      <div class="d2-diversity-pdca">
+        <iframe src="/models/diversity-pdca-model.html"
+          title="กระบวนการพัฒนาหลักสูตรด้านความหลากหลาย PDCA"
+          loading="lazy" scrolling="no" [style.height.px]="diversityPdcaHeight()"></iframe>
+      </div>
+      <ng-container [ngTemplateOutlet]="ioOutput" [ngTemplateOutletContext]="{ $implicit: modelIO.diversity.output, outcome: modelIO.diversity.outcome }"></ng-container>
     </div>
   </div>
 </section>
@@ -342,3 +357,28 @@
   <img [src]="z.src" [alt]="z.cap" />
   <p class="d2-zoom-cap" *ngIf="z.cap">{{ z.cap }}</p>
 </div>
+
+<!-- ช่อง Input / Output ข้าง model ด้านที่ 2 (แบบเดียวกับ BANCHUEN MODEL ด้านที่ 3) -->
+<ng-template #ioInput let-items>
+  <aside class="d2-io d2-io-in">
+    <h4 class="d2-io-head">ปัจจัยนำเข้า (Input)</h4>
+    <div class="d2-io-panel" [class.is-empty]="!items.length">
+      <div class="d2-io-src" *ngFor="let t of items">{{ t }}</div>
+    </div>
+    <div class="d2-io-flow" aria-hidden="true">→</div>
+  </aside>
+</ng-template>
+
+<ng-template #ioOutput let-items let-outcome="outcome">
+  <aside class="d2-io d2-io-out">
+    <h4 class="d2-io-head">ผลผลิต (Output)</h4>
+    <div class="d2-io-panel d2-io-panel-out" [class.is-empty]="!items.length">
+      <div class="d2-io-item" *ngFor="let t of items; let i = index"><span>{{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1) }}</span>{{ t }}</div>
+    </div>
+    <div class="d2-io-flow d2-io-down" aria-hidden="true">↓</div>
+    <h4 class="d2-io-head d2-io-head-outcome">ผลลัพธ์ (Outcome)</h4>
+    <div class="d2-io-panel" [class.is-empty]="!outcome.length">
+      <div class="d2-io-item d2-io-item-outcome" *ngFor="let t of outcome; let i = index"><span>{{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1) }}</span>{{ t }}</div>
+    </div>
+  </aside>
+</ng-template>

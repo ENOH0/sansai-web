@@ -28,6 +28,12 @@ import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
 })
 export class Dimension2Component {
   readonly continuityModelHeight = signal(960);
+  /** ช่อง Input / Output ข้าง 3 model ด้านล่าง · ใส่ข้อความเป็นรายการ เช่น input: ['ข้อ 1', 'ข้อ 2'] */
+  readonly modelIO: Record<'continuity' | 'flexible' | 'diversity', { input: string[]; output: string[]; outcome: string[] }> = {
+    continuity: { input: [], output: [], outcome: [] },   // กระบวนการพัฒนาหลักสูตรที่มีความต่อเนื่องเชื่อมโยง
+    flexible:   { input: [], output: [], outcome: [] },   // หลักสูตรที่มีความยืดหยุ่น
+    diversity:  { input: [], output: [], outcome: [] }    // หลักสูตรด้านความหลากหลาย
+  };
   readonly flexibleModelHeight = signal(980);
   readonly diversityPdcaHeight = signal(1000);
 

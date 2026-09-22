@@ -506,3 +506,91 @@
 .d2-model-intro ul { margin: 0; padding-left: 22px; }
 .d2-model-intro li { margin: 7px 0; }
 .d2-model-intro li::marker { color: var(--gold-400); }
+
+/* ═══════════ ช่อง Input / Output ข้าง model (แบบเดียวกับ BANCHUEN MODEL ด้านที่ 3) ═══════════ */
+.d2-io-layout {
+  display: grid;
+  grid-template-columns: minmax(170px, .62fr) minmax(0, 2.4fr) minmax(170px, .62fr);
+  gap: clamp(14px, 1.8vw, 24px);
+  align-items: center;
+  margin-top: 34px;
+}
+.d2-io-layout > .d2-continuity-model,
+.d2-io-layout > .d2-flexible-model,
+.d2-io-layout > .d2-diversity-pdca { margin-top: 0; min-width: 0; }
+
+.d2-io-head {
+  display: inline-flex; align-items: center; gap: 9px;
+  margin: 0 0 13px; padding: 8px 12px;
+  color: #fff; font-size: 15px; font-weight: 800; letter-spacing: .04em;
+  border: 1px solid rgba(255, 255, 255, .6); border-radius: 999px;
+  background: linear-gradient(90deg, rgba(168, 154, 245, .92), rgba(121, 207, 238, .92));
+  box-shadow: 0 6px 18px rgba(75, 105, 145, .3);
+  text-shadow: 0 1px 4px rgba(53, 80, 107, .45);
+}
+.d2-io-head::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%;
+  background: #ffd58a; box-shadow: 0 0 0 5px rgba(255, 213, 138, .35);
+}
+.d2-io-panel {
+  padding: 16px;
+  border: 1px solid rgba(180, 202, 228, .6);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .86);
+  box-shadow: 0 14px 34px rgba(75, 105, 145, .18);
+}
+/* ยังไม่มีข้อมูล → กรอบเส้นประว่าง ๆ */
+.d2-io-panel.is-empty {
+  min-height: 220px;
+  border-style: dashed;
+  border-color: rgba(255, 255, 255, .55);
+  background: rgba(255, 255, 255, .14);
+  box-shadow: none;
+}
+.d2-io-src {
+  position: relative;
+  padding: 12px 4px 12px 18px;
+  color: #35506b; font-size: 16px; font-weight: 600; line-height: 1.5;
+  border-bottom: 1px solid rgba(180, 202, 228, .45);
+}
+.d2-io-src:last-child { border-bottom: 0; }
+.d2-io-src::before {
+  content: ""; position: absolute; left: 0; top: 19px;
+  width: 7px; height: 7px; border-radius: 50%; background: #a89af5;
+}
+.d2-io-flow {
+  display: grid; place-items: center;
+  width: 46px; height: 46px; margin: 18px auto 0;
+  color: #fff; font-size: 26px; font-weight: 800; border-radius: 50%;
+  background: linear-gradient(135deg, #a89af5, #79cfee);
+  box-shadow: 0 8px 18px rgba(121, 150, 238, .35);
+}
+.d2-io-item {
+  margin: 9px 0; padding: 13px 14px;
+  color: #fff; font-size: 15.5px; font-weight: 600; line-height: 1.45;
+  border-radius: 10px;
+  background: linear-gradient(115deg, #8f82ea, #5fb4de);
+  box-shadow: 0 7px 14px rgba(121, 150, 238, .25);
+  text-shadow: 0 1px 3px rgba(53, 80, 107, .35);
+}
+.d2-io-item:first-child { margin-top: 0; }
+.d2-io-item:last-child { margin-bottom: 0; }
+.d2-io-item span { display: inline-block; min-width: 24px; color: #fff7e0; font-size: 13.5px; font-weight: 800; }
+
+/* iPad แนวตั้งและจอแคบ → เรียงบน-ล่าง: Input → model → Output */
+@media (max-width: 900px) {
+  .d2-io-layout { display: block; }
+  .d2-io { margin: 18px 0; }
+  .d2-io-flow { display: none; }
+  .d2-io-panel.is-empty { min-height: 90px; }
+}
+
+/* ช่อง Outcome ใต้ Output */
+.d2-io-flow.d2-io-down { width: 38px; height: 38px; margin: 12px auto; font-size: 20px; }
+.d2-io-head-outcome { background: linear-gradient(90deg, rgba(255, 159, 199, .92), rgba(136, 221, 180, .92)); }
+.d2-io-item-outcome { background: linear-gradient(115deg, #ef8fbd, #6cc9a1); }
+.d2-io-out .d2-io-panel.is-empty { min-height: 130px; }
+@media (max-width: 900px) {
+  .d2-io-flow.d2-io-down { display: grid; }
+  .d2-io-out .d2-io-panel.is-empty { min-height: 90px; }
+}
