@@ -594,3 +594,7 @@
   .d2-io-flow.d2-io-down { display: grid; }
   .d2-io-out .d2-io-panel.is-empty { min-height: 90px; }
 }
+
+/* ภาพเส้นทางหลักสูตรเชื่อมโยง ใต้ SCHOOL CURRICULUM */
+.d2-pathway { margin: 32px 0 8px; }
+.d2-pathway img { display: block; width: 100%; height: auto; border-radius: 16px; background: #fff; box-shadow: 0 8px 24px rgba(20, 40, 80, .14); }
