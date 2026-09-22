@@ -1,0 +1,9 @@
+{
+  "name": "โรงเรียนสันทรายวิทยาคม — รางวัลพระราชทาน",
+  "short_name": "สันทรายวิทยาคม",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d2149",
+  "theme_color": "#0d2149",
+  "icons": [{ "src": "/favicon.png", "sizes": "512x512", "type": "image/png" }]
+}

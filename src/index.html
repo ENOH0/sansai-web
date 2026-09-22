@@ -20,8 +20,25 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="apple-touch-icon" href="favicon.png" />
   <link rel="stylesheet" href="/fonts/th-sarabun.css" />
+  <link rel="manifest" href="/manifest.webmanifest" />
 </head>
 <body>
   <app-root></app-root>
+
+  <!-- โหมดออฟไลน์: บันทึกทั้งเว็บลงเครื่อง (iPad) แล้วแสดงสถานะมุมล่างซ้ายชั่วคราว -->
+  <div id="offline-toast" style="position:fixed;left:12px;bottom:12px;z-index:9999;display:none;padding:8px 14px;border-radius:12px;background:rgba(13,33,73,.9);color:#fff;font:600 15px/1.3 'TH SarabunPSK Web',Tahoma,sans-serif;box-shadow:0 6px 16px rgba(0,0,0,.3);pointer-events:none"></div>
+  <script>
+    if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
+      navigator.serviceWorker.register('/sw.js').then(function (reg) {
+        if (reg.active) reg.active.postMessage('precache');   // เช็กอัปเดตทุกครั้งที่เปิด (มีเน็ต)
+      }).catch(function () {});
+      var t = document.getElementById('offline-toast'), hideT;
+      navigator.serviceWorker.addEventListener('message', function (e) {
+        var d = e.data || {}; if (!t) return;
+        if (d.type === 'offline-progress' && d.done < d.total) { t.style.display = 'block'; t.textContent = 'กำลังบันทึกเว็บไว้ใช้ออฟไลน์ ' + Math.round(d.done / d.total * 100) + '%'; }
+        if (d.type === 'offline-ready' && t.style.display === 'block') { t.textContent = '✓ พร้อมใช้งานออฟไลน์แล้ว'; clearTimeout(hideT); hideT = setTimeout(function () { t.style.display = 'none'; }, 4000); }
+      });
+    }
+  </script>
 </body>
 </html>

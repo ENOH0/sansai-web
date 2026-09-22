@@ -46,6 +46,7 @@ export class Dimension3Component {
   readonly leaderModelHeight = signal(900);
   readonly orgModelHeight = signal(950);
   readonly iqaModelHeight = signal(1100);
+  readonly qaModelHeight = signal(920);
 
   @HostListener('window:message', ['$event'])
   resizeAdminModel(event: MessageEvent<{ type?: string; height?: number; top?: number; bottom?: number }>): void {
@@ -86,6 +87,7 @@ export class Dimension3Component {
     if (event.data?.type === 'd3-leader-model-height') this.leaderModelHeight.set(Math.max(500, height));
     if (event.data?.type === 'd3-org-model-height') this.orgModelHeight.set(Math.max(500, height));
     if (event.data?.type === 'd3-iqa-model-height') this.iqaModelHeight.set(Math.max(500, height));
+    if (event.data?.type === 'd3-qa-model-height') this.qaModelHeight.set(Math.max(400, height));
     if (event.data?.type === 'd3-digital-model-height') this.digitalModelHeight.set(Math.max(600, height));
     if (event.data?.type === 'd3-banchuen-model-height') this.adminModelHeight.set(Math.max(420, Math.min(2400, height)));
     if (event.data?.type === 'd3-learn-model-height') this.learnModelHeight.set(Math.max(620, height));

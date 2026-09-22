@@ -169,6 +169,12 @@
   <div class="wrap">
     <app-section-header [light]="true" num="3.4" title="ระบบการประกันคุณภาพภายใน" [lead]="d.qa.lead" />
     <!-- เนื้อหาเดิมใต้คำนำ (ตัวชี้วัด + ขั้นตอน d.qa.steps + callout) ถูกนำออกตามที่สั่ง ข้อมูลยังอยู่ใน dimension3.data.ts -->
+    <!-- โมเดลการประกันคุณภาพโรงเรียนสันทรายวิทยาคม (INPUT · PROCESS · OUTPUT) · แก้ได้ที่ public/models/sansai-qa-model.html -->
+    <div class="d3-learn-model d3-qa-model" appReveal style="margin-top:28px">
+      <iframe src="/models/sansai-qa-model.html" title="การประกันคุณภาพโรงเรียนสันทรายวิทยาคม"
+        loading="lazy" scrolling="no" [style.height.px]="qaModelHeight()"></iframe>
+    </div>
+
     <!-- สมุดระบบการประกันคุณภาพภายใน 6 ขั้นตอน · แก้ได้ที่ public/models/iqa-model.html
          เพิ่มรูป: เปิด /models/iqa-model.html?edit แล้วกดบันทึก HTML พร้อมรูป -->
     <div class="d3-learn-model d3-iqa-model" appReveal style="margin-top:28px">
