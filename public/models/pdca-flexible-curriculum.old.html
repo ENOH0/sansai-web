@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+  <link rel="stylesheet" href="/fonts/th-sarabun.css">
+  <style>
+    html {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%
+    }
+  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>กระบวนการพัฒนาหลักสูตรที่มีความยืดหยุ่น | PDCA</title>
+  <style>
+    :root {
+      --ink: #3f405d;
+      --paper: #fff9f4;
+      --p: #ff9cad;
+      --d: #9cceff;
+      --c: #a8dfbd;
+      --a: #cbb1ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: auto;
+      color: var(--ink);
+      background: transparent;
+      font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(2px);
+      opacity: .55;
+      pointer-events: none;
+      animation: drift 9s ease-in-out infinite alternate;
+    }
+
+    .orb.one {
+      width: 190px;
+      height: 190px;
+      background: #ffd5df;
+      top: -50px;
+      left: -35px;
+    }
+
+    .orb.two {
+      width: 230px;
+      height: 230px;
+      background: #c9e6ff;
+      right: -85px;
+      top: 20%;
+      animation-delay: -3s;
+    }
+
+    .orb.three {
+      width: 170px;
+      height: 170px;
+      background: #d9c9ff;
+      left: 9%;
+      bottom: -65px;
+      animation-delay: -6s;
+    }
+
+    main {
+      width: min(1180px, 94vw);
+      margin: auto;
+      padding: 8px 0 18px;
+      position: relative;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 99px;
+      background: #ffffffa8;
+      font-size: .8rem;
+      letter-spacing: .08em;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 12px 0 4px;
+      font-size: clamp(1.55rem, 4vw, 2.7rem);
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    header p {
+      margin: 0;
+      font-size: clamp(.9rem, 2vw, 1.05rem);
+      opacity: .78;
+    }
+
+    .scene {
+      position: relative;
+      min-height: 650px;
+      display: grid;
+      place-items: center;
+      perspective: 1100px;
+    }
+
+    .ring {
+      display: none;
+    }
+
+    .orbit-flow {
+      position: absolute;
+      z-index: 2;
+      width: min(650px, 86vw);
+      height: min(650px, 86vw);
+      overflow: visible;
+      pointer-events: none;
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: orbitTurn 18s linear infinite;
+    }
+
+    .orbit-flow path {
+      fill: none;
+      stroke: #ffffffbd;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-dasharray: 10 14;
+      filter: drop-shadow(0 2px 2px #6d638333);
+      animation: dashFlow 3.2s linear infinite;
+    }
+
+    .orbit-flow .bead {
+      stroke: #fff;
+      stroke-width: 3;
+      filter: drop-shadow(0 2px 3px #75668166);
+    }
+
+    .orbit-flow .bead-p {
+      fill: var(--p);
+    }
+
+    .orbit-flow .bead-d {
+      fill: var(--d);
+    }
+
+    .orbit-flow .bead-c {
+      fill: var(--c);
+    }
+
+    .orbit-flow .bead-a {
+      fill: var(--a);
+    }
+
+    .core {
+      position: relative;
+      isolation: isolate;
+      z-index: 3;
+      width: 210px;
+      height: 210px;
+      display: grid;
+      place-content: center;
+      text-align: center;
+      border-radius: 50%;
+      color: #fff;
+      background: linear-gradient(145deg, #ff9db9, #b89cff);
+      box-shadow: 0 20px 45px #a377b34f, inset 8px 8px 15px #ffffff35;
+      transform: rotateX(9deg) rotateY(-10deg);
+      animation: coreFloat 5s ease-in-out infinite;
+    }
+
+    .core::before,
+    .core::after {
+      content: "";
+      position: absolute;
+      border: 1px solid #ffffffa8;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .core::before {
+      inset: -18px;
+      animation: haloPulse 3.5s ease-out infinite;
+    }
+
+    .core::after {
+      inset: -38px;
+      opacity: .38;
+      animation: haloPulse 3.5s ease-out infinite 1.15s;
+    }
+
+    .core small {
+      font-size: .82rem;
+      opacity: .9;
+    }
+
+    .core strong {
+      display: block;
+      width: 150px;
+      margin: 5px auto 0;
+      font-size: 1.45rem;
+      line-height: 1.3;
+    }
+
+    .node {
+      --x: 0;
+      --y: 0;
+      --node: #fff;
+      position: absolute;
+      z-index: 4;
+      left: 50%;
+      top: 50%;
+      width: 138px;
+      height: 138px;
+      margin: -69px;
+      border: 0;
+      border-radius: 32px;
+      cursor: pointer;
+      color: var(--ink);
+      background: linear-gradient(135deg, #fff, #fff7);
+      box-shadow: 0 16px 26px #5f648028, inset 0 0 0 7px var(--node);
+      transform: translate(var(--x), var(--y)) rotateX(10deg) rotateY(-12deg);
+      transition: transform .35s ease, box-shadow .35s ease;
+      font-family: inherit;
+      animation: nodeFloat 4.5s ease-in-out infinite;
+    }
+
+    .node:hover,
+    .node:focus-visible,
+    .node.active {
+      transform: translate(var(--x), var(--y)) translateY(-12px) scale(1.07) rotateX(6deg) rotateY(-8deg);
+      outline: none;
+      box-shadow: 0 25px 34px #5f648044, inset 0 0 0 8px var(--node);
+    }
+
+    .node.active::after {
+      content: "";
+      position: absolute;
+      inset: -14px;
+      z-index: -1;
+      border: 2px solid var(--node);
+      border-radius: 38px;
+      opacity: .45;
+      animation: nodePulse 2.5s ease-out infinite;
+    }
+
+    .node b {
+      display: block;
+      font: 700 3rem/1 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+      color: var(--node);
+      text-shadow: 0 2px 0 #fff;
+    }
+
+    .node span {
+      display: block;
+      margin-top: 7px;
+      font-size: .75rem;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .p {
+      --x: clamp(-255px, -26vw, -175px);
+      --y: clamp(-160px, -16vw, -110px);
+      --node: var(--p);
+      animation-delay: -1s;
+    }
+
+    .d {
+      --x: clamp(175px, 26vw, 255px);
+      --y: clamp(-160px, -16vw, -110px);
+      --node: var(--d);
+      animation-delay: -2.1s;
+    }
+
+    .c {
+      --x: clamp(175px, 26vw, 255px);
+      --y: clamp(110px, 16vw, 160px);
+      --node: var(--c);
+      animation-delay: -.4s;
+    }
+
+    .a {
+      --x: clamp(-255px, -26vw, -175px);
+      --y: clamp(110px, 16vw, 160px);
+      --node: var(--a);
+      animation-delay: -3.3s;
+    }
+
+    .connector {
+      position: absolute;
+      z-index: 1;
+      left: 50%;
+      top: 50%;
+      width: min(245px, 25vw);
+      height: 2px;
+      transform-origin: left center;
+      background: linear-gradient(90deg, #a184ba77, transparent);
+    }
+
+    .l1 {
+      transform: rotate(-145deg);
+    }
+
+    .l2 {
+      transform: rotate(-35deg);
+    }
+
+    .l3 {
+      transform: rotate(35deg);
+    }
+
+    .l4 {
+      transform: rotate(145deg);
+    }
+
+    .detail {
+      min-height: 175px;
+      margin: 0 auto;
+      max-width: 900px;
+      padding: 23px 28px;
+      border-radius: 28px;
+      background: #ffffffb8;
+      box-shadow: 0 14px 34px #71658720;
+      backdrop-filter: blur(10px);
+    }
+
+    .detail-top {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .tag {
+      min-width: 45px;
+      height: 45px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: var(--current);
+      color: #fff;
+      font: 700 1.65rem/1 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.12rem;
+    }
+
+    .detail ul {
+      margin: 12px 0 0;
+      padding-left: 1.25rem;
+      line-height: 1.7;
+      font-size: .93rem;
+    }
+
+    .detail li {
+      margin: 7px 0;
+    }
+
+    .detail li::marker {
+      color: var(--current);
+    }
+
+    .detail h3 {
+      display: inline;
+      font-size: .98rem;
+      font-weight: 700;
+    }
+
+    .tips {
+      margin: 22px 0 0;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: .79rem;
+      opacity: .72;
+    }
+
+    .tips span {
+      background: #ffffff8a;
+      border-radius: 99px;
+      padding: 6px 12px;
+    }
+
+    @keyframes drift {
+      to {
+        transform: translate(25px, 30px) scale(1.12);
+      }
+    }
+
+    @keyframes coreFloat {
+      50% {
+        transform: translateY(-12px) rotateX(11deg) rotateY(3deg);
+      }
+    }
+
+    @keyframes nodeFloat {
+      50% {
+        margin-top: -77px;
+      }
+    }
+
+    @keyframes orbitTurn {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes dashFlow {
+      to {
+        stroke-dashoffset: -96;
+      }
+    }
+
+    @keyframes haloPulse {
+      0% {
+        transform: scale(.82);
+        opacity: .7;
+      }
+
+      70%,
+      100% {
+        transform: scale(1.16);
+        opacity: 0;
+      }
+    }
+
+    @keyframes nodePulse {
+      0% {
+        transform: scale(.72);
+        opacity: .56;
+      }
+
+      80%,
+      100% {
+        transform: scale(1.15);
+        opacity: 0;
+      }
+    }
+
+    .spark {
+      position: absolute;
+      z-index: 2;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      box-shadow: 0 0 0 7px #ffffff55;
+      animation: twinkle 2.8s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    .s1 {
+      background: #ffbad0;
+      top: 19%;
+      left: 23%;
+    }
+
+    .s2 {
+      background: #a9ddff;
+      top: 24%;
+      right: 20%;
+      animation-delay: -1s;
+    }
+
+    .s3 {
+      background: #b7e8ca;
+      right: 23%;
+      bottom: 20%;
+      animation-delay: -2s;
+    }
+
+    .s4 {
+      background: #d2bfff;
+      left: 20%;
+      bottom: 23%;
+      animation-delay: -.4s;
+    }
+
+    @keyframes twinkle {
+      to {
+        transform: scale(1.55);
+        opacity: .48;
+      }
+    }
+
+    @media (max-width:620px) {
+      .scene {
+        min-height: 505px;
+        transform: scale(.9);
+        transform-origin: center top;
+        margin-bottom: -45px;
+      }
+
+      .node {
+        width: 118px;
+        height: 118px;
+        margin: -59px;
+        border-radius: 28px;
+      }
+
+      .node b {
+        font-size: 2.5rem;
+      }
+
+      .node span {
+        font-size: .68rem;
+      }
+
+      .core {
+        width: 174px;
+        height: 174px;
+      }
+
+      .core strong {
+        font-size: 1.18rem;
+        width: 135px;
+      }
+
+      .detail {
+        padding: 19px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *:before,
+      *:after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* =========================================================
+       ON DARK BACKGROUND
+       โมเดลวางทับวิดีโอพื้นหลังสีเข้มของหน้าด้านที่ 2
+       เปลี่ยนเฉพาะตัวอักษรที่ไม่มีพื้นหลังของตัวเอง
+       ส่วนการ์ด P D C A และวงกลมกลางมีพื้นของตัวเองอยู่แล้ว คงสีเดิม
+    ========================================================= */
+    body {
+      color: #e8f0ff;
+    }
+
+    /* ปิดวงกลมเบลอพื้นหลัง — ให้เห็นวิดีโอของหน้าโดยตรง */
+    .orb {
+      display: none;
+    }
+
+    /* ข้อความในวงกลมกลางล้นออกนอกวง จึงลดขนาดและขยายกรอบให้พอดี */
+    .core strong {
+      width: 170px;
+      font-size: 1.24rem;
+      line-height: 1.28;
+    }
+
+    .eyebrow {
+      color: #f0e9ff;
+      background: rgba(255, 255, 255, .18);
+    }
+
+    h1 {
+      color: #ffffff;
+      text-shadow: 0 2px 18px rgba(8, 21, 47, .75);
+    }
+
+    header p {
+      color: #dbe6f7;
+      opacity: 1;
+      text-shadow: 0 1px 10px rgba(8, 21, 47, .6);
+    }
+
+    .detail {
+      color: #eaf2ff;
+      background: rgba(10, 24, 52, .46);
+      border: 1px solid rgba(255, 255, 255, .22);
+      box-shadow: 0 14px 34px rgba(0, 0, 0, .2);
+    }
+
+    .detail h2 {
+      color: #ffffff;
+    }
+
+    .detail h3 {
+      color: #ffffff;
+    }
+
+    .detail li {
+      color: #dbe6f7;
+    }
+
+    .tips {
+      color: #dbe6f7;
+      opacity: 1;
+    }
+
+    .tips span {
+      background: rgba(255, 255, 255, .16);
+    }
+
+    .connector {
+      background: linear-gradient(90deg, rgba(255, 255, 255, .55), transparent);
+    }
+
+    /* =========================================================
+       POPUP
+    ========================================================= */
+    .modal {
+      position: absolute;
+      inset: 0;
+      z-index: 9;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: rgba(8, 21, 47, .58);
+      backdrop-filter: blur(4px);
+      animation: modalIn .18s ease;
+    }
+
+    .modal[hidden] {
+      display: none;
+    }
+
+    .modal-card {
+      position: relative;
+      width: min(640px, 100%);
+      max-height: 100%;
+      overflow: auto;
+      padding: 24px 26px 22px;
+      border-radius: 26px;
+      color: #eaf2ff;
+      background: rgba(12, 27, 58, .94);
+      border: 1px solid rgba(255, 255, 255, .24);
+      box-shadow: 0 26px 60px rgba(0, 0, 0, .42);
+    }
+
+    .modal-card .detail-top {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding-right: 44px;
+    }
+
+    .modal-card h2 {
+      margin: 0;
+      font-size: 1.12rem;
+      color: #fff;
+    }
+
+    .modal-card ul {
+      margin: 14px 0 0;
+      padding-left: 1.25rem;
+      line-height: 1.75;
+      font-size: .95rem;
+    }
+
+    .modal-card li {
+      margin: 8px 0;
+      color: #dbe6f7;
+    }
+
+    .modal-card li::marker {
+      color: var(--current);
+    }
+
+    .modal-card h3 {
+      display: inline;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 20px;
+      color: #fff;
+      background: rgba(255, 255, 255, .16);
+      font-family: inherit;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+  <div class="orb three"></div>
+  <main>
+    <header>
+      <span class="eyebrow">ขั้นตอนการพัฒนาหลักสูตรและการจัดการเรียนรู้</span>
+      <h1>กระบวนการพัฒนาหลักสูตรที่มีความยืดหยุ่น</h1>
+      <p>กระบวนการ PDCA เพื่อการเรียนรู้ที่ต่อเนื่อง เชื่อมโยง และไม่ทิ้งใครไว้ข้างหลัง</p>
+    </header>
+    <section class="scene" aria-label="โมเดล PDCA แบบอินเทอร์แอกทีฟ">
+      <svg class="orbit-flow" viewBox="0 0 650 650" aria-hidden="true">
+        <defs>
+          <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+            <path d="M0,0 L8,3.5 L0,7 Z" fill="#ffffff"></path>
+          </marker>
+        </defs>
+        <path d="M70 165 A300 300 0 0 1 580 165" marker-end="url(#arrow)"></path>
+        <path d="M580 165 A300 300 0 0 1 580 485" marker-end="url(#arrow)"></path>
+        <path d="M580 485 A300 300 0 0 1 70 485" marker-end="url(#arrow)"></path>
+        <path d="M70 485 A300 300 0 0 1 70 165" marker-end="url(#arrow)"></path>
+        <circle class="bead bead-p" cx="70" cy="165" r="8"></circle>
+        <circle class="bead bead-d" cx="580" cy="165" r="8"></circle>
+        <circle class="bead bead-c" cx="580" cy="485" r="8"></circle>
+        <circle class="bead bead-a" cx="70" cy="485" r="8"></circle>
+      </svg>
+      <span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span
+        class="spark s4"></span>
+      <i class="connector l1"></i><i class="connector l2"></i><i class="connector l3"></i><i class="connector l4"></i>
+      <div class="core"><small>หัวใจของการจัดการศึกษา</small><strong>หลักสูตรที่มี<br>ความยืดหยุ่น</strong></div>
+      <button class="node p active" data-step="P"
+        type="button"><b>P</b><span>วิเคราะห์และ<br>ทำข้อตกลงเบื้องต้น</span></button>
+      <button class="node d" data-step="D" type="button"><b>D</b><span>ออกแบบแผน<br>และดำเนินการ</span></button>
+      <button class="node c" data-step="C" type="button"><b>C</b><span>วัดและ<br>ประเมินผล</span></button>
+      <button class="node a" data-step="A" type="button"><b>A</b><span>สรุปผลและ<br>รายงาน</span></button>
+
+      <!-- POPUP รายละเอียดแต่ละขั้น -->
+      <div class="modal" id="modal" hidden>
+        <div class="modal-card" id="detail" style="--current:var(--p)" role="dialog" aria-modal="true"
+          aria-labelledby="detailTitle" tabindex="-1"></div>
+      </div>
+    </section>
+    <div class="tips"><span>แตะ P · D · C · A เพื่อเปิดรายละเอียด</span><span>หลักสูตรที่ต่อเนื่องและเชื่อมโยง</span>
+    </div>
+  </main>
+  <script>
+    const data = {
+      P: { title: 'วิเคราะห์และทำข้อตกลงเบื้องต้น', color: 'var(--p)', items: [['ระบุความจำเป็น', 'วิเคราะห์ปัญหาและข้อจำกัดด้านเศรษฐกิจ สุขภาพ กิจกรรม และกีฬาของผู้เรียน เพื่อป้องกันการหลุดออกจากระบบ'], ['ประชุมสร้างความเข้าใจ', 'ครูและผู้เกี่ยวข้องวางความเข้าใจร่วมกันเรื่องรายวิชา ตารางเรียน การวัดผล และเงื่อนไขการมาเรียนที่ยืดหยุ่น']] },
+      D: { title: 'การออกแบบแผนการเรียนรู้และการดำเนินการ', color: 'var(--d)', items: [['การออกแบบแผนการเรียนรู้เฉพาะบุคคล', 'ครูประจำวิชาจัดทำ Course Syllabus ที่ยืดหยุ่นให้สอดคล้องกับสภาพปัญหาและข้อจำกัดของผู้เรียน'], ['การดำเนินการและการสนับสนุน', 'เตรียมสื่อพร้อมใช้ มีครูที่ปรึกษาและครูแนะแนวให้คำปรึกษารายบุคคล และบูรณาการทักษะหรือประสบการณ์จากอาชีพและกิจกรรมเป็นส่วนหนึ่งของการประเมินผล']] },
+      C: { title: 'การวัดและประเมินผล', color: 'var(--c)', items: [['ติดตามและประเมินผล', 'ใช้วิธีวัดและประเมินผลที่ยืดหยุ่นและหลากหลาย ให้สอดคล้องกับรูปแบบการเรียนรู้ ความพร้อม และข้อจำกัดเฉพาะของผู้เรียนแต่ละคน']] },
+      A: { title: 'สรุปผลและรายงาน', color: 'var(--a)', items: [['สรุปผลและพัฒนาต่อยอด', 'สรุปผลการดำเนินการ แล้วนำข้อมูลมาปรับปรุงและพัฒนาแนวทางช่วยเหลือผู้เรียนอย่างต่อเนื่อง เพื่อให้หลักสูตรเชื่อมโยงและตอบโจทย์ยิ่งขึ้น']] }
+    };
+    const detail = document.getElementById('detail');
+    const modal = document.getElementById('modal');
+    let lastNode = null;
+
+    function openStep(btn) {
+      const x = data[btn.dataset.step];
+      lastNode = btn;
+      document.querySelectorAll('.node').forEach(n => n.classList.toggle('active', n === btn));
+      detail.style.setProperty('--current', x.color);
+      detail.innerHTML =
+        `<button type="button" class="modal-close" aria-label="ปิด">&#10005;</button>` +
+        `<div class="detail-top"><span class="tag">${btn.dataset.step}</span><h2 id="detailTitle">${x.title}</h2></div>` +
+        `<ul>${x.items.map(([head, text]) => `<li><h3>${head}:</h3> ${text}</li>`).join('')}</ul>`;
+      modal.hidden = false;
+      detail.focus();
+    }
+
+    function closeModal() {
+      modal.hidden = true;
+      if (lastNode) lastNode.focus();
+    }
+
+    document.querySelectorAll('.node').forEach(btn => btn.addEventListener('click', () => openStep(btn)));
+
+    /* แตะพื้นหลังหรือปุ่มกากบาทเพื่อปิด */
+    modal.addEventListener('click', e => {
+      if (e.target === modal || e.target.closest('.modal-close')) closeModal();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !modal.hidden) closeModal();
+    });
+
+    /* แจ้งความสูงจริงให้หน้าแม่ปรับ iframe ตามเนื้อหา ไม่ให้มีแถบเลื่อนซ้อน */
+    function reportHeight() {
+      requestAnimationFrame(() => {
+        const el = document.querySelector('main');
+        const height = Math.ceil(el ? el.getBoundingClientRect().height + 16 : document.body.scrollHeight);
+        window.parent.postMessage({ type: 'd2-flexible-model-height', height }, window.location.origin);
+      });
+    }
+    new ResizeObserver(reportHeight).observe(document.body);
+    window.addEventListener('load', reportHeight);
+    document.querySelectorAll('.node').forEach(b => b.addEventListener('click', reportHeight));
+  </script>
+</body>
+
+</html>

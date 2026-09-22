@@ -1,18 +1,2321 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="th">
 
 <head>
-  <link rel="stylesheet" href="/fonts/th-sarabun.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>หลักสูตรที่มีความยืดหยุ่น · Input Process Output Outcome</title>
   <style>
+    :root {
+      --ink: #35445f;
+      --muted: #75849a;
+      --p: #ff9fc9;
+      --d: #a8a0f7;
+      --c: #78d5ef;
+      --a: #8edfb2;
+      --glass: rgba(255, 255, 255, .68);
+      --line: rgba(183, 197, 226, .48);
+      --shadow: 0 20px 55px rgba(78, 95, 135, .13);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      font-family: "TH Sarabun PSK", "TH Sarabun New", "Sarabun", Tahoma, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 12%, rgba(255, 170, 208, .30), transparent 25%),
+        radial-gradient(circle at 88% 13%, rgba(134, 220, 250, .25), transparent 24%),
+        radial-gradient(circle at 85% 88%, rgba(145, 229, 180, .23), transparent 27%),
+        radial-gradient(circle at 14% 86%, rgba(171, 160, 247, .20), transparent 25%),
+        linear-gradient(135deg, #fff9fc 0%, #f7fbff 48%, #f9fff9 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(105, 123, 160, .08) 1px, transparent 1px);
+      background-size: 23px 23px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .72), transparent 90%);
+    }
+
+    .page {
+      width: min(1510px, 100%);
+      margin: auto;
+      padding: 25px 25px 24px;
+      position: relative;
+      z-index: 1
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 18px
+    }
+
+    .eyebrow {
+      font: 700 18px Arial, sans-serif;
+      letter-spacing: 3px;
+      color: #9a87c8;
+      margin-bottom: 6px
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(38px, 4.5vw, 66px);
+      line-height: .98;
+      font-weight: 700;
+      background: linear-gradient(90deg, #ee72b1, #9b8df4, #4ebce6, #62cb91, #ee72b1);
+      background-size: 280% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: titleFlow 8s linear infinite;
+    }
+
+    @keyframes titleFlow {
+      to {
+        background-position: 280% center
+      }
+    }
+
+    .hero p {
+      margin: 9px auto 0;
+      max-width: 1050px;
+      font-size: 25px;
+      line-height: 1.18;
+      color: #6e7f96
+    }
+
+    .hero-line {
+      width: 260px;
+      height: 5px;
+      margin: 12px auto 0;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--p), var(--d), var(--c), var(--a));
+      box-shadow: 0 0 18px rgba(158, 158, 234, .35)
+    }
+
+    .layout {
+      display: block;
+      margin-top: 20px
+    }
+
+    .model-card {
+      width: min(980px, 100%);
+      min-height: 760px;
+      margin: 0 auto;
+      border-radius: 36px;
+      background: var(--glass);
+      border: 1px solid rgba(255, 255, 255, .92);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      padding: 26px 24px 23px;
+    }
+
+    .model-card::before {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      filter: blur(10px);
+      opacity: .18;
+      pointer-events: none;
+      left: -135px;
+      top: -130px;
+      background: radial-gradient(circle, var(--p), transparent 70%);
+    }
+
+    .model-title {
+      text-align: center;
+      font-size: 29px;
+      font-weight: 700;
+      color: #60728a;
+      position: relative;
+      z-index: 5
+    }
+
+    .model-title span {
+      font: 900 31px Arial, sans-serif;
+      letter-spacing: 2px;
+      color: #917be2
+    }
+
+    .model-sub {
+      text-align: center;
+      font-size: 20px;
+      color: #93a0b2;
+      margin-top: 2px;
+      position: relative;
+      z-index: 5
+    }
+
+    .badge-auto {
+      position: absolute;
+      right: 22px;
+      top: 22px;
+      padding: 7px 14px;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, .78);
+      border: 1px solid rgba(190, 205, 230, .55);
+      box-shadow: 0 8px 22px rgba(86, 104, 143, .08);
+      font-size: 18px;
+      color: #8492a6;
+      z-index: 8
+    }
+
+    .badge-auto::before {
+      content: "↺";
+      font-family: Arial, sans-serif;
+      font-weight: 700;
+      color: #947ee4;
+      margin-right: 6px
+    }
+
+    .orbit-stage {
+      position: relative;
+      width: min(610px, 95%);
+      aspect-ratio: 1;
+      margin: 14px auto 0;
+    }
+
+    .orbit {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none
+    }
+
+    .orbit.outer {
+      inset: 4%;
+      border: 2px solid rgba(166, 183, 219, .20);
+      box-shadow: inset 0 0 60px rgba(156, 165, 222, .05)
+    }
+
+    .orbit.mid {
+      inset: 13%;
+      border: 2px dashed rgba(166, 181, 220, .30);
+      animation: slowCCW 24s linear infinite
+    }
+
+    .orbit.inner {
+      inset: 25%;
+      border: 1px solid rgba(141, 207, 231, .24)
+    }
+
+    @keyframes slowCCW {
+      to {
+        transform: rotate(-360deg)
+      }
+    }
+
+    .direction-ring {
+      position: absolute;
+      inset: 8%;
+      border-radius: 50%;
+      pointer-events: none;
+      background: conic-gradient(from -12deg, transparent 0 18%, rgba(255, 159, 201, .12) 20%, transparent 24% 43%, rgba(168, 160, 247, .12) 45%, transparent 49% 68%, rgba(120, 213, 239, .12) 70%, transparent 74% 93%, rgba(142, 223, 178, .13) 95%, transparent 100%);
+      animation: directionGlow 5s ease-in-out infinite;
+    }
+
+    @keyframes directionGlow {
+      50% {
+        filter: brightness(1.12);
+        transform: scale(1.015)
+      }
+    }
+
+    .arrow-chip {
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(184, 197, 226, .58);
+      box-shadow: 0 6px 17px rgba(79, 99, 139, .10);
+      font: 700 23px Arial, sans-serif;
+      color: #8f81cc;
+      z-index: 4;
+      pointer-events: none
+    }
+
+    .arrow-chip.t {
+      left: 25%;
+      top: 8%;
+      transform: rotate(-42deg)
+    }
+
+    .arrow-chip.l {
+      left: 7%;
+      bottom: 26%;
+      transform: rotate(-132deg)
+    }
+
+    .arrow-chip.b {
+      right: 25%;
+      bottom: 7%;
+      transform: rotate(-222deg)
+    }
+
+    .arrow-chip.r {
+      right: 7%;
+      top: 26%;
+      transform: rotate(-312deg)
+    }
+
+    .rotating-ring {
+      position: absolute;
+      inset: 0;
+      transition: transform 1.05s cubic-bezier(.22, .75, .2, 1)
+    }
+
+    .pdca-node {
+      --c: #aaa;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 132px;
+      height: 132px;
+      margin-left: -66px;
+      margin-top: -66px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 15;
+      transform: rotate(var(--angle)) translateY(-205px) rotate(calc(var(--angle) * -1));
+      transition: transform 1.05s cubic-bezier(.22, .75, .2, 1), filter .35s ease, opacity .35s ease;
+    }
+
+    .pdca-node::before {
+      content: "";
+      position: absolute;
+      inset: -13px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--c), transparent 68%);
+      opacity: .11;
+      filter: blur(12px);
+      transition: .35s
+    }
+
+    .pdca-node::after {
+      content: "";
+      position: absolute;
+      inset: -18px;
+      border-radius: 50%;
+      border: 3px solid var(--c);
+      opacity: 0;
+      pointer-events: none
+    }
+
+    .pdca-node:hover::before,
+    .pdca-node.active::before {
+      opacity: .48
+    }
+
+    .pdca-node.peak-glow::before {
+      animation: peakAura 3s ease-out
+    }
+
+    .pdca-node.peak-glow::after {
+      animation: peakRing 3s cubic-bezier(.16, .84, .32, 1)
+    }
+
+    .node-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, rgba(255, 255, 255, .98), rgba(255, 255, 255, .75));
+      border: 4px solid var(--c);
+      box-shadow: 0 12px 32px rgba(76, 95, 134, .14), inset 0 0 22px rgba(255, 255, 255, .95);
+      transition: .36s ease;
+    }
+
+    .node-letter {
+      font: 900 60px/.78 Arial, sans-serif;
+      color: var(--c);
+      text-shadow: 0 0 9px white, 0 0 18px color-mix(in srgb, var(--c) 40%, transparent)
+    }
+
+    .node-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: #566a81;
+      margin-top: 10px
+    }
+
+    .pdca-node.active {
+      filter: drop-shadow(0 0 20px color-mix(in srgb, var(--c) 60%, transparent));
+      z-index: 22
+    }
+
+    .pdca-node.active .node-inner {
+      transform: scale(1.18);
+      box-shadow: 0 18px 45px rgba(74, 92, 133, .16), 0 0 31px color-mix(in srgb, var(--c) 46%, transparent), inset 0 0 24px white;
+      animation: activePop 3s cubic-bezier(.16, .84, .32, 1)
+    }
+
+    @keyframes activePop {
+      0% {
+        transform: scale(1)
+      }
+
+      12% {
+        transform: scale(1.30)
+      }
+
+      28% {
+        transform: scale(1.20)
+      }
+
+      45% {
+        transform: scale(1.25)
+      }
+
+      68% {
+        transform: scale(1.19)
+      }
+
+      100% {
+        transform: scale(1.18)
+      }
+    }
+
+    @keyframes peakAura {
+      0% {
+        opacity: .12;
+        transform: scale(.88);
+        filter: blur(8px)
+      }
+
+      18% {
+        opacity: .82;
+        transform: scale(1.05);
+        filter: blur(14px)
+      }
+
+      55% {
+        opacity: .52;
+        transform: scale(1.38);
+        filter: blur(20px)
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1.85);
+        filter: blur(28px)
+      }
+    }
+
+    @keyframes peakRing {
+      0% {
+        opacity: .9;
+        transform: scale(.9);
+        box-shadow: 0 0 18px var(--c), 0 0 38px var(--c)
+      }
+
+      45% {
+        opacity: .45;
+        transform: scale(1.48);
+        box-shadow: 0 0 30px var(--c), 0 0 70px var(--c)
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(2.15);
+        box-shadow: 0 0 44px transparent, 0 0 95px transparent
+      }
+    }
+
+    .pdca-node:hover .node-inner {
+      transform: scale(1.08)
+    }
+
+    .pdca-node.active:hover .node-inner {
+      transform: scale(1.18)
+    }
+
+    .center-core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: radial-gradient(circle at 35% 25%, rgba(255, 255, 255, .99), rgba(248, 239, 255, .94) 39%, rgba(227, 247, 255, .89) 72%, rgba(255, 255, 255, .86));
+      border: 6px solid rgba(255, 255, 255, .94);
+      box-shadow: 0 0 0 9px rgba(183, 164, 239, .09), 0 0 0 18px rgba(123, 210, 238, .07), 0 18px 48px rgba(88, 107, 147, .16), 0 0 50px rgba(184, 160, 244, .22);
+    }
+
+    .center-core::before {
+      content: "";
+      position: absolute;
+      inset: -26px;
+      border-radius: 50%;
+      border: 1px solid rgba(172, 158, 225, .25);
+      animation: centerPulse 3s ease-in-out infinite
+    }
+
+    @keyframes centerPulse {
+      50% {
+        transform: scale(1.04);
+        opacity: .7
+      }
+    }
+
+    .center-code {
+      font: 900 38px/1 Arial, sans-serif;
+      color: #806cc0;
+      letter-spacing: 1px
+    }
+
+    .center-main {
+      font-size: 25px;
+      font-weight: 700;
+      color: #60758b;
+      margin-top: 5px
+    }
+
+    .center-sub {
+      font-size: 17px;
+      color: #91a0b2;
+      margin-top: 2px
+    }
+
+    .particle {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 9px currentColor, 0 0 22px currentColor;
+      opacity: .75;
+      animation: float 4.6s ease-in-out infinite;
+      pointer-events: none
+    }
+
+    .p1 {
+      color: var(--p);
+      left: 8%;
+      top: 18%
+    }
+
+    .p2 {
+      color: var(--c);
+      right: 9%;
+      top: 31%;
+      animation-delay: 1s
+    }
+
+    .p3 {
+      color: var(--a);
+      left: 15%;
+      bottom: 14%;
+      animation-delay: 2s
+    }
+
+    .p4 {
+      color: var(--d);
+      right: 17%;
+      bottom: 12%;
+      animation-delay: 3s
+    }
+
+    .p5 {
+      color: var(--d);
+      left: 47%;
+      top: 7%;
+      animation-delay: 1.5s
+    }
+
+    @keyframes float {
+      50% {
+        transform: translateY(-20px) scale(1.5);
+        opacity: 1
+      }
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: -2px;
+      position: relative;
+      z-index: 30
+    }
+
+    .controls button {
+      border: 0;
+      border-radius: 14px;
+      padding: 7px 18px;
+      font: 700 20px "TH Sarabun PSK", "TH Sarabun New", sans-serif;
+      cursor: pointer;
+      color: #64758d;
+      background: rgba(240, 244, 255, .88);
+      box-shadow: 0 7px 18px rgba(92, 111, 151, .09);
+      transition: .25s
+    }
+
+    .controls button:hover {
+      transform: translateY(-2px)
+    }
+
+    .controls button.active {
+      color: white;
+      background: linear-gradient(135deg, #a68ff0, #69cae8);
+      box-shadow: 0 8px 20px rgba(135, 154, 226, .24)
+    }
+
+    .status-line {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 18px;
+      color: #8794a7;
+      position: relative;
+      z-index: 10
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #7ed69e;
+      box-shadow: 0 0 10px #7ed69e;
+      margin-right: 6px;
+      animation: blink 1.6s infinite
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: .35
+      }
+    }
+
+
+    /* POPUP DETAIL */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 26px;
+      background: rgba(72, 82, 110, .22);
+      backdrop-filter: blur(7px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .28s ease, visibility .28s ease;
+    }
+
+    .popup-overlay.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto
+    }
+
+    .popup-card {
+      --popup-color: var(--p);
+      width: min(820px, 96vw);
+      max-height: min(86vh, 850px);
+      overflow: auto;
+      position: relative;
+      border-radius: 34px;
+      padding: 30px 32px 28px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, .97), rgba(250, 252, 255, .93));
+      border: 1px solid rgba(255, 255, 255, .96);
+      box-shadow: 0 28px 80px rgba(63, 75, 110, .28), 0 0 55px color-mix(in srgb, var(--popup-color) 25%, transparent);
+      transform: translateY(70px) scale(.86);
+      opacity: 0;
+      transition: transform .48s cubic-bezier(.18, .89, .32, 1.22), opacity .28s ease;
+    }
+
+    .popup-overlay.show .popup-card {
+      transform: translateY(0) scale(1);
+      opacity: 1
+    }
+
+    .popup-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 7px;
+      border-radius: 34px 34px 0 0;
+      background: linear-gradient(90deg, var(--popup-color), rgba(255, 255, 255, .65), var(--popup-color));
+    }
+
+    .popup-card::after {
+      content: "";
+      position: absolute;
+      inset: -22px;
+      border-radius: 44px;
+      pointer-events: none;
+      opacity: 0;
+      border: 2px solid var(--popup-color);
+      filter: blur(.2px)
+    }
+
+    .popup-card.glow-burst {
+      animation: popupHoldGlow 3s ease-in-out
+    }
+
+    .popup-card.glow-burst::after {
+      animation: popupGlowSpread 3s ease-out
+    }
+
+    @keyframes popupHoldGlow {
+      0% {
+        box-shadow: 0 28px 80px rgba(63, 75, 110, .28), 0 0 25px color-mix(in srgb, var(--popup-color) 30%, transparent)
+      }
+
+      18% {
+        box-shadow: 0 30px 90px rgba(63, 75, 110, .30), 0 0 60px color-mix(in srgb, var(--popup-color) 65%, transparent), 0 0 105px color-mix(in srgb, var(--popup-color) 30%, transparent)
+      }
+
+      70% {
+        box-shadow: 0 28px 82px rgba(63, 75, 110, .28), 0 0 48px color-mix(in srgb, var(--popup-color) 50%, transparent), 0 0 92px color-mix(in srgb, var(--popup-color) 22%, transparent)
+      }
+
+      100% {
+        box-shadow: 0 28px 80px rgba(63, 75, 110, .28), 0 0 55px color-mix(in srgb, var(--popup-color) 25%, transparent)
+      }
+    }
+
+    @keyframes popupGlowSpread {
+      0% {
+        opacity: .85;
+        transform: scale(.96);
+        box-shadow: 0 0 24px var(--popup-color), 0 0 48px var(--popup-color)
+      }
+
+      45% {
+        opacity: .38;
+        transform: scale(1.07);
+        box-shadow: 0 0 42px var(--popup-color), 0 0 90px var(--popup-color)
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1.18);
+        box-shadow: 0 0 70px transparent, 0 0 130px transparent
+      }
+    }
+
+    .popup-close {
+      position: absolute;
+      right: 18px;
+      top: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(238, 241, 249, .92);
+      color: #75839a;
+      font: 400 29px/1 Arial, sans-serif;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(75, 91, 129, .10);
+      transition: .25s;
+      z-index: 4;
+    }
+
+    .popup-close:hover {
+      transform: rotate(90deg) scale(1.06);
+      background: #fff
+    }
+
+    .popup-top {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding-right: 52px
+    }
+
+    .popup-badge {
+      width: 86px;
+      height: 86px;
+      border-radius: 27px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font: 900 52px Arial, sans-serif;
+      background: var(--p);
+      box-shadow: 0 12px 30px rgba(160, 150, 220, .22);
+      transition: .35s;
+      flex: none
+    }
+
+    .popup-head h2 {
+      margin: 0;
+      font-size: 40px;
+      line-height: 1;
+      color: #50647b
+    }
+
+    .popup-head p {
+      margin: 6px 0 0;
+      font-size: 24px;
+      color: #8c7cb6;
+      line-height: 1.05
+    }
+
+    .description {
+      margin: 24px 0 18px;
+      padding: 18px 21px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, .75);
+      border: 1px solid rgba(195, 211, 235, .58);
+      font-size: 24px;
+      line-height: 1.32;
+      color: #5c7086;
+      box-shadow: 0 8px 25px rgba(91, 108, 148, .06)
+    }
+
+    .section-label {
+      font-size: 24px;
+      font-weight: 700;
+      color: #687b91;
+      margin: 11px 0 10px
+    }
+
+    .details {
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .detail {
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .72);
+      border: 1px solid rgba(191, 207, 232, .58);
+      overflow: hidden;
+      transition: .28s
+    }
+
+    .detail:hover {
+      transform: translateY(-2px);
+      background: #fff;
+      box-shadow: 0 9px 25px rgba(91, 108, 148, .09)
+    }
+
+    .detail-head {
+      min-height: 57px;
+      padding: 9px 15px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer
+    }
+
+    .num {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 700 17px Arial, sans-serif;
+      flex: none
+    }
+
+    .detail-title {
+      font-size: 23px;
+      font-weight: 700;
+      color: #53697f;
+      flex: 1;
+      line-height: 1.05
+    }
+
+    .plus {
+      width: 31px;
+      height: 31px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(171, 154, 231, .14);
+      color: #9b83d5;
+      font: 400 23px Arial;
+      transition: .3s
+    }
+
+    .detail-content {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 17px 0 64px;
+      color: #718196;
+      font-size: 21px;
+      line-height: 1.28;
+      transition: max-height .42s ease, padding .42s ease
+    }
+
+    .detail.open .detail-content {
+      max-height: 260px;
+      padding-bottom: 16px
+    }
+
+    .detail.open .plus {
+      transform: rotate(45deg)
+    }
+
+    .flow-note {
+      margin-top: 17px;
+      padding: 13px 17px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255, 231, 244, .72), rgba(229, 247, 255, .74), rgba(232, 252, 239, .74));
+      border: 1px dashed rgba(151, 169, 220, .60);
+      font-size: 21px;
+      line-height: 1.2;
+      color: #748397;
+      text-align: center
+    }
+
+    .flow-note strong {
+      font-family: Arial, sans-serif;
+      color: #7765b8;
+      letter-spacing: 1px
+    }
+
+    body.popup-open {
+      overflow: hidden
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 19px;
+      color: #8795a7
+    }
+
+    @media(max-width:1100px) {
+      .model-card {
+        min-height: auto
+      }
+
+      .orbit-stage {
+        width: min(610px, 92%)
+      }
+    }
+
+    @media(max-width:680px) {
+      .page {
+        padding: 14px 9px
+      }
+
+      .hero p {
+        font-size: 21px
+      }
+
+      .eyebrow {
+        font-size: 14px;
+        letter-spacing: 2px
+      }
+
+      .model-card {
+        border-radius: 24px;
+        padding: 20px 8px
+      }
+
+      .badge-auto {
+        position: relative;
+        right: auto;
+        top: auto;
+        width: max-content;
+        margin: 10px auto 0;
+        font-size: 16px
+      }
+
+      .orbit-stage {
+        width: 455px;
+        max-width: 100%;
+        margin-top: 2px
+      }
+
+      .pdca-node {
+        width: 94px;
+        height: 94px;
+        margin-left: -47px;
+        margin-top: -47px;
+        transform: rotate(var(--angle)) translateY(-148px) rotate(calc(var(--angle) * -1))
+      }
+
+      .node-letter {
+        font-size: 43px
+      }
+
+      .node-name {
+        font-size: 17px;
+        margin-top: 6px
+      }
+
+      .center-core {
+        width: 150px;
+        height: 150px
+      }
+
+      .center-code {
+        font-size: 29px
+      }
+
+      .center-main {
+        font-size: 20px
+      }
+
+      .center-sub {
+        font-size: 14px
+      }
+
+      .arrow-chip {
+        width: 27px;
+        height: 27px;
+        font-size: 18px
+      }
+
+      .popup-overlay {
+        padding: 12px
+      }
+
+      .popup-card {
+        border-radius: 24px;
+        padding: 24px 16px 20px
+      }
+
+      .popup-badge {
+        width: 66px;
+        height: 66px;
+        border-radius: 21px;
+        font-size: 40px
+      }
+
+      .popup-head h2 {
+        font-size: 30px
+      }
+
+      .popup-head p {
+        font-size: 20px
+      }
+
+      .popup-close {
+        right: 12px;
+        top: 12px;
+        width: 38px;
+        height: 38px
+      }
+
+      .description {
+        font-size: 21px
+      }
+
+      .detail-title {
+        font-size: 21px
+      }
+
+      .detail-content {
+        font-size: 19px;
+        padding-left: 58px
+      }
+
+      .flow-note {
+        font-size: 19px
+      }
+    }
+
+    @font-face {
+      font-family: "TH Sarabun PSK";
+      src: url('/fonts/THSarabunPSK.ttf')
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer
+    }
+
+    button:focus-visible,
+    .file-choice:focus-within {
+      outline: 3px solid #a994d2;
+      outline-offset: 3px
+    }
+
+    .page {
+      max-width: 1700px;
+      width: 100%;
+      padding: 30px 32px
+    }
+
+    .hero h1 {
+      font-size: clamp(34px, 3.7vw, 55px);
+      line-height: 1.06
+    }
+
+    .hero p {
+      font-size: 23px
+    }
+
+    .eyebrow {
+      font-size: 12px
+    }
+
+    .layout {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.65fr) minmax(0, 1fr);
+      gap: 54px;
+      align-items: start;
+      margin-top: 30px;
+      isolation: isolate
+    }
+
+    .link-panel,
+    .process-wrap {
+      min-width: 0;
+      --tint: #fce7f1;
+      --accent: #d99fbd;
+      --text: #a77696;
+      border: 1px solid white;
+      background: linear-gradient(140deg, #ffffffee, var(--tint));
+      border-radius: 26px;
+      padding: 24px 18px;
+      box-shadow: 0 8px 0 color-mix(in srgb, var(--accent), white 60%), 0 20px 35px #8498af1c
+    }
+
+    .link-panel.output {
+      --tint: #e5f5ed;
+      --accent: #a3cfb6;
+      --text: #6e9b83
+    }
+
+    .link-head small,
+    .process-label small,
+    .link-outcome>small {
+      font: 600 11px Arial;
+      letter-spacing: 2px;
+      color: var(--text, #9b8aba)
+    }
+
+    .link-head h2,
+    .process-label h2 {
+      font-size: 29px;
+      line-height: 1.1;
+      margin: 9px 0 23px;
+      color: var(--text, #9180b4)
+    }
+
+    .link-topics {
+      display: grid;
+      gap: 15px
+    }
+
+    .link-topics button {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      text-align: left;
+      min-height: 87px;
+      padding: 18px 12px;
+      background: #ffffffb8;
+      border: 1px solid white;
+      border-radius: 16px;
+      color: var(--text);
+      box-shadow: 0 4px 0 color-mix(in srgb, var(--accent), transparent 80%);
+      transition: box-shadow .3s, translate .3s
+    }
+
+    .link-topics strong {
+      font-size: 24px;
+      line-height: 1.15;
+      flex: 1
+    }
+
+    .link-topics span {
+      font: 600 11px Arial;
+      border-radius: 8px;
+      background: var(--tint);
+      padding: 7px;
+      margin-top: 2px
+    }
+
+    .link-topics i {
+      font-size: 21px;
+      font-style: normal;
+      opacity: .55
+    }
+
+    .link-topics button:hover {
+      translate: 0 -3px;
+      box-shadow: 0 5px 0 var(--accent), 0 0 25px var(--tint)
+    }
+
+    .process-wrap {
+      --tint: #efebfc;
+      --accent: #c5b0e1;
+      padding: 23px 10px 16px
+    }
+
+    .process-label {
+      padding: 0 14px
+    }
+
+    .process-label h2 {
+      margin-bottom: 14px
+    }
+
+    .model-card {
+      width: 100%;
+      min-height: 0;
+      margin: 0;
+      padding: 19px 9px 20px;
+      border: none;
+      box-shadow: none;
+      background: transparent;
+      container-type: inline-size;
+      border-radius: 18px;
+      overflow: hidden
+    }
+
+    .badge-auto {
+      position: relative;
+      top: auto;
+      right: auto;
+      display: table;
+      margin: 0 auto 15px;
+      font-size: 18px
+    }
+
+    .model-title {
+      font-size: 23px;
+      line-height: 1.2
+    }
+
+    .model-title span {
+      font-size: 24px
+    }
+
+    .model-sub {
+      font-size: 19px;
+      padding: 0 10px
+    }
+
+    .orbit-stage {
+      width: 100%;
+      max-width: 100%;
+      aspect-ratio: 1;
+      margin: 22px auto 12px;
+      height: auto
+    }
+
+    .pdca-node {
+      width: clamp(70px, 20cqw, 110px);
+      height: clamp(70px, 20cqw, 110px);
+      margin: 0;
+      transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(-1 * clamp(95px, 32cqw, 180px))) rotate(calc(var(--angle) * -1))
+    }
+
+    .center-core {
+      width: clamp(104px, 30cqw, 167px);
+      height: clamp(104px, 30cqw, 167px)
+    }
+
+    .node-letter {
+      font-size: clamp(34px, 9cqw, 52px)
+    }
+
+    .node-name {
+      font-size: clamp(15px, 3.8cqw, 22px)
+    }
+
+    .center-code {
+      font-size: clamp(23px, 5cqw, 31px)
+    }
+
+    .center-main {
+      font-size: clamp(17px, 4cqw, 23px)
+    }
+
+    .center-sub {
+      font-size: clamp(12px, 2.9cqw, 16px)
+    }
+
+    .controls {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      transform: none;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px auto 0
+    }
+
+    .controls button {
+      font-size: 21px;
+      min-height: 44px;
+      padding: 6px 15px
+    }
+
+    .status-line {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      transform: none;
+      text-align: center;
+      justify-content: center;
+      margin-top: 16px;
+      font-size: 19px
+    }
+
+    .link-outcome {
+      grid-column: 1/-1;
+      position: relative;
+      margin-top: 35px;
+      border: 1px solid white;
+      border-radius: 25px;
+      background: linear-gradient(110deg, #edf3fc, #f1e9f9, #e8f5ed);
+      padding: 25px 28px;
+      box-shadow: 0 7px 0 #dedeee, 0 14px 30px #91a1b11a
+    }
+
+    .link-outcome h2 {
+      font-size: 31px;
+      color: #8b80a6;
+      margin: 8px 0 19px
+    }
+
+    .outcome-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px
+    }
+
+    .outcome-grid p {
+      margin: 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 26px;
+      line-height: 1.25;
+      color: #7f8c9b;
+      padding: 19px;
+      border: 1px solid #fff;
+      border-radius: 16px;
+      background: #ffffff80
+    }
+
+    .outcome-grid b {
+      font: 500 25px Georgia;
+      color: #aea0c1
+    }
+
+    .link-flow {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      fill: none;
+      pointer-events: none;
+      z-index: 3
+    }
+
+    .lf-line {
+      stroke: url(#lf-grad);
+      stroke-width: 4;
+      fill: none;
+      stroke-linecap: round
+    }
+
+    .lf-dot {
+      fill: white;
+      filter: drop-shadow(0 0 6px #ad9ed6)
+    }
+
+    .asset-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin: 25px 0;
+      color: #9a9eac;
+      font-size: 21px
+    }
+
+    .asset-footer button,
+    .gallery-controls button,
+    .file-choice,
+    .gallery-remove {
+      font-size: 21px;
+      border: 1px solid white;
+      background: #ece9f8;
+      color: #9c88b7;
+      border-radius: 10px;
+      min-height: 44px;
+      padding: 7px 15px
+    }
+
+    .asset-footer button {
+      box-shadow: 0 4px 0 #dcd4eb
+    }
+
+    #link-modal {
+      border: 1px solid white;
+      border-radius: 25px;
+      padding: 0;
+      width: calc(100% - 28px);
+      max-width: 920px;
+      max-height: 90vh;
+      max-height: 90dvh;
+      background: #fcfdff;
+      color: #677a8c;
+      box-shadow: 0 25px 90px #46577544
+    }
+
+    #link-modal::backdrop {
+      background: #40516b70;
+      backdrop-filter: blur(7px)
+    }
+
+    .lm-head {
+      position: relative;
+      padding: 25px 29px;
+      background: linear-gradient(130deg, #f0e6f9, #e9f4f9);
+      border-bottom: 1px solid white
+    }
+
+    .lm-head h2 {
+      font-size: 33px;
+      line-height: 1.1;
+      color: #9882b1;
+      margin: 7px 40px 0 0
+    }
+
+    .lm-head small {
+      font: 600 10px Arial;
+      letter-spacing: 2px;
+      color: #a8a2b6
+    }
+
+    .lm-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 44px;
+      height: 44px;
+      border: 1px solid white;
+      background: #ffffffb0;
+      color: #a69aba;
+      border-radius: 50%;
+      font: 24px Arial
+    }
+
+    .lm-body {
+      padding: 23px 29px 28px
+    }
+
+    .lm-list {
+      padding-left: 22px;
+      margin: 0 0 20px;
+      font-size: 25px;
+      line-height: 1.4
+    }
+
+    .lm-list li {
+      padding: 4px 0
+    }
+
+    .lm-back {
+      border: 1px solid white;
+      border-radius: 9px;
+      background: #ece8f6;
+      color: #9883ac;
+      font-size: 22px;
+      padding: 6px 15px;
+      margin-bottom: 18px;
+      min-height: 44px
+    }
+
+    .course-grid {
+      display: grid;
+      gap: 12px
+    }
+
+    .course-grid button {
+      padding: 18px;
+      text-align: left;
+      border: 1px solid white;
+      border-radius: 15px;
+      background: linear-gradient(120deg, #eef5fa, #f3edf9);
+      box-shadow: 0 4px 0 #dde3ef;
+      color: #8795ab
+    }
+
+    .course-grid strong {
+      display: block;
+      font-size: 25px;
+      line-height: 1.16
+    }
+
+    .course-grid span {
+      display: block;
+      font-size: 22px;
+      margin-top: 7px;
+      color: #a0a8b7
+    }
+
+    .gallery-heading {
+      font-size: 26px;
+      color: #9a86af;
+      margin: 21px 0 15px
+    }
+
+    .photos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px
+    }
+
+    .photo-box {
+      min-width: 0
+    }
+
+    .photo-view {
+      aspect-ratio: 16/10;
+      background: linear-gradient(135deg, #f3eef9, #eaf3f7);
+      border: 1px dashed #d1c8df;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden
+    }
+
+    .photo-view img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain
+    }
+
+    .photo-empty {
+      text-align: center;
+      color: #b1a6bf;
+      font-size: 22px;
+      padding: 15px
+    }
+
+    .photo-empty b {
+      font: 34px Georgia;
+      display: block;
+      margin-bottom: 9px;
+      opacity: .7
+    }
+
+    .photo-actions {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+      flex-wrap: wrap
+    }
+
+    .file-choice {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+      font-size: 20px;
+      overflow: hidden
+    }
+
+    .file-choice input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer
+    }
+
+    .gallery-remove {
+      font-size: 19px;
+      background: transparent;
+      border: 0;
+      padding: 5px
+    }
+
+    .gallery-window {
+      overflow: hidden;
+      border-radius: 16px
+    }
+
+    .gallery-track {
+      display: flex;
+      transition: transform .8s cubic-bezier(.25, .7, .25, 1)
+    }
+
+    .gallery-slide {
+      flex: 0 0 100%;
+      min-width: 0
+    }
+
+    .gallery-slide .photo-view {
+      aspect-ratio: 16/9
+    }
+
+    .gallery-controls {
+      display: flex;
+      gap: 9px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 14px
+    }
+
+    .gallery-controls span {
+      font-size: 22px;
+      color: #a499b0
+    }
+
+    .gallery-note {
+      font-size: 20px;
+      color: #a4a7b5;
+      margin: 12px 0 0
+    }
+
+    .gallery-error {
+      font-size: 21px;
+      color: #ac788c
+    }
+
+    .footer {
+      font-size: 20px
+    }
+
+    .pdca-node:focus-visible {
+      outline: 3px solid #b3a0d8;
+      outline-offset: 5px
+    }
+
+    @media(max-width:1250px) {
+      .page {
+        padding: 25px 20px
+      }
+
+      .layout {
+        gap: 30px;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) minmax(0, 1fr)
+      }
+
+      .link-panel {
+        padding: 20px 12px
+      }
+
+      .link-topics strong {
+        font-size: 22px
+      }
+
+      .link-topics button {
+        padding: 15px 9px;
+        gap: 7px
+      }
+
+      .link-head h2 {
+        font-size: 26px
+      }
+
+      .process-label h2 {
+        font-size: 26px
+      }
+
+      .model-title {
+        font-size: 21px
+      }
+
+      .model-sub {
+        font-size: 18px
+      }
+
+      .badge-auto {
+        font-size: 17px
+      }
+    }
+
+    @media(max-width:999px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 70px;
+        max-width: 760px;
+        margin: 25px auto 0
+      }
+
+      .link-panel {
+        padding: 24px
+      }
+
+      .link-topics {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .link-topics strong {
+        font-size: 25px
+      }
+
+      .process-wrap {
+        padding: 24px 20px
+      }
+
+      .model-card {
+        max-width: 660px;
+        margin: auto
+      }
+
+      .orbit-stage {
+        max-width: 570px
+      }
+
+      .link-outcome {
+        margin-top: 0
+      }
+
+      .outcome-grid {
+        grid-template-columns: 1fr
+      }
+
+      .link-head h2,
+      .process-label h2 {
+        font-size: 31px
+      }
+
+      .asset-footer {
+        max-width: 760px;
+        margin: 23px auto;
+        flex-wrap: wrap
+      }
+
+      .link-topics button {
+        min-height: 94px
+      }
+
+      .hero h1 {
+        font-size: 40px
+      }
+    }
+
+    @media(max-width:600px) {
+      .page {
+        padding: 22px 15px
+      }
+
+      .hero h1 {
+        font-size: 33px
+      }
+
+      .hero p {
+        font-size: 22px
+      }
+
+      .eyebrow {
+        font-size: 10px;
+        letter-spacing: 1.3px
+      }
+
+      .link-topics {
+        grid-template-columns: 1fr
+      }
+
+      .link-panel {
+        padding: 23px 17px
+      }
+
+      .process-wrap {
+        padding: 22px 7px
+      }
+
+      .model-card {
+        padding: 16px 7px
+      }
+
+      .orbit-stage {
+        margin-top: 25px;
+        margin-bottom: 22px
+      }
+
+      .link-outcome {
+        padding: 23px 18px
+      }
+
+      .outcome-grid p {
+        font-size: 24px;
+        padding: 16px
+      }
+
+      .photos-grid {
+        grid-template-columns: 1fr
+      }
+
+      .lm-head,
+      .lm-body {
+        padding: 23px 19px
+      }
+
+      .lm-head h2 {
+        font-size: 28px
+      }
+
+      .lm-list {
+        font-size: 23px
+      }
+
+      .course-grid strong {
+        font-size: 24px
+      }
+
+      .asset-footer {
+        font-size: 20px
+      }
+
+      .controls button {
+        padding: 6px 12px
+      }
+
+      .model-sub {
+        font-size: 18px
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important
+      }
+
+      .lf-dot {
+        display: none
+      }
+    }
+
+    /* The orbit lights run automatically; information opens only on request. */
+    .model-card {
+      --orbit-glow: #ff9fc9
+    }
+
+    .orbit-stage {
+      isolation: isolate
+    }
+
+    .orbit-light-trail {
+      position: absolute;
+      inset: 13%;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, transparent 0deg, transparent 190deg, color-mix(in srgb, var(--orbit-glow), transparent 65%) 240deg, var(--orbit-glow) 295deg, #fff 315deg, transparent 338deg);
+      mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px));
+      animation: link-orbit-light 9s linear infinite;
+      filter: drop-shadow(0 0 7px var(--orbit-glow));
+      pointer-events: none;
+      z-index: 2;
+      transition: background .6s
+    }
+
+    .orbit-spark-track {
+      position: absolute;
+      inset: 8%;
+      border-radius: 50%;
+      animation: link-orbit-light 16s linear infinite;
+      pointer-events: none;
+      z-index: 2
+    }
+
+    .orbit-spark-track span {
+      position: absolute;
+      left: 50%;
+      top: -4px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 9px white, 0 0 20px var(--orbit-glow), 0 0 32px var(--orbit-glow)
+    }
+
+    .model-card .center-core {
+      box-shadow: 0 0 0 7px #ffffff50, 0 8px 20px #94a6c126, 0 0 32px color-mix(in srgb, var(--orbit-glow), transparent 60%);
+      transition: box-shadow .8s
+    }
+
+    .model-card .pdca-node.active .node-inner {
+      box-shadow: 0 8px 25px #899bb429, 0 0 22px var(--c), inset 0 0 16px #fff;
+      transition: box-shadow .6s
+    }
+
+    .model-card .pdca-node.peak-glow .node-inner {
+      box-shadow: 0 9px 28px #899bb42b, 0 0 30px var(--c), 0 0 46px color-mix(in srgb, var(--c), transparent 45%), inset 0 0 20px #fff
+    }
+
+    .orbit-paused .orbit-light-trail,
+    .orbit-paused .orbit-spark-track {
+      animation-play-state: paused
+    }
+
+    .orbit.outer {
+      box-shadow: 0 0 16px #dcd5f530
+    }
+
+    .node-inner {
+      background: linear-gradient(145deg, white, #ffffffc9)
+    }
+
+    @keyframes link-orbit-light {
+      to {
+        transform: rotate(-360deg)
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+
+      .orbit-light-trail,
+      .orbit-spark-track {
+        animation: none !important
+      }
+
+      .orbit-spark-track {
+        display: none
+      }
+    }
+
+    .partner-detail.open .detail-content {
+      max-height: none;
+      padding: 0 17px 20px 64px;
+      overflow: visible
+    }
+
+    .partner-detail .gallery-heading {
+      font-size: 25px;
+      line-height: 1.2;
+      margin: 22px 0 16px;
+      color: #a57baa
+    }
+
+    .partner-detail .photos-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px
+    }
+
+    .partner-detail .photo-view {
+      aspect-ratio: 16/10
+    }
+
+    .partner-detail .photo-empty {
+      font-size: 21px
+    }
+
+    .partner-save {
+      min-height: 44px;
+      border: 1px solid white;
+      border-radius: 10px;
+      background: linear-gradient(120deg, #f4e2ef, #ebe6f9);
+      font: 700 22px 'TH Sarabun PSK';
+      color: #a083b4;
+      padding: 8px 17px;
+      cursor: pointer;
+      margin-top: 14px
+    }
+
+    .partner-detail .gallery-note {
+      font-size: 20px;
+      line-height: 1.3
+    }
+
+    .partner-detail .file-choice {
+      font-size: 20px
+    }
+
+    .partner-detail .photo-actions {
+      gap: 6px
+    }
+
+    @media(max-width:600px) {
+      .partner-detail.open .detail-content {
+        padding: 0 13px 18px
+      }
+
+      .partner-detail .photos-grid {
+        grid-template-columns: 1fr
+      }
+
+      .partner-detail .gallery-heading {
+        font-size: 24px
+      }
+    }
+
+    .link-panel {
+      position: relative
+    }
+
+    .link-panel.input {
+      --tint: #fbe9f1;
+      --accent: #e1b4cc;
+      --text: #a87998
+    }
+
+    .link-panel.output {
+      --tint: #e5f2ed;
+      --accent: #a8d1bc;
+      --text: #729a87
+    }
+
+    .pending-model {
+      position: relative;
+      min-height: 425px;
+      padding: 28px 15px 35px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 1px dashed #d6c9e7;
+      border-radius: 23px;
+      margin: 12px 6px 5px;
+      background: radial-gradient(ellipse, #fff9, transparent 75%)
+    }
+
+    .pending-model h3 {
+      font-size: 27px;
+      color: #aa94bf;
+      margin: 20px 0 9px
+    }
+
+    .pending-model p {
+      font-size: 23px;
+      line-height: 1.35;
+      color: #a6a2b4;
+      margin: 0
+    }
+
+    .pending-orbits {
+      width: 205px;
+      height: 180px;
+      position: relative;
+      display: grid;
+      place-items: center
+    }
+
+    .pending-orbits:before,
+    .pending-orbits:after {
+      content: '';
+      position: absolute;
+      inset: 9px;
+      border: 2px solid #d1c3ec;
+      border-radius: 50%;
+      transform: rotateX(50deg) rotate(-20deg);
+      box-shadow: 0 0 18px #eadffa
+    }
+
+    .pending-orbits:after {
+      transform: rotateY(50deg) rotate(30deg);
+      border-color: #c3dfe8
+    }
+
+    .pending-orbits span {
+      position: absolute;
+      inset: 0;
+      border: 1px dashed #dcd0e9;
+      border-radius: 50%;
+      animation: pending-turn 20s linear infinite
+    }
+
+    .pending-orbits i {
+      font: 600 16px Arial;
+      letter-spacing: 2px;
+      font-style: normal;
+      color: #ac98c6;
+      background: linear-gradient(140deg, #fff, #ece5f7);
+      border: 2px solid white;
+      border-radius: 50%;
+      width: 115px;
+      height: 115px;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 7px 0 #d8cbea, 0 0 30px #f8efff
+    }
+
+    .flex-outcome {
+      display: flex;
+      gap: 16px;
+      border-radius: 18px;
+      border: 1px solid white;
+      background: #ffffff95;
+      padding: 21px
+    }
+
+    .flex-outcome>b {
+      font: 500 26px Georgia;
+      color: #b2a3c7
+    }
+
+    .flex-outcome h3 {
+      font-size: 26px;
+      line-height: 1.13;
+      margin: 0 0 9px;
+      color: #9a84ad
+    }
+
+    .flex-outcome p {
+      display: block;
+      border: 0;
+      border-radius: 0;
+      background: none;
+      padding: 0;
+      font-size: 24px;
+      line-height: 1.3;
+      color: #8c93a3
+    }
+
+    .photos-grid {
+      grid-template-columns: 1fr 1fr
+    }
+
+    .link-topics button {
+      min-height: 90px
+    }
+
+    .link-outcome {
+      margin-top: 35px
+    }
+
+    .process-wrap {
+      box-shadow: 0 8px 0 #d8cbea, 0 0 32px #eee2fa
+    }
+
+    .link-panel:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 22px;
+      right: 22px;
+      height: 4px;
+      border-radius: 0 0 10px 10px;
+      background: linear-gradient(90deg, #e9b7ce, #b7b4e5, #a2daca)
+    }
+
+    @keyframes pending-turn {
+      to {
+        rotate: 360deg
+      }
+    }
+
+    @media(max-width:999px) {
+      .pending-model {
+        min-height: 370px
+      }
+
+      .link-outcome {
+        margin-top: 0
+      }
+    }
+
+    @media(max-width:600px) {
+      .photos-grid {
+        grid-template-columns: 1fr
+      }
+
+      .flex-outcome {
+        padding: 17px;
+        gap: 12px
+      }
+
+      .flex-outcome h3 {
+        font-size: 25px
+      }
+
+      .flex-outcome p {
+        font-size: 23px
+      }
+
+      .pending-model p {
+        font-size: 22px
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      * {
+        animation: none !important;
+        transition: none !important
+      }
+    }
+
+    .flexible-process-frame {
+      display: block;
+      width: 100%;
+      height: 560px;
+      border: 0;
+      border-radius: 22px;
+      background: radial-gradient(ellipse at center, #fff9, #f4eaff55);
+      margin-top: 12px
+    }
+
+    .process-wrap {
+      min-width: 0
+    }
+  </style>
+  <!-- —————————————————————————————-
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+—————————————————————————————-
+
+PREAMBLE
+The goals of the Open Font License (OFL) are to stimulate worldwide
+development of collaborative font projects, to support the font creation
+efforts of academic and linguistic communities, and to provide a free and
+open framework in which fonts may be shared and improved in partnership
+with others.
+
+The OFL allows the licensed fonts to be used, studied, modified and
+redistributed freely as long as they are not sold by themselves. The
+fonts, including any derivative works, can be bundled, embedded, 
+redistributed and/or sold with any software provided that any reserved
+names are not used by derivative works. The fonts and derivatives,
+however, cannot be released under any other type of license. The
+requirement for fonts to remain under this license does not apply
+to any document created using the fonts or their derivatives.
+
+DEFINITIONS
+"Font Software" refers to the set of files released by the Copyright
+Holder(s) under this license and clearly marked as such. This may
+include source files, build scripts and documentation.
+
+"Reserved Font Name" refers to any names specified as such after the
+copyright statement(s).
+
+"Original Version" refers to the collection of Font Software components as
+distributed by the Copyright Holder(s).
+
+"Modified Version" refers to any derivative made by adding to, deleting,
+or substituting — in part or in whole — any of the components of the
+Original Version, by changing formats or by porting the Font Software to a
+new environment.
+
+"Author" refers to any designer, engineer, programmer, technical
+writer or other person who contributed to the Font Software.
+
+PERMISSION & CONDITIONS
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of the Font Software, to use, study, copy, merge, embed, modify,
+redistribute, and sell modified and unmodified copies of the Font
+Software, subject to the following conditions:
+
+1) Neither the Font Software nor any of its individual components,
+in Original or Modified Versions, may be sold by itself.
+
+2) Original or Modified Versions of the Font Software may be bundled,
+redistributed and/or sold with any software, provided that each copy
+contains the above copyright notice and this license. These can be
+included either as stand-alone text files, human-readable headers or
+in the appropriate machine-readable metadata fields within text or
+binary files as long as those fields can be easily viewed by the user.
+
+3) No Modified Version of the Font Software may use the Reserved Font
+Name(s) unless explicit written permission is granted by the corresponding
+Copyright Holder. This restriction only applies to the primary font name as
+presented to the users.
+
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
+Software shall not be used to promote, endorse or advertise any
+Modified Version, except to acknowledge the contribution(s) of the
+Copyright Holder(s) and the Author(s) or with their explicit written
+permission.
+
+5) The Font Software, modified or unmodified, in part or in whole,
+must be distributed entirely under this license, and must not be
+distributed under any other license. The requirement for fonts to
+remain under this license does not apply to any document created
+using the Font Software.
+
+TERMINATION
+This license becomes null and void if any of the above conditions are
+not met.
+
+DISCLAIMER
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+OTHER DEALINGS IN THE FONT SOFTWARE.
+ -->
+<style>html,body{background:transparent!important}.arrow-chip{display:none!important}</style>
+<script>if(!/[?&]edit\b/.test(location.search))document.documentElement.classList.add('view-only')</script>
+<style>.view-only .asset-footer,.view-only .photo-actions,.view-only .gallery-remove{display:none!important}</style>
+</head>
+
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="eyebrow">FLEXIBLE CURRICULUM · LEARNING FOR EVERYONE</div>
+      <h1>หลักสูตรที่มีความยืดหยุ่น</h1>
+      <p>ออกแบบการเรียนรู้ให้สอดคล้องกับชีวิตจริง และเปิดโอกาสให้ผู้เรียนพัฒนาได้ตามศักยภาพ</p>
+      <div class="hero-line"></div>
+    </header>
+
+    <main class="layout"><svg id="link-flow" class="link-flow" aria-hidden="true"></svg>
+      <aside class="link-panel input">
+        <div class="link-head"><small>01 · INPUT</small>
+          <h2>ปัจจัยนำเข้า</h2>
+        </div>
+        <div class="link-topics"><button
+            data-link="input:0"><span>01</span><strong>กลุ่มเป้าหมาย</strong><i>↗</i></button><button
+            data-link="input:1"><span>02</span><strong>บุคลากร</strong><i>↗</i></button><button
+            data-link="input:2"><span>03</span><strong>ทรัพยากรและเครื่องมือ</strong><i>↗</i></button><button
+            data-link="input:3"><span>04</span><strong>นโยบายและข้อตกลงร่วม</strong><i>↗</i></button></div>
+      </aside>
+      <section class="process-wrap">
+        <div class="process-label"><small>02 · PROCESS</small>
+          <h2>กระบวนการดำเนินงาน</h2>
+        </div><iframe class="flexible-process-frame" title="โมเดล PDCA หลักสูตรที่มีความยืดหยุ่น"
+          sandbox="allow-scripts allow-same-origin" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;th&quot;&gt;
+
+&lt;head&gt;
+  
+  &lt;style&gt;
     html {
       -webkit-text-size-adjust: 100%;
       text-size-adjust: 100%
     }
-  </style>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>กระบวนการพัฒนาหลักสูตรที่มีความยืดหยุ่น | PDCA</title>
-  <style>
+  &lt;/style&gt;
+  &lt;meta charset=&quot;utf-8&quot; /&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;
+  &lt;title&gt;กระบวนการพัฒนาหลักสูตรที่มีความยืดหยุ่น | PDCA&lt;/title&gt;
+  &lt;style&gt;
     :root {
       --ink: #3f405d;
       --paper: #fff9f4;
@@ -31,7 +2334,7 @@
       min-height: auto;
       color: var(--ink);
       background: transparent;
-      font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+      font-family: &#x27;TH SarabunPSK Web&#x27;, &#x27;TH SarabunPSK&#x27;, Tahoma, sans-serif;
       overflow-x: hidden;
     }
 
@@ -180,7 +2483,7 @@
 
     .core::before,
     .core::after {
-      content: "";
+      content: &quot;&quot;;
       position: absolute;
       border: 1px solid #ffffffa8;
       border-radius: 50%;
@@ -244,7 +2547,7 @@
     }
 
     .node.active::after {
-      content: "";
+      content: &quot;&quot;;
       position: absolute;
       inset: -14px;
       z-index: -1;
@@ -256,7 +2559,7 @@
 
     .node b {
       display: block;
-      font: 700 3rem/1 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+      font: 700 3rem/1 &#x27;TH SarabunPSK Web&#x27;, &#x27;TH SarabunPSK&#x27;, Tahoma, sans-serif;
       color: var(--node);
       text-shadow: 0 2px 0 #fff;
     }
@@ -349,7 +2652,7 @@
       border-radius: 16px;
       background: var(--current);
       color: #fff;
-      font: 700 1.65rem/1 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+      font: 700 1.65rem/1 &#x27;TH SarabunPSK Web&#x27;, &#x27;TH SarabunPSK&#x27;, Tahoma, sans-serif;
     }
 
     h2 {
@@ -708,74 +3011,91 @@
         opacity: 1;
       }
     }
-  </style>
-</head>
+  &lt;/style&gt;
+&lt;style&gt;
+@font-face{font-family:&#x27;TH SarabunPSK&#x27;;src:url('/fonts/THSarabunPSK.ttf')}
+html{font-size:20px}body{color:#514c70;overflow:hidden;font-family:&#x27;TH SarabunPSK&#x27;,sans-serif}main{width:100%;max-width:640px;margin:0 auto;padding:12px 10px}header{padding:0;text-align:center}header .eyebrow,header p{display:none}header h1{font-size:25px;color:#73618c;text-shadow:none;margin:4px 10px 0;line-height:1.2}.scene{height:440px;min-height:0;transform:none;margin:0;isolation:isolate}.core{width:130px;height:130px}.core strong{font-size:23px;width:125px;line-height:1.12}.core small{font-size:14px}.node{width:clamp(88px,23vw,116px);height:110px;margin:-55px calc(clamp(88px,23vw,116px) / -2);border-radius:26px}.node b{font-size:43px}.node span{font-size:17px;line-height:1.03;margin-top:2px}.p{--x:-27vw;--y:-130px}.d{--x:27vw;--y:-130px}.c{--x:27vw;--y:130px}.a{--x:-27vw;--y:130px}.orbit-flow{width:87%;height:390px}.orbit-flow path{stroke:#c1b0e4}.connector{display:none}.tips{color:#746586;margin:0;display:flex;justify-content:center;font-size:18px}.tips span{background:#f2eaf9;padding:7px 12px}.tips span+span{display:none}.modal{padding:8px;border-radius:20px;background:#eae2f0ad}.modal-card{background:linear-gradient(135deg,#fff4fa,#edf6ff);color:#514c70;padding:22px 18px;border:2px solid white;box-shadow:0 15px 35px #88729c40}.modal-card h2,.modal-card h3,.modal-card li{color:#514c70}.modal-card h2{font-size:25px}.modal-card ul{font-size:23px;line-height:1.35}.modal-card h3{font-size:24px}.modal-close{background:#e3d6f3;color:#635076}.node:focus-visible{outline:3px solid #8362ad;outline-offset:5px}
+@media(min-width:640px){.p,.a{--x:-165px}.d,.c{--x:165px}}
+&lt;/style&gt;&lt;style&gt;
+.scene{--halo:#d6c4f8}.scene:before{content:&#x27;&#x27;;position:absolute;inset:32px 10px;border-radius:50%;background:conic-gradient(from 0deg,#ffc7dd66,#baeaff66,#c8f7df66,#d9c5ff77,#ffc7dd66);filter:blur(24px);opacity:.7;animation:pastelHalo 14s linear infinite;pointer-events:none}.node{animation:none;transition:box-shadow .4s,filter .4s;box-shadow:0 10px 18px #9c82b62b,0 0 22px var(--node),inset 0 0 0 5px var(--node)}.node.orbit-lit{filter:brightness(1.06);box-shadow:0 12px 25px #9c82b644,0 0 18px 6px var(--node),0 0 40px var(--node),inset 0 0 0 6px var(--node)}.core{box-shadow:0 15px 35px #a377b34f,0 0 30px #eacaff,inset 8px 8px 15px #ffffff75}.core:before{border:3px solid #ffd3e8;box-shadow:0 0 13px #f9c5e3}.core:after{border:2px solid #b9e9f4;box-shadow:0 0 14px #cfb8ff}.orbit-flow{filter:drop-shadow(0 0 7px #c7adeb)}.motion-controls{display:flex;justify-content:center;gap:10px;align-items:center;position:relative;z-index:5}.motion-controls button{font:700 20px &#x27;TH SarabunPSK&#x27;;border:1px solid white;border-radius:20px;padding:7px 20px;background:linear-gradient(120deg,#f7dceb,#dedafa,#dcf4f7);color:#6b567f;box-shadow:0 4px 12px #c9b5dc55;cursor:pointer;min-height:44px}.motion-controls span{font-size:18px;color:#756283}.motion-paused .orbit-flow,.motion-paused .scene:before,.motion-paused .core,.motion-paused .core:before,.motion-paused .core:after,.motion-paused .spark,.motion-paused .node:after{animation-play-state:paused}
+@keyframes pastelHalo{to{transform:rotate(360deg)}}
+@media(max-width:380px){.node{width:80px;height:98px;margin:-49px -40px}.node span{font-size:15px}.core{width:94px;height:94px}.core small{font-size:11px}.core strong{width:90px;font-size:19px}.core:after{inset:-22px}.motion-controls{gap:5px}.motion-controls span{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.scene:before{animation:none}}
+&lt;/style&gt;&lt;style&gt;
+.orbit-rich.orbit-flow{width:96%;height:416px;animation:none;overflow:visible;filter:none}
+.orbit-rich ellipse{fill:none;stroke:url(#pastel-orbit)}
+.orbit-rich .orbit-soft{stroke-width:12;opacity:.23;filter:blur(7px)}
+.orbit-rich .orbit-outline{stroke-width:2.4;opacity:.6}
+.orbit-rich .orbit-dashes{stroke-width:1.4;stroke-dasharray:2 11;opacity:.7;animation:orbitDashTravel 22s linear infinite reverse}
+.orbit-rich .orbit-inner{stroke-width:1;stroke-dasharray:18 8 3 8;opacity:.38;animation:orbitDashTravel 30s linear infinite}
+.orbit-rich .orbit-stream{stroke-width:4;stroke-linecap:round;stroke-dasharray:55 300;animation:orbitDashTravel 9s linear infinite;filter:drop-shadow(0 0 5px #b5b5f3)}
+.orbit-rich .orbit-runner{transform-origin:250px 220px;animation:orbitRunnerSpin 16s linear infinite}
+.orbit-rich .runner-tail{stroke:var(--runner);stroke-width:5;stroke-dasharray:none;animation:none;filter:drop-shadow(0 0 5px var(--runner));opacity:.85}
+.orbit-rich .runner-arrow{stroke:var(--runner);stroke-width:3;stroke-linejoin:round;stroke-linecap:round;fill:none;stroke-dasharray:none;animation:none;filter:drop-shadow(0 0 4px var(--runner))}
+.orbit-rich .runner-star{fill:white;stroke:var(--runner);stroke-width:2;filter:drop-shadow(0 0 5px var(--runner))}
+.motion-paused .orbit-rich *{animation-play-state:paused}
+@keyframes orbitDashTravel{to{stroke-dashoffset:-1420}}
+@keyframes orbitRunnerSpin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.orbit-rich *{animation:none!important}}
+&lt;/style&gt;&lt;/head&gt;
 
-<body>
-  <div class="orb one"></div>
-  <div class="orb two"></div>
-  <div class="orb three"></div>
-  <main>
-    <header>
-      <span class="eyebrow">ขั้นตอนการพัฒนาหลักสูตรและการจัดการเรียนรู้</span>
-      <h1>กระบวนการพัฒนาหลักสูตรที่มีความยืดหยุ่น</h1>
-      <p>กระบวนการ PDCA เพื่อการเรียนรู้ที่ต่อเนื่อง เชื่อมโยง และไม่ทิ้งใครไว้ข้างหลัง</p>
-    </header>
-    <section class="scene" aria-label="โมเดล PDCA แบบอินเทอร์แอกทีฟ">
-      <svg class="orbit-flow" viewBox="0 0 650 650" aria-hidden="true">
-        <defs>
-          <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
-            <path d="M0,0 L8,3.5 L0,7 Z" fill="#ffffff"></path>
-          </marker>
-        </defs>
-        <path d="M70 165 A300 300 0 0 1 580 165" marker-end="url(#arrow)"></path>
-        <path d="M580 165 A300 300 0 0 1 580 485" marker-end="url(#arrow)"></path>
-        <path d="M580 485 A300 300 0 0 1 70 485" marker-end="url(#arrow)"></path>
-        <path d="M70 485 A300 300 0 0 1 70 165" marker-end="url(#arrow)"></path>
-        <circle class="bead bead-p" cx="70" cy="165" r="8"></circle>
-        <circle class="bead bead-d" cx="580" cy="165" r="8"></circle>
-        <circle class="bead bead-c" cx="580" cy="485" r="8"></circle>
-        <circle class="bead bead-a" cx="70" cy="485" r="8"></circle>
-      </svg>
-      <span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span
-        class="spark s4"></span>
-      <i class="connector l1"></i><i class="connector l2"></i><i class="connector l3"></i><i class="connector l4"></i>
-      <div class="core"><small>หัวใจของการจัดการศึกษา</small><strong>หลักสูตรที่มี<br>ความยืดหยุ่น</strong></div>
-      <button class="node p active" data-step="P"
-        type="button"><b>P</b><span>วิเคราะห์และ<br>ทำข้อตกลงเบื้องต้น</span></button>
-      <button class="node d" data-step="D" type="button"><b>D</b><span>ออกแบบแผน<br>และดำเนินการ</span></button>
-      <button class="node c" data-step="C" type="button"><b>C</b><span>วัดและ<br>ประเมินผล</span></button>
-      <button class="node a" data-step="A" type="button"><b>A</b><span>สรุปผลและ<br>รายงาน</span></button>
+&lt;body&gt;
+  &lt;div class=&quot;orb one&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;orb two&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;orb three&quot;&gt;&lt;/div&gt;
+  &lt;main&gt;
+    &lt;header&gt;
+      &lt;span class=&quot;eyebrow&quot;&gt;ขั้นตอนการพัฒนาหลักสูตรและการจัดการเรียนรู้&lt;/span&gt;
+      &lt;h1&gt;กระบวนการพัฒนาหลักสูตรที่มีความยืดหยุ่น&lt;/h1&gt;
+      &lt;p&gt;กระบวนการ PDCA เพื่อการเรียนรู้ที่ต่อเนื่อง เชื่อมโยง และไม่ทิ้งใครไว้ข้างหลัง&lt;/p&gt;
+    &lt;/header&gt;
+    &lt;section class=&quot;scene&quot; aria-label=&quot;โมเดล PDCA แบบอินเทอร์แอกทีฟ&quot;&gt;
+&lt;svg class=&quot;orbit-flow orbit-rich&quot; viewBox=&quot;0 0 500 440&quot; preserveAspectRatio=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;
+&lt;defs&gt;&lt;linearGradient id=&quot;pastel-orbit&quot; x1=&quot;0&quot; y1=&quot;0&quot; x2=&quot;1&quot; y2=&quot;1&quot;&gt;&lt;stop stop-color=&quot;#f2a9ce&quot;/&gt;&lt;stop offset=&quot;.35&quot; stop-color=&quot;#bca5ed&quot;/&gt;&lt;stop offset=&quot;.68&quot; stop-color=&quot;#8ed7ed&quot;/&gt;&lt;stop offset=&quot;1&quot; stop-color=&quot;#9edfc4&quot;/&gt;&lt;/linearGradient&gt;&lt;/defs&gt;
+&lt;ellipse class=&quot;orbit-soft&quot; cx=&quot;250&quot; cy=&quot;220&quot; rx=&quot;220&quot; ry=&quot;190&quot;/&gt;
+&lt;ellipse class=&quot;orbit-outline&quot; cx=&quot;250&quot; cy=&quot;220&quot; rx=&quot;220&quot; ry=&quot;190&quot;/&gt;
+&lt;ellipse class=&quot;orbit-dashes&quot; cx=&quot;250&quot; cy=&quot;220&quot; rx=&quot;235&quot; ry=&quot;204&quot;/&gt;
+&lt;ellipse class=&quot;orbit-inner&quot; cx=&quot;250&quot; cy=&quot;220&quot; rx=&quot;199&quot; ry=&quot;171&quot;/&gt;
+&lt;ellipse class=&quot;orbit-stream&quot; cx=&quot;250&quot; cy=&quot;220&quot; rx=&quot;220&quot; ry=&quot;190&quot;/&gt;
+&lt;g class=&quot;orbit-runner runner-0&quot; style=&quot;--runner:#efa6cb;animation-delay:-0s&quot;&gt;&lt;path class=&quot;runner-tail&quot; d=&quot;M250 30 A220 190 0 0 1 305 36&quot;/&gt;&lt;circle class=&quot;runner-star&quot; cx=&quot;250&quot; cy=&quot;30&quot; r=&quot;5&quot;/&gt;&lt;/g&gt;&lt;g class=&quot;orbit-runner runner-1&quot; style=&quot;--runner:#bea5ef;animation-delay:-4s&quot;&gt;&lt;path class=&quot;runner-tail&quot; d=&quot;M250 30 A220 190 0 0 1 305 36&quot;/&gt;&lt;circle class=&quot;runner-star&quot; cx=&quot;250&quot; cy=&quot;30&quot; r=&quot;5&quot;/&gt;&lt;/g&gt;&lt;g class=&quot;orbit-runner runner-2&quot; style=&quot;--runner:#83d7ec;animation-delay:-8s&quot;&gt;&lt;path class=&quot;runner-tail&quot; d=&quot;M250 30 A220 190 0 0 1 305 36&quot;/&gt;&lt;circle class=&quot;runner-star&quot; cx=&quot;250&quot; cy=&quot;30&quot; r=&quot;5&quot;/&gt;&lt;/g&gt;&lt;g class=&quot;orbit-runner runner-3&quot; style=&quot;--runner:#97dcb7;animation-delay:-12s&quot;&gt;&lt;path class=&quot;runner-tail&quot; d=&quot;M250 30 A220 190 0 0 1 305 36&quot;/&gt;&lt;circle class=&quot;runner-star&quot; cx=&quot;250&quot; cy=&quot;30&quot; r=&quot;5&quot;/&gt;&lt;/g&gt;&lt;/svg&gt;
+      &lt;span class=&quot;spark s1&quot;&gt;&lt;/span&gt;&lt;span class=&quot;spark s2&quot;&gt;&lt;/span&gt;&lt;span class=&quot;spark s3&quot;&gt;&lt;/span&gt;&lt;span
+        class=&quot;spark s4&quot;&gt;&lt;/span&gt;
+      &lt;i class=&quot;connector l1&quot;&gt;&lt;/i&gt;&lt;i class=&quot;connector l2&quot;&gt;&lt;/i&gt;&lt;i class=&quot;connector l3&quot;&gt;&lt;/i&gt;&lt;i class=&quot;connector l4&quot;&gt;&lt;/i&gt;
+      &lt;div class=&quot;core&quot;&gt;&lt;small&gt;หัวใจของการจัดการศึกษา&lt;/small&gt;&lt;strong&gt;หลักสูตรที่มี&lt;br&gt;ความยืดหยุ่น&lt;/strong&gt;&lt;/div&gt;
+      &lt;button class=&quot;node p active&quot; data-step=&quot;P&quot;
+        type=&quot;button&quot;&gt;&lt;b&gt;P&lt;/b&gt;&lt;span&gt;วิเคราะห์และ&lt;br&gt;ทำข้อตกลงเบื้องต้น&lt;/span&gt;&lt;/button&gt;
+      &lt;button class=&quot;node d&quot; data-step=&quot;D&quot; type=&quot;button&quot;&gt;&lt;b&gt;D&lt;/b&gt;&lt;span&gt;ออกแบบแผน&lt;br&gt;และดำเนินการ&lt;/span&gt;&lt;/button&gt;
+      &lt;button class=&quot;node c&quot; data-step=&quot;C&quot; type=&quot;button&quot;&gt;&lt;b&gt;C&lt;/b&gt;&lt;span&gt;วัดและ&lt;br&gt;ประเมินผล&lt;/span&gt;&lt;/button&gt;
+      &lt;button class=&quot;node a&quot; data-step=&quot;A&quot; type=&quot;button&quot;&gt;&lt;b&gt;A&lt;/b&gt;&lt;span&gt;สรุปผลและ&lt;br&gt;รายงาน&lt;/span&gt;&lt;/button&gt;
 
-      <!-- POPUP รายละเอียดแต่ละขั้น -->
-      <div class="modal" id="modal" hidden>
-        <div class="modal-card" id="detail" style="--current:var(--p)" role="dialog" aria-modal="true"
-          aria-labelledby="detailTitle" tabindex="-1"></div>
-      </div>
-    </section>
-    <div class="tips"><span>แตะ P · D · C · A เพื่อเปิดรายละเอียด</span><span>หลักสูตรที่ต่อเนื่องและเชื่อมโยง</span>
-    </div>
-  </main>
-  <script>
+      &lt;!-- POPUP รายละเอียดแต่ละขั้น --&gt;
+      &lt;div class=&quot;modal&quot; id=&quot;modal&quot; hidden&gt;
+        &lt;div class=&quot;modal-card&quot; id=&quot;detail&quot; style=&quot;--current:var(--p)&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot;
+          aria-labelledby=&quot;detailTitle&quot; tabindex=&quot;-1&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+    &lt;div class=&quot;motion-controls&quot;&gt;&lt;button id=&quot;orbit-toggle&quot; type=&quot;button&quot; aria-pressed=&quot;true&quot;&gt;Ⅱ หยุดหมุน&lt;/button&gt;&lt;span&gt;แตะ P · D · C · A เพื่ออ่าน&lt;/span&gt;&lt;/div&gt;
+  &lt;/main&gt;
+  &lt;script&gt;
     const data = {
-      P: { title: 'วิเคราะห์และทำข้อตกลงเบื้องต้น', color: 'var(--p)', items: [['ระบุความจำเป็น', 'วิเคราะห์ปัญหาและข้อจำกัดด้านเศรษฐกิจ สุขภาพ กิจกรรม และกีฬาของผู้เรียน เพื่อป้องกันการหลุดออกจากระบบ'], ['ประชุมสร้างความเข้าใจ', 'ครูและผู้เกี่ยวข้องวางความเข้าใจร่วมกันเรื่องรายวิชา ตารางเรียน การวัดผล และเงื่อนไขการมาเรียนที่ยืดหยุ่น']] },
-      D: { title: 'การออกแบบแผนการเรียนรู้และการดำเนินการ', color: 'var(--d)', items: [['การออกแบบแผนการเรียนรู้เฉพาะบุคคล', 'ครูประจำวิชาจัดทำ Course Syllabus ที่ยืดหยุ่นให้สอดคล้องกับสภาพปัญหาและข้อจำกัดของผู้เรียน'], ['การดำเนินการและการสนับสนุน', 'เตรียมสื่อพร้อมใช้ มีครูที่ปรึกษาและครูแนะแนวให้คำปรึกษารายบุคคล และบูรณาการทักษะหรือประสบการณ์จากอาชีพและกิจกรรมเป็นส่วนหนึ่งของการประเมินผล']] },
-      C: { title: 'การวัดและประเมินผล', color: 'var(--c)', items: [['ติดตามและประเมินผล', 'ใช้วิธีวัดและประเมินผลที่ยืดหยุ่นและหลากหลาย ให้สอดคล้องกับรูปแบบการเรียนรู้ ความพร้อม และข้อจำกัดเฉพาะของผู้เรียนแต่ละคน']] },
-      A: { title: 'สรุปผลและรายงาน', color: 'var(--a)', items: [['สรุปผลและพัฒนาต่อยอด', 'สรุปผลการดำเนินการ แล้วนำข้อมูลมาปรับปรุงและพัฒนาแนวทางช่วยเหลือผู้เรียนอย่างต่อเนื่อง เพื่อให้หลักสูตรเชื่อมโยงและตอบโจทย์ยิ่งขึ้น']] }
+      P: { title: &#x27;วิเคราะห์และทำข้อตกลงเบื้องต้น&#x27;, color: &#x27;var(--p)&#x27;, items: [[&#x27;ระบุความจำเป็น&#x27;, &#x27;วิเคราะห์ปัญหาและข้อจำกัดด้านเศรษฐกิจ สุขภาพ กิจกรรม และกีฬาของผู้เรียน เพื่อป้องกันการหลุดออกจากระบบ&#x27;], [&#x27;ประชุมสร้างความเข้าใจ&#x27;, &#x27;ครูและผู้เกี่ยวข้องวางความเข้าใจร่วมกันเรื่องรายวิชา ตารางเรียน การวัดผล และเงื่อนไขการมาเรียนที่ยืดหยุ่น&#x27;]] },
+      D: { title: &#x27;การออกแบบแผนการเรียนรู้และการดำเนินการ&#x27;, color: &#x27;var(--d)&#x27;, items: [[&#x27;การออกแบบแผนการเรียนรู้เฉพาะบุคคล&#x27;, &#x27;ครูประจำวิชาจัดทำ Course Syllabus ที่ยืดหยุ่นให้สอดคล้องกับสภาพปัญหาและข้อจำกัดของผู้เรียน&#x27;], [&#x27;การดำเนินการและการสนับสนุน&#x27;, &#x27;เตรียมสื่อพร้อมใช้ มีครูที่ปรึกษาและครูแนะแนวให้คำปรึกษารายบุคคล และบูรณาการทักษะหรือประสบการณ์จากอาชีพและกิจกรรมเป็นส่วนหนึ่งของการประเมินผล&#x27;]] },
+      C: { title: &#x27;การวัดและประเมินผล&#x27;, color: &#x27;var(--c)&#x27;, items: [[&#x27;ติดตามและประเมินผล&#x27;, &#x27;ใช้วิธีวัดและประเมินผลที่ยืดหยุ่นและหลากหลาย ให้สอดคล้องกับรูปแบบการเรียนรู้ ความพร้อม และข้อจำกัดเฉพาะของผู้เรียนแต่ละคน&#x27;]] },
+      A: { title: &#x27;สรุปผลและรายงาน&#x27;, color: &#x27;var(--a)&#x27;, items: [[&#x27;สรุปผลและพัฒนาต่อยอด&#x27;, &#x27;สรุปผลการดำเนินการ แล้วนำข้อมูลมาปรับปรุงและพัฒนาแนวทางช่วยเหลือผู้เรียนอย่างต่อเนื่อง เพื่อให้หลักสูตรเชื่อมโยงและตอบโจทย์ยิ่งขึ้น&#x27;]] }
     };
-    const detail = document.getElementById('detail');
-    const modal = document.getElementById('modal');
+    const detail = document.getElementById(&#x27;detail&#x27;);
+    const modal = document.getElementById(&#x27;modal&#x27;);
     let lastNode = null;
 
     function openStep(btn) {
       const x = data[btn.dataset.step];
       lastNode = btn;
-      document.querySelectorAll('.node').forEach(n => n.classList.toggle('active', n === btn));
-      detail.style.setProperty('--current', x.color);
+      document.querySelectorAll(&#x27;.node&#x27;).forEach(n =&gt; n.classList.toggle(&#x27;active&#x27;, n === btn));
+      detail.style.setProperty(&#x27;--current&#x27;, x.color);
       detail.innerHTML =
-        `<button type="button" class="modal-close" aria-label="ปิด">&#10005;</button>` +
-        `<div class="detail-top"><span class="tag">${btn.dataset.step}</span><h2 id="detailTitle">${x.title}</h2></div>` +
-        `<ul>${x.items.map(([head, text]) => `<li><h3>${head}:</h3> ${text}</li>`).join('')}</ul>`;
+        `&lt;button type=&quot;button&quot; class=&quot;modal-close&quot; aria-label=&quot;ปิด&quot;&gt;&amp;#10005;&lt;/button&gt;` +
+        `&lt;div class=&quot;detail-top&quot;&gt;&lt;span class=&quot;tag&quot;&gt;${btn.dataset.step}&lt;/span&gt;&lt;h2 id=&quot;detailTitle&quot;&gt;${x.title}&lt;/h2&gt;&lt;/div&gt;` +
+        `&lt;ul&gt;${x.items.map(([head, text]) =&gt; `&lt;li&gt;&lt;h3&gt;${head}:&lt;/h3&gt; ${text}&lt;/li&gt;`).join(&#x27;&#x27;)}&lt;/ul&gt;`;
       modal.hidden = false;
       detail.focus();
     }
@@ -785,29 +3105,134 @@
       if (lastNode) lastNode.focus();
     }
 
-    document.querySelectorAll('.node').forEach(btn => btn.addEventListener('click', () => openStep(btn)));
+    document.querySelectorAll(&#x27;.node&#x27;).forEach(btn =&gt; btn.addEventListener(&#x27;click&#x27;, () =&gt; openStep(btn)));
 
     /* แตะพื้นหลังหรือปุ่มกากบาทเพื่อปิด */
-    modal.addEventListener('click', e => {
-      if (e.target === modal || e.target.closest('.modal-close')) closeModal();
+    modal.addEventListener(&#x27;click&#x27;, e =&gt; {
+      if (e.target === modal || e.target.closest(&#x27;.modal-close&#x27;)) closeModal();
     });
 
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && !modal.hidden) closeModal();
+    document.addEventListener(&#x27;keydown&#x27;, e =&gt; {
+      if (e.key === &#x27;Escape&#x27; &amp;&amp; !modal.hidden) closeModal();
     });
 
-    /* แจ้งความสูงจริงให้หน้าแม่ปรับ iframe ตามเนื้อหา ไม่ให้มีแถบเลื่อนซ้อน */
-    function reportHeight() {
-      requestAnimationFrame(() => {
-        const el = document.querySelector('main');
-        const height = Math.ceil(el ? el.getBoundingClientRect().height + 16 : document.body.scrollHeight);
-        window.parent.postMessage({ type: 'd2-flexible-model-height', height }, window.location.origin);
-      });
-    }
-    new ResizeObserver(reportHeight).observe(document.body);
-    window.addEventListener('load', reportHeight);
-    document.querySelectorAll('.node').forEach(b => b.addEventListener('click', reportHeight));
+  
+const orbitNodes=[&#x27;P&#x27;,&#x27;D&#x27;,&#x27;C&#x27;,&#x27;A&#x27;].map(step=&gt;document.querySelector(`.node[data-step=&quot;${step}&quot;]`));
+const orbitScene=document.querySelector(&#x27;.scene&#x27;);
+const orbitToggle=document.getElementById(&#x27;orbit-toggle&#x27;);
+const motionPreference=matchMedia(&#x27;(prefers-reduced-motion: reduce)&#x27;);
+let orbitPlaying=!motionPreference.matches,orbitAngle=-Math.PI/2,orbitLast=0,orbitHover=false,orbitFocus=false;
+let orbitWidth=orbitScene.clientWidth;
+new ResizeObserver(()=&gt;{orbitWidth=orbitScene.clientWidth;placeOrbit()}).observe(orbitScene);
+function placeOrbit(){const small=orbitWidth&lt;=360;const radius=Math.max(65,Math.min(215,orbitWidth/2-(small?49:68)));orbitNodes.forEach((node,i)=&gt;{const a=orbitAngle+i*Math.PI/2;node.style.setProperty(&#x27;--x&#x27;,`${Math.cos(a)*radius}px`);node.style.setProperty(&#x27;--y&#x27;,`${Math.sin(a)*145}px`);node.classList.toggle(&#x27;orbit-lit&#x27;,Math.sin(a)&lt;-.55)})}
+function syncOrbit(){orbitToggle.textContent=orbitPlaying?&#x27;Ⅱ หยุดหมุน&#x27;:&#x27;▶ หมุนโมเดล&#x27;;orbitToggle.setAttribute(&#x27;aria-pressed&#x27;,String(orbitPlaying))}
+orbitToggle.addEventListener(&#x27;click&#x27;,()=&gt;{orbitPlaying=!orbitPlaying;syncOrbit()});
+orbitNodes.forEach(node=&gt;{node.addEventListener(&#x27;pointerenter&#x27;,()=&gt;orbitHover=true);node.addEventListener(&#x27;pointerleave&#x27;,()=&gt;orbitHover=false);node.addEventListener(&#x27;focus&#x27;,()=&gt;orbitFocus=true);node.addEventListener(&#x27;blur&#x27;,()=&gt;orbitFocus=false)});
+motionPreference.addEventListener(&#x27;change&#x27;,e=&gt;{orbitPlaying=!e.matches;syncOrbit()});
+function animateOrbit(time){const delta=orbitLast?Math.min(time-orbitLast,50):0;orbitLast=time;const paused=!orbitPlaying||orbitHover||orbitFocus||!modal.hidden||document.hidden;document.body.classList.toggle(&#x27;motion-paused&#x27;,paused);if(!paused){orbitAngle-=delta/40000*Math.PI*2;placeOrbit()}requestAnimationFrame(animateOrbit)}
+placeOrbit();syncOrbit();requestAnimationFrame(animateOrbit);
+&lt;/script&gt;
+&lt;/body&gt;&lt;/html&gt;"></iframe>
+      </section>
+      <aside class="link-panel output">
+        <div class="link-head"><small>03 · OUTPUT</small>
+          <h2>ผลผลิต</h2>
+        </div>
+        <div class="link-topics"><button
+            data-link="output:0"><span>01</span><strong>หลักสูตรและแผนการเรียนรู้ที่ยืดหยุ่น</strong><i>↗</i></button><button
+            data-link="output:1"><span>02</span><strong>ระบบสนับสนุนและช่วยเหลือ</strong><i>↗</i></button><button
+            data-link="output:2"><span>03</span><strong>เกณฑ์การวัดและประเมินผลทางเลือก</strong><i>↗</i></button><button
+            data-link="output:3"><span>04</span><strong>ระบบนิเวศการเรียนรู้ (Learning
+              Ecosystem)</strong><i>↗</i></button></div>
+      </aside>
+      <section class="link-outcome"><small>04 · OUTCOME</small>
+        <h2>ผลลัพธ์ที่เกิดกับผู้เรียนและสถานศึกษา</h2>
+        <div class="outcome-grid">
+          <article class="flex-outcome"><b>01</b>
+            <div>
+              <h3>การคงอยู่ในระบบการศึกษา (Retention)</h3>
+              <p>ลดอัตราการหลุดออกจากระบบการศึกษา (Drop-out) และทำให้นักเรียนกลุ่มเสี่ยงสามารถศึกษาต่อจนจบหลักสูตรได้
+              </p>
+            </div>
+          </article>
+          <article class="flex-outcome"><b>02</b>
+            <div>
+              <h3>ความเสมอภาคและโอกาสทางการศึกษา</h3>
+              <p>ผู้เรียนที่มีข้อจำกัดด้านชีวิตสามารถเข้าถึงการศึกษาที่มีคุณภาพได้อย่างเท่าเทียม
+                โดยไม่ต้องแลกอนาคตทางการศึกษากับภาระทางเศรษฐกิจ สุขภาพ หรือกีฬา</p>
+            </div>
+          </article>
+          <article class="flex-outcome"><b>03</b>
+            <div>
+              <h3>สมรรถนะและความภาคภูมิใจของผู้เรียน</h3>
+              <p>ผู้เรียนได้รับการพัฒนาที่สอดคล้องกับศักยภาพจริง
+                สามารถต่อยอดความรู้จากทักษะอาชีพหรือประสบการณ์ภายนอกห้องเรียนมาสู่ความสำเร็จในการเรียน</p>
+            </div>
+          </article>
+          <article class="flex-outcome"><b>04</b>
+            <div>
+              <h3>วัฒนธรรมองค์กรที่ยืดหยุ่น</h3>
+              <p>
+                โรงเรียนมีระบบบริหารจัดการหลักสูตรและฐานข้อมูลเพื่อการพัฒนาความช่วยเหลือผู้เรียนอย่างต่อเนื่องและยั่งยืน
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+    <div class="asset-footer"><span id="asset-status">พื้นที่ภาพพร้อมสำหรับเพิ่มรูปภายหลัง</span><button
+        id="save-linkage">บันทึก HTML พร้อมรูป</button></div>
+    <dialog id="link-modal" aria-labelledby="link-modal-title">
+      <div id="link-modal-content"></div>
+    </dialog>
+    <script id="link-saved-images" type="application/json">{}</script>
+
+    <div class="popup-overlay" id="detailPopup" aria-hidden="true">
+      <div class="popup-card" id="popupCard" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
+        <button class="popup-close" id="popupClose" aria-label="ปิด">×</button>
+        <div class="popup-top">
+          <div class="popup-badge" id="infoBadge">P</div>
+          <div class="popup-head">
+            <h2 id="infoTitle"></h2>
+            <p id="infoSubtitle"></p>
+          </div>
+        </div>
+        <div class="description" id="infoDescription"></div>
+        <div class="section-label">องค์ประกอบและรายละเอียดสำคัญ</div>
+        <div class="details" id="details"></div>
+        <div class="flow-note"><strong>PDCA</strong> เชื่อมโยงเป็นวงจรต่อเนื่อง
+          โดยผลจากการประเมินและการปรับปรุงในแต่ละรอบจะย้อนกลับไปเป็นข้อมูลสำหรับการวางแผนและพัฒนาหลักสูตรในรอบถัดไป
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">INPUT → PROCESS → OUTPUT → OUTCOME · โอกาสทางการเรียนรู้ที่ยืดหยุ่นและเท่าเทียม</div>
+  </div>
+
+  <script>const linkInput = [{ "title": "กลุ่มเป้าหมาย", "list": ["ผู้เรียนที่มีข้อจำกัดด้านเศรษฐกิจ สุขภาพ หรือความพิการ ซึ่งมีความเสี่ยงในการหลุดออกจากระบบการศึกษา (Drop-out)", "ผู้เรียนที่เข้าร่วมกิจกรรมกีฬาและต้องเข้าร่วมการแข่งขันอยู่บ่อยครั้ง"], "count": 0 }, { "title": "บุคลากร", "list": ["ผู้บริหาร ครูประจำวิชา ครูที่ปรึกษา และครูแนะแนว"], "count": 0 }, { "title": "ทรัพยากรและเครื่องมือ", "list": ["ประมวลรายวิชา (Course Syllabus) และตารางเรียนที่ยืดหยุ่น", "สื่อการเรียนรู้ที่พร้อมใช้งานและเหมาะสมกับรูปแบบที่หลากหลาย"], "count": 0 }, { "title": "นโยบายและข้อตกลงร่วม", "list": ["ข้อตกลงเบื้องต้นเกี่ยวกับเงื่อนไขการมาเรียน การวัดและประเมินผล และระบบการให้คำปรึกษารายบุคคล"], "count": 0 }], linkOutput = [{ "title": "หลักสูตรและแผนการเรียนรู้ที่ยืดหยุ่น", "list": ["ประมวลรายวิชาและแผนการจัดการเรียนรู้เฉพาะบุคคล (Individualized Learning Plan) ที่สอดคล้องกับข้อจำกัดของผู้เรียนรายบุคคล"], "count": 4 }, { "title": "ระบบสนับสนุนและช่วยเหลือ", "list": ["ระบบครูที่ปรึกษาและครูแนะแนวสำหรับการให้คำปรึกษารายบุคคล รวมถึงสื่อการเรียนรู้ที่เอื้อต่อการเรียนแบบยืดหยุ่น"], "count": 4 }, { "title": "เกณฑ์การวัดและประเมินผลทางเลือก", "list": ["เครื่องมือและวิธีการประเมินที่หลากหลาย เช่น การบูรณาการทักษะและประสบการณ์จากการประกอบอาชีพหรือกิจกรรมกีฬามาเป็นส่วนหนึ่งของการประเมินผล"], "count": 4 }, { "title": "ระบบนิเวศการเรียนรู้ (Learning Ecosystem)", "list": ["ตารางเรียนและเงื่อนไขเวลาเรียนที่ยืดหยุ่น ตอบโจทย์บริบทชีวิตจริงของผู้เรียน"], "count": 4 }], linkCourses = [];
+    function pauseAuto() { }
+    function closePopup() { }
+    const L = id => document.getElementById(id); let linkImages = {}; try { linkImages = JSON.parse(L('link-saved-images').textContent) || {} } catch { } let linkFocus = null, linkGallery = null, slideIndex = 0, slidePlaying = true, slideTimer;
+    function lmShow(title, body) { pauseAuto(); closePopup(); const m = L('link-modal'); if (!m.open) linkFocus = document.activeElement; L('link-modal-content').innerHTML = `<div class="lm-head"><small>FLEXIBLE CURRICULUM</small><h2 id="link-modal-title">${title}</h2><button class="lm-close" aria-label="ปิดหน้าต่าง">×</button></div><div class="lm-body">${body}</div>`; if (!m.open) m.showModal(); m.scrollTop = 0; document.querySelector('.lm-close').focus(); clearInterval(slideTimer) }
+    function photoSlot(key, i) { const src = linkImages[key]; return `<div class="photo-box"><div class="photo-view">${src ? `<img src="${src}" alt="ภาพประกอบที่ ${i + 1}">` : `<div class="photo-empty"><b>▧</b>พื้นที่ภาพที่ ${i + 1}</div>`}</div><div class="photo-actions"><label class="file-choice">${src ? 'เปลี่ยนรูป' : 'เพิ่มรูป'}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif" data-image-key="${key}" aria-label="เพิ่มภาพที่ ${i + 1}"></label>${src ? `<button class="gallery-remove" data-remove-image="${key}">นำรูปออก</button>` : ''}</div></div>` }
+    function galleryHTML(key, count, carousel) { linkGallery = { key, count, carousel }; slideIndex = 0; slidePlaying = !matchMedia('(prefers-reduced-motion: reduce)').matches; return `<h3 class="gallery-heading">ภาพประกอบ · ${count} รูป</h3><div id="link-photos"></div><p class="gallery-error" id="gallery-error" role="status"></p><p class="gallery-note">เพิ่มภาพแล้วกด “บันทึก HTML พร้อมรูป” เพื่อเก็บไว้ในไฟล์</p>` }
+    function renderPartnerPhotos() { const root = L('partner-photos'); if (root) root.innerHTML = Array.from({ length: 5 }, (_, i) => photoSlot('plan-partnership-' + i, i)).join('') }
+    function renderPhotos() { renderPartnerPhotos(); if (!linkGallery || !L('link-photos')) return; const { key, count, carousel } = linkGallery; if (carousel) { L('link-photos').innerHTML = `<div class="gallery-window"><div class="gallery-track" id="gallery-track">${Array.from({ length: count }, (_, i) => `<div class="gallery-slide" aria-hidden="${i !== slideIndex}" ${i !== slideIndex ? 'inert' : ''}>${photoSlot(key + '-' + i, i)}</div>`).join('')}</div></div><div class="gallery-controls"><button id="slide-prev" aria-label="ภาพก่อนหน้า">←</button><button id="slide-play">${slidePlaying ? 'Ⅱ หยุดภาพ' : '▶ เล่นภาพ'}</button><span id="slide-count"></span><button id="slide-next" aria-label="ภาพถัดไป">→</button></div>`; moveSlide(0); restartSlides() } else { L('link-photos').innerHTML = `<div class="photos-grid">${Array.from({ length: count }, (_, i) => photoSlot(key + '-' + i, i)).join('')}</div>` } }
+    function moveSlide(delta) { if (!linkGallery?.carousel) return; slideIndex = (slideIndex + delta + linkGallery.count) % linkGallery.count; L('gallery-track').style.transform = `translateX(-${slideIndex * 100}%)`; document.querySelectorAll('.gallery-slide').forEach((x, i) => { x.inert = i !== slideIndex; x.setAttribute('aria-hidden', String(i !== slideIndex)) }); L('slide-count').textContent = `${slideIndex + 1} / ${linkGallery.count}` }
+    function restartSlides() { clearInterval(slideTimer); if (slidePlaying && L('link-modal').open) slideTimer = setInterval(() => { if (!document.hidden) moveSlide(1) }, 4000) }
+    function openLink(type, i) { linkGallery = null; const d = (type === 'input' ? linkInput : linkOutput)[i]; const list = `<ul class="lm-list">${d.list.map(t => `<li>${t}</li>`).join('')}</ul>`; let body = list; if (d.courses) body += `<div class="course-grid">${linkCourses.map(([t, institute], j) => `<button data-course="${j}"><strong>${t}</strong><span>${institute} · ภาพประกอบ 2 รูป ↗</span></button>`).join('')}</div>`; if (d.count) body += galleryHTML(type + '-' + i, d.count, !!d.carousel); lmShow(d.title, body); renderPhotos() }
+    function openCourse(i) { linkGallery = null; const [title, institute] = linkCourses[i]; const body = `<button class="lm-back" data-link="output:1">← กลับไปหลักสูตรศึกษาร่วม</button><ul class="lm-list"><li>${institute}</li></ul>` + galleryHTML('course-' + i, 2, false); lmShow(title, body); renderPhotos() }
+    document.addEventListener('click', e => { const b = e.target.closest('button'); if (e.target.matches('input[data-image-key]')) { slidePlaying = false; clearInterval(slideTimer); if (L('slide-play')) L('slide-play').textContent = '▶ เล่นภาพ' } if (!b) return; if (b.dataset.link) { const [type, i] = b.dataset.link.split(':'); openLink(type, Number(i)) } if (b.dataset.course !== undefined) openCourse(Number(b.dataset.course)); if (b.classList.contains('lm-close')) L('link-modal').close(); if (b.dataset.removeImage) { delete linkImages[b.dataset.removeImage]; renderPhotos(); L('asset-status').textContent = 'แก้ไขภาพแล้ว กรุณาบันทึก HTML เพื่อเก็บการเปลี่ยนแปลง' } if (b.id === 'slide-next') { moveSlide(1); restartSlides() } if (b.id === 'slide-prev') { moveSlide(-1); restartSlides() } if (b.id === 'slide-play') { slidePlaying = !slidePlaying; b.textContent = slidePlaying ? 'Ⅱ หยุดภาพ' : '▶ เล่นภาพ'; restartSlides() } });
+    document.addEventListener('change', e => { const input = e.target; if (!input.matches('input[data-image-key]')) return; const file = input.files?.[0], key = input.dataset.imageKey; if (!file) return; if (!['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(file.type) || file.size > 12 * 1024 * 1024) { (input.closest('.partner-detail') ? L('partner-photo-error') : L('gallery-error')).textContent = 'เลือกภาพ JPG, PNG, WebP หรือ GIF ขนาดไม่เกิน 12 MB'; return } const reader = new FileReader(); reader.onload = () => { linkImages[key] = reader.result; renderPhotos(); L('asset-status').textContent = 'เพิ่มภาพแล้ว กดบันทึก HTML พร้อมรูป เพื่อเก็บไว้ใช้ครั้งถัดไป' }; reader.onerror = () => (input.closest('.partner-detail') ? L('partner-photo-error') : L('gallery-error')).textContent = 'อ่านภาพไม่ได้ กรุณาเลือกไฟล์อีกครั้ง'; reader.readAsDataURL(file) });
+    L('link-modal').addEventListener('close', () => { clearInterval(slideTimer); if (linkFocus?.isConnected) linkFocus.focus() }); L('link-modal').addEventListener('click', e => { if (e.target !== L('link-modal')) return; const r = e.target.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) e.target.close() });
+    L('save-linkage').onclick = () => { const copy = document.documentElement.cloneNode(true); copy.querySelector('#link-saved-images').textContent = JSON.stringify(linkImages).replace(/</g, '\u003c'); copy.querySelector('#link-modal').removeAttribute('open'); copy.querySelector('#link-modal-content').innerHTML = ''; copy.querySelector('#detailPopup').classList.remove('show'); copy.querySelector('#detailPopup').setAttribute('aria-hidden', 'true'); copy.querySelector('body').classList.remove('popup-open'); const url = URL.createObjectURL(new Blob(['<!doctype html>\n' + copy.outerHTML], { type: 'text/html;charset=utf-8' })); const a = document.createElement('a'); a.href = url; a.download = 'FLEXIBLE-CURRICULUM-MODEL.html'; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 30000); L('asset-status').textContent = 'สร้างไฟล์ HTML พร้อมรูปสำหรับดาวน์โหลดแล้ว' };
+    function drawLinkFlow() { const host = document.querySelector('.layout'), r = host.getBoundingClientRect(), svg = L('link-flow'); const boxes = ['.link-panel.input', '.process-wrap', '.link-panel.output', '.link-outcome'].map(sel => { const a = document.querySelector(sel).getBoundingClientRect(); return { x: a.left - r.left, y: a.top - r.top, w: a.width, h: a.height } }); svg.setAttribute('viewBox', `0 0 ${r.width} ${r.height}`); let h = '<defs><linearGradient id="lf-grad"><stop stop-color="#e5b8d0"/><stop offset=".5" stop-color="#baafe7"/><stop offset="1" stop-color="#a3d6c4"/></linearGradient></defs>'; function line(d, tip) { h += `<path class="lf-line" d="${d}"/><path fill="#b6acd7" d="${tip}"/><circle class="lf-dot" r="5"><animateMotion path="${d}" dur="2.8s" repeatCount="indefinite"/></circle>` } if (matchMedia('(min-width:1000px)').matches) { for (let i = 0; i < 2; i++) { const a = boxes[i], b = boxes[i + 1], y = 220, x = a.x + a.w + 8, x2 = b.x - 8; line(`M${x} ${y}H${x2 - 5}`, `M${x2 - 7} ${y - 6}L${x2 + 2} ${y}L${x2 - 7} ${y + 6}Z`) } const a = boxes[2], b = boxes[3], x = a.x + a.w / 2, y = a.y + a.h + 10, y2 = b.y - 10; line(`M${x} ${y}V${y2 - 5}`, `M${x - 6} ${y2 - 7}L${x} ${y2 + 2}L${x + 6} ${y2 - 7}Z`) } else { for (let i = 0; i < 3; i++) { const a = boxes[i], b = boxes[i + 1], x = r.width / 2, y = a.y + a.h + 14, y2 = b.y - 12; line(`M${x} ${y}V${y2 - 5}`, `M${x - 7} ${y2 - 8}L${x} ${y2 + 3}L${x + 7} ${y2 - 8}Z`) } } svg.innerHTML = h } let lfFrame; function queueLinkFlow() { cancelAnimationFrame(lfFrame); lfFrame = requestAnimationFrame(drawLinkFlow) } new ResizeObserver(queueLinkFlow).observe(document.querySelector('.layout')); window.addEventListener('resize', queueLinkFlow); document.fonts.ready.then(queueLinkFlow); queueLinkFlow(); if (matchMedia('(prefers-reduced-motion: reduce)').matches) pauseAuto();
   </script>
+<script>
+/* แจ้งความสูงจริงให้หน้าแม่ปรับ iframe ตามเนื้อหา */
+(function(){let last=0;function send(){requestAnimationFrame(()=>{const el=document.querySelector('.page');const h=Math.ceil(el?el.getBoundingClientRect().height+8:document.body.scrollHeight);if(Math.abs(h-last)<2)return;last=h;window.parent.postMessage({type:'d2-flexible-model-height',height:h},window.location.origin)})}
+new ResizeObserver(send).observe(document.body);addEventListener('load',send);setTimeout(send,600)})();
+</script>
 </body>
 
 </html>

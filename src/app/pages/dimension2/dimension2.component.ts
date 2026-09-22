@@ -42,17 +42,17 @@ export class Dimension2Component {
     if (typeof window === 'undefined' || event.origin !== window.location.origin) return;
     if (event.data?.type === 'd2-diversity-pdca-height') {
       const h = Number(event.data.height);
-      if (Number.isFinite(h)) this.diversityPdcaHeight.set(Math.max(620, Math.min(2400, h)));
+      if (Number.isFinite(h)) this.diversityPdcaHeight.set(Math.max(620, h));
       return;
     }
     if (event.data?.type === 'd2-flexible-model-height') {
       const h = Number(event.data.height);
-      if (Number.isFinite(h)) this.flexibleModelHeight.set(Math.max(620, Math.min(2000, h)));
+      if (Number.isFinite(h)) this.flexibleModelHeight.set(Math.max(620, h));
       return;
     }
     if (event.data?.type !== 'd2-continuity-model-height') return;
     const height = Number(event.data.height);
-    if (Number.isFinite(height)) this.continuityModelHeight.set(Math.max(620, Math.min(2400, height)));
+    if (Number.isFinite(height)) this.continuityModelHeight.set(Math.max(620, height));
   }
 
   /* ---------- แอคคอร์เดียนหัวข้อตามแบบประเมิน ----------
