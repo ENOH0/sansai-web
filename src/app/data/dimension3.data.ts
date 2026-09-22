@@ -220,7 +220,7 @@ export const DIM3 = {
       { name: 'วิชาการ', url: 'https://sites.google.com/sansai.ac.th/sansaiwittayakomschool/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81?authuser=0' },
       { name: 'งานบุคคล', url: 'https://sansai.ac.th/websk/personnel/' },
       { name: 'งบประมาณ', url: 'https://sites.google.com/sansai.ac.th/finance' },
-      { name: 'ทั่วไป', url: '' }
+      { name: 'ทั่วไป', url: 'https://sites.google.com/sansai.ac.th/thuapai?usp=sharing' }
     ],
     /* รายการระบบสารสนเทศ — ใส่ชื่อระบบและ url ได้เลย (url ว่าง = ปุ่มยังกดไม่ได้) */
     systems: [

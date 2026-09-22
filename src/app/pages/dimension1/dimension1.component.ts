@@ -39,10 +39,16 @@ export class Dimension1Component implements OnInit {
   private readonly route = inject(ActivatedRoute);
   readonly studentQualityModelHeight = signal(620);
   readonly ipoHeight = signal(1000);
+  readonly skgepHeight = signal(480);
 
   @HostListener('window:message', ['$event'])
   resizeStudentQualityModel(event: MessageEvent<{ type?: string; height?: number; topic?: string }>): void {
     if (typeof window === 'undefined' || event.origin !== window.location.origin) return;
+    if (event.data?.type === 'd1-skgep-height') {
+      const h = Number(event.data.height);
+      if (Number.isFinite(h)) this.skgepHeight.set(Math.max(300, h));
+      return;
+    }
     if (event.data?.type === 'd1-ipo-height') {
       const h = Number(event.data.height);
       if (Number.isFinite(h)) this.ipoHeight.set(Math.max(500, Math.min(3000, h)));
@@ -403,6 +409,12 @@ export class Dimension1Component implements OnInit {
       `/evidence/1.1.5/activities/${String(index * 2 + 2).padStart(2, '0')}.jpg`
     ]
   }));
+
+  /* กิจกรรมสภานักเรียน ใต้หัวข้อ 1.2.3 — รูปอยู่ที่ public/evidence/1.2.3/ */
+  readonly councilActivities = [
+    { title: 'คณะกรรมการสภานักเรียนโรงเรียนสันทรายวิทยาคม เข้าร่วมการประชุมเพื่อแลกเปลี่ยนเรียนรู้และรับฟังแนวทางการดำเนินงานด้านการคัดแยกขยะ ภายใต้โครงการ TSC โดยมุ่งส่งเสริมให้นักเรียนมีความรู้ ความเข้าใจ และตระหนักถึงความสำคัญของการจัดการขยะอย่างถูกวิธี เพื่อนำองค์ความรู้และแนวทางที่ได้รับไปประยุกต์ใช้ในการดำเนินกิจกรรมของสภานักเรียนและพัฒนาสิ่งแวดล้อมภายในโรงเรียนอย่างเป็นรูปธรรมและยั่งยืน', images: [1, 2, 3, 4].map(n => `/evidence/1.2.3/tsc-${n}.jpg`) },
+    { title: 'คณะกรรมการสภานักเรียนโรงเรียนสันทรายวิทยาคม เข้าร่วมการประชุมเพื่อแลกเปลี่ยนเรียนรู้และรับฟังแนวทางการดำเนินงานด้านการคัดแยกขยะ ภายใต้โครงการ TSC โดยมุ่งส่งเสริมให้นักเรียนมีความรู้ ความเข้าใจ และตระหนักถึงความสำคัญของการจัดการขยะอย่างถูกวิธี เพื่อนำองค์ความรู้และแนวทางที่ได้รับไปประยุกต์ใช้ในการดำเนินกิจกรรมของสภานักเรียนและพัฒนาสิ่งแวดล้อมภายในโรงเรียนอย่างเป็นรูปธรรมและยั่งยืน', images: [5, 6, 7, 8].map(n => `/evidence/1.2.3/tsc-${n}.jpg`) }
+  ];
 
   readonly healthActivities = [
     'ให้บริการชั่งน้ำหนักและวัดส่วนสูงนักเรียน',

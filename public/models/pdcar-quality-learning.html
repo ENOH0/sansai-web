@@ -3222,8 +3222,8 @@ syncActivity(order[currentIndex]);
 </script>
 
 <script>
-(function(){let last=0;function send(){const h=Math.ceil(document.documentElement.scrollHeight);if(Math.abs(h-last)<2)return;last=h;window.parent.postMessage({type:'d4-pdcar-model-height',height:h},location.origin)}
-new ResizeObserver(send).observe(document.body);addEventListener('load',send);setTimeout(send,600)})();
+(function(){let last=0;function send(){const a=document.querySelector('.app')||document.body;const h=Math.ceil(a.getBoundingClientRect().bottom+scrollY+24);if(Math.abs(h-last)<2)return;last=h;window.parent.postMessage({type:'d4-pdcar-model-height',height:h},location.origin)}
+const ro=new ResizeObserver(send);ro.observe(document.body);document.querySelector('.app')&&ro.observe(document.querySelector('.app'));addEventListener('load',send);setTimeout(send,600)})();
 </script>
 </body>
 </html>

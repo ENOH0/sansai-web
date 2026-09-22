@@ -488,6 +488,13 @@
       <app-section-header [light]="true" num="1.2.1" title="คุณธรรม จริยธรรม ค่านิยม และจิตสำนึกถึงประโยชน์ส่วนรวม" />
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section12.lead }"></ng-container>
+      <!-- โมเดล SK-GEP อัตลักษณ์นักเรียน · แก้ได้ที่ public/models/sk-gep-model.html -->
+      <div class="d1-ipo-model" appReveal>
+        <iframe src="/models/sk-gep-model.html?v=3" title="SK-GEP อัตลักษณ์นักเรียน" loading="lazy" scrolling="no"
+          [style.height.px]="skgepHeight()"></iframe>
+      </div>
+      <ng-container [ngTemplateOutlet]="d1Narrative"
+        [ngTemplateOutletContext]="{ text: d.section12.leadAfter }"></ng-container>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
       <div class="stack d1-desired-meter">
@@ -516,6 +523,12 @@
       </div>
 
       </div>
+
+      <!-- MODEL SK-GEP 5 ด้าน (สไลด์กลุ่มกิจการนักเรียน หน้า 9–13) · รูปอยู่ที่ public/evidence/1.2.1/skgep-*.jpg -->
+      <div class="d1-skgep-slides" appReveal>
+        <img *ngFor="let k of ['s','k','g','e','p']" [src]="'/evidence/1.2.1/skgep-' + k + '.jpg'"
+          alt="MODEL SK-GEP กิจกรรมส่งเสริมอัตลักษณ์นักเรียน" loading="lazy">
+      </div>
     </div>
   </section>
 </ng-container>
@@ -538,6 +551,21 @@
         <app-line-chart valueColor="#3b4a66" title="ร้อยละของผู้มาใช้สิทธิ์เลือกตั้ง" subtitle="เทียบกับเกณฑ์ที่กำหนดไว้ไม่ต่ำกว่าร้อยละ 80"
           [labels]="d.section12.election.years" [series]="electionPctSeries" [min]="70" [max]="100" />
       </div>
+
+      <section class="d1-health-activities" appReveal>
+        <h3>กิจกรรมสภานักเรียน</h3>
+        <div class="d1-environment-activities">
+          <article class="d1-environment-activity" *ngFor="let activity of councilActivities; let i = index" appReveal="left"
+            [revealDelay]="i * 70">
+            <h4>{{ activity.title }}</h4>
+            <div class="d1-environment-photos">
+              <figure *ngFor="let image of activity.images">
+                <img [src]="image" [alt]="activity.title" loading="lazy">
+              </figure>
+            </div>
+          </article>
+        </div>
+      </section>
     </div>
   </section>
 </ng-container>

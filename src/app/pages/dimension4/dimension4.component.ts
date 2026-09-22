@@ -102,7 +102,7 @@ export class Dimension4Component {
     }
     if (event.data?.type !== 'd4-pdcar-model-height') return;
     const height = Number(event.data.height);
-    if (Number.isFinite(height)) this.pdcarModelHeight.set(Math.max(620, Math.min(2200, height)));
+    if (Number.isFinite(height)) this.pdcarModelHeight.set(Math.max(620, height));
   }
 
   readonly gallery = GALLERY['d4'];

@@ -658,3 +658,7 @@
 /* กระบวนการ IPO ใต้บทนำ */
 .d1-ipo-model { margin-top: 8px; }
 .d1-ipo-model iframe { display: block; width: 100%; border: 0; background: transparent; }
+
+/* สไลด์ MODEL SK-GEP ท้าย 1.2.1 */
+.d1-skgep-slides { display: grid; gap: 18px; margin-top: 32px; }
+.d1-skgep-slides img { display: block; width: 100%; height: auto; border-radius: 14px; box-shadow: 0 6px 18px rgba(20, 40, 80, .12); }
