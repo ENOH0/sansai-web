@@ -1,3 +1,43 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="/fonts/th-sarabun.css"><style>:root {
+  /* ---------- สีประจำโรงเรียน: น้ำเงิน–ขาว ---------- */
+  --navy-950: #08152f;
+  --navy-900: #0d2149;
+  --navy-800: #132f63;
+  --navy-700: #183d80;
+  --navy-600: #1e4d9e;
+  --navy-500: #2c66bd;
+  --navy-400: #4f88d4;
+  --navy-300: #82ade4;
+  --navy-200: #b3cdf0;
+  --navy-100: #d8e6f8;
+  --navy-50:  #eef4fc;
+
+  /* ---------- สีทอง ใช้เน้นรางวัลและตัวเลขสำคัญ ---------- */
+  --gold-400: #e8c46a;
+  --gold-500: #d4a537;
+  --gold-600: #b3862a;
+
+  /* ---------- สีตัวอักษรและพื้นหลัง ---------- */
+  --ink: #16233c;
+  --ink-soft: #43536f;
+  --ink-mute: #6b7a94;
+  --line: #dfe7f2;
+  --paper: #f7fbff;
+  --paper-alt: #edf5ff;
+
+  /* ---------- ระยะและเงา ---------- */
+  --radius: 18px;
+  --radius-sm: 12px;
+  --shadow-sm: 0 1px 2px rgba(13, 33, 73, .06), 0 4px 12px rgba(13, 33, 73, .05);
+  --shadow-md: 0 2px 6px rgba(13, 33, 73, .08), 0 16px 40px rgba(13, 33, 73, .09);
+  --shadow-lg: 0 8px 20px rgba(13, 33, 73, .12), 0 30px 70px rgba(13, 33, 73, .14);
+
+  /* ความสูงแถบนำทาง — component อื่นใช้ค่านี้เว้นที่ด้านบน */
+  --nav-h: 68px;
+  --ease: cubic-bezier(.22, .78, .3, 1);
+}
+html,body{margin:0;background:transparent;font-family:'TH SarabunPSK Web','TH SarabunPSK',Tahoma,sans-serif}
 /* SMART Student — วงล้อ ACTIVITY (ใช้ ViewEncapsulation.None จึงตั้งชื่อคลาส sw- ทั้งหมด) */
 .sw-layout {
   display: grid;
@@ -432,3 +472,85 @@
 .sw-dots { display: flex; justify-content: center; gap: 8px; margin-top: 10px; }
 .sw-dot { min-width: 44px; height: 44px; border: 0; border-radius: 12px; background: #eef1f8; color: #5b6b84; font: inherit; font-size: 18px; font-weight: 800; cursor: pointer; touch-action: manipulation; }
 .sw-dot.is-on { background: linear-gradient(135deg, #ffd08a, #ff9f5a); color: #fff; }
+
+/* ภาพนิ่ง: ไม่มีเอฟเฟกต์ กดไม่ได้ */
+*,*::before,*::after{animation:none!important;transition:none!important}
+body,.sw-diagram,.sw-diagram *{pointer-events:none!important;cursor:default!important}
+.sw-diagram{width:100%!important;max-width:none!important;margin:0!important}
+.sw-piece.is-on{box-shadow:none!important;background:transparent!important}
+.sw-tilt{transform:none!important}
+</style></head><body><div class="sw-layout sw-theme-academic" style="display:block"><div class="sw-diagram">
+   <div class="sw-shadow" aria-hidden="true"></div>
+   <div class="sw-tilt sw-idle">
+    <div class="sw-orbit" aria-hidden="true"></div>
+    <svg class="sw-cycle" viewBox="0 0 600 600" aria-hidden="true">
+      <!-- 4 ส่วนโค้งต่อกันเป็นวงเดียว รัศมี 248 หนา 64 (ครอบคลุมรัศมี 216–280) ให้ตัวหนังสืออยู่กลางแถบพอดี -->
+      <path d="M52 300A248 248 0 0 1 300 52" />
+      <path d="M300 52A248 248 0 0 1 548 300" />
+      <path d="M548 300A248 248 0 0 1 300 548" />
+      <path d="M300 548A248 248 0 0 1 52 300" />
+      <text x="124.6" y="124.6" transform="rotate(-45 124.6 124.6)">PLAN</text>
+      <text x="475.4" y="124.6" transform="rotate(45 475.4 124.6)">DO</text>
+      <text x="475.4" y="475.4" transform="rotate(135 475.4 475.4)">CHECK</text>
+      <text x="124.6" y="475.4" transform="rotate(-135 124.6 475.4)">ACTION</text>
+    </svg>
+
+    <div class="sw-wheel">
+      <div class="sw-hub">
+        <span>ACADEMIC</span>
+        <strong>MODEL</strong>
+        <small>คุณภาพผู้เรียน</small>
+      </div>
+      
+  <button type="button" class="sw-piece" data-i="0"
+    style="left:16%;top:50%"
+    aria-label="C — Continuous Improvement">
+    <span class="sw-letter">C</span>
+    <span class="sw-name">Continuous Improvement</span>
+  </button>
+  <button type="button" class="sw-piece is-light" data-i="1"
+    style="left:25.96%;top:25.96%"
+    aria-label="A — Alignment with Standards">
+    <span class="sw-letter">A</span>
+    <span class="sw-name">Alignment with Standards</span>
+  </button>
+  <button type="button" class="sw-piece" data-i="2"
+    style="left:50%;top:16%"
+    aria-label="C — Curriculum Development">
+    <span class="sw-letter">C</span>
+    <span class="sw-name">Curriculum Development</span>
+  </button>
+  <button type="button" class="sw-piece is-light" data-i="3"
+    style="left:74.04%;top:25.96%"
+    aria-label="A — Active Learning">
+    <span class="sw-letter">A</span>
+    <span class="sw-name">Active Learning</span>
+  </button>
+  <button type="button" class="sw-piece" data-i="4"
+    style="left:84%;top:50%"
+    aria-label="D — Data-driven Assessment">
+    <span class="sw-letter">D</span>
+    <span class="sw-name">Data-driven Assessment</span>
+  </button>
+  <button type="button" class="sw-piece is-light" data-i="5"
+    style="left:74.04%;top:74.04%"
+    aria-label="E — Educational Innovation">
+    <span class="sw-letter">E</span>
+    <span class="sw-name">Educational Innovation</span>
+  </button>
+  <button type="button" class="sw-piece" data-i="6"
+    style="left:50%;top:84%"
+    aria-label="M — Monitoring & Mentoring">
+    <span class="sw-letter">M</span>
+    <span class="sw-name">Monitoring & Mentoring</span>
+  </button>
+  <button type="button" class="sw-piece is-light" data-i="7"
+    style="left:25.96%;top:74.04%"
+    aria-label="I — Inclusive Learning">
+    <span class="sw-letter">I</span>
+    <span class="sw-name">Inclusive Learning</span>
+  </button>
+      <div class="sw-glare" aria-hidden="true"></div>
+    </div>
+   </div>
+  </div></div></body></html>

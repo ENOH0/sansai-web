@@ -53,17 +53,19 @@
     <!-- แก้เนื้อหาได้ที่ public/models/curriculum-continuity-model.html ในตัวแปร data -->
     <!-- ช่อง Input / Output ข้าง model · ใส่ข้อมูลที่ modelIO.continuity ใน dimension2.component.ts -->
     <div class="d2-io-layout" appReveal>
-      <ng-container [ngTemplateOutlet]="ioInput" [ngTemplateOutletContext]="{ $implicit: modelIO.continuity.input }"></ng-container>
+      <ng-container [ngTemplateOutlet]="ioInput"
+        [ngTemplateOutletContext]="{ $implicit: modelIO.continuity.input }"></ng-container>
       <div class="d2-continuity-model">
         <iframe src="/models/curriculum-continuity-model.html"
-          title="กระบวนการพัฒนาหลักสูตรที่มีความต่อเนื่องเชื่อมโยง PDCA"
-          loading="lazy" scrolling="no" [style.height.px]="continuityModelHeight()"></iframe>
+          title="กระบวนการพัฒนาหลักสูตรที่มีความต่อเนื่องเชื่อมโยง PDCA" loading="lazy" scrolling="no"
+          [style.height.px]="continuityModelHeight()"></iframe>
       </div>
-      <ng-container [ngTemplateOutlet]="ioOutput" [ngTemplateOutletContext]="{ $implicit: modelIO.continuity.output, outcome: modelIO.continuity.outcome }"></ng-container>
+      <ng-container [ngTemplateOutlet]="ioOutput"
+        [ngTemplateOutletContext]="{ $implicit: modelIO.continuity.output, outcome: modelIO.continuity.outcome }"></ng-container>
     </div>
 
     <div class="d2-model-intro" appReveal>
-      <h3>ที่มาและความสำคัญ — หลักสูตรที่มีความยืดหยุ่น</h3>
+      <h3>ที่มาและความสำคัญ — กระบวนการพัฒนาหลักสูตรที่มีความยืดหยุ่น</h3>
       <div class="d2-model-intro-rule"></div>
       <p>
         โรงเรียนสันทรายวิทยาคมเผชิญข้อจำกัดของผู้เรียนบางคนทั้งด้านเศรษฐกิจ สุขภาพ และกิจกรรมกีฬา
@@ -76,12 +78,15 @@
     <!-- แก้เนื้อหาได้ที่ public/models/pdca-flexible-curriculum.html ในตัวแปร data -->
     <!-- ช่อง Input / Output ข้าง model · ใส่ข้อมูลที่ modelIO.flexible ใน dimension2.component.ts -->
     <div class="d2-io-layout" appReveal>
-      <ng-container [ngTemplateOutlet]="ioInput" [ngTemplateOutletContext]="{ $implicit: modelIO.flexible.input }"></ng-container>
+      <ng-container [ngTemplateOutlet]="ioInput"
+        [ngTemplateOutletContext]="{ $implicit: modelIO.flexible.input }"></ng-container>
       <div class="d2-flexible-model">
-        <iframe src="/models/pdca-flexible-curriculum.html" title="หลักสูตรที่มีความยืดหยุ่น กระบวนการ PDCA"
-          loading="lazy" scrolling="no" [style.height.px]="flexibleModelHeight()"></iframe>
+        <iframe src="/models/pdca-flexible-curriculum.html"
+          title="กระบวนการพัฒนาหลักสูตรที่มีความยืดหยุ่น กระบวนการ PDCA" loading="lazy" scrolling="no"
+          [style.height.px]="flexibleModelHeight()"></iframe>
       </div>
-      <ng-container [ngTemplateOutlet]="ioOutput" [ngTemplateOutletContext]="{ $implicit: modelIO.flexible.output, outcome: modelIO.flexible.outcome }"></ng-container>
+      <ng-container [ngTemplateOutlet]="ioOutput"
+        [ngTemplateOutletContext]="{ $implicit: modelIO.flexible.output, outcome: modelIO.flexible.outcome }"></ng-container>
     </div>
 
     <div class="d2-model-intro" appReveal>
@@ -97,13 +102,14 @@
     <!-- แก้เนื้อหาได้ที่ public/models/diversity-pdca-model.html ในตัวแปร stepData -->
     <!-- ช่อง Input / Output ข้าง model · ใส่ข้อมูลที่ modelIO.diversity ใน dimension2.component.ts -->
     <div class="d2-io-layout" appReveal>
-      <ng-container [ngTemplateOutlet]="ioInput" [ngTemplateOutletContext]="{ $implicit: modelIO.diversity.input }"></ng-container>
+      <ng-container [ngTemplateOutlet]="ioInput"
+        [ngTemplateOutletContext]="{ $implicit: modelIO.diversity.input }"></ng-container>
       <div class="d2-diversity-pdca">
-        <iframe src="/models/diversity-pdca-model.html"
-          title="กระบวนการพัฒนาหลักสูตรด้านความหลากหลาย PDCA"
+        <iframe src="/models/diversity-pdca-model.html" title="กระบวนการพัฒนาหลักสูตรด้านความหลากหลาย PDCA"
           loading="lazy" scrolling="no" [style.height.px]="diversityPdcaHeight()"></iframe>
       </div>
-      <ng-container [ngTemplateOutlet]="ioOutput" [ngTemplateOutletContext]="{ $implicit: modelIO.diversity.output, outcome: modelIO.diversity.outcome }"></ng-container>
+      <ng-container [ngTemplateOutlet]="ioOutput"
+        [ngTemplateOutletContext]="{ $implicit: modelIO.diversity.output, outcome: modelIO.diversity.outcome }"></ng-container>
     </div>
   </div>
 </section>
@@ -373,12 +379,14 @@
   <aside class="d2-io d2-io-out">
     <h4 class="d2-io-head">ผลผลิต (Output)</h4>
     <div class="d2-io-panel d2-io-panel-out" [class.is-empty]="!items.length">
-      <div class="d2-io-item" *ngFor="let t of items; let i = index"><span>{{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1) }}</span>{{ t }}</div>
+      <div class="d2-io-item" *ngFor="let t of items; let i = index"><span>{{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1)
+            }}</span>{{ t }}</div>
     </div>
     <div class="d2-io-flow d2-io-down" aria-hidden="true">↓</div>
     <h4 class="d2-io-head d2-io-head-outcome">ผลลัพธ์ (Outcome)</h4>
     <div class="d2-io-panel" [class.is-empty]="!outcome.length">
-      <div class="d2-io-item d2-io-item-outcome" *ngFor="let t of outcome; let i = index"><span>{{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1) }}</span>{{ t }}</div>
+      <div class="d2-io-item d2-io-item-outcome" *ngFor="let t of outcome; let i = index"><span>{{ (i + 1) < 10 ? '0' +
+            (i + 1) : (i + 1) }}</span>{{ t }}</div>
     </div>
   </aside>
 </ng-template>

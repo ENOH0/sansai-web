@@ -1731,6 +1731,7 @@
         @media(max-width:850px) {
             .bottom-column { width: 100%; }
         }
+
     </style>
 </head>
 
@@ -2937,6 +2938,15 @@
 
     </script>
 
+
+<script>
+/* จัดกิ่ง (การ์ด 1, 2) ให้อยู่กึ่งกลางแนวตั้งของวงกลมคุณภาพนักเรียน */
+(function(){function align(){var c=document.querySelector('.center-wrap'),cards=document.querySelectorAll('.left-column,.right-column');
+  if(!c)return;cards.forEach(function(col){var card=col.querySelector('.main-card');col.style.marginTop='0px';
+    if(innerWidth<=850||!card)return;var off=(c.getBoundingClientRect().height-card.getBoundingClientRect().height)/2;col.style.marginTop=Math.max(0,off)+'px';});
+  if(typeof drawConnectors==='function')drawConnectors();}
+ addEventListener('load',align);addEventListener('resize',align);setTimeout(align,300);})();
+</script>
 </body>
 
 </html>

@@ -38,10 +38,16 @@ export class Dimension1Component implements OnInit {
 
   private readonly route = inject(ActivatedRoute);
   readonly studentQualityModelHeight = signal(620);
+  readonly ipoHeight = signal(1000);
 
   @HostListener('window:message', ['$event'])
   resizeStudentQualityModel(event: MessageEvent<{ type?: string; height?: number; topic?: string }>): void {
     if (typeof window === 'undefined' || event.origin !== window.location.origin) return;
+    if (event.data?.type === 'd1-ipo-height') {
+      const h = Number(event.data.height);
+      if (Number.isFinite(h)) this.ipoHeight.set(Math.max(500, Math.min(3000, h)));
+      return;
+    }
     if (event.data?.type === 'd1-student-quality-model-height') {
       const height = Number(event.data.height);
       if (Number.isFinite(height)) this.studentQualityModelHeight.set(Math.max(560, Math.min(4200, height)));

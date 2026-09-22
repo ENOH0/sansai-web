@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<link rel="stylesheet" href="/fonts/th-sarabun.css">
+<style>html{-webkit-text-size-adjust:100%;text-size-adjust:100%}</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เสริมรากฐาน สานการพัฒนา นำพาผู้เรียนสู่คุณภาพ</title>
+<style>
+:root{
+  --ink:#35506b;
+  --muted:#6f8193;
+  --pink:#ff9fc7;
+  --purple:#a89af5;
+  --blue:#79cfee;
+  --mint:#88ddb4;
+  --gold:#ffd58a;
+  --bg1:#fff8fc;
+  --bg2:#f5fbff;
+  --card:rgba(255,255,255,.78);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:'TH SarabunPSK', Tahoma, sans-serif;color:var(--ink)}
+body{
+  background:
+    radial-gradient(circle at 10% 10%, rgba(255,185,219,.25), transparent 30%),
+    radial-gradient(circle at 90% 16%, rgba(151,208,255,.23), transparent 30%),
+    radial-gradient(circle at 50% 95%, rgba(155,232,196,.18), transparent 35%);
+  background-color:transparent;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.35;
+  background-image:radial-gradient(rgba(85,127,170,.2) 1px, transparent 1px);
+  background-size:28px 28px;
+  mask-image:linear-gradient(to bottom, transparent, #000 15%, #000 80%, transparent);
+}
+.wrapper{width:min(1480px,96vw);margin:auto;padding:26px 18px 42px;position:relative;z-index:1}
+.hero{text-align:center;margin-bottom:20px}
+.hero .eyebrow{font-size:22px;color:#8e78c3;font-weight:700;letter-spacing:.5px}
+.hero h1{margin:0;font-size:clamp(38px,5vw,66px);line-height:1;color:#355a84;text-shadow:0 4px 18px rgba(92,142,192,.13)}
+.hero h1 .model-name{display:inline-block;background:linear-gradient(90deg,var(--pink),var(--purple),var(--blue),var(--mint));-webkit-background-clip:text;background-clip:text;color:transparent;background-size:250% auto;animation:titleFlow 7s linear infinite}
+@keyframes titleFlow{to{background-position:250% center}}
+.hero p{margin:8px auto 0;max-width:980px;font-size:25px;line-height:1.25;color:#63778a}
+.hero-line{width:220px;height:5px;border-radius:99px;margin:14px auto 0;background:linear-gradient(90deg,var(--pink),var(--purple),var(--blue),var(--mint));box-shadow:0 0 20px rgba(145,174,240,.3)}
+
+.stage{position:relative;min-height:690px;display:flex;align-items:center;justify-content:center;padding:22px 0}
+.stage::before{content:"";position:absolute;width:min(1100px,88vw);height:410px;border-radius:50%;border:1px dashed rgba(128,159,196,.28);box-shadow:inset 0 0 70px rgba(160,190,225,.08);animation:slowSpin 28s linear infinite}
+@keyframes slowSpin{to{transform:rotate(360deg)}}
+.flow{position:relative;width:min(1240px,96%);display:grid;grid-template-columns:1fr 120px 1fr 120px 1fr;align-items:center;gap:8px}
+.main-node{position:relative;min-height:300px;border-radius:42px;padding:34px 24px 24px;background:var(--card);border:1px solid rgba(180,202,228,.55);backdrop-filter:blur(10px);box-shadow:0 18px 55px rgba(75,105,145,.13), inset 0 0 35px rgba(255,255,255,.7);cursor:pointer;transition:.45s cubic-bezier(.2,.8,.2,1);overflow:hidden}
+.main-node:hover{transform:translateY(-10px) scale(1.025);box-shadow:0 26px 70px rgba(75,105,145,.19),0 0 34px rgba(151,198,240,.28)}
+.main-node::before{content:"";position:absolute;inset:-35%;border-radius:50%;opacity:.18;filter:blur(4px);animation:haloRotate 13s linear infinite}
+@keyframes haloRotate{to{transform:rotate(360deg)}}
+.node-gear::before{background:conic-gradient(from 0deg,var(--pink),transparent 24%,var(--gold),transparent 48%,var(--pink))}
+.node-success::before{background:conic-gradient(from 0deg,var(--purple),transparent 25%,var(--blue),transparent 50%,var(--purple))}
+.node-result::before{background:conic-gradient(from 0deg,var(--mint),transparent 25%,var(--blue),transparent 52%,var(--mint))}
+.main-node>*{position:relative;z-index:2}
+.main-node::after{content:"";position:absolute;left:24px;right:24px;top:0;height:6px;border-radius:0 0 14px 14px;background:linear-gradient(90deg,var(--pink),var(--purple),var(--blue),var(--mint));opacity:.9;box-shadow:0 0 18px rgba(145,174,240,.22)}
+.node-number{font-family:'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;font-size:16px;font-weight:800;letter-spacing:1.5px;opacity:.65;text-align:center;margin-bottom:4px}
+.main-node h2{font-size:34px;line-height:1.05;text-align:center;margin:0 0 10px;color:#415f7d}
+.main-node p{font-size:22px;line-height:1.2;text-align:center;margin:0;color:#6d8093}
+.mini-tags{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:18px}
+.tag{font-size:18px;padding:4px 12px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid rgba(165,190,218,.42);color:#63778c}
+.click-hint{margin-top:18px;text-align:center;font-size:19px;font-weight:700;color:#9279bd;animation:hintPulse 1.8s ease-in-out infinite}@keyframes hintPulse{50%{opacity:.45;transform:translateY(2px)}}
+.node-actions{display:flex;justify-content:center;margin-top:14px}.image-btn,.detail-btn{position:relative;border:1px solid rgba(255,255,255,.92);border-radius:999px;padding:8px 20px;font-family:inherit;font-size:19px;font-weight:700;color:#55708b;background:linear-gradient(135deg,rgba(255,232,244,.96),rgba(230,244,255,.96),rgba(231,251,241,.96));box-shadow:0 8px 22px rgba(104,145,190,.14),0 0 18px rgba(168,154,245,.2);cursor:pointer;transition:.3s ease;overflow:hidden}.image-btn::before,.detail-btn::before{content:"";position:absolute;inset:-2px;background:linear-gradient(100deg,transparent 20%,rgba(255,255,255,.9) 48%,transparent 76%);transform:translateX(-120%);animation:buttonShine 3.8s ease-in-out infinite}.image-btn:hover,.detail-btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 11px 28px rgba(104,145,190,.2),0 0 26px rgba(255,159,199,.34)}@keyframes buttonShine{0%,55%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+.connector{position:relative;height:6px;border-radius:99px;background:linear-gradient(90deg,rgba(255,164,201,.35),rgba(142,154,239,.75),rgba(104,203,231,.55));box-shadow:0 0 18px rgba(130,165,220,.28)}
+.connector::after{content:"";position:absolute;right:-3px;top:50%;transform:translateY(-50%);border-left:16px solid #8da4e5;border-top:10px solid transparent;border-bottom:10px solid transparent;filter:drop-shadow(0 0 7px rgba(125,153,225,.25))}
+.connector::before{content:"";position:absolute;width:15px;height:15px;border-radius:50%;top:50%;transform:translateY(-50%);background:#fff;box-shadow:0 0 10px #a8b9ef,0 0 24px #a8b9ef;animation:travel 2.2s linear infinite}@keyframes travel{from{left:0}to{left:calc(100% - 15px)}}
+
+/* particles */
+.spark{position:absolute;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 12px currentColor;opacity:.7;animation:floatSpark 5s ease-in-out infinite}
+.s1{left:7%;top:15%;color:#ff9fc7}.s2{right:8%;top:22%;color:#79cfee;animation-delay:1s}.s3{left:15%;bottom:15%;color:#8bdcb5;animation-delay:2s}.s4{right:16%;bottom:17%;color:#a89af5;animation-delay:3s}.s5{left:50%;top:8%;color:#ffd58a;animation-delay:1.5s}
+@keyframes floatSpark{0%,100%{transform:translateY(0) scale(.75);opacity:.35}50%{transform:translateY(-22px) scale(1.4);opacity:1}}
+
+/* Modal base */
+.modal{position:fixed;inset:0;background:rgba(222,235,249,.18);backdrop-filter:blur(9px);display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;visibility:hidden;transition:.35s ease;z-index:9999}
+.modal.show{opacity:1;visibility:visible}
+.modal-card{position:relative;width:min(1060px,96vw);max-height:90vh;overflow:auto;border-radius:34px;background:linear-gradient(145deg,rgba(255,255,255,.76),rgba(251,246,255,.62),rgba(240,251,255,.68));border:1px solid rgba(255,255,255,.82);backdrop-filter:blur(24px) saturate(125%);box-shadow:0 30px 100px rgba(48,78,112,.2),inset 0 0 34px rgba(255,255,255,.35);padding:30px;transform:translateY(35px) scale(.92);opacity:0;transition:.45s cubic-bezier(.18,.85,.25,1.12)}
+.modal.show .modal-card{transform:translateY(0) scale(1);opacity:1}
+.modal-card::before{content:"";position:absolute;inset:-2px;border-radius:36px;padding:2px;background:linear-gradient(120deg,var(--modalA,#ff9fc7),transparent 30%,var(--modalB,#79cfee),transparent 70%,var(--modalA,#ff9fc7));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;animation:borderGlow 4s linear infinite;background-size:220% auto}@keyframes borderGlow{to{background-position:220% center}}
+.close-btn{position:sticky;top:0;margin-left:auto;display:flex;min-width:72px;height:42px;padding:0 18px;border:none;border-radius:14px;align-items:center;justify-content:center;font-family:inherit;font-size:20px;font-weight:700;background:#f0f5fb;color:#66809b;cursor:pointer;z-index:20;box-shadow:0 8px 18px rgba(70,105,140,.1)}
+.modal-header{display:flex;align-items:center;gap:18px;margin:-35px 60px 18px 0}
+.modal-badge{width:82px;height:82px;flex:none;border-radius:26px;display:flex;align-items:center;justify-content:center;color:white;font-family:'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;font-size:36px;font-weight:900;background:linear-gradient(145deg,var(--modalA,#ff9fc7),var(--modalB,#79cfee));box-shadow:0 12px 30px color-mix(in srgb,var(--modalA,#ff9fc7) 40%, transparent)}
+.modal-title h2{font-size:40px;margin:0;line-height:1;color:#3d5d7b}.modal-title p{font-size:23px;margin:6px 0 0;color:#728498}
+.section-box{border-radius:24px;padding:20px 22px;margin:14px 0;background:linear-gradient(135deg,rgba(247,251,255,.66),rgba(255,249,253,.58));border:1px solid rgba(255,255,255,.76);backdrop-filter:blur(15px);box-shadow:0 10px 28px rgba(80,110,145,.07)}
+.section-box h3{font-size:29px;margin:0 0 8px;color:#4d6884}.section-box p,.section-box li{font-size:22px;line-height:1.35;color:#60758a}.section-box ul{margin:7px 0 0;padding-left:28px}
+.resource-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:14px}
+.resource-card{position:relative;border-radius:22px;padding:17px 12px;text-align:center;background:#fff;border:1px solid rgba(185,205,225,.7);box-shadow:0 10px 25px rgba(82,112,145,.08);transition:.3s ease;overflow:hidden}.resource-card:hover{transform:translateY(-5px);box-shadow:0 16px 32px rgba(80,110,145,.14)}.resource-card::before{content:"";position:absolute;inset:0;background:linear-gradient(145deg,var(--rc,#e9f6ff),transparent);opacity:.75}.resource-card>*{position:relative}.resource-card strong{display:block;font-family:'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;font-size:23px;color:#4d6a87}.resource-card span{display:block;margin-top:6px;font-size:18px;color:#6d8193;line-height:1.15}
+.four-party{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}.party{border-radius:20px;padding:22px 12px;text-align:center;background:#fff;border:1px solid rgba(190,205,225,.65);box-shadow:0 9px 22px rgba(90,115,145,.07);position:relative;overflow:hidden}.party::before{content:"";position:absolute;left:16px;right:16px;top:0;height:4px;border-radius:0 0 10px 10px;background:linear-gradient(90deg,#f2a7c7,#a99be8,#7dcde7,#83d4af)}.party span{font-size:21px;font-weight:700;color:#5a7188}
+
+/* PDCA Modal */
+.pdca-layout{display:grid;grid-template-columns:minmax(470px,1fr) minmax(340px,.8fr);gap:26px;align-items:center}
+.pdca-stage{position:relative;width:min(540px,90vw);aspect-ratio:1;margin:auto}
+.pdca-ring{position:absolute;border-radius:50%;pointer-events:none}.pdca-ring.r1{inset:5%;border:2px dashed rgba(137,154,205,.28);animation:ccw 24s linear infinite}.pdca-ring.r2{inset:14%;border:2px solid rgba(120,205,230,.2);animation:cw 32s linear infinite}.pdca-ring.r3{inset:23%;border:1px dashed rgba(229,153,197,.27);animation:ccw 18s linear infinite}@keyframes ccw{to{transform:rotate(-360deg)}}@keyframes cw{to{transform:rotate(360deg)}}
+.pdca-rotor{position:absolute;inset:0;transition:transform 1.15s cubic-bezier(.18,.85,.25,1);transform:rotate(var(--rot,0deg))}
+.pdca-node{position:absolute;width:116px;height:116px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:rgba(255,255,255,.92);border:4px solid var(--c);box-shadow:0 14px 30px rgba(70,95,130,.12),0 0 0 rgba(0,0,0,0);transition:.45s ease;transform:translate(-50%,-50%) rotate(calc(var(--rot,0deg) * -1));z-index:8}
+.pdca-node strong{font-family:'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;font-size:48px;color:var(--c);line-height:.9}.pdca-node span{font-size:19px;font-weight:700;margin-top:7px;color:#566e84}.pdca-node.active{scale:1.16;box-shadow:0 14px 35px rgba(70,95,130,.16),0 0 35px var(--c)}.pdca-node.active::after{content:"";position:absolute;inset:-15px;border-radius:50%;border:3px solid var(--c);opacity:.35;animation:pulseRing 1.6s ease-out infinite}@keyframes pulseRing{0%{transform:scale(.82);opacity:.45}100%{transform:scale(1.35);opacity:0}}
+.nodeP{left:50%;top:7%;--c:#ef8fbd}.nodeD{left:93%;top:50%;--c:#968be8}.nodeC{left:50%;top:93%;--c:#6fc8e5}.nodeA{left:7%;top:50%;--c:#77c99a}
+.pdca-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:210px;height:210px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 35% 28%,#fff,#f3f0ff 48%,#e8f8ff 100%);border:6px solid rgba(255,255,255,.88);box-shadow:0 0 0 12px rgba(164,149,237,.08),0 15px 45px rgba(85,105,140,.14),0 0 40px rgba(168,154,245,.18);z-index:3}.pdca-center b{font-size:30px;color:#786eb6}.pdca-center span{display:block;font-size:21px;color:#60798e;margin-top:6px}.pdca-center small{display:block;font-size:17px;color:#8a98a8;margin-top:5px}
+.pdca-info{position:relative;min-height:430px;border-radius:28px;padding:24px;background:linear-gradient(145deg,rgba(248,251,255,.7),rgba(255,248,252,.6));border:1px solid rgba(255,255,255,.78);backdrop-filter:blur(18px);box-shadow:0 14px 34px rgba(85,110,145,.08),0 0 28px rgba(168,154,245,.1)}
+.info-top{display:flex;align-items:center;gap:14px}.info-letter{width:66px;height:66px;border-radius:20px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;font-size:36px;font-weight:900;background:var(--info,#ef8fbd);box-shadow:0 8px 22px color-mix(in srgb,var(--info,#ef8fbd) 40%, transparent)}.info-title h3{font-size:31px;margin:0;color:#46627d}.info-title p{font-size:21px;margin:3px 0 0;color:#806fa6}.info-desc{font-size:21px;line-height:1.35;margin-top:18px;color:#60758a;background:rgba(255,255,255,.48);border-radius:20px;padding:16px 18px;border:1px solid rgba(255,255,255,.72);backdrop-filter:blur(12px)}
+.pdca-data-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pdca-control{display:flex;gap:9px;margin-top:16px;flex-wrap:wrap}.control-btn{border:none;border-radius:14px;padding:8px 17px;font-family:inherit;font-size:20px;font-weight:700;cursor:pointer;background:#eef4fb;color:#5d738a;box-shadow:0 6px 16px rgba(70,100,135,.07)}.control-btn.active{background:linear-gradient(145deg,#a69af0,#78cde9);color:#fff}
+.detail-btn{margin-top:16px;border-radius:15px;padding:9px 19px;color:#fff;background:linear-gradient(135deg,#ee9bc2,#a99aed,#75cce8);box-shadow:0 9px 24px rgba(137,142,218,.22),0 0 22px rgba(168,154,245,.28)}
+.pdca-progress{display:flex;gap:7px;margin-top:18px}.pdca-progress span{flex:1;height:6px;border-radius:99px;background:#dde8f1;transition:.35s}.pdca-progress span.active{background:var(--bar,#8da4e4);box-shadow:0 0 10px var(--bar,#8da4e4)}
+
+.subdetail-list{display:grid;gap:12px;margin-top:16px}.subdetail-item{display:flex;gap:13px;align-items:flex-start;border-radius:20px;padding:15px 17px;background:linear-gradient(135deg,rgba(255,247,252,.96),rgba(244,250,255,.96));border:1px solid rgba(185,205,229,.62);box-shadow:0 9px 24px rgba(83,111,146,.07),0 0 16px rgba(168,154,245,.08)}.subdetail-index{width:34px;height:34px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font:700 16px 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;background:linear-gradient(145deg,var(--modalA,#a89af5),var(--modalB,#79cfee));box-shadow:0 0 16px color-mix(in srgb,var(--modalA,#a89af5) 32%, transparent)}.subdetail-item p{margin:1px 0 0;font-size:21px;line-height:1.35;color:#60758a}.image-placeholder{min-height:340px;border-radius:28px;border:2px dashed rgba(145,164,209,.42);display:flex;align-items:center;justify-content:center;text-align:center;padding:30px;background:radial-gradient(circle at 50% 35%,rgba(255,255,255,.96),rgba(242,248,255,.92) 56%,rgba(255,241,248,.88));box-shadow:inset 0 0 34px rgba(159,183,231,.1),0 0 28px rgba(168,154,245,.12)}.image-placeholder strong{display:block;font-size:30px;color:#7184a0}.image-placeholder span{display:block;font-size:21px;color:#8a99aa;margin-top:8px}.image-placeholder-icon{font-size:58px;filter:drop-shadow(0 0 14px rgba(121,207,238,.45))}
+
+.result-emblem{width:180px;height:180px;border-radius:50%;margin:5px auto 18px;display:flex;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle,#fff 20%,#ecfff6 65%,#dcf8ec 100%);border:4px solid #a7e3c5;box-shadow:0 0 0 10px rgba(137,220,180,.08),0 20px 45px rgba(76,139,111,.12)}.result-emblem strong{font-size:28px;color:#4d9476}.result-emblem span{display:block;font-size:20px;color:#648b7a;margin-top:5px}
+.result-path{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}.result-chip{padding:10px 18px;border-radius:18px;background:#fff;border:1px solid #d7ece3;font-size:21px;color:#557c6c;box-shadow:0 8px 20px rgba(75,120,100,.07)}
+
+@media(max-width:1120px){.flow{grid-template-columns:1fr;gap:16px;max-width:700px}.connector{width:6px;height:70px;margin:auto;background:linear-gradient(180deg,rgba(255,164,201,.35),rgba(142,154,239,.75),rgba(104,203,231,.55))}.connector::after{right:auto;left:50%;top:auto;bottom:-3px;transform:translateX(-50%);border-left:10px solid transparent;border-right:10px solid transparent;border-top:16px solid #8da4e5;border-bottom:0}.connector::before{left:50%!important;transform:translateX(-50%);animation:travelV 2.2s linear infinite}@keyframes travelV{from{top:0}to{top:calc(100% - 15px)}}.stage::before{display:none}.main-node{min-height:250px}.pdca-layout{grid-template-columns:1fr}.pdca-info{min-height:auto}}
+@media(max-width:760px){.wrapper{padding:18px 10px 30px}.hero p{font-size:21px}.main-node h2{font-size:29px}.main-node p{font-size:20px}.resource-grid{grid-template-columns:1fr 1fr}.resource-grid .resource-card:last-child{grid-column:1/-1}.four-party{grid-template-columns:1fr 1fr}.modal-card{padding:22px 16px}.modal-header{margin:-35px 52px 15px 0}.modal-badge{width:64px;height:64px;border-radius:20px}.modal-title h2{font-size:31px}.pdca-stage{width:min(430px,90vw)}.pdca-node{width:92px;height:92px}.pdca-node strong{font-size:37px}.pdca-node span{font-size:16px}.pdca-center{width:160px;height:160px}.pdca-center b{font-size:25px}.pdca-center span{font-size:18px}.pdca-center small{font-size:14px}.section-box p,.section-box li{font-size:20px}}
+@media(max-width:470px){.hero h1{font-size:38px}.main-node{padding:22px 15px}.resource-grid,.four-party{grid-template-columns:1fr}.resource-grid .resource-card:last-child{grid-column:auto}.pdca-node{width:76px;height:76px}.pdca-node strong{font-size:31px}.pdca-node span{font-size:14px}.pdca-center{width:135px;height:135px}.pdca-center b{font-size:21px}.pdca-center span{font-size:16px}.pdca-center small{display:none}}
+
+/* =========================================================
+   EMBED  ฝังในหน้าด้านที่ 3
+   ธีมพาสเทลสดใสตามต้นฉบับ การ์ดและกล่องเป็นพื้นสว่าง
+   เปลี่ยนเฉพาะตัวอักษรที่ลอยอยู่บนวิดีโอให้เป็นโทนพาสเทลสว่าง
+========================================================= */
+
+html,body{ min-height:auto; }
+
+body{
+  background:none;
+  background-color:transparent;
+  color:var(--ink);
+  font-family:'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
+}
+
+/* ปิดลายจุดพื้นหลัง */
+body::before{ display:none; }
+
+.wrapper{ position:relative; padding:10px 14px 16px; }
+
+/* ---- ตัวอักษรที่ลอยบนวิดีโอ ใช้โทนพาสเทลสว่าง ---- */
+.hero .eyebrow{
+  color:#ffd9ee;
+  text-shadow:0 1px 10px rgba(8,21,47,.55);
+}
+
+.hero h1{
+  color:#ffffff;
+  text-shadow:0 3px 20px rgba(8,21,47,.6);
+}
+
+.hero p{
+  color:#eaf4ff;
+  text-shadow:0 1px 10px rgba(8,21,47,.5);
+}
+
+.stage{ min-height:auto; padding:10px 0 4px; }
+.stage::before{ border-color:rgba(255,255,255,.30); }
+
+/* ---- การ์ด 3 ใบ: พาสเทลสว่าง อ่านง่าย ---- */
+.main-node{
+  min-height:auto;
+  padding:24px 20px 20px;
+  border-radius:30px;
+
+  background:linear-gradient(150deg,rgba(255,255,255,.95),rgba(255,247,252,.90),rgba(240,250,255,.92));
+  border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 18px 46px rgba(75,105,145,.22),0 0 26px rgba(255,190,225,.30),inset 0 0 30px rgba(255,255,255,.8);
+}
+
+.main-node::before{ opacity:.30; }
+
+.main-node h2{ color:#3f5f7f; font-size:28px; }
+.main-node p{ color:#6d8093; font-size:19px; }
+.node-number{ color:#a07fc9; opacity:1; }
+
+.tag{
+  font-size:17px;
+  color:#5f7489;
+  background:rgba(255,255,255,.88);
+  border-color:rgba(190,205,230,.7);
+}
+
+.click-hint{ color:#a07fc9; font-size:18px; }
+
+.connector{ box-shadow:0 0 22px rgba(255,190,225,.45); }
+
+.spark{ opacity:.9; }
+
+/* ปุ่มอย่างน้อย 44px ตามเกณฑ์นิ้วสัมผัสบน iPad */
+.image-btn,.detail-btn,.control-btn,.close-btn{ min-height:44px; }
+
+/* ---- กล่องรายละเอียด: พาสเทลสว่างตามต้นฉบับ ----
+   เด้งในกรอบโมเดล ไม่ใช่เต็มจอ เพราะโมเดลอยู่ใน iframe
+   และเริ่มจากขอบบนเสมอ เพื่อไม่ให้หัวกล่องถูกตัด */
+.modal{
+  position:absolute;
+  inset:0 0 auto 0;
+  min-height:100%;
+  align-items:flex-start;
+  padding:10px;
+  background:rgba(120,150,190,.34);
+}
+
+.modal-card{
+  max-height:none;
+  overflow:visible;
+  margin-bottom:6px;
+  background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(253,247,255,.93),rgba(240,251,255,.95));
+  box-shadow:0 30px 90px rgba(48,78,112,.30),inset 0 0 34px rgba(255,255,255,.6);
+}
+
+/* ---- ภาพประกอบจริงในกล่อง "ดูรูปภาพ" ---- */
+.image-viewer{ margin-top:6px; }
+.image-viewer figure{ margin:0; }
+.image-viewer img{
+  display:block;
+  width:100%;
+  max-height:460px;
+  object-fit:contain;
+  border-radius:18px;
+  border:1px solid rgba(190,208,232,.75);
+  box-shadow:0 12px 30px rgba(80,110,145,.14);
+  background:#fff;
+  cursor:zoom-in;
+}
+.image-viewer figcaption{
+  margin-top:10px;
+  font-size:19px;
+  line-height:1.4;
+  color:#6d8093;
+  text-align:center;
+}
+.image-nav{
+  display:flex; align-items:center; justify-content:center; gap:14px;
+  margin-top:16px; flex-wrap:wrap;
+}
+.image-nav .nav-btn{
+  min-height:46px; padding:0 20px; border-radius:16px; cursor:pointer;
+  font-family:inherit; font-size:19px; font-weight:700; color:#4e6d8c;
+  background:linear-gradient(145deg,#eaf5ff,#fdf2fb);
+  border:1px solid rgba(175,202,232,.85);
+  box-shadow:0 8px 20px rgba(80,110,145,.12);
+  transition:.25s ease;
+}
+@media(hover:hover){ .image-nav .nav-btn:hover{ transform:translateY(-2px); box-shadow:0 12px 24px rgba(80,110,145,.18); } }
+.image-count{
+  min-width:74px; text-align:center; font-size:19px; font-weight:800; color:#5c7a97;
+  padding:6px 14px; border-radius:999px;
+  background:rgba(226,240,255,.9); border:1px solid rgba(180,205,235,.8);
+}
+
+/* ไม่ล็อกการเลื่อนของหน้าแม่ */
+body[style*="overflow"]{ overflow:visible !important; }
+</style>
+<style>
+/* ด้าน 1: รายการข้อมูลในกล่องรายละเอียด */
+.num-list{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.num-list li{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:18px;background:#fff;border:1px solid rgba(190,205,225,.65);box-shadow:0 8px 18px rgba(90,115,145,.07);font-size:20px;line-height:1.4;color:#4f667d}
+.num-list li b{flex:0 0 34px;height:34px;display:grid;place-items:center;border-radius:12px;color:#fff;font-size:17px;background:linear-gradient(135deg,var(--modalA),var(--modalB))}
+.pdca-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
+@media(max-width:760px){.num-list,.pdca-row{grid-template-columns:1fr 1fr}}
+@media(max-width:470px){.num-list{grid-template-columns:1fr}}
+</style>
+<style>
+/* ===== ด้าน 1: โทนสีใหม่ (ฟ้า–เขียวน้ำทะเล–ทอง–ปะการัง) ===== */
+:root{--pink:#ff9a8b;--purple:#5aa9f0;--blue:#4fc9c0;--mint:#7fd99a;--gold:#ffc85c}
+.node-gear::before{background:conic-gradient(from 0deg,#5aa9f0,transparent 24%,#8fd3ff,transparent 48%,#5aa9f0)}
+.node-success::before{background:conic-gradient(from 0deg,#4fc9c0,transparent 25%,#7fd99a,transparent 50%,#4fc9c0)}
+.node-result::before{background:conic-gradient(from 0deg,#ffc85c,transparent 25%,#ff9a8b,transparent 52%,#ffc85c)}
+.node-number,.click-hint{color:#2f7fb8}
+#gearModal .modal-card{--modalA:#5aa9f0!important;--modalB:#8fd3ff!important}
+#successModal .modal-card{--modalA:#4fc9c0!important;--modalB:#7fd99a!important}
+#resultModal .modal-card{--modalA:#ffc85c!important;--modalB:#ff9a8b!important}
+/* หัวข้อรูปแบบใหม่ */
+.hero2{display:flex;flex-direction:column;align-items:center;gap:12px}
+.hero-pill{padding:6px 22px;border-radius:999px;background:linear-gradient(90deg,#5aa9f0,#4fc9c0);color:#fff;font-size:21px;font-weight:800;letter-spacing:.5px;box-shadow:0 8px 22px rgba(40,120,180,.35)}
+.hero-steps{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;margin:0;font-size:clamp(30px,4vw,50px)!important;line-height:1.15}
+.hero-steps .st{padding:6px 20px;border-radius:20px;color:#fff;box-shadow:0 10px 26px rgba(6,18,44,.3)}
+.st1{background:linear-gradient(135deg,#5aa9f0,#2f7fd8)}.st2{background:linear-gradient(135deg,#4fc9c0,#1f9e86)}.st3{background:linear-gradient(135deg,#ffc85c,#f07a5a)}
+.hero-steps i{font-style:normal;color:#ffd66b;font-size:.8em}
+.hero-sub{margin:0!important;padding:8px 22px;border-radius:16px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff!important;font-size:22px!important}
+.hero-sub b{color:#ffd66b}
+/* PDCA หมุน */
+.pdca-spin{position:relative;width:min(340px,76vw);pointer-events:none;aspect-ratio:1;margin:0 auto}
+.pdca-spin svg{width:100%;height:100%;animation:pspin 20s linear infinite;filter:drop-shadow(0 10px 20px rgba(40,90,140,.25))}
+@keyframes pspin{to{transform:rotate(360deg)}}
+.pdca-core{position:absolute;inset:29%;border-radius:50%;background:#fff;display:grid;place-content:center;text-align:center;box-shadow:0 6px 18px rgba(20,50,90,.2)}
+.pdca-core strong{font-size:24px;color:#1f7f8e;line-height:1}.pdca-core small{font-size:16px;color:#6f8193}
+@media (prefers-reduced-motion:reduce){.pdca-spin svg{animation:none}}
+</style>
+<style>
+/* หัวข้อสไตล์เรียบหรู: ขาว + ทอง เส้นบาง ไม่มีกล่อง */
+.hero3{display:flex;flex-direction:column;align-items:center;gap:6px}
+.lux-eyebrow{display:flex;align-items:center;gap:14px;color:#d9bf7a;font-size:19px;font-weight:600;letter-spacing:3px}
+.lux-eyebrow span{width:46px;height:1px;background:linear-gradient(90deg,transparent,#d9bf7a)}
+.lux-eyebrow span:last-child{background:linear-gradient(90deg,#d9bf7a,transparent)}
+.lux-title{margin:0!important;font-size:clamp(34px,4.4vw,56px)!important;font-weight:700;color:#fff!important;letter-spacing:.5px;text-shadow:0 2px 14px rgba(6,18,44,.45)!important}
+.lux-title em{font-style:normal;color:#d9bf7a}
+.lux-quote{font-size:clamp(30px,3.8vw,48px);font-weight:700;line-height:1.1;background:linear-gradient(180deg,#f6e3a8,#c9a24c);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lux-rule{position:relative;width:260px;height:1px;margin:10px 0 4px;background:linear-gradient(90deg,transparent,#d9bf7a,transparent)}
+.lux-rule i{position:absolute;left:50%;top:50%;width:8px;height:8px;background:#d9bf7a;transform:translate(-50%,-50%) rotate(45deg)}
+.lux-sub{margin:0!important;max-width:900px;color:rgba(255,255,255,.82)!important;font-size:21px!important;font-weight:400;letter-spacing:.3px}
+</style>
+<style>.am-static{width:min(420px,80vw);margin:4px auto 0;pointer-events:none;user-select:none}.am-static iframe{display:block;width:100%;aspect-ratio:1;border:0;background:transparent}</style>
+</head>
+<body>
+<div class="wrapper">
+  <header class="hero hero3">
+    <div class="lux-eyebrow"><span></span>กระบวนการพัฒนาคุณภาพผู้เรียน<span></span></div>
+    <h1 class="lux-title">เสริมรากฐาน <em>·</em> สานการพัฒนา</h1>
+    <div class="lux-quote">“นำพาผู้เรียนสู่คุณภาพ”</div>
+    <div class="lux-rule"><i></i></div>
+    <p class="lux-sub">Input – Process – Output ของการบริหารงานวิชาการ ด้วยรูปแบบ ACADEMIC Model และวงจร PDCA</p>
+  </header>
+
+  <section class="stage">
+    <span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span class="spark s4"></span><span class="spark s5"></span>
+    <div class="flow">
+      <article class="main-node node-gear" onclick="openMainModal('gear')">
+        <div class="node-number">01 • INPUT</div>
+        <h2>เสริมรากฐาน</h2>
+        <p>ปัจจัยพื้นฐานที่นำมาใช้ในการพัฒนาคุณภาพผู้เรียน</p>
+        <div class="mini-tags"><span class="tag">นโยบาย</span><span class="tag">มาตรฐาน / หลักสูตร</span><span class="tag">บริบท</span><span class="tag">ข้อมูลผู้เรียน</span></div>
+        <div class="click-hint">คลิกเพื่อดูรายละเอียด</div>
+      </article>
+
+      <div class="connector"></div>
+
+      <article class="main-node node-success" onclick="openMainModal('success')">
+        <div class="node-number">02 • PROCESS</div>
+        <h2>สานการพัฒนา</h2>
+        <p>มุ่งสู่เป้าหมาย ด้วยกระบวนการบริหารงานวิชาการ รูปแบบ ACADEMIC Model</p>
+        <div class="mini-tags"><span class="tag">ACADEMIC Model</span><span class="tag">PDCA</span></div>
+        <div class="click-hint">คลิกเพื่อดูกระบวนการ</div>
+      </article>
+
+      <div class="connector"></div>
+
+      <article class="main-node node-result" onclick="openMainModal('result')">
+        <div class="node-number">03 • OUTPUT</div>
+        <h2>นำพาผู้เรียนสู่คุณภาพ</h2>
+        <p>ผลผลิตจากกระบวนการบริหารงานวิชาการที่นำไปสู่คุณภาพผู้เรียน</p>
+        <div class="mini-tags"><span class="tag">หลักสูตร</span><span class="tag">การจัดการเรียนรู้</span><span class="tag">นวัตกรรม</span></div>
+        <div class="click-hint">คลิกเพื่อดูผลลัพธ์</div>
+      </article>
+    </div>
+  </section>
+
+<div class="modal" id="gearModal" onclick="outsideClose(event,'gearModal')">
+  <div class="modal-card" style="--modalA:#ff9fc7;--modalB:#ffd58a">
+    <button class="close-btn" onclick="closeModal('gearModal')">ปิด</button>
+    <div class="modal-header"><div class="modal-badge">01</div><div class="modal-title"><h2>เสริมรากฐาน</h2><p>INPUT · ปัจจัยนำเข้า</p></div></div>
+    <div class="section-box"><ul class="num-list"><li><b>1</b><span>นโยบายกระทรวงศึกษาธิการ</span></li><li><b>2</b><span>มาตรฐานการเรียนรู้</span></li><li><b>3</b><span>หลักสูตรแกนกลาง หลักสูตรอิงมาตรฐาน</span></li><li><b>4</b><span>บริบทของสถานศึกษา</span></li><li><b>5</b><span>ความต้องการของผู้เรียน ผู้ปกครอง ชุมชน และท้องถิ่น</span></li><li><b>6</b><span>ข้อมูลผลสัมฤทธิ์ทางการเรียน ผลการประเมินสมรรถนะ คุณลักษณะอันพึงประสงค์</span></li><li><b>7</b><span>ความสนใจ ความถนัด ความแตกต่างระหว่างบุคคล</span></li><li><b>8</b><span>เทคโนโลยี</span></li><li><b>9</b><span>ภาคีเครือข่าย</span></li></ul></div>
+  </div>
+</div>
+
+<div class="modal" id="successModal" onclick="outsideClose(event,'successModal')">
+  <div class="modal-card" style="--modalA:#a89af5;--modalB:#79cfee">
+    <button class="close-btn" onclick="closeModal('successModal')">ปิด</button>
+    <div class="modal-header"><div class="modal-badge">02</div><div class="modal-title"><h2>สานการพัฒนา</h2><p>PROCESS · มุ่งสู่เป้าหมาย</p></div></div>
+    <div class="section-box" style="text-align:center">
+      <p style="font-size:24px;line-height:1.45;color:#3d5a78;margin:0 0 6px"><b>มุ่งสู่เป้าหมาย</b></p>
+      <p style="font-size:22px;line-height:1.45;color:#5a7188;margin:0 0 16px">กระบวนการบริหารงานวิชาการ โดยรูปแบบ ACADEMIC Model เพื่อพัฒนาคุณภาพผู้เรียน<br>โดยทุกองค์ประกอบใช้วงจร PDCA</p>
+      <div class="am-static"><iframe src="/models/academic-wheel-static.html" title="ACADEMIC MODEL" scrolling="no" tabindex="-1"></iframe></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="resultModal" onclick="outsideClose(event,'resultModal')">
+  <div class="modal-card" style="--modalA:#88ddb4;--modalB:#79cfee">
+    <button class="close-btn" onclick="closeModal('resultModal')">ปิด</button>
+    <div class="modal-header"><div class="modal-badge">03</div><div class="modal-title"><h2>นำพาผู้เรียนสู่คุณภาพ</h2><p>OUTPUT · ผลผลิต</p></div></div>
+    <div class="section-box"><ul class="num-list"><li><b>1</b><span>หลักสูตรสถานศึกษาที่สอดคล้องกับมาตรฐานการศึกษา บริบทของโรงเรียน และความต้องการของผู้เรียน</span></li><li><b>2</b><span>แผนการจัดการเรียนรู้เชิงรุกที่เน้นผู้เรียนเป็นสำคัญ</span></li><li><b>3</b><span>นวัตกรรมในการจัดการเรียนรู้</span></li><li><b>4</b><span>เครื่องมือวัดและประเมินผลที่หลากหลาย สอดคล้องกับผลลัพธ์การเรียนรู้และสมรรถนะของผู้เรียน</span></li><li><b>5</b><span>ฐานข้อมูลสารสนเทศของผู้เรียนที่สามารถนำมาใช้วางแผน ปรับการสอน ซ่อมเสริม ส่งเสริมศักยภาพ</span></li><li><b>6</b><span>ระบบนิเทศภายใน การติดตาม การให้คำปรึกษา</span></li><li><b>7</b><span>รายงานผลการดำเนินงาน ผลการประเมิน และข้อมูลสะท้อนกลับที่ใช้เป็นหลักฐานในการพัฒนาคุณภาพ</span></li><li><b>8</b><span>ระบบจัดการเรียนรู้และระบบดูแลช่วยเหลือที่เปิดโอกาสให้ผู้เรียนทุกกลุ่ม</span></li><li><b>9</b><span>แนวปฏิบัติที่ดีและนวัตกรรมที่ผ่านการพัฒนา</span></li></ul></div>
+  </div>
+</div>
+</div>
+
+<script>
+function afterModalChange(){reportHeight();setTimeout(reportHeight,200);setTimeout(reportHeight,420);setTimeout(reportHeight,800)}
+function focusFrame(){if(window.frameElement)window.frameElement.scrollIntoView({behavior:'smooth',block:'start'})}
+function openMainModal(type){const id=type==='gear'?'gearModal':type==='success'?'successModal':'resultModal';document.getElementById(id).classList.add('show');afterModalChange();focusFrame()}
+function closeModal(id){document.getElementById(id).classList.remove('show');afterModalChange()}
+function outsideClose(e,id){if(e.target.id===id)closeModal(id)}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.show').forEach(m=>closeModal(m.id))});
+function reportHeight(){requestAnimationFrame(()=>{const el=document.querySelector('.wrapper');let height=el?el.getBoundingClientRect().height+6:document.body.scrollHeight;
+  const card=document.querySelector('.modal.show .modal-card');if(card){const r=card.getBoundingClientRect();height=Math.max(height,r.top+window.scrollY+r.height+90)}
+  height=Math.ceil(height);if(window.frameElement)window.frameElement.style.height=height+'px';
+  window.parent.postMessage({type:'d1-ipo-height',height},window.location.origin)})}
+const _ro=new ResizeObserver(reportHeight);_ro.observe(document.body);document.querySelectorAll('.modal-card').forEach(c=>_ro.observe(c));window.addEventListener('load',reportHeight);
+</script>
+</body>
+</html>

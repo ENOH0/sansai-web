@@ -654,3 +654,7 @@
 /* กราฟพาสเทล 1.1.2 และ 1.1.6: เส้นแกนและเส้นตารางเข้มขึ้น */
 :host ::ng-deep .d1-pastel-chart .axis-line { stroke: #5b6b86; stroke-width: 1.5; }
 :host ::ng-deep .d1-pastel-chart .grid-line { stroke: #c9d3e3; }
+
+/* กระบวนการ IPO ใต้บทนำ */
+.d1-ipo-model { margin-top: 8px; }
+.d1-ipo-model iframe { display: block; width: 100%; border: 0; background: transparent; }

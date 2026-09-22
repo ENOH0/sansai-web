@@ -169,7 +169,7 @@ export function initSmartWheel(root: HTMLElement, items: WheelItem[], startIndex
     t.textContent = it.title;
     /* ธีม academic ซ่อนคำอธิบายเพราะภาพเล่าเป็นลำดับ P-D-C-A อยู่แล้ว
        ส่วนแบบแกลเลอรียังคงแสดงความหมายขององค์ประกอบไว้ */
-    d.hidden = !!it.evidence?.length && it.evidenceProcess !== false;
+    d.hidden = !it.detail && !!it.evidence?.length && it.evidenceProcess !== false;   // มีคำอธิบาย (detail) = แสดงเสมอ
     d.textContent = it.detail ?? '';
     k.textContent = `${it.letter} — ${it.thaiTitle ?? it.title}`;
     evidence.setAttribute('aria-label', `พื้นที่ใส่ภาพหลักฐานของ ${it.title}`);
@@ -184,7 +184,8 @@ export function initSmartWheel(root: HTMLElement, items: WheelItem[], startIndex
               <svg viewBox="0 0 24 24" focusable="false"><path d="M4 12h14M13 6l6 6-6 6" /></svg>
             </span>` : ''}
           </figure>`).join('')}
-        </div>`
+        </div>
+        ${flow ? `<div class="sw-dots">${it.evidence.map((e, i) => `<button type="button" class="sw-dot${i ? '' : ' is-on'}" data-go="${i}" aria-label="${(e.caption || '').slice(0, 1)} รูปที่ ${i + 1}">${(e.caption || '').trim().charAt(0) || i + 1}</button>`).join('')}</div>` : ''}`
       : `<p class="sw-evidence-label">พื้นที่ใส่ภาพหลักฐาน 4 รูป</p>
         <div class="sw-evidence-grid">
           <div class="sw-evidence-slot"><span>รูปที่ 1</span></div>
@@ -192,6 +193,19 @@ export function initSmartWheel(root: HTMLElement, items: WheelItem[], startIndex
           <div class="sw-evidence-slot"><span>รูปที่ 3</span></div>
           <div class="sw-evidence-slot"><span>รูปที่ 4</span></div>
         </div>`;
+    // แถบเลื่อนรูป P D C A: ปัดซ้าย-ขวา หรือแตะปุ่ม P/D/C/A
+    const track = evidence.querySelector<HTMLElement>('.sw-evidence-grid--process');
+    const dots = Array.from(evidence.querySelectorAll<HTMLElement>('.sw-dot'));
+    if (track && dots.length) {
+      dots.forEach(b => b.addEventListener('click', () => {
+        const n = Number(b.dataset['go']);
+        track.scrollTo({ left: track.clientWidth * n, behavior: 'smooth' });
+      }));
+      track.addEventListener('scroll', () => {
+        const n = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+        dots.forEach((b, i) => b.classList.toggle('is-on', i === n));
+      }, { passive: true });
+    }
   };
 
   /* ---------- เอฟเฟกต์ 3 มิติ: เอียงตามเมาส์/นิ้ว + แสงสะท้อน ----------
