@@ -44,6 +44,7 @@ export class Dimension3Component {
   readonly inputModelHeight = signal(1100);
   readonly dlrModelHeight = signal(1200);
   readonly leaderModelHeight = signal(900);
+  readonly integratedLeaderModelHeight = signal(900);
   readonly orgModelHeight = signal(950);
   readonly iqaModelHeight = signal(1100);
   readonly qaModelHeight = signal(920);
@@ -85,6 +86,7 @@ export class Dimension3Component {
     if (event.data?.type === 'd3-input-model-height') this.inputModelHeight.set(Math.max(600, height));
     if (event.data?.type === 'd3-dlr-model-height') this.dlrModelHeight.set(Math.max(600, height));
     if (event.data?.type === 'd3-leader-model-height') this.leaderModelHeight.set(Math.max(500, height));
+    if (event.data?.type === 'd3-integrated-leader-model-height') this.integratedLeaderModelHeight.set(Math.max(500, height));
     if (event.data?.type === 'd3-org-model-height') this.orgModelHeight.set(Math.max(500, height));
     if (event.data?.type === 'd3-iqa-model-height') this.iqaModelHeight.set(Math.max(500, height));
     if (event.data?.type === 'd3-qa-model-height') this.qaModelHeight.set(Math.max(400, height));

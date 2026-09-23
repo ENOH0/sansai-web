@@ -911,7 +911,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         (() => {
             const reportHeight = () => {
                 const height = Math.ceil(document.documentElement.scrollHeight);
-                window.parent.postMessage({ type: 'd3-leader-model-height', height }, location.origin);
+                window.parent.postMessage({ type: 'd3-integrated-leader-model-height', height }, location.origin);
             };
             addEventListener('load', reportHeight);
             addEventListener('resize', reportHeight);
