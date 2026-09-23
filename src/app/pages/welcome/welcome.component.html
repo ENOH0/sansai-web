@@ -17,15 +17,19 @@
 
     <nav class="wl-grid">
       <ng-container *ngFor="let b of buttons; let i = index">
-        <a *ngIf="b.link && !isExternal(b.link)" class="wl-btn" [class.is-main]="b.main" [routerLink]="b.link"
+        <button *ngIf="b.icon === 'video'" type="button" class="wl-btn" [style.--i]="i"
+          (click)="openVideo($event)">
+          <ng-container *ngTemplateOutlet="btnBody; context: { $implicit: b }"></ng-container>
+        </button>
+        <a *ngIf="b.icon !== 'video' && b.link && !isExternal(b.link)" class="wl-btn" [class.is-main]="b.main" [routerLink]="b.link"
            [style.--i]="i">
           <ng-container *ngTemplateOutlet="btnBody; context: { $implicit: b }"></ng-container>
         </a>
-        <a *ngIf="b.link && isExternal(b.link)" class="wl-btn" [class.is-main]="b.main" [href]="b.link"
+        <a *ngIf="b.icon !== 'video' && b.link && isExternal(b.link)" class="wl-btn" [class.is-main]="b.main" [href]="b.link"
            [target]="targetOf(b.link)" rel="noopener" [style.--i]="i">
           <ng-container *ngTemplateOutlet="btnBody; context: { $implicit: b }"></ng-container>
         </a>
-        <span *ngIf="!b.link" class="wl-btn is-empty" aria-disabled="true" [style.--i]="i">
+        <span *ngIf="b.icon !== 'video' && !b.link" class="wl-btn is-empty" aria-disabled="true" [style.--i]="i">
           <ng-container *ngTemplateOutlet="btnBody; context: { $implicit: b }"></ng-container>
           <em class="wl-soon">เร็ว ๆ นี้</em>
         </span>
@@ -35,6 +39,19 @@
     <button type="button" class="wl-back" (click)="closeMenu($event)">กลับสู่หน้าปก</button>
   </div>
 </section>
+
+<div class="wl-video-modal" *ngIf="videoOpen()" role="dialog" aria-modal="true"
+  aria-label="วิดีโอนำเสนอ" (click)="closeVideo($event)">
+  <div class="wl-video-dialog" (click)="$event.stopPropagation()">
+    <button type="button" class="wl-video-close" aria-label="ปิดวิดีโอ" (click)="closeVideo($event)">×</button>
+    <div class="wl-youtube">
+      <iframe src="https://www.youtube.com/embed/bXKZK1pG3Lg?si=nhGmAIs07g4wdy-y&amp;rel=0"
+        title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
 
 <ng-template #btnBody let-b>
   <span class="wl-ico" [ngSwitch]="b.icon" aria-hidden="true">

@@ -27,6 +27,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('cover') private cover?: ElementRef<HTMLVideoElement>;
   readonly school = SCHOOL;
   readonly menuOpen = signal(false);
+  readonly videoOpen = signal(false);
 
   /** แก้ชื่อ/ลิงก์ปุ่มได้ที่นี่ */
   readonly buttons: WelcomeButton[] = [
@@ -71,6 +72,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   targetOf(link: string): string {
+    if (link.includes('youtube.com/embed/')) return '_self';
     return /^https?:\/\//.test(link) ? '_blank' : '_self';
   }
 
@@ -86,8 +88,21 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   closeMenu(event?: Event): void {
     event?.stopPropagation();
+    this.videoOpen.set(false);
     this.menuOpen.set(false);
     clearTimeout(this.idle);
+  }
+
+  openVideo(event: Event): void {
+    event.stopPropagation();
+    clearTimeout(this.idle);
+    this.videoOpen.set(true);
+  }
+
+  closeVideo(event?: Event): void {
+    event?.stopPropagation();
+    this.videoOpen.set(false);
+    this.resetIdle();
   }
 
   @HostListener('document:pointerdown')
@@ -100,5 +115,8 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @HostListener('document:keydown.escape')
-  onEsc(): void { this.closeMenu(); }
+  onEsc(): void {
+    if (this.videoOpen()) this.closeVideo();
+    else this.closeMenu();
+  }
 }

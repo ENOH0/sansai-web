@@ -162,6 +162,8 @@
   border: 0;
   background: transparent;
 }
+.d4-teaching-learning-model { margin-top: 28px; overflow: hidden; background: transparent; }
+.d4-teaching-learning-model iframe { display: block; width: 100%; border: 0; background: transparent; transition: height .25s ease; }
 
 /* ═══════════ 4.4 การนำผลการประเมินไปใช้ ═══════════ */
 .d44-hero {

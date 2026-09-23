@@ -514,6 +514,8 @@
 .d2-assessment-system-model iframe{display:block;width:100%;border:0;background:transparent;transition:height .25s ease}
 .d2-activities-model{margin:22px 0 32px;overflow:hidden;background:transparent}
 .d2-activities-model iframe{display:block;width:100%;border:0;background:transparent;transition:height .25s ease}
+.d2-curriculum-development-model{margin:22px 0 32px;overflow:hidden;background:transparent}
+.d2-curriculum-development-model iframe{display:block;width:100%;border:0;background:transparent;transition:height .25s ease}
 
 .d2-io-layout {
   display: grid;

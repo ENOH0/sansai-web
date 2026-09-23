@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>ระบบการวัดและประเมินผล</title>
+    <title>การพัฒนาหลักสูตรสถานศึกษา</title>
     <style>
         @font-face {
             font-family: Sarabun;
@@ -1563,6 +1563,317 @@
                 transform: translate(-50%, -50%)
             }
         }
+
+        .activity-path.route-viewport {
+            position: relative;
+            aspect-ratio: 600/620;
+            height: auto !important;
+            min-height: 530px;
+            padding: 0 !important;
+            overflow: visible
+        }
+
+        .activity-path .cycle-paths {
+            inset: 0;
+            width: 100%;
+            height: 100%
+        }
+
+        .step.activity-station {
+            position: absolute;
+            left: var(--left);
+            top: var(--top);
+            width: 58%;
+            min-height: 118px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 19px;
+            border-radius: 22px;
+            background: linear-gradient(140deg, white, color-mix(in srgb, var(--tone) 32%, white));
+            transform: rotate(-2deg);
+            box-shadow: 0 9px 0 var(--tone), 0 20px 28px #b69dcf25
+        }
+
+        .step.activity-station.active {
+            transform: rotate(0) scale(1.055);
+            box-shadow: 0 9px 0 var(--tone), 0 0 28px 5px color-mix(in srgb, var(--tone) 40%, transparent)
+        }
+
+        .station-num {
+            font: 35px Georgia;
+            color: var(--tone);
+            text-shadow: 0 2px 0 white
+        }
+
+        .activity-station small {
+            font: 10px Arial;
+            letter-spacing: 2px;
+            color: #a18bb2
+        }
+
+        .activity-station h3 {
+            font-size: 29px;
+            line-height: 1.05;
+            color: #785a89;
+            margin: 7px 0
+        }
+
+        .activity-station em {
+            font-style: normal;
+            font-size: 19px;
+            color: #a386b2
+        }
+
+        .step.activity-station:before {
+            border-radius: 16px
+        }
+
+        .workspace {
+            align-items: start
+        }
+
+        .details-panel {
+            position: relative;
+            top: 0
+        }
+
+        .cycle-paths path {
+            stroke-dasharray: 4 9
+        }
+
+        .cycle-paths path.active {
+            stroke-dasharray: 20 12
+        }
+
+        @media(max-width:1050px) {
+            .step.activity-station {
+                gap: 10px;
+                padding: 15px
+            }
+
+            .activity-station h3 {
+                font-size: 26px
+            }
+
+            .station-num {
+                font-size: 29px
+            }
+        }
+
+        @media(max-width:800px) {
+            .activity-path {
+                max-width: 590px;
+                margin: auto
+            }
+
+            .step.activity-station {
+                min-height: 110px
+            }
+
+            .activity-station h3 {
+                font-size: 28px
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            .step.activity-station.active {
+                transform: none
+            }
+        }
+
+        .curriculum-map.route-viewport {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px 22px;
+            height: auto !important;
+            min-height: 0;
+            aspect-ratio: auto;
+            padding: 22px 10px !important;
+            isolation: isolate
+        }
+
+        .curriculum-spine {
+            position: absolute;
+            inset: 20% 15%;
+            border: 2px dashed #d8c8e5;
+            border-radius: 30px;
+            z-index: -1
+        }
+
+        .step.curriculum-tile {
+            position: relative;
+            inset: auto;
+            width: 100%;
+            min-height: 237px;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+            border-radius: 22px;
+            background: linear-gradient(145deg, white, color-mix(in srgb, var(--tone) 25%, white));
+            transform: rotate(-2deg);
+            box-shadow: 0 9px 0 color-mix(in srgb, var(--tone) 70%, #c3aecf), 0 22px 30px #b9a4c92b
+        }
+
+        .curriculum-tile:nth-of-type(even) {
+            transform: rotate(2deg)
+        }
+
+        .step.curriculum-tile.active {
+            transform: translateY(-6px) rotate(0);
+            box-shadow: 0 9px 0 var(--tone), 0 0 27px 5px color-mix(in srgb, var(--tone) 38%, transparent), 0 22px 30px #b9a4c933
+        }
+
+        .curriculum-tile:before {
+            border-radius: 16px
+        }
+
+        .tile-index {
+            position: absolute;
+            right: 18px;
+            top: 17px;
+            font: 17px Georgia;
+            color: #a88bb9
+        }
+
+        .tile-paper {
+            width: 64px;
+            height: 75px;
+            display: block;
+            background: #fffe;
+            border: 2px solid white;
+            border-radius: 8px 18px 8px 8px;
+            box-shadow: 5px 5px 0 var(--tone);
+            transform: rotate(-8deg);
+            margin: 5px 0 13px;
+            padding: 10px
+        }
+
+        .tile-paper b {
+            font: 27px Georgia;
+            color: var(--tone)
+        }
+
+        .tile-paper i {
+            display: block;
+            width: 80%;
+            height: 3px;
+            background: var(--tone);
+            opacity: .4;
+            margin-top: 5px;
+            border-radius: 5px
+        }
+
+        .tile-copy small {
+            font: 10px Arial;
+            letter-spacing: 2px;
+            color: #a18aac
+        }
+
+        .tile-copy h3 {
+            font-size: 28px;
+            line-height: 1.05;
+            color: #795d89;
+            margin: 7px 0
+        }
+
+        .tile-copy p {
+            font-size: 21px;
+            line-height: 1.1;
+            margin: 8px 0;
+            color: #a289ae
+        }
+
+        .curriculum-tile.active .tile-paper {
+            animation: curriculumFloat 4s ease-in-out infinite
+        }
+
+        .cycle-return {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 18px 10px;
+            border: 1px solid white;
+            border-radius: 16px;
+            background: linear-gradient(120deg, #f2e7f8, #e7f4f6);
+            font-size: 23px;
+            color: #9a7baa;
+            margin-top: 8px
+        }
+
+        .details-panel {
+            min-height: 0
+        }
+
+        .paused .tile-paper {
+            animation-play-state: paused
+        }
+
+        @keyframes curriculumFloat {
+            50% {
+                transform: rotate(-3deg) translateY(-4px)
+            }
+        }
+
+        @media(max-width:1050px) {
+            .curriculum-map.route-viewport {
+                gap: 21px 14px
+            }
+
+            .step.curriculum-tile {
+                min-height: 230px;
+                padding: 17px 12px
+            }
+
+            .tile-copy h3 {
+                font-size: 26px
+            }
+
+            .tile-copy p {
+                font-size: 20px
+            }
+        }
+
+        @media(max-width:800px) {
+            .curriculum-map {
+                max-width: 650px;
+                margin: auto
+            }
+
+            .step.curriculum-tile {
+                min-height: 230px
+            }
+
+            .tile-copy h3 {
+                font-size: 28px
+            }
+        }
+
+        @media(max-width:400px) {
+            .step.curriculum-tile {
+                padding: 17px 10px
+            }
+
+            .tile-copy h3 {
+                font-size: 24px
+            }
+
+            .tile-copy p {
+                font-size: 19px
+            }
+
+            .tile-index {
+                right: 12px
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            .curriculum-tile.active .tile-paper {
+                animation: none
+            }
+        }
     </style><!-- —————————————————————————————-
 SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
 —————————————————————————————-
@@ -1655,9 +1966,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 <body>
     <main>
         <header>
-            <div><span class="eyebrow">ASSESSMENT & DEVELOPMENT</span>
-                <h1>ระบบการวัดและประเมินผล</h1>
-                <p>กำหนดแนวทาง · เก็บข้อมูล · รายงานผล · นำไปพัฒนา</p>
+            <div><span class="eyebrow">SCHOOL CURRICULUM DEVELOPMENT</span>
+                <h1>การพัฒนาหลักสูตรสถานศึกษา</h1>
+                <p>วางแผนร่วมกัน · นำไปใช้ · นิเทศติดตาม · ปรับปรุงต่อเนื่อง</p>
             </div>
         </header>
         <div class="workspace">
@@ -1667,28 +1978,29 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
                             id="play" aria-pressed="true">Ⅱ หยุดแสดง</button><button id="next"
                             aria-label="ขั้นถัดไป">↓</button></div>
                 </div>
-                <div class="route-viewport assessment-cycle" id="route">
-                    <div class="cycle-halo"></div><svg class="cycle-paths" viewBox="0 0 600 600" aria-hidden="true">
-                        <path d="M300 84 Q504 84 504 300" />
-                        <path d="M504 300 Q504 516 300 516" />
-                        <path d="M300 516 Q96 516 96 300" />
-                        <path d="M96 300 Q96 84 300 84" />
-                    </svg>
-                    <div class="cycle-center">
-                        <small>ASSESSMENT</small><b>วัดผล<br>เพื่อพัฒนา</b><span>เชื่อมข้อมูลสู่การเรียนรู้</span></div>
-                    <button class="step assessment-node" data-step="1" style="--tone:#b9a1ea;--x:50%;--y:14%"><span
-                            class="node-number">01</span>
-                        <h3>กำหนดแนวทาง</h3><small>2 ภาพประกอบ</small>
-                    </button><button class="step assessment-node" data-step="2"
-                        style="--tone:#83cae3;--x:84%;--y:50%"><span class="node-number">02</span>
-                        <h3>เครื่องมือและข้อมูล</h3><small>2 ภาพประกอบ</small>
-                    </button><button class="step assessment-node" data-step="3"
-                        style="--tone:#8dd5b6;--x:50%;--y:86%"><span class="node-number">03</span>
-                        <h3>เอกสารและรายงาน</h3><small>3 ภาพประกอบ</small>
-                    </button><button class="step assessment-node" data-step="4"
-                        style="--tone:#e9abc4;--x:16%;--y:50%"><span class="node-number">04</span>
-                        <h3>ใช้ผลเพื่อพัฒนา</h3><small>3 ภาพประกอบ</small>
-                    </button>
+                <div class="route-viewport curriculum-map" id="route">
+                    <div class="curriculum-spine" aria-hidden="true"></div><button class="step curriculum-tile"
+                        style="--tone:#b9a1ea"><span class="tile-index">01</span><span class="tile-paper"
+                            aria-hidden="true"><b>P</b><i></i><i></i></span><span class="tile-copy"><small>PLAN</small>
+                            <h3>ขั้นวางแผน</h3>
+                            <p>วิเคราะห์ความต้องการ</p>
+                        </span></button><button class="step curriculum-tile" style="--tone:#83cae3"><span
+                            class="tile-index">02</span><span class="tile-paper"
+                            aria-hidden="true"><b>D</b><i></i><i></i></span><span class="tile-copy"><small>DO</small>
+                            <h3>ขั้นดำเนินการ</h3>
+                            <p>พัฒนาและใช้หลักสูตร</p>
+                        </span></button><button class="step curriculum-tile" style="--tone:#8dd5b6"><span
+                            class="tile-index">03</span><span class="tile-paper"
+                            aria-hidden="true"><b>C</b><i></i><i></i></span><span class="tile-copy"><small>CHECK</small>
+                            <h3>ขั้นตรวจสอบ</h3>
+                            <p>นิเทศและประเมิน</p>
+                        </span></button><button class="step curriculum-tile" style="--tone:#e9abc4"><span
+                            class="tile-index">04</span><span class="tile-paper"
+                            aria-hidden="true"><b>A</b><i></i><i></i></span><span class="tile-copy"><small>ACT</small>
+                            <h3>ขั้นพัฒนาต่อยอด</h3>
+                            <p>วิจัยและปรับปรุง</p>
+                        </span></button>
+                    <div class="cycle-return">วางแผนพัฒนาหลักสูตรในรอบถัดไป ↺</div>
                 </div>
             </section>
             <aside class="details-panel" id="panel" aria-label="รายละเอียดขั้นตอน"><span class="detail-tag"
@@ -1710,9 +2022,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
             <div id="modal-body"></div>
         </div>
     </dialog>
-    <script type="application/json" id="saved-images">{"1-0":"/evidence/dimension2/assessment-system/guidelines-01.png","1-1":"/evidence/dimension2/assessment-system/guidelines-02.png","2-0":"/evidence/dimension2/assessment-system/tools-01.png","2-1":"/evidence/dimension2/assessment-system/tools-02.png","3-0":"/evidence/dimension2/assessment-system/reports-01.png","3-1":"/evidence/dimension2/assessment-system/reports-02.png","3-2":"/evidence/dimension2/assessment-system/reports-03.png","4-0":"/evidence/dimension2/assessment-system/improve-01.png","4-1":"/evidence/dimension2/assessment-system/improve-02.png","4-2":"/evidence/dimension2/assessment-system/improve-03.png"}</script>
+    <script type="application/json" id="saved-images">{"1-0":"/evidence/dimension2/curriculum-development/plan-01.png","1-1":"/evidence/dimension2/curriculum-development/plan-02.png","1-2":"/evidence/dimension2/curriculum-development/plan-03.png","2-0":"/evidence/dimension2/curriculum-development/do-01.png","2-1":"/evidence/dimension2/curriculum-development/do-02.png","2-2":"/evidence/dimension2/curriculum-development/do-03.png","3-0":"/evidence/dimension2/curriculum-development/check-01.png","3-1":"/evidence/dimension2/curriculum-development/check-02.png","3-2":"/evidence/dimension2/curriculum-development/check-03.png","4-0":"/evidence/dimension2/curriculum-development/act-01.png","4-1":"/evidence/dimension2/curriculum-development/act-02.png"}</script>
     <script>
-        const data = [{}, { "title": "สร้างและพัฒนาแนวทางการวัดและประเมินผล", "short": "กำหนดแนวทาง", "en": "Assessment Guidelines", "color": "#b9a1ea", "intro": "คณะกรรมการงานวัดและประเมินผลศึกษาแนวปฏิบัติการวัดและประเมินผลการเรียนรู้ตามหลักสูตรแกนกลาง แล้วประชุมร่วมกับฝ่ายบริหารและหัวหน้ากลุ่มสาระการเรียนรู้ เพื่อกำหนดแนวทางการวัดและประเมินผลตลอดภาคเรียน", "parts": [["ระเบียบการวัดและประเมินผล", "จัดทำระเบียบการวัดและประเมินผลของโรงเรียนที่รองรับหลักสูตรที่หลากหลาย"], ["แนวทางปฏิบัติของครู", "จัดทำแนวทางการปฏิบัติงานให้ครูผู้สอนมีความเข้าใจตรงกัน"], ["การมีส่วนร่วม", "ผู้ปกครองและผู้มีส่วนเกี่ยวข้องร่วมกันจัดทำระเบียบให้สอดคล้องกับสิ่งที่ต้องการวัด"]], "photos": 2, "outputs": ["จัดทำระเบียบการวัดและประเมินผลของโรงเรียนที่รองรับหลักสูตรที่หลากหลาย", "จัดทำแนวทางการปฏิบัติงานให้ครูผู้สอนมีความเข้าใจตรงกัน", "ผู้ปกครองและผู้มีส่วนเกี่ยวข้องร่วมกันจัดทำระเบียบให้สอดคล้องกับสิ่งที่ต้องการวัด"] }, { "title": "สร้างเครื่องมือที่มีคุณภาพและเก็บข้อมูลอย่างเป็นระบบ", "short": "เครื่องมือและข้อมูล", "en": "Tools & Digital Records", "color": "#83cae3", "intro": "สร้างและพัฒนาเครื่องมือการวัดและประเมินผลที่มีคุณภาพ หลากหลายรูปแบบ พร้อมเก็บรวบรวมข้อมูลอย่างเป็นระบบด้วยระบบดิจิทัล SGS Online เพื่อให้ใช้งานได้สะดวกรวดเร็ว", "parts": [["เครื่องมือประเมินรายวิชา", "ใช้เครื่องมือประเมินที่สอดคล้องกับมาตรฐานและตัวชี้วัดของแต่ละรายวิชา"], ["สมรรถนะและผลสัมฤทธิ์", "ประเมินสมรรถนะสำคัญของผู้เรียนควบคู่กับผลสัมฤทธิ์ทางการเรียน"], ["ข้อมูลผลการเรียนรายบุคคล", "จัดเก็บข้อมูลผลการเรียนรายบุคคลในระบบดิจิทัล"]], "photos": 2, "outputs": ["ใช้เครื่องมือประเมินที่สอดคล้องกับมาตรฐานและตัวชี้วัดของแต่ละรายวิชา", "ประเมินสมรรถนะสำคัญของผู้เรียนควบคู่กับผลสัมฤทธิ์ทางการเรียน", "จัดเก็บข้อมูลผลการเรียนรายบุคคลในระบบดิจิทัล"] }, { "title": "จัดทำเอกสารและรายงานต่อผู้เกี่ยวข้อง", "short": "เอกสารและรายงาน", "en": "Documents & Reporting", "color": "#8dd5b6", "intro": "จัดทำเอกสารประกอบการวัดและประเมินผล เพื่อสรุปรายงานเสนอต่อหน่วยงานต้นสังกัดและผู้เกี่ยวข้อง พร้อมรายงานผลการเรียนเชิงรุกรายบุคคลไปยังผู้ปกครองผ่านระบบดิจิทัล", "parts": [["เอกสารการศึกษา", "จัดทำ ปพ.1–ปพ.9 ครบถ้วนตามระเบียบ"], ["รายงานความก้าวหน้า", "รายงานความก้าวหน้าของผู้เรียนให้ผู้ปกครองทราบเป็นระยะ"], ["ข้อเสนอแนะจากผู้ปกครอง", "เปิดช่องทางรับฟังข้อเสนอแนะจากผู้ปกครอง"]], "photos": 3, "outputs": ["จัดทำ ปพ.1–ปพ.9 ครบถ้วนตามระเบียบ", "รายงานความก้าวหน้าของผู้เรียนให้ผู้ปกครองทราบเป็นระยะ", "เปิดช่องทางรับฟังข้อเสนอแนะจากผู้ปกครอง"] }, { "title": "นำผลไปใช้พัฒนาทั้งระบบ", "short": "ใช้ผลเพื่อพัฒนา", "en": "Use Results to Improve", "color": "#e9abc4", "intro": "นำผลการวัดและประเมินผลไปใช้พัฒนากระบวนการบริหารและการจัดการของผู้บริหาร กระบวนการจัดการเรียนการสอนของครู และกระบวนการเรียนรู้ของนักเรียน ตลอดจนย้อนกลับไปพัฒนาหลักสูตรสถานศึกษาในรอบถัดไป", "parts": [["การสอนของครู", "ครูนำผลไปปรับแผนการจัดการเรียนรู้และจัดสอนซ่อมเสริม"], ["การบริหารสถานศึกษา", "ผู้บริหารใช้สารสนเทศประกอบการตัดสินใจเชิงนโยบาย"], ["กิจกรรมและหลักสูตร", "นำข้อมูลไปพัฒนากิจกรรมการเรียนรู้และหลักสูตรของสถานศึกษาต่อไป"]], "photos": 3, "outputs": ["ครูนำผลไปปรับแผนการจัดการเรียนรู้และจัดสอนซ่อมเสริม", "ผู้บริหารใช้สารสนเทศประกอบการตัดสินใจเชิงนโยบาย", "นำข้อมูลไปพัฒนากิจกรรมการเรียนรู้และหลักสูตรของสถานศึกษาต่อไป"] }]; let images = {}; try { images = JSON.parse(document.getElementById('saved-images').textContent) || {} } catch { }
+        const data = [{}, { "title": "วิเคราะห์ความต้องการจำเป็นร่วมกับทุกภาคส่วน", "short": "ขั้นวางแผน", "en": "PLAN", "intro": "วิเคราะห์บริบทสถานศึกษา ความถนัด ความสนใจ และศักยภาพของผู้เรียน โดยผู้บริหารสถานศึกษา งานพัฒนาหลักสูตรและกระบวนการเรียนรู้ หัวหน้ากลุ่มสาระการเรียนรู้ หัวหน้าหลักสูตรห้องเรียนพัฒนาสมรรถนะ และคณะครู", "parts": [["วางแผนวิเคราะห์บริบท", "ประชุมวางแผนการดำเนินการวิเคราะห์บริบทและความต้องการจำเป็น"], ["ข้อมูลผู้เรียนรายบุคคล", "รวบรวมข้อมูลผู้เรียนรายบุคคลเพื่อใช้ประกอบการออกแบบหลักสูตร"], ["ประชาพิจารณ์ร่วมกับผู้เกี่ยวข้อง", "จัดทำประชาพิจารณ์ร่วมกับศึกษานิเทศก์ คณะกรรมการสถานศึกษาขั้นพื้นฐาน ผู้ปกครอง และนักเรียน"]], "outputs": ["ประชุมวางแผนการดำเนินการวิเคราะห์บริบทและความต้องการจำเป็น", "รวบรวมข้อมูลผู้เรียนรายบุคคลเพื่อใช้ประกอบการออกแบบหลักสูตร", "จัดทำประชาพิจารณ์ร่วมกับศึกษานิเทศก์ คณะกรรมการสถานศึกษาขั้นพื้นฐาน ผู้ปกครอง และนักเรียน"], "photos": 3, "color": "#b9a1ea" }, { "title": "พัฒนาหลักสูตรและนำไปสู่การจัดการเรียนการสอน", "short": "ขั้นดำเนินการ", "en": "DO", "intro": "นำผลการวิเคราะห์มาพัฒนาหลักสูตรสถานศึกษาให้มีความยืดหยุ่นและสอดคล้องกับหลักสูตรแกนกลาง แล้วนำหลักสูตรไปออกแบบการจัดการเรียนการสอนเพื่อให้บรรลุตามจุดมุ่งหมายที่กำหนดไว้", "parts": [["โครงสร้างหลักสูตรและหน่วยการเรียนรู้", "จัดทำโครงสร้างหลักสูตร คำอธิบายรายวิชา และหน่วยการเรียนรู้อิงสมรรถนะ"], ["แผนการจัดการเรียนรู้", "ครูจัดทำแผนการจัดการเรียนรู้ที่สอดคล้องกับมาตรฐานและตัวชี้วัด"], ["หลักสูตรห้องเรียนพิเศษ", "เปิดหลักสูตรห้องเรียนพิเศษเพิ่มเติม ได้แก่ CEP, HSP, IST และ CSP"]], "outputs": ["จัดทำโครงสร้างหลักสูตร คำอธิบายรายวิชา และหน่วยการเรียนรู้อิงสมรรถนะ", "ครูจัดทำแผนการจัดการเรียนรู้ที่สอดคล้องกับมาตรฐานและตัวชี้วัด", "เปิดหลักสูตรห้องเรียนพิเศษเพิ่มเติม ได้แก่ CEP, HSP, IST และ CSP"], "photos": 3, "color": "#83cae3" }, { "title": "นิเทศ กำกับ ติดตาม และประเมินการใช้หลักสูตร", "short": "ขั้นตรวจสอบ", "en": "CHECK", "intro": "จัดทำแผนและดำเนินการนิเทศการใช้หลักสูตรอย่างเป็นระบบ โดยคณะกรรมการนิเทศภายในร่วมกับหัวหน้ากลุ่มสาระการเรียนรู้ เพื่อตรวจสอบว่าการจัดการเรียนการสอนเป็นไปตามหลักสูตรที่กำหนดหรือไม่", "parts": [["นิเทศการสอน", "นิเทศการสอนภาคเรียนละไม่น้อยกว่า 1 ครั้งต่อครูผู้สอน 1 คน"], ["ประเมินผลการใช้หลักสูตร", "ประเมินผลการใช้หลักสูตรจากผู้เรียน ครู และผู้ปกครอง"], ["สารสนเทศผลการนิเทศ", "รวบรวมสารสนเทศผลการนิเทศเป็นรายกลุ่มสาระการเรียนรู้"]], "outputs": ["นิเทศการสอนภาคเรียนละไม่น้อยกว่า 1 ครั้งต่อครูผู้สอน 1 คน", "ประเมินผลการใช้หลักสูตรจากผู้เรียน ครู และผู้ปกครอง", "รวบรวมสารสนเทศผลการนิเทศเป็นรายกลุ่มสาระการเรียนรู้"], "photos": 3, "color": "#8dd5b6" }, { "title": "สรุปผลและปรับปรุงหลักสูตรโดยใช้กระบวนการวิจัย", "short": "ขั้นพัฒนาต่อยอด", "en": "ACT", "intro": "สรุปผลการนิเทศ กำกับ ติดตาม และประเมิน มาปรับปรุงและพัฒนาหลักสูตรโดยใช้กระบวนการวิจัยเพื่อพัฒนา ทำให้หลักสูตรของโรงเรียนมีพัฒนาการต่อเนื่องทุกปีการศึกษา", "parts": [["รายงานผลการใช้หลักสูตร", "จัดทำรายงานผลการใช้หลักสูตรเสนอคณะกรรมการสถานศึกษาขั้นพื้นฐาน"], ["ปรับปรุงหลักสูตรรอบถัดไป", "นำข้อค้นพบไปปรับปรุงหลักสูตรในปีการศึกษาถัดไป"], ["เพิ่มแผนการเรียนตามความต้องการ", "เพิ่มแผนการเรียนใหม่ตามความต้องการที่ค้นพบ เช่น แผนการเรียนวิทยาศาสตร์นวัตกรรมและเทคโนโลยี (IST) ในปี 2568"]], "outputs": ["จัดทำรายงานผลการใช้หลักสูตรเสนอคณะกรรมการสถานศึกษาขั้นพื้นฐาน", "นำข้อค้นพบไปปรับปรุงหลักสูตรในปีการศึกษาถัดไป", "เพิ่มแผนการเรียนใหม่ตามความต้องการที่ค้นพบ เช่น แผนการเรียนวิทยาศาสตร์นวัตกรรมและเทคโนโลยี (IST) ในปี 2568"], "photos": 2, "color": "#e9abc4" }]; let images = {}; try { images = JSON.parse(document.getElementById('saved-images').textContent) || {} } catch { }
         const get = id => document.getElementById(id), modal = get('modal'), route = get('route'), steps = [...document.querySelectorAll('.step')], reduced = matchMedia('(prefers-reduced-motion: reduce)'); let active = 1, playing = !reduced.matches, hover = false, focus = false, lastAction = 0, opener = null, galleryStep = null;
         function sync() { get('play').textContent = playing ? 'Ⅱ หยุดแสดง' : '▶ แสดงอัตโนมัติ'; get('play').setAttribute('aria-pressed', String(playing)); document.body.classList.toggle('paused', !playing || modal.open || hover || focus) }
         function choose(index, scroll = true) { active = ((index - 1 + 4) % 4) + 1; const d = data[active]; steps.forEach((s, i) => { s.classList.toggle('active', i + 1 === active); s.setAttribute('aria-pressed', String(i + 1 === active)) }); get('panel').style.setProperty('--tone', d.color); get('tag').textContent = String(active).padStart(2, '0') + ' / 04 · ' + d.en; get('heading').textContent = d.title; get('intro').textContent = d.intro; get('parts').innerHTML = d.parts.map(([title], i) => `<button data-part="${i}"><b>${i + 1}</b><span>${title}</span><i>↗</i></button>`).join(''); get('output').innerHTML = `ดูรายละเอียดและภาพประกอบ ↗<small>พื้นที่ภาพประกอบ ${d.photos} รูป</small>`; document.querySelectorAll('.cycle-paths path').forEach((flow, i) => { flow.classList.toggle('active', i + 1 === active); flow.style.setProperty('--path-color', data[i + 1].color) }) }
@@ -1725,16 +2037,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         route.addEventListener('pointerenter', () => { hover = true; sync() }); route.addEventListener('pointerleave', () => { hover = false; sync() }); route.addEventListener('focusin', () => { focus = true; sync() }); route.addEventListener('focusout', e => { if (!route.contains(e.relatedTarget)) { focus = false; sync() } }); route.addEventListener('pointerdown', () => lastAction = Date.now()); route.addEventListener('wheel', () => lastAction = Date.now(), { passive: true });
         document.addEventListener('change', e => { const input = e.target; if (!input.matches('[data-image]')) return; const file = input.files?.[0]; if (!file) return; if (!['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(file.type) || file.size > 12 * 1024 * 1024) { get('image-error').textContent = 'เลือกภาพ JPG, PNG, WebP หรือ GIF ขนาดไม่เกิน 12 MB'; return } const reader = new FileReader(); reader.onload = () => { images[input.dataset.image] = reader.result; renderPhotos(); get('status').textContent = 'เพิ่มภาพแล้ว กรุณาบันทึก HTML พร้อมรูปเพื่อเก็บการเปลี่ยนแปลง' }; reader.onerror = () => get('image-error').textContent = 'อ่านไฟล์ไม่ได้ กรุณาเลือกใหม่'; reader.readAsDataURL(file) });
         document.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; if (b.dataset.remove) { delete images[b.dataset.remove]; renderPhotos(); get('status').textContent = 'นำรูปออกแล้ว กรุณาบันทึกไฟล์เพื่อเก็บการเปลี่ยนแปลง' } if (b.hasAttribute('data-save')) save(); if (b.hasAttribute('data-show-photos')) output() });
-        function save() { const copy = document.documentElement.cloneNode(true); copy.querySelector('#saved-images').textContent = JSON.stringify(images).replace(/</g, '\u003c'); copy.querySelector('#modal').removeAttribute('open'); copy.querySelector('#modal-body').innerHTML = ''; const url = URL.createObjectURL(new Blob(['<!doctype html>\n' + copy.outerHTML], { type: 'text/html;charset=utf-8' })); const a = document.createElement('a'); a.href = url; a.download = 'ASSESSMENT-SYSTEM.html'; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 30000); get('status').textContent = 'สร้างไฟล์ HTML พร้อมรูปสำหรับดาวน์โหลดแล้ว' } get('save').onclick = save;
+        function save() { const copy = document.documentElement.cloneNode(true); copy.querySelector('#saved-images').textContent = JSON.stringify(images).replace(/</g, '\u003c'); copy.querySelector('#modal').removeAttribute('open'); copy.querySelector('#modal-body').innerHTML = ''; const url = URL.createObjectURL(new Blob(['<!doctype html>\n' + copy.outerHTML], { type: 'text/html;charset=utf-8' })); const a = document.createElement('a'); a.href = url; a.download = 'SCHOOL-CURRICULUM-DEVELOPMENT.html'; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 30000); get('status').textContent = 'สร้างไฟล์ HTML พร้อมรูปสำหรับดาวน์โหลดแล้ว' } get('save').onclick = save;
         reduced.addEventListener('change', e => { playing = !e.matches; sync() }); setInterval(() => { if (playing && !modal.open && !document.hidden && !hover && !focus && Date.now() - lastAction > 6500) choose(active + 1) }, 7000); choose(1, false); sync();
     </script>
     <style>
-        html, body, main {
-            background: transparent !important;
-        }
-        body {
-            background-image: none !important;
-        }
+        html, body, main { background: transparent !important; }
+        body { background-image: none !important; }
         header h1,
         header p,
         .eyebrow,
@@ -1752,9 +2060,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         .gallery-note,
         .save-inline,
         [data-save],
-        #save {
-            display: none !important;
-        }
+        #save { display: none !important; }
     </style>
     <script>
         (() => {
@@ -1765,7 +2071,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
                 if (Math.abs(height - lastHeight) < 2) return;
                 lastHeight = height;
                 if (window.parent !== window) {
-                    window.parent.postMessage({ type: 'd2-assessment-system-height', height }, window.location.origin);
+                    window.parent.postMessage({ type: 'd2-school-curriculum-height', height }, window.location.origin);
                 }
             });
             new ResizeObserver(sendHeight).observe(document.body);

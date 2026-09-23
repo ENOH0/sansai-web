@@ -39,6 +39,7 @@ export class Dimension2Component {
   readonly mediaModelHeight = signal(1100);
   readonly assessmentSystemHeight = signal(1100);
   readonly activitiesModelHeight = signal(1100);
+  readonly curriculumDevelopmentHeight = signal(1100);
 
   @HostListener('window:message', ['$event'])
   resizeDiversityModel(event: MessageEvent<{ type?: string; height?: number }>): void {
@@ -56,6 +57,11 @@ export class Dimension2Component {
     if (event.data?.type === 'd2-extracurricular-activities-height') {
       const h = Number(event.data.height);
       if (Number.isFinite(h)) this.activitiesModelHeight.set(Math.max(760, h));
+      return;
+    }
+    if (event.data?.type === 'd2-school-curriculum-height') {
+      const h = Number(event.data.height);
+      if (Number.isFinite(h)) this.curriculumDevelopmentHeight.set(Math.max(760, h));
       return;
     }
     if (event.data?.type === 'd2-diversity-curriculum-height') {

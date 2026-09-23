@@ -263,6 +263,22 @@
 .d3-learn-model { width: 100%; }
 .d3-learn-model iframe { display: block; width: 100%; border: 0; background: transparent; }
 
+/* ภาพสรุปที่วางเหนือโมเดลในหัวข้อ 3.1 และ 3.2 */
+.d3-model-overview {
+  width: 100%;
+  margin: 30px 0 0;
+  overflow: hidden;
+  border: 1px solid rgba(40, 91, 154, .15);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 18px 42px rgba(20, 55, 102, .14);
+}
+.d3-model-overview img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 /* ── ปุ่มลิงก์ 4 กลุ่มบริหาร (3.5) ── */
 .d3-admin-links {
   display: grid;

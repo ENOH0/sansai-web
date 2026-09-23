@@ -89,7 +89,7 @@ export const DIM3 = {
         award: 'รางวัลสถานศึกษาที่มีผลงานปฏิบัติที่เป็นเลิศ (BEST PRACTICES) “ระดับยอดเยี่ยม” สถานศึกษาที่มีผลการพัฒนาระบบประกันคุณภาพการศึกษาภายในสถานศึกษาที่ส่งผลต่อการพัฒนาผู้เรียนอย่างยั่งยืนตามบริบทของสถานศึกษา',
         level: 'ระดับเขตพื้นที่การศึกษา',
         year: '2567',
-        photos: ['/evidence/dimension3/organization-awards/org-01.jpg']
+        photos: ['/evidence/dimension3/organization-awards/org-01.jpg?v=20260924-1']
       },
       {
         names: ['โรงเรียนสันทรายวิทยาคม'],
