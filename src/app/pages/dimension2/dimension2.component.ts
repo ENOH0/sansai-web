@@ -36,10 +36,28 @@ export class Dimension2Component {
   };
   readonly flexibleModelHeight = signal(980);
   readonly diversityPdcaHeight = signal(1800);
+  readonly mediaModelHeight = signal(1100);
+  readonly assessmentSystemHeight = signal(1100);
+  readonly activitiesModelHeight = signal(1100);
 
   @HostListener('window:message', ['$event'])
   resizeDiversityModel(event: MessageEvent<{ type?: string; height?: number }>): void {
     if (typeof window === 'undefined' || event.origin !== window.location.origin) return;
+    if (event.data?.type === 'd2-learning-media-height') {
+      const h = Number(event.data.height);
+      if (Number.isFinite(h)) this.mediaModelHeight.set(Math.max(760, h));
+      return;
+    }
+    if (event.data?.type === 'd2-assessment-system-height') {
+      const h = Number(event.data.height);
+      if (Number.isFinite(h)) this.assessmentSystemHeight.set(Math.max(760, h));
+      return;
+    }
+    if (event.data?.type === 'd2-extracurricular-activities-height') {
+      const h = Number(event.data.height);
+      if (Number.isFinite(h)) this.activitiesModelHeight.set(Math.max(760, h));
+      return;
+    }
     if (event.data?.type === 'd2-diversity-curriculum-height') {
       const h = Number(event.data.height);
       if (Number.isFinite(h)) this.diversityPdcaHeight.set(Math.max(620, h));

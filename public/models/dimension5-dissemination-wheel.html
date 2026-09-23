@@ -163,14 +163,25 @@ const BLOCKS = [
   {
     id:'speaker', h:218, l1:'52%', l2:'34%',
     name:'การรับเชิญเป็นวิทยากร',
-    lead:'รอกำหนดเนื้อหา — ใส่รายละเอียดการรับเชิญเป็นวิทยากรได้ที่นี่',
-    items:['รอกำหนดเนื้อหา','รอกำหนดเนื้อหา','รอกำหนดเนื้อหา']
+    lead:'ผู้บริหารและครูได้รับเชิญเป็นวิทยากรถ่ายทอดองค์ความรู้และประสบการณ์แก่สถานศึกษาและหน่วยงานภายนอก รวม 5 รายการสำคัญ',
+    items:[
+      '28 กุมภาพันธ์ 2566 · บรรยายความรู้ด้านกฎหมายกระทรวงเกี่ยวกับความประพฤติและการป้องกันพฤติกรรมเสี่ยงในค่ายลูกเสือ–เนตรนารี ให้แก่โรงเรียนดอยสะเก็ดวิทยาคม',
+      '2–3 มกราคม 2568 · อบรมเชิงปฏิบัติการ “การนำเทคโนโลยีปัญญาประดิษฐ์ (AI) มาประยุกต์ใช้ในการเรียนการสอน” ให้แก่โรงเรียนแม่สะเรียง “บริพัตรศึกษา”',
+      '5 พฤษภาคม 2568 · อบรมเชิงปฏิบัติการ “การสร้างภาวะผู้นำและการทำงานเป็นทีมในคณะกรรมการสภานักเรียน” ให้แก่โรงเรียนเชียงดาววิทยาคม',
+      '17 สิงหาคม 2568 · วิทยากรค่ายวิชาการเพื่อยกระดับคะแนนการทดสอบระดับชาติ N-NET ด้านวิทยาศาสตร์ คณิตศาสตร์ และภาษาอังกฤษ ให้แก่โรงเรียนอยู่ประชานุเคราะห์',
+      '22 สิงหาคม 2569 · จัดกิจกรรมเรียนรู้วิถีจีนและกิจกรรม “เรียนภาษาจีนกับเจ้าของภาษา” สำหรับนักเรียนชั้น ม.1 โรงเรียนวัฒโนทัยพายัพ'
+    ]
   },
   {
     id:'exhibit', h:210, l1:'58%', l2:'41%',
     name:'การจัดนิทรรศการและเวทีแลกเปลี่ยนเรียนรู้',
-    lead:'รอกำหนดเนื้อหา — ใส่รายละเอียดการจัดนิทรรศการและเวทีแลกเปลี่ยนเรียนรู้ได้ที่นี่',
-    items:['รอกำหนดเนื้อหา','รอกำหนดเนื้อหา','รอกำหนดเนื้อหา']
+    lead:'โรงเรียนเผยแพร่ผลงานผ่านการจัดนิทรรศการและเวทีแลกเปลี่ยนเรียนรู้ในระดับท้องถิ่น ระดับชาติ และเวทีด้านวิทยาศาสตร์และเทคโนโลยี',
+    records:[
+      {date:'2 มิถุนายน 2566', title:'วันสิ่งแวดล้อมโลก ประจำปี 2566', detail:'ร่วมจัดนิทรรศการหัวข้อ “การจัดการสิ่งแวดล้อมในสถานศึกษา” เพื่อสร้างจิตสำนึกในการอนุรักษ์ทรัพยากรป่าไม้และลดมลภาวะฝุ่นหมอกควัน จัดโดยเทศบาลเมืองแม่โจ้', image:'/evidence/dimension5/dissemination/exhibit-01.jpg'},
+      {date:'12–14 พฤศจิกายน 2568', title:'การประชุมวิชาการแห่งชาติ ครั้งที่ 38', detail:'รับรางวัลโรงเรียนดีเด่นแห่งชาติ ระดับมัธยมศึกษา และจัดนิทรรศการคุณภาพการพลศึกษาสู่การพัฒนาอย่างยั่งยืน ณ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตกำแพงแสน', image:'/evidence/dimension5/dissemination/exhibit-02.jpg'},
+      {date:'29 พฤษภาคม 2569', title:'เวที “เจาะลึกเทคโนโลยี e-Nose พลิกวิกฤตฝุ่นเหนือ”', detail:'จัดนิทรรศการและแสดงผลงานหรือโครงงานเทคโนโลยีเพื่อแก้ปัญหาฝุ่นภาคเหนือ ในการประชุมสัมมนาและรับฟังความคิดเห็น จัดโดยศูนย์นาโนเทคโนโลยีแห่งชาติและ สวทช.', image:'/evidence/dimension5/dissemination/exhibit-03.jpg'}
+    ],
+    items:[]
   },
   {
     id:'online', h:204, l1:'64%', l2:'47%',
@@ -222,6 +233,7 @@ function open(id){
   if(openId === id){ close(); return; }
   openId = id;
   const b = BLOCKS.find(x => x.id === id);
+  const records = b.visits || b.records;
   setPaused(true);
   document.querySelectorAll('.tile').forEach(t => t.classList.toggle('on', t.dataset.id === id));
   out.innerHTML =
@@ -229,14 +241,14 @@ function open(id){
       '<div class="cap"><span class="swatch"></span></div>' +
       '<h2>' + esc(b.name) + '</h2>' +
       '<p class="lead">' + esc(b.lead) + '</p>' +
-      (b.visits ? '<div class="visit-records">' + b.visits.map(v => '<article class="visit-record"><button type="button" class="visit-image" data-src="' + v.image + '" aria-label="ขยายรูป ' + esc(v.date) + '"><img src="' + v.image + '" alt="ภาพการศึกษาดูงาน ' + esc(v.date) + '"></button><p><strong>' + esc(v.date) + ' · ' + esc(v.school) + '</strong>' + esc(v.detail) + '</p></article>').join('') + '</div>' : '<ul class="items">' + (b.links ? b.links.map(link => '<li><a href="' + esc(link.href) + '" target="_blank" rel="noopener noreferrer">' + esc(link.label) + '</a></li>').join('') : b.items.map(i => '<li>' + esc(i) + '</li>').join('')) + '</ul>') +
+      (records ? '<div class="visit-records">' + records.map(v => '<article class="visit-record"><button type="button" class="visit-image" data-src="' + v.image + '" aria-label="ขยายรูป ' + esc(v.date) + '"><img src="' + v.image + '" alt="' + esc(b.name) + ' ' + esc(v.date) + '"></button><p><strong>' + esc(v.date) + ' · ' + esc(v.school || v.title) + '</strong>' + esc(v.detail) + '</p></article>').join('') + '</div>' : '<ul class="items">' + (b.links ? b.links.map(link => '<li><a href="' + esc(link.href) + '" target="_blank" rel="noopener noreferrer">' + esc(link.label) + '</a></li>').join('') : b.items.map(i => '<li>' + esc(i) + '</li>').join('')) + '</ul>') +
       '<button class="btn close" type="button" id="closeBtn">ปิดข้อมูล</button>' +
     '</div>';
   document.getElementById('closeBtn').addEventListener('click', close);
   out.querySelectorAll('.visit-image').forEach(button => button.addEventListener('click', () => {
     const viewer = document.createElement('div');
     viewer.className = 'image-viewer';
-    viewer.innerHTML = '<img src="' + button.dataset.src + '" alt="ภาพการศึกษาดูงานแบบขยาย">';
+    viewer.innerHTML = '<img src="' + button.dataset.src + '" alt="ภาพกิจกรรมแบบขยาย">';
     viewer.addEventListener('click', () => viewer.remove());
     document.body.appendChild(viewer);
   }));

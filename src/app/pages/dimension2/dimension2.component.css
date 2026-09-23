@@ -508,6 +508,13 @@
 .d2-model-intro li::marker { color: var(--gold-400); }
 
 /* ═══════════ ช่อง Input / Output ข้าง model (แบบเดียวกับ BANCHUEN MODEL ด้านที่ 3) ═══════════ */
+.d2-learning-media-model{margin:22px 0 32px;overflow:hidden;background:transparent}
+.d2-learning-media-model iframe{display:block;width:100%;border:0;background:transparent;transition:height .25s ease}
+.d2-assessment-system-model{margin:22px 0 32px;overflow:hidden;background:transparent}
+.d2-assessment-system-model iframe{display:block;width:100%;border:0;background:transparent;transition:height .25s ease}
+.d2-activities-model{margin:22px 0 32px;overflow:hidden;background:transparent}
+.d2-activities-model iframe{display:block;width:100%;border:0;background:transparent;transition:height .25s ease}
+
 .d2-io-layout {
   display: grid;
   grid-template-columns: minmax(170px, .62fr) minmax(0, 2.4fr) minmax(170px, .62fr);

@@ -719,3 +719,9 @@
 /* สไลด์ MODEL SK-GEP ท้าย 1.2.1 */
 .d1-skgep-slides { display: grid; gap: 18px; margin-top: 32px; }
 .d1-skgep-slides img { display: block; width: 100%; height: auto; border-radius: 14px; box-shadow: 0 6px 18px rgba(20, 40, 80, .12); }
+
+/* วลีที่ต้องการเน้นในย่อหน้า intro — พื้นโทนสว่าง ตัวอักษรสีเข้ม */
+.d1-narrative strong.d1-hl {
+  background: #e9f3ff; color: #123457; font-weight: 700;
+  padding: 1px 7px; border-radius: 7px; box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}

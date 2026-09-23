@@ -1,0 +1,422 @@
+[
+  {
+    "block": 1,
+    "tag": "p",
+    "text": "Input  โรงเรียนสันทรายวิทยาคมจึงได้ขับเคลื่อนการยกระดับคุณภาพการศึกษาผ่าน โครงการห้องเรียนคุณภาพ โดยมุ่งเน้นการจัดหา ผลิตสื่อ และให้บริการเทคโนโลยีสารสนเทศและการสื่อสารที่ครอบคลุมผู้เรียนทุกกลุ่มเป้าหมาย ตลอดจนสนับสนุนการบริหารจัดการของสถานศึกษาในทุกกลุ่มงานอย่างมีประสิทธิภาพ โดยจัดหาวัสดุ อุปกรณ์ และครุภัณฑ์เทคโนโลยีประจำห้องเรียน  โปรเจกเตอร์ (Epson), จอรับภาพ/จอทีวีขนาดใหญ่  สื่อมัลติมีเดีย  ไมโครโฟน เครื่องขยายเสียง ลำโพง เครื่องคอมพิวเตอร์ประมวลผลสูง  ชุดบอร์ดสมองกลต่อยอด (GoGo Board & STEM Innovation)  และโครงสร้างพื้นฐานเครือข่าย  เครื่องเซิร์ฟเวอร์หลัก ตู้จัดเก็บระบบเครือข่าย สายใยแก้วนำแสง (Fiber Optic)  อุปกรณ์รับ-กระจายสัญญาณประจำห้องเรียน  ระบบยืนยันตัวตนและบัญชีผู้ใช้ โดเมนเนมองค์กร @sansai.ac.th ครอบคลุมครู บุคลากร และนักเรียนทุกคน",
+    "images": []
+  },
+  {
+    "block": 2,
+    "tag": "p",
+    "text": "โรงเรียนสันทรายวิทยาคมได้จัดหาแพลตฟอร์มและแอปพลิเคชันเพื่อการเรียนรู้ดังนี้ การเรียนการสอน Google Workspace for Education (Google Site, Google Classroom) และแอปพลิเคชันที่เกี่ยวข้อง",
+    "images": []
+  },
+  {
+    "block": 4,
+    "tag": "p",
+    "text": "การสำรวจ จัดหา และปรับปรุงโครงสร้างพื้นฐาน (Infrastructure Optimization)",
+    "images": []
+  },
+  {
+    "block": 7,
+    "tag": "p",
+    "text": "จัดทำแผนงบประมาณโครงการห้องเรียนคุณภาพ ดำเนินการจัดหาครุภัณฑ์เทคโนโลยี (โปรเจกเตอร์ เครื่องเสียง Access Point) ติดตั้งครบทุกห้องเรียน  เซ็ตอัปตู้ควบคุมระบบเครือข่าย เดินสาย Fiber Optic และติดตั้ง Access Point ประจำห้องเรียนเพื่อกระจายสัญญาณ Wi-Fi ความเร็วสูงอย่างทั่วถึง  จัดตั้งระบบล็อกอินเข้าใช้งานอินเทอร์เน็ต (Authentication System) โดยผูกกับบัญชี @sansai.ac.th กำหนดสิทธิ์การเข้าถึง และรีโมทดูแลอุปกรณ์รายเครื่องผ่านระบบผู้ดูแลเครือข่าย",
+    "images": []
+  },
+  {
+    "block": 10,
+    "tag": "p",
+    "text": "ห้องเรียนทุกห้องเป็น \"ห้องเรียนคุณภาพ\" มีอุปกรณ์มัลติมีเดียและอินเทอร์เน็ต Wi-Fi เสถียร 100%",
+    "images": []
+  },
+  {
+    "block": 11,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId5",
+        "source": "media/image1.png",
+        "file": "image-01.png"
+      },
+      {
+        "rid": "rId6",
+        "source": "media/image2.jpeg",
+        "file": "image-02.jpeg"
+      }
+    ]
+  },
+  {
+    "block": 12,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId7",
+        "source": "media/image3.jpeg",
+        "file": "image-03.jpeg"
+      },
+      {
+        "rid": "rId8",
+        "source": "media/image4.jpeg",
+        "file": "image-04.jpeg"
+      }
+    ]
+  },
+  {
+    "block": 23,
+    "tag": "p",
+    "text": "การพัฒนาศักยภาพครู สู่การสร้างนวัตกรรมดิจิทัล (Teacher Empowerment)",
+    "images": []
+  },
+  {
+    "block": 25,
+    "tag": "p",
+    "text": "จัดอบรมเชิงปฏิบัติการพัฒนาครูอย่างต่อเนื่อง เช่น \"การใช้สื่อเทคโนโลยีสำหรับการอ่าน\" การคิดเชิงคำนวณ (Computational Thinking) การใช้ AI เพื่อพัฒนาการจัดการเรียนรู้และการวิจัย   \"STEAM 4 INNOVATOR\"  The AI Innovators Project และ \"ครูแกนนำ IS\"  ให้ทุกกลุ่มสาระการเรียนรู้ร่วมกันผลิตและจัดทำคลังสื่อออนไลน์ผ่าน Google Site และสร้างห้องเรียนดิจิทัลบน Google Classroom เพื่อส่งต่อสื่อการเรียนรู้ให้นักเรียน",
+    "images": []
+  },
+  {
+    "block": 28,
+    "tag": "p",
+    "text": "1. สื่อการเรียนการสอนมี Google Site คลังสื่อประจำกลุ่มสาระฯ และ Google Classroom ครอบคลุมทุกรายวิชา  ด้านการบริหารจัดการเกิดฐานข้อมูลดิจิทัลที่เชื่อมโยงกัน เช่น บัญชีผู้ใช้ @sansai.ac.th",
+    "images": []
+  },
+  {
+    "block": 29,
+    "tag": "p",
+    "text": "2. นักเรียนเกิดทักษะการเรียนรู้ในศตวรรษที่ 21 สามารถเข้าถึงสื่อการเรียนรู้บน Google Site",
+    "images": []
+  },
+  {
+    "block": 30,
+    "tag": "p",
+    "text": "และ Google Classroom ได้ทุกที่ทุกเวลา (Anytime Anywhere)",
+    "images": []
+  },
+  {
+    "block": 31,
+    "tag": "p",
+    "text": "3. ได้รับการส่งเสริมทักษะการคิดขั้นสูงผ่านกิจกรรม Coding/STEM/IS จนสามารถสร้างสรรค์",
+    "images": []
+  },
+  {
+    "block": 32,
+    "tag": "p",
+    "text": "ชิ้นงานและนวัตกรรม พร้อมทั้งส่งต่อความรู้ในฐานะผู้ช่วยวิทยากรได้",
+    "images": []
+  },
+  {
+    "block": 35,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId9",
+        "source": "media/image5.jpeg",
+        "file": "image-05.jpeg"
+      },
+      {
+        "rid": "rId10",
+        "source": "media/image6.jpeg",
+        "file": "image-06.jpeg"
+      }
+    ]
+  },
+  {
+    "block": 36,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId11",
+        "source": "media/image7.png",
+        "file": "image-07.png"
+      },
+      {
+        "rid": "rId12",
+        "source": "media/image8.jpeg",
+        "file": "image-08.jpeg"
+      }
+    ]
+  },
+  {
+    "block": 37,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId13",
+        "source": "media/image9.jpeg",
+        "file": "image-09.jpeg"
+      },
+      {
+        "rid": "rId14",
+        "source": "media/image10.jpeg",
+        "file": "image-10.jpeg"
+      }
+    ]
+  },
+  {
+    "block": 39,
+    "tag": "p",
+    "text": "การขับเคลื่อนการบริหารจัดการ 4 กลุ่มงานด้วยแอปพลิเคชัน (Operational Integration)",
+    "images": []
+  },
+  {
+    "block": 42,
+    "tag": "p",
+    "text": "ฝ่ายวิชาการ ครูใช้ SGS บันทึกคะแนน/ประเมินผลออนไลน์ และใช้ Google Classroom ติดตามการส่งงาน  ฝ่ายกิจการนักเรียนครูประจำชั้นใช้ Student Care System เช็กชื่อเข้าเรียน บันทึกการเยี่ยมบ้าน และติดตามคะแนนความประพฤติแบบ Real-time  ฝ่ายอำนวยการ/บริหารงานบุคคล ใช้ eSchool จัดการหนังสือรับ-ส่งลดกระดาษ และใช้ SK Big Data จัดเก็บเอกสาร ว.PA การขอใช้ห้องประชุมและยานพาหนะ  ฝ่ายแผนงานและงบประมาณใช้ DMC จัดทำข้อมูลนักเรียนรายบุคคลเพื่อขอจัดสรรงบประมาณ ใช้ระบบ e-moneysk ในการบริหารจัดการด้านการเงินและบัญชี และใช้ระบบตรวจสอบค่าบำรุงการศึกษาออนไลน์",
+    "images": []
+  },
+  {
+    "block": 46,
+    "tag": "p",
+    "text": "ระบบสารบรรณ eSchool ระบบรายงาน SK Big Data และคลังข้อมูล DMC ที่ถูกต้องแม่นยำ",
+    "images": []
+  },
+  {
+    "block": 47,
+    "tag": "p",
+    "text": "ผู้บริหารและหัวหน้างานมีข้อมูลสารสนเทศที่ถูกต้อง รวดเร็ว (Data-Driven Decision Making) จาก2. 2.ระบบ SK Big Data, DMC และ SGS ช่วยให้การตัดสินใจสั่งการและการจัดสรรงบประมาณมีประสิทธิภาพสูงสุด",
+    "images": []
+  },
+  {
+    "block": 48,
+    "tag": "p",
+    "text": "3. องค์กรเปลี่ยนผ่านสู่การเป็น \"โรงเรียนดิจิทัลไร้กระดาษ (Paperless Organization)\" ช่วยลดขั้นตอน ระยะเวลา และงบประมาณในการบริหารงาน",
+    "images": []
+  },
+  {
+    "block": 51,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId15",
+        "source": "media/image11.png",
+        "file": "image-11.png"
+      }
+    ]
+  },
+  {
+    "block": 52,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId16",
+        "source": "media/image12.png",
+        "file": "image-12.png"
+      }
+    ]
+  },
+  {
+    "block": 53,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId17",
+        "source": "media/image13.png",
+        "file": "image-13.png"
+      },
+      {
+        "rid": "rId18",
+        "source": "media/image14.png",
+        "file": "image-14.png"
+      }
+    ]
+  },
+  {
+    "block": 54,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId19",
+        "source": "media/image15.png",
+        "file": "image-15.png"
+      }
+    ]
+  },
+  {
+    "block": 55,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId20",
+        "source": "media/image16.jpeg",
+        "file": "image-16.jpeg"
+      },
+      {
+        "rid": "rId21",
+        "source": "media/image17.jpeg",
+        "file": "image-17.jpeg"
+      }
+    ]
+  },
+  {
+    "block": 56,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId22",
+        "source": "media/image18.png",
+        "file": "image-18.png"
+      }
+    ]
+  },
+  {
+    "block": 57,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId23",
+        "source": "media/image19.jpeg",
+        "file": "image-19.jpeg"
+      }
+    ]
+  },
+  {
+    "block": 58,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId24",
+        "source": "media/image20.png",
+        "file": "image-20.png"
+      },
+      {
+        "rid": "rId25",
+        "source": "media/image21.png",
+        "file": "image-21.png"
+      }
+    ]
+  },
+  {
+    "block": 59,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId26",
+        "source": "media/image22.png",
+        "file": "image-22.png"
+      }
+    ]
+  },
+  {
+    "block": 60,
+    "tag": "p",
+    "text": "4. การขยายผลและให้บริการชุมชน (Community Outreach)เผยแพร่ข่าวสาร ผลงานนักเรียน/โรงเรียน",
+    "images": []
+  },
+  {
+    "block": 62,
+    "tag": "p",
+    "text": "เว็บไซต์ sansai.ac.th และ Facebook Fanpage  เปิดระบบยื่นคำร้องขอเอกสารทางการศึกษาออนไลน์ อำนวยความสะดวกให้ศิษย์เก่าและประชาชนโดยไม่ต้องเดินทางมาโรงเรียน  จัดกิจกรรมอบรมถ่ายทอดความรู้โค้ดดิ้ง (GoGo Board & STEM Innovation) ต่อยอดโครงงาน IS โดยมีนักเรียนรุ่นพี่และนักศึกษาวิชาชีพครูร่วมเป็นผู้ช่วยวิทยากร",
+    "images": []
+  },
+  {
+    "block": 64,
+    "tag": "p",
+    "text": "สร้างวัฒนธรรมองค์กรแห่งการเรียนรู้และการพัฒนาเทคโนโลยีอย่างต่อเนื่อง ส่งผลให้สถานศึกษามีความพร้อมในการรับมือกับความเปลี่ยนแปลง และยกระดับคุณภาพการศึกษาได้อย่างยั่งยืน",
+    "images": []
+  },
+  {
+    "block": 65,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId27",
+        "source": "media/image23.png",
+        "file": "image-23.png"
+      },
+      {
+        "rid": "rId28",
+        "source": "media/image24.png",
+        "file": "image-24.png"
+      }
+    ]
+  },
+  {
+    "block": 66,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId29",
+        "source": "media/image25.png",
+        "file": "image-25.png"
+      }
+    ]
+  },
+  {
+    "block": 68,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId30",
+        "source": "media/image26.png",
+        "file": "image-26.png"
+      }
+    ]
+  },
+  {
+    "block": 69,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId31",
+        "source": "media/image27.png",
+        "file": "image-27.png"
+      },
+      {
+        "rid": "rId32",
+        "source": "media/image28.png",
+        "file": "image-28.png"
+      }
+    ]
+  },
+  {
+    "block": 70,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId33",
+        "source": "media/image29.png",
+        "file": "image-29.png"
+      },
+      {
+        "rid": "rId34",
+        "source": "media/image30.png",
+        "file": "image-30.png"
+      }
+    ]
+  },
+  {
+    "block": 72,
+    "tag": "p",
+    "text": "",
+    "images": [
+      {
+        "rid": "rId35",
+        "source": "media/image31.png",
+        "file": "image-31.png"
+      },
+      {
+        "rid": "rId36",
+        "source": "media/image32.png",
+        "file": "image-32.png"
+      }
+    ]
+  }
+]

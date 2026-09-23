@@ -1,46 +1,833 @@
 <!doctype html>
 <html lang="th">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>Creative Thinking Pathway</title>
   <style>
-    @font-face{font-family:THSarabunPSK;src:url('/fonts/THSarabunPSK.ttf') format('truetype');font-display:swap}
-    @font-face{font-family:THSarabunPSK;src:url('/fonts/THSarabunPSK-Bold.ttf') format('truetype');font-weight:700;font-display:swap}
-    :root{--ink:#26364f;--muted:#53627a;--lav:#d9c9ff;--pink:#ffd3e6;--blue:#c9e8ff;--mint:#c9f0df;--peach:#ffd7bd;--active:#8b67c9}
-    *{box-sizing:border-box}
-    html,body{margin:0;background:transparent;color:var(--ink);font-family:THSarabunPSK,"TH SarabunPSK",Tahoma,sans-serif}
-    button{font:inherit}
-    button:focus-visible{outline:4px solid #8971cc;outline-offset:5px}
-    .model{position:relative;isolation:isolate;overflow:hidden;border:1px solid #fff;border-radius:34px;padding:30px clamp(18px,4vw,54px) 32px;background:linear-gradient(130deg,#fff7fcf2,#f3f7fff1 48%,#f7fffaf2);box-shadow:0 16px 0 #cabde15c,0 28px 70px #41577d35}
-    .model:before{content:"";position:absolute;inset:-55%;z-index:-3;background:conic-gradient(from 20deg,#ffd7e888,#d8d0ff99,#cceeff88,#d6f3df88,#ffe0c488,#ffd7e888);animation:aurora 18s linear infinite}
-    .model:after{content:"";position:absolute;inset:1px;z-index:-2;border-radius:33px;background:linear-gradient(130deg,#fff9fcef,#f5f8fff0 48%,#f8fffbed);backdrop-filter:blur(18px)}
-    .model.no-background{border-color:transparent;background:transparent;box-shadow:none}
-    .model.no-background:before,.model.no-background:after,.model.no-background .orb,.model.no-background .sparkles{display:none}
-    .orb{position:absolute;z-index:-1;border-radius:50%;filter:blur(2px);opacity:.6;animation:float 7s ease-in-out infinite}
-    .orb.o1{width:160px;height:160px;left:-45px;top:20%;background:#e5caff}.orb.o2{width:190px;height:190px;right:-65px;top:-30px;background:#c8eaff;animation-delay:-2s}.orb.o3{width:100px;height:100px;right:28%;bottom:-45px;background:#ffe0bb;animation-delay:-4s}
-    .sparkles{position:absolute;inset:0;pointer-events:none;overflow:hidden}.sparkles i{position:absolute;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 14px 5px #fff;animation:spark 4s ease-in-out infinite}.sparkles i:nth-child(1){left:8%;top:22%}.sparkles i:nth-child(2){left:28%;top:10%;animation-delay:-1s}.sparkles i:nth-child(3){right:18%;top:17%;animation-delay:-2.2s}.sparkles i:nth-child(4){right:7%;bottom:21%;animation-delay:-3s}.sparkles i:nth-child(5){left:43%;bottom:12%;animation-delay:-1.8s}
-    header{text-align:center;position:relative;z-index:2}.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 18px;border-radius:99px;background:#f2ddf8;color:#886a9d;font-size:24px;font-weight:700;box-shadow:inset 0 1px #fff,0 7px 18px #9e7cb328}.eyebrow:before{content:"✦";color:#d397be;animation:twinkle 2s ease-in-out infinite}
-    h1{margin:13px 0 7px;font-size:clamp(42px,5vw,64px);font-weight:700;line-height:1.04;color:#293a59;text-shadow:-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 8px 22px #fff}header p{display:inline-block;margin:8px auto 0;padding:4px 16px;border-radius:999px;color:#354762;background:#ffffffd9;box-shadow:0 5px 18px #32405e18;font-size:28px;font-weight:700;line-height:1.25}
-    .stage{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(28px,5vw,76px);margin:42px auto 24px;perspective:1200px;max-width:1320px}
-    .beam{position:absolute;left:10%;right:10%;top:49%;height:6px;z-index:-1;border-radius:99px;background:linear-gradient(90deg,#dbc4f0,#acddef,#acddef,#ffc7aa);box-shadow:0 0 18px #bda8e9;overflow:hidden}.beam:after{content:"";position:absolute;top:-5px;width:76px;height:16px;border-radius:50%;background:#fff;filter:blur(5px);box-shadow:0 0 24px #fff;animation:travel 4.8s ease-in-out infinite}
-    .node{--tone:#dbc8fb;--deep:#b392db;position:relative;min-height:190px;border:2px solid #fff;border-radius:28px;padding:24px 18px 24px;text-align:left;color:#34445e;background:linear-gradient(145deg,#fff 0%,var(--tone) 72%);box-shadow:0 14px 0 var(--deep),0 25px 38px #303d593f,inset 0 2px #fff;transform-style:preserve-3d;transform:rotateX(7deg) rotateY(-3deg) translateY(0);transition:transform .55s cubic-bezier(.2,.8,.2,1),box-shadow .55s,filter .55s;cursor:pointer;-webkit-tap-highlight-color:transparent;overflow:hidden}
-    .node:nth-child(3){--tone:#cde8fb;--deep:#91bfdc;transform:rotateX(7deg)}.node:nth-child(4){--tone:#ffd7bd;--deep:#e9a97e;transform:rotateX(7deg) rotateY(3deg)}
-    .node:before{content:"";position:absolute;inset:-70% -20%;background:linear-gradient(105deg,transparent 39%,#ffffffcf 49%,transparent 59%);transform:translateX(-70%) rotate(8deg);animation:shine 5.5s ease-in-out infinite}.node:nth-child(3):before{animation-delay:-1.7s}.node:nth-child(4):before{animation-delay:-3.4s}
-    .node:hover,.node.active{transform:rotateX(0) rotateY(0) translateY(-16px) scale(1.035);filter:saturate(1.08);box-shadow:0 17px 0 var(--deep),0 34px 52px #53628046,0 0 35px var(--tone),inset 0 2px #fff}.node.active{animation:pulse 2.4s ease-in-out infinite}
-    .node-top{display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative}.num{display:grid;place-items:center;width:61px;height:61px;border-radius:21px;background:#ffffffd9;font:700 28px Georgia;color:#6e7891;box-shadow:0 9px 18px #75819825,inset 0 2px #fff}.icon{font-size:42px;filter:drop-shadow(0 6px 5px #6e71972d)}
-    .node small{display:block;margin-top:20px;color:#4b5b73;font-size:22px;font-weight:700;letter-spacing:.7px}.node strong{display:block;font-size:37px;font-weight:700;line-height:1.06;color:#263750;text-shadow:0 1px #fff}.open{display:flex;align-items:center;gap:7px;margin-top:12px;color:#59477f;font-size:24px;font-weight:700}.open b{display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:#fff}
-    .preview{max-width:950px;margin:20px auto 0;min-height:112px;padding:18px 24px;border:2px solid #fff;border-radius:23px;background:#fffffff2;box-shadow:0 9px 25px #3949662b;text-align:center;transition:opacity .3s,transform .3s}.preview.swap{opacity:.25;transform:translateY(6px)}.preview b{display:block;color:#654878;font-size:32px;font-weight:700}.preview span{display:block;color:#33465f;font-size:27px;font-weight:700;line-height:1.3}
-    .dots{display:flex;justify-content:center;gap:9px;margin-top:17px}.dots button{width:11px;height:11px;padding:0;border:0;border-radius:50%;background:#c9c8d6;transition:.3s}.dots button.on{width:34px;border-radius:99px;background:var(--active);box-shadow:0 0 14px var(--active)}
-    dialog{width:min(970px,calc(100% - 28px));max-height:88vh;max-height:88dvh;padding:0;border:1px solid #fff;border-radius:30px;color:var(--ink);background:linear-gradient(145deg,#fff,#fbf8ff 52%,#f1f9ff);box-shadow:0 36px 100px #2a355a76;overflow:auto}dialog::backdrop{background:#313b5a72;backdrop-filter:blur(9px)}
-    .modal-head{position:sticky;top:0;z-index:3;display:flex;align-items:flex-start;gap:17px;padding:24px 27px 19px;border-bottom:1px solid #e7e5ef;background:#fffdf8e8;backdrop-filter:blur(18px)}.modal-badge{display:grid;place-items:center;flex:0 0 68px;height:68px;border-radius:23px;background:var(--tone,#e4d7fa);font:700 27px Georgia;box-shadow:0 9px 0 var(--deep,#bca4dd)}.modal-title{flex:1}.modal-title small{font-size:19px;color:#9b8aaa}.modal-title h2{margin:2px 0 0;font-size:39px;line-height:1;color:#5a6179}.close{width:48px;height:48px;border:0;border-radius:17px;background:#f3edf6;color:#7e6c8c;font-size:35px;line-height:1;cursor:pointer}
-    .modal-body{padding:25px 28px 31px}.lead{margin:0;color:#64748a;font-size:27px;line-height:1.45}.sub-label{margin:23px 0 12px;color:#977da1;font-size:22px;font-weight:700}.submodel{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:13px}.submodel button{min-height:104px;padding:15px;border:1px solid #fff;border-radius:18px;text-align:left;color:#53647b;background:linear-gradient(145deg,#fff,#f0e8fa);box-shadow:0 6px 0 #d8cde5;cursor:pointer;transition:.25s}.submodel button:nth-child(2n){background:linear-gradient(145deg,#fff,#e7f4fc);box-shadow:0 6px 0 #c9deec}.submodel button:nth-child(3n){background:linear-gradient(145deg,#fff,#fff0df);box-shadow:0 6px 0 #ead3bd}.submodel button:hover,.submodel button.on{transform:translateY(-5px);box-shadow:0 10px 0 #c9b5df,0 18px 25px #7e789c2a}.submodel b{display:block;font-size:27px;line-height:1.08}.submodel span{display:block;margin-top:4px;color:#8893a6;font-size:20px}
-    .nested-detail{margin-top:18px;padding:18px 20px;border-radius:19px;background:#fff;border:1px solid #e7e4ee;box-shadow:0 8px 22px #70809a18;color:#5e6d82;font-size:25px;line-height:1.38}.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}.kpi{padding:17px;border-radius:20px;text-align:center;background:linear-gradient(145deg,#fff,#f4e8fb);box-shadow:0 6px 0 #dac8e8}.kpi b{display:block;color:#8a6ca2;font:700 42px Georgia}.kpi span{font-size:21px;color:#718095}
-    @media(max-width:760px){.model{padding:25px 15px 28px;border-radius:25px}.stage{grid-template-columns:1fr;gap:28px;margin-top:30px}.beam{left:50%;right:auto;top:6%;bottom:8%;width:5px;height:auto}.beam:after{width:15px;height:65px;animation:travelY 4.8s ease-in-out infinite}.node,.node:nth-child(3),.node:nth-child(4){min-height:150px;transform:rotateX(4deg);padding:18px}.node:hover,.node.active{transform:translateY(-8px) scale(1.015)}.node strong{font-size:31px}.node small{margin-top:10px}.preview{min-height:0}.modal-head{padding:20px 17px}.modal-body{padding:20px 17px}.modal-badge{flex-basis:56px;height:56px}.modal-title h2{font-size:32px}.kpis{grid-template-columns:1fr}}
-    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
-    @keyframes aurora{to{transform:rotate(1turn)}}@keyframes float{50%{transform:translateY(-20px) scale(1.08)}}@keyframes spark{50%{opacity:.25;transform:scale(.5)}}@keyframes twinkle{50%{transform:rotate(35deg) scale(1.3)}}@keyframes shine{0%,52%{transform:translateX(-75%) rotate(8deg)}75%,100%{transform:translateX(75%) rotate(8deg)}}@keyframes pulse{50%{filter:saturate(1.12) brightness(1.04)}}@keyframes travel{0%{left:-5%}33%{left:44%}66%,100%{left:94%}}@keyframes travelY{0%{top:-3%}33%{top:43%}66%,100%{top:92%}}
+    @font-face {
+      font-family: THSarabunPSK;
+      src: url('/fonts/THSarabunPSK.ttf') format('truetype');
+      font-display: swap
+    }
+
+    @font-face {
+      font-family: THSarabunPSK;
+      src: url('/fonts/THSarabunPSK-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-display: swap
+    }
+
+    :root {
+      --ink: #26364f;
+      --muted: #53627a;
+      --lav: #d9c9ff;
+      --pink: #ffd3e6;
+      --blue: #c9e8ff;
+      --mint: #c9f0df;
+      --peach: #ffd7bd;
+      --active: #8b67c9
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      margin: 0;
+      background: transparent;
+      color: var(--ink);
+      font-family: THSarabunPSK, "TH SarabunPSK", Tahoma, sans-serif
+    }
+
+    button {
+      font: inherit
+    }
+
+    button:focus-visible {
+      outline: 4px solid #8971cc;
+      outline-offset: 5px
+    }
+
+    .model {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      border: 1px solid #fff;
+      border-radius: 34px;
+      padding: 30px clamp(18px, 4vw, 54px) 32px;
+      background: linear-gradient(130deg, #fff7fcf2, #f3f7fff1 48%, #f7fffaf2);
+      box-shadow: 0 16px 0 #cabde15c, 0 28px 70px #41577d35
+    }
+
+    .model:before {
+      content: "";
+      position: absolute;
+      inset: -55%;
+      z-index: -3;
+      background: conic-gradient(from 20deg, #ffd7e888, #d8d0ff99, #cceeff88, #d6f3df88, #ffe0c488, #ffd7e888);
+      animation: aurora 18s linear infinite
+    }
+
+    .model:after {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      z-index: -2;
+      border-radius: 33px;
+      background: linear-gradient(130deg, #fff9fcef, #f5f8fff0 48%, #f8fffbed);
+      backdrop-filter: blur(18px)
+    }
+
+    .model.no-background {
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none
+    }
+
+    .model.no-background:before,
+    .model.no-background:after,
+    .model.no-background .orb,
+    .model.no-background .sparkles {
+      display: none
+    }
+
+    .model.compact-horizontal header h1 {
+      font-size: clamp(31px, 3.1vw, 42px);
+      line-height: 1.05;
+      white-space: nowrap
+    }
+
+    .model.compact-horizontal.long-title header h1 {
+      font-size: clamp(26px, 2.55vw, 35px)
+    }
+
+    .model.theme-11 .eyebrow { background: #eee0fa; color: #76548d }
+    .model.theme-11 header h1 { color: #3f4e78 }
+    .model.theme-11 .beam { background: linear-gradient(90deg, #d7c2ee, #b8dff5, #ffd3b8); box-shadow: 0 0 18px #ae9bd8 }
+    .model.theme-11 .preview b { color: #684f87 }
+
+    .model.theme-12 .eyebrow { background: #d9f3e9; color: #39766b }
+    .model.theme-12 header h1 { color: #285d59 }
+    .model.theme-12 .beam { background: linear-gradient(90deg, #9fd8c0, #f2d891, #efb5cc); box-shadow: 0 0 18px #8fcab5 }
+    .model.theme-12 .preview b { color: #39766b }
+
+    .model.compact-horizontal header p { font-size: 25px }
+    .model.compact-horizontal .stage { gap: 24px; margin-top: 28px }
+
+    .model.compact-horizontal .node,
+    .model.compact-horizontal .node:nth-child(3),
+    .model.compact-horizontal .node:nth-child(4) {
+      min-height: 150px;
+      padding: 14px 16px 12px;
+      transform: none;
+      border-radius: 22px
+    }
+
+    .model.compact-horizontal .node:hover,
+    .model.compact-horizontal .node.active {
+      transform: translateY(-8px) scale(1.018)
+    }
+
+    .model.compact-horizontal .num { width: 46px; height: 46px; border-radius: 15px; font-size: 22px }
+    .model.compact-horizontal .icon { font-size: 31px }
+    .model.compact-horizontal .node small { margin-top: 7px; font-size: 17px; line-height: 1 }
+    .model.compact-horizontal .node strong { font-size: 29px; line-height: 1 }
+    .model.compact-horizontal .open { margin-top: 6px; font-size: 19px }
+    .model.compact-horizontal .open b { width: 22px; height: 22px }
+    .model.compact-horizontal .preview { min-height: 94px; margin-top: 15px; padding: 13px 20px }
+    .model.compact-horizontal .preview b { font-size: 28px }
+    .model.compact-horizontal .preview span { font-size: 24px }
+
+    .orb {
+      position: absolute;
+      z-index: -1;
+      border-radius: 50%;
+      filter: blur(2px);
+      opacity: .6;
+      animation: float 7s ease-in-out infinite
+    }
+
+    .orb.o1 {
+      width: 160px;
+      height: 160px;
+      left: -45px;
+      top: 20%;
+      background: #e5caff
+    }
+
+    .orb.o2 {
+      width: 190px;
+      height: 190px;
+      right: -65px;
+      top: -30px;
+      background: #c8eaff;
+      animation-delay: -2s
+    }
+
+    .orb.o3 {
+      width: 100px;
+      height: 100px;
+      right: 28%;
+      bottom: -45px;
+      background: #ffe0bb;
+      animation-delay: -4s
+    }
+
+    .sparkles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden
+    }
+
+    .sparkles i {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 14px 5px #fff;
+      animation: spark 4s ease-in-out infinite
+    }
+
+    .sparkles i:nth-child(1) {
+      left: 8%;
+      top: 22%
+    }
+
+    .sparkles i:nth-child(2) {
+      left: 28%;
+      top: 10%;
+      animation-delay: -1s
+    }
+
+    .sparkles i:nth-child(3) {
+      right: 18%;
+      top: 17%;
+      animation-delay: -2.2s
+    }
+
+    .sparkles i:nth-child(4) {
+      right: 7%;
+      bottom: 21%;
+      animation-delay: -3s
+    }
+
+    .sparkles i:nth-child(5) {
+      left: 43%;
+      bottom: 12%;
+      animation-delay: -1.8s
+    }
+
+    header {
+      text-align: center;
+      position: relative;
+      z-index: 2
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 18px;
+      border-radius: 99px;
+      background: #f2ddf8;
+      color: #886a9d;
+      font-size: 24px;
+      font-weight: 700;
+      box-shadow: inset 0 1px #fff, 0 7px 18px #9e7cb328
+    }
+
+    .eyebrow:before {
+      content: "✦";
+      color: #d397be;
+      animation: twinkle 2s ease-in-out infinite
+    }
+
+    h1 {
+      margin: 13px 0 7px;
+      font-size: clamp(42px, 5vw, 64px);
+      font-weight: 700;
+      line-height: 1.04;
+      color: #293a59;
+      text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 8px 22px #fff
+    }
+
+    header p {
+      display: inline-block;
+      margin: 8px auto 0;
+      padding: 4px 16px;
+      border-radius: 999px;
+      color: #354762;
+      background: #ffffffd9;
+      box-shadow: 0 5px 18px #32405e18;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.25
+    }
+
+    .stage {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(28px, 5vw, 76px);
+      margin: 42px auto 24px;
+      perspective: 1200px;
+      max-width: 1320px
+    }
+
+    .beam {
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      top: 49%;
+      height: 6px;
+      z-index: -1;
+      border-radius: 99px;
+      background: linear-gradient(90deg, #dbc4f0, #acddef, #acddef, #ffc7aa);
+      box-shadow: 0 0 18px #bda8e9;
+      overflow: hidden
+    }
+
+    .beam:after {
+      content: "";
+      position: absolute;
+      top: -5px;
+      width: 76px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      filter: blur(5px);
+      box-shadow: 0 0 24px #fff;
+      animation: travel 4.8s ease-in-out infinite
+    }
+
+    .node {
+      --tone: #dbc8fb;
+      --deep: #b392db;
+      position: relative;
+      min-height: 190px;
+      border: 2px solid #fff;
+      border-radius: 28px;
+      padding: 24px 18px 24px;
+      text-align: left;
+      color: #34445e;
+      background: linear-gradient(145deg, #fff 0%, var(--tone) 72%);
+      box-shadow: 0 14px 0 var(--deep), 0 25px 38px #303d593f, inset 0 2px #fff;
+      transform-style: preserve-3d;
+      transform: rotateX(7deg) rotateY(-3deg) translateY(0);
+      transition: transform .55s cubic-bezier(.2, .8, .2, 1), box-shadow .55s, filter .55s;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      overflow: hidden
+    }
+
+    .node:nth-child(3) {
+      --tone: #cde8fb;
+      --deep: #91bfdc;
+      transform: rotateX(7deg)
+    }
+
+    .node:nth-child(4) {
+      --tone: #ffd7bd;
+      --deep: #e9a97e;
+      transform: rotateX(7deg) rotateY(3deg)
+    }
+
+    .node:before {
+      content: "";
+      position: absolute;
+      inset: -70% -20%;
+      background: linear-gradient(105deg, transparent 39%, #ffffffcf 49%, transparent 59%);
+      transform: translateX(-70%) rotate(8deg);
+      animation: shine 5.5s ease-in-out infinite
+    }
+
+    .node:nth-child(3):before {
+      animation-delay: -1.7s
+    }
+
+    .node:nth-child(4):before {
+      animation-delay: -3.4s
+    }
+
+    .node:hover,
+    .node.active {
+      transform: rotateX(0) rotateY(0) translateY(-16px) scale(1.035);
+      filter: saturate(1.08);
+      box-shadow: 0 17px 0 var(--deep), 0 34px 52px #53628046, 0 0 35px var(--tone), inset 0 2px #fff
+    }
+
+    .node.active {
+      animation: pulse 2.4s ease-in-out infinite
+    }
+
+    .node-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      position: relative
+    }
+
+    .num {
+      display: grid;
+      place-items: center;
+      width: 61px;
+      height: 61px;
+      border-radius: 21px;
+      background: #ffffffd9;
+      font: 700 28px Georgia;
+      color: #6e7891;
+      box-shadow: 0 9px 18px #75819825, inset 0 2px #fff
+    }
+
+    .icon {
+      font-size: 42px;
+      filter: drop-shadow(0 6px 5px #6e71972d)
+    }
+
+    .node small {
+      display: block;
+      margin-top: 20px;
+      color: #4b5b73;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: .7px
+    }
+
+    .node strong {
+      display: block;
+      font-size: 37px;
+      font-weight: 700;
+      line-height: 1.06;
+      color: #263750;
+      text-shadow: 0 1px #fff
+    }
+
+    .open {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 12px;
+      color: #59477f;
+      font-size: 24px;
+      font-weight: 700
+    }
+
+    .open b {
+      display: grid;
+      place-items: center;
+      width: 27px;
+      height: 27px;
+      border-radius: 50%;
+      background: #fff
+    }
+
+    .preview {
+      max-width: 950px;
+      margin: 20px auto 0;
+      min-height: 112px;
+      padding: 18px 24px;
+      border: 2px solid #fff;
+      border-radius: 23px;
+      background: #fffffff2;
+      box-shadow: 0 9px 25px #3949662b;
+      text-align: center;
+      transition: opacity .3s, transform .3s
+    }
+
+    .preview.swap {
+      opacity: .25;
+      transform: translateY(6px)
+    }
+
+    .preview b {
+      display: block;
+      color: #654878;
+      font-size: 32px;
+      font-weight: 700
+    }
+
+    .preview span {
+      display: block;
+      color: #33465f;
+      font-size: 27px;
+      font-weight: 700;
+      line-height: 1.3
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 9px;
+      margin-top: 17px
+    }
+
+    .dots button {
+      width: 11px;
+      height: 11px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: #c9c8d6;
+      transition: .3s
+    }
+
+    .dots button.on {
+      width: 34px;
+      border-radius: 99px;
+      background: var(--active);
+      box-shadow: 0 0 14px var(--active)
+    }
+
+    dialog {
+      width: min(970px, calc(100% - 28px));
+      max-height: 88vh;
+      max-height: 88dvh;
+      padding: 0;
+      border: 1px solid #fff;
+      border-radius: 30px;
+      color: var(--ink);
+      background: linear-gradient(145deg, #fff, #fbf8ff 52%, #f1f9ff);
+      box-shadow: 0 36px 100px #2a355a76;
+      overflow: auto
+    }
+
+    dialog::backdrop {
+      background: #313b5a72;
+      backdrop-filter: blur(9px)
+    }
+
+    .modal-head {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      display: flex;
+      align-items: flex-start;
+      gap: 17px;
+      padding: 24px 27px 19px;
+      border-bottom: 1px solid #e7e5ef;
+      background: #fffdf8e8;
+      backdrop-filter: blur(18px)
+    }
+
+    .modal-badge {
+      display: grid;
+      place-items: center;
+      flex: 0 0 68px;
+      height: 68px;
+      border-radius: 23px;
+      background: var(--tone, #e4d7fa);
+      font: 700 27px Georgia;
+      box-shadow: 0 9px 0 var(--deep, #bca4dd)
+    }
+
+    .modal-title {
+      flex: 1
+    }
+
+    .modal-title small {
+      font-size: 19px;
+      color: #9b8aaa
+    }
+
+    .modal-title h2 {
+      margin: 2px 0 0;
+      font-size: 39px;
+      line-height: 1;
+      color: #5a6179
+    }
+
+    .close {
+      width: 48px;
+      height: 48px;
+      border: 0;
+      border-radius: 17px;
+      background: #f3edf6;
+      color: #7e6c8c;
+      font-size: 35px;
+      line-height: 1;
+      cursor: pointer
+    }
+
+    .modal-body {
+      padding: 25px 28px 31px
+    }
+
+    .lead {
+      margin: 0;
+      color: #64748a;
+      font-size: 27px;
+      line-height: 1.45
+    }
+
+    .sub-label {
+      margin: 23px 0 12px;
+      color: #977da1;
+      font-size: 22px;
+      font-weight: 700
+    }
+
+    .submodel {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 13px
+    }
+
+    .submodel button {
+      min-height: 104px;
+      padding: 15px;
+      border: 1px solid #fff;
+      border-radius: 18px;
+      text-align: left;
+      color: #53647b;
+      background: linear-gradient(145deg, #fff, #f0e8fa);
+      box-shadow: 0 6px 0 #d8cde5;
+      cursor: pointer;
+      transition: .25s
+    }
+
+    .submodel button:nth-child(2n) {
+      background: linear-gradient(145deg, #fff, #e7f4fc);
+      box-shadow: 0 6px 0 #c9deec
+    }
+
+    .submodel button:nth-child(3n) {
+      background: linear-gradient(145deg, #fff, #fff0df);
+      box-shadow: 0 6px 0 #ead3bd
+    }
+
+    .submodel button:hover,
+    .submodel button.on {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 0 #c9b5df, 0 18px 25px #7e789c2a
+    }
+
+    .submodel b {
+      display: block;
+      font-size: 27px;
+      line-height: 1.08
+    }
+
+    .submodel span {
+      display: block;
+      margin-top: 4px;
+      color: #8893a6;
+      font-size: 20px
+    }
+
+    .nested-detail {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-radius: 19px;
+      background: #fff;
+      border: 1px solid #e7e4ee;
+      box-shadow: 0 8px 22px #70809a18;
+      color: #5e6d82;
+      font-size: 25px;
+      line-height: 1.38
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 13px
+    }
+
+    .kpi {
+      padding: 17px;
+      border-radius: 20px;
+      text-align: center;
+      background: linear-gradient(145deg, #fff, #f4e8fb);
+      box-shadow: 0 6px 0 #dac8e8
+    }
+
+    .kpi b {
+      display: block;
+      color: #8a6ca2;
+      font: 700 42px Georgia
+    }
+
+    .kpi span {
+      font-size: 21px;
+      color: #718095
+    }
+
+    @media(max-width:900px) {
+      .model.compact-horizontal header h1 { white-space: normal; font-size: clamp(30px, 5vw, 38px) }
+      .model.compact-horizontal.long-title header h1 { font-size: clamp(28px, 4.6vw, 35px) }
+    }
+
+    @media(max-width:760px) {
+      .model {
+        padding: 25px 15px 28px;
+        border-radius: 25px
+      }
+
+      .stage {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        margin-top: 30px
+      }
+
+      .beam {
+        left: 50%;
+        right: auto;
+        top: 6%;
+        bottom: 8%;
+        width: 5px;
+        height: auto
+      }
+
+      .beam:after {
+        width: 15px;
+        height: 65px;
+        animation: travelY 4.8s ease-in-out infinite
+      }
+
+      .node,
+      .node:nth-child(3),
+      .node:nth-child(4) {
+        min-height: 150px;
+        transform: rotateX(4deg);
+        padding: 18px
+      }
+
+      .node:hover,
+      .node.active {
+        transform: translateY(-8px) scale(1.015)
+      }
+
+      .node strong {
+        font-size: 31px
+      }
+
+      .node small {
+        margin-top: 10px
+      }
+
+      .preview {
+        min-height: 0
+      }
+
+      .modal-head {
+        padding: 20px 17px
+      }
+
+      .modal-body {
+        padding: 20px 17px
+      }
+
+      .modal-badge {
+        flex-basis: 56px;
+        height: 56px
+      }
+
+      .modal-title h2 {
+        font-size: 32px
+      }
+
+      .kpis {
+        grid-template-columns: 1fr
+      }
+
+      .model.compact-horizontal .node,
+      .model.compact-horizontal .node:nth-child(3),
+      .model.compact-horizontal .node:nth-child(4) { min-height: 142px }
+
+      .model.compact-horizontal .node strong { font-size: 28px }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+
+      *,
+      *:before,
+      *:after {
+        animation: none !important;
+        transition: none !important
+      }
+    }
+
+    @keyframes aurora {
+      to {
+        transform: rotate(1turn)
+      }
+    }
+
+    @keyframes float {
+      50% {
+        transform: translateY(-20px) scale(1.08)
+      }
+    }
+
+    @keyframes spark {
+      50% {
+        opacity: .25;
+        transform: scale(.5)
+      }
+    }
+
+    @keyframes twinkle {
+      50% {
+        transform: rotate(35deg) scale(1.3)
+      }
+    }
+
+    @keyframes shine {
+
+      0%,
+      52% {
+        transform: translateX(-75%) rotate(8deg)
+      }
+
+      75%,
+      100% {
+        transform: translateX(75%) rotate(8deg)
+      }
+    }
+
+    @keyframes pulse {
+      50% {
+        filter: saturate(1.12) brightness(1.04)
+      }
+    }
+
+    @keyframes travel {
+      0% {
+        left: -5%
+      }
+
+      33% {
+        left: 44%
+      }
+
+      66%,
+      100% {
+        left: 94%
+      }
+    }
+
+    @keyframes travelY {
+      0% {
+        top: -3%
+      }
+
+      33% {
+        top: 43%
+      }
+
+      66%,
+      100% {
+        top: 92%
+      }
+    }
   </style>
 </head>
+
 <body>
   <main class="model">
     <span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span>
@@ -53,112 +840,155 @@
     <section class="stage" aria-label="โมเดลกระบวนการพัฒนาทักษะการคิด">
       <div class="beam" aria-hidden="true"></div>
       <button class="node active" data-step="challenge" style="--tone:#e4cdf7;--deep:#bd9cdb">
-        <span class="node-top"><span class="num">01</span><span class="icon">◇</span></span><small>DISCOVER THE CHALLENGE</small><strong>โจทย์ท้าทาย</strong><span class="open">เปิดรายละเอียด <b>↗</b></span>
+        <span class="node-top"><span class="num">01</span><span class="icon">◇</span></span><small>DISCOVER THE
+          CHALLENGE</small><strong>โจทย์ท้าทาย</strong><span class="open">เปิดรายละเอียด <b>↗</b></span>
       </button>
       <button class="node" data-step="create" style="--tone:#cde9fb;--deep:#91bfdc">
-        <span class="node-top"><span class="num">02</span><span class="icon">✦</span></span><small>THINK · DESIGN · CREATE</small><strong>คิดและสร้างคำตอบ</strong><span class="open">เปิดรายละเอียด <b>↗</b></span>
+        <span class="node-top"><span class="num">02</span><span class="icon">✦</span></span><small>THINK · DESIGN ·
+          CREATE</small><strong>คิดและสร้างคำตอบ</strong><span class="open">เปิดรายละเอียด <b>↗</b></span>
       </button>
       <button class="node" data-step="apply" style="--tone:#ffd8bd;--deep:#e9aa7d">
-        <span class="node-top"><span class="num">03</span><span class="icon">◎</span></span><small>REAL-WORLD IMPACT</small><strong>ผลงานใช้ได้จริง</strong><span class="open">เปิดรายละเอียด <b>↗</b></span>
+        <span class="node-top"><span class="num">03</span><span class="icon">◎</span></span><small>REAL-WORLD
+          IMPACT</small><strong>ผลงานใช้ได้จริง</strong><span class="open">เปิดรายละเอียด <b>↗</b></span>
       </button>
     </section>
     <div class="preview" aria-live="polite"><b id="preview-title"></b><span id="preview-text"></span></div>
-    <div class="dots" aria-label="เลือกขั้นตอน"><button class="on" data-go="0" aria-label="ขั้นตอนที่ 1"></button><button data-go="1" aria-label="ขั้นตอนที่ 2"></button><button data-go="2" aria-label="ขั้นตอนที่ 3"></button></div>
+    <div class="dots" aria-label="เลือกขั้นตอน"><button class="on" data-go="0"
+        aria-label="ขั้นตอนที่ 1"></button><button data-go="1" aria-label="ขั้นตอนที่ 2"></button><button data-go="2"
+        aria-label="ขั้นตอนที่ 3"></button></div>
   </main>
 
   <dialog id="detail-dialog" aria-labelledby="modal-heading">
     <div class="modal-head">
       <div class="modal-badge" id="modal-badge">01</div>
-      <div class="modal-title"><small id="modal-kicker"></small><h2 id="modal-heading"></h2></div>
+      <div class="modal-title"><small id="modal-kicker"></small>
+        <h2 id="modal-heading"></h2>
+      </div>
       <button class="close" aria-label="ปิดหน้าต่าง">×</button>
     </div>
-    <div class="modal-body"><p class="lead" id="modal-lead"></p><div id="modal-extra"></div></div>
+    <div class="modal-body">
+      <p class="lead" id="modal-lead"></p>
+      <div id="modal-extra"></div>
+    </div>
   </dialog>
 
   <script>
     const creativeData = [
-      {key:'challenge',no:'01',kicker:'DISCOVER THE CHALLENGE',title:'โจทย์ท้าทาย',tone:'#e4cdf7',deep:'#bd9cdb',preview:'เริ่มจากหลักสูตร โครงงาน และวิชา IS เพื่อกระตุ้นให้ผู้เรียนตั้งคำถามและมองเห็นปัญหา',lead:'หลักสูตรรายวิชา โครงงาน และวิชาการศึกษาค้นคว้าด้วยตนเอง (IS) ในชั้น ม.2 และ ม.5 เป็นฐานในการพัฒนาทักษะการคิด โดยครูออกแบบหน่วยการเรียนรู้และใช้นวัตกรรมที่กระตุ้นให้ผู้เรียนตั้งคำถาม วิเคราะห์ และสร้างแนวทางแก้ปัญหา',items:[['หลักสูตรรายวิชา','เชื่อมมาตรฐานและตัวชี้วัดกับสถานการณ์ที่ท้าทาย'],['โครงงาน','ใช้ปัญหาและความสนใจของผู้เรียนเป็นจุดเริ่มต้น'],['วิชา IS ม.2 และ ม.5','ฝึกตั้งคำถาม ค้นคว้า และสร้างองค์ความรู้ด้วยตนเอง'],['บทบาทของครู','ออกแบบหน่วยการเรียนรู้และนวัตกรรมที่กระตุ้นการคิด']]},
-      {key:'create',no:'02',kicker:'THINK · DESIGN · CREATE',title:'คิดและสร้างคำตอบ',tone:'#cde9fb',deep:'#91bfdc',preview:'ค้นคว้า ลงมือทำ อภิปรายผล และปรับแนวคิดอย่างเป็นขั้นตอน',lead:'ผู้เรียนศึกษาปัญหา ค้นคว้าข้อมูล และลงมือทำโครงงาน จากนั้นอภิปรายผลและแลกเปลี่ยนความคิดเห็นอย่างเป็นขั้นตอน พร้อมนำข้อค้นพบไปปรับใช้กับสถานการณ์ต่าง ๆ',items:[['ตั้งคำถาม','กำหนดปัญหาและเป้าหมายที่ต้องการค้นหา'],['ค้นคว้าข้อมูล','สืบค้น ตรวจสอบ และวิเคราะห์ข้อมูลจากหลายแหล่ง'],['ลงมือสร้าง','วางแผน ทดลอง พัฒนาโครงงาน และแก้ไขปัญหา'],['อภิปรายและปรับใช้','แลกเปลี่ยนความคิดเห็น สรุปข้อค้นพบ และเชื่อมโยงสู่สถานการณ์ใหม่']]},
-      {key:'apply',no:'03',kicker:'REAL-WORLD IMPACT',title:'ผลงานใช้ได้จริง',tone:'#ffd8bd',deep:'#e9aa7d',preview:'ผลงาน โครงงาน และผลประเมินสะท้อนการคิดวิเคราะห์ที่นำไปใช้ได้จริง',lead:'นักเรียนแสดงความสามารถผ่านผลการเรียนวิชา IS ผลประเมินการอ่าน คิดวิเคราะห์และเขียนสื่อความ ตลอดจนผลงานโครงงานและรางวัล',items:[['ผลงานโครงงาน','ผู้เรียนสร้างผลงานจากปัญหาและนำเสนอแนวทางแก้ไข'],['การนำเสนอและแลกเปลี่ยน','อธิบายเหตุผล รับฟังข้อเสนอแนะ และพัฒนาผลงาน'],['การประยุกต์ใช้','นำข้อค้นพบและกระบวนการคิดไปใช้กับสถานการณ์จริง'],['ผลงานและรางวัล','แสดงศักยภาพผ่านเวทีและหลักฐานเชิงประจักษ์']],kpis:[['81.00%','ผลการเรียนวิชา IS ระดับคะแนน 3–4 เฉลี่ย ปี 2566–2568'],['93.50%','ผลประเมินการอ่าน คิดวิเคราะห์และเขียนสื่อความ ระดับดีขึ้นไป ปี 2568']]}
+      { key: 'challenge', no: '01', kicker: 'DISCOVER THE CHALLENGE', title: 'โจทย์ท้าทาย', tone: '#e4cdf7', deep: '#bd9cdb', preview: 'เริ่มจากหลักสูตร โครงงาน และวิชา IS เพื่อกระตุ้นให้ผู้เรียนตั้งคำถามและมองเห็นปัญหา', lead: 'หลักสูตรรายวิชา โครงงาน และวิชาการศึกษาค้นคว้าด้วยตนเอง (IS) ในชั้น ม.2 และ ม.5 เป็นฐานในการพัฒนาทักษะการคิด โดยครูออกแบบหน่วยการเรียนรู้และใช้นวัตกรรมที่กระตุ้นให้ผู้เรียนตั้งคำถาม วิเคราะห์ และสร้างแนวทางแก้ปัญหา', items: [['หลักสูตรรายวิชา', 'เชื่อมมาตรฐานและตัวชี้วัดกับสถานการณ์ที่ท้าทาย'], ['โครงงาน', 'ใช้ปัญหาและความสนใจของผู้เรียนเป็นจุดเริ่มต้น'], ['วิชา IS ม.2 และ ม.5', 'ฝึกตั้งคำถาม ค้นคว้า และสร้างองค์ความรู้ด้วยตนเอง'], ['บทบาทของครู', 'ออกแบบหน่วยการเรียนรู้และนวัตกรรมที่กระตุ้นการคิด']] },
+      { key: 'create', no: '02', kicker: 'THINK · DESIGN · CREATE', title: 'คิดและสร้างคำตอบ', tone: '#cde9fb', deep: '#91bfdc', preview: 'ค้นคว้า ลงมือทำ อภิปรายผล และปรับแนวคิดอย่างเป็นขั้นตอน', lead: 'ผู้เรียนศึกษาปัญหา ค้นคว้าข้อมูล และลงมือทำโครงงาน จากนั้นอภิปรายผลและแลกเปลี่ยนความคิดเห็นอย่างเป็นขั้นตอน พร้อมนำข้อค้นพบไปปรับใช้กับสถานการณ์ต่าง ๆ', items: [['ตั้งคำถาม', 'กำหนดปัญหาและเป้าหมายที่ต้องการค้นหา'], ['ค้นคว้าข้อมูล', 'สืบค้น ตรวจสอบ และวิเคราะห์ข้อมูลจากหลายแหล่ง'], ['ลงมือสร้าง', 'วางแผน ทดลอง พัฒนาโครงงาน และแก้ไขปัญหา'], ['อภิปรายและปรับใช้', 'แลกเปลี่ยนความคิดเห็น สรุปข้อค้นพบ และเชื่อมโยงสู่สถานการณ์ใหม่']] },
+      { key: 'apply', no: '03', kicker: 'REAL-WORLD IMPACT', title: 'ผลงานใช้ได้จริง', tone: '#ffd8bd', deep: '#e9aa7d', preview: 'ผลงาน โครงงาน และผลประเมินสะท้อนการคิดวิเคราะห์ที่นำไปใช้ได้จริง', lead: 'นักเรียนแสดงความสามารถผ่านผลการเรียนวิชา IS ผลประเมินการอ่าน คิดวิเคราะห์และเขียนสื่อความ ตลอดจนผลงานโครงงานและรางวัล', items: [['ผลงานโครงงาน', 'ผู้เรียนสร้างผลงานจากปัญหาและนำเสนอแนวทางแก้ไข'], ['การนำเสนอและแลกเปลี่ยน', 'อธิบายเหตุผล รับฟังข้อเสนอแนะ และพัฒนาผลงาน'], ['การประยุกต์ใช้', 'นำข้อค้นพบและกระบวนการคิดไปใช้กับสถานการณ์จริง'], ['ผลงานและรางวัล', 'แสดงศักยภาพผ่านเวทีและหลักฐานเชิงประจักษ์']], kpis: [['81.00%', 'ผลการเรียนวิชา IS ระดับคะแนน 3–4 เฉลี่ย ปี 2566–2568'], ['93.50%', 'ผลประเมินการอ่าน คิดวิเคราะห์และเขียนสื่อความ ระดับดีขึ้นไป ปี 2568']] }
     ];
-    const simple = (key,no,kicker,title,preview,lead,items,kpis) => ({key,no,kicker,title,preview,lead,items,kpis});
+    const simple = (key, no, kicker, title, preview, lead, items, kpis) => ({ key, no, kicker, title, preview, lead, items, kpis });
     const models = {
-      creative:{eyebrow:'CREATIVE THINKING PATHWAY',title:'โจทย์ท้าทาย · คิดและสร้างคำตอบ · ผลงานใช้ได้จริง',description:'โมเดลพัฒนาการคิด วิเคราะห์ แก้ปัญหา และประยุกต์ใช้ — แตะแต่ละขั้นเพื่อดูรายละเอียด',steps:creativeData},
-      thai:{eyebrow:'LEARNING GROWTH PATHWAY',title:'คัดกรองตามศักยภาพ · ฝึกทักษะผ่านกิจกรรมจริง · เห็นพัฒนาการและผลงาน',description:'เส้นทางพัฒนาการอ่าน การเขียน การสื่อสาร และการคิดคำนวณ',steps:[
-        simple('screen','01','PERSONALIZED SCREENING','คัดกรองตามศักยภาพ','วิเคราะห์ผู้เรียนเป็นรายบุคคล เพื่อวางแผนกิจกรรมให้เหมาะกับศักยภาพ','กำหนดเป้าหมายตามหลักสูตรสถานศึกษา และคัดกรองความสามารถด้านการอ่าน–เขียนภาษาไทย การสื่อสาร และการคิดคำนวณของผู้เรียนเป็นรายบุคคล เพื่อนำข้อมูลมาวิเคราะห์ความต้องการและวางแผนกิจกรรมให้เหมาะกับศักยภาพของผู้เรียน',[['กำหนดเป้าหมาย','เชื่อมเป้าหมายการพัฒนากับหลักสูตรสถานศึกษา'],['คัดกรองรายบุคคล','สำรวจการอ่าน การเขียน การสื่อสาร และการคิดคำนวณ'],['วิเคราะห์ข้อมูล','มองเห็นจุดแข็งและประเด็นที่ต้องพัฒนา'],['วางแผนเฉพาะบุคคล','เลือกกิจกรรมที่เหมาะกับศักยภาพของผู้เรียน']]),
-        simple('practice','02','ACTIVE LEARNING','ฝึกทักษะผ่านกิจกรรมจริง','อ่าน เขียน อภิปราย นำเสนอ และแก้ปัญหาจากการปฏิบัติจริง','ครูจัดการเรียนรู้แบบ Active Learning ให้ผู้เรียนอ่าน เขียน อภิปราย นำเสนอ และแก้ปัญหาจากการปฏิบัติจริง ควบคู่กับกิจกรรมบันทึกรักการอ่าน วันภาษาไทย ชุมนุมและค่ายคณิตศาสตร์ ตลอดจนการแข่งขันทักษะทางวิชาการ พร้อมประเมินความก้าวหน้าและปรับกิจกรรมอย่างต่อเนื่อง',[['Active Learning','ฝึกทักษะผ่านการลงมือทำและแก้ปัญหา'],['กิจกรรมภาษาไทย','บันทึกรักการอ่านและวันภาษาไทย'],['กิจกรรมคณิตศาสตร์','ชุมนุม ค่าย และโจทย์จากสถานการณ์จริง'],['ติดตามผล','ประเมินความก้าวหน้าและปรับกิจกรรมอย่างต่อเนื่อง']]),
-        simple('progress','03','VISIBLE PROGRESS','เห็นพัฒนาการและผลงาน','ผลงานและผลคัดกรองสะท้อนความก้าวหน้าที่ชัดเจน','ผู้เรียนมีผลงานด้านการอ่าน การเขียน การสื่อสาร และการคิดคำนวณ รวมถึงได้รับรางวัลจากการแข่งขันหลายระดับ',[['ผลงานการอ่าน–เขียน','มีหลักฐานและชิ้นงานที่สะท้อนทักษะ'],['การสื่อสาร','อภิปรายและนำเสนอได้เหมาะสม'],['การคิดคำนวณ','ประยุกต์ทักษะเพื่อแก้ปัญหา'],['เวทีวิชาการ','ได้รับประสบการณ์และรางวัลจากการแข่งขัน']], [['76.90%','ผลคัดกรองระดับดี ปีการศึกษา 2566'],['81.38%','ผลคัดกรองระดับดี ปีการศึกษา 2568']])]},
-      english:{eyebrow:'ENGLISH LEARNING PATHWAY',title:'เรียนรู้ตามศักยภาพ · สื่อสารในโลกจริง · ใช้ภาษาอย่างมั่นใจ',description:'พัฒนาภาษาอังกฤษจากเส้นทางเฉพาะบุคคลสู่การสื่อสารจริง',steps:[
-        simple('pathway','01','PERSONALIZED PATHWAY','เรียนรู้ตามศักยภาพ','ออกแบบเส้นทางเรียนรู้ตามศักยภาพผู้เรียน','ออกแบบเส้นทางเรียนรู้ภาษาอังกฤษตามพื้นฐาน ความสนใจ และศักยภาพของผู้เรียน',[['รู้จักผู้เรียน','สำรวจพื้นฐาน ความสนใจ และความต้องการ'],['ตั้งเป้าหมาย','กำหนดเป้าหมายการเรียนรู้ที่เหมาะสม'],['เลือกกิจกรรม','จัดกิจกรรมและสื่อที่หลากหลาย'],['ติดตามรายบุคคล','ใช้ข้อมูลเพื่อปรับเส้นทางการเรียนรู้']]),
-        simple('real','02','REAL-WORLD COMMUNICATION','สื่อสารในโลกจริง','ฝึกใช้ภาษาอังกฤษผ่านสถานการณ์จริงและการแลกเปลี่ยนเรียนรู้','เปิดโอกาสให้ผู้เรียนฝึกสื่อสารภาษาอังกฤษผ่านสถานการณ์จริง กิจกรรม และการแลกเปลี่ยนเรียนรู้',[['ฟังและพูด','สื่อสารผ่านกิจกรรมและสถานการณ์จำลอง'],['อ่านและเขียน','ใช้ภาษาเพื่อค้นคว้าและถ่ายทอดความคิด'],['เจ้าของภาษา','เรียนรู้กับครูชาวต่างชาติและเครือข่าย'],['เวทีนำเสนอ','ใช้ภาษาในกิจกรรมและการแข่งขัน']]),
-        simple('confident','03','CONFIDENT COMMUNICATOR','ใช้ภาษาอย่างมั่นใจ','ผู้เรียนสื่อสารภาษาอังกฤษอย่างมั่นใจและเหมาะสม','ผู้เรียนสามารถเลือกใช้ภาษาอังกฤษได้เหมาะกับบุคคลและสถานการณ์ มีความมั่นใจในการสื่อสารและพร้อมใช้ภาษาในการศึกษาต่อ',[['สื่อสารเหมาะสม','เลือกใช้ภาษาได้ตรงบริบท'],['กล้าแสดงออก','นำเสนอและแลกเปลี่ยนความคิดเห็น'],['ใช้ได้จริง','ประยุกต์ภาษาในชีวิตประจำวัน'],['ต่อยอดอนาคต','ใช้ภาษาเพื่อการศึกษาและอาชีพ']])]},
-      digital:{eyebrow:'DIGITAL LEARNING PATHWAY',title:'เข้าถึงการเรียนรู้ · ลงมือสร้างผลงาน · ใช้เทคโนโลยีอย่างเหมาะสม',description:'จากการเข้าถึงเครื่องมือ สู่การสร้างสรรค์และใช้เทคโนโลยีอย่างรับผิดชอบ',steps:[
-        simple('access','01','DIGITAL ACCESS','เข้าถึงการเรียนรู้','เข้าถึงเครื่องมือดิจิทัล ความรู้ และประสบการณ์ที่หลากหลาย','บูรณาการเทคโนโลยีในการจัดการเรียนรู้ทั้งในและนอกห้องเรียน พร้อมประสานมหาวิทยาลัย ภาคีเครือข่าย และผู้เชี่ยวชาญ เพื่อให้ผู้เรียนเข้าถึงเครื่องมือดิจิทัล ความรู้ และประสบการณ์ที่หลากหลาย',[['ห้องเรียนดิจิทัล','ใช้เทคโนโลยีทั้งในและนอกห้องเรียน'],['เครื่องมือและสื่อ','เข้าถึงอุปกรณ์ แพลตฟอร์ม และแหล่งความรู้'],['ภาคีเครือข่าย','เชื่อมมหาวิทยาลัยและผู้เชี่ยวชาญ'],['โอกาสที่เท่าเทียม','เปิดพื้นที่ให้ผู้เรียนได้เรียนรู้ตามศักยภาพ']]),
-        simple('creation','02','HANDS-ON CREATION','ลงมือสร้างผลงาน','สืบค้น วิเคราะห์ ออกแบบ ทดลอง และแก้ปัญหาผ่านชิ้นงาน','ผู้เรียนฝึกสืบค้นและวิเคราะห์ข้อมูล ใช้เครื่องมือดิจิทัลเพื่อเรียนรู้และสื่อสาร แล้ววางแผน ออกแบบ ทดลอง และแก้ปัญหาผ่านการสร้างชิ้นงานและโครงงาน',[['สืบค้นข้อมูล','ค้นหา ตรวจสอบ และวิเคราะห์ข้อมูล'],['ออกแบบ','วางแผนชิ้นงานและเลือกเครื่องมือ'],['ทดลองสร้าง','ลงมือปฏิบัติและแก้ปัญหา'],['นำเสนอ','สื่อสารผลงานด้วยเทคโนโลยี']]),
-        simple('capability','03','DIGITAL CAPABILITY','ใช้เทคโนโลยีอย่างเหมาะสม','ประยุกต์ใช้เทคโนโลยีเพื่อเรียนรู้ สื่อสาร และสร้างผลงาน','ผู้เรียนสามารถประยุกต์ใช้เทคโนโลยีในการเรียนรู้ การสื่อสาร และการสร้างผลงาน มีโอกาสนำเสนอโครงงานและแสดงความสามารถในเวทีต่าง ๆ อย่างปลอดภัย สร้างสรรค์ และรับผิดชอบ',[['เรียนรู้','ใช้เทคโนโลยีขยายโอกาสการเรียนรู้'],['สื่อสาร','เลือกช่องทางและรูปแบบได้เหมาะสม'],['สร้างสรรค์','พัฒนาชิ้นงานและนวัตกรรม'],['พลเมืองดิจิทัล','ใช้อย่างปลอดภัย มีจริยธรรม และรับผิดชอบ']])]},
-      curriculum:{eyebrow:'CURRICULUM PROGRESS PATHWAY',title:'วิเคราะห์รายสาระ · เรียนรู้และปรับการสอน · เห็นพัฒนาการรายปี',description:'ใช้ข้อมูลรายกลุ่มสาระเพื่อพัฒนาการเรียนรู้ของผู้เรียนอย่างต่อเนื่อง',steps:[
-        simple('analyse','01','SUBJECT ANALYSIS','วิเคราะห์รายสาระ','ค้นหาจุดแข็งและประเด็นพัฒนาจากมาตรฐานและผลการเรียน','โรงเรียนใช้มาตรฐานและตัวชี้วัดของหลักสูตรสถานศึกษา ร่วมกับผลการเรียนและผลประเมินของผู้เรียนในแต่ละกลุ่มสาระ เพื่อวิเคราะห์จุดแข็ง ประเด็นที่ต้องพัฒนา และกำหนดเป้าหมายการเรียนรู้ที่เหมาะสม',[['มาตรฐานหลักสูตร','วิเคราะห์มาตรฐานและตัวชี้วัด'],['ผลการเรียน','เปรียบเทียบข้อมูลรายปีและรายสาระ'],['จุดแข็ง','ค้นหาศักยภาพที่ควรส่งเสริม'],['ประเด็นพัฒนา','กำหนดเป้าหมายที่ตอบโจทย์ผู้เรียน']]),
-        simple('learn','02','LEARN & ADAPT','เรียนรู้และปรับการสอน','วัดผลระหว่างเรียนและนำข้อมูลกลับมาปรับกิจกรรม','ครูออกแบบกิจกรรมที่เน้นผู้เรียนเป็นสำคัญ ให้ผู้เรียนฝึกคิด ลงมือปฏิบัติ และนำความรู้ไปใช้ พร้อมวัดผลระหว่างเรียน นำผลมาปรับการสอน ส่งเสริมผู้เรียนตามศักยภาพ และช่วยเหลือผู้ที่ต้องพัฒนาเพิ่มเติม',[['ออกแบบกิจกรรม','เน้นผู้เรียนและการลงมือปฏิบัติ'],['ประเมินระหว่างเรียน','เก็บหลักฐานความก้าวหน้าอย่างต่อเนื่อง'],['ปรับการสอน','ใช้ผลประเมินพัฒนากิจกรรม'],['ดูแลรายบุคคล','ส่งเสริมและช่วยเหลือตามศักยภาพ']]),
-        simple('growth','03','YEARLY GROWTH','เห็นพัฒนาการรายปี','ผลสัมฤทธิ์ สมรรถนะ และผลงานแสดงความก้าวหน้า','ผู้เรียนมีพัฒนาการตามมาตรฐานการเรียนรู้ของแต่ละกลุ่มสาระ โดยสะท้อนผ่านผลสัมฤทธิ์ทางการเรียน ผลประเมินสมรรถนะ และผลงานของผู้เรียน ซึ่งโรงเรียนสามารถเปรียบเทียบผลรายปีและรายกลุ่มสาระเพื่อแสดงความก้าวหน้า',[['ผลสัมฤทธิ์','เปรียบเทียบผลการเรียนรายปี'],['สมรรถนะ','ติดตามความสามารถในการนำความรู้ไปใช้'],['ผลงาน','ใช้ชิ้นงานเป็นหลักฐานเชิงประจักษ์'],['พัฒนาต่อเนื่อง','นำผลกลับสู่การวางแผนรอบถัดไป']])]},
-      guidance:{eyebrow:'FUTURE READINESS PATHWAY',title:'เตรียมพร้อม · แนะแนว · ก้าวไกล',description:'รู้จักตน วางแผนเส้นทาง และเตรียมพร้อมสู่การศึกษาหรืออาชีพ',steps:[
-        simple('ready','01','INPUT · READY','เตรียมพร้อม','วางระบบข้อมูล บุคลากร งบประมาณ และเครือข่ายสนับสนุน','โรงเรียนมีหลักสูตรแนะแนว ข้อมูลนักเรียนรายบุคคล บุคลากร งบประมาณ และเครือข่ายที่สนับสนุนการศึกษาต่อและการฝึกอาชีพอย่างต่อเนื่อง ทำให้สามารถวางแผนช่วยเหลือนักเรียนตามความสนใจและความถนัดได้',[['ข้อมูลรายบุคคล','รู้จักความสนใจ ความถนัด และบริบทของผู้เรียน'],['หลักสูตรแนะแนว','กำหนดกิจกรรมอย่างเป็นระบบ'],['บุคลากรและงบประมาณ','จัดทรัพยากรสนับสนุนอย่างเพียงพอ'],['ภาคีเครือข่าย','เชื่อมสถานศึกษา อาชีพ และแหล่งเรียนรู้']]),
-        simple('guide','02','PROCESS · GUIDANCE','แนะแนว','บริการแนะแนว 5 ด้าน เชื่อมการรู้จักตนกับการเตรียมสมัคร','โรงเรียนจัดบริการแนะแนว 5 ด้าน เชื่อมการสำรวจตนเองกับการรับข้อมูล การฝึกทักษะ และการเตรียมสมัครเรียนหรือทำงาน พร้อมติดตามผลและนำข้อมูลมาปรับกิจกรรมในปีถัดไป',[['สำรวจตนเอง','เข้าใจความสนใจ ความถนัด และเป้าหมาย'],['รับข้อมูล','รู้จักเส้นทางการศึกษาและอาชีพ'],['ฝึกทักษะ','เตรียมความพร้อมที่จำเป็น'],['สมัครและติดตาม','สร้างหลักฐาน สมัคร และติดตามผล']]),
-        simple('advance','03','OUTPUT · ADVANCE','ก้าวไกล','มีแผนและหลักฐานการเตรียมตัวสำหรับเส้นทางที่เลือก','นักเรียนมีแผนและหลักฐานการเตรียมตัวสำหรับเส้นทางที่เลือก ข้อมูลปี 2566–2568 แสดงว่านักเรียน ม.3 ส่วนใหญ่ศึกษาต่ออย่างต่อเนื่อง ขณะที่นักเรียน ม.6 เข้าศึกษาต่อในสถาบันที่หลากหลายและมีเส้นทางเข้าสู่การทำงานด้วย',[['แผนรายบุคคล','เลือกเส้นทางที่สอดคล้องกับตนเอง'],['แฟ้มหลักฐาน','รวบรวมผลงานและการเตรียมสมัคร'],['ศึกษาต่อ','เชื่อมต่อสถาบันและหลักสูตรที่หลากหลาย'],['เข้าสู่อาชีพ','เตรียมทักษะและช่องทางการทำงาน']])]},
-      democracy:{eyebrow:'DEMOCRATIC LEARNING PATHWAY',title:'เปิดใจรับฟัง · ใช้เหตุผลร่วมกัน · เคารพความแตกต่าง',description:'เรียนรู้วิถีประชาธิปไตยผ่านการมีส่วนร่วมและการอยู่ร่วมกัน',steps:[
-        simple('listen','01','LISTEN WITH EMPATHY','เปิดใจรับฟัง','รับฟังความคิดเห็นและความต้องการของผู้อื่นอย่างตั้งใจ','เริ่มต้นจากการสร้างพื้นที่ปลอดภัยให้ผู้เรียนได้แสดงความคิดเห็น รับฟังกัน และเข้าใจมุมมองที่แตกต่าง',[['สภานักเรียน','เปิดพื้นที่เสนอความคิดเห็นและร่วมตัดสินใจ'],['ห้องเรียน','แลกเปลี่ยนความคิดเห็นด้วยกติกาที่เป็นธรรม'],['ชุมชน','รับฟังความต้องการของผู้มีส่วนเกี่ยวข้อง'],['พื้นที่ปลอดภัย','สื่อสารโดยไม่ตัดสินหรือกีดกัน']]),
-        simple('reason','02','REASON TOGETHER','ใช้เหตุผลร่วมกัน','พิจารณาข้อมูล อภิปราย และตัดสินใจอย่างมีส่วนร่วม','ผู้เรียนฝึกใช้ข้อมูลและเหตุผล อภิปรายข้อดีข้อจำกัด และร่วมกันกำหนดแนวทางดำเนินกิจกรรม',[['ข้อมูล','ตรวจสอบข้อเท็จจริงก่อนตัดสินใจ'],['อภิปราย','แลกเปลี่ยนด้วยเหตุผลและหลักฐาน'],['มีส่วนร่วม','ร่วมคิด ร่วมวางแผน และร่วมรับผิดชอบ'],['ฉันทามติ','ค้นหาข้อตกลงที่ทุกฝ่ายยอมรับได้']]),
-        simple('respect','03','RESPECT DIVERSITY','เคารพความแตกต่าง','อยู่ร่วมกันบนความหลากหลายและรับผิดชอบต่อส่วนรวม','ผู้เรียนยอมรับความคิดเห็นและความแตกต่าง ปฏิบัติตามกติกา และมีส่วนร่วมในโรงเรียนกับชุมชนอย่างสร้างสรรค์',[['ยอมรับความต่าง','เห็นคุณค่าของความหลากหลาย'],['เคารพสิทธิ','ไม่ละเมิดสิทธิของตนเองและผู้อื่น'],['รับผิดชอบ','ปฏิบัติตามข้อตกลงร่วมกัน'],['พลเมืองเข้มแข็ง','ใช้ประชาธิปไตยในชีวิตประจำวัน']])]},
-      health:{eyebrow:'HEALTH & WELLBEING PATHWAY',title:'รู้ทันโรค · สร้างเสริมป้องกัน · สุขกายสุขใจ',description:'ดูแลสุขภาพกายและสุขภาพจิตด้วยข้อมูล กิจกรรม และระบบช่วยเหลือ',steps:[
-        simple('aware','01','HEALTH AWARENESS','รู้ทันโรค','สำรวจและวิเคราะห์สุขภาพกาย สุขภาพจิต และพฤติกรรมเสี่ยง','สำรวจและวิเคราะห์ข้อมูลสุขภาพกาย สุขภาพจิต และพฤติกรรมเสี่ยงของนักเรียน เพื่อกำหนดแนวทางส่งเสริม ป้องกัน และช่วยเหลือได้ตรงความต้องการ',[['ข้อมูลสุขภาพ','ติดตามภาวะสุขภาพและสมรรถภาพ'],['สุขภาพจิต','คัดกรองอารมณ์และความเครียด'],['พฤติกรรมเสี่ยง','มองเห็นปัจจัยที่ต้องเฝ้าระวัง'],['แผนดูแล','กำหนดแนวทางรายบุคคลและภาพรวม']]),
-        simple('strengthen','02','PREVENT & STRENGTHEN','สร้างเสริมป้องกัน','ออกกำลังกาย โภชนาการ จัดการอารมณ์ และช่วยเหลืออย่างเหมาะสม','จัดกิจกรรมออกกำลังกาย ส่งเสริมโภชนาการ พัฒนาทักษะการจัดการอารมณ์ คัดกรอง ให้คำปรึกษา และประสานผู้ปกครองกับเครือข่ายสุขภาพ',[['กิจกรรมทางกาย','ออกกำลังกายและทดสอบสมรรถภาพ'],['โภชนาการ','เลือกบริโภคและดูแลสุขอนามัย'],['ทักษะอารมณ์','เข้าใจและจัดการความรู้สึก'],['ระบบช่วยเหลือ','ให้คำปรึกษาและส่งต่อเมื่อจำเป็น']]),
-        simple('wellbeing','03','HEALTHY BODY & MIND','สุขกายสุขใจ','ดูแลตนเองได้และมีคุณภาพชีวิตที่เหมาะสม','นักเรียนดูแลสุขภาพกายและสุขภาพจิตของตนเองได้ รู้จักป้องกันความเสี่ยง ขอความช่วยเหลืออย่างเหมาะสม และมีพฤติกรรมสุขภาพที่ดี',[['ดูแลตนเอง','ปฏิบัติตนเพื่อสุขภาพที่ดี'],['รู้เท่าทัน','ป้องกันโรคและพฤติกรรมเสี่ยง'],['ขอความช่วยเหลือ','เข้าถึงครู ผู้ปกครอง และผู้เชี่ยวชาญ'],['คุณภาพชีวิต','เรียนรู้และใช้ชีวิตอย่างมีความสุข']])]},
-      excellence:{eyebrow:'TALENT EXCELLENCE PATHWAY',title:'ค้นพบความสามารถ · พัฒนาเต็มศักยภาพ · แสดงผลงานสู่ความเป็นเลิศ',description:'ค้นหา พัฒนา และต่อยอดความสามารถพิเศษของผู้เรียนสู่เวทีจริง',steps:[
-        simple('discover','01','DISCOVER TALENT','ค้นพบความสามารถ','คัดกรองความสามารถ ความถนัด และความสนใจเป็นรายบุคคล','คัดกรองความสามารถ ความถนัด และความสนใจของผู้เรียนเป็นรายบุคคล โดยอาศัยข้อมูลจากครู ผู้ปกครอง และผู้เชี่ยวชาญ พร้อมจัดทางเลือกการเรียนรู้ที่หลากหลาย ทั้งห้องเรียนพัฒนาสมรรถนะระดับมัธยมศึกษาตอนต้นและตอนปลาย',[['ข้อมูลผู้เรียน','รวบรวมจากครู ผู้ปกครอง และผู้เชี่ยวชาญ'],['ความถนัด','ค้นหาจุดเด่นและศักยภาพเฉพาะบุคคล'],['ความสนใจ','เชื่อมสิ่งที่ชอบกับโอกาสการเรียนรู้'],['ทางเลือกหลากหลาย','จัดห้องเรียนและกิจกรรมให้เหมาะสม']]),
-        simple('develop','02','DEVELOP & EXTEND','พัฒนาเต็มศักยภาพ','ฝึกฝนตามความถนัดและต่อยอดสู่เวทีการแข่งขัน','นำข้อมูลผู้เรียนมาวางแผนและจัดกิจกรรม ผ่านกิจกรรม 1 คน 1 ความสามารถ กิจกรรมพัฒนาสมรรถนะ การเรียนรู้โดยใช้กิจกรรมเป็นฐาน การฝึกทักษะอาชีพ และการเรียนรู้จากผู้เชี่ยวชาญกับแหล่งเรียนรู้จริง',[['1 คน 1 ความสามารถ','เปิดพื้นที่ให้ทุกคนค้นพบและพัฒนาจุดเด่น'],['พัฒนาสมรรถนะ','ฝึกทักษะผ่านกิจกรรมและการปฏิบัติ'],['ผู้เชี่ยวชาญ','เรียนรู้จากบุคคลและสถานที่จริง'],['เวทีแข่งขัน','ฝึกซ้อม ประกวด แข่งขัน และนำเสนอ']]),
-        simple('excel','03','SHOWCASE EXCELLENCE','แสดงผลงานสู่ความเป็นเลิศ','สร้างสรรค์ผลงานและแสดงความสามารถในเวทีหลายระดับ','ผู้เรียนได้พัฒนาความรู้และทักษะทั้งด้านวิชาการ ภาษา ศิลปะ ดนตรี กีฬา เทคโนโลยี และอาชีพ สามารถสร้างสรรค์ผลงานและแสดงความสามารถพิเศษ โดยมีผลงานและรางวัลตั้งแต่ระดับสถานศึกษาถึงระดับประเทศ',[['วิชาการและภาษา','แสดงความสามารถด้านความรู้และการสื่อสาร'],['ศิลปะและดนตรี','สร้างสรรค์และถ่ายทอดอัตลักษณ์'],['กีฬา','พัฒนาวินัย สมรรถนะ และการแข่งขัน'],['เทคโนโลยีและอาชีพ','สร้างชิ้นงานและต่อยอดสู่อนาคต']])]},
-      environment:{eyebrow:'GREEN CITIZEN PATHWAY',title:'สร้างความรู้ · สู่การลงมือทำ · ร่วมอนุรักษ์อย่างยั่งยืน',description:'เรียนรู้ปัญหาสิ่งแวดล้อมและเปลี่ยนความรู้เป็นการลงมือทำร่วมกัน',steps:[
-        simple('learn','01','ENVIRONMENTAL LITERACY','สร้างความรู้','เข้าใจทรัพยากร ปัญหาสิ่งแวดล้อม และผลกระทบใกล้ตัว','จัดการเรียนรู้เรื่องทรัพยากรธรรมชาติ สิ่งแวดล้อม ฝุ่น PM2.5 การคัดแยกขยะ และความหลากหลายทางชีวภาพ โดยเชื่อมโยงกับบริบทโรงเรียนและชุมชน',[['สวนพฤกษศาสตร์','เรียนรู้ความหลากหลายของพืชและระบบนิเวศ'],['PM2.5','เข้าใจสาเหตุ ผลกระทบ และการเฝ้าระวัง'],['การจัดการขยะ','รู้จักประเภทขยะและวิธีคัดแยก'],['พื้นที่รับผิดชอบ','สร้างจิตสำนึกต่อห้องเรียนและโรงเรียน']]),
-        simple('act','02','LEARNING BY ACTION','สู่การลงมือทำ','ใช้กิจกรรมและเทคโนโลยีแก้ปัญหาจากสถานการณ์จริง','นำโครงการไปสู่การปฏิบัติผ่านกิจกรรมที่เปิดโอกาสให้นักเรียนได้เรียนรู้ ลงมือสำรวจ ตรวจวัด คัดแยก ดูแลพื้นที่ และสื่อสารความรู้สู่เครือข่าย',[['สำรวจและตรวจวัด','เก็บข้อมูลสิ่งแวดล้อมด้วยเครื่องมือและ AI'],['ถังนี้มีเสียง','วางแผนกิจกรรมคัดแยกขยะร่วมกัน'],['ห้องเรียนสะอาด','รับผิดชอบพื้นที่และสร้างพฤติกรรมเชิงบวก'],['ขยายผล','สื่อสารความรู้สู่โรงเรียนและชุมชน']]),
-        simple('sustain','03','SUSTAINABLE IMPACT','ร่วมอนุรักษ์อย่างยั่งยืน','เกิดพฤติกรรม ผลงาน และเครือข่ายที่ดูแลสิ่งแวดล้อมต่อเนื่อง','ผู้เรียนมีความรู้และทักษะในการคัดแยกขยะ ใช้เทคโนโลยีเฝ้าระวังคุณภาพอากาศ ดูแลพื้นที่รับผิดชอบ และร่วมอนุรักษ์ทรัพยากรทั้งในโรงเรียนและชุมชน',[['ป้ายสนองพระราชดำริ','ผ่านการประเมินงานสวนพฤกษศาสตร์โรงเรียน'],['เฝ้าระวังอากาศ','ใช้ AI และแอปพลิเคชันตรวจวัด PM2.5'],['โรงเรียนสะอาด','ดูแลห้องเรียนและพื้นที่อย่างต่อเนื่อง'],['ชุมชนสีเขียว','นำทักษะคัดแยกขยะไปใช้และขยายผล']])]},
-      teamwork:{eyebrow:'TEAM POWER PATHWAY',title:'ร่วมคิด · รับผิดชอบ · มุ่งมั่นสู่ความสำเร็จ',description:'ผสานความคิด บทบาท และความรับผิดชอบให้ทีมทำงานอย่างมีประสิทธิภาพ',steps:[
-        simple('think','01','THINK TOGETHER','ร่วมคิด','กำหนดเป้าหมาย วางแผน และรับฟังความคิดเห็นร่วมกัน','ผู้เรียนแลกเปลี่ยนความคิดเห็น วิเคราะห์ภารกิจ และร่วมกันกำหนดเป้าหมายกับแนวทางการทำงาน',[['เป้าหมายร่วม','เข้าใจผลลัพธ์ที่ทีมต้องการ'],['ระดมความคิด','เปิดรับแนวคิดที่หลากหลาย'],['วางแผน','กำหนดขั้นตอน เวลา และทรัพยากร'],['แบ่งบทบาท','เลือกหน้าที่ตามความถนัด']]),
-        simple('own','02','SHARED RESPONSIBILITY','รับผิดชอบ','ลงมือทำตามบทบาทและช่วยเหลือกันระหว่างทาง','สมาชิกปฏิบัติหน้าที่ของตนอย่างเต็มที่ สื่อสารความคืบหน้า ช่วยเหลือเพื่อน และแก้ปัญหาร่วมกัน',[['ทำตามบทบาท','รับผิดชอบงานที่ได้รับมอบหมาย'],['สื่อสาร','รายงานความคืบหน้าและอุปสรรค'],['ช่วยเหลือ','เติมเต็มจุดแข็งและข้อจำกัดของกันและกัน'],['ปรับตัว','แก้ไขแผนเมื่อสถานการณ์เปลี่ยน']]),
-        simple('succeed','03','TEAM SUCCESS','มุ่งมั่นสู่ความสำเร็จ','ติดตามคุณภาพ สะท้อนผล และภูมิใจในความสำเร็จร่วมกัน','ทีมติดตามงานจนบรรลุเป้าหมาย ประเมินคุณภาพ สะท้อนบทเรียน และนำประสบการณ์ไปพัฒนาการทำงานครั้งต่อไป',[['ติดตามงาน','ตรวจสอบความก้าวหน้าอย่างสม่ำเสมอ'],['คุณภาพ','ร่วมกันปรับปรุงผลงาน'],['สะท้อนผล','เรียนรู้จากความสำเร็จและอุปสรรค'],['ความสำเร็จร่วม','เห็นคุณค่าของสมาชิกทุกคน']])]},
-      thaiPride:{eyebrow:'THAI WISDOM PATHWAY',title:'เรียนรู้ · สืบสาน · ประยุกต์ใช้',description:'เชื่อมหลักสูตร ภูมิปัญญาท้องถิ่น และการลงมือปฏิบัติสู่ความภาคภูมิใจในความเป็นไทย',steps:[
-        simple('learn','01','LEARN THE ROOTS','เรียนรู้','เรียนรู้จากหลักสูตร ปราชญ์ชาวบ้าน แหล่งเรียนรู้ และเทคโนโลยี','ผู้เรียนศึกษาประวัติศาสตร์ ศิลปวัฒนธรรม วิถีชีวิต และภูมิปัญญาท้องถิ่นผ่านหลักสูตร ปราชญ์ชาวบ้าน แหล่งเรียนรู้ และสื่อเทคโนโลยี',[['หลักสูตร','บูรณาการความเป็นไทยในรายวิชา'],['ปราชญ์ชาวบ้าน','เรียนรู้จากผู้มีประสบการณ์จริง'],['แหล่งเรียนรู้','เชื่อมโรงเรียนกับชุมชนและท้องถิ่น'],['เทคโนโลยี','ใช้สื่อค้นคว้าและบันทึกองค์ความรู้']]),
-        simple('continue','02','CONTINUE THE WISDOM','สืบสาน','ฝึกปฏิบัติและถ่ายทอดภูมิปัญญาผ่านกิจกรรมเชิงรุก','ออกแบบกิจกรรมให้สอดคล้องกับหลักสูตรสถานศึกษา โดยบูรณาการประวัติศาสตร์ ศิลปวัฒนธรรม ดนตรี นาฏศิลป์ การเกษตร สุขภาพ และการงานอาชีพเข้ากับการจัดการเรียนรู้เชิงรุกและการฝึกปฏิบัติจริง',[['ศิลปวัฒนธรรม','ฝึกปฏิบัติและร่วมกิจกรรมประเพณี'],['ดนตรีนาฏศิลป์','สืบทอดการแสดงและอัตลักษณ์ไทย'],['วิถีชุมชน','เรียนรู้การเกษตร สุขภาพ และงานอาชีพ'],['ถ่ายทอด','นำเสนอและแบ่งปันองค์ความรู้']]),
-        simple('apply','03','APPLY WITH PRIDE','ประยุกต์ใช้','นำภูมิปัญญาไปใช้ในชีวิตและต่อยอดสู่อนาคต','นักเรียนภาคภูมิใจในความเป็นไทย เห็นคุณค่าภูมิปัญญาท้องถิ่น สามารถนำไปใช้ในชีวิตประจำวันและต่อยอดสู่การศึกษาและอาชีพ',[['ชีวิตประจำวัน','เลือกใช้ความรู้ได้เหมาะกับบริบท'],['สร้างสรรค์','ประยุกต์ภูมิปัญญากับแนวคิดใหม่'],['การศึกษา','ต่อยอดความสนใจสู่การเรียนรู้ขั้นสูง'],['อาชีพ','พัฒนาผลิตภัณฑ์และทักษะที่สร้างคุณค่า']])]},
-      confidence:{eyebrow:'CONFIDENT LEARNER PATHWAY',title:'เปิดโอกาส · ลงมือเรียนรู้ · เชื่อมั่นในการเรียนรู้',description:'สร้างพื้นที่ให้ผู้เรียนค้นพบตนเอง ฝึกปฏิบัติ และเติบโตอย่างมั่นใจ',steps:[
-        simple('opportunity','01','OPEN OPPORTUNITIES','เปิดโอกาส','เรียนรู้ตามความสนใจและศักยภาพ','เปิดโอกาสให้นักเรียนเรียนรู้ตามความสนใจและศักยภาพ ผ่านทางเลือก กิจกรรม และพื้นที่แสดงออกที่หลากหลาย',[['ทางเลือก','เลือกกิจกรรมที่สอดคล้องกับความสนใจ'],['พื้นที่ปลอดภัย','กล้าลองโดยไม่กลัวความผิดพลาด'],['การสนับสนุน','ได้รับกำลังใจจากครูและเพื่อน'],['เป้าหมาย','มองเห็นสิ่งที่ต้องการพัฒนา']]),
-        simple('practice','02','LEARN BY DOING','ลงมือเรียนรู้','ฝึกปฏิบัติจริงและแสดงออกอย่างสร้างสรรค์','เรียนรู้ผ่านกิจกรรมเชิงรุก การฝึกปฏิบัติจริง และการแสดงออกอย่างสร้างสรรค์ พร้อมรับข้อเสนอแนะเพื่อนำไปพัฒนาตนเอง',[['ลงมือทำ','เปลี่ยนความคิดเป็นประสบการณ์จริง'],['แก้ปัญหา','เรียนรู้จากอุปสรรคและความผิดพลาด'],['สื่อสาร','นำเสนอความคิดและผลงาน'],['ข้อเสนอแนะ','รับฟังและปรับปรุงอย่างต่อเนื่อง']]),
-        simple('confidence','03','LEARN WITH CONFIDENCE','เชื่อมั่นในการเรียนรู้','กล้าแสดงออกและมีเจตคติที่ดีต่อการเรียน','นักเรียนเชื่อมั่นในตนเอง กล้าแสดงออก และมีเจตคติที่ดีต่อการเรียนรู้ สามารถตั้งเป้าหมายและพัฒนาตนเองได้อย่างต่อเนื่อง',[['เชื่อมั่นในตนเอง','เห็นคุณค่าและศักยภาพของตน'],['กล้าแสดงออก','สื่อสารและนำเสนออย่างเหมาะสม'],['เจตคติเชิงบวก','มองการเรียนรู้เป็นโอกาสเติบโต'],['พัฒนาต่อเนื่อง','ตั้งเป้าหมายและลงมือทำด้วยตนเอง']])]},
-      safety:{eyebrow:'SAFE STUDENT PATHWAY',title:'รู้เท่าทันความเสี่ยง · สร้างภูมิคุ้มกัน · ปลอดภัยทุกสถานการณ์',description:'สร้างความรู้ ทักษะชีวิต และเครือข่ายดูแลให้ผู้เรียนป้องกันตนเองได้',steps:[
-        simple('risk','01','RISK AWARENESS','รู้เท่าทันความเสี่ยง','วิเคราะห์สารเสพติด ปัญหาทางเพศ อบายมุข และภัยออนไลน์','โรงเรียนวิเคราะห์ข้อมูลและสถานการณ์เสี่ยงด้านสารเสพติด ปัญหาทางเพศ อบายมุข และภัยจากสื่อออนไลน์ พร้อมจัดระบบดูแลช่วยเหลือนักเรียนร่วมกับครูที่ปรึกษา ผู้ปกครอง ชุมชน และภาคีเครือข่าย',[['สารเสพติด','รู้จักผลกระทบและสถานการณ์เสี่ยง'],['ปัญหาทางเพศ','เข้าใจขอบเขต สิทธิ และการป้องกัน'],['อบายมุข','รู้เท่าทันแรงจูงใจและผลกระทบ'],['ภัยออนไลน์','ตรวจสอบข้อมูลและปกป้องความเป็นส่วนตัว']]),
-        simple('immunity','02','BUILD IMMUNITY','สร้างภูมิคุ้มกัน','ฝึกทักษะชีวิต การตัดสินใจ การปฏิเสธ และการขอความช่วยเหลือ','จัดการเรียนรู้และกิจกรรมส่งเสริมทักษะชีวิต สถานศึกษาสีขาว To Be Number One กีฬาต้านยาเสพติด การเฝ้าระวัง การเยี่ยมบ้าน และการให้คำปรึกษา ฝึกให้นักเรียนคิดวิเคราะห์ ตัดสินใจ ปฏิเสธ หลีกเลี่ยงสถานการณ์เสี่ยง และรู้ช่องทางขอความช่วยเหลือ',[['ทักษะชีวิต','คิด วิเคราะห์ และตัดสินใจอย่างรอบคอบ'],['ทักษะปฏิเสธ','สื่อสารชัดเจนและออกจากสถานการณ์เสี่ยง'],['กิจกรรมเชิงบวก','ใช้กีฬาและกิจกรรมสร้างสรรค์'],['ระบบช่วยเหลือ','เข้าถึงครู ผู้ปกครอง และเครือข่าย']]),
-        simple('safe','03','SAFE IN EVERY SITUATION','ปลอดภัยทุกสถานการณ์','ป้องกันตนเองและผู้อื่น พร้อมใช้ชีวิตในพื้นที่ปลอดภัย','ผู้เรียนรู้เท่าทันอันตราย ปฏิเสธและหลีกเลี่ยงสารเสพติด ปัญหาทางเพศ และอบายมุขได้ รู้จักป้องกันตนเองและผู้อื่น และเชื่อมั่นว่าสถานศึกษาเป็นพื้นที่ปลอดภัย',[['รู้เท่าทัน','ประเมินความเสี่ยงก่อนตัดสินใจ'],['ป้องกันตนเอง','ใช้ทักษะชีวิตในสถานการณ์จริง'],['ช่วยเหลือผู้อื่น','แจ้งเหตุและส่งต่ออย่างเหมาะสม'],['โรงเรียนปลอดภัย','ร่วมสร้างวัฒนธรรมที่ดูแลกัน']], [['59.63%','พฤติกรรมไม่พึงประสงค์ ปี 2566'],['39.26%','พฤติกรรมไม่พึงประสงค์ ปี 2568']])]},
+      creative: { eyebrow: 'CREATIVE THINKING PATHWAY', title: 'โจทย์ท้าทาย · คิดและสร้างคำตอบ · ผลงานใช้ได้จริง', description: 'โมเดลพัฒนาการคิด วิเคราะห์ แก้ปัญหา และประยุกต์ใช้ — แตะแต่ละขั้นเพื่อดูรายละเอียด', steps: creativeData },
+      thai: {
+        eyebrow: 'LEARNING GROWTH PATHWAY', title: 'คัดกรองตามศักยภาพ · ฝึกทักษะผ่านกิจกรรมจริง · เห็นพัฒนาการและผลงาน', description: 'เส้นทางพัฒนาการอ่าน การเขียน การสื่อสาร และการคิดคำนวณ', steps: [
+          simple('screen', '01', 'PERSONALIZED SCREENING', 'คัดกรองตามศักยภาพ', 'วิเคราะห์ผู้เรียนเป็นรายบุคคล เพื่อวางแผนกิจกรรมให้เหมาะกับศักยภาพ', 'กำหนดเป้าหมายตามหลักสูตรสถานศึกษา และคัดกรองความสามารถด้านการอ่าน–เขียนภาษาไทย การสื่อสาร และการคิดคำนวณของผู้เรียนเป็นรายบุคคล เพื่อนำข้อมูลมาวิเคราะห์ความต้องการและวางแผนกิจกรรมให้เหมาะกับศักยภาพของผู้เรียน', [['กำหนดเป้าหมาย', 'เชื่อมเป้าหมายการพัฒนากับหลักสูตรสถานศึกษา'], ['คัดกรองรายบุคคล', 'สำรวจการอ่าน การเขียน การสื่อสาร และการคิดคำนวณ'], ['วิเคราะห์ข้อมูล', 'มองเห็นจุดแข็งและประเด็นที่ต้องพัฒนา'], ['วางแผนเฉพาะบุคคล', 'เลือกกิจกรรมที่เหมาะกับศักยภาพของผู้เรียน']]),
+          simple('practice', '02', 'ACTIVE LEARNING', 'ฝึกทักษะผ่านกิจกรรมจริง', 'อ่าน เขียน อภิปราย นำเสนอ และแก้ปัญหาจากการปฏิบัติจริง', 'ครูจัดการเรียนรู้แบบ Active Learning ให้ผู้เรียนอ่าน เขียน อภิปราย นำเสนอ และแก้ปัญหาจากการปฏิบัติจริง ควบคู่กับกิจกรรมบันทึกรักการอ่าน วันภาษาไทย ชุมนุมและค่ายคณิตศาสตร์ ตลอดจนการแข่งขันทักษะทางวิชาการ พร้อมประเมินความก้าวหน้าและปรับกิจกรรมอย่างต่อเนื่อง', [['Active Learning', 'ฝึกทักษะผ่านการลงมือทำและแก้ปัญหา'], ['กิจกรรมภาษาไทย', 'บันทึกรักการอ่านและวันภาษาไทย'], ['กิจกรรมคณิตศาสตร์', 'ชุมนุม ค่าย และโจทย์จากสถานการณ์จริง'], ['ติดตามผล', 'ประเมินความก้าวหน้าและปรับกิจกรรมอย่างต่อเนื่อง']]),
+          simple('progress', '03', 'VISIBLE PROGRESS', 'เห็นพัฒนาการและผลงาน', 'ผลงานและผลคัดกรองสะท้อนความก้าวหน้าที่ชัดเจน', 'ผู้เรียนมีผลงานด้านการอ่าน การเขียน การสื่อสาร และการคิดคำนวณ รวมถึงได้รับรางวัลจากการแข่งขันหลายระดับ', [['ผลงานการอ่าน–เขียน', 'มีหลักฐานและชิ้นงานที่สะท้อนทักษะ'], ['การสื่อสาร', 'อภิปรายและนำเสนอได้เหมาะสม'], ['การคิดคำนวณ', 'ประยุกต์ทักษะเพื่อแก้ปัญหา'], ['เวทีวิชาการ', 'ได้รับประสบการณ์และรางวัลจากการแข่งขัน']], [['76.90%', 'ผลคัดกรองระดับดี ปีการศึกษา 2566'], ['81.38%', 'ผลคัดกรองระดับดี ปีการศึกษา 2568']])]
+      },
+      english: {
+        eyebrow: 'ENGLISH LEARNING PATHWAY', title: 'เรียนรู้ตามศักยภาพ · สื่อสารในโลกจริง · ใช้ภาษาอย่างมั่นใจ', description: 'พัฒนาภาษาอังกฤษจากเส้นทางเฉพาะบุคคลสู่การสื่อสารจริง', steps: [
+          simple('pathway', '01', 'PERSONALIZED PATHWAY', 'เรียนรู้ตามศักยภาพ', 'ออกแบบเส้นทางเรียนรู้ตามศักยภาพผู้เรียน', 'ออกแบบเส้นทางเรียนรู้ภาษาอังกฤษตามพื้นฐาน ความสนใจ และศักยภาพของผู้เรียน', [['รู้จักผู้เรียน', 'สำรวจพื้นฐาน ความสนใจ และความต้องการ'], ['ตั้งเป้าหมาย', 'กำหนดเป้าหมายการเรียนรู้ที่เหมาะสม'], ['เลือกกิจกรรม', 'จัดกิจกรรมและสื่อที่หลากหลาย'], ['ติดตามรายบุคคล', 'ใช้ข้อมูลเพื่อปรับเส้นทางการเรียนรู้']]),
+          simple('real', '02', 'REAL-WORLD COMMUNICATION', 'สื่อสารในโลกจริง', 'ฝึกใช้ภาษาอังกฤษผ่านสถานการณ์จริงและการแลกเปลี่ยนเรียนรู้', 'เปิดโอกาสให้ผู้เรียนฝึกสื่อสารภาษาอังกฤษผ่านสถานการณ์จริง กิจกรรม และการแลกเปลี่ยนเรียนรู้', [['ฟังและพูด', 'สื่อสารผ่านกิจกรรมและสถานการณ์จำลอง'], ['อ่านและเขียน', 'ใช้ภาษาเพื่อค้นคว้าและถ่ายทอดความคิด'], ['เจ้าของภาษา', 'เรียนรู้กับครูชาวต่างชาติและเครือข่าย'], ['เวทีนำเสนอ', 'ใช้ภาษาในกิจกรรมและการแข่งขัน']]),
+          simple('confident', '03', 'CONFIDENT COMMUNICATOR', 'ใช้ภาษาอย่างมั่นใจ', 'ผู้เรียนสื่อสารภาษาอังกฤษอย่างมั่นใจและเหมาะสม', 'ผู้เรียนสามารถเลือกใช้ภาษาอังกฤษได้เหมาะกับบุคคลและสถานการณ์ มีความมั่นใจในการสื่อสารและพร้อมใช้ภาษาในการศึกษาต่อ', [['สื่อสารเหมาะสม', 'เลือกใช้ภาษาได้ตรงบริบท'], ['กล้าแสดงออก', 'นำเสนอและแลกเปลี่ยนความคิดเห็น'], ['ใช้ได้จริง', 'ประยุกต์ภาษาในชีวิตประจำวัน'], ['ต่อยอดอนาคต', 'ใช้ภาษาเพื่อการศึกษาและอาชีพ']])]
+      },
+      digital: {
+        eyebrow: 'DIGITAL LEARNING PATHWAY', title: 'เข้าถึงการเรียนรู้ · ลงมือสร้างผลงาน · ใช้เทคโนโลยีอย่างเหมาะสม', description: 'จากการเข้าถึงเครื่องมือ สู่การสร้างสรรค์และใช้เทคโนโลยีอย่างรับผิดชอบ', steps: [
+          simple('access', '01', 'DIGITAL ACCESS', 'เข้าถึงการเรียนรู้', 'เข้าถึงเครื่องมือดิจิทัล ความรู้ และประสบการณ์ที่หลากหลาย', 'บูรณาการเทคโนโลยีในการจัดการเรียนรู้ทั้งในและนอกห้องเรียน พร้อมประสานมหาวิทยาลัย ภาคีเครือข่าย และผู้เชี่ยวชาญ เพื่อให้ผู้เรียนเข้าถึงเครื่องมือดิจิทัล ความรู้ และประสบการณ์ที่หลากหลาย', [['ห้องเรียนดิจิทัล', 'ใช้เทคโนโลยีทั้งในและนอกห้องเรียน'], ['เครื่องมือและสื่อ', 'เข้าถึงอุปกรณ์ แพลตฟอร์ม และแหล่งความรู้'], ['ภาคีเครือข่าย', 'เชื่อมมหาวิทยาลัยและผู้เชี่ยวชาญ'], ['โอกาสที่เท่าเทียม', 'เปิดพื้นที่ให้ผู้เรียนได้เรียนรู้ตามศักยภาพ']]),
+          simple('creation', '02', 'HANDS-ON CREATION', 'ลงมือสร้างผลงาน', 'สืบค้น วิเคราะห์ ออกแบบ ทดลอง และแก้ปัญหาผ่านชิ้นงาน', 'ผู้เรียนฝึกสืบค้นและวิเคราะห์ข้อมูล ใช้เครื่องมือดิจิทัลเพื่อเรียนรู้และสื่อสาร แล้ววางแผน ออกแบบ ทดลอง และแก้ปัญหาผ่านการสร้างชิ้นงานและโครงงาน', [['สืบค้นข้อมูล', 'ค้นหา ตรวจสอบ และวิเคราะห์ข้อมูล'], ['ออกแบบ', 'วางแผนชิ้นงานและเลือกเครื่องมือ'], ['ทดลองสร้าง', 'ลงมือปฏิบัติและแก้ปัญหา'], ['นำเสนอ', 'สื่อสารผลงานด้วยเทคโนโลยี']]),
+          simple('capability', '03', 'DIGITAL CAPABILITY', 'ใช้เทคโนโลยีอย่างเหมาะสม', 'ประยุกต์ใช้เทคโนโลยีเพื่อเรียนรู้ สื่อสาร และสร้างผลงาน', 'ผู้เรียนสามารถประยุกต์ใช้เทคโนโลยีในการเรียนรู้ การสื่อสาร และการสร้างผลงาน มีโอกาสนำเสนอโครงงานและแสดงความสามารถในเวทีต่าง ๆ อย่างปลอดภัย สร้างสรรค์ และรับผิดชอบ', [['เรียนรู้', 'ใช้เทคโนโลยีขยายโอกาสการเรียนรู้'], ['สื่อสาร', 'เลือกช่องทางและรูปแบบได้เหมาะสม'], ['สร้างสรรค์', 'พัฒนาชิ้นงานและนวัตกรรม'], ['พลเมืองดิจิทัล', 'ใช้อย่างปลอดภัย มีจริยธรรม และรับผิดชอบ']])]
+      },
+      curriculum: {
+        eyebrow: 'CURRICULUM PROGRESS PATHWAY', title: 'วิเคราะห์ตามสาระ · เรียนรู้และปรับการสอน · เห็นพัฒนาการรายปี', description: 'ใช้ข้อมูลรายกลุ่มสาระเพื่อพัฒนาการเรียนรู้ของผู้เรียนอย่างต่อเนื่อง', steps: [
+          simple('analyse', '01', 'SUBJECT ANALYSIS', 'วิเคราะห์ตามสาระ', 'ค้นหาจุดแข็งและประเด็นพัฒนาจากมาตรฐานและผลการเรียน', 'โรงเรียนใช้มาตรฐานและตัวชี้วัดของหลักสูตรสถานศึกษา ร่วมกับผลการเรียนและผลประเมินของผู้เรียนในแต่ละกลุ่มสาระ เพื่อวิเคราะห์จุดแข็ง ประเด็นที่ต้องพัฒนา และกำหนดเป้าหมายการเรียนรู้ที่เหมาะสม', [['มาตรฐานหลักสูตร', 'วิเคราะห์มาตรฐานและตัวชี้วัด'], ['ผลการเรียน', 'เปรียบเทียบข้อมูลรายปีและรายสาระ'], ['จุดแข็ง', 'ค้นหาศักยภาพที่ควรส่งเสริม'], ['ประเด็นพัฒนา', 'กำหนดเป้าหมายที่ตอบโจทย์ผู้เรียน']]),
+          simple('learn', '02', 'LEARN & ADAPT', 'เรียนรู้และปรับการสอน', 'วัดผลระหว่างเรียนและนำข้อมูลกลับมาปรับกิจกรรม', 'ครูออกแบบกิจกรรมที่เน้นผู้เรียนเป็นสำคัญ ให้ผู้เรียนฝึกคิด ลงมือปฏิบัติ และนำความรู้ไปใช้ พร้อมวัดผลระหว่างเรียน นำผลมาปรับการสอน ส่งเสริมผู้เรียนตามศักยภาพ และช่วยเหลือผู้ที่ต้องพัฒนาเพิ่มเติม', [['ออกแบบกิจกรรม', 'เน้นผู้เรียนและการลงมือปฏิบัติ'], ['ประเมินระหว่างเรียน', 'เก็บหลักฐานความก้าวหน้าอย่างต่อเนื่อง'], ['ปรับการสอน', 'ใช้ผลประเมินพัฒนากิจกรรม'], ['ดูแลรายบุคคล', 'ส่งเสริมและช่วยเหลือตามศักยภาพ']]),
+          simple('growth', '03', 'YEARLY GROWTH', 'เห็นพัฒนาการรายปี', 'ผลสัมฤทธิ์ สมรรถนะ และผลงานแสดงความก้าวหน้า', 'ผู้เรียนมีพัฒนาการตามมาตรฐานการเรียนรู้ของแต่ละกลุ่มสาระ โดยสะท้อนผ่านผลสัมฤทธิ์ทางการเรียน ผลประเมินสมรรถนะ และผลงานของผู้เรียน ซึ่งโรงเรียนสามารถเปรียบเทียบผลรายปีและรายกลุ่มสาระเพื่อแสดงความก้าวหน้า', [['ผลสัมฤทธิ์', 'เปรียบเทียบผลการเรียนรายปี'], ['สมรรถนะ', 'ติดตามความสามารถในการนำความรู้ไปใช้'], ['ผลงาน', 'ใช้ชิ้นงานเป็นหลักฐานเชิงประจักษ์'], ['พัฒนาต่อเนื่อง', 'นำผลกลับสู่การวางแผนรอบถัดไป']])]
+      },
+      guidance: {
+        eyebrow: 'FUTURE READINESS PATHWAY', title: 'รู้จักตน ·  เตรียมพร้อมจริง · เลือกเส้นทางได้', description: 'รู้จักตน วางแผนเส้นทาง และเตรียมพร้อมสู่การศึกษาหรืออาชีพ', steps: [
+          simple('ready', '01', 'INPUT · READY', 'รู้จักตน', 'วางระบบข้อมูล บุคลากร งบประมาณ และเครือข่ายสนับสนุน', 'โรงเรียนมีหลักสูตรแนะแนว ข้อมูลนักเรียนรายบุคคล บุคลากร งบประมาณ และเครือข่ายที่สนับสนุนการศึกษาต่อและการฝึกอาชีพอย่างต่อเนื่อง ทำให้สามารถวางแผนช่วยเหลือนักเรียนตามความสนใจและความถนัดได้', [['ข้อมูลรายบุคคล', 'รู้จักความสนใจ ความถนัด และบริบทของผู้เรียน'], ['หลักสูตรแนะแนว', 'กำหนดกิจกรรมอย่างเป็นระบบ'], ['บุคลากรและงบประมาณ', 'จัดทรัพยากรสนับสนุนอย่างเพียงพอ'], ['ภาคีเครือข่าย', 'เชื่อมสถานศึกษา อาชีพ และแหล่งเรียนรู้']]),
+          simple('guide', '02', 'PROCESS · GUIDANCE', ' เตรียมพร้อมจริง', 'บริการแนะแนว 5 ด้าน เชื่อมการรู้จักตนกับการเตรียมสมัคร', 'โรงเรียนจัดบริการแนะแนว 5 ด้าน เชื่อมการสำรวจตนเองกับการรับข้อมูล การฝึกทักษะ และการเตรียมสมัครเรียนหรือทำงาน พร้อมติดตามผลและนำข้อมูลมาปรับกิจกรรมในปีถัดไป', [['สำรวจตนเอง', 'เข้าใจความสนใจ ความถนัด และเป้าหมาย'], ['รับข้อมูล', 'รู้จักเส้นทางการศึกษาและอาชีพ'], ['ฝึกทักษะ', 'เตรียมความพร้อมที่จำเป็น'], ['สมัคร', 'สร้างหลักฐาน สมัคร '], ['ติดตาม', 'ติดตามผล']]),
+          simple('advance', '03', 'OUTPUT · ADVANCE', 'เลือกเส้นทางได้', 'มีแผนและหลักฐานการเตรียมตัวสำหรับเส้นทางที่เลือก', 'นักเรียนมีแผนและหลักฐานการเตรียมตัวสำหรับเส้นทางที่เลือก ข้อมูลปี 2566–2568 แสดงว่านักเรียน ม.3 ส่วนใหญ่ศึกษาต่ออย่างต่อเนื่อง ขณะที่นักเรียน ม.6 เข้าศึกษาต่อในสถาบันที่หลากหลายและมีเส้นทางเข้าสู่การทำงานด้วย', [['แผนรายบุคคล', 'เลือกเส้นทางที่สอดคล้องกับตนเอง'], ['แฟ้มหลักฐาน', 'รวบรวมผลงานและการเตรียมสมัคร'], ['ศึกษาต่อ', 'เชื่อมต่อสถาบันและหลักสูตรที่หลากหลาย'], ['เข้าสู่อาชีพ', 'เตรียมทักษะและช่องทางการทำงาน']])]
+      },
+      democracy: {
+        eyebrow: 'DEMOCRATIC LEARNING PATHWAY', title: 'เปิดใจรับฟัง · ใช้เหตุผลร่วมกัน · เคารพความแตกต่าง', description: 'เรียนรู้วิถีประชาธิปไตยผ่านการมีส่วนร่วมและการอยู่ร่วมกัน', steps: [
+          simple('listen', '01', 'LISTEN WITH EMPATHY', 'เปิดใจรับฟัง', 'รับฟังความคิดเห็นและความต้องการของผู้อื่นอย่างตั้งใจ', 'เริ่มต้นจากการสร้างพื้นที่ปลอดภัยให้ผู้เรียนได้แสดงความคิดเห็น รับฟังกัน และเข้าใจมุมมองที่แตกต่าง', [['สภานักเรียน', 'เปิดพื้นที่เสนอความคิดเห็นและร่วมตัดสินใจ'], ['ห้องเรียน', 'แลกเปลี่ยนความคิดเห็นด้วยกติกาที่เป็นธรรม'], ['ชุมชน', 'รับฟังความต้องการของผู้มีส่วนเกี่ยวข้อง'], ['พื้นที่ปลอดภัย', 'สื่อสารโดยไม่ตัดสินหรือกีดกัน']]),
+          simple('reason', '02', 'REASON TOGETHER', 'ใช้เหตุผลร่วมกัน', 'พิจารณาข้อมูล อภิปราย และตัดสินใจอย่างมีส่วนร่วม', 'ผู้เรียนฝึกใช้ข้อมูลและเหตุผล อภิปรายข้อดีข้อจำกัด และร่วมกันกำหนดแนวทางดำเนินกิจกรรม', [['ข้อมูล', 'ตรวจสอบข้อเท็จจริงก่อนตัดสินใจ'], ['อภิปราย', 'แลกเปลี่ยนด้วยเหตุผลและหลักฐาน'], ['มีส่วนร่วม', 'ร่วมคิด ร่วมวางแผน และร่วมรับผิดชอบ'], ['ฉันทามติ', 'ค้นหาข้อตกลงที่ทุกฝ่ายยอมรับได้']]),
+          simple('respect', '03', 'RESPECT DIVERSITY', 'เคารพความแตกต่าง', 'อยู่ร่วมกันบนความหลากหลายและรับผิดชอบต่อส่วนรวม', 'ผู้เรียนยอมรับความคิดเห็นและความแตกต่าง ปฏิบัติตามกติกา และมีส่วนร่วมในโรงเรียนกับชุมชนอย่างสร้างสรรค์', [['ยอมรับความต่าง', 'เห็นคุณค่าของความหลากหลาย'], ['เคารพสิทธิ', 'ไม่ละเมิดสิทธิของตนเองและผู้อื่น'], ['รับผิดชอบ', 'ปฏิบัติตามข้อตกลงร่วมกัน'], ['พลเมืองเข้มแข็ง', 'ใช้ประชาธิปไตยในชีวิตประจำวัน']])]
+      },
+      health: {
+        eyebrow: 'HEALTH & WELLBEING PATHWAY', title: 'รู้ทันโรค · สร้างเสริมป้องกัน · สุขกายสุขใจ', description: 'ดูแลสุขภาพกายและสุขภาพจิตด้วยข้อมูล กิจกรรม และระบบช่วยเหลือ', steps: [
+          simple('aware', '01', 'HEALTH AWARENESS', 'รู้ทันโรค', 'สำรวจและวิเคราะห์สุขภาพกาย สุขภาพจิต และพฤติกรรมเสี่ยง', 'สำรวจและวิเคราะห์ข้อมูลสุขภาพกาย สุขภาพจิต และพฤติกรรมเสี่ยงของนักเรียน เพื่อกำหนดแนวทางส่งเสริม ป้องกัน และช่วยเหลือได้ตรงความต้องการ', [['ข้อมูลสุขภาพ', 'ติดตามภาวะสุขภาพและสมรรถภาพ'], ['สุขภาพจิต', 'คัดกรองอารมณ์และความเครียด'], ['พฤติกรรมเสี่ยง', 'มองเห็นปัจจัยที่ต้องเฝ้าระวัง'], ['แผนดูแล', 'กำหนดแนวทางรายบุคคลและภาพรวม']]),
+          simple('strengthen', '02', 'PREVENT & STRENGTHEN', 'สร้างเสริมป้องกัน', 'ออกกำลังกาย โภชนาการ จัดการอารมณ์ และช่วยเหลืออย่างเหมาะสม', 'จัดกิจกรรมออกกำลังกาย ส่งเสริมโภชนาการ พัฒนาทักษะการจัดการอารมณ์ คัดกรอง ให้คำปรึกษา และประสานผู้ปกครองกับเครือข่ายสุขภาพ', [['กิจกรรมทางกาย', 'ออกกำลังกายและทดสอบสมรรถภาพ'], ['โภชนาการ', 'เลือกบริโภคและดูแลสุขอนามัย'], ['ทักษะอารมณ์', 'เข้าใจและจัดการความรู้สึก'], ['ระบบช่วยเหลือ', 'ให้คำปรึกษาและส่งต่อเมื่อจำเป็น']]),
+          simple('wellbeing', '03', 'HEALTHY BODY & MIND', 'สุขกายสุขใจ', 'ดูแลตนเองได้และมีคุณภาพชีวิตที่เหมาะสม', 'นักเรียนดูแลสุขภาพกายและสุขภาพจิตของตนเองได้ รู้จักป้องกันความเสี่ยง ขอความช่วยเหลืออย่างเหมาะสม และมีพฤติกรรมสุขภาพที่ดี', [['ดูแลตนเอง', 'ปฏิบัติตนเพื่อสุขภาพที่ดี'], ['รู้เท่าทัน', 'ป้องกันโรคและพฤติกรรมเสี่ยง'], ['ขอความช่วยเหลือ', 'เข้าถึงครู ผู้ปกครอง และผู้เชี่ยวชาญ'], ['คุณภาพชีวิต', 'เรียนรู้และใช้ชีวิตอย่างมีความสุข']])]
+      },
+      excellence: {
+        eyebrow: 'TALENT EXCELLENCE PATHWAY', title: 'ค้นพบความสามารถ · พัฒนาเต็มศักยภาพ · แสดงผลงานสู่ความเป็นเลิศ', description: 'ค้นหา พัฒนา และต่อยอดความสามารถพิเศษของผู้เรียนสู่เวทีจริง', steps: [
+          simple('discover', '01', 'DISCOVER TALENT', 'ค้นพบความสามารถ', 'คัดกรองความสามารถ ความถนัด และความสนใจเป็นรายบุคคล', 'คัดกรองความสามารถ ความถนัด และความสนใจของผู้เรียนเป็นรายบุคคล โดยอาศัยข้อมูลจากครู ผู้ปกครอง และผู้เชี่ยวชาญ พร้อมจัดทางเลือกการเรียนรู้ที่หลากหลาย ทั้งห้องเรียนพัฒนาสมรรถนะระดับมัธยมศึกษาตอนต้นและตอนปลาย', [['ข้อมูลผู้เรียน', 'รวบรวมจากครู ผู้ปกครอง และผู้เชี่ยวชาญ'], ['ความถนัด', 'ค้นหาจุดเด่นและศักยภาพเฉพาะบุคคล'], ['ความสนใจ', 'เชื่อมสิ่งที่ชอบกับโอกาสการเรียนรู้'], ['ทางเลือกหลากหลาย', 'จัดห้องเรียนและกิจกรรมให้เหมาะสม']]),
+          simple('develop', '02', 'DEVELOP & EXTEND', 'พัฒนาเต็มศักยภาพ', 'ฝึกฝนตามความถนัดและต่อยอดสู่เวทีการแข่งขัน', 'นำข้อมูลผู้เรียนมาวางแผนและจัดกิจกรรม ผ่านกิจกรรม 1 คน 1 ความสามารถ กิจกรรมพัฒนาสมรรถนะ การเรียนรู้โดยใช้กิจกรรมเป็นฐาน การฝึกทักษะอาชีพ และการเรียนรู้จากผู้เชี่ยวชาญกับแหล่งเรียนรู้จริง', [['1 คน 1 ความสามารถ', 'เปิดพื้นที่ให้ทุกคนค้นพบและพัฒนาจุดเด่น'], ['พัฒนาสมรรถนะ', 'ฝึกทักษะผ่านกิจกรรมและการปฏิบัติ'], ['ผู้เชี่ยวชาญ', 'เรียนรู้จากบุคคลและสถานที่จริง'], ['เวทีแข่งขัน', 'ฝึกซ้อม ประกวด แข่งขัน และนำเสนอ']]),
+          simple('excel', '03', 'SHOWCASE EXCELLENCE', 'แสดงผลงานสู่ความเป็นเลิศ', 'สร้างสรรค์ผลงานและแสดงความสามารถในเวทีหลายระดับ', 'ผู้เรียนได้พัฒนาความรู้และทักษะทั้งด้านวิชาการ ภาษา ศิลปะ ดนตรี กีฬา เทคโนโลยี และอาชีพ สามารถสร้างสรรค์ผลงานและแสดงความสามารถพิเศษ โดยมีผลงานและรางวัลตั้งแต่ระดับสถานศึกษาถึงระดับประเทศ', [['วิชาการและภาษา', 'แสดงความสามารถด้านความรู้และการสื่อสาร'], ['ศิลปะและดนตรี', 'สร้างสรรค์และถ่ายทอดอัตลักษณ์'], ['กีฬา', 'พัฒนาวินัย สมรรถนะ และการแข่งขัน'], ['เทคโนโลยีและอาชีพ', 'สร้างชิ้นงานและต่อยอดสู่อนาคต']])]
+      },
+      environment: {
+        eyebrow: 'GREEN CITIZEN PATHWAY', title: 'สร้างความรู้ · สู่การลงมือทำ · ร่วมอนุรักษ์อย่างยั่งยืน', description: 'เรียนรู้ปัญหาสิ่งแวดล้อมและเปลี่ยนความรู้เป็นการลงมือทำร่วมกัน', steps: [
+          simple('learn', '01', 'ENVIRONMENTAL LITERACY', 'สร้างความรู้', 'เข้าใจทรัพยากร ปัญหาสิ่งแวดล้อม และผลกระทบใกล้ตัว', 'จัดการเรียนรู้เรื่องทรัพยากรธรรมชาติ สิ่งแวดล้อม ฝุ่น PM2.5 การคัดแยกขยะ และความหลากหลายทางชีวภาพ โดยเชื่อมโยงกับบริบทโรงเรียนและชุมชน', [['สวนพฤกษศาสตร์', 'เรียนรู้ความหลากหลายของพืชและระบบนิเวศ'], ['PM2.5', 'เข้าใจสาเหตุ ผลกระทบ และการเฝ้าระวัง'], ['การจัดการขยะ', 'รู้จักประเภทขยะและวิธีคัดแยก'], ['พื้นที่รับผิดชอบ', 'สร้างจิตสำนึกต่อห้องเรียนและโรงเรียน']]),
+          simple('act', '02', 'LEARNING BY ACTION', 'สู่การลงมือทำ', 'ใช้กิจกรรมและเทคโนโลยีแก้ปัญหาจากสถานการณ์จริง', 'นำโครงการไปสู่การปฏิบัติผ่านกิจกรรมที่เปิดโอกาสให้นักเรียนได้เรียนรู้ ลงมือสำรวจ ตรวจวัด คัดแยก ดูแลพื้นที่ และสื่อสารความรู้สู่เครือข่าย', [['สำรวจและตรวจวัด', 'เก็บข้อมูลสิ่งแวดล้อมด้วยเครื่องมือและ AI'], ['ถังนี้มีเสียง', 'วางแผนกิจกรรมคัดแยกขยะร่วมกัน'], ['ห้องเรียนสะอาด', 'รับผิดชอบพื้นที่และสร้างพฤติกรรมเชิงบวก'], ['ขยายผล', 'สื่อสารความรู้สู่โรงเรียนและชุมชน']]),
+          simple('sustain', '03', 'SUSTAINABLE IMPACT', 'ร่วมอนุรักษ์อย่างยั่งยืน', 'เกิดพฤติกรรม ผลงาน และเครือข่ายที่ดูแลสิ่งแวดล้อมต่อเนื่อง', 'ผู้เรียนมีความรู้และทักษะในการคัดแยกขยะ ใช้เทคโนโลยีเฝ้าระวังคุณภาพอากาศ ดูแลพื้นที่รับผิดชอบ และร่วมอนุรักษ์ทรัพยากรทั้งในโรงเรียนและชุมชน', [['ป้ายสนองพระราชดำริ', 'ผ่านการประเมินงานสวนพฤกษศาสตร์โรงเรียน'], ['เฝ้าระวังอากาศ', 'ใช้ AI และแอปพลิเคชันตรวจวัด PM2.5'], ['โรงเรียนสะอาด', 'ดูแลห้องเรียนและพื้นที่อย่างต่อเนื่อง'], ['ชุมชนสีเขียว', 'นำทักษะคัดแยกขยะไปใช้และขยายผล']])]
+      },
+      teamwork: {
+        eyebrow: 'TEAM POWER PATHWAY', title: 'ร่วมคิด · รับผิดชอบ · มุ่งมั่นสู่ความสำเร็จ', description: 'ผสานความคิด บทบาท และความรับผิดชอบให้ทีมทำงานอย่างมีประสิทธิภาพ', steps: [
+          simple('think', '01', 'THINK TOGETHER', 'ร่วมคิด', 'กำหนดเป้าหมาย วางแผน และรับฟังความคิดเห็นร่วมกัน', 'ผู้เรียนแลกเปลี่ยนความคิดเห็น วิเคราะห์ภารกิจ และร่วมกันกำหนดเป้าหมายกับแนวทางการทำงาน', [['เป้าหมายร่วม', 'เข้าใจผลลัพธ์ที่ทีมต้องการ'], ['ระดมความคิด', 'เปิดรับแนวคิดที่หลากหลาย'], ['วางแผน', 'กำหนดขั้นตอน เวลา และทรัพยากร'], ['แบ่งบทบาท', 'เลือกหน้าที่ตามความถนัด']]),
+          simple('own', '02', 'SHARED RESPONSIBILITY', 'รับผิดชอบ', 'ลงมือทำตามบทบาทและช่วยเหลือกันระหว่างทาง', 'สมาชิกปฏิบัติหน้าที่ของตนอย่างเต็มที่ สื่อสารความคืบหน้า ช่วยเหลือเพื่อน และแก้ปัญหาร่วมกัน', [['ทำตามบทบาท', 'รับผิดชอบงานที่ได้รับมอบหมาย'], ['สื่อสาร', 'รายงานความคืบหน้าและอุปสรรค'], ['ช่วยเหลือ', 'เติมเต็มจุดแข็งและข้อจำกัดของกันและกัน'], ['ปรับตัว', 'แก้ไขแผนเมื่อสถานการณ์เปลี่ยน']]),
+          simple('succeed', '03', 'TEAM SUCCESS', 'มุ่งมั่นสู่ความสำเร็จ', 'ติดตามคุณภาพ สะท้อนผล และภูมิใจในความสำเร็จร่วมกัน', 'ทีมติดตามงานจนบรรลุเป้าหมาย ประเมินคุณภาพ สะท้อนบทเรียน และนำประสบการณ์ไปพัฒนาการทำงานครั้งต่อไป', [['ติดตามงาน', 'ตรวจสอบความก้าวหน้าอย่างสม่ำเสมอ'], ['คุณภาพ', 'ร่วมกันปรับปรุงผลงาน'], ['สะท้อนผล', 'เรียนรู้จากความสำเร็จและอุปสรรค'], ['ความสำเร็จร่วม', 'เห็นคุณค่าของสมาชิกทุกคน']])]
+      },
+      thaiPride: {
+        eyebrow: 'THAI WISDOM PATHWAY', title: 'เรียนรู้ · สืบสาน · ประยุกต์ใช้', description: 'เชื่อมหลักสูตร ภูมิปัญญาท้องถิ่น และการลงมือปฏิบัติสู่ความภาคภูมิใจในความเป็นไทย', steps: [
+          simple('learn', '01', 'LEARN THE ROOTS', 'เรียนรู้', 'เรียนรู้จากหลักสูตร ปราชญ์ชาวบ้าน แหล่งเรียนรู้ และเทคโนโลยี', 'ผู้เรียนศึกษาประวัติศาสตร์ ศิลปวัฒนธรรม วิถีชีวิต และภูมิปัญญาท้องถิ่นผ่านหลักสูตร ปราชญ์ชาวบ้าน แหล่งเรียนรู้ และสื่อเทคโนโลยี', [['หลักสูตร', 'บูรณาการความเป็นไทยในรายวิชา'], ['ปราชญ์ชาวบ้าน', 'เรียนรู้จากผู้มีประสบการณ์จริง'], ['แหล่งเรียนรู้', 'เชื่อมโรงเรียนกับชุมชนและท้องถิ่น'], ['เทคโนโลยี', 'ใช้สื่อค้นคว้าและบันทึกองค์ความรู้']]),
+          simple('continue', '02', 'CONTINUE THE WISDOM', 'สืบสาน', 'ฝึกปฏิบัติและถ่ายทอดภูมิปัญญาผ่านกิจกรรมเชิงรุก', 'ออกแบบกิจกรรมให้สอดคล้องกับหลักสูตรสถานศึกษา โดยบูรณาการประวัติศาสตร์ ศิลปวัฒนธรรม ดนตรี นาฏศิลป์ การเกษตร สุขภาพ และการงานอาชีพเข้ากับการจัดการเรียนรู้เชิงรุกและการฝึกปฏิบัติจริง', [['ศิลปวัฒนธรรม', 'ฝึกปฏิบัติและร่วมกิจกรรมประเพณี'], ['ดนตรีนาฏศิลป์', 'สืบทอดการแสดงและอัตลักษณ์ไทย'], ['วิถีชุมชน', 'เรียนรู้การเกษตร สุขภาพ และงานอาชีพ'], ['ถ่ายทอด', 'นำเสนอและแบ่งปันองค์ความรู้']]),
+          simple('apply', '03', 'APPLY WITH PRIDE', 'ประยุกต์ใช้', 'นำภูมิปัญญาไปใช้ในชีวิตและต่อยอดสู่อนาคต', 'นักเรียนภาคภูมิใจในความเป็นไทย เห็นคุณค่าภูมิปัญญาท้องถิ่น สามารถนำไปใช้ในชีวิตประจำวันและต่อยอดสู่การศึกษาและอาชีพ', [['ชีวิตประจำวัน', 'เลือกใช้ความรู้ได้เหมาะกับบริบท'], ['สร้างสรรค์', 'ประยุกต์ภูมิปัญญากับแนวคิดใหม่'], ['การศึกษา', 'ต่อยอดความสนใจสู่การเรียนรู้ขั้นสูง'], ['อาชีพ', 'พัฒนาผลิตภัณฑ์และทักษะที่สร้างคุณค่า']])]
+      },
+      confidence: {
+        eyebrow: 'CONFIDENT LEARNER PATHWAY', title: 'เปิดโอกาส · ลงมือเรียนรู้ · เชื่อมั่นในการเรียนรู้', description: 'สร้างพื้นที่ให้ผู้เรียนค้นพบตนเอง ฝึกปฏิบัติ และเติบโตอย่างมั่นใจ', steps: [
+          simple('opportunity', '01', 'OPEN OPPORTUNITIES', 'เปิดโอกาส', 'เรียนรู้ตามความสนใจและศักยภาพ', 'เปิดโอกาสให้นักเรียนเรียนรู้ตามความสนใจและศักยภาพ ผ่านทางเลือก กิจกรรม และพื้นที่แสดงออกที่หลากหลาย', [['ทางเลือก', 'เลือกกิจกรรมที่สอดคล้องกับความสนใจ'], ['พื้นที่ปลอดภัย', 'กล้าลองโดยไม่กลัวความผิดพลาด'], ['การสนับสนุน', 'ได้รับกำลังใจจากครูและเพื่อน'], ['เป้าหมาย', 'มองเห็นสิ่งที่ต้องการพัฒนา']]),
+          simple('practice', '02', 'LEARN BY DOING', 'ลงมือเรียนรู้', 'ฝึกปฏิบัติจริงและแสดงออกอย่างสร้างสรรค์', 'เรียนรู้ผ่านกิจกรรมเชิงรุก การฝึกปฏิบัติจริง และการแสดงออกอย่างสร้างสรรค์ พร้อมรับข้อเสนอแนะเพื่อนำไปพัฒนาตนเอง', [['ลงมือทำ', 'เปลี่ยนความคิดเป็นประสบการณ์จริง'], ['แก้ปัญหา', 'เรียนรู้จากอุปสรรคและความผิดพลาด'], ['สื่อสาร', 'นำเสนอความคิดและผลงาน'], ['ข้อเสนอแนะ', 'รับฟังและปรับปรุงอย่างต่อเนื่อง']]),
+          simple('confidence', '03', 'LEARN WITH CONFIDENCE', 'เชื่อมั่นในการเรียนรู้', 'กล้าแสดงออกและมีเจตคติที่ดีต่อการเรียน', 'นักเรียนเชื่อมั่นในตนเอง กล้าแสดงออก และมีเจตคติที่ดีต่อการเรียนรู้ สามารถตั้งเป้าหมายและพัฒนาตนเองได้อย่างต่อเนื่อง', [['เชื่อมั่นในตนเอง', 'เห็นคุณค่าและศักยภาพของตน'], ['กล้าแสดงออก', 'สื่อสารและนำเสนออย่างเหมาะสม'], ['เจตคติเชิงบวก', 'มองการเรียนรู้เป็นโอกาสเติบโต'], ['พัฒนาต่อเนื่อง', 'ตั้งเป้าหมายและลงมือทำด้วยตนเอง']])]
+      },
+      safety: {
+        eyebrow: 'SAFE STUDENT PATHWAY', title: 'รู้เท่าทันความเสี่ยง · สร้างภูมิคุ้มกัน · ปลอดภัยทุกสถานการณ์', description: 'สร้างความรู้ ทักษะชีวิต และเครือข่ายดูแลให้ผู้เรียนป้องกันตนเองได้', steps: [
+          simple('risk', '01', 'RISK AWARENESS', 'รู้เท่าทันความเสี่ยง', 'วิเคราะห์สารเสพติด ปัญหาทางเพศ อบายมุข และภัยออนไลน์', 'โรงเรียนวิเคราะห์ข้อมูลและสถานการณ์เสี่ยงด้านสารเสพติด ปัญหาทางเพศ อบายมุข และภัยจากสื่อออนไลน์ พร้อมจัดระบบดูแลช่วยเหลือนักเรียนร่วมกับครูที่ปรึกษา ผู้ปกครอง ชุมชน และภาคีเครือข่าย', [['สารเสพติด', 'รู้จักผลกระทบและสถานการณ์เสี่ยง'], ['ปัญหาทางเพศ', 'เข้าใจขอบเขต สิทธิ และการป้องกัน'], ['อบายมุข', 'รู้เท่าทันแรงจูงใจและผลกระทบ'], ['ภัยออนไลน์', 'ตรวจสอบข้อมูลและปกป้องความเป็นส่วนตัว']]),
+          simple('immunity', '02', 'BUILD IMMUNITY', 'สร้างภูมิคุ้มกัน', 'ฝึกทักษะชีวิต การตัดสินใจ การปฏิเสธ และการขอความช่วยเหลือ', 'จัดการเรียนรู้และกิจกรรมส่งเสริมทักษะชีวิต สถานศึกษาสีขาว To Be Number One กีฬาต้านยาเสพติด การเฝ้าระวัง การเยี่ยมบ้าน และการให้คำปรึกษา ฝึกให้นักเรียนคิดวิเคราะห์ ตัดสินใจ ปฏิเสธ หลีกเลี่ยงสถานการณ์เสี่ยง และรู้ช่องทางขอความช่วยเหลือ', [['ทักษะชีวิต', 'คิด วิเคราะห์ และตัดสินใจอย่างรอบคอบ'], ['ทักษะปฏิเสธ', 'สื่อสารชัดเจนและออกจากสถานการณ์เสี่ยง'], ['กิจกรรมเชิงบวก', 'ใช้กีฬาและกิจกรรมสร้างสรรค์'], ['ระบบช่วยเหลือ', 'เข้าถึงครู ผู้ปกครอง และเครือข่าย']]),
+          simple('safe', '03', 'SAFE IN EVERY SITUATION', 'ปลอดภัยทุกสถานการณ์', 'ป้องกันตนเองและผู้อื่น พร้อมใช้ชีวิตในพื้นที่ปลอดภัย', 'ผู้เรียนรู้เท่าทันอันตราย ปฏิเสธและหลีกเลี่ยงสารเสพติด ปัญหาทางเพศ และอบายมุขได้ รู้จักป้องกันตนเองและผู้อื่น และเชื่อมั่นว่าสถานศึกษาเป็นพื้นที่ปลอดภัย', [['รู้เท่าทัน', 'ประเมินความเสี่ยงก่อนตัดสินใจ'], ['ป้องกันตนเอง', 'ใช้ทักษะชีวิตในสถานการณ์จริง'], ['ช่วยเหลือผู้อื่น', 'แจ้งเหตุและส่งต่ออย่างเหมาะสม'], ['โรงเรียนปลอดภัย', 'ร่วมสร้างวัฒนธรรมที่ดูแลกัน']], [['59.63%', 'พฤติกรรมไม่พึงประสงค์ ปี 2566'], ['39.26%', 'พฤติกรรมไม่พึงประสงค์ ปี 2568']])]
+      },
     };
-    const modelKey=new URLSearchParams(location.search).get('model')||'creative';
-    const model=models[modelKey]||models.creative;
-    const data=model.steps;
-    document.querySelector('.model').classList.add('no-background');
-    document.title=model.eyebrow;
-    document.getElementById('model-eyebrow').textContent=model.eyebrow;
-    document.getElementById('model-title').textContent=model.title;
-    document.getElementById('model-description').textContent=model.description+' — แตะแต่ละขั้นเพื่อดูรายละเอียด';
-    const nodes=[...document.querySelectorAll('.node')],dots=[...document.querySelectorAll('.dots button')],previewTitle=document.getElementById('preview-title'),previewText=document.getElementById('preview-text'),dialog=document.getElementById('detail-dialog');
-    const icons=['◇','✦','◎'];
-    const colors=[['#e4cdf7','#bd9cdb'],['#cde9fb','#91bfdc'],['#ffd8bd','#e9aa7d']];
-    nodes.forEach((node,i)=>{const d=data[i],c=colors[i];d.tone=d.tone||c[0];d.deep=d.deep||c[1];node.dataset.step=d.key;node.style.cssText=`--tone:${d.tone};--deep:${d.deep}`;node.querySelector('.num').textContent=d.no;node.querySelector('.icon').textContent=icons[i];node.querySelector('small').textContent=d.kicker;node.querySelector('strong').textContent=d.title});
-    let current=0,timer,focusBefore;
-    function activate(i){current=(i+data.length)%data.length;nodes.forEach((n,j)=>n.classList.toggle('active',j===current));dots.forEach((n,j)=>n.classList.toggle('on',j===current));document.documentElement.style.setProperty('--active',data[current].deep);document.querySelector('.preview').classList.add('swap');setTimeout(()=>{previewTitle.textContent=data[current].title;previewText.textContent=data[current].preview;document.querySelector('.preview').classList.remove('swap')},160)}
-    function restart(){clearInterval(timer);if(!matchMedia('(prefers-reduced-motion: reduce)').matches)timer=setInterval(()=>activate(current+1),4800)}
-    function detailsHTML(d){const buttons=d.items.map((x,i)=>`<button data-sub="${i}" class="${i===0?'on':''}"><b>${x[0]}</b><span>แตะเพื่ออ่านรายละเอียด</span></button>`).join('');const kpis=d.kpis?`<div class="sub-label">ผลลัพธ์เชิงประจักษ์</div><div class="kpis">${d.kpis.map(k=>`<div class="kpi"><b>${k[0]}</b><span>${k[1]}</span></div>`).join('')}</div>`:'';return `<div class="sub-label">โมเดลย่อยของขั้นตอน</div><div class="submodel">${buttons}</div><div class="nested-detail" id="nested-detail">${d.items[0][1]}</div>${kpis}`}
-    function openDetail(i){activate(i);clearInterval(timer);const d=data[i];focusBefore=document.activeElement;document.getElementById('modal-badge').textContent=d.no;document.getElementById('modal-badge').style.cssText=`--tone:${d.tone};--deep:${d.deep}`;document.getElementById('modal-kicker').textContent=d.kicker;document.getElementById('modal-heading').textContent=d.title;document.getElementById('modal-lead').textContent=d.lead;document.getElementById('modal-extra').innerHTML=detailsHTML(d);dialog.showModal();dialog.scrollTop=0;document.querySelector('.close').focus();reportHeight()}
-    nodes.forEach((n,i)=>n.addEventListener('click',()=>openDetail(i)));dots.forEach((n,i)=>n.addEventListener('click',()=>{activate(i);restart()}));
-    document.addEventListener('click',e=>{const b=e.target.closest('[data-sub]');if(!b)return;const i=Number(b.dataset.sub);document.querySelectorAll('[data-sub]').forEach(x=>x.classList.toggle('on',x===b));document.getElementById('nested-detail').textContent=data[current].items[i][1]});
-    document.querySelector('.close').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close()}});dialog.addEventListener('close',()=>{restart();if(focusBefore?.isConnected)focusBefore.focus()});
-    function reportHeight(){requestAnimationFrame(()=>{const h=Math.ceil(document.querySelector('.model').getBoundingClientRect().height+8);parent.postMessage({type:'d1-thinking-model-height',height:h},location.origin)})}
-    new ResizeObserver(reportHeight).observe(document.querySelector('.model'));addEventListener('load',reportHeight);addEventListener('resize',reportHeight);activate(0);restart();setTimeout(reportHeight,400);
+    const modelKey = new URLSearchParams(location.search).get('model') || 'creative';
+    const model = models[modelKey] || models.creative;
+    const data = model.steps;
+    const modelRoot = document.querySelector('.model');
+    const section12Models = new Set(['democracy', 'environment', 'teamwork', 'thaiPride', 'confidence', 'health', 'safety']);
+    const isSection12 = section12Models.has(modelKey);
+    modelRoot.classList.add('no-background', 'compact-horizontal', isSection12 ? 'theme-12' : 'theme-11');
+    modelRoot.classList.toggle('long-title', model.title.length > 48);
+    document.title = model.eyebrow;
+    document.getElementById('model-eyebrow').textContent = model.eyebrow;
+    document.getElementById('model-title').textContent = model.title;
+    document.getElementById('model-description').textContent = model.description + ' — แตะแต่ละขั้นเพื่อดูรายละเอียด';
+    const nodes = [...document.querySelectorAll('.node')], dots = [...document.querySelectorAll('.dots button')], previewTitle = document.getElementById('preview-title'), previewText = document.getElementById('preview-text'), dialog = document.getElementById('detail-dialog');
+    const icons = ['◇', '✦', '◎'];
+    const colors = isSection12
+      ? [['#d2f2e2', '#86c2a5'], ['#fff0bd', '#d9bd69'], ['#ffd9e8', '#df9fba']]
+      : [['#e4d3f7', '#b99bd9'], ['#d2eafb', '#93bedb'], ['#ffddc5', '#e5aa80']];
+    nodes.forEach((node, i) => { const d = data[i], c = colors[i]; d.tone = c[0]; d.deep = c[1]; node.dataset.step = d.key; node.style.cssText = `--tone:${d.tone};--deep:${d.deep}`; node.querySelector('.num').textContent = d.no; node.querySelector('.icon').textContent = icons[i]; node.querySelector('small').textContent = d.kicker; node.querySelector('strong').textContent = d.title });
+    let current = 0, timer, focusBefore;
+    function activate(i) { current = (i + data.length) % data.length; nodes.forEach((n, j) => n.classList.toggle('active', j === current)); dots.forEach((n, j) => n.classList.toggle('on', j === current)); document.documentElement.style.setProperty('--active', data[current].deep); document.querySelector('.preview').classList.add('swap'); setTimeout(() => { previewTitle.textContent = data[current].title; previewText.textContent = data[current].preview; document.querySelector('.preview').classList.remove('swap') }, 160) }
+    function restart() { clearInterval(timer); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) timer = setInterval(() => activate(current + 1), 4800) }
+    function detailsHTML(d) { const buttons = d.items.map((x, i) => `<button data-sub="${i}" class="${i === 0 ? 'on' : ''}"><b>${x[0]}</b><span>แตะเพื่ออ่านรายละเอียด</span></button>`).join(''); const kpis = d.kpis ? `<div class="sub-label">ผลลัพธ์เชิงประจักษ์</div><div class="kpis">${d.kpis.map(k => `<div class="kpi"><b>${k[0]}</b><span>${k[1]}</span></div>`).join('')}</div>` : ''; return `<div class="sub-label">โมเดลย่อยของขั้นตอน</div><div class="submodel">${buttons}</div><div class="nested-detail" id="nested-detail">${d.items[0][1]}</div>${kpis}` }
+    function openDetail(i) { activate(i); clearInterval(timer); const d = data[i]; focusBefore = document.activeElement; document.getElementById('modal-badge').textContent = d.no; document.getElementById('modal-badge').style.cssText = `--tone:${d.tone};--deep:${d.deep}`; document.getElementById('modal-kicker').textContent = d.kicker; document.getElementById('modal-heading').textContent = d.title; document.getElementById('modal-lead').textContent = d.lead; document.getElementById('modal-extra').innerHTML = detailsHTML(d); dialog.showModal(); dialog.scrollTop = 0; document.querySelector('.close').focus(); reportHeight() }
+    nodes.forEach((n, i) => n.addEventListener('click', () => openDetail(i))); dots.forEach((n, i) => n.addEventListener('click', () => { activate(i); restart() }));
+    document.addEventListener('click', e => { const b = e.target.closest('[data-sub]'); if (!b) return; const i = Number(b.dataset.sub); document.querySelectorAll('[data-sub]').forEach(x => x.classList.toggle('on', x === b)); document.getElementById('nested-detail').textContent = data[current].items[i][1] });
+    document.querySelector('.close').addEventListener('click', () => dialog.close()); dialog.addEventListener('click', e => { if (e.target === dialog) { const r = dialog.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dialog.close() } }); dialog.addEventListener('close', () => { restart(); if (focusBefore?.isConnected) focusBefore.focus() });
+    function reportHeight() { requestAnimationFrame(() => { const h = Math.ceil(document.querySelector('.model').getBoundingClientRect().height + 8); parent.postMessage({ type: 'd1-thinking-model-height', height: h }, location.origin) }) }
+    new ResizeObserver(reportHeight).observe(document.querySelector('.model')); addEventListener('load', reportHeight); addEventListener('resize', reportHeight); activate(0); restart(); setTimeout(reportHeight, 400);
   </script>
 </body>
+
 </html>

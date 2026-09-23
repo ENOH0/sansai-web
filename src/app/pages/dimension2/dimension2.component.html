@@ -69,7 +69,7 @@
     <!-- โมเดลหลักสูตรด้านความหลากหลาย · แก้เนื้อหาได้ที่ public/models/diversity-curriculum-model.html -->
     <div appReveal>
       <div class="d2-diversity-pdca">
-        <iframe src="/models/diversity-curriculum-model.html?v=20260923-1" title="กระบวนการพัฒนาหลักสูตรด้านความหลากหลาย"
+        <iframe src="/models/diversity-curriculum-model.html?v=20260923-5" title="กระบวนการพัฒนาหลักสูตรด้านความหลากหลาย"
           loading="lazy" scrolling="no" [style.height.px]="diversityPdcaHeight()"></iframe>
       </div>
     </div>
@@ -88,7 +88,7 @@
     <!-- แก้เนื้อหาได้ที่ public/models/pdca-flexible-curriculum.html ในตัวแปร data -->
     <div appReveal>
       <div class="d2-flexible-model">
-        <iframe src="/models/pdca-flexible-curriculum.html?v=20260923-1"
+        <iframe src="/models/pdca-flexible-curriculum.html?v=20260924-1"
           title="กระบวนการพัฒนาหลักสูตรที่มีความยืดหยุ่น กระบวนการ PDCA" loading="lazy" scrolling="no"
           [style.height.px]="flexibleModelHeight()"></iframe>
       </div>
@@ -97,7 +97,7 @@
     <!-- แก้เนื้อหาได้ที่ public/models/curriculum-continuity-model.html ในตัวแปร data -->
     <div appReveal style="margin-top:40px">
       <div class="d2-continuity-model">
-        <iframe src="/models/curriculum-continuity-model.html?v=20260923-6"
+        <iframe src="/models/curriculum-continuity-model.html?v=20260923-8"
           title="กระบวนการพัฒนาหลักสูตรที่มีความต่อเนื่องเชื่อมโยง PDCA" loading="lazy" scrolling="no"
           [style.height.px]="continuityModelHeight()"></iframe>
       </div>
@@ -205,7 +205,11 @@
         <p class="card-body" style="margin:0">{{ d.activities.flagship.text }}</p>
       </div>
 
-      <app-cycle-flow [steps]="d.activities.cycle" />
+      <div class="d2-activities-model" appReveal>
+        <iframe src="/models/extracurricular-activities.html?v=20260924-1"
+          title="กิจกรรมเสริมหลักสูตร 4 ขั้นตอน" loading="lazy" scrolling="no"
+          [style.height.px]="activitiesModelHeight()"></iframe>
+      </div>
 
       <div class="competency-section" appReveal>
         <button type="button" class="competency-card card card-gold" [class.is-open]="competencyOpen()"
@@ -278,7 +282,11 @@
       </div>
 
 
-      <app-cycle-flow [steps]="d.media.cycle" />
+      <div class="d2-learning-media-model" appReveal>
+        <iframe src="/models/learning-media-resources.html?v=20260923-2"
+          title="โมเดลสื่อ เทคโนโลยีเพื่อการเรียนรู้ และแหล่งเรียนรู้" loading="lazy" scrolling="no"
+          [style.height.px]="mediaModelHeight()"></iframe>
+      </div>
 
       <div class="grid grid-3" style="margin-top:38px">
         <div class="card card-accent" *ngFor="let r of d.media.resources; let i = index" appReveal="zoom"
@@ -316,7 +324,11 @@
       </div>
 
 
-      <app-cycle-flow [steps]="d.assessment.cycle" />
+      <div class="d2-assessment-system-model" appReveal>
+        <iframe src="/models/assessment-system.html?v=20260924-1"
+          title="ระบบการวัดและประเมินผล 4 ขั้นตอน" loading="lazy" scrolling="no"
+          [style.height.px]="assessmentSystemHeight()"></iframe>
+      </div>
 
       <div style="margin-top:38px">
         <app-data-table [caption]="d.assessment.planCount.caption"

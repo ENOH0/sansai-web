@@ -167,7 +167,12 @@
     <ng-container *ngIf="text[0]?.text; else singleNarrative">
       <p *ngFor="let paragraph of text">
         <strong *ngIf="paragraph.strong; else normalNarrative">{{ paragraph.text }}</strong>
-        <ng-template #normalNarrative>{{ paragraph.text }}</ng-template>
+        <ng-template #normalNarrative>
+          <ng-container *ngFor="let part of boldParts(paragraph.text, paragraph.bold)">
+            <strong *ngIf="part.b; else plainPart" class="d1-hl">{{ part.t }}</strong>
+            <ng-template #plainPart>{{ part.t }}</ng-template>
+          </ng-container>
+        </ng-template>
       </p>
     </ng-container>
     <ng-template #singleNarrative>
@@ -181,10 +186,12 @@
   <section class="section">
     <div class="wrap">
       <app-section-header [light]="true" num="1.1.1" [title]="onetTitle" />
+      <ng-container [ngTemplateOutlet]="d1Narrative"
+        [ngTemplateOutletContext]="{ text: d.section11.onet.narrative.slice(0, 2) }"></ng-container>
       <div class="d1-onet-learning-model" appReveal>
         <iframe src="/models/onet-learning-outcomes.html?v=20260923-1"
-          title="ผลสัมฤทธิ์ทางการเรียน O-NET ระดับชั้น ม.3 และ ม.6 ปีการศึกษา 2566–2568"
-          loading="lazy" scrolling="no" [style.height.px]="onetLearningHeight()"></iframe>
+          title="ผลสัมฤทธิ์ทางการเรียน O-NET ระดับชั้น ม.3 และ ม.6 ปีการศึกษา 2566–2568" loading="lazy" scrolling="no"
+          [style.height.px]="onetLearningHeight()"></iframe>
       </div>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
@@ -227,7 +234,10 @@
       <app-section-header [light]="true" num="1.1.2" [title]="thaiTitle" />
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section11.thai.narrative }"></ng-container>
-      <div class="d1-thinking-3d-model" appReveal><iframe src="/models/creative-thinking-3d.html?model=thai&amp;v=20260923-3" title="โมเดล 3 มิติ การพัฒนาทักษะภาษาไทยและการคิดคำนวณ" loading="lazy" scrolling="no" [style.height.px]="thinkingModelHeight()"></iframe></div>
+      <div class="d1-thinking-3d-model" appReveal><iframe
+          src="/models/creative-thinking-3d.html?model=thai&amp;v=20260923-5"
+          title="โมเดล 3 มิติ การพัฒนาทักษะภาษาไทยและการคิดคำนวณ" loading="lazy" scrolling="no"
+          [style.height.px]="thinkingModelHeight()"></iframe></div>
       <section class="d1-environment-flow d1-thai-skills-flow" appReveal
         aria-label="เส้นทางการพัฒนาทักษะภาษาไทยและการคิดคำนวณ">
         <div class="d1-environment-flow-head">
@@ -236,9 +246,7 @@
           <p>แตะแต่ละกล่องเพื่อดูรายละเอียด</p>
         </div>
         <div class="d1-environment-flow-steps" role="tablist" aria-label="ขั้นตอนการพัฒนาทักษะผู้เรียน">
-          <button type="button" class="d1-environment-flow-step input"
-            [class.active]="thaiSkillsFlowOpen() === 'screen'" (click)="selectThaiSkillsFlow('screen')" role="tab"
-            [attr.aria-selected]="thaiSkillsFlowOpen() === 'screen'">
+          <button type="button" class="d1-environment-flow-step input">
             <span class="d1-environment-flow-no">01</span><small>คัดกรองตามศักยภาพ</small>
           </button>
           <span class="d1-environment-flow-arrow" aria-hidden="true">→</span>
@@ -326,7 +334,10 @@
       <app-section-header [light]="true" num="1.1.3" [title]="engTitle" />
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section11.english.narrative }"></ng-container>
-      <div class="d1-thinking-3d-model" appReveal><iframe src="/models/creative-thinking-3d.html?model=english&amp;v=20260923-2" title="โมเดล 3 มิติ การเรียนรู้ภาษาอังกฤษ" loading="lazy" scrolling="no" [style.height.px]="thinkingModelHeight()"></iframe></div>
+      <div class="d1-thinking-3d-model" appReveal><iframe
+          src="/models/creative-thinking-3d.html?model=english&amp;v=20260923-5"
+          title="โมเดล 3 มิติ การเรียนรู้ภาษาอังกฤษ" loading="lazy" scrolling="no"
+          [style.height.px]="thinkingModelHeight()"></iframe></div>
       <section class="d1-environment-flow d1-english-flow" appReveal aria-label="เส้นทางการเรียนรู้ภาษาอังกฤษ">
         <div class="d1-environment-flow-head">
           <span>English Learning Pathway</span>
@@ -419,7 +430,7 @@
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section11.thinking.narrative }"></ng-container>
       <div class="d1-thinking-3d-model" appReveal>
-        <iframe src="/models/creative-thinking-3d.html?v=20260923-2"
+        <iframe src="/models/creative-thinking-3d.html?v=20260923-5"
           title="โมเดล 3 มิติ เส้นทางการคิดวิเคราะห์และสร้างสรรค์ผลงาน" loading="lazy" scrolling="no"
           [style.height.px]="thinkingModelHeight()"></iframe>
       </div>
@@ -462,7 +473,10 @@
       <app-section-header [light]="true" num="1.1.5" [title]="ictTitle" />
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section11.ict.narrative }"></ng-container>
-      <div class="d1-thinking-3d-model" appReveal><iframe src="/models/creative-thinking-3d.html?model=digital&amp;v=20260923-2" title="โมเดล 3 มิติ การพัฒนาศักยภาพดิจิทัล" loading="lazy" scrolling="no" [style.height.px]="thinkingModelHeight()"></iframe></div>
+      <div class="d1-thinking-3d-model" appReveal><iframe
+          src="/models/creative-thinking-3d.html?model=digital&amp;v=20260923-5"
+          title="โมเดล 3 มิติ การพัฒนาศักยภาพดิจิทัล" loading="lazy" scrolling="no"
+          [style.height.px]="thinkingModelHeight()"></iframe></div>
       <section class="d1-environment-flow d1-digital-flow" appReveal aria-label="เส้นทางการพัฒนาศักยภาพดิจิทัล">
         <div class="d1-environment-flow-head">
           <span>Digital Learning Pathway</span>
@@ -564,7 +578,10 @@
       <app-section-header [light]="true" num="1.1.6" [title]="curriculumProgressTitle" />
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section11.curriculumProgress.narrative }"></ng-container>
-      <div class="d1-thinking-3d-model" appReveal><iframe src="/models/creative-thinking-3d.html?model=curriculum&amp;v=20260923-2" title="โมเดล 3 มิติ ความก้าวหน้าตามหลักสูตร" loading="lazy" scrolling="no" [style.height.px]="thinkingModelHeight()"></iframe></div>
+      <div class="d1-thinking-3d-model" appReveal><iframe
+          src="/models/creative-thinking-3d.html?model=curriculum&amp;v=20260923-5"
+          title="โมเดล 3 มิติ ความก้าวหน้าตามหลักสูตร" loading="lazy" scrolling="no"
+          [style.height.px]="thinkingModelHeight()"></iframe></div>
       <section class="d1-environment-flow d1-curriculum-progress-flow" appReveal
         aria-label="เส้นทางการพัฒนาผลการเรียนรายกลุ่มสาระ">
         <div class="d1-environment-flow-head">
@@ -658,7 +675,10 @@
       <app-section-header [light]="true" num="1.1.7" [title]="pathTitle" />
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section11.pathway.narrative }"></ng-container>
-      <div class="d1-thinking-3d-model" appReveal><iframe src="/models/creative-thinking-3d.html?model=guidance&amp;v=20260923-2" title="โมเดล 3 มิติ การเตรียมความพร้อมสู่อนาคต" loading="lazy" scrolling="no" [style.height.px]="thinkingModelHeight()"></iframe></div>
+      <div class="d1-thinking-3d-model" appReveal><iframe
+          src="/models/creative-thinking-3d.html?model=guidance&amp;v=20260923-5"
+          title="โมเดล 3 มิติ การเตรียมความพร้อมสู่อนาคต" loading="lazy" scrolling="no"
+          [style.height.px]="thinkingModelHeight()"></iframe></div>
       <section class="d1-environment-flow d1-pathway-flow" appReveal aria-label="เส้นทางการเตรียมความพร้อมสู่อนาคต">
         <div class="d1-environment-flow-head">
           <span>Future Readiness Pathway</span>
@@ -785,7 +805,10 @@
       <app-section-header [light]="true" num="1.2.3" [title]="electionTitle" />
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section12.election.narrative }"></ng-container>
-      <div class="d1-thinking-3d-model" appReveal><iframe src="/models/creative-thinking-3d.html?model=democracy&amp;v=20260923-2" title="โมเดล 3 มิติ การเรียนรู้วิถีประชาธิปไตย" loading="lazy" scrolling="no" [style.height.px]="thinkingModelHeight()"></iframe></div>
+      <div class="d1-thinking-3d-model" appReveal><iframe
+          src="/models/creative-thinking-3d.html?model=democracy&amp;v=20260923-5"
+          title="โมเดล 3 มิติ การเรียนรู้วิถีประชาธิปไตย" loading="lazy" scrolling="no"
+          [style.height.px]="thinkingModelHeight()"></iframe></div>
       <section class="d1-environment-flow d1-democracy-flow" appReveal>
         <div class="d1-environment-flow-head">
           <span>การเรียนรู้วิถีประชาธิปไตย</span>
@@ -927,7 +950,10 @@
       <app-section-header [light]="true" num="1.2.7" [title]="healthTitle" />
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section12.health.narrative }"></ng-container>
-      <div class="d1-thinking-3d-model" appReveal><iframe src="/models/creative-thinking-3d.html?model=health&amp;v=20260923-2" title="โมเดล 3 มิติ สุขภาพกายและสุขภาพจิต" loading="lazy" scrolling="no" [style.height.px]="thinkingModelHeight()"></iframe></div>
+      <div class="d1-thinking-3d-model" appReveal><iframe
+          src="/models/creative-thinking-3d.html?model=health&amp;v=20260923-5"
+          title="โมเดล 3 มิติ สุขภาพกายและสุขภาพจิต" loading="lazy" scrolling="no"
+          [style.height.px]="thinkingModelHeight()"></iframe></div>
       <section class="d1-environment-flow d1-health-flow" appReveal aria-label="เส้นทางสุขภาพกายและสุขภาพจิต">
         <div class="d1-environment-flow-head">
           <span>เส้นทางสุขภาพ</span>
@@ -1023,7 +1049,10 @@
         title="ความรู้ความสามารถรอบด้าน ความสามารถพิเศษ และผลงานเป็นเลิศ" />
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section11.excellence.narrative }"></ng-container>
-      <div class="d1-thinking-3d-model" appReveal><iframe src="/models/creative-thinking-3d.html?model=excellence&amp;v=20260923-2" title="โมเดล 3 มิติ การพัฒนาความสามารถสู่ความเป็นเลิศ" loading="lazy" scrolling="no" [style.height.px]="thinkingModelHeight()"></iframe></div>
+      <div class="d1-thinking-3d-model" appReveal><iframe
+          src="/models/creative-thinking-3d.html?model=excellence&amp;v=20260923-5"
+          title="โมเดล 3 มิติ การพัฒนาความสามารถสู่ความเป็นเลิศ" loading="lazy" scrolling="no"
+          [style.height.px]="thinkingModelHeight()"></iframe></div>
       <section class="d1-environment-flow d1-excellence-flow" appReveal
         aria-label="เส้นทางการพัฒนาความสามารถสู่ความเป็นเลิศ">
         <div class="d1-environment-flow-head">
@@ -1100,7 +1129,10 @@
         title="ตระหนักและมีส่วนร่วมในการอนุรักษ์ทรัพยากรธรรมชาติและสิ่งแวดล้อม" />
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section12.environment.narrative }"></ng-container>
-      <div class="d1-thinking-3d-model" appReveal><iframe src="/models/creative-thinking-3d.html?model=environment&amp;v=20260923-2" title="โมเดล 3 มิติ การอนุรักษ์สิ่งแวดล้อม" loading="lazy" scrolling="no" [style.height.px]="thinkingModelHeight()"></iframe></div>
+      <div class="d1-thinking-3d-model" appReveal><iframe
+          src="/models/creative-thinking-3d.html?model=environment&amp;v=20260923-5"
+          title="โมเดล 3 มิติ การอนุรักษ์สิ่งแวดล้อม" loading="lazy" scrolling="no"
+          [style.height.px]="thinkingModelHeight()"></iframe></div>
       <section class="d1-environment-flow" appReveal>
         <div class="d1-environment-flow-head">
           <span>แนวทางการขับเคลื่อน</span>
@@ -1227,7 +1259,9 @@
         title="ทำงานเป็นทีม มีความรับผิดชอบ มุ่งมั่น และทำงานอย่างมีประสิทธิภาพ" />
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section12.teamwork.narrative }"></ng-container>
-      <div class="d1-thinking-3d-model" appReveal><iframe src="/models/creative-thinking-3d.html?model=teamwork&amp;v=20260923-2" title="โมเดล 3 มิติ การทำงานเป็นทีม" loading="lazy" scrolling="no" [style.height.px]="thinkingModelHeight()"></iframe></div>
+      <div class="d1-thinking-3d-model" appReveal><iframe
+          src="/models/creative-thinking-3d.html?model=teamwork&amp;v=20260923-5" title="โมเดล 3 มิติ การทำงานเป็นทีม"
+          loading="lazy" scrolling="no" [style.height.px]="thinkingModelHeight()"></iframe></div>
       <section class="d1-environment-flow d1-teamwork-flow" appReveal>
         <div class="d1-environment-flow-head">
           <span>พลังการทำงานร่วมกัน</span>
@@ -1289,7 +1323,10 @@
       <app-section-header [light]="true" num="1.2.5" title="ภาคภูมิใจในความเป็นไทยและนำภูมิปัญญาท้องถิ่นไปใช้" />
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section12.thaiPride.narrative }"></ng-container>
-      <div class="d1-thinking-3d-model" appReveal><iframe src="/models/creative-thinking-3d.html?model=thaiPride&amp;v=20260923-2" title="โมเดล 3 มิติ ความภาคภูมิใจในความเป็นไทย" loading="lazy" scrolling="no" [style.height.px]="thinkingModelHeight()"></iframe></div>
+      <div class="d1-thinking-3d-model" appReveal><iframe
+          src="/models/creative-thinking-3d.html?model=thaiPride&amp;v=20260923-5"
+          title="โมเดล 3 มิติ ความภาคภูมิใจในความเป็นไทย" loading="lazy" scrolling="no"
+          [style.height.px]="thinkingModelHeight()"></iframe></div>
       <section class="d1-environment-flow d1-thai-pride-flow" appReveal>
         <div class="d1-environment-flow-head">
           <span>การเรียนรู้ภูมิปัญญาและความเป็นไทย</span>
@@ -1388,7 +1425,10 @@
       <app-section-header [light]="true" num="1.2.6" title="มั่นใจในตนเอง และมีเจตคติที่ดีต่อการเรียน" />
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section12.confidence.narrative }"></ng-container>
-      <div class="d1-thinking-3d-model" appReveal><iframe src="/models/creative-thinking-3d.html?model=confidence&amp;v=20260923-2" title="โมเดล 3 มิติ การสร้างความมั่นใจในการเรียนรู้" loading="lazy" scrolling="no" [style.height.px]="thinkingModelHeight()"></iframe></div>
+      <div class="d1-thinking-3d-model" appReveal><iframe
+          src="/models/creative-thinking-3d.html?model=confidence&amp;v=20260923-5"
+          title="โมเดล 3 มิติ การสร้างความมั่นใจในการเรียนรู้" loading="lazy" scrolling="no"
+          [style.height.px]="thinkingModelHeight()"></iframe></div>
       <section class="d1-environment-flow d1-confidence-flow" appReveal
         aria-label="เส้นทางการสร้างความมั่นใจในการเรียนรู้">
         <div class="d1-environment-flow-head">
@@ -1460,7 +1500,10 @@
       <app-section-header [light]="true" num="1.2.8" title="ปลอดภัยจากสารเสพติด ปัญหาทางเพศ และอบายมุขทุกชนิด" />
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section12.safety.narrative }"></ng-container>
-      <div class="d1-thinking-3d-model" appReveal><iframe src="/models/creative-thinking-3d.html?model=safety&amp;v=20260923-2" title="โมเดล 3 มิติ การสร้างความปลอดภัยของผู้เรียน" loading="lazy" scrolling="no" [style.height.px]="thinkingModelHeight()"></iframe></div>
+      <div class="d1-thinking-3d-model" appReveal><iframe
+          src="/models/creative-thinking-3d.html?model=safety&amp;v=20260923-5"
+          title="โมเดล 3 มิติ การสร้างความปลอดภัยของผู้เรียน" loading="lazy" scrolling="no"
+          [style.height.px]="thinkingModelHeight()"></iframe></div>
       <section class="d1-environment-flow d1-safety-flow" appReveal aria-label="เส้นทางการสร้างความปลอดภัยของผู้เรียน">
         <div class="d1-environment-flow-head">
           <span>เส้นทางความปลอดภัย</span>
