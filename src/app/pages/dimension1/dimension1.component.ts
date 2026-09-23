@@ -127,6 +127,13 @@ export class Dimension1Component implements OnInit {
   readonly confidenceFlowOpen = signal<'opportunity' | 'practice' | 'confidence' | null>(null);
   readonly healthFlowOpen = signal<'aware' | 'strengthen' | 'wellbeing' | null>(null);
   readonly safetyFlowOpen = signal<'risk' | 'immunity' | 'safe' | null>(null);
+  readonly englishFlowOpen = signal<'pathway' | 'realWorld' | 'communicator' | null>(null);
+  readonly thaiSkillsFlowOpen = signal<'screen' | 'practice' | 'progress' | null>(null);
+  readonly pathwayFlowOpen = signal<'ready' | 'guidance' | 'progress' | null>(null);
+  readonly thinkingFlowOpen = signal<'challenge' | 'create' | 'apply' | null>(null);
+  readonly digitalFlowOpen = signal<'access' | 'creation' | 'capability' | null>(null);
+  readonly curriculumProgressFlowOpen = signal<'analyse' | 'learn' | 'growth' | null>(null);
+  readonly excellenceFlowOpen = signal<'discover' | 'develop' | 'excel' | null>(null);
 
   get shown() { return this.topics.filter(t => t.group === this.tab()); }
 
@@ -165,6 +172,34 @@ export class Dimension1Component implements OnInit {
 
   selectSafetyFlow(step: 'risk' | 'immunity' | 'safe'): void {
     this.safetyFlowOpen.set(this.safetyFlowOpen() === step ? null : step);
+  }
+
+  selectEnglishFlow(step: 'pathway' | 'realWorld' | 'communicator'): void {
+    this.englishFlowOpen.set(this.englishFlowOpen() === step ? null : step);
+  }
+
+  selectThaiSkillsFlow(step: 'screen' | 'practice' | 'progress'): void {
+    this.thaiSkillsFlowOpen.set(this.thaiSkillsFlowOpen() === step ? null : step);
+  }
+
+  selectPathwayFlow(step: 'ready' | 'guidance' | 'progress'): void {
+    this.pathwayFlowOpen.set(this.pathwayFlowOpen() === step ? null : step);
+  }
+
+  selectThinkingFlow(step: 'challenge' | 'create' | 'apply'): void {
+    this.thinkingFlowOpen.set(this.thinkingFlowOpen() === step ? null : step);
+  }
+
+  selectDigitalFlow(step: 'access' | 'creation' | 'capability'): void {
+    this.digitalFlowOpen.set(this.digitalFlowOpen() === step ? null : step);
+  }
+
+  selectCurriculumProgressFlow(step: 'analyse' | 'learn' | 'growth'): void {
+    this.curriculumProgressFlowOpen.set(this.curriculumProgressFlowOpen() === step ? null : step);
+  }
+
+  selectExcellenceFlow(step: 'discover' | 'develop' | 'excel'): void {
+    this.excellenceFlowOpen.set(this.excellenceFlowOpen() === step ? null : step);
   }
 
   toggleTab(group: '1.1' | '1.2'): void {
@@ -449,8 +484,8 @@ export class Dimension1Component implements OnInit {
 
   /* กิจกรรมสภานักเรียน ใต้หัวข้อ 1.2.3 — รูปอยู่ที่ public/evidence/1.2.3/ */
   readonly councilActivities = [
-    { title: 'คณะกรรมการสภานักเรียนโรงเรียนสันทรายวิทยาคม เข้าร่วมการประชุมเพื่อแลกเปลี่ยนเรียนรู้และรับฟังแนวทางการดำเนินงานด้านการคัดแยกขยะ ภายใต้โครงการ TSC โดยมุ่งส่งเสริมให้นักเรียนมีความรู้ ความเข้าใจ และตระหนักถึงความสำคัญของการจัดการขยะอย่างถูกวิธี เพื่อนำองค์ความรู้และแนวทางที่ได้รับไปประยุกต์ใช้ในการดำเนินกิจกรรมของสภานักเรียนและพัฒนาสิ่งแวดล้อมภายในโรงเรียนอย่างเป็นรูปธรรมและยั่งยืน', images: [1, 2, 3, 4].map(n => `/evidence/1.2.3/tsc-${n}.jpg`) },
-    { title: 'คณะกรรมการสภานักเรียนโรงเรียนสันทรายวิทยาคม เข้าร่วมการประชุมเพื่อแลกเปลี่ยนเรียนรู้และรับฟังแนวทางการดำเนินงานด้านการคัดแยกขยะ ภายใต้โครงการ TSC โดยมุ่งส่งเสริมให้นักเรียนมีความรู้ ความเข้าใจ และตระหนักถึงความสำคัญของการจัดการขยะอย่างถูกวิธี เพื่อนำองค์ความรู้และแนวทางที่ได้รับไปประยุกต์ใช้ในการดำเนินกิจกรรมของสภานักเรียนและพัฒนาสิ่งแวดล้อมภายในโรงเรียนอย่างเป็นรูปธรรมและยั่งยืน', images: [5, 6, 7, 8].map(n => `/evidence/1.2.3/tsc-${n}.jpg`) }
+    { title: 'ประชุมเพื่อแลกเปลี่ยนเรียนรู้และรับฟังแนวทางการดำเนินงานด้านการคัดแยกขยะ ภายใต้โครงการ TSC', images: [1, 2, 3, 4].map(n => `/evidence/1.2.3/tsc-${n}.jpg`) },
+    { title: 'ร่วมประชุมวางแผนและแลกเปลี่ยนความคิดเห็นในการดำเนินกิจกรรม “ถังนี้มีเสียง” โดยร่วมกันกำหนดรูปแบบกิจกรรม', images: [5, 6, 7, 8].map(n => `/evidence/1.2.3/tsc-${n}.jpg`) }
   ];
 
   readonly healthActivities = [
@@ -466,7 +501,13 @@ export class Dimension1Component implements OnInit {
       index === 0 ? '/evidence/1.2.7/health-activities/01-v2.jpg' : `/evidence/1.2.7/health-activities/${String(index * 2 + 1).padStart(2, '0')}.jpg`,
       `/evidence/1.2.7/health-activities/${String(index * 2 + 2).padStart(2, '0')}.jpg`
     ]
-  }));
+  })).concat([{
+    title: 'การทดสอบสมรรถภาพทางกาย',
+    images: [
+      '/evidence/1.2.7/health-activities/physical-fitness-01.png',
+      '/evidence/1.2.7/health-activities/physical-fitness-02.png'
+    ]
+  }]);
 
   readonly safetyActivities = [
     'โครงการสร้างค่านิยมและปลูกฝังคุณลักษณะที่พึงประสงค์ที่ดีกับผู้เรียน',
@@ -552,15 +593,15 @@ export class Dimension1Component implements OnInit {
   readonly englishAwards = [
     {
       title: 'สอบได้ลำดับที่ 19 จากผู้เข้าสอบ 1,306 คน ในโครงการทดสอบความรู้วิชา TGAT ระดับชั้นมัธยมศึกษาตอนปลาย ปีการศึกษา 2567',
-      image: '/evidence/1.1.3/english-awards/01-tgat.jpg'
+      images: ['/evidence/1.1.3/english-awards/01-tgat.jpg']
     },
     {
       title: 'ผลการสอบวัดระดับความสามารถทางภาษาอังกฤษ 4 ทักษะ ตามกรอบมาตรฐานสากล CEFR ระดับ A1–A2 เต็ม 50 คะแนน',
-      image: '/evidence/1.1.3/english-awards/02-cefr.jpg'
+      images: ['/evidence/1.1.3/english-awards/02-cefr.jpg']
     },
     {
       title: 'ได้คะแนนเต็ม 100 คะแนน ในการทดสอบ O-NET รายวิชาภาษาอังกฤษ (สทศ.)',
-      image: '/evidence/1.1.3/english-awards/03-onet.jpg'
+      images: ['/evidence/1.1.3/english-awards/03-onet.jpg', '/evidence/1.1.3/english-awards/04-onet-certificate.png']
     }
   ];
 
