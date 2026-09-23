@@ -39,6 +39,8 @@ export class Dimension1Component implements OnInit {
   readonly studentQualityModelHeight = signal(620);
   readonly ipoHeight = signal(1000);
   readonly skgepHeight = signal(480);
+  readonly onetLearningHeight = signal(1400);
+  readonly thinkingModelHeight = signal(650);
 
   @HostListener('window:message', ['$event'])
   resizeStudentQualityModel(event: MessageEvent<{ type?: string; height?: number; topic?: string }>): void {
@@ -46,6 +48,16 @@ export class Dimension1Component implements OnInit {
     if (event.data?.type === 'd1-skgep-height') {
       const h = Number(event.data.height);
       if (Number.isFinite(h)) this.skgepHeight.set(Math.max(300, h));
+      return;
+    }
+    if (event.data?.type === 'd1-onet-learning-height') {
+      const h = Number(event.data.height);
+      if (Number.isFinite(h)) this.onetLearningHeight.set(Math.max(720, Math.min(6000, h)));
+      return;
+    }
+    if (event.data?.type === 'd1-thinking-model-height') {
+      const h = Number(event.data.height);
+      if (Number.isFinite(h)) this.thinkingModelHeight.set(Math.max(560, Math.min(1800, h)));
       return;
     }
     if (event.data?.type === 'd1-ipo-height') {

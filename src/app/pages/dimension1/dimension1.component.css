@@ -14,6 +14,11 @@
 .d1-student-quality-model { padding-top: 4px; padding-bottom: 0; }
 .d1-student-quality-model-frame { overflow: hidden; background: transparent; }
 .d1-student-quality-model-frame iframe { display: block; width: 100%; border: 0; background: transparent; }
+.d1-onet-learning-model { margin: 8px 0 26px; overflow: hidden; border-radius: 28px; background: transparent; }
+.d1-onet-learning-model iframe { display: block; width: 100%; border: 0; background: transparent; transition: height .28s ease; }
+.d1-thinking-3d-model { margin: 10px 0 28px; overflow: hidden; border-radius: 34px; background: transparent; }
+.d1-thinking-3d-model iframe { display: block; width: 100%; border: 0; background: transparent; transition: height .28s ease; }
+.d1-environment-flow { display: none !important; }
 .d1-quality-wheel { padding-top: 18px; }
 
 /* ข้อ 1.2.1: ชื่อใต้กราฟ 8 ด้านใช้คำย่อเพื่อไม่ให้ชนกัน */
