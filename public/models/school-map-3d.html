@@ -1,1392 +1,351 @@
 <!doctype html>
 <html lang="th">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-    <title>ผังโรงเรียนสันทรายวิทยาคม 3 มิติ</title>
-    <link rel="stylesheet" href="/fonts/th-sarabun.css">
-    <style>
-        * {
-            box-sizing: border-box
-        }
-
-        html,
-        body {
-            margin: 0;
-            height: 100%;
-            overflow: hidden;
-            background: radial-gradient(ellipse at 30% 20%, #f7fcf0 0%, #e6f2ff 35%, #cfe3f7 65%, #b7d2ee 100%);
-            font-family: 'TH SarabunPSK Web', 'TH SarabunPSK', Tahoma, sans-serif;
-            color: #1d2f52;
-            -webkit-user-select: none;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent
-        }
-
-        body::before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            left: -50px;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, #ffffff 0%, #fff4c2 20%, rgba(255, 215, 100, 0.3) 45%, transparent 70%);
-            border-radius: 50%;
-            box-shadow: 0 0 150px 80px rgba(255, 220, 120, 0.4);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        body::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(135deg, rgba(255, 240, 200, 0.25) 0%, transparent 40%);
-            pointer-events: none;
-            z-index: 10;
-            mix-blend-mode: overlay;
-        }
-
-        #view {
-            position: absolute;
-            inset: 0;
-            perspective: 2200px;
-            perspective-origin: 50% 42%;
-            touch-action: none;
-            cursor: grab;
-            overflow: hidden
-        }
-
-        #view:active {
-            cursor: grabbing
-        }
-
-        #scene {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 1980px;
-            height: 347px;
-            margin: -174px 0 0 -990px;
-            transform-style: preserve-3d
-        }
-
-        #scene * {
-            transform-style: preserve-3d
-        }
-
-        /* สร้างลวดลายพื้นผิว (Noise) แบบฝังใน CSS เพื่อให้ตึก/พื้น ไม่ดูเรียบเป็นพลาสติก */
-        :root {
-            --noise: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.12"/></svg>');
-        }
-
-        .ground {
-            position: absolute;
-            inset: -14px;
-            border-radius: 26px;
-            background-color: #bfe3a9;
-            background-image: var(--noise);
-            box-shadow: 0 0 0 12px #a9d493
-        }
-
-        .flat {
-            position: absolute
-        }
-
-        .road {
-            background-color: #8f98a8;
-            background-image: var(--noise)
-        }
-
-        .road::after {
-            height: 1.5px !important;
-            margin-top: -.75px !important
-        }
-
-        .road::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 50%;
-            height: 3px;
-            margin-top: -1.5px;
-            background: repeating-linear-gradient(90deg, #fff 0 12px, transparent 12px 24px);
-            opacity: .85
-        }
-
-        .road.v::after {
-            left: 50%;
-            right: auto;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            height: auto;
-            margin: 0 0 0 -1.5px;
-            background: repeating-linear-gradient(180deg, #fff 0 22px, transparent 22px 44px)
-        }
-
-        .pave {
-            background: repeating-linear-gradient(45deg, #e7d7c3 0 10px, #dcc8b0 10px 20px);
-            background-image: var(--noise), repeating-linear-gradient(45deg, #e7d7c3 0 10px, #dcc8b0 10px 20px)
-        }
-
-        .field {
-            background-color: #63c46e;
-            background-image: var(--noise), repeating-linear-gradient(90deg, #63c46e 0 34px, #58b863 34px 68px);
-            border: 4px solid #fff;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.15)
-        }
-
-        .field::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            border-left: 3px solid #fff
-        }
-
-        .field::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 50px;
-            height: 50px;
-            margin: -25px;
-            border: 3px solid #fff;
-            border-radius: 50%
-        }
-
-        .farm {
-            background-color: #9bc45a;
-            background-image: var(--noise), repeating-linear-gradient(0deg, #9bc45a 0 9px, #7a5a36 9px 13px)
-        }
-
-        .garden {
-            background-color: #8fd17a;
-            background-image: var(--noise);
-            border-radius: 14px
-        }
-
-        .court {
-            background: linear-gradient(90deg, #5b7fd6 0 50%, #e89a52 50%);
-            border: 2px solid #fff;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2)
-        }
-
-        .pond {
-            background: radial-gradient(ellipse at 40% 40%, #b9e8d9, #7fcbb6);
-            border-radius: 30px;
-            box-shadow: inset 0 5px 15px rgba(0, 60, 40, 0.2)
-        }
-
-        .b {
-            position: absolute;
-            cursor: pointer
-        }
-
-        .f {
-            position: absolute;
-            backface-visibility: visible
-        }
-
-        /* เพิ่มพื้นผิวปูน และเงาที่ฐานตึก */
-        .wall {
-            background-color: var(--w);
-            background-image: 
-                linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, transparent 15%, transparent 80%, rgba(0, 0, 0, 0.25) 100%),
-                var(--noise);
-            box-shadow: inset 0 -6px 16px rgba(0, 0, 0, 0.18), inset 0 2px 4px rgba(255, 255, 255, 0.4), inset 4px 0 10px rgba(0, 0, 0, 0.08), inset -4px 0 10px rgba(0, 0, 0, 0.08)
-        }
-
-        .wall.win {
-            background-image:
-                linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.3) 35%, transparent 45%),
-                repeating-linear-gradient(90deg, transparent 0 15px, rgba(35, 55, 80, 0.75) 15px 45px, transparent 45px 60px),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, transparent 15%, transparent 80%, rgba(0, 0, 0, 0.25) 100%),
-                var(--noise)
-        }
-
-        .wall.win::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: repeating-linear-gradient(0deg, var(--w) 0 calc(var(--fl) * .3), rgba(255, 255, 255, 0) calc(var(--fl) * .3) calc(var(--fl) * .72), var(--w) calc(var(--fl) * .72) var(--fl))
-        }
-
-        .shade-n { filter: brightness(1.2) contrast(1.05) }
-        .shade-s { filter: brightness(0.65) contrast(1.1) }
-        .shade-w { filter: brightness(0.95) }
-        .shade-e { filter: brightness(0.7) }
-        .shade-top { filter: brightness(1.15) }
-
-        .cast-shadow {
-            position: absolute;
-            background: rgba(15, 30, 60, 0.32);
-            filter: blur(8px);
-            pointer-events: none;
-            border-radius: 8px;
-        }
-
-        /* ทำลอนกระเบื้องหลังคาให้ชัดขึ้น และเพิ่มเงาขอบหลังคา */
-        .roof {
-            background-color: var(--r);
-            background-image: 
-                linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 30%, rgba(0, 0, 0, 0.2) 100%),
-                repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0 1px, transparent 1px 12px), 
-                repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0 1px, transparent 1px 8px),
-                var(--noise);
-            box-shadow: inset 0 0 28px rgba(0, 0, 0, 0.3), inset 0 3px 6px rgba(255, 255, 255, 0.25)
-        }
-
-        .b.on .f {
-            outline: 3px solid #ffcf3f
-        }
-
-        .glass {
-            background: linear-gradient(135deg, #7fe0d6, #2aa39a);
-            background-image: 
-                linear-gradient(135deg, rgba(255, 255, 255, .6) 0%, transparent 50%, rgba(0, 0, 0, .15) 100%), 
-                repeating-linear-gradient(90deg, #2fb3a8 0 14px, #1f8f86 14px 16px),
-                var(--noise);
-            box-shadow: inset 0 -6px 16px rgba(0, 0, 0, 0.15), inset 0 2px 4px rgba(255, 255, 255, 0.4)
-        }
-
-        .bb {
-            position: absolute;
-            width: 0;
-            height: 0
-        }
-
-        .bb>* {
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            transform: translateX(-50%)
-        }
-
-        /* รูปแบบต้นไม้ที่หลากหลาย (ไม่ซ้อนทับถนน) */
-        .tree {
-            position: relative;
-            width: 18px;
-            height: 26px
-        }
-
-        .tree i {
-            position: absolute;
-            left: 7.5px;
-            bottom: 0;
-            width: 3px;
-            height: 9px;
-            background: #6a4220
-        }
-
-        .tree b {
-            position: absolute;
-            left: -2px;
-            bottom: 7px;
-            width: 22px;
-            height: 20px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 35% 30%, #8fe07c, #3f9e45);
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2)
-        }
-
-        .tree.t2 b {
-            border-radius: 40% 40% 50% 50%;
-            background: radial-gradient(circle at 30% 30%, #b5f280, #2e8535)
-        }
-
-        .tree.t3 {
-            width: 16px;
-            height: 30px
-        }
-
-        .tree.t3 b {
-            left: -1px;
-            bottom: 7px;
-            width: 18px;
-            height: 24px;
-            border-radius: 50% 50% 10% 10%/80% 80% 20% 20%;
-            background: radial-gradient(circle at 50% 20%, #6cd474, #256631)
-        }
-
-        .tree.t4 {
-            width: 22px;
-            height: 20px
-        }
-
-        .tree.t4 b {
-            left: -4px;
-            bottom: 5px;
-            width: 30px;
-            height: 15px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 50% 40%, #9be882, #48a152)
-        }
-
-        .tree.big {
-            transform: scale(1.3);
-            transform-origin: 50% 100%
-        }
-
-        .tree.small {
-            transform: scale(.75);
-            transform-origin: 50% 100%
-        }
-
-        /* ตัวคนเดินแบบสมจริง (ไม่มีกระเป๋า) */
-        .walker-figure {
-            position: relative;
-            width: 12px;
-            height: 24px;
-            transform-origin: bottom center
-        }
-
-        .walker-figure .head {
-            position: absolute;
-            left: 3px;
-            top: 0;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #e0a96d
-        }
-
-        .walker-figure .body {
-            position: absolute;
-            left: 2px;
-            top: 6px;
-            width: 8px;
-            height: 10px;
-            border-radius: 3px 3px 1px 1px;
-            background: #2b4f8f
-        }
-
-        .walker-figure.sport .body {
-            background: #d93838
-        }
-
-        .walker-figure.teacher .body {
-            background: #388a45
-        }
-
-        .walker-figure .leg-l {
-            position: absolute;
-            left: 3px;
-            bottom: 0;
-            width: 2px;
-            height: 8px;
-            background: #1d2f52;
-            transform-origin: top center;
-            animation: walkL .6s ease-in-out infinite alternate
-        }
-
-        .walker-figure .leg-r {
-            position: absolute;
-            left: 7px;
-            bottom: 0;
-            width: 2px;
-            height: 8px;
-            background: #1d2f52;
-            transform-origin: top center;
-            animation: walkR .6s ease-in-out infinite alternate
-        }
-
-        @keyframes walkL {
-            from { transform: rotate(20deg) }
-            to { transform: rotate(-20deg) }
-        }
-
-        @keyframes walkR {
-            from { transform: rotate(-20deg) }
-            to { transform: rotate(20deg) }
-        }
-
-        .pin {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            pointer-events: auto
-        }
-
-        .pin span {
-            display: grid;
-            place-items: center;
-            min-width: 28px;
-            height: 28px;
-            padding: 0 6px;
-            border-radius: 50% 50% 50% 0;
-            transform: rotate(-45deg);
-            background: #ef3b4d;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
-            border: 2px solid #fff
-        }
-
-        .pin span em {
-            transform: rotate(45deg);
-            font-style: normal;
-            color: #fff;
-            font-weight: 800;
-            font-size: 16px;
-            line-height: 1
-        }
-
-        .pin.on span {
-            background: #ffb400
-        }
-
-        .shutter.side {
-            left: 0;
-            right: auto;
-            top: 20%;
-            bottom: 20%;
-            width: 72%;
-            height: auto;
-            background: repeating-linear-gradient(90deg, #9aa3b2 0 2px, #c7ccd6 2px 4px)
-        }
-
-        .shutter {
-            position: absolute;
-            left: 18%;
-            right: 18%;
-            top: 0;
-            height: 72%;
-            background: repeating-linear-gradient(0deg, #9aa3b2 0 2px, #c7ccd6 2px 4px);
-            border: 1.5px solid #6b7385
-        }
-
-        .wc {
-            display: grid;
-            place-items: center;
-            width: 24px;
-            height: 24px;
-            border-radius: 7px;
-            background: #2f6fd6;
-            border: 2px solid #fff;
-            font-size: 14px;
-            line-height: 1;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, .3)
-        }
-
-        .flagp {
-            width: 3px;
-            height: 50px;
-            background: #ccc
-        }
-
-        .flagp::after {
-            content: '';
-            position: absolute;
-            left: 3px;
-            top: 0;
-            width: 22px;
-            height: 14px;
-            background: linear-gradient(#e33 0 20%, #fff 20% 36%, #2b3f8f 36% 64%, #fff 64% 80%, #e33 80%)
-        }
-
-        /* UI */
-        .ui {
-            position: absolute;
-            z-index: 5
-        }
-
-        .title {
-            top: max(14px, env(safe-area-inset-top));
-            left: 16px;
-            padding: 8px 18px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, .85);
-            box-shadow: 0 8px 20px rgba(30, 60, 110, .15)
-        }
-
-        .title h1 {
-            margin: 0;
-            font-size: 26px;
-            line-height: 1.1
-        }
-
-        .title p {
-            margin: 0;
-            font-size: 16px;
-            color: #50648a
-        }
-
-        .pad {
-            right: 16px;
-            bottom: calc(max(16px, env(safe-area-inset-bottom)) + 62px);
-            display: grid;
-            grid-template-columns: repeat(3, 48px);
-            gap: 6px
-        }
-
-        .pad button {
-            min-height: 48px;
-            border: 0;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, .92);
-            color: #1d2f52;
-            font: inherit;
-            font-size: 20px;
-            font-weight: 800;
-            box-shadow: 0 6px 16px rgba(30, 60, 110, .18);
-            touch-action: none;
-            cursor: pointer
-        }
-
-        .pad button:active {
-            background: #ffe39a
-        }
-
-        .ctrl {
-            right: 16px;
-            bottom: max(16px, env(safe-area-inset-bottom));
-            display: flex;
-            gap: 10px
-        }
-
-        .ctrl button,
-        .back {
-            min-width: 48px;
-            min-height: 48px;
-            padding: 0 14px;
-            border: 0;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, .92);
-            color: #1d2f52;
-            font: inherit;
-            font-size: 22px;
-            font-weight: 800;
-            box-shadow: 0 6px 16px rgba(30, 60, 110, .18);
-            cursor: pointer;
-            touch-action: manipulation
-        }
-
-        .back {
-            top: max(14px, env(safe-area-inset-top));
-            right: 16px;
-            font-size: 18px;
-            text-decoration: none;
-            display: flex;
-            align-items: center
-        }
-
-        .legend {
-            left: 16px;
-            bottom: max(16px, env(safe-area-inset-bottom));
-            width: 300px;
-            max-height: min(58vh, 560px);
-            overflow: auto;
-            -webkit-overflow-scrolling: touch;
-            padding: 10px;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, .9);
-            box-shadow: 0 10px 26px rgba(30, 60, 110, .2)
-        }
-
-        .legend button {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            min-height: 44px;
-            padding: 4px 8px;
-            border: 0;
-            border-radius: 10px;
-            background: none;
-            font: inherit;
-            font-size: 18px;
-            color: #1d2f52;
-            text-align: left;
-            cursor: pointer;
-            touch-action: manipulation
-        }
-
-        .legend button b {
-            display: grid;
-            place-items: center;
-            flex: 0 0 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #ef3b4d;
-            color: #fff;
-            font-size: 16px
-        }
-
-        .legend button.on {
-            background: #fff3cc
-        }
-
-        .legend button.on b {
-            background: #ffb400
-        }
-
-        .info {
-            left: 50%;
-            top: max(84px, calc(env(safe-area-inset-top) + 70px));
-            transform: translateX(-50%);
-            display: none;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 18px;
-            border-radius: 16px;
-            background: #fff;
-            box-shadow: 0 12px 28px rgba(30, 60, 110, .25);
-            font-size: 22px;
-            font-weight: 800
-        }
-
-        .info.show {
-            display: flex
-        }
-
-        .info b {
-            display: grid;
-            place-items: center;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: #ffb400;
-            color: #fff
-        }
-
-        .hint {
-            left: 50%;
-            bottom: max(18px, env(safe-area-inset-bottom));
-            transform: translateX(-50%);
-            padding: 6px 16px;
-            border-radius: 999px;
-            background: rgba(29, 47, 82, .75);
-            color: #fff;
-            font-size: 16px;
-            pointer-events: none
-        }
-
-        body.has-legend #scene {
-            left: calc(50% + 160px)
-        }
-
-        .legend-toggle {
-            left: 16px;
-            bottom: max(16px, env(safe-area-inset-bottom));
-            min-height: 48px;
-            padding: 0 18px;
-            border: 0;
-            border-radius: 14px;
-            background: #fff;
-            color: #1d2f52;
-            font: inherit;
-            font-size: 19px;
-            font-weight: 800;
-            box-shadow: 0 6px 16px rgba(30, 60, 110, .18);
-            cursor: pointer
-        }
-
-        body.has-legend .legend-toggle {
-            display: none
-        }
-
-        body:not(.has-legend) .legend {
-            display: none
-        }
-
-        .legend-close {
-            position: sticky;
-            top: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2px 6px 6px;
-            background: rgba(255, 255, 255, .95);
-            font-weight: 800;
-            font-size: 19px
-        }
-
-        .legend-close button {
-            width: auto;
-            min-height: 40px;
-            padding: 0 12px;
-            background: #eef3fb;
-            font-size: 16px;
-            justify-content: center
-        }
-
-        @media (max-width:900px) {
-            body.has-legend #scene {
-                left: 50%
-            }
-            .legend {
-                width: 240px;
-                max-height: 40vh
-            }
-            .legend button {
-                font-size: 16px
-            }
-            .hint {
-                display: none
-            }
-        }
-
-        /* ===== ความมีชีวิตชีวา: เมฆ นก ธงปลิว คนเดิน ต้นไม้ไหว ของประกอบฉาก ===== */
-        .flagp::after {
-            transform-origin: 0 50%;
-            animation: flag 1.6s ease-in-out infinite
-        }
-
-        @keyframes flag {
-            0%, 100% { transform: skewY(0) scaleX(1) }
-            50% { transform: skewY(-6deg) scaleX(.9) }
-        }
-
-        .tree b {
-            transform-origin: 50% 100%;
-            animation: sway 3.4s ease-in-out infinite
-        }
-
-        @keyframes sway {
-            0%, 100% { transform: rotate(-2deg) }
-            50% { transform: rotate(2.5deg) }
-        }
-
-        .bush {
-            width: 12px;
-            height: 8px;
-            border-radius: 50% 50% 40% 40%;
-            background: radial-gradient(circle at 40% 35%, #9be38a, #4aa24f)
-        }
-
-        .hedge {
-            background: repeating-linear-gradient(90deg, #4aa24f 0 6px, #5fb85c 6px 12px);
-            border-radius: 4px
-        }
-
-        .shadow {
-            position: absolute;
-            width: 120px;
-            height: 60px;
-            border-radius: 50%;
-            background: radial-gradient(ellipse, rgba(30, 50, 80, .18), transparent 70%);
-            animation: drift 60s linear infinite
-        }
-
-        @keyframes drift {
-            from { transform: translateX(-200px) }
-            to { transform: translateX(1300px) }
-        }
-
-        .cloud {
-            width: 70px;
-            height: 26px;
-            border-radius: 20px;
-            background: #fff;
-            opacity: .9;
-            box-shadow: 18px -10px 0 4px #fff, -16px -4px 0 0 #fff
-        }
-
-        .bird {
-            font-size: 12px;
-            color: #445;
-            letter-spacing: 6px;
-            white-space: nowrap
-        }
-
-        .mover {
-            white-space: nowrap
-        }
-
-        .mover.flip {
-            transform: scaleX(-1)
-        }
-
-        .goal {
-            width: 22px;
-            height: 10px;
-            border: 2px solid #fff;
-            border-bottom: 0
-        }
-
-        .bench {
-            width: 12px;
-            height: 5px;
-            background: #8a5a36;
-            border-radius: 2px
-        }
-
-        .pond {
-            overflow: hidden
-        }
-
-        .pond::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .55) 45%, transparent 60%);
-            background-size: 250% 100%;
-            animation: shine 5s linear infinite
-        }
-
-        @keyframes shine {
-            from { background-position: 150% 0 }
-            to { background-position: -100% 0 }
-        }
-
-        @media (prefers-reduced-motion:reduce) {
-            .flagp::after,
-            .tree b,
-            .shadow,
-            .pond::after {
-                animation: none
-            }
-        }
-
-        /* ซ่อนปุ่มควบคุมกล้อง (ใช้นิ้ว/เมาส์/คีย์บอร์ดแทน) */
-        .pad,
-        .ctrl {
-            display: none !important
-        }
-
-        /* แผงข้อมูลกิจกรรม (แตะอาคาร → ซูมเข้า + แสดงรายการ) */
-        .panel {
-            right: 16px;
-            top: max(90px, calc(env(safe-area-inset-top) + 76px));
-            bottom: max(16px, env(safe-area-inset-bottom));
-            width: min(380px, calc(100vw - 32px));
-            display: none;
-            flex-direction: column;
-            padding: 16px 16px 10px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, .96);
-            box-shadow: 0 16px 40px rgba(30, 60, 110, .28)
-        }
-
-        .panel.show {
-            display: flex;
-            animation: pin .35s ease
-        }
-
-        @keyframes pin {
-            from {
-                opacity: 0;
-                transform: translateX(20px)
-            }
-            to {
-                opacity: 1;
-                transform: none
-            }
-        }
-
-        .pclose {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 40px;
-            height: 40px;
-            border: 0;
-            border-radius: 12px;
-            background: #eef3fb;
-            font-size: 18px;
-            cursor: pointer
-        }
-
-        .phead {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            padding-right: 44px
-        }
-
-        .phead b {
-            display: grid;
-            place-items: center;
-            flex: 0 0 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: #ffb400;
-            color: #fff;
-            font-size: 20px
-        }
-
-        .phead h2 {
-            margin: 0;
-            font-size: 24px;
-            line-height: 1.15
-        }
-
-        .phead p {
-            margin: 2px 0 0;
-            font-size: 16px;
-            color: #50648a
-        }
-
-        .pdate {
-            margin: 10px 0 6px;
-            font-size: 15px;
-            font-weight: 700;
-            color: #c07a00
-        }
-
-        .plist {
-            overflow: auto;
-            -webkit-overflow-scrolling: touch;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding-bottom: 6px
-        }
-
-        .pitem {
-            padding: 10px 12px;
-            border-radius: 14px;
-            background: #f3f7fd;
-            border: 1px solid #e1e9f5
-        }
-
-        .pitem .rm {
-            display: inline-block;
-            padding: 1px 10px;
-            border-radius: 999px;
-            background: #1d4f9e;
-            color: #fff;
-            font-size: 15px;
-            font-weight: 800
-        }
-
-        .pitem .ac {
-            margin: 5px 0 2px;
-            font-size: 19px;
-            font-weight: 800;
-            line-height: 1.25
-        }
-
-        .pitem .pl,
-        .pitem .tc {
-            margin: 0;
-            font-size: 15.5px;
-            color: #50648a;
-            line-height: 1.35
-        }
-
-        .pempty {
-            padding: 14px;
-            border-radius: 14px;
-            background: #f7f7fa;
-            color: #7a8499;
-            font-size: 16px
-        }
-
-        @media (max-width:700px) {
-            .panel {
-                top: auto;
-                height: 52vh
-            }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ผังโรงเรียนสันทรายวิทยาคม 3 มิติ</title>
+<link rel="stylesheet" href="/fonts/th-sarabun.css">
+<style>
+/* ผังโรงเรียน 3 มิติ — ใช้ CSS 3D ล้วน ไม่ต้องโหลดไลบรารี (ทำงานออฟไลน์ได้ ลื่นบน iPad)
+   แก้ชื่อ/ตำแหน่ง/ขนาดอาคารได้ที่ตัวแปร B ในสคริปต์ด้านล่าง (หน่วย: 1 = 5px) */
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:radial-gradient(ellipse at 50% 30%,#eaf4ff 0%,#cfe3f7 55%,#b7d2ee 100%);
+  font-family:'TH SarabunPSK Web','TH SarabunPSK',Tahoma,sans-serif;color:#1d2f52;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+#view{position:absolute;inset:0;perspective:2200px;perspective-origin:50% 42%;touch-action:none;cursor:grab;overflow:hidden}
+#view:active{cursor:grabbing}
+#scene{position:absolute;left:50%;top:50%;width:1980px;height:347px;margin:-174px 0 0 -990px;transform-style:preserve-3d}
+#scene *{transform-style:preserve-3d}
+.ground{position:absolute;inset:-14px;border-radius:26px;background:#bfe3a9;box-shadow:0 0 0 12px #a9d493}
+.flat{position:absolute}
+.road{background:#8f98a8}
+.road::after{height:1.5px!important;margin-top:-.75px!important}
+.road::after{content:'';position:absolute;left:0;right:0;top:50%;height:3px;margin-top:-1.5px;background:repeating-linear-gradient(90deg,#fff 0 12px,transparent 12px 24px);opacity:.85}
+.road.v::after{left:50%;right:auto;top:0;bottom:0;width:3px;height:auto;margin:0 0 0 -1.5px;background:repeating-linear-gradient(180deg,#fff 0 22px,transparent 22px 44px)}
+.pave{background:repeating-linear-gradient(45deg,#e7d7c3 0 10px,#dcc8b0 10px 20px)}
+.field{background:repeating-linear-gradient(90deg,#63c46e 0 34px,#58b863 34px 68px);border:4px solid #fff}
+.field::before{content:'';position:absolute;left:50%;top:0;bottom:0;border-left:3px solid #fff}
+.field::after{content:'';position:absolute;left:50%;top:50%;width:50px;height:50px;margin:-25px;border:3px solid #fff;border-radius:50%}
+.farm{background:repeating-linear-gradient(0deg,#9bc45a 0 9px,#7a5a36 9px 13px)}
+.garden{background:#8fd17a;border-radius:14px}
+.court{background:linear-gradient(90deg,#5b7fd6 0 50%,#e89a52 50%);border:2px solid #fff}
+.pond{background:radial-gradient(ellipse at 40% 40%,#b9e8d9,#7fcbb6);border-radius:30px}
+.b{position:absolute;cursor:pointer}
+.f{position:absolute;backface-visibility:visible}
+.wall{background-color:var(--w)}
+.wall.win{background-image:repeating-linear-gradient(90deg,transparent 0 10px,rgba(60,90,140,.45) 10px 18px,transparent 18px 26px),
+  repeating-linear-gradient(0deg,transparent 0 12px,rgba(255,255,255,0) 12px 30px)}
+.wall.win::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,var(--w) 0 calc(var(--fl) * .3),rgba(255,255,255,0) calc(var(--fl) * .3) calc(var(--fl) * .72),var(--w) calc(var(--fl) * .72) var(--fl))}
+.shade1{filter:brightness(.92)}.shade2{filter:brightness(.8)}
+.roof{background-color:var(--r);background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.08) 0 2px,transparent 2px 12px)}
+.b.on .f{outline:3px solid #ffcf3f}
+.glass{background:linear-gradient(135deg,#7fe0d6,#2aa39a);background-image:linear-gradient(135deg,rgba(255,255,255,.35),transparent 60%),repeating-linear-gradient(90deg,#2fb3a8 0 14px,#1f8f86 14px 16px)}
+.bb{position:absolute;width:0;height:0}
+.bb>*{position:absolute;left:0;bottom:0;transform:translateX(-50%)}
+.tree{width:16px;height:24px}
+.tree i{position:absolute;left:6.5px;bottom:0;width:3px;height:8px;background:#7a5230}
+.tree b{position:absolute;left:0;bottom:6px;width:16px;height:17px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#8fe07c,#3f9e45)}
+.pin{display:flex;flex-direction:column;align-items:center;cursor:pointer;pointer-events:auto}
+.pin span{display:grid;place-items:center;min-width:28px;height:28px;padding:0 6px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#ef3b4d;box-shadow:0 4px 10px rgba(0,0,0,.3);border:2px solid #fff}
+.pin span em{transform:rotate(45deg);font-style:normal;color:#fff;font-weight:800;font-size:16px;line-height:1}
+.pin.on span{background:#ffb400}
+.shutter.side{left:0;right:auto;top:20%;bottom:20%;width:72%;height:auto;background:repeating-linear-gradient(90deg,#9aa3b2 0 2px,#c7ccd6 2px 4px)}
+.shutter{position:absolute;left:18%;right:18%;top:0;height:72%;background:repeating-linear-gradient(0deg,#9aa3b2 0 2px,#c7ccd6 2px 4px);border:1.5px solid #6b7385}
+.wc{display:grid;place-items:center;width:24px;height:24px;border-radius:7px;background:#2f6fd6;border:2px solid #fff;font-size:14px;line-height:1;box-shadow:0 3px 8px rgba(0,0,0,.3)}
+.flagp{width:3px;height:50px;background:#ccc}
+.flagp::after{content:'';position:absolute;left:3px;top:0;width:22px;height:14px;background:linear-gradient(#e33 0 20%,#fff 20% 36%,#2b3f8f 36% 64%,#fff 64% 80%,#e33 80%)}
+
+/* UI */
+.ui{position:absolute;z-index:5}
+.title{top:max(14px,env(safe-area-inset-top));left:16px;padding:8px 18px;border-radius:16px;background:rgba(255,255,255,.85);box-shadow:0 8px 20px rgba(30,60,110,.15)}
+.title h1{margin:0;font-size:26px;line-height:1.1}.title p{margin:0;font-size:16px;color:#50648a}
+.pad{right:16px;bottom:calc(max(16px,env(safe-area-inset-bottom)) + 62px);display:grid;grid-template-columns:repeat(3,48px);gap:6px}
+.pad button{min-height:48px;border:0;border-radius:14px;background:rgba(255,255,255,.92);color:#1d2f52;font:inherit;font-size:20px;font-weight:800;box-shadow:0 6px 16px rgba(30,60,110,.18);touch-action:none;cursor:pointer}
+.pad button:active{background:#ffe39a}
+.ctrl{right:16px;bottom:max(16px,env(safe-area-inset-bottom));display:flex;gap:10px}
+.ctrl button,.back{min-width:48px;min-height:48px;padding:0 14px;border:0;border-radius:14px;background:rgba(255,255,255,.92);color:#1d2f52;font:inherit;font-size:22px;font-weight:800;box-shadow:0 6px 16px rgba(30,60,110,.18);cursor:pointer;touch-action:manipulation}
+.back{top:max(14px,env(safe-area-inset-top));right:16px;font-size:18px;text-decoration:none;display:flex;align-items:center}
+.legend{left:16px;bottom:max(16px,env(safe-area-inset-bottom));width:300px;max-height:min(58vh,560px);overflow:auto;-webkit-overflow-scrolling:touch;padding:10px;border-radius:18px;background:rgba(255,255,255,.9);box-shadow:0 10px 26px rgba(30,60,110,.2)}
+.legend button{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:4px 8px;border:0;border-radius:10px;background:none;font:inherit;font-size:18px;color:#1d2f52;text-align:left;cursor:pointer;touch-action:manipulation}
+.legend button b{display:grid;place-items:center;flex:0 0 30px;height:30px;border-radius:50%;background:#ef3b4d;color:#fff;font-size:16px}
+.legend button.on{background:#fff3cc}
+.legend button.on b{background:#ffb400}
+.info{left:50%;top:max(84px,calc(env(safe-area-inset-top) + 70px));transform:translateX(-50%);display:none;align-items:center;gap:12px;padding:10px 18px;border-radius:16px;background:#fff;box-shadow:0 12px 28px rgba(30,60,110,.25);font-size:22px;font-weight:800}
+.info.show{display:flex}.info b{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#ffb400;color:#fff}
+.hint{left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);padding:6px 16px;border-radius:999px;background:rgba(29,47,82,.75);color:#fff;font-size:16px;pointer-events:none}
+body.has-legend #scene{left:calc(50% + 160px)}
+.legend-toggle{left:16px;bottom:max(16px,env(safe-area-inset-bottom));min-height:48px;padding:0 18px;border:0;border-radius:14px;background:#fff;color:#1d2f52;font:inherit;font-size:19px;font-weight:800;box-shadow:0 6px 16px rgba(30,60,110,.18);cursor:pointer}
+body.has-legend .legend-toggle{display:none}
+body:not(.has-legend) .legend{display:none}
+.legend-close{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:2px 6px 6px;background:rgba(255,255,255,.95);font-weight:800;font-size:19px}
+.legend-close button{width:auto;min-height:40px;padding:0 12px;background:#eef3fb;font-size:16px;justify-content:center}
+@media (max-width:900px){body.has-legend #scene{left:50%}.legend{width:240px;max-height:40vh}.legend button{font-size:16px}.hint{display:none}}
+
+/* ===== ความมีชีวิตชีวา: เมฆ นก ธงปลิว คน/รถวิ่ง ต้นไม้ไหว ของประกอบฉาก ===== */
+.flagp::after{transform-origin:0 50%;animation:flag 1.6s ease-in-out infinite}
+@keyframes flag{0%,100%{transform:skewY(0) scaleX(1)}50%{transform:skewY(-6deg) scaleX(.9)}}
+.tree b{transform-origin:50% 100%;animation:sway 3.4s ease-in-out infinite}
+.tree.t2 b{background:radial-gradient(circle at 35% 30%,#a8e88a,#5bb04a)}.tree.t3 b{background:radial-gradient(circle at 35% 30%,#7fd18f,#2f8a52);border-radius:50% 50% 45% 45%/60% 60% 40% 40%}
+.tree.big{transform:scale(1.35);transform-origin:50% 100%}.tree.small{transform:scale(.75);transform-origin:50% 100%}
+@keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2.5deg)}}
+.bush{width:12px;height:8px;border-radius:50% 50% 40% 40%;background:radial-gradient(circle at 40% 35%,#9be38a,#4aa24f)}
+.hedge{background:repeating-linear-gradient(90deg,#4aa24f 0 6px,#5fb85c 6px 12px);border-radius:4px}
+.shadow{position:absolute;width:120px;height:60px;border-radius:50%;background:radial-gradient(ellipse,rgba(30,50,80,.18),transparent 70%);animation:drift 60s linear infinite}
+@keyframes drift{from{transform:translateX(-200px)}to{transform:translateX(1300px)}}
+.cloud{width:70px;height:26px;border-radius:20px;background:#fff;opacity:.9;box-shadow:18px -10px 0 4px #fff,-16px -4px 0 0 #fff}
+.bird{font-size:12px;color:#445;letter-spacing:6px;white-space:nowrap}.mover,.walker{white-space:nowrap}
+.mover{font-size:20px;line-height:1;filter:drop-shadow(0 2px 2px rgba(0,0,0,.3))}
+.mover.flip{transform:scaleX(-1)}
+.walker{font-size:13px;line-height:1}
+.goal{width:22px;height:10px;border:2px solid #fff;border-bottom:0}
+.bench{width:12px;height:5px;background:#8a5a36;border-radius:2px}
+.pond{overflow:hidden}.pond::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.55) 45%,transparent 60%);background-size:250% 100%;animation:shine 5s linear infinite}
+@keyframes shine{from{background-position:150% 0}to{background-position:-100% 0}}
+@media (prefers-reduced-motion:reduce){.flagp::after,.tree b,.shadow,.pond::after{animation:none}}
+/* ซ่อนปุ่มควบคุมกล้อง (ใช้นิ้ว/เมาส์/คีย์บอร์ดแทน) */
+.pad,.ctrl{display:none!important}
+
+/* แผงข้อมูลกิจกรรม (แตะอาคาร → ซูมเข้า + แสดงรายการ) */
+.panel{right:16px;top:max(90px,calc(env(safe-area-inset-top) + 76px));bottom:max(16px,env(safe-area-inset-bottom));width:min(380px,calc(100vw - 32px));display:none;flex-direction:column;padding:16px 16px 10px;border-radius:20px;background:rgba(255,255,255,.96);box-shadow:0 16px 40px rgba(30,60,110,.28)}
+.panel.show{display:flex;animation:pin .35s ease}
+@keyframes pin{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+.pclose{position:absolute;top:10px;right:10px;width:40px;height:40px;border:0;border-radius:12px;background:#eef3fb;font-size:18px;cursor:pointer}
+.phead{display:flex;gap:12px;align-items:center;padding-right:44px}
+.phead b{display:grid;place-items:center;flex:0 0 44px;height:44px;border-radius:50%;background:#ffb400;color:#fff;font-size:20px}
+.phead h2{margin:0;font-size:24px;line-height:1.15}.phead p{margin:2px 0 0;font-size:16px;color:#50648a}
+.pdate{margin:10px 0 6px;font-size:15px;font-weight:700;color:#c07a00}
+.plist{overflow:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:8px;padding-bottom:6px}
+.pitem{padding:10px 12px;border-radius:14px;background:#f3f7fd;border:1px solid #e1e9f5}
+.pitem .rm{display:inline-block;padding:1px 10px;border-radius:999px;background:#1d4f9e;color:#fff;font-size:15px;font-weight:800}
+.pitem .ac{margin:5px 0 2px;font-size:19px;font-weight:800;line-height:1.25}
+.pitem .pl,.pitem .tc{margin:0;font-size:15.5px;color:#50648a;line-height:1.35}
+.pempty{padding:14px;border-radius:14px;background:#f7f7fa;color:#7a8499;font-size:16px}
+@media (max-width:700px){.panel{top:auto;height:52vh}}
+</style>
 </head>
-
 <body>
-    <div id="view">
-        <div id="scene"></div>
-    </div>
-    <div class="ui title">
-        <h1>ผังโรงเรียนสันทรายวิทยาคม</h1>
-        <p>ลาก 1 นิ้วซ้าย-ขวา = หมุน · 2 นิ้ว = ซูม/เลื่อน</p>
-    </div>
-    <a class="ui back" href="/" target="_top">‹ กลับหน้าหลัก</a>
-    <div class="ui legend" id="legend">
-        <div class="legend-close">รายชื่ออาคาร<button type="button" id="lclose">ซ่อน ✕</button></div>
-    </div>
-    <button class="ui legend-toggle" id="lopen" type="button">☰ รายชื่ออาคาร</button>
-    
-    <div class="ui panel" id="panel"><button type="button" class="pclose" id="pclose" aria-label="ปิด">✕</button>
-        <div class="phead"><b id="pNo"></b>
-            <div>
-                <h2 id="pName"></h2>
-                <p id="pSub"></p>
-            </div>
-        </div>
-        <p class="pdate">กิจกรรมพัฒนาสมรรถนะ · 24 กันยายน 2569</p>
-        <div class="plist" id="pList"></div>
-    </div>
-    <div class="ui info" id="info" hidden><b id="infoNo"></b><span><span id="infoName"></span><small id="infoSub"
-                style="display:block;font-size:17px;font-weight:600;color:#50648a"></small></span></div>
-    <div class="ui pad" aria-label="ควบคุมกล้อง"><button data-mv="r:-1" aria-label="หมุนซ้าย">↺</button><button
-            data-mv="y:-1" aria-label="เดินหน้า">▲</button><button data-mv="r:1" aria-label="หมุนขวา">↻</button><button
-            data-mv="x:-1" aria-label="ไปซ้าย">◀</button><button data-mv="y:1" aria-label="ถอยหลัง">▼</button><button
-            data-mv="x:1" aria-label="ไปขวา">▶</button><button data-mv="t:-1"
-            aria-label="มองต่ำลง">⤓</button><span></span><button data-mv="t:1" aria-label="มองสูงขึ้น">⤒</button></div>
-    <div class="ui ctrl"><button id="zin" aria-label="ซูมเข้า">+</button><button id="zout"
-            aria-label="ซูมออก">−</button><button id="reset" aria-label="มุมมองเริ่มต้น">⟲</button></div>
-    <div class="ui hint">แตะอาคารเพื่อดูกิจกรรมพัฒนาสมรรถนะ</div>
-    
-    <script>
-        const U = 0.99, SY = 1, UY = U * SY, RW = 1.7;
-        const B = [
-            { n: 1, t: 'อาคาร 1 อาคารศรีสันทราย', x: 510, y: 2, w: 335, d: 62, h: 48, s: 'gable', wc: '#fbeede', rc: '#6f7480', win: 1, fl: 2 },
-            { n: 2, t: 'อาคารอุตสาหกรรม', x: 920, y: 2, w: 125, d: 72, h: 24, s: 'gable', wc: '#f3dfc8', rc: '#7d8391', fl: 1, win: 1 },
-            { n: 3, t: 'อาคารคหกรรม', x: 1060, y: 10, w: 118, d: 64, h: 24, s: 'gable', wc: '#ffd9a0', rc: '#8a8f99', fl: 1, win: 1 },
-            { n: 4, t: 'ห้องดนตรี', x: 1184, y: 4, w: 46, d: 38, h: 24, s: 'gable', wc: '#b9c8f0', rc: '#555b6c', fl: 1, win: 1 },
-            { n: 5, t: 'ห้องภาษาจีน/ภาษาญี่ปุ่น', x: 1236, y: 4, w: 54, d: 38, h: 24, s: 'gable', wc: '#ffe08a', rc: '#c4453f', fl: 1, win: 1 },
-            { n: 6, t: 'โรงพลศึกษา', x: 500, y: 115, w: 100, d: 130, h: 48, s: 'flat', wc: '#e3e6ec', rc: '#eef0f4', doors: 1, desc: 'อาคารโล่ง มีประตูม้วนเลื่อนขึ้นลงด้านหน้าและด้านหลัง' },
-            { n: 7, t: 'โดมสันทราย', x: 750, y: 122, w: 155, d: 118, h: 44, s: 'vault', wc: '#ffffff', rc: '#e6e9ef', desc: 'โดมสูงสำหรับให้นักเรียนเข้าแถว' },
-            { n: 8, t: 'หอประชุมเฉลิมพระเกียรติ', x: 1025, y: 115, w: 150, d: 100, h: 48, s: 'gable', wc: '#ffffff', rc: '#345ca8', win: 1, fl: 1, desc: 'ชั้นล่าง: โรงอาหาร · ชั้นบน: หอประชุม', lift: 24, pw: 8, pave: true },
-            { n: 9, t: 'อาคาร To be Number One', x: 1195, y: 120, w: 60, d: 40, h: 24, s: 'gable', wc: '#fff4e2', rc: '#9aa0ab', fl: 1, win: 1 },
-            { n: 10, t: 'อาคาร 4 อาคาร 45 ปีสันทราย (ศิษย์ชื่นบาน)', x: 1330, y: 148, w: 245, d: 64, h: 96, s: 'gable', wc: '#f6ecd6', rc: '#c8574a', win: 1, fl: 4 },
-            { n: 11, t: 'เรือนเกษตร', x: 1622, y: 150, w: 78, d: 48, h: 26, s: 'gable', wc: '#a8744a', rc: '#6b3f22', lift: 24, fl: 2, desc: 'บ้านไม้ทรงไทย มีใต้ถุน' },
-            { n: 22, t: 'บ้านดิน', x: 1622, y: 102, w: 54, d: 44, h: 20, s: 'flat', wc: '#c28e64', rc: '#9c6a46', fl: 1, desc: 'อาคาร 1 ชั้น' },
-            { n: 12, t: 'อาคาร 5', x: 1330, y: 262, w: 245, d: 73, h: 72, s: 'gable', wc: '#dfe6f8', rc: '#7d7fbf', win: 1, fl: 3 },
-            { n: 13, t: 'อาคาร 3 อาคารสร้อยดอกหมาก', x: 905, y: 260, w: 300, d: 75, h: 72, s: 'gable', wc: '#e9f3ef', rc: '#5f636e', win: 1, fl: 3 },
-            { n: 14, t: 'อาคารเรียนรวม', x: 843, y: 318, w: 38, d: 33, h: 24, s: 'gable', wc: '#d7c3ad', rc: '#555b6c', fl: 1, win: 1 },
-            { n: 15, t: 'อาคาร 2 อาคารสายธาร', x: 575, y: 262, w: 263, d: 73, h: 72, s: 'gable', wc: '#f3d3e2', rc: '#6f7480', win: 1, fl: 3 },
-            { n: 16, t: 'อาคาร 40 ปี สันทราย', x: 535, y: 295, w: 40, d: 56, h: 24, s: 'gable', wc: '#e6e9f2', rc: '#6b7385', fl: 1, win: 1 },
-            { n: 17, t: 'ลานเพรงบุญ', x: 612, y: 108, w: 130, d: 100, h: 0, s: 'plaza' },
-            { n: 18, t: 'สนามกีฬาอาคาร 5', x: 1385, y: 226, w: 60, d: 28, h: 0, s: 'plaza' },
-            { n: 21, t: 'ลานเสาธง', x: 958, y: 148, w: 54, d: 36, h: 4, s: 'flat', wc: '#d9d2c4', rc: '#efe9dd', desc: 'แท่นสำหรับให้นักเรียนเชิญธงชาติ' },
-            { n: 0, x: 485, y: 300, w: 46, d: 40, h: 24, s: 'gable', wc: '#e6e9f2', rc: '#6b7385', nowc: 1 },
-            { n: 0, x: 976, y: 159, w: 18, d: 12, h: 9, s: 'flat', wc: '#e9e4da', rc: '#f8f4ec', nowc: 1 },
-            { n: 0, t: 'สหกรณ์ + ป้อมยาม', x: 30, y: 298, w: 48, d: 36, h: 24, s: 'flat', wc: '#fff1d6', rc: '#c9b79c', win: 1, nowc: 1 },
-            { n: 0, t: 'ศาลารอรถนักเรียน', x: 85, y: 300, w: 52, d: 30, h: 3, s: 'gable', wc: '#b07a4a', rc: '#a0522d', lift: 22, nowc: 1 },
-            { n: 19, t: 'คาเฟ่ สาขา 1', x: 40, y: 22, w: 44, d: 32, h: 24, s: 'flat', wc: '#f3e0c8', rc: '#8a5a3c', win: 1 },
-            { n: 0, x: 455, y: 2, w: 52, d: 38, h: 26, s: 'gable', wc: '#eef0f4', rc: '#8a8f99' },
-            { n: 0, x: 848, y: 6, w: 70, d: 52, h: 30, s: 'gable', wc: '#eef0f4', rc: '#6c79a8' },
-            { n: 0, x: 1195, y: 122, w: 0, d: 0, h: 0, s: 'none' },
-            { n: 0, x: 882, y: 300, w: 22, d: 51, h: 26, s: 'flat', wc: '#eef0f4', rc: '#8a8f99' },
-            { n: 0, x: 1215, y: 318, w: 46, d: 33, h: 24, s: 'flat', wc: '#eef0f4', rc: '#8a8f99' }
-        ].filter(b => b.s !== 'none');
+<div id="view"><div id="scene"></div></div>
+<div class="ui title"><h1>ผังโรงเรียนสันทรายวิทยาคม</h1><p>ลาก 1 นิ้วซ้าย-ขวา = หมุน · 2 นิ้ว = ซูม/เลื่อน</p></div>
+<a class="ui back" href="/" target="_top">‹ กลับหน้าหลัก</a>
+<div class="ui legend" id="legend"><div class="legend-close">รายชื่ออาคาร<button type="button" id="lclose">ซ่อน ✕</button></div></div>
+<button class="ui legend-toggle" id="lopen" type="button">☰ รายชื่ออาคาร</button>
+<div class="ui panel" id="panel"><button type="button" class="pclose" id="pclose" aria-label="ปิด">✕</button><div class="phead"><b id="pNo"></b><div><h2 id="pName"></h2><p id="pSub"></p></div></div><p class="pdate">กิจกรรมพัฒนาสมรรถนะ · 24 กันยายน 2569</p><div class="plist" id="pList"></div></div>
+<div class="ui info" id="info" hidden><b id="infoNo"></b><span><span id="infoName"></span><small id="infoSub" style="display:block;font-size:17px;font-weight:600;color:#50648a"></small></span></div>
+<div class="ui pad" aria-label="ควบคุมกล้อง"><button data-mv="r:-1" aria-label="หมุนซ้าย">↺</button><button data-mv="y:-1" aria-label="เดินหน้า">▲</button><button data-mv="r:1" aria-label="หมุนขวา">↻</button><button data-mv="x:-1" aria-label="ไปซ้าย">◀</button><button data-mv="y:1" aria-label="ถอยหลัง">▼</button><button data-mv="x:1" aria-label="ไปขวา">▶</button><button data-mv="t:-1" aria-label="มองต่ำลง">⤓</button><span></span><button data-mv="t:1" aria-label="มองสูงขึ้น">⤒</button></div>
+<div class="ui ctrl"><button id="zin" aria-label="ซูมเข้า">+</button><button id="zout" aria-label="ซูมออก">−</button><button id="reset" aria-label="มุมมองเริ่มต้น">⟲</button></div>
+<div class="ui hint">แตะอาคารเพื่อดูกิจกรรมพัฒนาสมรรถนะ</div>
+<script>
+const U=0.99,SY=1,UY=U*SY,RW=1.7; // SY = ขยายแนวลึกให้ผังดูอ้วนขึ้น (1 = ตามภาพจริง)
+ // พิกัดอ้างอิงตามพิกเซลของภาพดาวเทียม (กว้าง 2000 × สูง 351) × 0.55
+/* อาคาร: n เลข (0 = อาคารไม่มีเลข), t ชื่อ, x y w d = ตำแหน่ง/ขนาดจากภาพดาวเทียม, h ความสูง (ประมาณ), s รูปทรง, wc/rc สีผนัง/หลังคา */
+const B=[
+ {n:1,t:'อาคาร 1 อาคารศรีสันทราย',x:510,y:2,w:335,d:62,h:48,s:'gable',wc:'#fbeede',rc:'#6f7480',win:1,fl:2},
+ {n:2,t:'อาคารอุตสาหกรรม',x:920,y:2,w:125,d:72,h:24,s:'gable',wc:'#f3dfc8',rc:'#7d8391',fl:1,win:1},
+ {n:3,t:'อาคารคหกรรม',x:1060,y:10,w:118,d:64,h:24,s:'gable',wc:'#ffd9a0',rc:'#8a8f99',fl:1,win:1},
+ {n:4,t:'ห้องดนตรี',x:1184,y:4,w:46,d:38,h:24,s:'gable',wc:'#b9c8f0',rc:'#555b6c',fl:1,win:1},
+ {n:5,t:'ห้องภาษาจีน/ภาษาญี่ปุ่น',x:1236,y:4,w:54,d:38,h:24,s:'gable',wc:'#ffe08a',rc:'#c4453f',fl:1,win:1},
+ {n:6,t:'โรงพลศึกษา',x:500,y:115,w:100,d:130,h:48,s:'flat',wc:'#e3e6ec',rc:'#eef0f4',doors:1,desc:'อาคารโล่ง มีประตูม้วนเลื่อนขึ้นลงด้านหน้าและด้านหลัง'},
+ {n:7,t:'โดมสันทราย',x:750,y:122,w:155,d:118,h:44,s:'vault',wc:'#ffffff',rc:'#e6e9ef',desc:'โดมสูงสำหรับให้นักเรียนเข้าแถว'},
+ {n:8,t:'หอประชุมเฉลิมพระเกียรติ',x:1025,y:115,w:150,d:100,h:48,s:'gable',wc:'#efe3cf',rc:'#c5584c',win:1,fl:2,desc:'ชั้นล่าง: โรงอาหาร · ชั้นบน: หอประชุม'},
+ {n:9,t:'อาคาร To be Number One',x:1195,y:120,w:60,d:40,h:24,s:'gable',wc:'#fff4e2',rc:'#9aa0ab',fl:1,win:1},
+ {n:10,t:'อาคาร 4 อาคาร 45 ปีสันทราย',x:1330,y:148,w:245,d:64,h:96,s:'gable',wc:'#f6ecd6',rc:'#c8574a',win:1,fl:4},
+ {n:11,t:'เรือนเกษตร',x:1622,y:150,w:78,d:48,h:26,s:'gable',wc:'#a8744a',rc:'#6b3f22',lift:24,fl:2,desc:'บ้านไม้ทรงไทย มีใต้ถุน'},
+ {n:12,t:'อาคาร 5',x:1330,y:262,w:245,d:73,h:72,s:'gable',wc:'#dfe6f8',rc:'#7d7fbf',win:1,fl:3},
+ {n:13,t:'อาคาร 3 อาคารสร้อยดอกหมาก',x:905,y:260,w:300,d:75,h:72,s:'gable',wc:'#e9f3ef',rc:'#5f636e',win:1,fl:3},
+ {n:14,t:'อาคารเรียนรวม',x:843,y:318,w:38,d:33,h:24,s:'gable',wc:'#d7c3ad',rc:'#555b6c',fl:1,win:1},
+ {n:15,t:'อาคาร 2 อาคารสายธาร',x:575,y:262,w:263,d:73,h:72,s:'gable',wc:'#f3d3e2',rc:'#6f7480',win:1,fl:3},
+ {n:16,t:'อาคาร 40 ปี สันทราย',x:535,y:295,w:40,d:56,h:24,s:'gable',wc:'#e6e9f2',rc:'#6b7385',fl:1,win:1},
+ {n:17,t:'ลานเพรงบุญ',x:612,y:108,w:130,d:100,h:0,s:'plaza'},
+ {n:0,x:485,y:300,w:46,d:40,h:24,s:'gable',wc:'#e6e9f2',rc:'#6b7385',nowc:1},
+ {n:21,t:'ลานเสาธง',x:958,y:148,w:54,d:36,h:4,s:'flat',wc:'#d9d2c4',rc:'#efe9dd',desc:'แท่นสำหรับให้นักเรียนเชิญธงชาติ'},
+ {n:0,x:976,y:159,w:18,d:12,h:9,s:'flat',wc:'#e9e4da',rc:'#f8f4ec',nowc:1},
+ {n:0,t:'สหกรณ์ + ป้อมยาม',x:30,y:298,w:48,d:36,h:24,s:'flat',wc:'#fff1d6',rc:'#c9b79c',win:1,nowc:1},
+ {n:0,t:'ศาลารอรถนักเรียน',x:85,y:300,w:52,d:30,h:3,s:'gable',wc:'#b07a4a',rc:'#a0522d',lift:22,nowc:1},
+ {n:0,t:'ร้านกาแฟ + ป้อมยาม',x:40,y:22,w:44,d:32,h:24,s:'flat',wc:'#f3e0c8',rc:'#8a5a3c',win:1,nowc:1},
+ {n:0,x:455,y:2,w:52,d:38,h:26,s:'gable',wc:'#eef0f4',rc:'#8a8f99'},
+ {n:0,x:848,y:6,w:70,d:52,h:30,s:'gable',wc:'#eef0f4',rc:'#6c79a8'},
+ {n:0,x:1195,y:122,w:0,d:0,h:0,s:'none'},
+ {n:0,x:882,y:300,w:22,d:51,h:26,s:'flat',wc:'#eef0f4',rc:'#8a8f99'},
+ {n:0,x:1215,y:318,w:46,d:33,h:24,s:'flat',wc:'#eef0f4',rc:'#8a8f99'}
+].filter(b=>b.s!=='none');
+const FLAT=[
+ ['field',60,45,380,205],
+ ['road',440,82,1560,18],['road',480,247,832,12],['road',1305,336,287,11],['road',20,265,470,14],['road v',480,90,16,190],
+ ['road v',1305,100,14,250],['road v',1592,100,14,251],['road',0,0,18,351],
+ ['court',1345,226,225,28],['farm',1620,212,82,110],['pond',1785,140,205,110],['pond',1785,258,160,93]];
+const TREES=[[1210,200],[1260,190],[1280,240],[450,150],[455,240],[250,262],[150,262],[350,262],[1720,120],[1750,200],[1760,300],[860,250],[1200,95],[620,100],[1500,110],[1450,112],[1650,60],[1800,60],[1900,60],[330,20],[180,20],[40,300],[120,300]];
+/* กิจกรรมพัฒนาสมรรถนะ 24 กันยายน 2569 (จากไฟล์ Excel) — คีย์ = เลขอาคาร, 'field' = สนามฟุตบอล
+   r = สถานที่/ห้อง, p = แผนการเรียน/ห้อง, a = กิจกรรม, t = ครูผู้รับผิดชอบ */
+const ACT={"1": [{"r": "ห้อง 117", "p": "แผนการเรียนภาษาอังกฤษ ม.4", "a": "English Theater", "t": ""}, {"r": "ห้อง 126", "p": "ม.2/9", "a": "ลูกประคบ", "t": ""}, {"r": "ห้อง 127", "p": "ม2/10", "a": "ยาดมสมุนไพร GEN Z", "t": ""}], "15": [{"r": "ห้อง232", "p": "แผนการเรียนไทย-สังคม ม.4-6", "a": "ศาสนาเพื่อสันติภาพ", "t": ""}, {"r": "ห้อง233", "p": "SMT  ม.2/1", "a": "การแปลงทางเรขาคณิตประดิษฐ์", "t": "ครูจินตนา & ครูปรีชา"}, {"r": "ห้อง236", "p": "SMT  ม.1/2", "a": "เกม 24 , ประดิษฐ์โมบาย แกนสมมาตรรูปเรขาคณิต", "t": ""}], "13": [{"r": "ห้อง 311", "p": "SMT  ม.2/2", "a": "สเลอปี้", "t": "ครูภิรญา & ครูนิพรรณ์"}, {"r": "ห้อง 312", "p": "SMT  ม.3/1", "a": "บัวลอย ครบเครื่องเรื่อง STEAM", "t": ""}, {"r": "ห้อง 321", "p": "แผนการเรียนวิทยาศาสตร์-คณิตศาสตร์ ม.6/1", "a": "ติวสู่ฝัน มุ่งเข้ามหาวิทยาลัย", "t": ""}, {"r": "ห้อง 323", "p": "แผนการเรียนวิทยาศาสตร์-คณิตศาสตร์ ม.4/1", "a": "นำเสนอโครงงาน", "t": ""}, {"r": "ห้อง 324", "p": "แผนการเรียนวิทยาศาสตร์-คณิตศาสตร์ ม.5/2", "a": "กิจกรรม Light Maze Challenge", "t": ""}, {"r": "ห้อง 328", "p": "SMT ม.1/1", "a": "รถพลังยาง", "t": "ครูนิภาพร"}, {"r": "ห้อง 331", "p": "ม.2/6 LSS", "a": "จัดทำคลิปนำเสนอประเทศญี่ปุ่น", "t": ""}, {"r": "ห้อง 332", "p": "SCP", "a": "", "t": ""}, {"r": "ห้อง 333", "p": "SCP", "a": "", "t": ""}, {"r": "ห้อง 334", "p": "SCP", "a": "", "t": ""}, {"r": "ห้อง 335", "p": "SCP", "a": "", "t": ""}], "10": [{"r": "ห้อง 421", "p": "แผนการเรียนจีน ม.4/2 (CSP) , ม.4/6", "a": "ภาษาจีนโดยวิทยากรจาก มช.", "t": ""}, {"r": "ห้อง 422", "p": "ม.3/4 LSS", "a": "ภาษาจีน", "t": ""}, {"r": "ห้อง 423", "p": "แผนการเรียนจีน ม.5-6", "a": "การเรียนรู้วัฒนธรรมจีน การเขียนพู่กันจีน", "t": ""}, {"r": "ห้อง 425", "p": "ม.2/4", "a": "ฐานบทเพลงสื่อภาษา", "t": "ครูกลุ่มสาระฯภาษาไทย"}, {"r": "ห้อง 432", "p": "MEP ม.1", "a": "Geometric + 4 skills", "t": ""}, {"r": "ห้อง 433", "p": "ม.1/4 LSS", "a": "ภาษาอังกฤษ", "t": ""}, {"r": "ห้อง 434", "p": "ม.3/9 CEP", "a": "ภาษาอังกฤษ", "t": ""}, {"r": "ห้อง 435", "p": "ม.2/5", "a": "ฐานวรรณคดีไทย", "t": "ครูกลุ่มสาระฯภาษาไทย"}, {"r": "ห้อง 441", "p": "แผนการเรียนภาษาอังกฤษ ม.5", "a": "English Theater", "t": ""}, {"r": "ห้อง 443", "p": "แผนการเรียนภาษาอังกฤษ ม.6", "a": "English Games Creation", "t": ""}, {"r": "ห้อง 444", "p": "ม.3/5", "a": "ฐานต่อคำศัพท์ภาษาไทย (คำคม)", "t": "ครูกลุ่มสาระฯภาษาไทย"}, {"r": "ห้อง 446", "p": "ม.1/5", "a": "ฐานปริศนาภาษาไทย", "t": "ครูกลุ่มสาระฯภาษาไทย"}, {"r": "ห้องดนตรีไทย", "p": "ดนตรีไทย", "a": "", "t": "ครูมิตร"}, {"r": "ห้องศิลปะ", "p": "นักเรียนแผนการเรียนศิลปะ ม.1", "a": "การลงสีย้ำหุ่นนิ่ง", "t": "ครูสุภาพร ครูกฤตภาส"}], "12": [{"r": "ห้อง 522", "p": "แผนการเรียนคณิต-อังกฤษ , แผนการเรียนวิทยาศาสตร์-คณิตศาสตร์ ม.5/1", "a": "กิจกรรมบอร์ดเกมส์คณิตศาสตร์ B.O.N.", "t": ""}, {"r": "ห้อง 523", "p": "แผนการเรียนคณิต-อังกฤษ , แผนการเรียนวิทยาศาสตร์-คณิตศาสตร์ ม.5/2", "a": "กิจกรรม Casio Math การคำนวณทางคณิตศาสตร์ด้วยเครื่องคำนวณ Casio", "t": ""}, {"r": "ห้อง 524", "p": "แผนการเรียนคณิตอังกฤษ", "a": "กิจกรรมความท้าทายทางคณิตศาสตร์ ตอบปัญหาทางคณิตศาสตร์ เร็ว แรง ไม่เกรงใจใคร", "t": ""}, {"r": "ห้อง 524", "p": "แผนการเรียนวิทยาศาสตร์-คณิตศาสตร์ ม.6/2", "a": "ติวสู่ฝัน มุ่งเข้ามหาวิทยาลัย", "t": ""}, {"r": "ห้อง 525", "p": "SMT  ม.3/2", "a": "บอร์ดเกมคณิตศาสตร์", "t": ""}, {"r": "ห้อง 532", "p": "SMT  ม.2/3", "a": "3D Keyscaps", "t": "ครูปิยพล"}, {"r": "ห้อง 534", "p": "SMT  ม.3/3", "a": "สร้างภาพด้วย AI", "t": ""}, {"r": "ห้อง 535", "p": "แผนการเรียนวิทยาศาสตร์คอมพิวเตอร์ ม.6", "a": "", "t": ""}, {"r": "ใต้อาคาร 5 ทิศใต้", "p": "ดนตรีไทย", "a": "", "t": "ครูมิตร"}, {"r": "ใต้อาคาร 5 ทิศเหนือ", "p": "นักเรียนแผนการเรียนศิลปะ ม.2-3", "a": "ภาพสีอคิลิก , การตรวจสอบผลงานศิลป์", "t": "ครูสุภาพร ครูกฤตภาส"}, {"r": "ใต้อาคาร 5 ช่วงกลาง", "p": "นักเรียนแผนการงนอาชีพ", "a": "นวดแผนไทย", "t": "ครูถนอมจิต"}, {"r": "สนามกีฬาอาคาร 5", "p": "นักเรียนแผนการเรียนกีฬา (นักกีฬา)", "a": "ซ้อมกีฬาตะกร้อ", "t": ""}], "7": [{"r": "โดมสันทราย", "p": "นักเรียนแผนการเรียนกีฬา ม.5/7 ,6/8", "a": "การแข่งขันจานร่อน", "t": ""}], "6": [{"r": "โรงพละ", "p": "นักเรียนแผนการเรียนกีฬา (นักกีฬา)", "a": "ซ้อมวอลเล่ย์บอล", "t": ""}], "field": [{"r": "สนามฟุตบอล", "p": "นักเรียนแผนการเรียนกีฬา ม.1/11", "a": "ซ้อมฟุตบอล(โค้ชภาณุวัฒน์)", "t": ""}], "11": [{"r": "เรือนเกษตรกร", "p": "แผนการเรียนอาชีพ ม.ต้น", "a": "จากเมล็ดสู่แปลงผัก", "t": ""}, {"r": "เรือนเกษตรกร ชั้น 2", "p": "แผนการเรียนการโรงแรม ม.4", "a": "การบริการอาหารเครื่องดื่ม ทำคานาเป้", "t": ""}, {"r": "คาเฟ่ สาขา 2 เรือนเกษตร", "p": "แผนการเรียนธรุกิจสมัยใหม่ ม.5 กลุ่ม 2", "a": "การทำธุรกิจ", "t": ""}], "3": [{"r": "ห้องคหกรรม", "p": "แผนการเรียนคหกรรม", "a": "การประกอบอาหาร", "t": ""}], "14": [{"r": "ห้องเรียนรวม", "p": "นักเรียนเรียนรวม", "a": "แสดงผลงานและกิจกรรมของนักเรียนเรียนรวม", "t": ""}]};
+const scene=document.getElementById('scene');
+scene.style.setProperty('--fl',(24*U)+'px');   // ความสูง 1 ชั้น = 24 หน่วย → แถวหน้าต่าง 1 แถวต่อชั้น
+const el=(c,st,p=scene)=>{const d=document.createElement('div');d.className=c;if(st)d.style.cssText=st;p.appendChild(d);return d};
+el('ground');
+// ถนนโค้งตามเส้นสีแดง (มุมซ้ายบน → ถนนหลัก)
+[[80,10],[200,8],[330,12],[390,22],[430,45],[460,72],[520,90]].reduce((a,b)=>{
+  const L=Math.hypot(b[0]-a[0],(b[1]-a[1])*SY)+8,ang=Math.atan2((b[1]-a[1])*SY,b[0]-a[0])*180/Math.PI;
+  el('flat road',`left:${a[0]*U}px;top:${a[1]*UY-7*RW*U}px;width:${L*U}px;height:${14*RW*U}px;transform-origin:0 50%;transform:rotate(${ang}deg)`);return b});
+FLAT.forEach(([c,x,y,w,d])=>{if(c==='field'){const f=el('flat field',`left:${x*U}px;top:${y*UY}px;width:${w*U}px;height:${d*UY}px;cursor:pointer`);f.addEventListener('click',()=>{if(!moved)select('field')});return}const road=/road/.test(c),v=/ v/.test(c);   // ถนนกว้างขึ้น RW เท่า (ขยายจากแนวกึ่งกลาง)
+  if(road&&v){const nw=w*RW;x-=(nw-w)/2;w=nw}else if(road){const nd=d*RW;y-=(nd-d)/2;d=nd}
+  el('flat '+c,`left:${x*U}px;top:${y*UY}px;width:${w*U}px;height:${d*UY}px`)});
 
-        /* ลบถนนเส้นที่ตัดผ่านใต้ลานเสาธง 21 ออกไปตามความต้องการ */
-        const FLAT = [
-            ['field', 60, 45, 380, 205],
-            ['road', 440, 82, 1560, 18], ['road', 480, 247, 832, 12], ['road', 1305, 336, 287, 11], ['road', 20, 265, 470, 14], ['road v', 480, 90, 16, 190],
-            ['road v', 1305, 100, 14, 250], ['road v', 1592, 100, 14, 251], ['road', 0, 0, 18, 351],
-            ['road v', 915, 90, 12, 160],
-            ['court', 1345, 226, 225, 28], ['farm', 1620, 212, 82, 110], ['pond', 1785, 140, 205, 110], ['pond', 1785, 258, 160, 93]];
+function face(p,cls,st){return el('f '+cls,st,p)}
+function building(b){
+  const w=b.w*U,d=b.d*UY,h=b.h*U;
+  const g=el('b',`left:${b.x*U}px;top:${b.y*UY}px;width:${w}px;height:${d}px;--w:${b.wc};--r:${b.rc}`,b._into||scene);
+  if(b._into)g.style.cssText+=';position:absolute';
+  g.dataset.n=b.n;
+  if(b.s==='plaza'){el('flat pave',`left:0;top:0;width:${w}px;height:${d}px;border-radius:10px`,g);return g}
+  if(b.lift){const L=b.lift*U;
+    [[0,0],[w-3,0],[0,d-3],[w-3,d-3],[w/2-1.5,0],[w/2-1.5,d-3]].forEach(([px,py])=>{
+      const p=el('b',`left:${px}px;top:${py}px;width:3px;height:3px`,g);
+      face(p,'wall shade2',`left:0;top:0;width:3px;height:${L}px;transform-origin:0 0;transform:rotateX(90deg)`);
+      face(p,'wall shade2',`left:0;top:0;width:${L}px;height:3px;transform-origin:0 0;transform:rotateY(-90deg)`);});
+    const up=el('b',`left:0;top:0;width:${w}px;height:${d}px;transform:translateZ(${L}px);pointer-events:auto`,g);
+    return building({...b,lift:0,x:0,y:0,_into:up});}
+  const wc=b.s==='glass'?'glass':'wall'+(b.win?' win':'');
+  const r=b.lift===0&&b._into?d*.75:b.s==='gable'?Math.min(d*.45,40):b.s==='vault'?d*.5:0;
+  // ผนัง 4 ด้าน (ด้านข้าง x ต่อยอดเป็นหน้าจั่ว)
+  const nW=face(g,wc+' shade1',`left:0;top:0;width:${w}px;height:${h}px;transform-origin:0 0;transform:rotateX(90deg)`);
+  const sW=face(g,wc+' shade1',`left:0;top:${d}px;width:${w}px;height:${h}px;transform-origin:0 0;transform:rotateX(90deg)`);
 
-        const TREES_DEF = [
-            [1210, 190, 't2', 'big'], [1260, 185, 't3', ''], [1280, 230, 't4', 'small'],
-            [450, 130, 't3', 'big'], [455, 220, 't2', ''],
-            [250, 250, 't4', ''], [150, 250, 't2', 'big'], [350, 250, 't3', 'small'],
-            [1720, 110, 't2', 'big'], [1750, 190, 't3', ''], [1760, 290, 't4', 'big'],
-            [860, 240, 't2', ''], [1200, 85, 't3', 'small'], [620, 95, 't4', ''],
-            [1500, 95, 't2', 'big'], [1450, 98, 't3', ''], [1650, 50, 't4', 'small'],
-            [1800, 50, 't2', ''], [1900, 50, 't3', 'big'], [330, 12, 't4', 'small'],
-            [180, 12, 't2', ''], [40, 285, 't3', 'big'], [120, 285, 't4', '']
-        ];
+  const side=(left)=>{
+    const s=face(g,wc+' shade2',`left:${left}px;top:0;width:${h+r}px;height:${d}px;transform-origin:0 0;transform:rotateY(-90deg)`);
+    if(b.doors)el('shutter side','',s);   // ประตูม้วน ผนังด้านยาว (หน้า-หลัง)
+    if(b.s==='gable')s.style.clipPath=`polygon(0 0,${h}px 0,${h+r}px 50%,${h}px 100%,0 100%)`;
+    if(b.s==='vault')s.style.clipPath=`polygon(0 0,${h}px 0,${h+r*.7}px 15%,${h+r}px 50%,${h+r*.7}px 85%,${h}px 100%,0 100%)`;
+  };
+  side(0);side(w);
+  if(b.s==='gable'){
+    const L=Math.hypot(d/2,r),a=Math.atan2(r,d/2)*180/Math.PI;
+    face(g,'roof',`left:0;top:0;width:${w}px;height:${L}px;transform-origin:0 0;transform:translateZ(${h}px) rotateX(${a}deg)`);
+    face(g,'roof shade1',`left:0;top:${d}px;width:${w}px;height:${L}px;transform-origin:0 0;transform:translateZ(${h}px) rotateX(${180-a}deg)`);
+  }else if(b.s==='vault'){
+    const n=6,R=d/2;
+    for(let i=0;i<n;i++){const a0=Math.PI*i/n,a1=Math.PI*(i+1)/n;
+      const y0=R-R*Math.cos(a0),z0=R*Math.sin(a0)*.7,y1=R-R*Math.cos(a1),z1=R*Math.sin(a1)*.7;
+      const L=Math.hypot(y1-y0,z1-z0)+1,ang=Math.atan2(z1-z0,y1-y0)*180/Math.PI;
+      face(g,'roof'+(i%2?' shade1':''),`left:0;top:${y0}px;width:${w}px;height:${L}px;transform-origin:0 0;transform:translateZ(${h+z0}px) rotateX(${ang}deg)`);}
+  }else{
+    face(g,b.s==='glass'?'glass':'roof',`left:0;top:0;width:${w}px;height:${d}px;transform:translateZ(${h}px)`);
+  }
+  if(b.n)g.addEventListener('click',e=>{if(!moved)select(b.n)});
+  return g;
+}
+const G={};B.forEach(b=>{const g=building(b);if(b.n)G[b.n]=g});
 
-        const ACT = {
-            "1": [
-                { "r": "ห้อง 117", "p": "แผนการเรียนภาษาอังกฤษ ม.4", "a": "English Theater" },
-                { "r": "ห้อง 126", "p": "ม.2/9", "a": "ลูกประคบ" },
-                { "r": "ห้อง 127", "p": "ม.2/10", "a": "ยาดมสมุนไพร GEN Z" }
-            ],
-            "2": [
-                { "r": "ห้องนวัตกรรม", "p": "แผนการเรียนวิทยาศาสตร์สุขภาพ ม.4-5", "a": "การคิดนวัตกรรม" }
-            ],
-            "15": [
-                { "r": "ห้อง 232", "p": "แผนการเรียนไทย-สังคม ม.4-6", "a": "ศาสนาเพื่อสันติภาพ" },
-                { "r": "ห้อง 233", "p": "SMT ม.2/1", "a": "การแปลงทางเรขาคณิตประดิษฐ์" },
-                { "r": "ห้อง 236", "p": "SMT ม.1/2", "a": "เกม 24, ประดิษฐ์โมบาย แกนสมมาตรรูปเรขาคณิต" }
-            ],
-            "13": [
-                { "r": "ห้อง 311", "p": "SMT ม.2/2", "a": "สเลอปี้" },
-                { "r": "ห้อง 312", "p": "SMT ม.3/1", "a": "บัวลอย ครบเครื่องเรื่อง STEAM" },
-                { "r": "ห้อง 321", "p": "แผนการเรียนวิทยาศาสตร์-คณิตศาสตร์ ม.6", "a": "ติวสู่ฝัน มุ่งเข้ามหาวิทยาลัย" },
-                { "r": "ห้อง 323", "p": "ม.4/1", "a": "นำเสนอโครงงาน" },
-                { "r": "ห้อง 324", "p": "แผนการเรียนวิทยาศาสตร์-คณิตศาสตร์", "a": "กิจกรรม Light Maze Challenge" },
-                { "r": "ห้อง 328", "p": "SMT ม.1/1", "a": "รถพลังยาง" },
-                { "r": "ห้อง 331", "p": "ม.2/6 LSS", "a": "จัดทำคลิปนำเสนอประเทศญี่ปุ่น" },
-                { "r": "ห้อง 332", "p": "SCP", "a": "" },
-                { "r": "ห้อง 333", "p": "SCP", "a": "" },
-                { "r": "ห้อง 334", "p": "SCP", "a": "" },
-                { "r": "ห้อง 335", "p": "SCP", "a": "" },
-                { "r": "ห้องสวนพฤกษศาสตร์", "p": "แผนการเรียนวิทยาศาสตร์สุขภาพ ม.6", "a": "งานสวนพฤกษศาสตร์โรงเรียน" }
-            ],
-            "10": [
-                { "r": "ห้อง 421", "p": "แผนการเรียนจีน ม.4/2 (CSP), ม.4/6", "a": "ภาษาจีนโดยวิทยากรจาก มช." },
-                { "r": "ห้อง 422", "p": "ม.3/4 LSS", "a": "ภาษาจีน" },
-                { "r": "ห้อง 423", "p": "แผนการเรียนจีน ม.5-6", "a": "การเรียนรู้วัฒนธรรมจีน การเขียนพู่กันจีน" },
-                { "r": "ห้อง 425", "p": "ม.2/4", "a": "ฐานบทเพลงสื่อภาษา" },
-                { "r": "ห้อง 432", "p": "MEP ม.1", "a": "Geometric + 4 skills" },
-                { "r": "ห้อง 433", "p": "ม.1/4 LSS", "a": "ภาษาอังกฤษ" },
-                { "r": "ห้อง 434", "p": "ม.3/9 CEP", "a": "ภาษาอังกฤษ" },
-                { "r": "ห้อง 435", "p": "ม.2/5", "a": "ฐานวรรณคดีไทย" },
-                { "r": "ห้อง 441", "p": "แผนการเรียนภาษาอังกฤษ ม.5", "a": "English Theater" },
-                { "r": "ห้อง 443", "p": "แผนการเรียนภาษาอังกฤษ ม.6", "a": "English Games Creation" },
-                { "r": "ห้อง 444", "p": "ม.3/5", "a": "ฐานต่อคำศัพท์ภาษาไทย (คำคม)" },
-                { "r": "ห้อง 446", "p": "ม.1/5", "a": "ฐานปริศนาภาษาไทย" },
-                { "r": "ห้องดนตรีไทย", "p": "ดนตรีไทย", "a": "" },
-                { "r": "ห้องศิลปะ", "p": "นักเรียนแผนการเรียนศิลปะ ม.1", "a": "การลงสี หุ่นนิ่ง" }
-            ],
-            "12": [
-                { "r": "ห้อง 522", "p": "แผนการเรียนคณิต-อังกฤษ, วิทย์-คณิต", "a": "กิจกรรมบอร์ดเกมส์คณิตศาสตร์ B.O.N." },
-                { "r": "ห้อง 523", "p": "แผนการเรียนคณิต-อังกฤษ, วิทย์-คณิต", "a": "กิจกรรม Casio Math การคำนวณทางคณิตศาสตร์ด้วยเครื่องคำนวณ" },
-                { "r": "ห้อง 524", "p": "แผนการเรียนคณิต-อังกฤษ", "a": "กิจกรรมความท้าทายทางคณิตศาสตร์ ตอบปัญหาเร็ว แรง ไม่เกรงใจใคร" },
-                { "r": "ห้อง 525", "p": "SMT ม.3/2", "a": "บอร์ดเกมคณิตศาสตร์" },
-                { "r": "ห้อง 532", "p": "SMT ม.2/3", "a": "3D Keyscaps" },
-                { "r": "ห้อง 534", "p": "SMT ม.3/3", "a": "สร้างภาพด้วย AI" },
-                { "r": "ห้อง 535", "p": "แผนการเรียนวิทยาศาสตร์คอมพิวเตอร์ ม.6", "a": "" },
-                { "r": "ใต้อาคาร 5 ทิศใต้", "p": "ดนตรีไทย", "a": "" },
-                { "r": "ใต้อาคาร 5 ทิศเหนือ", "p": "นักเรียนแผนการเรียนศิลปะ ม.2-3", "a": "ภาพสีอะคริลิก, การตรวจสอบผลงานศิลป์" },
-                { "r": "ใต้อาคาร 5 ช่วงกลาง", "p": "นักเรียนแผนการงานอาชีพ", "a": "นวดแผนไทย" }
-            ],
-            "4": [
-                { "r": "ห้องดนตรีสากล", "p": "นักเรียนวงดนตรีสากล", "a": "รวมวง, ต่อเพลงสำหรับประกวด" },
-                { "r": "ห้องสตริงคอมโบ", "p": "นักเรียนวงดนตรีสตริง", "a": "บรรเลงเพลงที่ฝึกซ้อม" }
-            ],
-            "5": [
-                { "r": "ห้องศูนย์การเรียนรู้ภาษาจีน", "p": "ม.1/12, ม.2/12 CEP", "a": "ภาษาจีน" },
-                { "r": "ห้องศูนย์ญี่ปุ่น", "p": "แผนการเรียนภาษาญี่ปุ่น ม.4-6", "a": "" }
-            ],
-            "7": [
-                { "r": "โดมสันทราย", "p": "นักเรียนแผนการเรียนกีฬา ม.5/7, 6/8", "a": "การแข่งขันจานร่อน" }
-            ],
-            "6": [
-                { "r": "โรงพละ", "p": "นักเรียนแผนการเรียนกีฬา (นักกีฬา)", "a": "ซ้อมวอลเล่ย์บอล" }
-            ],
-            "field": [
-                { "r": "สนามฟุตบอล", "p": "นักเรียนแผนการเรียนกีฬา ม.1/11", "a": "ซ้อมฟุตบอล(โค้ชภาณุวัฒน์)" }
-            ],
-            "18": [
-                { "r": "สนามกีฬาอาคาร 5", "p": "นักเรียนแผนการเรียนกีฬา (นักกีฬา)", "a": "ซ้อมกีฬาตะกร้อ" }
-            ],
-            "11": [
-                { "r": "เรือนเกษตรกร", "p": "แผนการเรียนอาชีพ ม.ต้น", "a": "จากเมล็ดสู่แปลงผัก" },
-                { "r": "เรือนเกษตรกร ชั้น 2", "p": "แผนการเรียนการโรงแรม ม.4", "a": "การบริการอาหารเครื่องดื่ม ทำคานาเป้" },
-                { "r": "คาเฟ่ สาขา 2 เรือนเกษตร", "p": "แผนการเรียนธุรกิจสมัยใหม่ ม.5 กลุ่ม 2", "a": "การทำธุรกิจ" }
-            ],
-            "22": [
-                { "r": "บ้านดิน", "p": "แผนการเรียนธุรกิจสมัยใหม่ ม.6", "a": "เทคนิคการอสังหาริมทรัพย์โดยวิทยากรภายนอก" }
-            ],
-            "3": [
-                { "r": "ห้องคหกรรม", "p": "แผนการเรียนคหกรรม", "a": "การประกอบอาหาร" }
-            ],
-            "14": [
-                { "r": "ห้องเรียนรวม", "p": "นักเรียนเรียนรวม", "a": "แสดงผลงานและกิจกรรมของนักเรียนเรียนรวม" }
-            ],
-            "19": [
-                { "r": "คาเฟ่ สาขา 1", "p": "แผนการเรียนธุรกิจสมัยใหม่ ม.5 กลุ่ม 1", "a": "การทำธุรกิจ" }
-            ]
-        };
+// ป้ายหมุด ต้นไม้ และเสาธง (หันหน้าเข้าหากล้องเสมอ)
+const bills=[];
+function billboard(x,y,z,html,cls){const bb=el('bb',`left:${x*U}px;top:${y*UY}px`);bb.dataset.z=z;bb.innerHTML=html;if(cls)bb.firstChild.className+=' '+cls;bills.push(bb);return bb}
+const TV=['','t2','t3'],TS=['','big','small'];
+TREES.push([470,60],[470,120],[470,200],[1320,140],[1320,220],[1600,250],[1600,300],[1760,20],[1880,110],[950,300],[1230,300],[560,240],[40,150],[40,220]);
+TREES.forEach(([x,y],i)=>billboard(x,y,0,`<div class="tree ${TV[i%3]} ${TS[(i*7)%3]}"><i></i><b style="animation-delay:${-(i%7)*.45}s"></b></div>`));
+// แนวรั้วต้นไม้รอบสนาม, พุ่มไม้ริมถนน, ประตูโกล, ม้านั่ง
+[['hedge',60,254,380,6],['hedge',60,40,380,5]].forEach(([c,x,y,w,d])=>el('flat '+c,`left:${x*U}px;top:${y*UY}px;width:${w*U}px;height:${d*U}px`));
+for(let x=520;x<1300;x+=60)billboard(x,103,0,'<div class="bush"></div>');
+for(let x=1340;x<1580;x+=50)billboard(x,218,0,'<div class="bush"></div>');
+billboard(66,148,0,'<div class="goal"></div>');billboard(434,148,0,'<div class="goal"></div>');
+[[700,238],[760,110],[1010,240],[1260,110],[1400,258],[1500,258]].forEach(([x,y])=>billboard(x,y,0,'<div class="bench"></div>'));
+// เงาเมฆบนพื้น
+[0,-20,-40].forEach((d,i)=>el('shadow',`top:${[40,160,260][i]*UY}px;animation-delay:${d}s`));
+billboard(985,165,9*U,'<div class="flagp"></div>');   // เสาธงกลางหน้าอาคาร 8 (บนแท่น)
+const MOV=[];
+const mover=(html,cls,x,y,z,vx,x0,x1)=>{const bb=billboard(x,y,z,`<div class="${cls}">${html}</div>`);MOV.push({bb,x,y,vx,x0,x1,z});return bb};
+mover('','cloud',200,30,190,.12,-100,2100);mover('','cloud',1200,200,210,.09,-100,2100);mover('','cloud',1700,90,200,.1,-100,2100);
+mover('︶ ︶ ︶','bird',300,120,150,.35,-100,2100);
+[[600,86,.12],[900,97,-.1],[1150,86,.09],[1400,97,-.13],[700,251,.1],[1000,257,-.08],[250,265,.11]].forEach(([x,y,v],i)=>mover(i%2?'🧍':'🚶','walker'+(v<0?' mover flip':''),x,y,0,v,440,1990));
+const stepMov=()=>MOV.forEach(m=>{m.x+=m.vx;if(m.x>m.x1)m.x=m.x0;if(m.x<m.x0)m.x=m.x1;m.bb.style.left=(m.x*U)+'px'});
+const pins={};
+// อาคารเลข 0 = ห้องน้ำ: ใส่สัญลักษณ์ห้องน้ำเล็ก ๆ
+B.filter(b=>!b.n&&!b.nowc).forEach(b=>billboard(b.x+b.w/2,b.y+b.d/2,b.h*U+14,'<div class="wc" title="ห้องน้ำ">🚻</div>'));
+B.filter(b=>b.n).forEach(b=>{const bb=billboard(b.x+b.w/2,b.y+b.d/2,(b.lift||0)*U+b.h*U+(b.s==='gable'?Math.min(b.d*UY*.45,40):b.s==='vault'?b.d*UY*.35:0)+(b.s==='plaza'?46:22),`<div class="pin"><span><em>${b.n}</em></span></div>`);
+  bb.firstChild.addEventListener('click',()=>{if(!moved)select(b.n)});pins[b.n]=bb.firstChild});
 
-        const scene = document.getElementById('scene');
-        scene.style.setProperty('--fl', (24 * U) + 'px');
-        const el = (c, st, p = scene) => { const d = document.createElement('div'); d.className = c; if (st) d.style.cssText = st; p.appendChild(d); return d };
-        el('ground');
-        [[0, 10], [80, 10], [200, 8], [330, 12], [390, 22], [430, 45], [460, 72], [520, 90]].reduce((a, b) => {
-            const L = Math.hypot(b[0] - a[0], (b[1] - a[1]) * SY) + 8, ang = Math.atan2((b[1] - a[1]) * SY, b[0] - a[0]) * 180 / Math.PI;
-            el('flat road', `left:${a[0] * U}px;top:${a[1] * UY - 7 * RW * U}px;width:${L * U}px;height:${14 * RW * U}px;transform-origin:0 50%;transform:rotate(${ang}deg)`); return b
-        });
-        FLAT.forEach(([c, x, y, w, d]) => {
-            if (c === 'field') { const f = el('flat field', `left:${x * U}px;top:${y * UY}px;width:${w * U}px;height:${d * UY}px;cursor:pointer`); f.addEventListener('click', () => { if (!moved) select('field') }); return } const road = /road/.test(c), v = / v/.test(c);
-            if (road && v) { const nw = w * RW; x -= (nw - w) / 2; w = nw } else if (road) { const nd = d * RW; y -= (nd - d) / 2; d = nd }
-            el('flat ' + c, `left:${x * U}px;top:${y * UY}px;width:${w * U}px;height:${d * UY}px`)
-        });
+// รายการอาคาร
+const legend=document.getElementById('legend');
+[...B].filter(b=>b.n).sort((a,b)=>a.n-b.n).forEach(b=>{const bt=document.createElement('button');bt.type='button';bt.dataset.n=b.n;bt.innerHTML=`<b>${b.n}</b>${b.t}`;bt.onclick=()=>select(b.n,true);legend.appendChild(bt)});
 
-        function face(p, cls, st) { return el('f ' + cls, st, p) }
-        function building(b) {
-            const w = b.w * U, d = b.d * UY, h = b.h * U;
-            const g = el('b', `left:${b.x * U}px;top:${b.y * UY}px;width:${w}px;height:${d}px;--w:${b.wc};--r:${b.rc}`, b._into || scene);
-            if (b._into) g.style.cssText += ';position:absolute';
-            g.dataset.n = b.n;
-            if (b.s === 'plaza') { el('flat pave', `left:0;top:0;width:${w}px;height:${d}px;border-radius:10px`, g); return g }
-            if (b.lift) {
-                const L = b.lift * U, pw = (b.pw || 3) * U;
-                if (b.pave) el('flat', `left:0;top:0;width:${w}px;height:${d}px;background:#d8dce6;border-radius:6px`, g);
-                el('cast-shadow', `left:0;top:0;width:${w}px;height:${d}px;transform:translateZ(1px) translate(${L * 0.8}px, ${L * 0.6}px);filter:blur(12px)`, g);
-                [[0, 0], [w / 2 - pw / 2, 0], [w - pw, 0], [0, d / 2 - pw / 2], [w / 2 - pw / 2, d / 2 - pw / 2], [w - pw, d / 2 - pw / 2], [0, d - pw], [w / 2 - pw / 2, d - pw], [w - pw, d - pw]].forEach(([px, py]) => {
-                    const p = el('b', `left:${px}px;top:${py}px;width:${pw}px;height:${pw}px;--w:${b.wc}`, g);
-                    face(p, 'wall shade-n', `left:0;top:0;width:${pw}px;height:${L}px;transform-origin:0 0;transform:rotateX(90deg)`);
-                    face(p, 'wall shade-s', `left:0;top:${pw}px;width:${pw}px;height:${L}px;transform-origin:0 0;transform:rotateX(90deg)`);
-                    face(p, 'wall shade-w', `left:0;top:0;width:${L}px;height:${pw}px;transform-origin:0 0;transform:rotateY(-90deg)`);
-                    face(p, 'wall shade-e', `left:${pw}px;top:0;width:${L}px;height:${pw}px;transform-origin:0 0;transform:rotateY(-90deg)`);
-                });
-                const up = el('b', `left:0;top:0;width:${w}px;height:${d}px;transform:translateZ(${L}px);pointer-events:auto`, g);
-                return building({ ...b, lift: 0, x: 0, y: 0, _into: up });
-            }
-            
-            if (b.s !== 'plaza' && b.h > 0) {
-                const sh = el('cast-shadow', `left:0;top:0;width:${w}px;height:${d}px;`, g);
-                sh.style.transform = `translateZ(1px) translate(${b.h * 0.7}px, ${b.h * 0.55}px)`;
-            }
+let cur=null;
+let fly=null;   // บินกล้องไปยังอาคารอย่างนุ่มนวล
+let saved=null;   // มุมกล้องก่อนเปิดแผงข้อมูล (ใช้ซูมกลับเมื่อปิด)
+function flyTo(x,y,z,px=null,py=0){fly={x0:camX,y0:camY,z0:zoom,p0:panX,q0:panY,x,y,z,px,py,t:0};auto=false}
+function stepFly(){if(!fly)return;fly.t=Math.min(1,fly.t+(reduce?1:.045));const k=1-Math.pow(1-fly.t,3);
+  camX=fly.x0+(fly.x-fly.x0)*k;camY=fly.y0+(fly.y-fly.y0)*k;zoom=fly.z0+(fly.z-fly.z0)*k;const tx=fly.px!==null?fly.px:(innerWidth>700?-200:0);panX=fly.p0+(tx-fly.p0)*k;panY=fly.q0+(fly.py-fly.q0)*k;
+  render();if(fly.t>=1)fly=null}
+function select(n,focus){
+  cur=cur===n&&!focus?null:n;
+  Object.entries(G).forEach(([k,g])=>g.classList.toggle('on',+k===cur));
+  if(n==null){cur=null}
+  Object.entries(pins).forEach(([k,p])=>p.classList.toggle('on',+k===cur));
+  legend.querySelectorAll('button[data-n]').forEach(b=>b.classList.toggle('on',+b.dataset.n===cur));
+  const panel=document.getElementById('panel');
+  if(cur==null){panel.classList.remove('show');if(saved){flyTo(saved.camX,saved.camY,saved.zoom,saved.panX,saved.panY);saved=null}return}
+  const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const b=cur==='field'?{n:'⚽',t:'สนามฟุตบอล',x:60,y:45,w:380,d:205}:B.find(x=>x.n===cur);
+  document.getElementById('pNo').textContent=b.n;document.getElementById('pName').textContent=b.t;
+  document.getElementById('pSub').textContent=[b.fl?b.fl+' ชั้น':'',b.desc||''].filter(Boolean).join(' · ');
+  const L=ACT[String(cur)]||[];
+  document.getElementById('pList').innerHTML=L.length?L.map(i=>`<div class="pitem"><span class="rm">${esc(i.r)}</span><p class="ac">${esc(i.a||'—')}</p>${i.p?`<p class="pl">👥 ${esc(i.p)}</p>`:''}${i.t?`<p class="tc">👤 ${esc(i.t)}</p>`:''}</div>`).join(''):'<div class="pempty">ไม่มีกิจกรรมในอาคารนี้</div>';
+  if(!panel.classList.contains('show'))saved={camX,camY,zoom,panX,panY};
+  panel.classList.add('show');document.getElementById('pList').scrollTop=0;
+  flyTo((b.x+b.w/2)*U-990,(b.y+b.d/2)*UY-173.5,Math.max(zoom,2.4));
+  return;
+  if(focus){const c=legend.querySelector(`[data-n="${cur}"]`);c&&c.scrollIntoView({block:'nearest'})}
+  auto=false;
+}
 
-            const wc = b.s === 'glass' ? 'glass' : 'wall' + (b.win ? ' win' : '');
-            const r = b.lift === 0 && b._into ? d * .75 : b.s === 'gable' ? Math.min(d * .45, 40) : b.s === 'vault' ? d * .5 : 0;
-            face(g, wc + ' shade-n', `left:0;top:0;width:${w}px;height:${h}px;transform-origin:0 0;transform:rotateX(90deg)`);
-            face(g, wc + ' shade-s', `left:0;top:${d}px;width:${w}px;height:${h}px;transform-origin:0 0;transform:rotateX(90deg)`);
+// กล้อง: หมุน (rot) เอียง (tilt) ซูม (zoom)
+let camX=0,camY=0,panX=0,panY=0,t0=0,rot=0,tilt=55,zoom=1,auto=true,moved=false;
+const fit=()=>Math.min(innerWidth/1500,innerHeight/430);   // ขยายให้เต็มจอ (ด้านข้างล้นได้ ใช้ 2 นิ้วเลื่อนดู)
+function render(){
+  scene.style.transform=`translate(${panX}px,${panY}px) scale(${zoom*fit()}) rotateX(${tilt}deg) rotateZ(${rot}deg) translate(${-camX}px,${-camY}px)`;
+  bills.forEach(bb=>bb.style.transform=`translateZ(${bb.dataset.z}px) rotateZ(${-rot}deg) rotateX(${-tilt}deg)`);
+}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+requestAnimationFrame(function loop(){stepCam();stepFly();if(!reduce)stepMov();if(auto&&!reduce){t0+=.004;rot=Math.sin(t0)*18;render()}requestAnimationFrame(loop)});
 
-            const side = (left, cls) => {
-                const s = face(g, wc + ' ' + cls, `left:${left}px;top:0;width:${h + r}px;height:${d}px;transform-origin:0 0;transform:rotateY(-90deg)`);
-                if (b.doors) el('shutter side', '', s);
-                if (b.s === 'gable') s.style.clipPath = `polygon(0 0,${h}px 0,${h + r}px 50%,${h}px 100%,0 100%)`;
-                if (b.s === 'vault') s.style.clipPath = `polygon(0 0,${h}px 0,${h + r * .7}px 15%,${h + r}px 50%,${h + r * .7}px 85%,${h}px 100%,0 100%)`;
-            };
-            side(0, 'shade-w'); side(w, 'shade-e');
-
-            if (b.s === 'gable') {
-                const L = Math.hypot(d / 2, r), a = Math.atan2(r, d / 2) * 180 / Math.PI;
-                face(g, 'roof shade-n', `left:0;top:0;width:${w}px;height:${L}px;transform-origin:0 0;transform:translateZ(${h}px) rotateX(${a}deg)`);
-                face(g, 'roof shade-s', `left:0;top:${d}px;width:${w}px;height:${L}px;transform-origin:0 0;transform:translateZ(${h}px) rotateX(${180 - a}deg)`);
-            } else if (b.s === 'vault') {
-                const n = 6, R = d / 2;
-                for (let i = 0; i < n; i++) {
-                    const a0 = Math.PI * i / n, a1 = Math.PI * (i + 1) / n;
-                    const y0 = R - R * Math.cos(a0), z0 = R * Math.sin(a0) * .7, y1 = R - R * Math.cos(a1), z1 = R * Math.sin(a1) * .7;
-                    const L = Math.hypot(y1 - y0, z1 - z0) + 1, ang = Math.atan2(z1 - z0, y1 - y0) * 180 / Math.PI;
-                    face(g, 'roof ' + (i < 3 ? 'shade-n' : 'shade-s'), `left:0;top:${y0}px;width:${w}px;height:${L}px;transform-origin:0 0;transform:translateZ(${h + z0}px) rotateX(${ang}deg)`);
-                }
-            } else {
-                face(g, b.s === 'glass' ? 'glass shade-top' : 'roof shade-top', `left:0;top:0;width:${w}px;height:${d}px;transform:translateZ(${h}px)`);
-            }
-            if (b.n) g.addEventListener('click', e => { if (!moved) select(b.n) });
-            return g;
-        }
-        const G = {}; B.forEach(b => { const g = building(b); if (b.n) G[b.n] = g });
-
-        const bills = [];
-        function billboard(x, y, z, html, cls) { const bb = el('bb', `left:${x * U}px;top:${y * UY}px`); bb.dataset.z = z; bb.innerHTML = html; if (cls) bb.firstChild.className += ' ' + cls; bills.push(bb); return bb }
-
-        TREES_DEF.forEach(([x, y, shape, size], i) => {
-            el('cast-shadow', `left:${x * U - 10}px;top:${y * UY - 10}px;width:20px;height:20px;border-radius:50%;transform:translateZ(1px) translate(14px, 12px);filter:blur(5px)`, scene);
-            billboard(x, y, 0, `<div class="tree ${shape} ${size}"><i></i><b style="animation-delay:${-(i % 7) * .45}s"></b></div>`);
-        });
-
-        [['hedge', 60, 254, 380, 6], ['hedge', 60, 40, 380, 5]].forEach(([c, x, y, w, d]) => {
-            el('cast-shadow', `left:${x * U}px;top:${y * UY}px;width:${w * U}px;height:${d * U}px;transform:translateZ(1px) translate(4px, 4px);filter:blur(4px)`, scene);
-            el('flat ' + c, `left:${x * U}px;top:${y * UY}px;width:${w * U}px;height:${d * U}px`);
-        });
-        
-        for (let x = 520; x < 1300; x += 60) {
-            el('cast-shadow', `left:${x * U - 6}px;top:${103 * UY - 6}px;width:12px;height:12px;border-radius:50%;transform:translateZ(1px) translate(8px, 8px);filter:blur(3px)`, scene);
-            billboard(x, 103, 0, '<div class="bush"></div>');
-        }
-        for (let x = 1340; x < 1580; x += 50) {
-            el('cast-shadow', `left:${x * U - 6}px;top:${218 * UY - 6}px;width:12px;height:12px;border-radius:50%;transform:translateZ(1px) translate(8px, 8px);filter:blur(3px)`, scene);
-            billboard(x, 218, 0, '<div class="bush"></div>');
-        }
-        
-        billboard(66, 148, 0, '<div class="goal"></div>'); billboard(434, 148, 0, '<div class="goal"></div>');
-        [[700, 238], [760, 110], [1010, 240], [1260, 110], [1400, 258], [1500, 258]].forEach(([x, y]) => billboard(x, y, 0, '<div class="bench"></div>'));
-        [0, -20, -40].forEach((d, i) => el('shadow', `top:${[40, 160, 260][i] * UY}px;animation-delay:${d}s`));
-        billboard(985, 165, 9 * U, '<div class="flagp"></div>');
-
-        const MOV = [];
-        const mover = (html, cls, x, y, z, vx, x0, x1) => { const bb = billboard(x, y, z, `<div class="${cls}">${html}</div>`); MOV.push({ bb, x, y, vx, x0, x1, z }); return bb };
-        mover('', 'cloud', 200, 30, 190, .12, -100, 2100); mover('', 'cloud', 1200, 200, 210, .09, -100, 2100); mover('', 'cloud', 1700, 90, 200, .1, -100, 2100);
-        mover('︶ ︶ ︶', 'bird', 300, 120, 150, .35, -100, 2100);
-
-        const walkerHTML = `<div class="walker-figure"><div class="head"></div><div class="body"></div><div class="leg-l"></div><div class="leg-r"></div></div>`;
-        const sportHTML = `<div class="walker-figure sport"><div class="head"></div><div class="body"></div><div class="leg-l"></div><div class="leg-r"></div></div>`;
-        const teacherHTML = `<div class="walker-figure teacher"><div class="head"></div><div class="body"></div><div class="leg-l"></div><div class="leg-r"></div></div>`;
-
-        [[600, 86, .12, walkerHTML], [900, 97, -.1, sportHTML], [1150, 86, .09, teacherHTML], [1400, 97, -.13, walkerHTML], [700, 251, .1, sportHTML], [1000, 257, -.08, walkerHTML], [250, 265, .11, teacherHTML]].forEach(([x, y, v, html]) => mover(html, 'mover' + (v < 0 ? ' flip' : ''), x, y, 0, v, 440, 1990));
-
-        const stepMov = () => MOV.forEach(m => { m.x += m.vx; if (m.x > m.x1) m.x = m.x0; if (m.x < m.x0) m.x = m.x1; m.bb.style.left = (m.x * U) + 'px' });
-        const pins = {};
-        B.filter(b => !b.n && !b.nowc).forEach(b => billboard(b.x + b.w / 2, b.y + b.d / 2, b.h * U + 14, '<div class="wc" title="ห้องน้ำ">🚻</div>'));
-        B.filter(b => b.n).forEach(b => {
-            const bb = billboard(b.x + b.w / 2, b.y + b.d / 2, (b.lift || 0) * U + b.h * U + (b.s === 'gable' ? Math.min(b.d * UY * .45, 40) : b.s === 'vault' ? b.d * UY * .35 : 0) + (b.s === 'plaza' ? 46 : 22), `<div class="pin"><span><em>${b.n}</em></span></div>`);
-            bb.firstChild.addEventListener('click', () => { if (!moved) select(b.n) }); pins[b.n] = bb.firstChild
-        });
-
-        const legend = document.getElementById('legend');
-        [...B].filter(b => b.n).sort((a, b) => a.n - b.n).forEach(b => { const bt = document.createElement('button'); bt.type = 'button'; bt.dataset.n = b.n; bt.innerHTML = `<b>${b.n}</b>${b.t}`; bt.onclick = () => select(b.n, true); legend.appendChild(bt) });
-
-        let cur = null, fly = null, saved = null;
-        function flyTo(x, y, z, px = null, py = 0) { fly = { x0: camX, y0: camY, z0: zoom, p0: panX, q0: panY, x, y, z, px, py, t: 0 }; auto = false }
-        function stepFly() {
-            if (!fly) return; fly.t = Math.min(1, fly.t + (reduce ? 1 : .045)); const k = 1 - Math.pow(1 - fly.t, 3);
-            camX = fly.x0 + (fly.x - fly.x0) * k; camY = fly.y0 + (fly.y - fly.y0) * k; zoom = fly.z0 + (fly.z - fly.z0) * k; const tx = fly.px !== null ? fly.px : (innerWidth > 700 ? -200 : 0); panX = fly.p0 + (tx - fly.p0) * k; panY = fly.q0 + (fly.py - fly.q0) * k;
-            render(); if (fly.t >= 1) fly = null
-        }
-        function select(n, focus) {
-            cur = cur === n && !focus ? null : n;
-            Object.entries(G).forEach(([k, g]) => g.classList.toggle('on', +k === cur));
-            if (n == null) { cur = null }
-            Object.entries(pins).forEach(([k, p]) => p.classList.toggle('on', +k === cur));
-            legend.querySelectorAll('button[data-n]').forEach(b => b.classList.toggle('on', +b.dataset.n === cur));
-            const panel = document.getElementById('panel');
-            if (cur == null) { panel.classList.remove('show'); if (saved) { flyTo(saved.camX, saved.camY, saved.zoom, saved.panX, saved.panY); saved = null } return }
-            const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-            const b = cur === 'field' ? { n: '⚽', t: 'สนามฟุตบอล', x: 60, y: 45, w: 380, d: 205 } : B.find(x => x.n === cur);
-            document.getElementById('pNo').textContent = b.n; document.getElementById('pName').textContent = b.t;
-            document.getElementById('pSub').textContent = [b.fl ? b.fl + ' ชั้น' : '', b.desc || ''].filter(Boolean).join(' · ');
-            const L = ACT[String(cur)] || [];
-            document.getElementById('pList').innerHTML = L.length ? L.map(i => `<div class="pitem"><span class="rm">${esc(i.r)}</span><p class="ac">${esc(i.a || '—')}</p>${i.p ? `<p class="pl">👥 ${esc(i.p)}</p>` : ''}${i.t ? `<p class="tc">👤 ${esc(i.t)}</p>` : ''}</div>`).join('') : '<div class="pempty">ไม่มีกิจกรรมในอาคารนี้</div>';
-            if (!panel.classList.contains('show')) saved = { camX, camY, zoom, panX, panY };
-            panel.classList.add('show'); document.getElementById('pList').scrollTop = 0;
-            flyTo((b.x + b.w / 2) * U - 990, (b.y + b.d / 2) * UY - 173.5, Math.max(zoom, 2.4));
-        }
-
-        let camX = 0, camY = 0, panX = 0, panY = 0, t0 = 0, rot = 0, tilt = 55, zoom = 1, auto = true, moved = false;
-        const fit = () => Math.min(innerWidth / 1500, innerHeight / 430);
-        function render() {
-            scene.style.transform = `translate(${panX}px,${panY}px) scale(${zoom * fit()}) rotateX(${tilt}deg) rotateZ(${rot}deg) translate(${-camX}px,${-camY}px)`;
-            bills.forEach(bb => bb.style.transform = `translateZ(${bb.dataset.z}px) rotateZ(${-rot}deg) rotateX(${-tilt}deg)`);
-        }
-        const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-        requestAnimationFrame(function loop() { stepCam(); stepFly(); if (!reduce) stepMov(); if (auto && !reduce) { t0 += .004; rot = Math.sin(t0) * 18; render() } requestAnimationFrame(loop) });
-
-        const view = document.getElementById('view'), pts = new Map(); let last = null, pinch0 = 0, zoom0 = 1, downAt = null, mid0 = null, pan0 = null;
-        const ZMIN = .4, ZMAX = 10;
-        function toWorld(dx, dy) {
-            const s = zoom * fit(), r = rot * Math.PI / 180, t = Math.cos(tilt * Math.PI / 180) || .2;
-            const wx = dx / s, wy = dy / (s * t); return [wx * Math.cos(r) + wy * Math.sin(r), -wx * Math.sin(r) + wy * Math.cos(r)]
-        }
-        function camMove(dx, dy) { const [x, y] = toWorld(dx, dy); camX = Math.max(-1100, Math.min(1100, camX + x)); camY = Math.max(-300, Math.min(300, camY + y)); auto = false; render() }
-        const hold = { x: 0, y: 0, r: 0, t: 0 }, keys = new Set();
-        function stepCam() {
-            let x = hold.x, y = hold.y, r = hold.r, t = hold.t;
-            if (keys.has('w') || keys.has('arrowup')) y -= 1; if (keys.has('s') || keys.has('arrowdown')) y += 1;
-            if (keys.has('a') || keys.has('arrowleft')) x -= 1; if (keys.has('d') || keys.has('arrowright')) x += 1;
-            if (keys.has('q')) r -= 1; if (keys.has('e')) r += 1; if (keys.has('r')) t -= 1; if (keys.has('f')) t += 1;
-            if (x || y) camMove(x * 8, y * 8); if (r || t) { rot += r * 1.2; tilt = Math.max(10, Math.min(85, tilt + t * .8)); auto = false; render() }
-            else if (keys.size) render()
-        }
-        
-        addEventListener('keydown', e => { const k = e.key.toLowerCase(); if ('wasdqerf'.includes(k) || k.startsWith('arrow')) { keys.add(k); e.preventDefault() } });
-        addEventListener('keyup', e => keys.delete(e.key.toLowerCase())); addEventListener('blur', () => keys.clear());
-        document.querySelectorAll('[data-mv]').forEach(b => {
-            const [k, v] = b.dataset.mv.split(':');
-            const on = e => { e.preventDefault(); hold[k] = +v }, off = () => { hold[k] = 0 };
-            b.addEventListener('pointerdown', on); b.addEventListener('pointerup', off); b.addEventListener('pointerleave', off); b.addEventListener('pointercancel', off)
-        });
-        function zoomAt(z, cx, cy) { z = Math.max(ZMIN, Math.min(ZMAX, z)); const r = view.getBoundingClientRect(), ox = r.left + r.width / 2 + panX, oy = r.top + r.height / 2 + panY, k = z / zoom; panX += (cx - ox) * (1 - k); panY += (cy - oy) * (1 - k); zoom = z; render() }
-        view.addEventListener('pointerdown', e => {
-            pts.set(e.pointerId, { x: e.clientX, y: e.clientY }); moved = false; downAt = { x: e.clientX, y: e.clientY };
-            if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch0 = Math.hypot(a.x - b.x, a.y - b.y); zoom0 = zoom; mid0 = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }; pan0 = { x: panX, y: panY }; auto = false } last = { x: e.clientX, y: e.clientY }
-        });
-        view.addEventListener('pointermove', e => {
-            if (!pts.has(e.pointerId)) return; pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
-            if (downAt && Math.hypot(e.clientX - downAt.x, e.clientY - downAt.y) > 6) { moved = true; auto = false }
-            if (pts.size === 2) {
-                const [a, b] = [...pts.values()], m = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
-                camMove(-(m.x - mid0.x), -(m.y - mid0.y)); mid0 = m;
-                zoomAt(zoom0 * Math.hypot(a.x - b.x, a.y - b.y) / pinch0, m.x, m.y); return
-            }
-            if (e.shiftKey || e.buttons === 2 || e.buttons === 4) { camMove(-(e.clientX - last.x), -(e.clientY - last.y)); last = { x: e.clientX, y: e.clientY }; return }
-            if (!moved) return;
-            rot -= (e.clientX - last.x) * .45; last = { x: e.clientX, y: e.clientY }; render()
-        });
-        
-        const up = e => { pts.delete(e.pointerId); if (pts.size === 1) { last = [...pts.values()][0] } setTimeout(() => { if (!pts.size) moved = false }, 0) };
-        view.addEventListener('pointerup', up); view.addEventListener('pointercancel', up);
-        view.addEventListener('wheel', e => { e.preventDefault(); auto = false; zoomAt(zoom * (e.deltaY < 0 ? 1.12 : .89), e.clientX, e.clientY) }, { passive: false });
-        view.addEventListener('contextmenu', e => e.preventDefault());
-        document.getElementById('zin').onclick = () => { zoom = Math.min(ZMAX, zoom * 1.3); render() };
-        document.getElementById('zout').onclick = () => { zoom = Math.max(ZMIN, zoom / 1.3); render() };
-        document.getElementById('reset').onclick = () => { saved = null; rot = 0; tilt = 55; zoom = 1; panX = 0; panY = 0; camX = 0; camY = 0; auto = true; select(null); cur = null; render() };
-        const setLegend = on => { document.body.classList.toggle('has-legend', on); render() };
-        document.getElementById('lclose').onclick = () => setLegend(false); document.getElementById('lopen').onclick = () => setLegend(true);
-        setLegend(false);
-        document.getElementById('pclose').onclick = () => select(null);
-        addEventListener('resize', render); render();
-    </script>
+const view=document.getElementById('view'),pts=new Map();let last=null,pinch0=0,zoom0=1,downAt=null,mid0=null,pan0=null;
+const ZMIN=.4,ZMAX=10;
+/* ===== Free cam: ย้ายจุดที่กล้องมอง (camX, camY) ไปได้ทั่วผัง หมุน/เอียงรอบจุดนั้น ===== */
+function toWorld(dx,dy){const s=zoom*fit(),r=rot*Math.PI/180,t=Math.cos(tilt*Math.PI/180)||.2;
+  const wx=dx/s,wy=dy/(s*t);return [wx*Math.cos(r)+wy*Math.sin(r),-wx*Math.sin(r)+wy*Math.cos(r)]}
+function camMove(dx,dy){const [x,y]=toWorld(dx,dy);camX=Math.max(-1100,Math.min(1100,camX+x));camY=Math.max(-300,Math.min(300,camY+y));auto=false;render()}
+const hold={x:0,y:0,r:0,t:0},keys=new Set();
+function stepCam(){let x=hold.x,y=hold.y,r=hold.r,t=hold.t;
+  if(keys.has('w')||keys.has('arrowup'))y-=1;if(keys.has('s')||keys.has('arrowdown'))y+=1;
+  if(keys.has('a')||keys.has('arrowleft'))x-=1;if(keys.has('d')||keys.has('arrowright'))x+=1;
+  if(keys.has('q'))r-=1;if(keys.has('e'))r+=1;if(keys.has('r'))t-=1;if(keys.has('f'))t+=1;
+  if(keys.has('+')||keys.has('='))zoom=Math.min(ZMAX,zoom*1.02);if(keys.has('-'))zoom=Math.max(ZMIN,zoom/1.02);
+  if(x||y)camMove(x*8,y*8);if(r||t){rot+=r*1.2;tilt=Math.max(10,Math.min(85,tilt+t*.8));auto=false;render()}
+  else if(keys.size)render()}
+addEventListener('keydown',e=>{const k=e.key.toLowerCase();if('wasdqerf+-='.includes(k)||k.startsWith('arrow')){keys.add(k);e.preventDefault()}});
+addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));addEventListener('blur',()=>keys.clear());
+document.querySelectorAll('[data-mv]').forEach(b=>{const [k,v]=b.dataset.mv.split(':');
+  const on=e=>{e.preventDefault();hold[k]=+v},off=()=>{hold[k]=0};
+  b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointerleave',off);b.addEventListener('pointercancel',off)});
+// ซูมโดยให้จุดใต้นิ้ว/เมาส์อยู่ที่เดิม
+function zoomAt(z,cx,cy){z=Math.max(ZMIN,Math.min(ZMAX,z));const r=view.getBoundingClientRect(),ox=r.left+r.width/2+panX,oy=r.top+r.height/2+panY,k=z/zoom;panX+=(cx-ox)*(1-k);panY+=(cy-oy)*(1-k);zoom=z;render()}
+view.addEventListener('pointerdown',e=>{pts.set(e.pointerId,{x:e.clientX,y:e.clientY});moved=false;downAt={x:e.clientX,y:e.clientY};
+  if(pts.size===2){const [a,b]=[...pts.values()];pinch0=Math.hypot(a.x-b.x,a.y-b.y);zoom0=zoom;mid0={x:(a.x+b.x)/2,y:(a.y+b.y)/2};pan0={x:panX,y:panY};auto=false}last={x:e.clientX,y:e.clientY}});
+view.addEventListener('pointermove',e=>{if(!pts.has(e.pointerId))return;pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(downAt&&Math.hypot(e.clientX-downAt.x,e.clientY-downAt.y)>6){moved=true;auto=false}
+  if(pts.size===2){const [a,b]=[...pts.values()],m={x:(a.x+b.x)/2,y:(a.y+b.y)/2};
+    camMove(-(m.x-mid0.x),-(m.y-mid0.y));mid0=m;   // สองนิ้วลาก = เลื่อนกล้องไปทั่วผัง
+    zoomAt(zoom0*Math.hypot(a.x-b.x,a.y-b.y)/pinch0,m.x,m.y);return}
+  if(e.shiftKey||e.buttons===2||e.buttons===4){camMove(-(e.clientX-last.x),-(e.clientY-last.y));last={x:e.clientX,y:e.clientY};return}
+  if(!moved)return;
+  rot-=(e.clientX-last.x)*.45;last={x:e.clientX,y:e.clientY};render()});   // ลาก 1 นิ้ว = หมุนแนวนอนอย่างเดียว (ไม่เอียง)
+const up=e=>{pts.delete(e.pointerId);if(pts.size===1){last=[...pts.values()][0]}setTimeout(()=>{if(!pts.size)moved=false},0)};
+view.addEventListener('pointerup',up);view.addEventListener('pointercancel',up);
+view.addEventListener('wheel',e=>{e.preventDefault();auto=false;zoomAt(zoom*(e.deltaY<0?1.12:.89),e.clientX,e.clientY)},{passive:false});
+view.addEventListener('contextmenu',e=>e.preventDefault());
+document.getElementById('zin').onclick=()=>{zoom=Math.min(ZMAX,zoom*1.3);render()};
+document.getElementById('zout').onclick=()=>{zoom=Math.max(ZMIN,zoom/1.3);render()};
+document.getElementById('reset').onclick=()=>{saved=null;rot=0;tilt=55;zoom=1;panX=0;panY=0;camX=0;camY=0;auto=true;select(null);cur=null;render()};
+const setLegend=on=>{document.body.classList.toggle('has-legend',on);render()};
+document.getElementById('lclose').onclick=()=>setLegend(false);document.getElementById('lopen').onclick=()=>setLegend(true);
+setLegend(false);
+document.getElementById('pclose').onclick=()=>select(null);
+addEventListener('resize',render);render();
+</script>
 </body>
-
 </html>
