@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { BarSeries, Kpi, LineSeries, MeterRow, TableRow } from '../../core/models';
+import { BarSeries, Kpi, LineSeries, TableRow } from '../../core/models';
 import { DIM1 } from '../../data/dimension1.data';
 import { RevealDirective } from '../../shared/directives/reveal.directive';
 import { PageHeroComponent } from '../../shared/page-hero/page-hero.component';
@@ -17,7 +17,6 @@ import { HomeFabComponent } from '../../shared/home-fab/home-fab.component';
 import { PagerComponent } from '../../shared/pager/pager.component';
 import { LineChartComponent } from '../../shared/line-chart/line-chart.component';
 import { BarChartComponent } from '../../shared/bar-chart/bar-chart.component';
-import { MeterListComponent } from '../../shared/meter-list/meter-list.component';
 import { OnetChartComponent } from '../../shared/onet-chart/onet-chart.component';
 import { StudentQualityWheelComponent } from '../../shared/student-quality-wheel/student-quality-wheel.component';
 
@@ -29,7 +28,7 @@ import { StudentQualityWheelComponent } from '../../shared/student-quality-wheel
     PhotoGalleryComponent, AwardsPreviewComponent,
     CommonModule, RevealDirective, PageHeroComponent, SectionHeaderComponent,
     KpiGridComponent, DataTableComponent, CalloutComponent, PagerComponent, CycleFlowComponent,
-    LineChartComponent, BarChartComponent, MeterListComponent, OnetChartComponent, StudentQualityWheelComponent
+    LineChartComponent, BarChartComponent, OnetChartComponent, StudentQualityWheelComponent
   ],
   templateUrl: './dimension1.component.html',
   styleUrl: './dimension1.component.css'
@@ -122,6 +121,12 @@ export class Dimension1Component implements OnInit {
   /** เริ่มต้นให้เห็นเพียง 2 หมวดหลัก แล้วค่อยเผยข้อย่อยเมื่อกรรมการเลือก */
   readonly tab = signal<'1.1' | '1.2' | ''>('');
   readonly open = signal('');
+  readonly environmentFlowOpen = signal<'input' | 'process' | 'output' | null>(null);
+  readonly democracyFlowOpen = signal<'listen' | 'reason' | 'respect' | null>(null);
+  readonly thaiPrideFlowOpen = signal<'learn' | 'continue' | 'apply' | null>(null);
+  readonly confidenceFlowOpen = signal<'opportunity' | 'practice' | 'confidence' | null>(null);
+  readonly healthFlowOpen = signal<'aware' | 'strengthen' | 'wellbeing' | null>(null);
+  readonly safetyFlowOpen = signal<'risk' | 'immunity' | 'safe' | null>(null);
 
   get shown() { return this.topics.filter(t => t.group === this.tab()); }
 
@@ -136,6 +141,30 @@ export class Dimension1Component implements OnInit {
     this.open.set(key);
     this.tab.set(key.startsWith('1.1') ? '1.1' : '1.2');
     window.scrollTo({ top: 0 });
+  }
+
+  selectEnvironmentFlow(step: 'input' | 'process' | 'output'): void {
+    this.environmentFlowOpen.set(this.environmentFlowOpen() === step ? null : step);
+  }
+
+  selectDemocracyFlow(step: 'listen' | 'reason' | 'respect'): void {
+    this.democracyFlowOpen.set(this.democracyFlowOpen() === step ? null : step);
+  }
+
+  selectThaiPrideFlow(step: 'learn' | 'continue' | 'apply'): void {
+    this.thaiPrideFlowOpen.set(this.thaiPrideFlowOpen() === step ? null : step);
+  }
+
+  selectConfidenceFlow(step: 'opportunity' | 'practice' | 'confidence'): void {
+    this.confidenceFlowOpen.set(this.confidenceFlowOpen() === step ? null : step);
+  }
+
+  selectHealthFlow(step: 'aware' | 'strengthen' | 'wellbeing'): void {
+    this.healthFlowOpen.set(this.healthFlowOpen() === step ? null : step);
+  }
+
+  selectSafetyFlow(step: 'risk' | 'immunity' | 'safe'): void {
+    this.safetyFlowOpen.set(this.safetyFlowOpen() === step ? null : step);
   }
 
   toggleTab(group: '1.1' | '1.2'): void {
@@ -214,15 +243,6 @@ export class Dimension1Component implements OnInit {
    * ตัวเลขถอดจากหลักฐาน M3_ไทย, M6_ไทย และ M6_สังคมฯ ที่แนบโดยโรงเรียน */
   readonly onetHighlights: Array<{ title: string; subtitle: string; series: BarSeries[]; note: string }> = [
     {
-      title: 'ม.3 ภาษาไทย',
-      subtitle: 'สูงกว่าระดับประเทศต่อเนื่อง 3 ปี',
-      series: [
-        { name: 'ระดับโรงเรียน', values: [54.87, 56.52, 49.22], color: '#4fd1a0' },
-        { name: 'ระดับประเทศ', values: [37.35, 34.40, 33.92], color: '#ff8f66' }
-      ],
-      note: 'สูงกว่าระดับประเทศ +17.52, +22.12 และ +15.30 คะแนนตามลำดับ'
-    },
-    {
       title: 'ม.6 ภาษาไทย',
       subtitle: 'สูงกว่าระดับประเทศต่อเนื่อง 3 ปี',
       series: [
@@ -239,6 +259,23 @@ export class Dimension1Component implements OnInit {
         { name: 'ระดับประเทศ', values: [33.09, 35.77, 36.96], color: '#f5d04c' }
       ],
       note: 'สูงกว่าระดับประเทศ +1.56, +3.34 และ +2.16 คะแนนตามลำดับ'
+    },
+    {
+      title: 'ม.3 ภาษาไทย',
+      subtitle: 'สูงกว่าระดับประเทศต่อเนื่อง 3 ปี',
+      series: [
+        { name: 'ระดับโรงเรียน', values: [54.87, 56.52, 49.22], color: '#4fd1a0' },
+        { name: 'ระดับประเทศ', values: [37.35, 34.40, 33.92], color: '#ff8f66' }
+      ],
+      note: 'สูงกว่าระดับประเทศ +17.52, +22.12 และ +15.30 คะแนนตามลำดับ'
+    },
+    {
+      title: 'ม.3 คณิตศาสตร์',
+      subtitle: 'พัฒนาการอย่างต่อเนื่อง 3 ปี',
+      series: [
+        { name: 'ระดับโรงเรียน', values: [22.39, 24.56, 26.68], color: '#9b7cf4' }
+      ],
+      note: 'คะแนนเพิ่มขึ้นต่อเนื่อง 22.39 → 24.56 → 26.68 รวมเพิ่มขึ้น 4.29 คะแนน'
     }
   ];
 
@@ -603,22 +640,33 @@ export class Dimension1Component implements OnInit {
   }));
 
   // ---------- คุณลักษณะอันพึงประสงค์ ----------
-  readonly desiredMeterColors = ['#f5849c', '#ffa96b', '#f5cf55', '#66d493', '#5ccbe0', '#7a9ef8', '#ab8bf8', '#ef8fc0'];
-  readonly desiredMeters: MeterRow[] = DIM1.section12.desired.rows
-    .map((r, index) => ({ name: r.name, value: r.avg, color: this.desiredMeterColors[index % this.desiredMeterColors.length] }))
-    .sort((a, b) => b.value - a.value);
+  readonly desiredLabels = [
+    '1. รักชาติฯ',
+    '2. ซื่อสัตย์ฯ',
+    '3. มีวินัย',
+    '4. ใฝ่เรียนรู้',
+    '5. พอเพียง',
+    '6. มุ่งมั่นฯ',
+    '7. ภูมิใจความเป็นไทย',
+    '8. จิตสาธารณะ'
+  ];
+  readonly desiredBars: BarSeries[] = DIM1.section12.desired.years.map((year, index) => ({
+    name: `ปีการศึกษา ${year}`,
+    values: DIM1.section12.desired.rows.map(row => row.values[index]),
+    color: this.thaiPalette[index],
+    stroke: this.thaiStroke[index]
+  }));
 
-  readonly desiredHeaders = ['คุณลักษณะที่พึงประสงค์', 'ปี 2566', 'ปี 2567', 'ปี 2568', 'สรุปคุณภาพโดยรวม'];
+  readonly desiredHeaders = ['คุณลักษณะที่พึงประสงค์', 'ปี 2566', 'ปี 2567', 'ปี 2568'];
 
   readonly desiredRows: TableRow[] = [
     ...DIM1.section12.desired.rows.map(r => ({
-      cells: [r.name, ...r.values.map(v => v.toFixed(2)), r.avg.toFixed(2)]
+      cells: [r.name, ...r.values.map(v => v.toFixed(2))]
     })),
     {
       cells: [
         'สรุปผลการประเมิน',
-        ...DIM1.section12.desired.overall.map(v => v.toFixed(2)),
-        DIM1.section12.desired.overallAvg.toFixed(2)
+        ...DIM1.section12.desired.overall.map(v => v.toFixed(2))
       ],
       total: true
     }

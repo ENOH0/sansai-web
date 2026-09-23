@@ -101,7 +101,7 @@ export class Dimension5Component {
     if (!Number.isFinite(height)) return;
     const minHeight = Math.max(360, height);
     if (event.data?.type === 'd5-success-model-height') this.successModelHeight.set(minHeight);   // ไม่จำกัดความสูง ไม่งั้นเนื้อหาส่วนล่างถูกตัด
-    if (event.data?.type === 'd5-dissemination-wheel-height') this.disseminationWheelHeight.set(Math.min(1400, minHeight));
+    if (event.data?.type === 'd5-dissemination-wheel-height') this.disseminationWheelHeight.set(Math.min(2600, minHeight));
     if (event.data?.type === 'd5-factors-height') this.factorsHeight.set(minHeight);
     if (event.data?.type === 'd5-gears-height') this.gearsHeight.set(minHeight);
     if (event.data?.type === 'd5-banchuen-height') this.banchuenHeight.set(minHeight);

@@ -100,10 +100,9 @@
     <app-section-header class="d3-lead-indent" [light]="true" num="3.1" title="ภาวะผู้นำของผู้บริหาร" [lead]="d.leadership.lead" />
     <!-- แนวปฏิบัติ 5 ข้อ และ 4 กลุ่มบริหาร ถูกนำออกตามที่สั่ง (ข้อมูลยังอยู่ใน d.leadership ใน dimension3.data.ts) -->
 
-    <!-- วงล้อภาวะผู้นำ 5 ตัวชี้วัด · แก้ได้ที่ public/models/leadership-wheel-model.html
-         เพิ่มรูป: เปิด /models/leadership-wheel-model.html?edit แล้วกดบันทึก HTML พร้อมรูป -->
+    <!-- วงล้อภาวะผู้นำ 5 ตัวชี้วัด -->
     <div class="d3-learn-model d3-leader-model" appReveal style="margin-top:40px">
-      <iframe src="/models/leadership-wheel-model.html" title="ภาวะผู้นำของผู้บริหาร 5 ตัวชี้วัด"
+      <iframe src="/models/leadership-wheel-model.html?v=20260923-1" title="ภาวะผู้นำของผู้บริหาร 5 ตัวชี้วัด"
         loading="lazy" scrolling="no" [style.height.px]="leaderModelHeight()"></iframe>
     </div>
 
@@ -120,10 +119,9 @@
   <div class="wrap">
     <app-section-header class="d3-lead-indent" [light]="true" num="3.2" title="การพัฒนาองค์กร" [lead]="d.organization.lead" />
     <!-- เนื้อหาเดิมใต้คำนำ (ตัวชี้วัด + การ์ด d.organization.items) ถูกนำออกตามที่สั่ง ข้อมูลยังอยู่ใน dimension3.data.ts -->
-    <!-- วงล้อการพัฒนาองค์กร 6 ตัวชี้วัด · แก้ได้ที่ public/models/organization-development-model.html
-         เพิ่มรูป: เปิด /models/organization-development-model.html?edit แล้วกดบันทึก HTML พร้อมรูป -->
+    <!-- วงล้อการพัฒนาองค์กร 6 ตัวชี้วัด -->
     <div class="d3-learn-model d3-org-model" appReveal style="margin-top:28px">
-      <iframe src="/models/organization-development-model.html" title="การพัฒนาองค์กร 6 ตัวชี้วัด"
+      <iframe src="/models/organization-development-model.html?v=20260923-1" title="การพัฒนาองค์กร 6 ตัวชี้วัด"
         loading="lazy" scrolling="no" [style.height.px]="orgModelHeight()"></iframe>
     </div>
 
@@ -147,14 +145,13 @@
       <p class="model-intro-text">{{ d.technology.modelIntro }}</p>
     </div>
 
-    <!-- โมเดล LEARN โรงเรียนต้นแบบองค์กรดิจิทัลแห่งการเรียนรู้ 4 ขั้นตอน
-         แก้เนื้อหาได้ที่ public/models/school-development-model.html ในตัวแปร data -->
+    <!-- โมเดลโรงเรียนต้นแบบองค์กรดิจิทัลแห่งการเรียนรู้ -->
     <div class="sec-head" appReveal>
       <h2 class="sec-title" style="font-size:26px">โรงเรียนต้นแบบองค์กรดิจิทัลแห่งการเรียนรู้</h2>
       <div class="sec-rule"></div>
     </div>
     <div class="d3-learn-model" appReveal style="margin-bottom:38px">
-      <iframe src="/models/school-development-model.html" title="โมเดลการพัฒนาโรงเรียน 4 ขั้นตอน"
+      <iframe src="/models/digital-learning-organization.html?v=20260923-6" title="โรงเรียนต้นแบบองค์กรดิจิทัลแห่งการเรียนรู้"
         loading="lazy" scrolling="no" [style.height.px]="learnModelHeight()"></iframe>
     </div>
 
@@ -181,10 +178,9 @@
         loading="lazy" scrolling="no" [style.height.px]="qaModelHeight()"></iframe>
     </div>
 
-    <!-- สมุดระบบการประกันคุณภาพภายใน 6 ขั้นตอน · แก้ได้ที่ public/models/iqa-model.html
-         เพิ่มรูป: เปิด /models/iqa-model.html?edit แล้วกดบันทึก HTML พร้อมรูป -->
+    <!-- สมุดระบบการประกันคุณภาพภายใน 6 ขั้นตอน -->
     <div class="d3-learn-model d3-iqa-model" appReveal style="margin-top:28px">
-      <iframe src="/models/iqa-model.html" title="ระบบการประกันคุณภาพภายใน 6 ขั้นตอน"
+      <iframe src="/models/iqa-model.html?v=20260923-1" title="ระบบการประกันคุณภาพภายใน 6 ขั้นตอน"
         loading="lazy" scrolling="no" [style.height.px]="iqaModelHeight()"></iframe>
     </div>
   </div>

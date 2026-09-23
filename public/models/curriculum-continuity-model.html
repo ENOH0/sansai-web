@@ -2081,6 +2081,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     }
   </style>
 </head>
+<style>.footer { display: none !important; }</style>
 
 <body>
   <div class="page">
@@ -2446,7 +2447,26 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     });
 
     const linkInput = [{ "title": "โรงเรียนขยายโอกาส", "list": ["โรงเรียนขยายโอกาสในเขตอำเภอสันทราย จำนวน 10 โรงเรียน"], "count": 2 }, { "title": "สถาบันอุดมศึกษา", "list": ["มหาวิทยาลัยแม่โจ้", "มหาวิทยาลัยราชภัฏเชียงใหม่", "มหาวิทยาลัยเทคโนโลยีราชมงคลล้านนา เชียงใหม่", "สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง", "มหาวิทยาลัยเกษตรศาสตร์", "วิทยาลัยพยาบาลบรมราชชนนี", "สถาบันพระบรมราชชนก"], "count": 2 }, { "title": "สถาบันอาชีวศึกษา", "list": ["วิทยาลัยอาชีวศึกษาเชียงใหม่", "วิทยาลัยเทคนิคสารภี"], "count": 2 }, { "title": "เครือข่าย", "list": ["โรงเรียนรามบริรักษ์เชียงใหม่", "สถาบันการจัดการปัญญาภิวัฒน์", "สถาบันพัฒนาชีวิตสู่ความยั่งยืน AIU", "สถาบันภาษา The Oxford School of Language"], "count": 2 }, { "title": "สถาบันเครือข่ายจากต่างประเทศ", "list": ["มหาวิทยาลัยครูกว่างซี เมืองกุ้ยหลิน ประเทศจีน", "มหาวิทยาลัยซีหนาน มณฑลฉงชิ่ง ประเทศจีน"], "count": 2 }], linkOutput = [{ "title": "หลักสูตรที่เชื่อมโยงกับสถาบันคู่พัฒนา", "list": ["หลักสูตรที่สถานศึกษามุ่งส่งเสริมสมรรถนะโดยเชื่อมโยงกับสถาบันคู่พัฒนา ระดับอาชีวศึกษาและอุดมศึกษา", "ระดับชั้นมัธยมศึกษาตอนต้น: 9 ห้องเรียนปกติ (พัฒนาสมรรถนะ) และ 1 ห้องเรียนพิเศษ", "ระดับชั้นมัธยมศึกษาตอนปลาย: 19 แผนการเรียนปกติ และ 3 ห้องเรียนพิเศษ"], "count": 0 }, { "title": "ระบบสะสมหน่วยการเรียนรู้และหลักสูตรศึกษาร่วม", "list": ["ระบบสะสมหน่วยการเรียนรู้และหลักสูตรศึกษาร่วมกับสถาบันอาชีวศึกษาและสถาบันคู่พัฒนา"], "count": 0, "courses": true }, { "title": "หลักสูตรวิชาชีพเฉพาะทาง", "list": ["หลักสูตรวิชาชีพเฉพาะทางกับสถาบันคู่พัฒนา", "สถาบันพัฒนาชีวิตสู่ความยั่งยืน AIU"], "count": 2 }, { "title": "แหล่งการเรียนรู้", "list": ["ภาพการใช้แหล่งการเรียนรู้ คณะต่าง ๆ ของมหาวิทยาลัยแม่โจ้"], "count": 6, "carousel": true }], linkCourses = [["หลักสูตรสาขาช่างเชื่อมอุตสาหกรรม (ทวิศึกษา)", "วิทยาลัยเทคนิคสารภี"], ["หลักสูตรสาขาธุรกิจการโรงแรม (ทวิศึกษา)", "วิทยาลัยเทคนิคสารภี"], ["หลักสูตรสาขาธุรกิจการโรงแรม (Credit Bank)", "วิทยาลัยอาชีวศึกษาเชียงใหม่"], ["หลักสูตรสาขาคหกรรมศาสตร์ (Credit Bank)", "วิทยาลัยอาชีวศึกษาเชียงใหม่"], ["หลักสูตรสาขาอาหารและโภชนาการ (Credit Bank)", "วิทยาลัยอาชีวศึกษาเชียงใหม่"], ["หลักสูตรการจัดการธุรกิจการค้าสมัยใหม่ (Credit Bank)", "สถาบันการจัดการปัญญาภิวัฒน์"]];
-    const L = id => document.getElementById(id); let linkImages = {}; try { linkImages = JSON.parse(L('link-saved-images').textContent) || {} } catch { } let linkFocus = null, linkGallery = null, slideIndex = 0, slidePlaying = true, slideTimer;
+    const L = id => document.getElementById(id); let linkImages = {}; try { linkImages = JSON.parse(L('link-saved-images').textContent) || {} } catch { }
+    linkImages = {
+      'input-4-0': '/evidence/2.2/curriculum-continuity/foreign-network-01.png',
+      'input-4-1': '/evidence/2.2/curriculum-continuity/foreign-network-02.png',
+      'input-3-0': '/evidence/2.2/curriculum-continuity/network-01.png',
+      'input-3-1': '/evidence/2.2/curriculum-continuity/network-02.png',
+      'course-0-0': '/evidence/2.2/curriculum-continuity/course-01.png',
+      'course-0-1': '/evidence/2.2/curriculum-continuity/course-02.png',
+      'course-1-0': '/evidence/2.2/curriculum-continuity/course-03.png',
+      'course-1-1': '/evidence/2.2/curriculum-continuity/course-04.png',
+      'course-2-0': '/evidence/2.2/curriculum-continuity/course-05.png',
+      'course-2-1': '/evidence/2.2/curriculum-continuity/course-06.png',
+      'course-3-0': '/evidence/2.2/curriculum-continuity/course-07.png',
+      'course-3-1': '/evidence/2.2/curriculum-continuity/course-08.png',
+      'course-4-0': '/evidence/2.2/curriculum-continuity/course-09.png',
+      'course-4-1': '/evidence/2.2/curriculum-continuity/course-10.png',
+      'course-5-0': '/evidence/2.2/curriculum-continuity/course-11.png',
+      'course-5-1': '/evidence/2.2/curriculum-continuity/course-12.png',
+      ...linkImages
+    }; let linkFocus = null, linkGallery = null, slideIndex = 0, slidePlaying = true, slideTimer;
     function lmShow(title, body) { pauseAuto(); closePopup(); const m = L('link-modal'); if (!m.open) linkFocus = document.activeElement; L('link-modal-content').innerHTML = `<div class="lm-head"><small>CURRICULUM · CONNECTION</small><h2 id="link-modal-title">${title}</h2><button class="lm-close" aria-label="ปิดหน้าต่าง">×</button></div><div class="lm-body">${body}</div>`; if (!m.open) m.showModal(); m.scrollTop = 0; document.querySelector('.lm-close').focus(); clearInterval(slideTimer) }
     function photoSlot(key, i) { const src = linkImages[key]; return `<div class="photo-box"><div class="photo-view">${src ? `<img src="${src}" alt="ภาพประกอบที่ ${i + 1}">` : `<div class="photo-empty"><b>▧</b>พื้นที่ภาพที่ ${i + 1}</div>`}</div><div class="photo-actions"><label class="file-choice">${src ? 'เปลี่ยนรูป' : 'เพิ่มรูป'}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif" data-image-key="${key}" aria-label="เพิ่มภาพที่ ${i + 1}"></label>${src ? `<button class="gallery-remove" data-remove-image="${key}">นำรูปออก</button>` : ''}</div></div>` }
     function galleryHTML(key, count, carousel) { linkGallery = { key, count, carousel }; slideIndex = 0; slidePlaying = !matchMedia('(prefers-reduced-motion: reduce)').matches; return `<h3 class="gallery-heading">ภาพประกอบ · ${count} รูป</h3><div id="link-photos"></div><p class="gallery-error" id="gallery-error" role="status"></p><p class="gallery-note">เพิ่มภาพแล้วกด “บันทึก HTML พร้อมรูป” เพื่อเก็บไว้ในไฟล์</p>` }

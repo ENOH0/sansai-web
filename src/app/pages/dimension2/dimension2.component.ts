@@ -35,12 +35,12 @@ export class Dimension2Component {
     diversity:  { input: [], output: [], outcome: [] }    // หลักสูตรด้านความหลากหลาย
   };
   readonly flexibleModelHeight = signal(980);
-  readonly diversityPdcaHeight = signal(1000);
+  readonly diversityPdcaHeight = signal(1800);
 
   @HostListener('window:message', ['$event'])
   resizeDiversityModel(event: MessageEvent<{ type?: string; height?: number }>): void {
     if (typeof window === 'undefined' || event.origin !== window.location.origin) return;
-    if (event.data?.type === 'd2-diversity-pdca-height') {
+    if (event.data?.type === 'd2-diversity-curriculum-height') {
       const h = Number(event.data.height);
       if (Number.isFinite(h)) this.diversityPdcaHeight.set(Math.max(620, h));
       return;

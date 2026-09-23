@@ -23,6 +23,7 @@ export class BarChartComponent {
   @Input() valueFormat = '1.0-2';
   @Input() valueFontSize = 14;
   @Input() showEvidence = false;
+  @Input() min?: number;
   @Input() max?: number;
   /** กราฟที่มีชุดข้อมูลเดียว: ให้แต่ละแท่งมีสีไม่ซ้ำกัน (ตามลำดับป้ายแกน X) */
   @Input() barColors?: string[];
@@ -42,13 +43,24 @@ export class BarChartComponent {
     return Math.ceil((m * 1.16) / 5) * 5;
   }
 
+  private lo(): number {
+    return this.min ?? 0;
+  }
+
   ticks(): number[] {
     const hi = this.hi();
-    return Array.from({ length: 6 }, (_, i) => Math.round((hi / 5) * i * 10) / 10);
+    const lo = this.lo();
+    return Array.from({ length: 6 }, (_, i) => Math.round((lo + ((hi - lo) / 5) * i) * 10) / 10);
   }
 
   yPos(v: number): number {
-    return this.H - this.PB - (v / this.hi()) * (this.H - this.PT - this.PB);
+    const lo = this.lo();
+    const range = Math.max(1, this.hi() - lo);
+    return this.H - this.PB - ((v - lo) / range) * (this.H - this.PT - this.PB);
+  }
+
+  baseY(): number {
+    return this.yPos(this.lo());
   }
 
   private groupW(): number {

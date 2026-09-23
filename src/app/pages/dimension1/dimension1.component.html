@@ -183,7 +183,7 @@
       <app-section-header [light]="true" num="1.1.1" [title]="onetTitle" />
       <div class="d1-onet-narrative" appReveal>
         <p *ngFor="let paragraph of d.section11.onet.narrative">
-          <strong *ngIf="paragraph.strong; else normalParagraph">{{ paragraph.text }}</strong>
+          <strong class="d1-onet-progress" *ngIf="paragraph.strong; else normalParagraph">{{ paragraph.text }}</strong>
           <ng-template #normalParagraph><ng-container *ngFor="let part of boldParts(paragraph.text, paragraph.bold)"><strong class="d1-hl" *ngIf="part.b; else plainPart">{{ part.t }}</strong><ng-template #plainPart>{{ part.t }}</ng-template></ng-container></ng-template>
         </p>
       </div>
@@ -198,8 +198,7 @@
           </div>
           <!-- ตัวเลือก A: ถ้าเลือกแบบ B ให้ลบบล็อก .d1-onet-option--row นี้ทั้งบล็อก -->
           <div class="d1-onet-option d1-onet-option--row">
-            <div class="d1-onet-option-label">ตัวเลือก A · กราฟ 3 ใบเรียงแนวตั้ง</div>
-            <div class="grid grid-3">
+            <div class="grid grid-2">
               <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" *ngFor="let chart of onetHighlights" [title]="chart.title" [subtitle]="chart.subtitle"
                 [labels]="d.section11.onet.m6.years" [series]="chart.series" [max]="60" valueFormat="1.2-2"
                 [valueFontSize]="12" [note]="chart.note" />
@@ -497,10 +496,11 @@
         [ngTemplateOutletContext]="{ text: d.section12.leadAfter }"></ng-container>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
-      <div class="stack d1-desired-meter">
-        <app-meter-list [title]="'สรุปคุณภาพโดยรวมของคุณลักษณะอันพึงประสงค์ทั้ง 8 ด้าน'"
-          subtitle="ค่าเฉลี่ยร้อยละระดับดีขึ้นไป ปีการศึกษา 2566–2568" [rows]="desiredMeters" [max]="100"
- [note]="d.section12.desired.conclusion" />
+      <div class="stack">
+        <app-bar-chart class="d1-desired-chart" valueColor="#3b4a66" title="ผลการประเมินคุณลักษณะที่พึงประสงค์ของผู้เรียน"
+          subtitle="ร้อยละระดับดีขึ้นไป จำแนกตามปีการศึกษา 2566–2568" [labels]="desiredLabels"
+          [series]="desiredBars" [min]="90" [max]="100" valueFormat="1.2-2" [valueFontSize]="10"
+          [note]="d.section12.desired.conclusion" />
 
         <app-data-table [caption]="d.section12.desired.caption" [headers]="desiredHeaders" [rows]="desiredRows" />
 
@@ -542,6 +542,60 @@
         [ngTemplateOutletContext]="{ text: d.section12.election.narrative }"></ng-container>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
+      <section class="d1-environment-flow d1-democracy-flow" appReveal>
+        <div class="d1-environment-flow-head">
+          <span>การเรียนรู้วิถีประชาธิปไตย</span>
+          <h3>“เปิดใจรับฟัง &nbsp; ใช้เหตุผลร่วมกัน &nbsp; เคารพความแตกต่าง”</h3>
+          <p>เลือกแต่ละกล่องเพื่อดูรายละเอียด</p>
+        </div>
+        <div class="d1-environment-flow-steps" role="tablist" aria-label="กระบวนการส่งเสริมประชาธิปไตย">
+          <button type="button" class="d1-environment-flow-step input" [class.active]="democracyFlowOpen() === 'listen'" (click)="selectDemocracyFlow('listen')" role="tab" [attr.aria-selected]="democracyFlowOpen() === 'listen'"><span class="d1-environment-flow-no">01</span><span><small>เปิดใจรับฟัง</small></span></button>
+          <span class="d1-environment-flow-arrow" aria-hidden="true">→</span>
+          <button type="button" class="d1-environment-flow-step process" [class.active]="democracyFlowOpen() === 'reason'" (click)="selectDemocracyFlow('reason')" role="tab" [attr.aria-selected]="democracyFlowOpen() === 'reason'"><span class="d1-environment-flow-no">02</span><span><small>ใช้เหตุผลร่วมกัน</small></span></button>
+          <span class="d1-environment-flow-arrow" aria-hidden="true">→</span>
+          <button type="button" class="d1-environment-flow-step output" [class.active]="democracyFlowOpen() === 'respect'" (click)="selectDemocracyFlow('respect')" role="tab" [attr.aria-selected]="democracyFlowOpen() === 'respect'"><span class="d1-environment-flow-no">03</span><span><small>เคารพความแตกต่าง</small></span></button>
+        </div>
+
+        <article class="d1-environment-flow-panel" *ngIf="democracyFlowOpen() === 'listen'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>เปิดใจรับฟัง</h4></div>
+          <div class="d1-environment-flow-grid">
+            <section><h5>นโยบายและเป้าหมายของสถานศึกษา</h5><p>กำหนดเป้าหมายพัฒนาผู้เรียนให้มีสมรรถนะความเป็นพลเมือง เคารพสิทธิและหน้าที่ ยอมรับความแตกต่าง และสามารถอยู่ร่วมกับผู้อื่นในสังคมประชาธิปไตย</p></section>
+            <section><h5>หลักสูตรและคุณลักษณะอันพึงประสงค์</h5><p>แนวทางส่งเสริมประชาธิปไตยในโรงเรียน ซึ่งมุ่งพัฒนาความรับผิดชอบ การมีวินัย การทำงานร่วมกัน และการเคารพความคิดเห็นของผู้อื่น</p></section>
+            <section><h5>ข้อมูลพื้นฐานของนักเรียน</h5><p>ผู้มีสิทธิ์เลือกตั้ง ผลการเข้าร่วมกิจกรรม และความต้องการมีส่วนร่วมของนักเรียนแต่ละระดับชั้น</p></section>
+            <section><h5>โครงสร้างการมีส่วนร่วมของนักเรียน</h5><p>สภานักเรียนและคณะสี</p></section>
+            <section class="wide"><h5>ภาคีเครือข่าย</h5><p>คณะครู ผู้ปกครอง คณะกรรมการการเลือกตั้ง และผู้เกี่ยวข้องที่ร่วมสังเกตการณ์และสนับสนุน</p></section>
+          </div>
+        </article>
+
+        <article class="d1-environment-flow-panel" *ngIf="democracyFlowOpen() === 'reason'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>ใช้เหตุผลร่วมกัน</h4></div>
+          <ol class="d1-environment-flow-output">
+            <li>โรงเรียนวิเคราะห์พฤติกรรมและความต้องการพัฒนาของนักเรียน โดยมุ่งส่งเสริมให้นักเรียนกล้าแสดงความคิดเห็น รับฟังเหตุผลของผู้อื่น และสามารถตัดสินใจร่วมกันได้</li>
+            <li>โรงเรียนประชาสัมพันธ์และให้ความรู้เกี่ยวกับการปกครองระบอบประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข สิทธิและหน้าที่ของพลเมือง การเคารพเสียงส่วนใหญ่ และการคุ้มครองสิทธิของเสียงส่วนน้อย พร้อมเปิดโอกาสให้นักเรียนซักถามและแลกเปลี่ยนความคิดเห็น</li>
+            <li>โรงเรียนจำลองกระบวนการเลือกตั้งตามวิถีประชาธิปไตย ตั้งแต่การเปิดรับสมัคร การนำเสนอนโยบาย การรณรงค์หาเสียง การรับฟังความคิดเห็น การใช้สิทธิ์ลงคะแนน การนับคะแนน และการประกาศผลอย่างโปร่งใส โดยมีคณะกรรมการการเลือกตั้งร่วมสังเกตการณ์</li>
+            <li>สภานักเรียนและคณะกรรมการที่เกี่ยวข้องจัดประชุมเพื่อเปิดโอกาสให้นักเรียนเสนอความคิดเห็น ความต้องการ และแนวทางพัฒนาโรงเรียน ฝึกการนำเสนออย่างมีเหตุผล รับฟังโดยไม่ขัดจังหวะ แลกเปลี่ยนข้อมูล และสรุปข้อตกลงร่วมกัน</li>
+            <li>โรงเรียนจัดกิจกรรมกีฬาสีโดยใช้โครงสร้างคณะกรรมการคณะสี นักเรียนเลือกผู้นำและแบ่งหน้าที่ตามความสนใจและความสามารถ ฝึกพิจารณาข้อดีและข้อจำกัด แก้ไขปัญหา ประนีประนอม และตัดสินใจโดยใช้มติของกลุ่ม</li>
+            <li>ส่งเสริมการเคารพกฎ กติกา และคำตัดสิน โดยให้นักเรียนปฏิบัติตามกติกา แข่งขันด้วยความสุจริต มีน้ำใจนักกีฬา ควบคุมอารมณ์ ใช้เหตุผลในการแก้ปัญหา และแสดงความยินดีกับผู้ที่ประสบความสำเร็จ</li>
+            <li>สะท้อนผลการเรียนรู้หลังจบกิจกรรม โดยร่วมกันพิจารณาความสำเร็จ ปัญหา สาเหตุ ความคิดเห็นที่ช่วยให้งานดีขึ้น และแนวทางปรับปรุง เพื่อเรียนรู้ว่าความคิดเห็นที่แตกต่างช่วยพัฒนางานได้เมื่อทุกฝ่ายรับฟังด้วยเหตุผล</li>
+          </ol>
+        </article>
+
+        <article class="d1-environment-flow-panel" *ngIf="democracyFlowOpen() === 'respect'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>เคารพความแตกต่าง</h4></div>
+          <ol class="d1-environment-flow-output">
+            <li>โรงเรียนมีแผนงานและกิจกรรมส่งเสริมประชาธิปไตยที่ดำเนินงานอย่างต่อเนื่องและเป็นรูปธรรม</li>
+            <li>มีคณะกรรมการสภานักเรียนและผู้นำคณะสีที่มาจากกระบวนการเลือกตั้งของนักเรียน</li>
+            <li>นักเรียนได้รับความรู้เกี่ยวกับสิทธิ หน้าที่ กติกา และกระบวนการประชาธิปไตย</li>
+            <li>นักเรียนมีทักษะการสื่อสาร การประสานงาน การแบ่งหน้าที่ การแก้ปัญหา การตัดสินใจร่วมกัน ยอมรับมติของเสียงส่วนใหญ่ เคารพความคิดเห็นที่แตกต่าง และปฏิบัติตามข้อตกลงของกลุ่ม</li>
+            <li>นักเรียนรู้จักควบคุมอารมณ์ เคารพกฎกติกา ยอมรับคำตัดสิน และแสดงน้ำใจนักกีฬา</li>
+            <li>ผลสะท้อนว่านักเรียนส่วนใหญ่ตระหนักถึงสิทธิ หน้าที่ และความสำคัญของการมีส่วนร่วมตามวิถีประชาธิปไตย โดยในแต่ละปีมีผู้มาใช้สิทธิ์มากกว่าร้อยละ 80</li>
+            <li>นักเรียนเข้าร่วมกิจกรรมกีฬาสีภายใน “บานชื่นเกมส์” เฉลี่ยย้อนหลัง 3 ปี คิดเป็นร้อยละ <strong>63.52</strong> แสดงถึงการมีส่วนร่วมในกิจกรรมที่ต้องอาศัยการวางแผน การรับฟัง และการทำงานร่วมกัน</li>
+            <li>ข้อมูลสมรรถภาพทางกายของนักเรียนมีแนวโน้มดีขึ้น โดยนักเรียนที่มีสมรรถภาพทางกายระดับดีมากเพิ่มขึ้น</li>
+            <li>ข้อมูลสุขภาพจิตโดยรวมสะท้อนว่า นักเรียนที่มีสุขภาพจิตระดับปกติเพิ่มจากร้อยละ <strong>93.66</strong> ในปี 2566 เป็นร้อยละ <strong>93.93</strong> ในปี 2568 และกลุ่มเสี่ยงลดจากร้อยละ <strong>6.34</strong> เหลือร้อยละ <strong>6.07</strong></li>
+          </ol>
+        </article>
+      </section>
+
       <div class="stack">
         <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" title="การเข้าร่วมกิจกรรมเลือกตั้งสภาผู้แทนนักเรียน"
           subtitle="จำนวนผู้มีสิทธิ์และผู้มาใช้สิทธิ์ ปีการศึกษา 2566–2568 (หน่วย: คน)"
@@ -577,6 +631,38 @@
       <app-section-header [light]="true" num="1.2.7" [title]="healthTitle" />
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section12.health.narrative }"></ng-container>
+      <section class="d1-environment-flow d1-health-flow" appReveal aria-label="เส้นทางสุขภาพกายและสุขภาพจิต">
+        <div class="d1-environment-flow-head">
+          <span>เส้นทางสุขภาพ</span>
+          <h3>รู้เท่าทัน · สร้างเสริม · สุขกายสุขใจ</h3>
+          <p>แตะแต่ละกล่องเพื่อดูรายละเอียด</p>
+        </div>
+        <div class="d1-environment-flow-steps" role="tablist" aria-label="ขั้นตอนการส่งเสริมสุขภาพ">
+          <button type="button" class="d1-environment-flow-step input" [class.active]="healthFlowOpen() === 'aware'" (click)="selectHealthFlow('aware')" role="tab" [attr.aria-selected]="healthFlowOpen() === 'aware'">
+            <span class="d1-environment-flow-no">01</span><small>รู้เท่าทัน</small>
+          </button>
+          <span class="d1-environment-flow-arrow" aria-hidden="true">→</span>
+          <button type="button" class="d1-environment-flow-step process" [class.active]="healthFlowOpen() === 'strengthen'" (click)="selectHealthFlow('strengthen')" role="tab" [attr.aria-selected]="healthFlowOpen() === 'strengthen'">
+            <span class="d1-environment-flow-no">02</span><small>สร้างเสริม</small>
+          </button>
+          <span class="d1-environment-flow-arrow" aria-hidden="true">→</span>
+          <button type="button" class="d1-environment-flow-step output" [class.active]="healthFlowOpen() === 'wellbeing'" (click)="selectHealthFlow('wellbeing')" role="tab" [attr.aria-selected]="healthFlowOpen() === 'wellbeing'">
+            <span class="d1-environment-flow-no">03</span><small>สุขกายสุขใจ</small>
+          </button>
+        </div>
+        <article class="d1-environment-flow-panel" *ngIf="healthFlowOpen() === 'aware'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>รู้เท่าทัน</h4></div>
+          <p class="d1-environment-flow-intro">สำรวจและวิเคราะห์ข้อมูลสุขภาพกาย สุขภาพจิต และพฤติกรรมเสี่ยงของนักเรียน</p>
+        </article>
+        <article class="d1-environment-flow-panel" *ngIf="healthFlowOpen() === 'strengthen'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>สร้างเสริม</h4></div>
+          <p class="d1-environment-flow-intro">จัดกิจกรรมออกกำลังกาย ส่งเสริมโภชนาการ พัฒนาทักษะการจัดการอารมณ์ คัดกรอง ให้คำปรึกษา และช่วยเหลืออย่างเป็นระบบ</p>
+        </article>
+        <article class="d1-environment-flow-panel" *ngIf="healthFlowOpen() === 'wellbeing'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>สุขกายสุขใจดี</h4></div>
+          <p class="d1-environment-flow-intro">นักเรียนดูแลสุขภาพกายและสุขภาพจิตของตนเองได้ จัดการอารมณ์และความเครียดเป็น และหลีกเลี่ยงพฤติกรรมเสี่ยง</p>
+        </article>
+      </section>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
 
       <div class="grid grid-2">
@@ -649,6 +735,62 @@
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section12.environment.narrative }"></ng-container>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
+      <section class="d1-environment-flow" appReveal>
+        <div class="d1-environment-flow-head">
+          <span>แนวทางการขับเคลื่อน</span>
+          <h3>“สร้างความรู้ สู่การลงมือทำ ร่วมอนุรักษ์สิ่งแวดล้อมอย่างยั่งยืน”</h3>
+          <p>เลือกแต่ละกล่องเพื่อดูรายละเอียด</p>
+        </div>
+        <div class="d1-environment-flow-steps" role="tablist" aria-label="กระบวนการอนุรักษ์สิ่งแวดล้อม">
+          <button type="button" class="d1-environment-flow-step input" [class.active]="environmentFlowOpen() === 'input'"
+            (click)="selectEnvironmentFlow('input')" role="tab" [attr.aria-selected]="environmentFlowOpen() === 'input'">
+            <span class="d1-environment-flow-no">01</span><span><small>สร้างความรู้</small></span>
+          </button>
+          <span class="d1-environment-flow-arrow" aria-hidden="true">→</span>
+          <button type="button" class="d1-environment-flow-step process" [class.active]="environmentFlowOpen() === 'process'"
+            (click)="selectEnvironmentFlow('process')" role="tab" [attr.aria-selected]="environmentFlowOpen() === 'process'">
+            <span class="d1-environment-flow-no">02</span><span><small>สู่การลงมือทำ</small></span>
+          </button>
+          <span class="d1-environment-flow-arrow" aria-hidden="true">→</span>
+          <button type="button" class="d1-environment-flow-step output" [class.active]="environmentFlowOpen() === 'output'"
+            (click)="selectEnvironmentFlow('output')" role="tab" [attr.aria-selected]="environmentFlowOpen() === 'output'">
+            <span class="d1-environment-flow-no">03</span><span><small>ร่วมอนุรักษ์อย่างยั่งยืน</small></span>
+          </button>
+        </div>
+
+        <article class="d1-environment-flow-panel" *ngIf="environmentFlowOpen() === 'input'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>สร้างความรู้</h4></div>
+          <div class="d1-environment-flow-grid">
+            <section><h5>นโยบายและแผนงานของสถานศึกษา</h5><p>ให้ความสำคัญกับการอนุรักษ์ทรัพยากรธรรมชาติและสิ่งแวดล้อม</p></section>
+            <section><h5>ข้อมูลสภาพปัญหาและบริบทพื้นที่</h5><p>ปัญหาฝุ่นละออง PM2.5 การจัดการขยะ ความสะอาดของห้องเรียนและบริเวณโรงเรียน ตลอดจนทรัพยากรพรรณไม้และความหลากหลายทางชีวภาพภายในสถานศึกษา</p></section>
+            <section><h5>หลักสูตรและกิจกรรมการเรียนรู้</h5><p>บูรณาการในรายวิชาพื้นฐานและวิชาเพิ่มเติมทุกรายวิชา กิจกรรมพัฒนาผู้เรียน กิจกรรมจิตอาสา และโครงการงานสวนพฤกษศาสตร์โรงเรียน</p></section>
+            <section><h5>ทรัพยากรและเทคโนโลยี</h5><p>จุดคัดแยกขยะ เครื่องมือตรวจวัดคุณภาพอากาศ ปัญญาประดิษฐ์ และแอปพลิเคชันสำหรับติดตามฝุ่น PM2.5</p></section>
+            <section class="wide"><h5>ภาคีเครือข่าย</h5><p>ความร่วมมือจากผู้ปกครอง ชุมชน เทศบาลตำบลสันทรายหลวง โรงเรียนในอำเภอสันทราย และศูนย์ปฏิบัติการด้านเทคโนโลยีอวกาศ ภูมิสารสนเทศ และวิศวกรรมสิ่งแวดล้อมเพื่อคุณภาพอากาศที่ดีแห่งเอเชีย (AiroTEC) มหาวิทยาลัยราชภัฏเชียงใหม่</p></section>
+          </div>
+        </article>
+
+        <article class="d1-environment-flow-panel" *ngIf="environmentFlowOpen() === 'process'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>สู่การลงมือทำ</h4></div>
+          <p class="d1-environment-flow-intro">นำโครงการไปสู่การปฏิบัติผ่านกิจกรรมที่เปิดโอกาสให้นักเรียนได้เรียนรู้ ลงมือทำ และทำงานร่วมกับผู้อื่น</p>
+          <ol class="d1-environment-flow-list">
+            <li>งานสวนพฤกษศาสตร์โรงเรียน</li><li>นวัตกรรมการสื่อสารและแก้ไขปัญหาฝุ่น PM2.5</li>
+            <li>การเรียนรู้เทคโนโลยี AI เพื่อสิ่งแวดล้อม</li><li>การประกวดห้องเรียนสะอาด</li>
+            <li>เวรทำความสะอาดพื้นที่รับผิดชอบ</li><li>การคัดแยกขยะของคณะสี</li>
+            <li>การอนุรักษ์สิ่งแวดล้อมร่วมกับชุมชน</li>
+          </ol>
+        </article>
+
+        <article class="d1-environment-flow-panel" *ngIf="environmentFlowOpen() === 'output'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>ร่วมอนุรักษ์สิ่งแวดล้อมอย่างยั่งยืน</h4></div>
+          <ol class="d1-environment-flow-output">
+            <li>โรงเรียนผ่านการประเมินและได้รับอนุมัติให้เข้ารับพระราชทานป้ายสนองพระราชดำริในงานสวนพฤกษศาสตร์โรงเรียน ประจำปีการศึกษา 2567 เมื่อวันที่ 19 สิงหาคม พ.ศ. 2567</li>
+            <li>นักเรียนมีความรู้เกี่ยวกับปัญหาฝุ่น PM2.5 สามารถใช้เทคโนโลยี AI และแอปพลิเคชันในการตรวจวัดและเฝ้าระวังคุณภาพอากาศ มีทักษะในการสื่อสารและขยายความรู้สู่โรงเรียนและเครือข่ายในอำเภอสันทราย</li>
+            <li>ห้องเรียนและพื้นที่รับผิดชอบได้รับการดูแลอย่างต่อเนื่อง มีระบบประกวดและมอบธงห้องเรียนสะอาดเป็นเครื่องมือส่งเสริมพฤติกรรมเชิงบวก</li>
+            <li>นักเรียนมีความรู้และทักษะในการคัดแยกขยะ สามารถนำไปปฏิบัติได้ทั้งในโรงเรียนและกิจกรรมของชุมชน</li>
+            <li>โรงเรียนมีเครือข่ายความร่วมมือด้านสิ่งแวดล้อมกับชุมชน เทศบาล สถาบันอุดมศึกษา และหน่วยงานด้านเทคโนโลยีสิ่งแวดล้อม</li>
+          </ol>
+        </article>
+      </section>
       <div class="card card-gold" appReveal style="margin-bottom:30px">
         <h3 class="card-title">ผลงานเด่น</h3>
         <p class="card-body" style="margin:0">{{ d.section12.environment.highlight }}</p>
@@ -682,6 +824,19 @@
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section12.teamwork.narrative }"></ng-container>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
+      <section class="d1-environment-flow d1-teamwork-flow" appReveal>
+        <div class="d1-environment-flow-head">
+          <span>พลังการทำงานร่วมกัน</span>
+          <h3>“ร่วมคิด &nbsp; รับผิดชอบ &nbsp; มุ่งมั่นสู่ความสำเร็จ”</h3>
+        </div>
+        <div class="d1-environment-flow-steps" aria-label="แนวทางการทำงานเป็นทีม">
+          <div class="d1-environment-flow-step input"><span class="d1-environment-flow-no">01</span><span><small>ร่วมคิด</small></span></div>
+          <span class="d1-environment-flow-arrow" aria-hidden="true">→</span>
+          <div class="d1-environment-flow-step process"><span class="d1-environment-flow-no">02</span><span><small>รับผิดชอบ</small></span></div>
+          <span class="d1-environment-flow-arrow" aria-hidden="true">→</span>
+          <div class="d1-environment-flow-step output"><span class="d1-environment-flow-no">03</span><span><small>มุ่งมั่นสู่ความสำเร็จ</small></span></div>
+        </div>
+      </section>
       <app-cycle-flow [steps]="d.section12.teamwork.cycle" [expandAll]="true" />
       <div class="stack" style="margin-top:44px">
         <app-line-chart valueColor="#3b4a66" title="ร้อยละของผลการประเมิน “ผ่าน” ในกิจกรรมพัฒนาผู้เรียน" subtitle="ปีการศึกษา 2566–2568"
@@ -727,6 +882,32 @@
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section12.thaiPride.narrative }"></ng-container>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
+      <section class="d1-environment-flow d1-thai-pride-flow" appReveal>
+        <div class="d1-environment-flow-head">
+          <span>การเรียนรู้ภูมิปัญญาและความเป็นไทย</span>
+          <h3>“เรียนรู้ &nbsp; สืบสาน &nbsp; ประยุกต์ใช้”</h3>
+          <p>เลือกแต่ละกล่องเพื่อดูรายละเอียด</p>
+        </div>
+        <div class="d1-environment-flow-steps" role="tablist" aria-label="กระบวนการเรียนรู้ภูมิปัญญาไทย">
+          <button type="button" class="d1-environment-flow-step input" [class.active]="thaiPrideFlowOpen() === 'learn'" (click)="selectThaiPrideFlow('learn')" role="tab" [attr.aria-selected]="thaiPrideFlowOpen() === 'learn'"><span class="d1-environment-flow-no">01</span><span><small>เรียนรู้</small></span></button>
+          <span class="d1-environment-flow-arrow" aria-hidden="true">→</span>
+          <button type="button" class="d1-environment-flow-step process" [class.active]="thaiPrideFlowOpen() === 'continue'" (click)="selectThaiPrideFlow('continue')" role="tab" [attr.aria-selected]="thaiPrideFlowOpen() === 'continue'"><span class="d1-environment-flow-no">02</span><span><small>สืบสาน</small></span></button>
+          <span class="d1-environment-flow-arrow" aria-hidden="true">→</span>
+          <button type="button" class="d1-environment-flow-step output" [class.active]="thaiPrideFlowOpen() === 'apply'" (click)="selectThaiPrideFlow('apply')" role="tab" [attr.aria-selected]="thaiPrideFlowOpen() === 'apply'"><span class="d1-environment-flow-no">03</span><span><small>ประยุกต์ใช้</small></span></button>
+        </div>
+        <article class="d1-environment-flow-panel" *ngIf="thaiPrideFlowOpen() === 'learn'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>เรียนรู้</h4></div>
+          <div class="d1-thai-pride-tags"><span>หลักสูตร</span><span>ปราชญ์ชาวบ้าน</span><span>แหล่งเรียนรู้</span><span>เทคโนโลยี</span></div>
+        </article>
+        <article class="d1-environment-flow-panel" *ngIf="thaiPrideFlowOpen() === 'continue'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>สืบสาน</h4></div>
+          <p class="d1-environment-flow-intro">ออกแบบโครงสร้างกิจกรรมให้สอดคล้องกับหลักสูตรสถานศึกษา โดยบูรณาการความรู้ด้านประวัติศาสตร์ ศิลปวัฒนธรรม ดนตรี นาฏศิลป์ การเกษตร สุขภาพ และการงานอาชีพเข้ากับการจัดการเรียนรู้เชิงรุก การใช้เทคโนโลยี การศึกษาแหล่งเรียนรู้ และการฝึกปฏิบัติจริง</p>
+        </article>
+        <article class="d1-environment-flow-panel" *ngIf="thaiPrideFlowOpen() === 'apply'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>ประยุกต์ใช้</h4></div>
+          <p class="d1-environment-flow-intro">นักเรียนภาคภูมิใจในความเป็นไทย เห็นคุณค่าภูมิปัญญาท้องถิ่น สามารถนำไปใช้ในชีวิตประจำวันและต่อยอดสู่การศึกษาและอาชีพ</p>
+        </article>
+      </section>
       <div class="grid grid-3">
         <div class="card card-hover" *ngFor="let pj of d.section12.thaiPride.projects; let i = index" appReveal
           [revealDelay]="i * 90">
@@ -776,6 +957,38 @@
       <app-section-header [light]="true" num="1.2.6" title="มั่นใจในตนเอง และมีเจตคติที่ดีต่อการเรียน" />
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section12.confidence.narrative }"></ng-container>
+      <section class="d1-environment-flow d1-confidence-flow" appReveal aria-label="เส้นทางการสร้างความมั่นใจในการเรียนรู้">
+        <div class="d1-environment-flow-head">
+          <span>เส้นทางการเรียนรู้</span>
+          <h3>เปิดโอกาส · ลงมือเรียนรู้ · เชื่อมั่นในการเรียนรู้</h3>
+          <p>แตะแต่ละกล่องเพื่อดูรายละเอียด</p>
+        </div>
+        <div class="d1-environment-flow-steps" role="tablist" aria-label="ขั้นตอนการสร้างความมั่นใจ">
+          <button type="button" class="d1-environment-flow-step input" [class.active]="confidenceFlowOpen() === 'opportunity'" (click)="selectConfidenceFlow('opportunity')" role="tab" [attr.aria-selected]="confidenceFlowOpen() === 'opportunity'">
+            <span class="d1-environment-flow-no">01</span><small>เปิดโอกาส</small>
+          </button>
+          <span class="d1-environment-flow-arrow" aria-hidden="true">→</span>
+          <button type="button" class="d1-environment-flow-step process" [class.active]="confidenceFlowOpen() === 'practice'" (click)="selectConfidenceFlow('practice')" role="tab" [attr.aria-selected]="confidenceFlowOpen() === 'practice'">
+            <span class="d1-environment-flow-no">02</span><small>ลงมือเรียนรู้</small>
+          </button>
+          <span class="d1-environment-flow-arrow" aria-hidden="true">→</span>
+          <button type="button" class="d1-environment-flow-step output" [class.active]="confidenceFlowOpen() === 'confidence'" (click)="selectConfidenceFlow('confidence')" role="tab" [attr.aria-selected]="confidenceFlowOpen() === 'confidence'">
+            <span class="d1-environment-flow-no">03</span><small>เชื่อมั่นในการเรียนรู้</small>
+          </button>
+        </div>
+        <article class="d1-environment-flow-panel" *ngIf="confidenceFlowOpen() === 'opportunity'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>เปิดโอกาส</h4></div>
+          <p class="d1-environment-flow-intro">เปิดโอกาสให้นักเรียนเรียนรู้ตามความสนใจและศักยภาพ</p>
+        </article>
+        <article class="d1-environment-flow-panel" *ngIf="confidenceFlowOpen() === 'practice'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>ลงมือเรียนรู้</h4></div>
+          <p class="d1-environment-flow-intro">เรียนรู้ผ่านกิจกรรมเชิงรุก การฝึกปฏิบัติจริง และการแสดงออกอย่างสร้างสรรค์</p>
+        </article>
+        <article class="d1-environment-flow-panel" *ngIf="confidenceFlowOpen() === 'confidence'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>เชื่อมั่นในการเรียนรู้</h4></div>
+          <p class="d1-environment-flow-intro">นักเรียนเชื่อมั่นในตนเอง กล้าแสดงออก และมีเจตคติที่ดีต่อการเรียนรู้</p>
+        </article>
+      </section>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
       <div class="d1-environment-activities">
         <article class="d1-environment-activity" *ngFor="let activity of confidenceActivities; let i = index" appReveal="left"
@@ -800,6 +1013,38 @@
       <app-section-header [light]="true" num="1.2.8" title="ปลอดภัยจากสารเสพติด ปัญหาทางเพศ และอบายมุขทุกชนิด" />
       <ng-container [ngTemplateOutlet]="d1Narrative"
         [ngTemplateOutletContext]="{ text: d.section12.safety.narrative }"></ng-container>
+      <section class="d1-environment-flow d1-safety-flow" appReveal aria-label="เส้นทางการสร้างความปลอดภัยของผู้เรียน">
+        <div class="d1-environment-flow-head">
+          <span>เส้นทางความปลอดภัย</span>
+          <h3>รู้เท่าทันความเสี่ยง · สร้างภูมิคุ้มกัน · ปลอดภัยทุกสถานการณ์</h3>
+          <p>แตะแต่ละกล่องเพื่อดูรายละเอียด</p>
+        </div>
+        <div class="d1-environment-flow-steps" role="tablist" aria-label="ขั้นตอนการสร้างภูมิคุ้มกันผู้เรียน">
+          <button type="button" class="d1-environment-flow-step input" [class.active]="safetyFlowOpen() === 'risk'" (click)="selectSafetyFlow('risk')" role="tab" [attr.aria-selected]="safetyFlowOpen() === 'risk'">
+            <span class="d1-environment-flow-no">01</span><small>รู้เท่าทันความเสี่ยง</small>
+          </button>
+          <span class="d1-environment-flow-arrow" aria-hidden="true">→</span>
+          <button type="button" class="d1-environment-flow-step process" [class.active]="safetyFlowOpen() === 'immunity'" (click)="selectSafetyFlow('immunity')" role="tab" [attr.aria-selected]="safetyFlowOpen() === 'immunity'">
+            <span class="d1-environment-flow-no">02</span><small>สร้างภูมิคุ้มกัน</small>
+          </button>
+          <span class="d1-environment-flow-arrow" aria-hidden="true">→</span>
+          <button type="button" class="d1-environment-flow-step output" [class.active]="safetyFlowOpen() === 'safe'" (click)="selectSafetyFlow('safe')" role="tab" [attr.aria-selected]="safetyFlowOpen() === 'safe'">
+            <span class="d1-environment-flow-no">03</span><small>ปลอดภัยทุกสถานการณ์</small>
+          </button>
+        </div>
+        <article class="d1-environment-flow-panel" *ngIf="safetyFlowOpen() === 'risk'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>รู้เท่าทันความเสี่ยง</h4></div>
+          <p class="d1-environment-flow-intro">โรงเรียนวิเคราะห์ข้อมูลและสถานการณ์เสี่ยงด้านสารเสพติด ปัญหาทางเพศ อบายมุข และภัยจากสื่อออนไลน์ พร้อมจัดระบบดูแลช่วยเหลือนักเรียนร่วมกับครูที่ปรึกษา ผู้ปกครอง ชุมชน และภาคีเครือข่าย</p>
+        </article>
+        <article class="d1-environment-flow-panel" *ngIf="safetyFlowOpen() === 'immunity'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>สร้างภูมิคุ้มกัน</h4></div>
+          <p class="d1-environment-flow-intro">จัดการเรียนรู้และกิจกรรมส่งเสริมทักษะชีวิต สถานศึกษาสีขาว To Be Number One กีฬาต้านยาเสพติด การเฝ้าระวัง การเยี่ยมบ้าน และการให้คำปรึกษา ฝึกให้นักเรียนคิดวิเคราะห์ ตัดสินใจ ปฏิเสธ หลีกเลี่ยงสถานการณ์เสี่ยง และรู้ช่องทางขอความช่วยเหลืออย่างเหมาะสม</p>
+        </article>
+        <article class="d1-environment-flow-panel" *ngIf="safetyFlowOpen() === 'safe'" role="tabpanel">
+          <div class="d1-environment-flow-panel-title"><h4>ปลอดภัยทุกสถานการณ์</h4></div>
+          <p class="d1-environment-flow-intro">ผู้เรียนรู้เท่าทันอันตราย ปฏิเสธและหลีกเลี่ยงสารเสพติด ปัญหาทางเพศ และอบายมุขได้ รู้จักป้องกันตนเองและผู้อื่น และเชื่อมั่นว่าสถานศึกษาเป็นพื้นที่ปลอดภัย ส่งผลให้นักเรียนที่มีพฤติกรรมไม่พึงประสงค์ลดลงจากร้อยละ <strong>59.63</strong> ในปี 2566 เหลือร้อยละ <strong>39.26</strong> ในปี 2568</p>
+        </article>
+      </section>
       <ng-container [ngTemplateOutlet]="d1Indicator"></ng-container>
       <div class="stack d1-safety-chart">
         <app-bar-chart [barColors]="vivid" valueColor="#3b4a66" title="ร้อยละของนักเรียนที่มีพฤติกรรมไม่พึงประสงค์"

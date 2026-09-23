@@ -63,7 +63,7 @@ body::before{
 .mini-tags{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:18px}
 .tag{font-size:18px;padding:4px 12px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid rgba(165,190,218,.42);color:#63778c}
 .click-hint{margin-top:18px;text-align:center;font-size:19px;font-weight:700;color:#9279bd;animation:hintPulse 1.8s ease-in-out infinite}@keyframes hintPulse{50%{opacity:.45;transform:translateY(2px)}}
-.node-actions{display:flex;justify-content:center;margin-top:14px}.image-btn,.detail-btn{position:relative;border:1px solid rgba(255,255,255,.92);border-radius:999px;padding:8px 20px;font-family:inherit;font-size:19px;font-weight:700;color:#55708b;background:linear-gradient(135deg,rgba(255,232,244,.96),rgba(230,244,255,.96),rgba(231,251,241,.96));box-shadow:0 8px 22px rgba(104,145,190,.14),0 0 18px rgba(168,154,245,.2);cursor:pointer;transition:.3s ease;overflow:hidden}.image-btn::before,.detail-btn::before{content:"";position:absolute;inset:-2px;background:linear-gradient(100deg,transparent 20%,rgba(255,255,255,.9) 48%,transparent 76%);transform:translateX(-120%);animation:buttonShine 3.8s ease-in-out infinite}.image-btn:hover,.detail-btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 11px 28px rgba(104,145,190,.2),0 0 26px rgba(255,159,199,.34)}@keyframes buttonShine{0%,55%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+.node-actions{display:flex;justify-content:center;margin-top:14px}.image-btn,.detail-btn{position:relative;border:1px solid rgba(255,255,255,.92);border-radius:999px;padding:8px 20px;font-family:inherit;font-size:19px;font-weight:700;color:#55708b;background:linear-gradient(135deg,rgba(255,232,244,.96),rgba(230,244,255,.96),rgba(231,251,241,.96));box-shadow:0 8px 22px rgba(104,145,190,.14),0 0 18px rgba(168,154,245,.2);cursor:pointer;transition:.3s ease;overflow:hidden}.image-btn.link-btn{display:inline-flex;align-items:center;text-decoration:none}.image-btn::before,.detail-btn::before{content:"";position:absolute;inset:-2px;background:linear-gradient(100deg,transparent 20%,rgba(255,255,255,.9) 48%,transparent 76%);transform:translateX(-120%);animation:buttonShine 3.8s ease-in-out infinite}.image-btn:hover,.detail-btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 11px 28px rgba(104,145,190,.2),0 0 26px rgba(255,159,199,.34)}@keyframes buttonShine{0%,55%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
 .connector{position:relative;height:6px;border-radius:99px;background:linear-gradient(90deg,rgba(255,164,201,.35),rgba(142,154,239,.75),rgba(104,203,231,.55));box-shadow:0 0 18px rgba(130,165,220,.28)}
 .connector::after{content:"";position:absolute;right:-3px;top:50%;transform:translateY(-50%);border-left:16px solid #8da4e5;border-top:10px solid transparent;border-bottom:10px solid transparent;filter:drop-shadow(0 0 7px rgba(125,153,225,.25))}
 .connector::before{content:"";position:absolute;width:15px;height:15px;border-radius:50%;top:50%;transform:translateY(-50%);background:#fff;box-shadow:0 0 10px #a8b9ef,0 0 24px #a8b9ef;animation:travel 2.2s linear infinite}@keyframes travel{from{left:0}to{left:calc(100% - 15px)}}
@@ -357,7 +357,7 @@ body[style*="overflow"]{ overflow:visible !important; }
       <div class="result-emblem"><div><strong>ผลลัพธ์<br>ที่ภาคภูมิใจ</strong><span>ผ่านการบริหารงาน 4 ฝ่าย</span></div></div>
       <div class="result-path"><div class="result-chip">การบริหารแบบมีส่วนร่วม</div><div class="result-chip">BANCHUEN Model</div><div class="result-chip">การบริหารงาน 4 ฝ่าย</div><div class="result-chip">คุณภาพผู้เรียนในศตวรรษที่ 21</div></div>
       <p style="font-size:22px;line-height:1.35;text-align:center;color:#607b6e;margin:18px 0 0">ผลลัพธ์เกิดจากการเชื่อมโยงปัจจัยการขับเคลื่อน กระบวนการบริหารคุณภาพ และการดำเนินงานผ่านโครงสร้างการบริหารงาน 4 ฝ่ายอย่างเป็นระบบ</p>
-      <div class="node-actions"><button class="image-btn" onclick="openImageModal(event,'result')">ดูรูปภาพเพิ่มเติม</button></div>
+      <div class="node-actions"><a class="image-btn link-btn" href="https://padlet.com/laphat3521/3-bxu9k22di530bfen" target="_blank" rel="noopener noreferrer">ดูผลงานผ่าน Padlet ↗</a></div>
     </div>
   </div>
 </div>
@@ -399,7 +399,12 @@ const IMG='/evidence/dimension3/banchuen/';
 const imageSets={
  P:[{src:IMG+'p-plan.jpg',caption:'P (PLAN) การวางแผน — เชื่อมโยงยุทธศาสตร์ชาติ แผนการศึกษาแห่งชาติ และบริบทท้องถิ่น สู่แผนพัฒนาการศึกษาและแผนปฏิบัติการประจำปี'}],
  D:[{src:IMG+'d-do-1-overview.jpg',caption:'D (DO) การดำเนินงาน — ปัจจัยนำเข้าสู่กระบวนการตาม BANCHUEN Model และความสัมพันธ์ขององค์ประกอบตามลำดับ'},
-    {src:IMG+'d-do-2-mechanism.jpg',caption:'D (DO) กลไกของการขับเคลื่อนด้วย BANCHUEN Model ในการบริหารจัดการ 5 ขั้นตอน'}],
+    {src:IMG+'d-do-2-mechanism.jpg',caption:'D (DO) กลไกของการขับเคลื่อนด้วย BANCHUEN Model ในการบริหารจัดการ 5 ขั้นตอน'},
+    {src:IMG+'d-do-3-four-groups.png',caption:'D (DO) BANCHUEN Model ขับเคลื่อนกระบวนการบริหารงานผ่านกลุ่มบริหารงาน 4 ฝ่าย'},
+    {src:IMG+'d-do-4-academic.png',caption:'D (DO) กลุ่มบริหารวิชาการ — ผู้บริหารเป็นผู้นำทางวิชาการและผู้นำนวัตกรรม'},
+    {src:IMG+'d-do-5-personnel.png',caption:'D (DO) กลุ่มบริหารบุคคล — ผู้บริหารเป็นผู้นำการเปลี่ยนแปลงและผู้สร้างแรงบันดาลใจ'},
+    {src:IMG+'d-do-6-general.png',caption:'D (DO) กลุ่มบริหารทั่วไป — ผู้บริหารเป็นผู้นำเชิงการประสานงานและนักบริหารวิกฤต'},
+    {src:IMG+'d-do-7-budget.png',caption:'D (DO) กลุ่มบริหารงบประมาณ — ผู้บริหารเป็นผู้นำด้านความโปร่งใสและนักบริหารจัดการเชิงกลยุทธ์'}],
  C:[{src:IMG+'c-check.jpg',caption:'C (CHECK) การตรวจสอบ — วางกรอบการตรวจสอบ ดำเนินการนิเทศ กำกับ ติดตาม และสรุปผลการตรวจสอบ'}],
  A:[{src:IMG+'a-act.jpg',caption:'A (ACT) การปรับปรุง — ผู้บริหารนำผลการประเมินมาใช้ในระบบการพัฒนาองค์กรในอนาคต เป็นจุดเชื่อมโยงระหว่างผลการประเมินในขั้น CHECK เพื่อนำไปสู่วงรอบการบริหารใหม่'}],
  gear:[{src:IMG+'gear-5m.jpg',caption:'การบริหารจัดการทรัพยากรและปัจจัยพื้นฐาน 5M — Man (คน/บุคลากร), Money (งบประมาณ/การเงิน), Material (วัสดุ อุปกรณ์ สิ่งอำนวยความสะดวก), Machine (เทคโนโลยี) และ Method (วิธีการบริหารและการจัดการเรียนรู้)'},

@@ -11,7 +11,6 @@
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%236856ba'/%3E%3Cpath d='M7 11l9-5 9 5-9 5zM7 16l9 5 9-5M7 21l9 5 9-5' fill='none' stroke='white' stroke-width='2'/%3E%3C/svg%3E">
     <link rel="stylesheet" href="/fonts/th-sarabun.css">
     <style>
-
         * {
             box-sizing: border-box
         }
@@ -1324,31 +1323,112 @@
         }
 
         /* วางบนพื้นหลังเข้มของหน้าเว็บ: ส่วนหัวและหมายเหตุใช้ตัวหนังสือสว่าง */
-        .intro, .footer { color: #fff; text-shadow: 0 2px 6px rgba(6, 18, 44, .75), 0 0 18px rgba(6, 18, 44, .5) }
-        .intro .eyebrow { color: #f3d27a }
-        .intro h1 span { color: #cfc4ff }
-        .intro .subtitle { color: rgba(255, 255, 255, .92) }
-        .intro .overview strong { color: #f3d27a }
-        .footer button { color: #f3d27a }
+        .intro,
+        .footer {
+            color: #fff;
+            text-shadow: 0 2px 6px rgba(6, 18, 44, .75), 0 0 18px rgba(6, 18, 44, .5)
+        }
+
+        .intro .eyebrow {
+            color: #f3d27a
+        }
+
+        .intro h1 span {
+            color: #cfc4ff
+        }
+
+        .intro .subtitle {
+            color: rgba(255, 255, 255, .92)
+        }
+
+        .intro .overview strong {
+            color: #f3d27a
+        }
+
+        .footer button {
+            color: #f3d27a
+        }
 
         /* ให้กล่องซ้ายสูงเท่ากล่องขวา แล้วจัดเนื้อหาสไลด์ไว้กลางแนวตั้ง ไม่เหลือที่ว่างด้านล่าง */
-        .stage { display: flex; flex-direction: column }
-        .viewport { flex: 1 1 auto; display: flex }
-        .track { flex: 0 0 100%; width: 100%; align-items: stretch }
-        .slide { display: flex; flex-direction: column; justify-content: center; align-items: center }
-        .slide .scene { width: 100% }
+        .stage {
+            display: flex;
+            flex-direction: column
+        }
+
+        .viewport {
+            flex: 1 1 auto;
+            display: flex
+        }
+
+        .track {
+            flex: 0 0 100%;
+            width: 100%;
+            align-items: stretch
+        }
+
+        .slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center
+        }
+
+        .slide .scene {
+            width: 100%
+        }
 
         /* ไม่มีพื้นหลังฝั่งโมเดล: ให้โปร่งบนพื้นเข้มของหน้าเว็บ และเปลี่ยนตัวหนังสือเป็นสีสว่าง */
-        .stage { background: transparent; border-color: rgba(255, 255, 255, .22); box-shadow: none }
-        .stage::before, .stage::after { display: none }
-        .stage-top>span, .stage .hint { color: rgba(255, 255, 255, .88) }
-        .stage .slide h2 { color: #fff; text-shadow: 0 2px 8px rgba(6, 18, 44, .7) }
-        .stage .en { color: #f3d27a }
-        .stage .slide-summary { color: rgba(255, 255, 255, .92); text-shadow: 0 1px 6px rgba(6, 18, 44, .7) }
-        .stage .dot { background: rgba(255, 255, 255, .4) }
-        .stage .control { background: #fff; color: #4b4470; opacity: 1 }
-        .stage .counter { background: #fff; color: #4b4470 }
-        .stage #play, .stage #play[aria-pressed] { background: #fff; color: #4b4470; opacity: 1 }
+        .stage {
+            background: transparent;
+            border-color: rgba(255, 255, 255, .22);
+            box-shadow: none
+        }
+
+        .stage::before,
+        .stage::after {
+            display: none
+        }
+
+        .stage-top>span,
+        .stage .hint {
+            color: rgba(255, 255, 255, .88)
+        }
+
+        .stage .slide h2 {
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(6, 18, 44, .7)
+        }
+
+        .stage .en {
+            color: #f3d27a
+        }
+
+        .stage .slide-summary {
+            color: rgba(255, 255, 255, .92);
+            text-shadow: 0 1px 6px rgba(6, 18, 44, .7)
+        }
+
+        .stage .dot {
+            background: rgba(255, 255, 255, .4)
+        }
+
+        .stage .control {
+            background: #fff;
+            color: #4b4470;
+            opacity: 1
+        }
+
+        .stage .counter {
+            background: #fff;
+            color: #4b4470
+        }
+
+        .stage #play,
+        .stage #play[aria-pressed] {
+            background: #fff;
+            color: #4b4470;
+            opacity: 1
+        }
     </style>
 </head>
 
@@ -1393,7 +1473,7 @@
     <script>
         const themes = [['#d6c9f5', '#ab9ad6', '#6a55a0'], ['#bfe6d7', '#8ccab4', '#2d705e'], ['#fcd0bb', '#dfa48a', '#9c5a45']]; /* สีเดิมปรับเข้มขึ้นเล็กน้อย */
         const data = [{ title: 'การบริหารบนฐานข้อมูล', english: 'Data-Driven Management', short: 'บริหารด้วยข้อมูล', desc: 'รวบรวมข้อมูลจาก 4 กลุ่มบริหารมาใช้วางแผน ติดตามงาน และประกอบการตัดสินใจ โดยดำเนินงานตามวงจร PDCA', core: 'DATA → DECISION', summary: 'ใช้ข้อมูลร่วมกันในการวางแผนและติดตามงาน', outcome: 'ลดงานเอกสารและตรวจสอบการดำเนินงานได้', items: [['data', '4 กลุ่มบริหาร', 'เชื่อมโยงข้อมูลแบบ Real-time', '04'], ['pdca', 'วงจรคุณภาพ PDCA', 'วางแผน ลงมือ ตรวจสอบ ปรับปรุง', '↻'], ['paper', 'Paperless Workflow', 'จัดเก็บ ค้นหา และอนุมัติในระบบ', '▤'], ['ita', 'ความโปร่งใส / ITA', 'ตรวจสอบย้อนกลับและเปิดเผยข้อมูล', '◎']] },
-        { title: 'การเรียนรู้และดูแลผู้เรียน', english: 'Digital Pedagogy & Student Support', short: 'เรียนรู้และดูแล', desc: 'เลือกใช้สื่อดิจิทัลให้เหมาะกับแต่ละวิชา และใช้ข้อมูลผลการเรียนประกอบการดูแลช่วยเหลือนักเรียนเป็นรายบุคคล', core: 'LEARN → CARE', summary: 'ใช้สื่อให้เหมาะกับวิชา ดูแลให้เหมาะกับผู้เรียน', outcome: 'นักเรียนได้รับการดูแลและเรียนจนจบการศึกษา', items: [['learning', 'ดิจิทัลตามกลุ่มวิชา', '3 รูปแบบ · 90% / 70% / 50%', '%'], ['care', 'Student Care System', 'รู้จัก คัดกรอง ช่วยเหลือ ติดตาม', '♡'], ['sgs', 'SGS / eSchool', 'เชื่อมข้อมูลผลการเรียนและการดูแล', '▤'], ['zero', 'การออกกลางคัน 0%', 'ติดตามและช่วยเหลือนักเรียนกลุ่มเสี่ยง', '0']] },
+        { title: 'การเรียนรู้และดูแลผู้เรียน', english: 'Digital Pedagogy & Student Support', short: 'เรียนรู้และดูแล', desc: 'เลือกใช้สื่อดิจิทัลให้เหมาะกับแต่ละวิชา และใช้ข้อมูลผลการเรียนประกอบการดูแลช่วยเหลือนักเรียนเป็นรายบุคคล', core: 'LEARN → CARE', summary: 'ใช้สื่อให้เหมาะกับวิชา ดูแลให้เหมาะกับผู้เรียน', outcome: 'นักเรียนได้รับการดูแลและเรียนจนจบการศึกษา', items: [['learning', 'ดิจิทัลตามกลุ่มวิชา', '3 รูปแบบ · 90% / 70% / 50%', '%'], ['care', 'SK E-HERO', 'รู้จัก คัดกรอง ช่วยเหลือ ติดตาม', '♡'], ['sgs', 'SGS / eSchool', 'เชื่อมข้อมูลผลการเรียนและการดูแล', '▤'], ['zero', 'การออกกลางคัน 0%', 'ติดตามและช่วยเหลือนักเรียนกลุ่มเสี่ยง', '0']] },
         { title: 'การสื่อสารประชาสัมพันธ์', english: 'Omnichannel Communication', short: 'การประชาสัมพันธ์', desc: 'เผยแพร่ข่าวสารผ่านช่องทางออนไลน์ การประชุม และเวทีวิชาการ พร้อมรับฟังข้อเสนอแนะจากผู้ปกครองและชุมชน', core: 'CONNECT → TRUST', summary: 'ให้ผู้ปกครองและชุมชนรับทราบข่าวสารของสถานศึกษา', outcome: 'ผู้ปกครองและชุมชนเชื่อมั่นในการดำเนินงาน', items: [['online', 'ช่องทางออนไลน์', 'เว็บไซต์ สื่อสังคม และช่องทางผู้ปกครอง', '↗'], ['offline', 'ช่องทางออฟไลน์', 'ประชุมผู้ปกครอง ชุมชน และสื่อในโรงเรียน', '◉'], ['academic', 'เวทีวิชาการ', 'แลกเปลี่ยนเรียนรู้และเผยแพร่ผลงาน', '✧'], ['trust', 'สู่สถานศึกษาต้นแบบ', 'เผยแพร่ผลการดำเนินงานและแลกเปลี่ยนแนวปฏิบัติ', '◇']] }];
         const details = {
             data: { title: 'การจัดการข้อมูล 4 กลุ่มบริหาร', intro: 'จัดทำข้อมูลกลาง กำหนดผู้รับผิดชอบและสิทธิ์เข้าถึง เพื่อให้ทั้ง 4 กลุ่มบริหารใช้ข้อมูลที่ถูกต้องและตรงกัน', children: [['วิชาการ', 'หลักสูตร ตารางเรียน ผลสัมฤทธิ์ และการเข้าเรียน ใช้ติดตามคุณภาพการเรียนรู้และวางแผนช่วยเหลือผู้เรียน'], ['บุคคล', 'ข้อมูลบุคลากร ภาระงาน สมรรถนะ และการพัฒนา ใช้จัดสรรครูและวางแผนพัฒนาวิชาชีพ'], ['งบประมาณ', 'แผนงาน การจัดสรร การเบิกจ่าย และหลักฐาน ใช้ติดตามความคุ้มค่าและความก้าวหน้าของโครงการ'], ['ทั่วไป', 'อาคารสถานที่ ครุภัณฑ์ ความปลอดภัย และงานบริการ ใช้บริหารทรัพยากรและสภาพแวดล้อม']], flow: ['จัดเก็บ', 'ตรวจคุณภาพ', 'เชื่อมโยง', 'ใช้ตัดสินใจ'], note: 'การแสดงข้อมูลแบบ Real-time ต้องเชื่อมต่อกับระบบของสถานศึกษาและระบุเวลาปรับปรุงล่าสุด หน้านี้ยังไม่ได้เชื่อมต่อข้อมูลจริง' },
@@ -1427,13 +1507,15 @@
         document.querySelectorAll('.scene').forEach(scene => { scene.addEventListener('pointermove', e => { if (reducedMotion.matches || e.pointerType === 'touch') return; const r = scene.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height; scene.style.setProperty('--rx', `${(y - .5) * 9}deg`); scene.style.setProperty('--ry', `${(x - .5) * 10}deg`); scene.style.setProperty('--lx', `${x * 100}%`); scene.style.setProperty('--ly', `${y * 100}%`) }); scene.addEventListener('pointerleave', () => { scene.style.setProperty('--rx', '0deg'); scene.style.setProperty('--ry', '0deg') }) });
     </script>
 
-<script>
-/* ส่งความสูงให้หน้าเว็บหลัก (iframe ไม่มีแถบเลื่อนของตัวเอง) และขอให้เลื่อนมาที่โมเดลเมื่อเปิดหน้าต่างรายละเอียด */
-(function(){const post=m=>{if(parent!==window)parent.postMessage(m,location.origin)};
-const rep=()=>requestAnimationFrame(()=>post({type:'d3-digital-model-height',height:Math.ceil(document.querySelector('main').getBoundingClientRect().height+16)}));
-new ResizeObserver(rep).observe(document.body);addEventListener('load',rep);rep();
-const m=document.getElementById('modal');new MutationObserver(()=>{if(m.open)post({type:'d3-digital-model-scroll'})}).observe(m,{attributes:true,attributeFilter:['open']});})();
-</script>
+    <script>
+        /* ส่งความสูงให้หน้าเว็บหลัก (iframe ไม่มีแถบเลื่อนของตัวเอง) และขอให้เลื่อนมาที่โมเดลเมื่อเปิดหน้าต่างรายละเอียด */
+        (function () {
+            const post = m => { if (parent !== window) parent.postMessage(m, location.origin) };
+            const rep = () => requestAnimationFrame(() => post({ type: 'd3-digital-model-height', height: Math.ceil(document.querySelector('main').getBoundingClientRect().height + 16) }));
+            new ResizeObserver(rep).observe(document.body); addEventListener('load', rep); rep();
+            const m = document.getElementById('modal'); new MutationObserver(() => { if (m.open) post({ type: 'd3-digital-model-scroll' }) }).observe(m, { attributes: true, attributeFilter: ['open'] });
+        })();
+    </script>
 </body>
 
 </html>
