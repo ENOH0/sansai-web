@@ -101,7 +101,7 @@ export const DIM3 = {
         names: ['โรงเรียนสันทรายวิทยาคม'],
         award: 'ผ่านเกณฑ์การประเมินเป็นสถานศึกษาสีขาว ปลอดยาเสพติดและอบายมุข ประเภทผลงานดีเด่น ระดับเพชร',
         year: '2566',
-        photos: ['/evidence/dimension3/organization-awards/org-03.jpg']
+        photos: ['/evidence/dimension3/organization-awards/org-03.jpg', '/evidence/dimension3/organization-awards/org-03-2.png']
       },
       {
         names: ['โรงเรียนสันทรายวิทยาคม'],
