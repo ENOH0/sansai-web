@@ -52,8 +52,8 @@ export const DIM3 = {
         names: ['โรงเรียนสันทรายวิทยาคม'],
         award: 'รางวัลยอดเยี่ยมโรงเรียนขนาดใหญ่ สถานศึกษาที่มีผลการปฏิบัติที่เป็นเลิศ (BEST PRACTICES) ระดับเขตพื้นที่การศึกษา',
         level: 'ระดับเขตพื้นที่การศึกษา',
-        year: '2566',
-        photos: ['/evidence/dimension3/leadership-awards/bp2566-01.jpg']
+        year: '2568',
+        photos: ['/evidence/dimension3/leadership-awards/bp2568-01.png']
       },
       {
         names: ['โรงเรียนสันทรายวิทยาคม'],

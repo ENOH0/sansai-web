@@ -111,17 +111,6 @@
         loading="lazy" scrolling="no" [style.height.px]="leaderModelHeight()"></iframe>
     </div>
 
-    <!-- ชุดภาพและโมเดลภาวะผู้นำแบบบูรณาการที่เพิ่มต่อท้าย -->
-    <figure class="d3-model-overview" appReveal style="margin-top:40px">
-      <img src="/evidence/dimension3/models/integrated-leadership-overview.png"
-        alt="ภาพรวมภาวะผู้นำและการบริหารจัดการสถานศึกษาบูรณาการ 4 ด้าน" loading="lazy">
-    </figure>
-    <div class="d3-learn-model d3-integrated-leader-model" appReveal style="margin-top:40px">
-      <iframe src="/models/integrated-leadership-model.html?v=20260924-2"
-        title="ภาพรวมภาวะผู้นำและการบริหารจัดการสถานศึกษาบูรณาการ 4 ด้าน"
-        loading="lazy" scrolling="no" [style.height.px]="integratedLeaderModelHeight()"></iframe>
-    </div>
-
     <!-- ผลงานเชิงประจักษ์ · แก้ข้อมูลได้ที่ leadership.awards ใน src/app/data/dimension3.data.ts -->
     <div appReveal style="margin-top:40px">
       <app-award-slideshow [items]="d.leadership.awards" theme="pastel" [fillEmpty]="false"
