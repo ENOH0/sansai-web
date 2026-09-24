@@ -109,6 +109,9 @@
     .model.theme-11 .beam { background: linear-gradient(90deg, #d7c2ee, #b8dff5, #ffd3b8); box-shadow: 0 0 18px #ae9bd8 }
     .model.theme-11 .preview b { color: #684f87 }
 
+    /* หัวข้อโมเดลทักษะภาษาไทย: ใช้ตัวอักษรสีขาวโดยไม่มีกรอบ/เงาสีขาว */
+    .model.model-thai header h1 { color: #fff; text-shadow: none }
+
     .model.theme-12 .eyebrow { background: #d9f3e9; color: #39766b }
     .model.theme-12 header h1 { color: #285d59 }
     .model.theme-12 .beam { background: linear-gradient(90deg, #9fd8c0, #f2d891, #efb5cc); box-shadow: 0 0 18px #8fcab5 }
@@ -966,7 +969,7 @@
     const modelRoot = document.querySelector('.model');
     const section12Models = new Set(['democracy', 'environment', 'teamwork', 'thaiPride', 'confidence', 'health', 'safety']);
     const isSection12 = section12Models.has(modelKey);
-    modelRoot.classList.add('no-background', 'compact-horizontal', isSection12 ? 'theme-12' : 'theme-11');
+    modelRoot.classList.add('no-background', 'compact-horizontal', isSection12 ? 'theme-12' : 'theme-11', 'model-' + modelKey);
     modelRoot.classList.toggle('long-title', model.title.length > 48);
     document.title = model.eyebrow;
     document.getElementById('model-eyebrow').textContent = model.eyebrow;
